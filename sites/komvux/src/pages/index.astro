@@ -1,0 +1,62 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import HittaNarmaste from "@natverk/core/katalog/HittaNarmaste.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA, RIKET, grupp } from "../site.js";
+
+const n = KAT.enheter.length;
+const antal = (g) => KAT.enheter.filter((e) => grupp(e) === g).length;
+const medSfi = KAT.enheter.filter((e) => e.extra?.nivaer?.includes("sfi")).length;
+const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 12);
+const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
+const kv = RIKET.komvux, sf = RIKET.sfi;
+const fragor = [
+  { fraga: "Hur många komvuxskolor finns det i Sverige?", svar: `Skolverkets register har ${n} skolenheter för kommunal vuxenutbildning i ${KAT.kommuner.length} kommuner. ${medSfi} av dem har sfi. Många kommuner köper dessutom utbildning av privata anordnare.` },
+  kv && { fraga: "Hur många läser på komvux?", svar: `${tal(kv.elever_gymnasial, 0)} personer läste på gymnasial nivå och ${tal(kv.elever_grundlaggande, 0)} på grundläggande nivå ${kv.ar}. ${tal(kv.andel_distans_gymnasial)} % av eleverna på gymnasial nivå läste på distans.` },
+  sf && { fraga: "Hur många läser sfi?", svar: `${tal(sf.elever, 0)} personer läste sfi ${sf.ar}. ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} % av de avslutade eller avbrutna kurserna blev godkända.` },
+  { fraga: "Hur söker man till komvux?", svar: "Du söker hos kommunen där du är folkbokförd, oftast via kommunens e-tjänst. Vill du läsa i en annan kommun kan din hemkommun ofta ordna det genom samverkansavtal." },
+  { fraga: "Kostar det att läsa på komvux?", svar: "Nej, utbildningen är avgiftsfri. Du kan behöva betala för kurslitteratur och material. Du kan ansöka om studiemedel hos CSN." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel="Komvux i din kommun – skolor, sfi och distans"
+  beskrivning={`Alla ${n} komvuxskolor och sfi-skolor i Sverige med adress, utbildningsnivåer och statistik per kommun. ✓ Grundläggande och gymnasial ✓ Sfi ✓ Så söker du.`}
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Hitta komvux i din kommun</h1>
+  <p class="svar">Här finns <strong>{n} skolenheter</strong> för vuxenutbildning i {KAT.kommuner.length} kommuner: {antal("komvux")} för komvux, {antal("sfi")} renodlade sfi-skolor och {antal("anpassad")} för anpassad utbildning. Välj din kommun för att se skolor, anordnare och hur kommunen står sig mot riket.</p>
+  <HittaNarmaste ord={ORD} />
+
+  <h2>Flest skolenheter</h2>
+  <div class="kort">{storst.map((k) => <a href={k.href}><strong>Komvux i {k.namn}</strong><small>{k.enheter.length} skolenheter</small></a>)}</div>
+
+  {kv && sf && <>
+    <h2>Vuxenutbildningen i siffror</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Hela riket ({kv.ar})</th><th class="num">Värde</th></tr></thead>
+      <tbody>
+        <tr><td>Elever på gymnasial nivå</td><td class="num">{tal(kv.elever_gymnasial, 0)}</td></tr>
+        <tr><td>Elever på grundläggande nivå</td><td class="num">{tal(kv.elever_grundlaggande, 0)}</td></tr>
+        <tr><td>Elever i sfi</td><td class="num">{tal(sf.elever, 0)}</td></tr>
+        <tr><td>Distansstudier, gymnasial nivå</td><td class="num">{tal(kv.andel_distans_gymnasial)} %</td></tr>
+        <tr><td>Gymnasial nivå hos annan anordnare än kommunen</td><td class="num">{tal(kv.andel_annan_anordnare_gymnasial)} %</td></tr>
+        <tr><td>Godkända sfi-kurser</td><td class="num">{tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} %</td></tr>
+      </tbody>
+    </table></div>
+    <p class="kalla">Källa: Skolverket, kommunala jämförelsetal.</p>
+  </>}
+
+  <Annons plats="start-1" />
+
+  <h2 id="lan">Komvux per län och kommun</h2>
+  {KAT.lan.map((l) => (
+    <>
+      <h3><a href={l.href}>{l.namn}</a> <small>({l.antal})</small></h3>
+      <ul class="kolumner">{l.kommuner.map((k) => <li><a href={k.href}>{k.namn}</a> ({k.enheter.length})</li>)}</ul>
+    </>
+  ))}
+
+  <Annons plats="start-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

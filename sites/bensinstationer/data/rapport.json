@@ -1,0 +1,1712 @@
+{
+ "genererad": "2026-11-19T11:08:21.083Z",
+ "osm_fil": "../osm-data/data/bensinstationer.json",
+ "osm_antal": 3416,
+ "kedjeposter": 3002,
+ "matchade": 2397,
+ "kedja_utan_osm": 605,
+ "endast_osm": 981,
+ "osm_dubbletter_borttagna": 38,
+ "matchmetoder": {
+  "kedja+avstand+gata": 686,
+  "kedja+avstand": 1591,
+  "kedja+adress": 7,
+  "utan_varumarke+avstand": 47,
+  "annat_varumarke_osm+avstand": 33,
+  "varumarkesbyte": 33
+ },
+ "totalt": {
+  "antal": 3983,
+  "adress_pct": 83.1,
+  "oppettider_pct": 61.2,
+  "priser_pct": 0,
+  "telefon_pct": 20.8,
+  "kommun_pct": 100
+ },
+ "kallor": {
+  "circlek": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:24.188Z",
+   "antal": 734,
+   "fel": null
+  },
+  "okq8": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:26.791Z",
+   "antal": 884,
+   "fel": null
+  },
+  "preem": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:29.076Z",
+   "antal": 501,
+   "fel": null
+  },
+  "st1": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:42.824Z",
+   "antal": 502,
+   "fel": null
+  },
+  "qstar": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:44.512Z",
+   "antal": 319,
+   "fel": null
+  },
+  "gulf": {
+   "status": "ok",
+   "hamtad": "2026-11-19T11:04:46.091Z",
+   "antal": 63,
+   "fel": null
+  },
+  "dinx": {
+   "status": "fel",
+   "hamtad": null,
+   "antal": 0,
+   "fel": "din-x.se svarar inte (UND_ERR_CONNECT_TIMEOUT: fetch failed) – hoppar över"
+  }
+ },
+ "per_kedja": {
+  "OKQ8": {
+   "antal": 695,
+   "adress_pct": 98.3,
+   "oppettider_pct": 80.9,
+   "priser_pct": 0,
+   "telefon_pct": 9.1,
+   "kommun_pct": 100,
+   "fran_kedja": 679,
+   "endast_osm": 16
+  },
+  "St1": {
+   "antal": 513,
+   "adress_pct": 98.2,
+   "oppettider_pct": 98.8,
+   "priser_pct": 0,
+   "telefon_pct": 1,
+   "kommun_pct": 100,
+   "fran_kedja": 501,
+   "endast_osm": 12
+  },
+  "Circle K": {
+   "antal": 441,
+   "adress_pct": 98.6,
+   "oppettider_pct": 98.2,
+   "priser_pct": 0,
+   "telefon_pct": 63,
+   "kommun_pct": 100,
+   "fran_kedja": 433,
+   "endast_osm": 8
+  },
+  "Preem": {
+   "antal": 394,
+   "adress_pct": 79.2,
+   "oppettider_pct": 37.8,
+   "priser_pct": 0,
+   "telefon_pct": 75.6,
+   "kommun_pct": 100,
+   "fran_kedja": 306,
+   "endast_osm": 88
+  },
+  "(okänd)": {
+   "antal": 345,
+   "adress_pct": 10.4,
+   "oppettider_pct": 15.1,
+   "priser_pct": 0,
+   "telefon_pct": 2.6,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 345
+  },
+  "Qstar": {
+   "antal": 326,
+   "adress_pct": 96.3,
+   "oppettider_pct": 22.4,
+   "priser_pct": 0,
+   "telefon_pct": 0.6,
+   "kommun_pct": 100,
+   "fran_kedja": 311,
+   "endast_osm": 15
+  },
+  "Ingo": {
+   "antal": 303,
+   "adress_pct": 99.3,
+   "oppettider_pct": 99.7,
+   "priser_pct": 0,
+   "telefon_pct": 1.7,
+   "kommun_pct": 100,
+   "fran_kedja": 301,
+   "endast_osm": 2
+  },
+  "Tanka": {
+   "antal": 189,
+   "adress_pct": 83.6,
+   "oppettider_pct": 79.9,
+   "priser_pct": 0,
+   "telefon_pct": 1.6,
+   "kommun_pct": 100,
+   "fran_kedja": 146,
+   "endast_osm": 43
+  },
+  "Såifa": {
+   "antal": 132,
+   "adress_pct": 97.7,
+   "oppettider_pct": 10.6,
+   "priser_pct": 0,
+   "telefon_pct": 44.7,
+   "kommun_pct": 100,
+   "fran_kedja": 129,
+   "endast_osm": 3
+  },
+  "Din-X": {
+   "antal": 130,
+   "adress_pct": 44.6,
+   "oppettider_pct": 16.2,
+   "priser_pct": 0,
+   "telefon_pct": 9.2,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 130
+  },
+  "Gulf": {
+   "antal": 78,
+   "adress_pct": 89.7,
+   "oppettider_pct": 6.4,
+   "priser_pct": 0,
+   "telefon_pct": 84.6,
+   "kommun_pct": 100,
+   "fran_kedja": 63,
+   "endast_osm": 15
+  },
+  "IDS": {
+   "antal": 58,
+   "adress_pct": 98.3,
+   "oppettider_pct": 75.9,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 58,
+   "endast_osm": 0
+  },
+  "TRB": {
+   "antal": 33,
+   "adress_pct": 97,
+   "oppettider_pct": 6.1,
+   "priser_pct": 0,
+   "telefon_pct": 12.1,
+   "kommun_pct": 100,
+   "fran_kedja": 29,
+   "endast_osm": 4
+  },
+  "Gasum": {
+   "antal": 30,
+   "adress_pct": 96.7,
+   "oppettider_pct": 13.3,
+   "priser_pct": 0,
+   "telefon_pct": 3.3,
+   "kommun_pct": 100,
+   "fran_kedja": 29,
+   "endast_osm": 1
+  },
+  "Bilisten": {
+   "antal": 15,
+   "adress_pct": 53.3,
+   "oppettider_pct": 20,
+   "priser_pct": 0,
+   "telefon_pct": 6.7,
+   "kommun_pct": 100,
+   "fran_kedja": 7,
+   "endast_osm": 8
+  },
+  "Oljeshejkerna Johnsson AB": {
+   "antal": 13,
+   "adress_pct": 92.3,
+   "oppettider_pct": 23.1,
+   "priser_pct": 0,
+   "telefon_pct": 15.4,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 13
+  },
+  "Fordonsgas": {
+   "antal": 12,
+   "adress_pct": 41.7,
+   "oppettider_pct": 41.7,
+   "priser_pct": 0,
+   "telefon_pct": 8.3,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 12
+  },
+  "FordonsGas Sverige AB": {
+   "antal": 11,
+   "adress_pct": 90.9,
+   "oppettider_pct": 81.8,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 11
+  },
+  "PS Energi": {
+   "antal": 10,
+   "adress_pct": 90,
+   "oppettider_pct": 20,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 10
+  },
+  "Småländska Bränslen": {
+   "antal": 10,
+   "adress_pct": 100,
+   "oppettider_pct": 70,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 10
+  },
+  "Runes Bensin & Oljeimport AB": {
+   "antal": 8,
+   "adress_pct": 100,
+   "oppettider_pct": 12.5,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 8
+  },
+  "Oljeshejkerna Johnsson": {
+   "antal": 7,
+   "adress_pct": 57.1,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 28.6,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 7
+  },
+  "Svensk Biogas AB": {
+   "antal": 7,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 7
+  },
+  "Fundins": {
+   "antal": 6,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 6,
+   "endast_osm": 0
+  },
+  "Paroy": {
+   "antal": 6,
+   "adress_pct": 16.7,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 6
+  },
+  "Dalvik Oil": {
+   "antal": 6,
+   "adress_pct": 33.3,
+   "oppettider_pct": 16.7,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 6
+  },
+  "Börjes": {
+   "antal": 6,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 6
+  },
+  "Independent": {
+   "antal": 5,
+   "adress_pct": 0,
+   "oppettider_pct": 60,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 5
+  },
+  "Dalviks Kvarn": {
+   "antal": 5,
+   "adress_pct": 0,
+   "oppettider_pct": 20,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 5
+  },
+  "Pump": {
+   "antal": 5,
+   "adress_pct": 20,
+   "oppettider_pct": 20,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 1,
+   "endast_osm": 4
+  },
+  "Energifabriken": {
+   "antal": 5,
+   "adress_pct": 60,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 20,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 5
+  },
+  "Alltank": {
+   "antal": 5,
+   "adress_pct": 40,
+   "oppettider_pct": 20,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 5
+  },
+  "Skelleftebränslen": {
+   "antal": 4,
+   "adress_pct": 0,
+   "oppettider_pct": 25,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 4
+  },
+  "OG Clean Fuels": {
+   "antal": 4,
+   "adress_pct": 100,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 25,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 4
+  },
+  "Hagelsrums biogas": {
+   "antal": 4,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 25,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 4
+  },
+  "biogas Gotland": {
+   "antal": 4,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 25,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 4
+  },
+  "Polargas": {
+   "antal": 3,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 33.3,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 3
+  },
+  "E.ON": {
+   "antal": 3,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 1,
+   "endast_osm": 2
+  },
+  "Green Petroleum": {
+   "antal": 3,
+   "adress_pct": 0,
+   "oppettider_pct": 33.3,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 3
+  },
+  "Colabit": {
+   "antal": 3,
+   "adress_pct": 100,
+   "oppettider_pct": 66.7,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 3
+  },
+  "Paroy Energi AB": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Skoogs Bränsle": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "VafabMiljö": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Tapp": {
+   "antal": 2,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Aspen": {
+   "antal": 2,
+   "adress_pct": 0,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Tankvärt": {
+   "antal": 2,
+   "adress_pct": 0,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Gasefuels AB": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Hydri": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Öresundskraft": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 2,
+   "endast_osm": 0
+  },
+  "OrangeGas": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Oskarshamns Energi": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Svensk Växtkraft AB": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Smart Energy": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Svensk Biogas": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Arkösunds Hamn": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Polargas AB": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Biogas Ystad Österlen": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Skelleftebränslen AB": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 50,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Listermacken": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Uppsala Vatten och Avfall AB": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Börjes Tankcenter": {
+   "antal": 2,
+   "adress_pct": 50,
+   "oppettider_pct": 50,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Börjes Tankcenter AB": {
+   "antal": 2,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 2
+  },
+  "Alvesta Biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Utterströms": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Laisvall bensin o diesel": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bya-macken": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bodens kommun": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Skogqvist Olja": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bensin": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Sasejo Biogas": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Maserfrakt": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "NBOLJOR": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "OK/Q8": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Eskilstuna Energi & Miljö AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Vessige Biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "GD Oljor": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Flen biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Färgelanda Biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "OKQ8(?)": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Ullattimacken ek. för.": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gästrike Ekogas AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Colabitoil": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Ekogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "MLT": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "GP": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Out of order": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "OKQ8/St1": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Sala-Heby Energi": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "NSR": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Kents Bensin & Bilar": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Macken Stamnäs": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bensn/Diesel": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Hagelsrum biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Oljeshejkarna Johnsson": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "HEMAB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Stigsjö bränsle": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "bensinmack": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "More biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Biogasbolaget Karlskoga": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Katrineholm Vatten och Avlopp AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "FRODAB": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "LT Lantmän": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Smart Gas Station": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bränslecompaniet": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Colabitol": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Biogasbolaget i Mellansverige AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Tunmacken": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Collabit": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "FBS": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "OK": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Kraftringen": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Skellefteå Bränsle": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Klagshamn Hamn": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gasol Limhamn LPG": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gasol Malmö LPG": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "CirkleK": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Husqvarna": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Bergkvarabuss / Mekka Trafic": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Jättendals Macken!": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Visa + Mastercard etc": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Lantmännen": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Nybro Transport": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "OG": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Okänd huvudman": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Oskarshamn Energi": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "PS Energi AB": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Skoogs": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Blekinge bränslen Biogas": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "ICA Bensin": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Hynion": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Smart": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Hjelmco": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Skellefteå kommun": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Tidans Bensin & Kiosk": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Skellefte Bränslen": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "BRC gas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Alltank AB": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Holm Service": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "S:t Anna Kajak": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Blekinge Bränslen": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Handlarn": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Fjällbacka Bensin- & Handelsbod Aktiebolag": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Runes": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Tanken": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gullabomackens ekonomiska förening": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Mekonomen": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Mellströms bil AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Ulricehamns Energi AB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gulf / QStar": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "AGA": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Oxsätra-Åkerlänna Utvecklings AB": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 100,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "TP-macken": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Uno X": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Coop Möja": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Smart Energy Sweden Group": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Pampas Marina": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "VAFAB": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Växtkraft biogas": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Ess oljeorder bränsle AB": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Gasol Esset": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "ICA Tapp": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Astor Oil": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Östersunds kommun": {
+   "antal": 1,
+   "adress_pct": 100,
+   "oppettider_pct": 100,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  },
+  "Teboil": {
+   "antal": 1,
+   "adress_pct": 0,
+   "oppettider_pct": 0,
+   "priser_pct": 0,
+   "telefon_pct": 0,
+   "kommun_pct": 100,
+   "fran_kedja": 0,
+   "endast_osm": 1
+  }
+ }
+}

@@ -1,0 +1,2774 @@
+[
+  {
+    "kommunkod": "0114",
+    "kommun": "Upplands Väsby",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 72,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0115",
+    "kommun": "Vallentuna",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 70,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0117",
+    "kommun": "Österåker",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 54,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0120",
+    "kommun": "Värmdö",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 116,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0123",
+    "kommun": "Järfälla",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 131,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0125",
+    "kommun": "Ekerö",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 38,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0126",
+    "kommun": "Huddinge",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 161,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0127",
+    "kommun": "Botkyrka",
+    "lan": "Stockholms län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "botkyrka",
+        "licens": "CC0 1.0",
+        "antal": 88
+      }
+    ],
+    "antal_lekplatser": 221,
+    "antal_fran_officiell_kalla": 77
+  },
+  {
+    "kommunkod": "0128",
+    "kommun": "Salem",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 84,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0136",
+    "kommun": "Haninge",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 191,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0138",
+    "kommun": "Tyresö",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 90,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0139",
+    "kommun": "Upplands-Bro",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 81,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0140",
+    "kommun": "Nykvarn",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0160",
+    "kommun": "Täby",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 190,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0162",
+    "kommun": "Danderyd",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 58,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0163",
+    "kommun": "Sollentuna",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 248,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0180",
+    "kommun": "Stockholm",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1272,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0181",
+    "kommun": "Södertälje",
+    "lan": "Stockholms län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "sodertalje",
+        "licens": "CC0 1.0",
+        "antal": 62
+      }
+    ],
+    "antal_lekplatser": 222,
+    "antal_fran_officiell_kalla": 62
+  },
+  {
+    "kommunkod": "0182",
+    "kommun": "Nacka",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 327,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0183",
+    "kommun": "Sundbyberg",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 96,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0184",
+    "kommun": "Solna",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 134,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0186",
+    "kommun": "Lidingö",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 74,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0187",
+    "kommun": "Vaxholm",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0188",
+    "kommun": "Norrtälje",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 59,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0191",
+    "kommun": "Sigtuna",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 29,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0192",
+    "kommun": "Nynäshamn",
+    "lan": "Stockholms län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 36,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0305",
+    "kommun": "Håbo",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 40,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0319",
+    "kommun": "Älvkarleby",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0330",
+    "kommun": "Knivsta",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 29,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0331",
+    "kommun": "Heby",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 22,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0360",
+    "kommun": "Tierp",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 23,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0380",
+    "kommun": "Uppsala",
+    "lan": "Uppsala län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "uppsala",
+        "licens": "CC BY",
+        "antal": 119
+      }
+    ],
+    "antal_lekplatser": 607,
+    "antal_fran_officiell_kalla": 119
+  },
+  {
+    "kommunkod": "0381",
+    "kommun": "Enköping",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 53,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0382",
+    "kommun": "Östhammar",
+    "lan": "Uppsala län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 52,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0428",
+    "kommun": "Vingåker",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0461",
+    "kommun": "Gnesta",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 50,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0480",
+    "kommun": "Nyköping",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 134,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0481",
+    "kommun": "Oxelösund",
+    "lan": "Södermanlands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "oxelosund",
+        "licens": "ej angiven",
+        "antal": 10
+      }
+    ],
+    "antal_lekplatser": 19,
+    "antal_fran_officiell_kalla": 10
+  },
+  {
+    "kommunkod": "0482",
+    "kommun": "Flen",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0483",
+    "kommun": "Katrineholm",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 54,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0484",
+    "kommun": "Eskilstuna",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 253,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0486",
+    "kommun": "Strängnäs",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 88,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0488",
+    "kommun": "Trosa",
+    "lan": "Södermanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0509",
+    "kommun": "Ödeshög",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0512",
+    "kommun": "Ydre",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0513",
+    "kommun": "Kinda",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0560",
+    "kommun": "Boxholm",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0561",
+    "kommun": "Åtvidaberg",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 27,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0562",
+    "kommun": "Finspång",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 19,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0563",
+    "kommun": "Valdemarsvik",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0580",
+    "kommun": "Linköping",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 687,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0581",
+    "kommun": "Norrköping",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 213,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0582",
+    "kommun": "Söderköping",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 39,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0583",
+    "kommun": "Motala",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 98,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0584",
+    "kommun": "Vadstena",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0586",
+    "kommun": "Mjölby",
+    "lan": "Östergötlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 63,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0604",
+    "kommun": "Aneby",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0617",
+    "kommun": "Gnosjö",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0642",
+    "kommun": "Mullsjö",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0643",
+    "kommun": "Habo",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 16,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0662",
+    "kommun": "Gislaved",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 50,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0665",
+    "kommun": "Vaggeryd",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 28,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0680",
+    "kommun": "Jönköping",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 198,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0682",
+    "kommun": "Nässjö",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 24,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0683",
+    "kommun": "Värnamo",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 104,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0684",
+    "kommun": "Sävsjö",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0685",
+    "kommun": "Vetlanda",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 27,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0686",
+    "kommun": "Eksjö",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 45,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0687",
+    "kommun": "Tranås",
+    "lan": "Jönköpings län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0760",
+    "kommun": "Uppvidinge",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0761",
+    "kommun": "Lessebo",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0763",
+    "kommun": "Tingsryd",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 27,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0764",
+    "kommun": "Alvesta",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0765",
+    "kommun": "Älmhult",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 22,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0767",
+    "kommun": "Markaryd",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 5,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0780",
+    "kommun": "Växjö",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 161,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0781",
+    "kommun": "Ljungby",
+    "lan": "Kronobergs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 54,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0821",
+    "kommun": "Högsby",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0834",
+    "kommun": "Torsås",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 5,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0840",
+    "kommun": "Mörbylånga",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 31,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0860",
+    "kommun": "Hultsfred",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 30,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0861",
+    "kommun": "Mönsterås",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0862",
+    "kommun": "Emmaboda",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0880",
+    "kommun": "Kalmar",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 99,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0881",
+    "kommun": "Nybro",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 29,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0882",
+    "kommun": "Oskarshamn",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 27,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0883",
+    "kommun": "Västervik",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 45,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0884",
+    "kommun": "Vimmerby",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 21,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0885",
+    "kommun": "Borgholm",
+    "lan": "Kalmar län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 20,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "0980",
+    "kommun": "Gotland",
+    "lan": "Gotlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 100,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1060",
+    "kommun": "Olofström",
+    "lan": "Blekinge län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1080",
+    "kommun": "Karlskrona",
+    "lan": "Blekinge län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 107,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1081",
+    "kommun": "Ronneby",
+    "lan": "Blekinge län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 45,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1082",
+    "kommun": "Karlshamn",
+    "lan": "Blekinge län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 34,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1083",
+    "kommun": "Sölvesborg",
+    "lan": "Blekinge län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 34,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1214",
+    "kommun": "Svalöv",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 57,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1230",
+    "kommun": "Staffanstorp",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 60,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1231",
+    "kommun": "Burlöv",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 77,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1233",
+    "kommun": "Vellinge",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "vellinge",
+        "licens": "ej angiven",
+        "antal": 51
+      }
+    ],
+    "antal_lekplatser": 126,
+    "antal_fran_officiell_kalla": 51
+  },
+  {
+    "kommunkod": "1256",
+    "kommun": "Östra Göinge",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1257",
+    "kommun": "Örkelljunga",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 11,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1260",
+    "kommun": "Bjuv",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1261",
+    "kommun": "Kävlinge",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 101,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1262",
+    "kommun": "Lomma",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "lomma",
+        "licens": "CC0 1.0",
+        "antal": 67
+      }
+    ],
+    "antal_lekplatser": 102,
+    "antal_fran_officiell_kalla": 67
+  },
+  {
+    "kommunkod": "1263",
+    "kommun": "Svedala",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 135,
+    "antal_fran_officiell_kalla": 1
+  },
+  {
+    "kommunkod": "1264",
+    "kommun": "Skurup",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 47,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1265",
+    "kommun": "Sjöbo",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 41,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1266",
+    "kommun": "Hörby",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 19,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1267",
+    "kommun": "Höör",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 31,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1270",
+    "kommun": "Tomelilla",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "tomelilla",
+        "licens": "ej angiven",
+        "antal": 16
+      }
+    ],
+    "antal_lekplatser": 24,
+    "antal_fran_officiell_kalla": 16
+  },
+  {
+    "kommunkod": "1272",
+    "kommun": "Bromölla",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1273",
+    "kommun": "Osby",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 22,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1275",
+    "kommun": "Perstorp",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 35,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1276",
+    "kommun": "Klippan",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 18,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1277",
+    "kommun": "Åstorp",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 28,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1278",
+    "kommun": "Båstad",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "bastad",
+        "licens": "ej angiven",
+        "antal": 31
+      }
+    ],
+    "antal_lekplatser": 44,
+    "antal_fran_officiell_kalla": 31
+  },
+  {
+    "kommunkod": "1280",
+    "kommun": "Malmö",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "malmo",
+        "licens": "CC0 1.0",
+        "antal": 246
+      }
+    ],
+    "antal_lekplatser": 812,
+    "antal_fran_officiell_kalla": 245
+  },
+  {
+    "kommunkod": "1281",
+    "kommun": "Lund",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 472,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1282",
+    "kommun": "Landskrona",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 82,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1283",
+    "kommun": "Helsingborg",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 632,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1284",
+    "kommun": "Höganäs",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 63,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1285",
+    "kommun": "Eslöv",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "eslov",
+        "licens": "CC0 1.0",
+        "antal": 34
+      }
+    ],
+    "antal_lekplatser": 100,
+    "antal_fran_officiell_kalla": 34
+  },
+  {
+    "kommunkod": "1286",
+    "kommun": "Ystad",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "ystad",
+        "licens": "CC0 1.0",
+        "antal": 35
+      }
+    ],
+    "antal_lekplatser": 72,
+    "antal_fran_officiell_kalla": 35
+  },
+  {
+    "kommunkod": "1287",
+    "kommun": "Trelleborg",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 157,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1290",
+    "kommun": "Kristianstad",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 75,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1291",
+    "kommun": "Simrishamn",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 23,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1292",
+    "kommun": "Ängelholm",
+    "lan": "Skåne län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "engelholm",
+        "licens": "ej angiven",
+        "antal": 11
+      }
+    ],
+    "antal_lekplatser": 71,
+    "antal_fran_officiell_kalla": 11
+  },
+  {
+    "kommunkod": "1293",
+    "kommun": "Hässleholm",
+    "lan": "Skåne län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 76,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1315",
+    "kommun": "Hylte",
+    "lan": "Hallands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1380",
+    "kommun": "Halmstad",
+    "lan": "Hallands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 233,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1381",
+    "kommun": "Laholm",
+    "lan": "Hallands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 30,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1382",
+    "kommun": "Falkenberg",
+    "lan": "Hallands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 89,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1383",
+    "kommun": "Varberg",
+    "lan": "Hallands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "varberg",
+        "licens": "ej angiven",
+        "antal": 72
+      }
+    ],
+    "antal_lekplatser": 169,
+    "antal_fran_officiell_kalla": 72
+  },
+  {
+    "kommunkod": "1384",
+    "kommun": "Kungsbacka",
+    "lan": "Hallands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "kungsbacka",
+        "licens": "CC0 1.0",
+        "antal": 32
+      }
+    ],
+    "antal_lekplatser": 177,
+    "antal_fran_officiell_kalla": 32
+  },
+  {
+    "kommunkod": "1401",
+    "kommun": "Härryda",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "harryda",
+        "licens": "ej angiven",
+        "antal": 22
+      }
+    ],
+    "antal_lekplatser": 60,
+    "antal_fran_officiell_kalla": 20
+  },
+  {
+    "kommunkod": "1402",
+    "kommun": "Partille",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 149,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1407",
+    "kommun": "Öckerö",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 20,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1415",
+    "kommun": "Stenungsund",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "stenungsund",
+        "licens": "CC0 1.0",
+        "antal": 22
+      }
+    ],
+    "antal_lekplatser": 40,
+    "antal_fran_officiell_kalla": 22
+  },
+  {
+    "kommunkod": "1419",
+    "kommun": "Tjörn",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 17,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1421",
+    "kommun": "Orust",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 11,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1427",
+    "kommun": "Sotenäs",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 31,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1430",
+    "kommun": "Munkedal",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1435",
+    "kommun": "Tanum",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 29,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1438",
+    "kommun": "Dals-Ed",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1439",
+    "kommun": "Färgelanda",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 11,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1440",
+    "kommun": "Ale",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 70,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1441",
+    "kommun": "Lerum",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 80,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1442",
+    "kommun": "Vårgårda",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 56,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1443",
+    "kommun": "Bollebygd",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 5,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1444",
+    "kommun": "Grästorp",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1445",
+    "kommun": "Essunga",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1446",
+    "kommun": "Karlsborg",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 12,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1447",
+    "kommun": "Gullspång",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 5,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1452",
+    "kommun": "Tranemo",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 16,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1460",
+    "kommun": "Bengtsfors",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1461",
+    "kommun": "Mellerud",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1462",
+    "kommun": "Lilla Edet",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 21,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1463",
+    "kommun": "Mark",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 37,
+    "antal_fran_officiell_kalla": 1
+  },
+  {
+    "kommunkod": "1465",
+    "kommun": "Svenljunga",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 21,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1466",
+    "kommun": "Herrljunga",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1470",
+    "kommun": "Vara",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "vara",
+        "licens": "CC0 1.0",
+        "antal": 18
+      }
+    ],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 17
+  },
+  {
+    "kommunkod": "1471",
+    "kommun": "Götene",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 20,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1472",
+    "kommun": "Tibro",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1473",
+    "kommun": "Töreboda",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1480",
+    "kommun": "Göteborg",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1266,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1481",
+    "kommun": "Mölndal",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 241,
+    "antal_fran_officiell_kalla": 1
+  },
+  {
+    "kommunkod": "1482",
+    "kommun": "Kungälv",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "kungalv",
+        "licens": "ej angiven",
+        "antal": 49
+      }
+    ],
+    "antal_lekplatser": 190,
+    "antal_fran_officiell_kalla": 49
+  },
+  {
+    "kommunkod": "1484",
+    "kommun": "Lysekil",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1485",
+    "kommun": "Uddevalla",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 102,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1486",
+    "kommun": "Strömstad",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1487",
+    "kommun": "Vänersborg",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 109,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1488",
+    "kommun": "Trollhättan",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 173,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1489",
+    "kommun": "Alingsås",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 55,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1490",
+    "kommun": "Borås",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "boras",
+        "licens": "CC0 1.0",
+        "antal": 160
+      }
+    ],
+    "antal_lekplatser": 203,
+    "antal_fran_officiell_kalla": 161
+  },
+  {
+    "kommunkod": "1491",
+    "kommun": "Ulricehamn",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 64,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1492",
+    "kommun": "Åmål",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 11,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1493",
+    "kommun": "Mariestad",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 30,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1494",
+    "kommun": "Lidköping",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 48,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1495",
+    "kommun": "Skara",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 46,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1496",
+    "kommun": "Skövde",
+    "lan": "Västra Götalands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "skovde",
+        "licens": "CC0 1.0",
+        "antal": 70
+      }
+    ],
+    "antal_lekplatser": 273,
+    "antal_fran_officiell_kalla": 70
+  },
+  {
+    "kommunkod": "1497",
+    "kommun": "Hjo",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1498",
+    "kommun": "Tidaholm",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 28,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1499",
+    "kommun": "Falköping",
+    "lan": "Västra Götalands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 55,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1715",
+    "kommun": "Kil",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 18,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1730",
+    "kommun": "Eda",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1737",
+    "kommun": "Torsby",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1760",
+    "kommun": "Storfors",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1761",
+    "kommun": "Hammarö",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 65,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1762",
+    "kommun": "Munkfors",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1763",
+    "kommun": "Forshaga",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 51,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1764",
+    "kommun": "Grums",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1765",
+    "kommun": "Årjäng",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 23,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1766",
+    "kommun": "Sunne",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1780",
+    "kommun": "Karlstad",
+    "lan": "Värmlands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "karlstad",
+        "licens": "CC0 1.0",
+        "antal": 227
+      }
+    ],
+    "antal_lekplatser": 387,
+    "antal_fran_officiell_kalla": 227
+  },
+  {
+    "kommunkod": "1781",
+    "kommun": "Kristinehamn",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1782",
+    "kommun": "Filipstad",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 5,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1783",
+    "kommun": "Hagfors",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1784",
+    "kommun": "Arvika",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 37,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1785",
+    "kommun": "Säffle",
+    "lan": "Värmlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1814",
+    "kommun": "Lekeberg",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1860",
+    "kommun": "Laxå",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1861",
+    "kommun": "Hallsberg",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1862",
+    "kommun": "Degerfors",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1863",
+    "kommun": "Hällefors",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1864",
+    "kommun": "Ljusnarsberg",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1880",
+    "kommun": "Örebro",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 324,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1881",
+    "kommun": "Kumla",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 61,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1882",
+    "kommun": "Askersund",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 23,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1883",
+    "kommun": "Karlskoga",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 42,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1884",
+    "kommun": "Nora",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1885",
+    "kommun": "Lindesberg",
+    "lan": "Örebro län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 32,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1904",
+    "kommun": "Skinnskatteberg",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1907",
+    "kommun": "Surahammar",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 12,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1960",
+    "kommun": "Kungsör",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1961",
+    "kommun": "Hallstahammar",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 24,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1962",
+    "kommun": "Norberg",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1980",
+    "kommun": "Västerås",
+    "lan": "Västmanlands län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "vasteras",
+        "licens": "ej angiven",
+        "antal": 123
+      }
+    ],
+    "antal_lekplatser": 382,
+    "antal_fran_officiell_kalla": 123
+  },
+  {
+    "kommunkod": "1981",
+    "kommun": "Sala",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 53,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1982",
+    "kommun": "Fagersta",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1983",
+    "kommun": "Köping",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 87,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "1984",
+    "kommun": "Arboga",
+    "lan": "Västmanlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 26,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2021",
+    "kommun": "Vansbro",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 0,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2023",
+    "kommun": "Malung-Sälen",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2026",
+    "kommun": "Gagnef",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2029",
+    "kommun": "Leksand",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 13,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2031",
+    "kommun": "Rättvik",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 3,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2034",
+    "kommun": "Orsa",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 7,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2039",
+    "kommun": "Älvdalen",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2061",
+    "kommun": "Smedjebacken",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 15,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2062",
+    "kommun": "Mora",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 48,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2080",
+    "kommun": "Falun",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 159,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2081",
+    "kommun": "Borlänge",
+    "lan": "Dalarnas län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "borlange",
+        "licens": "ej angiven",
+        "antal": 75
+      }
+    ],
+    "antal_lekplatser": 119,
+    "antal_fran_officiell_kalla": 75
+  },
+  {
+    "kommunkod": "2082",
+    "kommun": "Säter",
+    "lan": "Dalarnas län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "sater",
+        "licens": "ej angiven",
+        "antal": 19
+      }
+    ],
+    "antal_lekplatser": 35,
+    "antal_fran_officiell_kalla": 19
+  },
+  {
+    "kommunkod": "2083",
+    "kommun": "Hedemora",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2084",
+    "kommun": "Avesta",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2085",
+    "kommun": "Ludvika",
+    "lan": "Dalarnas län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 31,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2101",
+    "kommun": "Ockelbo",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2104",
+    "kommun": "Hofors",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 10,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2121",
+    "kommun": "Ovanåker",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 21,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2132",
+    "kommun": "Nordanstig",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2161",
+    "kommun": "Ljusdal",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 29,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2180",
+    "kommun": "Gävle",
+    "lan": "Gävleborgs län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "gavle",
+        "licens": "CC0 1.0",
+        "antal": 82
+      }
+    ],
+    "antal_lekplatser": 365,
+    "antal_fran_officiell_kalla": 82
+  },
+  {
+    "kommunkod": "2181",
+    "kommun": "Sandviken",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 98,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2182",
+    "kommun": "Söderhamn",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 74,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2183",
+    "kommun": "Bollnäs",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 50,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2184",
+    "kommun": "Hudiksvall",
+    "lan": "Gävleborgs län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 77,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2260",
+    "kommun": "Ånge",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 2,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2262",
+    "kommun": "Timrå",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 44,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2280",
+    "kommun": "Härnösand",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 42,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2281",
+    "kommun": "Sundsvall",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 335,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2282",
+    "kommun": "Kramfors",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 35,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2283",
+    "kommun": "Sollefteå",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 20,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2284",
+    "kommun": "Örnsköldsvik",
+    "lan": "Västernorrlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 60,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2303",
+    "kommun": "Ragunda",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2305",
+    "kommun": "Bräcke",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2309",
+    "kommun": "Krokom",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 9,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2313",
+    "kommun": "Strömsund",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2321",
+    "kommun": "Åre",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 18,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2326",
+    "kommun": "Berg",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2361",
+    "kommun": "Härjedalen",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 19,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2380",
+    "kommun": "Östersund",
+    "lan": "Jämtlands län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 114,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2401",
+    "kommun": "Nordmaling",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 8,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2403",
+    "kommun": "Bjurholm",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 3,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2404",
+    "kommun": "Vindeln",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2409",
+    "kommun": "Robertsfors",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 12,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2417",
+    "kommun": "Norsjö",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 20,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2418",
+    "kommun": "Malå",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2421",
+    "kommun": "Storuman",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2422",
+    "kommun": "Sorsele",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 2,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2425",
+    "kommun": "Dorotea",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2460",
+    "kommun": "Vännäs",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2462",
+    "kommun": "Vilhelmina",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 3,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2463",
+    "kommun": "Åsele",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2480",
+    "kommun": "Umeå",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 486,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2481",
+    "kommun": "Lycksele",
+    "lan": "Västerbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 19,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2482",
+    "kommun": "Skellefteå",
+    "lan": "Västerbottens län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "skelleftea",
+        "licens": "CC BY 4.0",
+        "antal": 90
+      }
+    ],
+    "antal_lekplatser": 142,
+    "antal_fran_officiell_kalla": 90
+  },
+  {
+    "kommunkod": "2505",
+    "kommun": "Arvidsjaur",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 12,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2506",
+    "kommun": "Arjeplog",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 6,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2510",
+    "kommun": "Jokkmokk",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 3,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2513",
+    "kommun": "Överkalix",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 1,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2514",
+    "kommun": "Kalix",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 24,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2518",
+    "kommun": "Övertorneå",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2521",
+    "kommun": "Pajala",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 4,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2523",
+    "kommun": "Gällivare",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 51,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2560",
+    "kommun": "Älvsbyn",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 14,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2580",
+    "kommun": "Luleå",
+    "lan": "Norrbottens län",
+    "officiell_data": true,
+    "kallor": [
+      {
+        "id": "lulea",
+        "licens": "CC BY",
+        "antal": 73
+      }
+    ],
+    "antal_lekplatser": 198,
+    "antal_fran_officiell_kalla": 73
+  },
+  {
+    "kommunkod": "2581",
+    "kommun": "Piteå",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 54,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2582",
+    "kommun": "Boden",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 65,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2583",
+    "kommun": "Haparanda",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 11,
+    "antal_fran_officiell_kalla": 0
+  },
+  {
+    "kommunkod": "2584",
+    "kommun": "Kiruna",
+    "lan": "Norrbottens län",
+    "officiell_data": false,
+    "kallor": [],
+    "antal_lekplatser": 23,
+    "antal_fran_officiell_kalla": 0
+  }
+]

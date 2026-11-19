@@ -1,0 +1,324 @@
+LICENS OCH KÄLLOR – parkeringar.json och lekplatser.json
+Genererad: 2026-11-19 av scripts/20-licens.mjs
+==============================================================================
+
+PRINCIPER FÖR INSAMLINGEN
+- Endast fakta (läge, namn, adress, antal platser, taxa, öppettider, utrustning). Fritext (beskrivningar)
+  tas bara med när källans licens tillåter återanvändning (CC0 / CC BY). Operatörernas texter tas aldrig med.
+- robots.txt kontrolleras för varje URL (grupperna "*" samt AI-/dataset-specifika user-agents, t.ex.
+  ClaudeBot, anthropic-ai, GPTBot, CCBot, Google-Extended). Disallow och Crawl-delay respekteras.
+- Max 1 anrop per sekund och värd, generisk User-Agent "dataset-builder/1.0 (open data compilation)".
+- Ingen inloggning, ingen registrering, inga API-nycklar, ingen CAPTCHA/botskydd kringgås.
+  Tjänster som kräver nyckel/inloggning har hoppats över (se BLOCKERAT nedan).
+
+GRUNDDATA: OPENSTREETMAP (ODbL 1.0)
+- Basdataseten kommer från ../osm-data/data (OpenStreetMap via Overpass/Geofabrik).
+- © OpenStreetMap-bidragsgivare, Open Database License 1.0, https://www.openstreetmap.org/copyright
+- Sammanslagningen med OSM gör filerna till en härledd databas enligt ODbL: visa attributionen på varje
+  sida, och om själva databasen (JSON-filerna) delas ut publikt måste den delas under ODbL.
+  Webbsidor som bara visar datat räknas som "Produced Work" och kräver attribution.
+
+ATTRIBUTIONSKRAV (visa på sidor som använder respektive kommuns data)
+- CC BY: Uppsala kommun, Luleå kommun ("Geodataproducent: Luleå kommun"), Jönköpings kommun,
+  Växjö kommun, Skellefteå kommun (CC BY 4.0), Helsingborgs stad (CC BY 4.0, parkering).
+- CC0: ingen attribution krävs, men källan anges ändå i fältet "kallor" per objekt.
+- "ej angiven": kommunen har publicerat datat som öppna data utan att ange licens. Endast fakta används,
+  ingen fritext. Kontakta kommunen om en uttrycklig licens behövs.
+
+KOMMUNALA ÖPPNA DATA – LEKPLATSER
+- [lek] malmo (Malmö)
+    Licens: CC0 1.0
+    Källa:  https://opendata-api.malmo.se/dataset/c08d7231-9b49-4af5-94bd-3bc6ed5cf7a2/resource/c18f001e-891c-42c6-86e2-f30b8749e26f/download/lekplatser.geojson
+    Status: 246 objekt
+- [lek] sodertalje (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/lekplatser.json
+    Status: 62 objekt
+- [lek] boras (Borås)
+    Licens: CC0 1.0
+    Källa:  https://catalog.boras.se/store/1/resource/74
+    Status: 160 objekt
+- [lek] gavle (Gävle)
+    Licens: CC0 1.0
+    Källa:  https://catalog.gavle.se/store/1/resource/83
+    Status: 82 objekt
+- [lek] vara (Vara)
+    Licens: CC0 1.0
+    Källa:  https://catalog.vara.se/rowstore/dataset/2d0adb30-6c72-41ff-a4b9-ff56e7ffabb6
+    Status: 18 objekt
+- [lek] botkyrka (Botkyrka)
+    Licens: CC0 1.0
+    Källa:  https://data.botkyrka.se/store/3/resource/173
+    Status: 88 objekt
+- [lek] stenungsund (Stenungsund)
+    Licens: CC0 1.0
+    Källa:  https://catalog.stenungsund.se/rowstore/dataset/fc6ad312-1a22-4fa3-88c0-de26daf66cc4
+    Status: 22 objekt
+- [lek] skovde (Skövde)
+    Licens: CC0 1.0
+    Källa:  https://karta.skovde.se/linkdokument/OpenData/lekplatser.json
+    Status: 70 objekt
+- [lek] kungsbacka (Kungsbacka)
+    Licens: CC0 1.0
+    Källa:  https://kungsbacka.entryscape.net/store/1/resource/188
+    Status: 32 objekt
+- [lek] eslov (Eslöv)
+    Licens: CC0 1.0
+    Källa:  https://catalog.eslov.se/rowstore/dataset/08b5e92d-7bc7-41de-aa56-f67f6662e919
+    Status: 34 objekt
+- [lek] lomma (Lomma)
+    Licens: CC0 1.0
+    Källa:  https://catalog.lomma.se/store/1/resource/52
+    Status: 67 objekt
+- [lek] lomma-utrustning (Lomma, används som utrustning)
+    Licens: CC0 1.0
+    Källa:  https://catalog.lomma.se/store/1/resource/228
+    Status: 1269 objekt
+- [lek] falun (Falun)
+    Licens: CC0 1.0
+    Källa:  https://falun.entryscape.net/rowstore/dataset/6a94dfdb-751a-47f3-94d2-3242aca049c2
+    Status: ej hämtad: fetch failed
+- [lek] karlstad (Karlstad)
+    Licens: CC0 1.0
+    Källa:  https://gi.karlstad.se/geoserver/oppnadata/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=oppnadata%3Akarlstad_lekplatser&outputFormat=application%2Fjson
+    Status: 227 objekt
+- [lek] ystad (Ystad)
+    Licens: CC0 1.0
+    Källa:  https://ystad.entryscape.net/store/1/resource/39
+    Status: 35 objekt
+- [lek] tomelilla (Tomelilla)
+    Licens: ej angiven
+    Källa:  https://data.tomelilla.se/rowstore/dataset/6f5ff23b-0e05-4746-a37d-ad2dad3ada29
+    Status: 16 objekt
+- [lek] bastad (Båstad)
+    Licens: ej angiven
+    Källa:  https://geodata.bastad.se/maps/Oppen_data/Lekplatser_4_0_databas/data.json
+    Status: 31 objekt
+- [lek] engelholm (Ängelholm)
+    Licens: ej angiven
+    Källa:  https://geodata.engelholm.se/maps/oppen_data/geodirekt_4_lekplatser/data.json
+    Status: 11 objekt
+- [lek] harryda (Härryda)
+    Licens: ej angiven
+    Källa:  https://catalog.harryda.se/rowstore/dataset/977bd7e6-a7a1-48c1-8392-bc5897772ac9
+    Status: 22 objekt
+- [lek] kungalv (Kungälv)
+    Licens: ej angiven
+    Källa:  https://catalog.kungalv.se/rowstore/dataset/eaf573d8-94ff-4d89-8286-474f5deb9fda
+    Status: 49 objekt
+- [lek] oxelosund (Oxelösund)
+    Licens: ej angiven
+    Källa:  https://geodok.oxelosund.se/oppna_data/Lekplatser_oxelosund.csv
+    Status: 10 objekt
+- [lek] trelleborg (Trelleborg)
+    Licens: ej angiven
+    Källa:  https://catalog.trelleborg.se/store/2/resource/12
+    Status: ej hämtad: fetch failed
+- [lek] vasteras (Västerås)
+    Licens: ej angiven
+    Källa:  https://services-eu1.arcgis.com/lyiwM2rVk68OQ7Fd/arcgis/rest/services/Kommunala_lekplatser/FeatureServer
+    Status: 123 objekt
+- [lek] uppsala (Uppsala)
+    Licens: CC BY – Uppsala kommuns lekplatsdata publicerad av Esri Sverige (2015), kan vara inaktuell
+    Källa:  https://services.arcgis.com/hrh7HJqpzvUrwY6X/arcgis/rest/services/Lekplatser_uppsala/FeatureServer
+    Status: 119 objekt
+- [lek] lulea (Luleå)
+    Licens: CC BY – Attribution: Geodataproducent: Luleå kommun
+    Källa:  https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/lekplatser/FeatureServer
+    Status: 73 objekt
+- [lek] skelleftea (Skellefteå)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Park_och_natur_ext/FeatureServer
+    Status: 90 objekt
+- [lek] skelleftea-utrustning (Skellefteå, används som utrustning)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Park_och_natur_ext/FeatureServer
+    Status: 1073 objekt
+- [lek] gotland (Gotland)
+    Licens: ej angiven – publicerad som öppna data
+    Källa:  https://kartor.gotland.se/arcgis/rest/services/Park/oppnadata_lekplatser_p/FeatureServer
+    Status: ej hämtad: The operation was aborted due to timeout
+- [lek] varberg (Varberg)
+    Licens: ej angiven
+    Källa:  https://services3.arcgis.com/rusrCBFktCNPtUy3/arcgis/rest/services/Kommunala_lekplatser_vy_typ/FeatureServer
+    Status: 72 objekt
+- [lek] vellinge (Vellinge)
+    Licens: ej angiven – publicerad som öppna data
+    Källa:  https://services3.arcgis.com/V1E24miEW9adAZYb/arcgis/rest/services/Lekplatser_oppnadata/FeatureServer
+    Status: 51 objekt
+- [lek] borlange (Borlänge)
+    Licens: ej angiven
+    Källa:  https://services-eu1.arcgis.com/k9fhBrx5QiIxrnsD/arcgis/rest/services/Lekplatser_punkter/FeatureServer
+    Status: 75 objekt
+- [lek] sater (Säter)
+    Licens: ej angiven
+    Källa:  https://services-eu1.arcgis.com/Edg0lenBBoWlakRf/arcgis/rest/services/Lekplatser/FeatureServer
+    Status: 21 objekt
+- [lek] hallstahammar (Hallstahammar)
+    Licens: ej angiven
+    Källa:  https://services-eu1.arcgis.com/vkGU9ZuRu3qDJH0t/arcgis/rest/services/Lekplats/FeatureServer
+    Status: 0 objekt
+
+KOMMUNALA ÖPPNA DATA – PARKERING
+- [park] sodertalje-parkeringshus (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/parkeringshus.json
+    Status: 5 objekt
+- [park] sodertalje-stora (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/stora_parkeringar.json
+    Status: 7 objekt
+- [park] sodertalje-infart (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/infartsparkeringar.json
+    Status: 5 objekt
+- [park] sodertalje-husbil (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/husbilsparkering.json
+    Status: 1 objekt
+- [park] sodertalje-motion (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/parkering_vid_motionsspar.json
+    Status: 6 objekt
+- [park] sodertalje-friluft (Södertälje)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/parkering_friluftsliv.json
+    Status: 19 objekt
+- [park] gavle-zoner (Gävle, används som avgiftszoner)
+    Licens: CC0 1.0
+    Källa:  https://catalog.gavle.se/store/1/resource/115
+    Status: 39 objekt
+- [park] skovde (Skövde)
+    Licens: CC0 1.0
+    Källa:  https://karta.skovde.se/linkdokument/OpenData/parkeringsplats.json
+    Status: 178 objekt
+- [park] lidingo-infart (Lidingö)
+    Licens: CC0 1.0
+    Källa:  https://metadata.lidingo.se/store/9/resource/12
+    Status: 7 objekt
+- [park] harryda (Härryda)
+    Licens: CC0 1.0
+    Källa:  https://catalog.harryda.se/rowstore/dataset/db6fa782-cad3-46c5-aa2b-c38254a53bf2
+    Status: 36 objekt
+- [park] tjorn (Tjörn)
+    Licens: CC0 1.0
+    Källa:  https://catalog.tjorn.se/store/1/resource/23
+    Status: 24 objekt
+- [park] mariestad (Mariestad)
+    Licens: CC0 1.0
+    Källa:  https://catalog.mariestad.se/store/1/resource/17
+    Status: 43 objekt
+- [park] toreboda (Töreboda)
+    Licens: CC0 1.0
+    Källa:  https://catalog.toreboda.se/store/1/resource/15
+    Status: 10 objekt
+- [park] gullspang (Gullspång)
+    Licens: CC0 1.0
+    Källa:  https://catalog.gullspang.se/store/1/resource/17
+    Status: 5 objekt
+- [park] haninge-infart (Haninge)
+    Licens: ej angiven
+    Källa:  https://haninge.entryscape.net/rowstore/dataset/a4a2e2ca-2fbb-4288-9644-37589346c742
+    Status: 7 objekt
+- [park] helsingborg-laddplatser (Helsingborg, används som laddplatser)
+    Licens: CC BY 4.0
+    Källa:  https://oppnadata.helsingborg.se/sbf/transport/parkeringsplatser_ovriga/laddpl.geojson
+    Status: 6 objekt
+- [park] helsingborg-rorelsehindrade (Helsingborg, används som handikapplatser)
+    Licens: CC BY 4.0
+    Källa:  https://oppnadata.helsingborg.se/sbf/transport/parkeringsplatser_ovriga/rorelseh.geojson
+    Status: 181 objekt
+- [park] malmo-avgifter (Malmö, används som avgiftslinjer)
+    Licens: CC0 1.0
+    Källa:  https://opendata-api.malmo.se/dataset/c06939a6-65b4-4078-9cb5-b49aa48b9140/resource/1a6bd68b-30ca-40a5-9d62-01e2a566982e/download/parkeringsavgifter.geojson
+    Status: 3398 objekt
+- [park] stockholm-ltf (Stockholm, används som avgiftslinjer)
+    Licens: licensfritt – Stockholms stad: "får vidareutnyttjas fritt och tillhandahållas licensfritt om inget annat anges" (openstreetgs.stockholm.se). Ingen API-nyckel krävs för LTF-Tolken.
+    Källa:  https://openparking.stockholm.se/LTF-Tolken/v1/ptillaten/all?outputFormat=json
+    Status: 20182 objekt
+- [park] sodertalje-betalzoner (Södertälje, används som avgiftszoner)
+    Licens: CC0 1.0
+    Källa:  https://static-content.sodertalje.se/opendata/betalparkeringszoner.json
+    Status: 12 objekt
+- [park] jonkoping-ytor (Jönköping)
+    Licens: CC BY – Ange Jönköpings kommun som källa
+    Källa:  https://gis.jonkoping.se/arcgis/rest/services/OpenData/MapServer/44
+    Status: 546 objekt
+- [park] jonkoping-kff (Jönköping)
+    Licens: CC0 1.0
+    Källa:  https://gis.jonkoping.se/arcgis/rest/services/open_data_digg/MapServer/43
+    Status: 124 objekt
+- [park] lulea-phus (Luleå)
+    Licens: CC BY – Attribution: Geodataproducent: Luleå kommun
+    Källa:  https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/Parkeringshus/FeatureServer
+    Status: 5 objekt
+- [park] lulea-taxa (Luleå, används som avgiftszoner)
+    Licens: CC BY – Attribution: Geodataproducent: Luleå kommun
+    Källa:  https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/Parkeringstaxa/FeatureServer
+    Status: 7 objekt
+- [park] skelleftea-phus (Skellefteå)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer
+    Status: 2 objekt
+- [park] skelleftea-pendlar (Skellefteå)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer
+    Status: 2 objekt
+- [park] skelleftea-ytor (Skellefteå)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer
+    Status: 95 objekt
+- [park] skelleftea-taxa (Skellefteå, används som avgiftszoner)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer
+    Status: 5 objekt
+- [park] skelleftea-ladd (Skellefteå, används som laddplatser)
+    Licens: CC BY 4.0
+    Källa:  https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer
+    Status: 1601 objekt
+- [park] vaxjo (Växjö)
+    Licens: CC BY – Ange Växjö kommun som källa
+    Källa:  https://services5.arcgis.com/WJV4fyJf1eDrDMiY/arcgis/rest/services/Parkeringskartan_1_0_WFL1_1_View_Layer/FeatureServer/17
+    Status: 227 objekt
+- [park] simrishamn (Simrishamn)
+    Licens: ej angiven
+    Källa:  https://services9.arcgis.com/NkmmUTvsR98rrIbx/arcgis/rest/services/Parkeringsplatser/FeatureServer
+    Status: 267 objekt
+- [park] orust (Orust)
+    Licens: ej angiven
+    Källa:  https://services2.arcgis.com/1Nvz85KbF7OLwYjb/arcgis/rest/services/Parkering_2020/FeatureServer
+    Status: 178 objekt
+
+OPERATÖRER (publika anläggningssidor, hittade via operatörens egen sitemap.xml)
+Ingen öppen licens. Endast faktauppgifter extraheras. OBS – databasrätt: i EU/Sverige kan en
+operatörs samlade anläggningsregister skyddas som databas/katalog (URL 49 §) när en väsentlig del
+återges. Bedöm själv om operatörsdatat ska publiceras; det kan stängas av helt med
+UTAN_OPERATORER=1 node scripts/10-build.mjs (posterna markeras med operatören i "kallor").
+- Stockholm Parkering: 1492 sidor tolkade (1492 hämtade, 0 från cache, 1 fel [HTTP 404 m.m. för inaktuella sitemap-poster], 0 blockerade)
+- Aimo Park: 3071 sidor tolkade (0 hämtade, 3071 från cache, 474 fel [HTTP 404 m.m. för inaktuella sitemap-poster], 0 blockerade)
+- APCOA: 1320 sidor tolkade (1320 hämtade, 0 från cache, 4 fel [HTTP 404 m.m. för inaktuella sitemap-poster], 0 blockerade)
+
+BLOCKERAT / EJ ANVÄNT
+- Stockholms stad, LTF-Tolken: ANVÄNDS (ingen nyckel krävs för ptillaten/all). Det är gatuparkerings-
+  föreskrifter (linjer), inte anläggningar, så det används bara som "taxezon_kommun" för parkeringar inom
+  35 m från en avgiftsbelagd gatusträcka. Övriga API:er på Stockholms öppna data-portal kräver nyckel.
+- Stockholms stad, "Hitta service"-API (lekplatser): kräver API-nyckel (registrering) och svarade
+  inte (timeout). Ingen Stockholmsdata för lekplatser.
+- Göteborgs Stad, ParkingService v2.3 (data.goteborg.se, CC0): kräver APPID (gratis registrering).
+  Inte registrerat enligt instruktion. Göteborgs lekplatser finns inte som öppen datamängd.
+- Stockholm Parkering /api/map: "Authorization has been denied" – inte använd (anläggningssidorna används).
+- Swedavia: priser hämtas dynamiskt via bokningsmotor med token. Inte hämtat. Flygplatsparkeringar
+  identifieras i stället geografiskt (OSM-objekt nära flygplatsen) och länkas till Swedavias parkeringssida.
+- Umeå kommun (opendata.umea.se, Opendatasoft): robots.txt har "Disallow: /api/" och
+  "Disallow: /explore/dataset/*/download" för alla user-agents – lekplatsdatat (CC0) hämtas därför inte.
+- Helsingborgs stad, lekplatser: CC BY-NC 4.0 (icke-kommersiell) – utesluten (sajterna är kommersiella).
+- EasyPark: robots.txt "Disallow: /api/", ingen publik zonlista – inte använd.
+- Q-Park (q-park.se), Falun (falun.entryscape.net), Trelleborg (catalog.trelleborg.se): DNS-uppslag (även vid omförsök)
+  misslyckades från körmiljön. Region Gotland: tidsgräns. Försök igen med node scripts/run-all.mjs.
+- Uppsala kommuns egen portal (opendata.uppsala.se, ArcGIS Hub, Crawl-delay 60): lekplatserna hämtas via
+  Esri Sveriges publicering av samma data (CC BY, 2015).
+- Trafikverkets API (rastplatser/parkering): kräver API-nyckel – inte använd.
+
+STATISTIK (från data/rapport.json)
+- Lekplatser: 21400 totalt, 1194 OSM-objekt berikade med officiell data, 699 nya officiella objekt.
+- Parkeringar: 8942 totalt, 379 OSM-objekt berikade, 5179 nya officiella/operatörsobjekt.

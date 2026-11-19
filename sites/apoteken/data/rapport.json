@@ -1,0 +1,2827 @@
+{
+ "genererad": "2026-11-19T07:59:15.586Z",
+ "matchning": {
+  "kedjor": {
+   "per_gln": 871,
+   "per_adress_namn": 405,
+   "unik_i_orten": 2
+  },
+  "osm": {
+   "matchade": 965,
+   "osm_i_sverige": 1111
+  }
+ },
+ "dubbletter": {
+  "osm_flera_objekt_samma_apotek": [
+   {
+    "lv_id": "a5d29174-6974-ec11-8943-000d3abf0560",
+    "namn": "Apotek Sparta",
+    "osm_a": "node/9374444203",
+    "osm_b": "node/11619101530",
+    "avstand_m": 2
+   },
+   {
+    "lv_id": "b6b944d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Kalmar Giraffen",
+    "osm_a": "node/12998676681",
+    "osm_b": "way/853808146",
+    "avstand_m": 30
+   },
+   {
+    "lv_id": "2c7cdd2c-4b9c-eb11-b1ac-000d3aaccfac",
+    "namn": "Kronans Apotek Knivsta Centralvägen",
+    "osm_a": "node/10910654989",
+    "osm_b": "node/10873967121",
+    "avstand_m": 24
+   }
+  ],
+  "lv_samma_adress": [
+   [
+    {
+     "id": "f0b844d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat (vågen) Frölunda Torg",
+     "typ": "butik",
+     "gatuadress": "Frölunda Torg",
+     "postnummer": "421 42"
+    },
+    {
+     "id": "b3b044d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Frölunda Torg",
+     "typ": "butik",
+     "gatuadress": "Frölunda torg",
+     "postnummer": "421 42"
+    },
+    {
+     "id": "f6ac44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Frölunda Torg",
+     "typ": "butik",
+     "gatuadress": "Frölunda Torg",
+     "postnummer": "421 42"
+    }
+   ],
+   [
+    {
+     "id": "c0ad44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Burlöv",
+     "typ": "butik",
+     "gatuadress": "Kronetorpsvägen 2",
+     "postnummer": "232 37"
+    },
+    {
+     "id": "06ba44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Källan",
+     "typ": "butik",
+     "gatuadress": "Kronetorpsvägen 2",
+     "postnummer": "232 37"
+    }
+   ],
+   [
+    {
+     "id": "1aab44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Fältöversten, Stockholm",
+     "typ": "butik",
+     "gatuadress": "Karlaplan 13",
+     "postnummer": "115 20"
+    },
+    {
+     "id": "7aab44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Falken",
+     "typ": "butik",
+     "gatuadress": "Karlaplan 13",
+     "postnummer": "115 20"
+    }
+   ],
+   [
+    {
+     "id": "86b544d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Gottsunda, Uppsala",
+     "typ": "butik",
+     "gatuadress": "Valthornsvägen 7",
+     "postnummer": "750 25"
+    },
+    {
+     "id": "f8b844d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Gottsunda Centrum",
+     "typ": "butik",
+     "gatuadress": "Valthornsvägen 7",
+     "postnummer": "750 25"
+    }
+   ],
+   [
+    {
+     "id": "861c3758-3e64-ef11-bfe2-6045bda209e8",
+     "namn": "Apotek Hjärtat ICA Kvantum Ersboda",
+     "typ": "butik",
+     "gatuadress": "Formvägen 4",
+     "postnummer": "906 21"
+    },
+    {
+     "id": "28b944d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Umeå Ersboda",
+     "typ": "butik",
+     "gatuadress": "Formvägen 4",
+     "postnummer": "906 21"
+    }
+   ],
+   [
+    {
+     "id": "7eab44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat ICA Maxi Råå Helsingborg",
+     "typ": "butik",
+     "gatuadress": "Landskronavägen 33",
+     "postnummer": "252 32"
+    },
+    {
+     "id": "96b844d4-289f-e511-8106-3863bb340e08",
+     "namn": "DOZ Apotek Helsingborg Råå",
+     "typ": "butik",
+     "gatuadress": "Landskronavägen 33",
+     "postnummer": "252 32"
+    }
+   ],
+   [
+    {
+     "id": "375da250-886a-e911-a962-000d3a4640d2",
+     "namn": "Apotek Hjärtat ICA Maxi Torp, Uddevalla,",
+     "typ": "butik",
+     "gatuadress": "Torp Köpcentrum",
+     "postnummer": "451 76"
+    },
+    {
+     "id": "8eb444d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Måsen",
+     "typ": "butik",
+     "gatuadress": "Torp Köpcentrum",
+     "postnummer": "451 76"
+    },
+    {
+     "id": "59af44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Torp Köpcentrum",
+     "typ": "butik",
+     "gatuadress": "Torp Köpcentrum",
+     "postnummer": "451 76"
+    }
+   ],
+   [
+    {
+     "id": "0b3617d6-e119-f011-9989-6045bd9a49cb",
+     "namn": "Apotek Hjärtat ICA Maxi Västervik",
+     "typ": "butik",
+     "gatuadress": "Ljunghedsvägen 2",
+     "postnummer": "593 62"
+    },
+    {
+     "id": "77b044d4-289f-e511-8106-3863bb340e08",
+     "namn": "DOZ Apotek Västervik Ljungheden",
+     "typ": "butik",
+     "gatuadress": "Ljunghedsvägen 2",
+     "postnummer": "593 62"
+    }
+   ],
+   [
+    {
+     "id": "f2b844d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Jägersro Center, Malmö",
+     "typ": "butik",
+     "gatuadress": "Jägersrovägen 151",
+     "postnummer": "213 75"
+    },
+    {
+     "id": "6fb044d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Jägersro",
+     "typ": "butik",
+     "gatuadress": "Jägersrovägen 151",
+     "postnummer": "213 75"
+    }
+   ],
+   [
+    {
+     "id": "f2ab44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Marieberg Galleria, Örebro",
+     "typ": "butik",
+     "gatuadress": "Varuvägen 10",
+     "postnummer": "702 36"
+    },
+    {
+     "id": "75ae44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Marieberg Örebro",
+     "typ": "butik",
+     "gatuadress": "Varuvägen 10",
+     "postnummer": "702 36"
+    }
+   ],
+   [
+    {
+     "id": "87b144d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apotek Hjärtat Storgatan 4, Staffanstorp",
+     "typ": "butik",
+     "gatuadress": "Storgatan 4",
+     "postnummer": "245 31"
+    },
+    {
+     "id": "66b844d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Staffanstorp",
+     "typ": "butik",
+     "gatuadress": "Storgatan 4",
+     "postnummer": "245 31"
+    }
+   ],
+   [
+    {
+     "id": "16b444d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Avesta Galleria",
+     "typ": "butik",
+     "gatuadress": "Markustorget 1",
+     "postnummer": "774 30"
+    },
+    {
+     "id": "62b944d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Avesta",
+     "typ": "butik",
+     "gatuadress": "Markustorget 1",
+     "postnummer": "774 30"
+    }
+   ],
+   [
+    {
+     "id": "bab344d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Infektion Huddinge Sjukhus",
+     "typ": "okänd",
+     "gatuadress": "Karolinska Universitetssjukhuset Huddinge",
+     "postnummer": "141 86"
+    },
+    {
+     "id": "a0ac44d4-289f-e511-8106-3863bb340e08",
+     "namn": "Apoteket Nova",
+     "typ": "butik",
+     "gatuadress": "Karolinska Universitetssjukhuset Huddinge",
+     "postnummer": "141 86"
+    }
+   ],
+   [
+    {
+     "id": "3183fb00-1e71-f011-b4cb-0022488c1d34",
+     "namn": "Apoteket Välten",
+     "typ": "butik",
+     "gatuadress": "Traktorvägen 4",
+     "postnummer": "226 60"
+    },
+    {
+     "id": "0bb344d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Mobilia Lund",
+     "typ": "butik",
+     "gatuadress": "Traktorvägen 4",
+     "postnummer": "226 60"
+    }
+   ],
+   [
+    {
+     "id": "f4aa44d4-289f-e511-8106-3863bb340e08",
+     "namn": "DOZ Apotek Stockholm Centralstation",
+     "typ": "butik",
+     "gatuadress": "Centralplan 15",
+     "postnummer": "111 20"
+    },
+    {
+     "id": "8db044d4-289f-e511-8106-3863bb340e08",
+     "namn": "Kronans Apotek Stockholms Centralstation",
+     "typ": "butik",
+     "gatuadress": "Centralplan 15",
+     "postnummer": "111 20"
+    }
+   ]
+  ],
+  "kedja_konkurrerande_match": [
+   {
+    "kedja": "Apotek Hjärtat",
+    "kedja_namn": "Apotek Hjärtat Universitetssjukhuset Norra Entrén, Linköping",
+    "lv_namn": "Apotek Hjärtat Universitetssjukhuset Södra Entrén, linköping",
+    "score": 10
+   },
+   {
+    "kedja": "Apotek Hjärtat",
+    "kedja_namn": "Apotek Hjärtat Entré H, Täby Centrum",
+    "lv_namn": "Apotek Hjärtat Entré E, Täby centrum",
+    "score": 8.5
+   }
+  ]
+ },
+ "omatchade": {
+  "kedjeposter_utan_lv": [
+   {
+    "kedja": "Kronans Apotek",
+    "kedja_id": "1940",
+    "namn": "Kronans Pharmacy Shop Arlanda Airside",
+    "gatuadress": "Centralbyggnaden Terminal 5",
+    "postnummer": "190 60",
+    "ort": "Stockholm-Arlanda"
+   }
+  ],
+  "osm_utan_lv": [
+   {
+    "osm_id": "node/459473620",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.9110903,
+    "lon": 12.6919269
+   },
+   {
+    "osm_id": "node/467107423",
+    "namn": "Apoteksgruppen",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.5569182,
+    "lon": 14.350812
+   },
+   {
+    "osm_id": "node/3759177670",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.7754739,
+    "lon": 13.5203863
+   },
+   {
+    "osm_id": "node/4248067502",
+    "namn": "Apoteksgruppen",
+    "brand": "Apoteksgruppen",
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.6091672,
+    "lon": 13.0368285
+   },
+   {
+    "osm_id": "node/5993571582",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": "Järnvägsgatan",
+    "postnummer": null,
+    "lat": 55.8714709,
+    "lon": 12.8335975
+   },
+   {
+    "osm_id": "node/8993076819",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.6090852,
+    "lon": 13.0001908
+   },
+   {
+    "osm_id": "node/9949588102",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": "Södra Förstadsgatan 31",
+    "postnummer": null,
+    "lat": 55.5973529,
+    "lon": 13.0009323
+   },
+   {
+    "osm_id": "node/10754158034",
+    "namn": "Limhamn Apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 55.574061,
+    "lon": 12.9312826
+   },
+   {
+    "osm_id": "node/13005917806",
+    "namn": "Kronans Apotek Degeberga Vårdcentral",
+    "brand": null,
+    "adress": "Brades Väg 5",
+    "postnummer": "297 31",
+    "lat": 55.8376214,
+    "lon": 14.0918474
+   },
+   {
+    "osm_id": "node/285396013",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.5214608,
+    "lon": 13.3154632
+   },
+   {
+    "osm_id": "node/907179312",
+    "namn": "Apoteksombud",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.0547363,
+    "lon": 12.9730493
+   },
+   {
+    "osm_id": "node/990509498",
+    "namn": "Apotek Hjärtat Olofström",
+    "brand": null,
+    "adress": "Östra Storgatan 38",
+    "postnummer": "293 34",
+    "lat": 56.2773861,
+    "lon": 14.5307852
+   },
+   {
+    "osm_id": "node/1374024329",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat Stattena",
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.0594114,
+    "lon": 12.6975362
+   },
+   {
+    "osm_id": "node/1674642136",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.6872737,
+    "lon": 16.3202353
+   },
+   {
+    "osm_id": "node/5760828819",
+    "namn": "LloydsApotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.9096061,
+    "lon": 12.494424
+   },
+   {
+    "osm_id": "node/7747321593",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat",
+    "adress": "Värnamovägen 8",
+    "postnummer": null,
+    "lat": 56.9195451,
+    "lon": 13.9960088
+   },
+   {
+    "osm_id": "node/8395093533",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": "Järnvägsgatan 13",
+    "postnummer": "252 24",
+    "lat": 56.044677,
+    "lon": 12.694974
+   },
+   {
+    "osm_id": "node/11905068896",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.1357549,
+    "lon": 13.1298074
+   },
+   {
+    "osm_id": "node/12255910096",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.9178824,
+    "lon": 12.5029455
+   },
+   {
+    "osm_id": "node/13162091935",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 56.0312443,
+    "lon": 14.1581173
+   },
+   {
+    "osm_id": "node/313791873",
+    "namn": "Apoteket Björnen",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.7145769,
+    "lon": 12.0466672
+   },
+   {
+    "osm_id": "node/492852229",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.1745975,
+    "lon": 13.5995133
+   },
+   {
+    "osm_id": "node/788414608",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.1648868,
+    "lon": 16.0265529
+   },
+   {
+    "osm_id": "node/822258542",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.1659087,
+    "lon": 16.9900407
+   },
+   {
+    "osm_id": "node/2427129327",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.6685099,
+    "lon": 14.9697746
+   },
+   {
+    "osm_id": "node/2613260069",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.6662125,
+    "lon": 14.9659026
+   },
+   {
+    "osm_id": "node/2616028542",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.6173789,
+    "lon": 15.5702794
+   },
+   {
+    "osm_id": "node/3437233263",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.0823798,
+    "lon": 12.2786898
+   },
+   {
+    "osm_id": "node/4520847194",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.6677566,
+    "lon": 12.2954258
+   },
+   {
+    "osm_id": "node/5792323316",
+    "namn": "Apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.7679599,
+    "lon": 14.2027089
+   },
+   {
+    "osm_id": "node/6640208078",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.7576361,
+    "lon": 16.6342771
+   },
+   {
+    "osm_id": "node/10100427593",
+    "namn": "Kronans Apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.5068332,
+    "lon": 12.6914659
+   },
+   {
+    "osm_id": "node/10827085696",
+    "namn": "Apoteket Express Gamlestaden",
+    "brand": "Apoteket",
+    "adress": "7",
+    "postnummer": null,
+    "lat": 57.7279513,
+    "lon": 12.0048515
+   },
+   {
+    "osm_id": "node/12254867302",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.771746,
+    "lon": 14.1757832
+   },
+   {
+    "osm_id": "way/435867941",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.4264205,
+    "lon": 14.0928539
+   },
+   {
+    "osm_id": "node/293946500",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.0675105,
+    "lon": 11.8166049
+   },
+   {
+    "osm_id": "node/691644144",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3844669,
+    "lon": 13.4388847
+   },
+   {
+    "osm_id": "node/2813306408",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 57.8876797,
+    "lon": 11.5878445
+   },
+   {
+    "osm_id": "node/2963992842",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3818229,
+    "lon": 11.4864037
+   },
+   {
+    "osm_id": "node/4319359257",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans apotek Skäggetorp centrum",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.4261465,
+    "lon": 15.5800339
+   },
+   {
+    "osm_id": "node/4345213036",
+    "namn": "Apoteket",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3561254,
+    "lon": 11.9297074
+   },
+   {
+    "osm_id": "node/5752637659",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.4931837,
+    "lon": 13.1846668
+   },
+   {
+    "osm_id": "node/5822301015",
+    "namn": "Apoteksombud",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.0725843,
+    "lon": 11.4712822
+   },
+   {
+    "osm_id": "node/11085088163",
+    "namn": "Apoteksgruppen",
+    "brand": "Apoteksgruppen",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3778704,
+    "lon": 12.3302794
+   },
+   {
+    "osm_id": "node/12254861353",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3142989,
+    "lon": 12.3018925
+   },
+   {
+    "osm_id": "node/12944855498",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3543193,
+    "lon": 11.8122718
+   },
+   {
+    "osm_id": "node/12949947789",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3540505,
+    "lon": 11.8239739
+   },
+   {
+    "osm_id": "node/14077536977",
+    "namn": "Kronans Apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.1878595,
+    "lon": 13.5518391
+   },
+   {
+    "osm_id": "way/904606932",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.3808018,
+    "lon": 15.6792945
+   },
+   {
+    "osm_id": "node/290332088",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.6288976,
+    "lon": 13.4324791
+   },
+   {
+    "osm_id": "node/1930470760",
+    "namn": "LloydsApotek",
+    "brand": null,
+    "adress": "Sveavägen 8",
+    "postnummer": "692 30",
+    "lat": 59.1256247,
+    "lon": 15.1431306
+   },
+   {
+    "osm_id": "node/4712922398",
+    "namn": "Apoteket ombud",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.885569,
+    "lon": 11.0289222
+   },
+   {
+    "osm_id": "node/9895007945",
+    "namn": "Rönninge apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.1937845,
+    "lon": 17.7479
+   },
+   {
+    "osm_id": "node/13026681853",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 58.7089109,
+    "lon": 13.8227242
+   },
+   {
+    "osm_id": "node/304568336",
+    "namn": "Apoteksgruppen",
+    "brand": "Apoteksgruppen",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3460473,
+    "lon": 18.0714555
+   },
+   {
+    "osm_id": "node/436368338",
+    "namn": "Svartsö Lanthandel",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.4380361,
+    "lon": 18.6568532
+   },
+   {
+    "osm_id": "node/466947709",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3325074,
+    "lon": 14.5726085
+   },
+   {
+    "osm_id": "node/622552493",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3902052,
+    "lon": 16.5382731
+   },
+   {
+    "osm_id": "node/661142086",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.376232,
+    "lon": 17.9399584
+   },
+   {
+    "osm_id": "node/770356142",
+    "namn": "Kronans",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.350929,
+    "lon": 18.1511073
+   },
+   {
+    "osm_id": "node/892214452",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": "Annebodavägen 4-6",
+    "postnummer": null,
+    "lat": 59.2847122,
+    "lon": 18.0301247
+   },
+   {
+    "osm_id": "node/905133144",
+    "namn": "Apotek Sveap",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3672931,
+    "lon": 17.8433013
+   },
+   {
+    "osm_id": "node/1386448411",
+    "namn": "Pharmacy vending machine",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3433492,
+    "lon": 18.119299
+   },
+   {
+    "osm_id": "node/1582982618",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3757151,
+    "lon": 17.026922
+   },
+   {
+    "osm_id": "node/2440622658",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.4326724,
+    "lon": 18.0389032
+   },
+   {
+    "osm_id": "node/3068771008",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.327084,
+    "lon": 18.3921528
+   },
+   {
+    "osm_id": "node/3344681665",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans apotek",
+    "adress": "Centralvägen 3",
+    "postnummer": "194 76",
+    "lat": 59.5214037,
+    "lon": 17.9026673
+   },
+   {
+    "osm_id": "node/3358948917",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": "Bergsvägen 24",
+    "postnummer": "732 71",
+    "lat": 59.4345072,
+    "lon": 15.5939035
+   },
+   {
+    "osm_id": "node/4027968595",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3704433,
+    "lon": 18.0040198
+   },
+   {
+    "osm_id": "node/5467787388",
+    "namn": "Apoteksombud",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.2733891,
+    "lon": 12.6606722
+   },
+   {
+    "osm_id": "node/5627340312",
+    "namn": "Apoteksgruppen",
+    "brand": "Apoteksgruppen",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.2565943,
+    "lon": 15.2052752
+   },
+   {
+    "osm_id": "node/5867342315",
+    "namn": "Västra Skogens apotek",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3476058,
+    "lon": 18.0030419
+   },
+   {
+    "osm_id": "node/7118965708",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3382562,
+    "lon": 18.0473529
+   },
+   {
+    "osm_id": "node/9748395907",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.2381058,
+    "lon": 17.8455203
+   },
+   {
+    "osm_id": "node/9982571429",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.32619,
+    "lon": 18.1007381
+   },
+   {
+    "osm_id": "node/10766449181",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.2213652,
+    "lon": 17.9374025
+   },
+   {
+    "osm_id": "node/11989713674",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3862476,
+    "lon": 17.9372104
+   },
+   {
+    "osm_id": "node/11991511163",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.2761175,
+    "lon": 17.8884754
+   },
+   {
+    "osm_id": "node/12017092371",
+    "namn": "Mecinkd Fotvård",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.268158,
+    "lon": 18.0520696
+   },
+   {
+    "osm_id": "node/12025264693",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.27593,
+    "lon": 17.9097966
+   },
+   {
+    "osm_id": "node/12027927734",
+    "namn": "Medstore",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3411605,
+    "lon": 17.9443373
+   },
+   {
+    "osm_id": "node/12201899298",
+    "namn": "Apotek",
+    "brand": "Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.5592418,
+    "lon": 17.549254
+   },
+   {
+    "osm_id": "node/13236931350",
+    "namn": "Svea Vaccin",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.3445211,
+    "lon": 18.064243
+   },
+   {
+    "osm_id": "way/1318990063",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.5187826,
+    "lon": 17.9104722
+   },
+   {
+    "osm_id": "node/2208623618",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.8556841,
+    "lon": 17.646412
+   },
+   {
+    "osm_id": "node/2775883286",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.8583066,
+    "lon": 17.6466422
+   },
+   {
+    "osm_id": "node/3322989141",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.6213973,
+    "lon": 17.8572207
+   },
+   {
+    "osm_id": "node/4998369094",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.9196751,
+    "lon": 16.6064508
+   },
+   {
+    "osm_id": "node/4998432402",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.920223,
+    "lon": 16.6069076
+   },
+   {
+    "osm_id": "node/5274451562",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.7608111,
+    "lon": 12.3624355
+   },
+   {
+    "osm_id": "node/13060108538",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": "8",
+    "postnummer": "724 60",
+    "lat": 59.605986,
+    "lon": 16.5306458
+   },
+   {
+    "osm_id": "way/842298719",
+    "namn": "DOZ Apotek",
+    "brand": "DOZ Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 59.9701683,
+    "lon": 18.8072837
+   },
+   {
+    "osm_id": "node/446020293",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 61.85715,
+    "lon": 12.727612
+   },
+   {
+    "osm_id": "node/448659760",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": "Valbovägen 309",
+    "postnummer": "81835",
+    "lat": 60.6343205,
+    "lon": 16.9925178
+   },
+   {
+    "osm_id": "node/681268191",
+    "namn": "Kronans Droghandel Borlänge Sjukhus",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 60.5035701,
+    "lon": 15.465043
+   },
+   {
+    "osm_id": "node/1709789393",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 60.6265817,
+    "lon": 17.4121279
+   },
+   {
+    "osm_id": "node/2392886137",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 61.6914425,
+    "lon": 13.1244857
+   },
+   {
+    "osm_id": "node/3726888110",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 60.7034979,
+    "lon": 12.5949851
+   },
+   {
+    "osm_id": "node/5126575117",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": "Valbovägen 309",
+    "postnummer": "81835",
+    "lat": 60.6329195,
+    "lon": 16.994586
+   },
+   {
+    "osm_id": "node/5126613297",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 60.67404,
+    "lon": 17.1390614
+   },
+   {
+    "osm_id": "node/305950654",
+    "namn": "Kronans droghandel",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 63.8331996,
+    "lon": 20.2524671
+   },
+   {
+    "osm_id": "node/720997667",
+    "namn": "Apoteket",
+    "brand": "Apoteket",
+    "adress": null,
+    "postnummer": null,
+    "lat": 63.2918218,
+    "lon": 18.6177825
+   },
+   {
+    "osm_id": "node/5870287085",
+    "namn": "Apotek Hjärtat",
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 63.1671817,
+    "lon": 17.2689685
+   },
+   {
+    "osm_id": "node/13265539319",
+    "namn": "Apotek Hjärtat",
+    "brand": "Apotek Hjärtat",
+    "adress": null,
+    "postnummer": null,
+    "lat": 63.851873,
+    "lon": 20.298838
+   },
+   {
+    "osm_id": "way/573981848",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 62.4467369,
+    "lon": 17.3373273
+   },
+   {
+    "osm_id": "node/582997944",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 64.192594,
+    "lon": 20.8509491
+   },
+   {
+    "osm_id": "node/686549157",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 65.536583,
+    "lon": 17.5302016
+   },
+   {
+    "osm_id": "node/1149434088",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 65.3847255,
+    "lon": 20.3302683
+   },
+   {
+    "osm_id": "node/2747952631",
+    "namn": "Kronans Apotek",
+    "brand": "Kronans Apotek",
+    "adress": null,
+    "postnummer": null,
+    "lat": 65.8249323,
+    "lon": 21.6891221
+   },
+   {
+    "osm_id": "node/3738020909",
+    "namn": null,
+    "brand": null,
+    "adress": null,
+    "postnummer": null,
+    "lat": 65.0605835,
+    "lon": 14.7962837
+   }
+  ],
+  "lv_utan_kedja_eller_osm": [
+   {
+    "id": "eb3fa7d1-87d9-ef11-a730-000d3a487bc3",
+    "namn": "ApoEx PV",
+    "kedja": "Fristående",
+    "gatuadress": "Prismavägen 6",
+    "postnummer": "141 75",
+    "ort": "Kungens kurva",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "bc5d68ae-568e-e811-814c-e0071b6c2fd1",
+    "namn": "Apohem",
+    "kedja": "Apohem",
+    "gatuadress": "Mejerivägen 6A, port 10-14",
+    "postnummer": "176 69",
+    "ort": "Järfälla",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "68899e2b-b433-e711-80e0-3863bb34da18",
+    "namn": "Apotea Lidingö",
+    "kedja": "Apotea",
+    "gatuadress": "Agavägen 58",
+    "postnummer": "181 55",
+    "ort": "Lidingö",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "deb644d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotea Morgongåva",
+    "kedja": "Apotea",
+    "gatuadress": "Tjusarvägen 40",
+    "postnummer": "744 51",
+    "ort": "Morgongåva",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "ce2fe8a3-072d-ed11-9db1-000d3a227929",
+    "namn": "Apotea Sveavägen",
+    "kedja": "Apotea",
+    "gatuadress": "Sveavägen 168",
+    "postnummer": "113 46",
+    "ort": "Stockholm",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "c6cca2b0-5cfb-ef11-bae2-0022488c1d34",
+    "namn": "Apotea Varberg",
+    "kedja": "Apotea",
+    "gatuadress": "Stålgatan 16",
+    "postnummer": "432 32",
+    "ort": "Varberg",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "e35005e8-d721-f011-998a-000d3a2a03e9",
+    "namn": "Apotea Årsta",
+    "kedja": "Apotea",
+    "gatuadress": "Upplagsvägen 10",
+    "postnummer": "117 43",
+    "ort": "Stockholm",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "5eac44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Brunnsäng",
+    "kedja": "Fristående",
+    "gatuadress": "Bragevägen 24-26",
+    "postnummer": "152 49",
+    "ort": "Södertälje",
+    "typ": "okänd"
+   },
+   {
+    "id": "c368a576-65ed-ec11-bb3d-000d3a2ed856",
+    "namn": "Apotek Dammfri",
+    "kedja": "Fristående",
+    "gatuadress": "Köpenhamnsvägen 5",
+    "postnummer": "217 43",
+    "ort": "Malmö",
+    "typ": "okänd"
+   },
+   {
+    "id": "72ad44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Hjärtat Bromma Blocks",
+    "kedja": "Apotek Hjärtat",
+    "gatuadress": "Ulvsundavägen 185C",
+    "postnummer": "168 67",
+    "ort": "Bromma",
+    "typ": "okänd"
+   },
+   {
+    "id": "7ab344d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Hjärtat E-apotek",
+    "kedja": "Apotek Hjärtat",
+    "gatuadress": "Blygatan 25",
+    "postnummer": "602 23",
+    "ort": "Norrköping",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "709fc5ed-1908-f111-8406-7ced8d147afc",
+    "namn": "Apotek Lindövägen Norrköping",
+    "kedja": "Fristående",
+    "gatuadress": "Lindövägen 17",
+    "postnummer": "602 28",
+    "ort": "Norrköping",
+    "typ": "okänd"
+   },
+   {
+    "id": "9db2fc82-1bb0-f011-bbd3-7c1e5229da78",
+    "namn": "Apotek Sveap Bromma Sjukhus",
+    "kedja": "Fristående",
+    "gatuadress": "Follingbogatan 54",
+    "postnummer": "168 62",
+    "ort": "Bromma",
+    "typ": "okänd"
+   },
+   {
+    "id": "0f65832e-ba61-e911-a965-000d3a4647a5",
+    "namn": "Apotek Sveap Hässelby Gård Centrum",
+    "kedja": "Fristående",
+    "gatuadress": "Hässelbytorg 8-10",
+    "postnummer": "165 55",
+    "ort": "Hässelby",
+    "typ": "okänd"
+   },
+   {
+    "id": "e3b044d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Swevet Sjöbo",
+    "kedja": "Fristående",
+    "gatuadress": "Forskaregatan 1 D",
+    "postnummer": "275 37",
+    "ort": "Sjöbo",
+    "typ": "okänd"
+   },
+   {
+    "id": "5e1d70ac-5190-ef11-8a6a-000d3a208164",
+    "namn": "Apotek Varberga",
+    "kedja": "Fristående",
+    "gatuadress": "Varberga Torg 1",
+    "postnummer": "703 51",
+    "ort": "Örebro",
+    "typ": "okänd"
+   },
+   {
+    "id": "2436d9b0-a0fb-ec11-82e5-6045bd955b41",
+    "namn": "Apotek Wasa Geneta Centrum",
+    "kedja": "Fristående",
+    "gatuadress": "Prästgårdsvägen 4",
+    "postnummer": "151 61",
+    "ort": "Södertälje",
+    "typ": "okänd"
+   },
+   {
+    "id": "935d60b4-c523-e911-a95a-000d3a3a3fc8",
+    "namn": "Apotek Ösmo",
+    "kedja": "Fristående",
+    "gatuadress": "Hallängen 5",
+    "postnummer": "148 30",
+    "ort": "Ösmo",
+    "typ": "okänd"
+   },
+   {
+    "id": "a9af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Elgen",
+    "kedja": "Kronans Apotek",
+    "gatuadress": "Drottning Kristinas väg 1",
+    "postnummer": "114 28",
+    "ort": "Stockholm",
+    "typ": "okänd"
+   },
+   {
+    "id": "36b444d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Fyren",
+    "kedja": "Apoteket",
+    "gatuadress": "Storgatan 24",
+    "postnummer": "824 30",
+    "ort": "Hudiksvall",
+    "typ": "okänd"
+   },
+   {
+    "id": "74b944d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Gode Herden",
+    "kedja": "Fristående",
+    "gatuadress": "Robert Anbergsväg 33",
+    "postnummer": "151 53",
+    "ort": "Södertälje",
+    "typ": "okänd"
+   },
+   {
+    "id": "bab344d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Infektion Huddinge Sjukhus",
+    "kedja": "Apoteket",
+    "gatuadress": "Karolinska Universitetssjukhuset Huddinge",
+    "postnummer": "141 86",
+    "ort": "Stockholm",
+    "typ": "okänd"
+   },
+   {
+    "id": "05b244d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Jullen",
+    "kedja": "Fristående",
+    "gatuadress": "Jullen 3",
+    "postnummer": "444 30",
+    "ort": "Stenungsund",
+    "typ": "okänd"
+   },
+   {
+    "id": "e806d53b-ab68-e811-813e-e0071b6c2fd1",
+    "namn": "Apoteket Kundcentrum Göteborg",
+    "kedja": "Apoteket",
+    "gatuadress": "Importgatan 7",
+    "postnummer": "422 46",
+    "ort": "Hisings backa",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "11db4f08-1a0e-e711-80fe-3863bb356e28",
+    "namn": "Apoteket Prinsen",
+    "kedja": "Fristående",
+    "gatuadress": "Tenstagången 29 Lokal nummer 26",
+    "postnummer": "163 64",
+    "ort": "Spånga",
+    "typ": "okänd"
+   },
+   {
+    "id": "835254f8-a437-e611-80fc-5065f38a0b61",
+    "namn": "Apoteket Veberöd (stängt för allmänheten)",
+    "kedja": "Fristående",
+    "gatuadress": "Mejerigatan 4 A",
+    "postnummer": "247 62",
+    "ort": "Veberöd",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "e5af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotekstjänst Sverige AB",
+    "kedja": "Fristående",
+    "gatuadress": "Gåshaga Brygga 1",
+    "postnummer": "181 85",
+    "ort": "Lidingö",
+    "typ": "okänd"
+   },
+   {
+    "id": "e3c25c8d-0be4-ed11-a7c7-6045bd895a1a",
+    "namn": "Apovital",
+    "kedja": "Fristående",
+    "gatuadress": "Åkerivägen 17",
+    "postnummer": "241 38",
+    "ort": "Eslöv",
+    "typ": "okänd"
+   },
+   {
+    "id": "86097e95-b748-ee11-be6d-6045bd895b48",
+    "namn": "Apovård apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Albyvägen 6",
+    "postnummer": "145 59",
+    "ort": "Norsborg",
+    "typ": "okänd"
+   },
+   {
+    "id": "ed19cb5e-c274-ef11-a670-6045bda1b47f",
+    "namn": "AtrimusRx",
+    "kedja": "Fristående",
+    "gatuadress": "Hammarbacken 6A",
+    "postnummer": "191 49",
+    "ort": "Sollentuna",
+    "typ": "okänd"
+   },
+   {
+    "id": "6d86d8d4-4ced-ec11-bb3d-000d3a2ed856",
+    "namn": "Costco Apotek Arninge",
+    "kedja": "Costco",
+    "gatuadress": "Saluvägen 5",
+    "postnummer": "187 66",
+    "ort": "Täby",
+    "typ": "okänd"
+   },
+   {
+    "id": "fd1d18a5-c846-f011-8779-6045bd9bc501",
+    "namn": "Costco Apotek Malmö",
+    "kedja": "Costco",
+    "gatuadress": "Vassvägen 27",
+    "postnummer": "232 61",
+    "ort": "Arlöv",
+    "typ": "okänd"
+   },
+   {
+    "id": "dd2f8887-ae68-e811-813e-e0071b6c2fd1",
+    "namn": "Distansapoteket Göteborg",
+    "kedja": "Apoteket",
+    "gatuadress": "Importgatan 18",
+    "postnummer": "422 46",
+    "ort": "Hisings backa",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "f44cf22e-275d-ee11-be6f-6045bd895b48",
+    "namn": "Distansapoteket Örebro Vård",
+    "kedja": "Apoteket",
+    "gatuadress": "Stångjärnsgatan 7",
+    "postnummer": "703 83",
+    "ort": "Örebro",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "9cb644d4-289f-e511-8106-3863bb340e08",
+    "namn": "Djurfarmacia Apoteket Trollet",
+    "kedja": "Fristående",
+    "gatuadress": "Kungsgatan 57",
+    "postnummer": "461 34",
+    "ort": "Trollhättan",
+    "typ": "okänd"
+   },
+   {
+    "id": "42b444d4-289f-e511-8106-3863bb340e08",
+    "namn": "Dosapoteket Örebro",
+    "kedja": "Apoteket",
+    "gatuadress": "Stångjärnsgatan 7",
+    "postnummer": "703 63",
+    "ort": "Örebro",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "bcf36a5a-2b8e-ec11-b400-000d3a224733",
+    "namn": "DOZ Apotek E-handel",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Bruttovägen 9",
+    "postnummer": "175 43",
+    "ort": "Järfälla",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "07b244d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Enebyberg Eneby Torg",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Eneby Torg 9",
+    "postnummer": "182 48",
+    "ort": "Enebyberg",
+    "typ": "okänd"
+   },
+   {
+    "id": "e648be47-95be-e911-a96b-000d3a4647a5",
+    "namn": "DOZ Apotek Enköping Östra Ringgatan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Östra Ringgatan 21",
+    "postnummer": "745 23",
+    "ort": "Enköping",
+    "typ": "okänd"
+   },
+   {
+    "id": "ffae44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Eskilstuna Gallerian",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Kungsgatan - Careliigatan",
+    "postnummer": "632 20",
+    "ort": "Eskilstuna",
+    "typ": "okänd"
+   },
+   {
+    "id": "37b844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Falkenberg Tånga Handelsplats",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Dalkullevägen 8",
+    "postnummer": "311 39",
+    "ort": "Falkenberg",
+    "typ": "okänd"
+   },
+   {
+    "id": "b6b844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Göteborg Alelyckan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Alekärrsgatan 2",
+    "postnummer": "415 25",
+    "ort": "Göteborg",
+    "typ": "okänd"
+   },
+   {
+    "id": "3faf44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Halmstad Jutaplatsen",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Jutaplatsen 2",
+    "postnummer": "302 92",
+    "ort": "Halmstad",
+    "typ": "okänd"
+   },
+   {
+    "id": "5eb844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Hovås Billdal",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Krogabäcksvägen 22",
+    "postnummer": "436 53",
+    "ort": "Hovås",
+    "typ": "okänd"
+   },
+   {
+    "id": "34b844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Huddinge Flemingsberg",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Röntgenvägen 9",
+    "postnummer": "141 52",
+    "ort": "Huddinge",
+    "typ": "okänd"
+   },
+   {
+    "id": "85af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Kalmar Hansa City",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Bilbyggarvägen 2",
+    "postnummer": "393 56",
+    "ort": "Kalmar",
+    "typ": "okänd"
+   },
+   {
+    "id": "09b244d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Klippan Allégatan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Allégatan 12 A",
+    "postnummer": "264 33",
+    "ort": "Klippan",
+    "typ": "okänd"
+   },
+   {
+    "id": "61b044d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Kungens Kurva Shoppingcenter",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Tangentvägen 6",
+    "postnummer": "141 75",
+    "ort": "Kungens kurva",
+    "typ": "okänd"
+   },
+   {
+    "id": "b15ecf68-acb6-ed11-83ff-6045bd895b48",
+    "namn": "DOZ Apotek Kungsbacka Hantverksgatan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Hantverksgatan 27",
+    "postnummer": "434 42",
+    "ort": "Kungsbacka",
+    "typ": "okänd"
+   },
+   {
+    "id": "89af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Köping Stora Gatan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Stora Gatan 19",
+    "postnummer": "731 30",
+    "ort": "Köping",
+    "typ": "okänd"
+   },
+   {
+    "id": "1db044d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Lidköping Rörstrandsgatan",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Rörstrandsgatan 5 D",
+    "postnummer": "531 40",
+    "ort": "Lidköping",
+    "typ": "okänd"
+   },
+   {
+    "id": "96ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Malmö Centralstation",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Centralplan Malmö centralstation",
+    "postnummer": "211 20",
+    "ort": "Malmö",
+    "typ": "okänd"
+   },
+   {
+    "id": "2c15f334-81be-e911-a96b-000d3a4647a5",
+    "namn": "DOZ Apotek Malmö Stadion",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Stadiongatan 24",
+    "postnummer": "217 62",
+    "ort": "Malmö",
+    "typ": "okänd"
+   },
+   {
+    "id": "c2b844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Stockholm Vårberg Centrum",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Vårholmstorget 11",
+    "postnummer": "127 43",
+    "ort": "Skärholmen",
+    "typ": "okänd"
+   },
+   {
+    "id": "f2b744d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Strängnäs Präntaren",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Trädgårdsgatan 13",
+    "postnummer": "645 31",
+    "ort": "Strängnäs",
+    "typ": "okänd"
+   },
+   {
+    "id": "e2bfeb5b-0946-ed11-bba2-6045bd895b48",
+    "namn": "DOZ Apotek Strängnäs Solberga",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Solberga Handelsväg 17",
+    "postnummer": "645 47",
+    "ort": "Strängnäs",
+    "typ": "okänd"
+   },
+   {
+    "id": "83af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Säffle Säffle Sjukhus",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Sundgatan 1 B",
+    "postnummer": "661 40",
+    "ort": "Säffle",
+    "typ": "okänd"
+   },
+   {
+    "id": "eeb744d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Tidaholm Västra Drottningvägen",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Västra Drottningvägen 11",
+    "postnummer": "522 30",
+    "ort": "Tidaholm",
+    "typ": "okänd"
+   },
+   {
+    "id": "60b844d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Uppsala Centralstation",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Nya Centralstationen",
+    "postnummer": "753 21",
+    "ort": "Uppsala",
+    "typ": "okänd"
+   },
+   {
+    "id": "14d570c6-a48f-e611-810f-5065f38a0b61",
+    "namn": "DOZ Apotek Uppsala Samariten",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Kålsängsgränd 10C",
+    "postnummer": "753 19",
+    "ort": "Uppsala",
+    "typ": "okänd"
+   },
+   {
+    "id": "43af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Väddö Älmsta",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Norrtäljevägen 10",
+    "postnummer": "760 40",
+    "ort": "Väddö",
+    "typ": "okänd"
+   },
+   {
+    "id": "fbae44d4-289f-e511-8106-3863bb340e08",
+    "namn": "DOZ Apotek Västerås Råby",
+    "kedja": "DOZ Apotek",
+    "gatuadress": "Pilfinksgatan 3-5",
+    "postnummer": "724 70",
+    "ort": "Västerås",
+    "typ": "okänd"
+   },
+   {
+    "id": "6c4016e6-a7d3-ed11-a7c7-6045bd895a1a",
+    "namn": "e-apoteket Eskilstuna",
+    "kedja": "Apoteket",
+    "gatuadress": "Williams väg 23",
+    "postnummer": "635 06",
+    "ort": "Eskilstuna",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "1eb944d4-289f-e511-8106-3863bb340e08",
+    "namn": "Emaus Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Vegaplan 1",
+    "postnummer": "734 30",
+    "ort": "Hallstahammar",
+    "typ": "okänd"
+   },
+   {
+    "id": "e1b67158-1d42-ec11-8c62-000d3aab8ee8",
+    "namn": "Fittja Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Fittja Torg 21",
+    "postnummer": "145 51",
+    "ort": "Norsborg",
+    "typ": "okänd"
+   },
+   {
+    "id": "59ba90f3-e0f5-ef11-be1f-0022488c1d34",
+    "namn": "Försörjningsenheten Hässleholm",
+    "kedja": "Apoteket",
+    "gatuadress": "Helsingborgsvägen 14",
+    "postnummer": "281 49",
+    "ort": "Hässleholm",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "b54de4f8-7b31-f011-8c4d-000d3aa823d7",
+    "namn": "Försörjningsenheten Staffanstorp",
+    "kedja": "Apoteket",
+    "gatuadress": "Västanvägen 83AA",
+    "postnummer": "245 42",
+    "ort": "Staffanstorp",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "b6ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Haga Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Säterigatan 122",
+    "postnummer": "441 55",
+    "ort": "Alingsås",
+    "typ": "okänd"
+   },
+   {
+    "id": "9a061046-be76-f111-ab0e-000d3aab32e4",
+    "namn": "Helios Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Björkhultsvägen 1",
+    "postnummer": "632 29",
+    "ort": "Eskilstuna",
+    "typ": "okänd"
+   },
+   {
+    "id": "ddb244d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Enköping e-handel",
+    "kedja": "Kronans Apotek",
+    "gatuadress": "Maria Romells Gata 9",
+    "postnummer": "749 47",
+    "ort": "Enköping",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "b8b944d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Hudiksvall Guldsmeden",
+    "kedja": "Kronans Apotek",
+    "gatuadress": "Guldsmeden Hudiksvall",
+    "postnummer": "824 30",
+    "ort": "Hudiksvall",
+    "typ": "okänd"
+   },
+   {
+    "id": "7f3ac7cb-73c7-eb11-bacc-002248813d91",
+    "namn": "Kronans Apotek Järva Närakut (stängt för allmänheten)",
+    "kedja": "Kronans Apotek",
+    "gatuadress": "Rinkebysvängen 70 B",
+    "postnummer": "163 74",
+    "ort": "Spånga",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "66ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Motala",
+    "kedja": "Kronans Apotek",
+    "gatuadress": "Urban Hjärnes väg 9",
+    "postnummer": "591 30",
+    "ort": "Motala",
+    "typ": "okänd"
+   },
+   {
+    "id": "ab62524e-4d45-ed11-bba2-6045bd895a1a",
+    "namn": "Limhamn OE Apotek AB",
+    "kedja": "Fristående",
+    "gatuadress": "Ringugnsgatan 14 B",
+    "postnummer": "216 16",
+    "ort": "Limhamn",
+    "typ": "okänd"
+   },
+   {
+    "id": "948fa1f9-e0fb-e511-80fe-3863bb353f68",
+    "namn": "Medovia Kalmar",
+    "kedja": "Medovia",
+    "gatuadress": "Polhemsgatan 14",
+    "postnummer": "392 39",
+    "ort": "Kalmar",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "e7e758a9-1c84-e811-8148-e0071b6c2fd1",
+    "namn": "Medovia Kungens Kurva",
+    "kedja": "Medovia",
+    "gatuadress": "Prismavägen 2",
+    "postnummer": "141 75",
+    "ort": "Kungens kurva",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "240829db-6738-ea11-a813-000d3a2d5883",
+    "namn": "Medovia Norrland",
+    "kedja": "Medovia",
+    "gatuadress": "Rälsvägen 7",
+    "postnummer": "901 32",
+    "ort": "Umeå",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "d9617b87-0874-ef11-a670-6045bda1b47f",
+    "namn": "Medovia Norrland NUS",
+    "kedja": "Medovia",
+    "gatuadress": "Klintvägen 2",
+    "postnummer": "907 37",
+    "ort": "Umeå",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "b2b644d4-289f-e511-8106-3863bb340e08",
+    "namn": "Medovia Sjukhusapotek Stockholm",
+    "kedja": "Medovia",
+    "gatuadress": "Bogårdsvägen 43",
+    "postnummer": "128 62",
+    "ort": "Sköndal",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "e88a4a32-2662-e711-8111-e0071b6c2fd1",
+    "namn": "Medovia Skåne",
+    "kedja": "Medovia",
+    "gatuadress": "Blidögatan 27",
+    "postnummer": "211 24",
+    "ort": "Malmö",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "aedd9e49-2308-f111-8406-7ced8d147afc",
+    "namn": "Medovia Solna",
+    "kedja": "Medovia",
+    "gatuadress": "Gävlegatan 44",
+    "postnummer": "171 64",
+    "ort": "Solna",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "d43dc1c0-3d7a-ea11-a811-000d3a2d58c3",
+    "namn": "Medovia Sunderbyn",
+    "kedja": "Medovia",
+    "gatuadress": "Sunderby sjukhus, Sjukhusvägen 10",
+    "postnummer": "954 42",
+    "ort": "Södra sunderbyn",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "29cc64a7-e074-ea11-a811-000d3a2d58c3",
+    "namn": "Medovia Sundsvall",
+    "kedja": "Medovia",
+    "gatuadress": "Länssjukhuset Sundsvall Härnösand, Lasarettsvägen 21",
+    "postnummer": "851 86",
+    "ort": "Sundsvall",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "a8918101-3d9d-e711-8115-70106fa57f61",
+    "namn": "Meds",
+    "kedja": "Fristående",
+    "gatuadress": "Sättargatan 1",
+    "postnummer": "632 29",
+    "ort": "Eskilstuna",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "48ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Nationella Enheten Uppsala",
+    "kedja": "Apoteket",
+    "gatuadress": "Södra Depågatan 2",
+    "postnummer": "754 54",
+    "ort": "Uppsala",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "1c82f8b7-9b0b-e611-80f6-3863bb358fa0",
+    "namn": "Palm Apotek AB",
+    "kedja": "Fristående",
+    "gatuadress": "Orkestergatan 1",
+    "postnummer": "215 85",
+    "ort": "Malmö",
+    "typ": "okänd"
+   },
+   {
+    "id": "20eccebd-18d7-ee11-904d-6045bd895b48",
+    "namn": "Rinkeby Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Rinkebystråket 66-68",
+    "postnummer": "163 72",
+    "ort": "Spånga",
+    "typ": "okänd"
+   },
+   {
+    "id": "33961f15-2fe1-e911-a96f-000d3a4647a5",
+    "namn": "Silverskatten Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Silvertorget 6",
+    "postnummer": "193 37",
+    "ort": "Sigtuna",
+    "typ": "okänd"
+   },
+   {
+    "id": "c5cbf132-d53b-f011-b4cc-000d3a2a03e9",
+    "namn": "Sjukhusapoteket Helsingborg",
+    "kedja": "Apoteket",
+    "gatuadress": "Charlotte Yhléns gata 10",
+    "postnummer": "252 23",
+    "ort": "Helsingborg",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "8411ae9e-c884-f011-b4cb-0022487f713f",
+    "namn": "Sjukhusapoteket Kristianstad",
+    "kedja": "Apoteket",
+    "gatuadress": "J A Hedlundsväg 5",
+    "postnummer": "291 33",
+    "ort": "Kristianstad",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "0b50120a-ca84-f011-b4cb-0022487f713f",
+    "namn": "Sjukhusapoteket Lund",
+    "kedja": "Apoteket",
+    "gatuadress": "Entrégatan 7",
+    "postnummer": "222 42",
+    "ort": "Lund",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "45274da2-58dd-ef11-a730-000d3a487bc3",
+    "namn": "Sjukhusapoteket Malmö",
+    "kedja": "Apoteket",
+    "gatuadress": "Jan Waldenströms gata 77, plan 10",
+    "postnummer": "214 28",
+    "ort": "Malmö",
+    "typ": "ej öppet för allmänheten"
+   },
+   {
+    "id": "eb715e67-59a8-f111-b8de-6045bda1469d",
+    "namn": "Sollentuna Sjukhusapotek",
+    "kedja": "Fristående",
+    "gatuadress": "Nytorpsvägen 10",
+    "postnummer": "191 35",
+    "ort": "Sollentuna",
+    "typ": "okänd"
+   },
+   {
+    "id": "36b2e87c-65a8-f111-b8de-6045bda1469d",
+    "namn": "Södermalms Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Folkungagatan 99",
+    "postnummer": "116 30",
+    "ort": "Stockholm",
+    "typ": "okänd"
+   },
+   {
+    "id": "76a75830-0eb8-e811-815b-70106fa7b0a1",
+    "namn": "VetApotek",
+    "kedja": "Fristående",
+    "gatuadress": "Cypressvägen 11",
+    "postnummer": "213 63",
+    "ort": "Malmö",
+    "typ": "okänd"
+   },
+   {
+    "id": "64d3db4a-bc7f-ea11-a811-000d3a2d54fd",
+    "namn": "VetApotek E-handel",
+    "kedja": "Fristående",
+    "gatuadress": "Cypressvägen 18",
+    "postnummer": "213 63",
+    "ort": "Malmö",
+    "typ": "e-handel/dos/distans"
+   },
+   {
+    "id": "517bba77-5b7e-f011-b4cb-000d3a24011b",
+    "namn": "Västra Skogen",
+    "kedja": "Fristående",
+    "gatuadress": "Johan Enbergsgatan 24",
+    "postnummer": "171 61",
+    "ort": "Solna",
+    "typ": "okänd"
+   },
+   {
+    "id": "9db244d4-289f-e511-8106-3863bb340e08",
+    "namn": "Vårbygårds Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Vårby allé 18",
+    "postnummer": "143 00",
+    "ort": "Vårby",
+    "typ": "okänd"
+   },
+   {
+    "id": "5a8d8bff-de6e-f111-ab0d-7ced8d147cd3",
+    "namn": "Älvsjö Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Götlandsvägen 223A",
+    "postnummer": "125 45",
+    "ort": "Älvsjö",
+    "typ": "okänd"
+   },
+   {
+    "id": "ef2374da-63a8-f111-b8de-6045bda199bb",
+    "namn": "Östermalms Apotek",
+    "kedja": "Fristående",
+    "gatuadress": "Sibyllegatan 27",
+    "postnummer": "114 42",
+    "ort": "Stockholm",
+    "typ": "okänd"
+   }
+  ],
+  "lv_kedjeapotek_ej_i_kedjans_lista": [
+   {
+    "id": "72ad44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Hjärtat Bromma Blocks",
+    "kedja": "Apotek Hjärtat",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "7ab344d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Hjärtat E-apotek",
+    "kedja": "Apotek Hjärtat",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "a9af44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Elgen",
+    "kedja": "Kronans Apotek",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "36b444d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Fyren",
+    "kedja": "Apoteket",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "bab344d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Infektion Huddinge Sjukhus",
+    "kedja": "Apoteket",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "e806d53b-ab68-e811-813e-e0071b6c2fd1",
+    "namn": "Apoteket Kundcentrum Göteborg",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "6f46ff37-ab9f-f111-b8dc-6045bda1469d",
+    "namn": "Apoteket Väsby Centrum",
+    "kedja": "Apoteket",
+    "typ": "butik",
+    "osm": true
+   },
+   {
+    "id": "dd2f8887-ae68-e811-813e-e0071b6c2fd1",
+    "namn": "Distansapoteket Göteborg",
+    "kedja": "Apoteket",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "f44cf22e-275d-ee11-be6f-6045bd895b48",
+    "namn": "Distansapoteket Örebro Vård",
+    "kedja": "Apoteket",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "42b444d4-289f-e511-8106-3863bb340e08",
+    "namn": "Dosapoteket Örebro",
+    "kedja": "Apoteket",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "6c4016e6-a7d3-ed11-a7c7-6045bd895a1a",
+    "namn": "e-apoteket Eskilstuna",
+    "kedja": "Apoteket",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "6a6aeedb-61a2-e611-8103-5065f38ba5e1",
+    "namn": "Frösunda Apotek",
+    "kedja": "Kronans Apotek",
+    "typ": "butik",
+    "osm": true
+   },
+   {
+    "id": "59ba90f3-e0f5-ef11-be1f-0022488c1d34",
+    "namn": "Försörjningsenheten Hässleholm",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "b54de4f8-7b31-f011-8c4d-000d3aa823d7",
+    "namn": "Försörjningsenheten Staffanstorp",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "b5f69f55-79a2-ef11-8a6a-00224882857d",
+    "namn": "Hässelby strand apotek",
+    "kedja": "Apotek Hjärtat",
+    "typ": "butik",
+    "osm": true
+   },
+   {
+    "id": "ddb244d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Enköping e-handel",
+    "kedja": "Kronans Apotek",
+    "typ": "e-handel/dos/distans",
+    "osm": false
+   },
+   {
+    "id": "b8b944d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Hudiksvall Guldsmeden",
+    "kedja": "Kronans Apotek",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "7f3ac7cb-73c7-eb11-bacc-002248813d91",
+    "namn": "Kronans Apotek Järva Närakut (stängt för allmänheten)",
+    "kedja": "Kronans Apotek",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "66ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Kronans Apotek Motala",
+    "kedja": "Kronans Apotek",
+    "typ": "okänd",
+    "osm": false
+   },
+   {
+    "id": "48ab44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Nationella Enheten Uppsala",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "c5cbf132-d53b-f011-b4cc-000d3a2a03e9",
+    "namn": "Sjukhusapoteket Helsingborg",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "8411ae9e-c884-f011-b4cb-0022487f713f",
+    "namn": "Sjukhusapoteket Kristianstad",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "0b50120a-ca84-f011-b4cb-0022487f713f",
+    "namn": "Sjukhusapoteket Lund",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "45274da2-58dd-ef11-a730-000d3a487bc3",
+    "namn": "Sjukhusapoteket Malmö",
+    "kedja": "Apoteket",
+    "typ": "ej öppet för allmänheten",
+    "osm": false
+   },
+   {
+    "id": "92b4ee6f-18be-f011-bbd3-7c1e5229de98",
+    "namn": "Tullinge apotek (stängt för allmänheten)",
+    "kedja": "Kronans Apotek",
+    "typ": "ej öppet för allmänheten",
+    "osm": true
+   }
+  ]
+ },
+ "kvalitet_geokod_avvisad": [
+  {
+   "id": "11db4f08-1a0e-e711-80fe-3863bb356e28",
+   "namn": "Apoteket Prinsen",
+   "kommun": "Stockholm",
+   "km_fran_kommunmedian": 247,
+   "precision": "postnummer"
+  },
+  {
+   "id": "7f3ac7cb-73c7-eb11-bacc-002248813d91",
+   "namn": "Kronans Apotek Järva Närakut (stängt för allmänheten)",
+   "kommun": "Stockholm",
+   "km_fran_kommunmedian": 247,
+   "precision": "postnummer"
+  },
+  {
+   "id": "20eccebd-18d7-ee11-904d-6045bd895b48",
+   "namn": "Rinkeby Apotek",
+   "kommun": "Stockholm",
+   "km_fran_kommunmedian": 247,
+   "precision": "postnummer"
+  }
+ ],
+ "kvalitet_osm_foraldrad_kedja": [
+  {
+   "osm_id": "node/1083493007",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Skanör",
+   "avstand_m": 17
+  },
+  {
+   "osm_id": "node/472669316",
+   "osm_namn": "Apoteket Lejonet",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Falkenberg Nygatan",
+   "avstand_m": 12
+  },
+  {
+   "osm_id": "node/658739414",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Helsingborg Drottninggatan",
+   "avstand_m": 2
+  },
+  {
+   "osm_id": "node/11544141655",
+   "osm_namn": "Kronans Apotek",
+   "osm_brand": "Kronans Apotek",
+   "troligen": "Apotek Hjärtat Väla Helsingborg",
+   "avstand_m": 19
+  },
+  {
+   "osm_id": "node/440012420",
+   "osm_namn": "Apoteket Eken",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Lerum Vårdcentral",
+   "avstand_m": 15
+  },
+  {
+   "osm_id": "node/759324399",
+   "osm_namn": "Almen",
+   "osm_brand": null,
+   "troligen": "Apoteket Lindome",
+   "avstand_m": 7
+  },
+  {
+   "osm_id": "node/792686447",
+   "osm_namn": "Apoteket Tallen",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Sävedalen",
+   "avstand_m": 9
+  },
+  {
+   "osm_id": "node/3146264207",
+   "osm_namn": "Apoteket Enen",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Smålandsstenar",
+   "avstand_m": 4
+  },
+  {
+   "osm_id": "node/10309371245",
+   "osm_namn": "Apoteket Hjärtat",
+   "osm_brand": null,
+   "troligen": "Apoteket Göteborgsvägen Borås",
+   "avstand_m": 24
+  },
+  {
+   "osm_id": "node/10727717073",
+   "osm_namn": "ICA Apotek",
+   "osm_brand": null,
+   "troligen": "Apotek Hjärtat Rottne",
+   "avstand_m": 4
+  },
+  {
+   "osm_id": "node/461137684",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Kisa",
+   "avstand_m": 10
+  },
+  {
+   "osm_id": "node/1786421914",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Norrköping Skarphagen",
+   "avstand_m": 18
+  },
+  {
+   "osm_id": "node/1913822366",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Ljungsbro",
+   "avstand_m": 22
+  },
+  {
+   "osm_id": "node/436356542",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Mellanbrogatan 3, Åmål",
+   "avstand_m": 1
+  },
+  {
+   "osm_id": "node/447917238",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Gnesta Marieströmsgatan",
+   "avstand_m": 8
+  },
+  {
+   "osm_id": "node/474381664",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Nyköpings lasarett",
+   "avstand_m": 2
+  },
+  {
+   "osm_id": "node/1860853387",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Trosa",
+   "avstand_m": 19
+  },
+  {
+   "osm_id": "node/773643506",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Tranebergsplan",
+   "avstand_m": 2
+  },
+  {
+   "osm_id": "node/2555676641",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "DOZ Apotek Farsta Farsta Centrum",
+   "avstand_m": 22
+  },
+  {
+   "osm_id": "node/2717584673",
+   "osm_namn": "Apotek",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Täby kyrkby",
+   "avstand_m": 16
+  },
+  {
+   "osm_id": "node/3938202338",
+   "osm_namn": "Svea Vaccin",
+   "osm_brand": null,
+   "troligen": "Apotek Hjärtat Stationshuset, Sundbyberg",
+   "avstand_m": 18
+  },
+  {
+   "osm_id": "node/9624730742",
+   "osm_namn": "Apoteket Svanen",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Forum Nacka",
+   "avstand_m": 37
+  },
+  {
+   "osm_id": "node/10088809934",
+   "osm_namn": "Kronans Apotek",
+   "osm_brand": "Kronans Apotek",
+   "troligen": "Apoteket Kungsör",
+   "avstand_m": 10
+  },
+  {
+   "osm_id": "node/11118221389",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Apoteket Arninge station",
+   "avstand_m": 39
+  },
+  {
+   "osm_id": "node/11993373928",
+   "osm_namn": "Apoteket Prinsen",
+   "osm_brand": null,
+   "troligen": "Kronans Apotek Tensta Centrum",
+   "avstand_m": 11
+  },
+  {
+   "osm_id": "way/1311862224",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Kista Galleria (Kista Torg)",
+   "avstand_m": 14
+  },
+  {
+   "osm_id": "node/4315968219",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Filipstad",
+   "avstand_m": 2
+  },
+  {
+   "osm_id": "node/12905884178",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Erikslund, Västerås",
+   "avstand_m": 38
+  },
+  {
+   "osm_id": "node/4348281799",
+   "osm_namn": "Apotek Hjärtat",
+   "osm_brand": "Apotek Hjärtat",
+   "troligen": "Apoteket E-center Söderhamn",
+   "avstand_m": 31
+  },
+  {
+   "osm_id": "node/9862677116",
+   "osm_namn": "Apotek",
+   "osm_brand": null,
+   "troligen": "Kronans Apotek Ockelbo",
+   "avstand_m": 8
+  },
+  {
+   "osm_id": "node/522936035",
+   "osm_namn": "Apoteket AB",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Sundsvall Granlo",
+   "avstand_m": 3
+  },
+  {
+   "osm_id": "node/1088773052",
+   "osm_namn": "Apoteket",
+   "osm_brand": "Apoteket",
+   "troligen": "Kronans Apotek Domsjö vårdcentral",
+   "avstand_m": 9
+  },
+  {
+   "osm_id": "node/5315211770",
+   "osm_namn": "Apoteket ICA",
+   "osm_brand": "Apoteket",
+   "troligen": "Apotek Hjärtat Hede",
+   "avstand_m": 6
+  }
+ ],
+ "kvalitet": {
+  "koordinat_langt_fran_kommun": [
+   {
+    "id": "bbae44d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apotek Hjärtat Sveg",
+    "kommun": "Härjedalen",
+    "km_fran_kommunmedian": 61,
+    "koordinat_kalla": "Apotek Hjärtat"
+   },
+   {
+    "id": "9ab444d4-289f-e511-8106-3863bb340e08",
+    "namn": "Apoteket Fjällämmeln",
+    "kommun": "Strömsund",
+    "km_fran_kommunmedian": 100,
+    "koordinat_kalla": "Apoteket"
+   }
+  ],
+  "kedja_osm_koordinatkonflikt_over_300m": [
+   {
+    "id": "7d7cd1dd-38c7-ea11-a812-000d3a2d58c3",
+    "namn": "Apoteket Arninge Station",
+    "avstand_m": 420,
+    "kedja_lat": 59.459645,
+    "kedja_lon": 18.138428,
+    "osm_id": "node/1369973056"
+   },
+   {
+    "id": "5ad6627d-c5df-ef11-a730-000d3a487bc3",
+    "namn": "Kronans Apotek Norberg",
+    "avstand_m": 4154,
+    "kedja_lat": 60.10088,
+    "kedja_lon": 15.91141,
+    "osm_id": "node/1568014806"
+   },
+   {
+    "id": "8cfa1f71-c0ff-e911-a811-000d3a2d54fd",
+    "namn": "Kronans Apotek Värnamo Vråens Vc",
+    "avstand_m": 576,
+    "kedja_lat": 57.18748,
+    "kedja_lon": 14.0677,
+    "osm_id": "node/9139700890"
+   }
+  ]
+ },
+ "sammanfattning": {
+  "totalt": {
+   "antal": 1451,
+   "med_koordinater": "99.7%",
+   "med_oppettider": "91.3%",
+   "med_telefon": "90.0%"
+  },
+  "publika_butik_eller_okand": {
+   "antal": 1414,
+   "med_koordinater": "99.8%",
+   "med_oppettider": "93.6%",
+   "med_telefon": "92.2%"
+  },
+  "kommuner_med_apotek": 290
+ },
+ "per_kedja": {
+  "Apohem": {
+   "antal": 1,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "0.0%",
+   "med_telefon": "0.0%"
+  },
+  "Apotea": {
+   "antal": 5,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "0.0%",
+   "med_telefon": "0.0%"
+  },
+  "Apotek Hjärtat": {
+   "antal": 407,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "99.5%",
+   "med_telefon": "99.3%"
+  },
+  "Apotek Äpplet": {
+   "antal": 1,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "100.0%",
+   "med_telefon": "0.0%"
+  },
+  "Apoteket": {
+   "antal": 410,
+   "med_koordinater": "99.8%",
+   "med_oppettider": "96.6%",
+   "med_telefon": "96.6%"
+  },
+  "Costco": {
+   "antal": 2,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "0.0%",
+   "med_telefon": "0.0%"
+  },
+  "DOZ Apotek": {
+   "antal": 70,
+   "med_koordinater": "98.6%",
+   "med_oppettider": "37.1%",
+   "med_telefon": "20.0%"
+  },
+  "Fristående": {
+   "antal": 60,
+   "med_koordinater": "96.7%",
+   "med_oppettider": "26.7%",
+   "med_telefon": "20.0%"
+  },
+  "Kronans Apotek": {
+   "antal": 486,
+   "med_koordinater": "99.8%",
+   "med_oppettider": "99.0%",
+   "med_telefon": "98.8%"
+  },
+  "Medovia": {
+   "antal": 9,
+   "med_koordinater": "100.0%",
+   "med_oppettider": "0.0%",
+   "med_telefon": "0.0%"
+  }
+ },
+ "oppettider_kalla": {
+  "saknas": 126,
+  "Apotek Hjärtat (kommande 7 dagar)": 404,
+  "Apoteket (kommande 7 dagar)": 395,
+  "OpenStreetMap": 49,
+  "Kronans Apotek (ordinarie)": 477
+ },
+ "koordinat_kalla": {
+  "geokodning (adress)": 77,
+  "OpenStreetMap": 73,
+  "Apotek Hjärtat": 404,
+  "geokodning (postnummer)": 18,
+  "Apoteket": 395,
+  "saknas": 5,
+  "Kronans Apotek": 479
+ },
+ "typ": {
+  "e-handel/dos/distans": 25,
+  "butik": 1349,
+  "okänd": 65,
+  "ej öppet för allmänheten": 12
+ },
+ "kallor": {
+  "Läkemedelsverket": {
+   "url": "https://www.lakemedelsverket.se/sv/handel-med-lakemedel/apotek/sok-apotek-som-har-tillstand",
+   "hamtad": "2026-11-19T03:58:31.656Z",
+   "licens": "Listad som öppna data på lakemedelsverket.se/sv/om-webbplatsen/oppna-data (CC0 eller CC BY 4.0) — ange \"Källa: Läkemedelsverket\"."
+  },
+  "OpenStreetMap": {
+   "hamtad": "2026-11-19T07:58:06.246Z",
+   "osm_base": "2026-11-19T07:56:02Z",
+   "licens": "ODbL 1.0 — attribution \"© OpenStreetMap contributors\" krävs; härledd databas ska delas under ODbL."
+  },
+  "SCB": {
+   "hamtad": "2026-11-19T03:58:36.998Z",
+   "licens": "CC0"
+  },
+  "kedjor": {
+   "Apoteket": {
+    "hamtad": "2026-11-19T03:58:43.282Z",
+    "antal": 395,
+    "inaktuell": false
+   },
+   "Kronans Apotek": {
+    "hamtad": "2026-11-19T03:58:46.195Z",
+    "antal": 480,
+    "inaktuell": false
+   },
+   "Apotek Hjärtat": {
+    "hamtad": "2026-11-19T03:58:50.140Z",
+    "antal": 404,
+    "inaktuell": false
+   }
+  },
+  "hoppade_over": {
+   "DOZ Apotek (ex LloydsApotek)": "dozapotek.se robots.txt disallows ClaudeBot/anthropic-ai/GPTBot (Disallow: /) — not fetched"
+  }
+ }
+}

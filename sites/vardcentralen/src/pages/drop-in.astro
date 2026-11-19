@@ -1,0 +1,32 @@
+---
+// Vårdcentraler med drop-in (utan tidsbokning), per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { veckoSammanfattning } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const dropin = KAT.enheter.filter((e) => e.extra?.dropin === true)
+  .map((e) => ({ ...e, listaRad: e.extra.dropin_tider ? `Drop-in ${veckoSammanfattning(e.extra.dropin_tider)}` : "Drop-in" }));
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: dropin.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const fragor = [
+  { fraga: "Vad är drop-in på vårdcentralen?", svar: "Drop-in betyder att du kan komma till vårdcentralen utan att boka tid, under vissa tider. Du får vänta på din tur och det kan bli kö. Många vårdcentraler har bara drop-in för provtagning eller vaccination." },
+  { fraga: "Hur många vårdcentraler har drop-in?", svar: `Enligt våra uppgifter har ${dropin.length} vårdcentraler i Sverige drop-in för läkar- eller sjuksköterskebesök. För många vårdcentraler saknas uppgift, så ring eller kontrollera på 1177.se.` },
+  { fraga: "Vart vänder jag mig om det är akut?", svar: "Ring 112 vid akut, livshotande sjukdom eller skada. För sjukvårdsrådgivning dygnet runt, ring 1177." },
+];
+---
+<Layout site={SITE} titel={`Vårdcentral med drop-in – ${dropin.length} utan tidsbokning`}
+  beskrivning={`${dropin.length} vårdcentraler i Sverige har drop-in utan tidsbokning. ✓ Drop-in-tider per vårdcentral ✓ Per län och kommun ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Drop-in", href: "/drop-in/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Vårdcentraler med drop-in</h1>
+  <p class="svar"><strong>{dropin.length} vårdcentraler</strong> har drop-in där du kan komma utan att boka tid. Flest finns i {[...perLan].sort((a, b) => b.enheter.length - a.enheter.length)[0]?.lan.namn}. Akut? Ring 112. Rådgivning dygnet runt: 1177.</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="dropin-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>Drop-in i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

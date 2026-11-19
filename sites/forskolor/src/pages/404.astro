@@ -1,0 +1,10 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, KAT, ORD } from "../site.js";
+const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 6);
+---
+<Layout site={SITE} titel={`Sidan finns inte – ${SITE.visningsnamn}`} beskrivning="Sidan du sökte finns inte." noindex>
+  <h1>Sidan finns inte</h1>
+  <p>Sidan kan ha flyttats eller tagits bort. Gå till <a href="/">startsidan</a> eller välj en kommun:</p>
+  <div class="lank-rad">{storst.map((k) => <a href={k.href}>{k.namn}</a>)}</div>
+</Layout>

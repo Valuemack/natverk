@@ -1,0 +1,19 @@
+{
+  "uppdaterad": "2026-11-19",
+  "totalt": 2634,
+  "eu_bad": 487,
+  "typ": {
+    "havsbad": 689,
+    "sjöbad": 1843,
+    "älvbad": 100,
+    "deltabad": 2
+  },
+  "kommuner": 266,
+  "med_prov": 2512,
+  "med_prov_i_ar": 2389,
+  "med_klassificering": 2634,
+  "med_tempprognos": 652,
+  "med_avradan": 21,
+  "med_hav_sida": 2555,
+  "fel": []
+}

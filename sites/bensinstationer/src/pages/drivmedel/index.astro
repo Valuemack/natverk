@@ -1,0 +1,17 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, KAT, UPPDATERAD, KALLA, DRIVMEDEL, harDrivmedel, LISTPRISER, kr } from "../../site.js";
+
+const rader = DRIVMEDEL.map(([k, kort, namn, s]) => ({ k, namn, s, n: KAT.enheter.filter((e) => harDrivmedel(e, k)).length, pris: LISTPRISER.snitt?.[k]?.pris })).filter((x) => x.n > 0);
+---
+<Layout site={SITE} titel="Drivmedel – var kan man tanka HVO100, E85 och fordonsgas?"
+  beskrivning="Hitta stationer med HVO100, E85, fordonsgas, AdBlue och laddning. Antal stationer per drivmedel och dagens listpris. ✓ Uppdateras varje natt."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Drivmedel", href: "/drivmedel/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Drivmedel</h1>
+  <p class="svar">Så många stationer har varje drivmedel enligt kedjornas och OpenStreetMaps uppgifter.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th><th class="num">Stationer</th><th class="num">Listpris idag</th></tr></thead>
+    <tbody>{rader.map((x) => <tr><td>{x.s ? <a href={`/drivmedel/${x.s}/`}>{x.namn}</a> : x.namn}</td><td class="num">{x.n}</td><td class="num">{x.pris ? `${kr(x.pris)}/${x.k === "biogas" ? "kg" : "l"}` : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">{KALLA} Listpris = snitt av kedjornas priser för företagskunder inkl. moms. <a href="/bensinpris/">Se alla priser</a>.</p>
+</Layout>

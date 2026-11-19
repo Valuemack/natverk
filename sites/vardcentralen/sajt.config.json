@@ -1,0 +1,17 @@
+{
+  "mapp": "vardcentralen",
+  "namn": "Vårdcentralen",
+  "visningsnamn": "vårdcentralen.nu",
+  "url": "https://xn--vrdcentralen-tcb.nu",
+  "beskrivning": "Alla vårdcentraler och hälsocentraler i Sverige med adress, telefon och öppettider – hitta din närmaste vårdcentral. Uppdateras varje natt.",
+  "farg": "#1f5fa8",
+  "ikonText": "V",
+  "ord": { "sing": "vårdcentral", "plur": "vårdcentraler", "art": "en" },
+  "schemaTyp": "MedicalClinic",
+  "titelOrd": "öppettider",
+  "datafil": "data/enheter.json",
+  "startTitel": "Vårdcentral nära dig – alla vårdcentraler i Sverige",
+  "startH1": "Hitta vårdcentral nära dig",
+  "kallaText": "Uppgifterna sammanställs från öppna källor och kontrolleras varje natt. Vid akut sjukdom: ring 112. Sjukvårdsrådgivning dygnet runt: 1177.",
+  "meny": [{ "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

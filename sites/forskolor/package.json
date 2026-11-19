@@ -1,0 +1,16 @@
+{
+  "name": "forskolor",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "data": "node ../skolor/scripts/run-all.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@natverk/core": "*",
+    "astro": "^7.4.13"
+  }
+}

@@ -1,0 +1,19 @@
+---
+// Visar en prognos från Naturhistoriska riksmuseet. Texten återges ordagrant (CC BY-ND 4.0):
+// bara radbrytningar blir stycken, inget ord ändras eller kortas.
+import { datumText, nivaText, KALLA_NRM } from "../site.js";
+const { prognos: p, visaNivaer = true } = Astro.props;
+const stycken = (p?.text ?? "").split(/\r?\n\s*\r?\n/).map((s) => s.split(/\r?\n/).map((r) => r.trim()).filter(Boolean)).filter((s) => s.length);
+const dagar = p?.dagar ?? [];
+const pollen = dagar[0]?.nivaer.map((n) => n.pollen) ?? [];
+const kortDag = (d) => { const x = new Date(`${d}T12:00:00Z`); return `${["sön", "mån", "tis", "ons", "tors", "fre", "lör"][x.getUTCDay()]} ${x.getUTCDate()}/${x.getUTCMonth() + 1}`; };
+---
+{p && <>
+  <p class="kalla">Prognos för {p.region} {p.start === p.slut ? datumText(p.start) : <>{datumText(p.start)} – {datumText(p.slut)}</>}{p.sasongsslut && " (säsongens sista prognos)"}.</p>
+  {stycken.length > 0 && <div class="prognostext">{stycken.map((rader) => <p>{rader.map((r, i) => <>{i > 0 && <br />}{r}</>)}</p>)}</div>}
+  {visaNivaer && dagar.length > 0 && <div class="tabell"><table>
+    <thead><tr><th>Pollenslag</th>{dagar.map((d) => <th>{kortDag(d.datum)}</th>)}</tr></thead>
+    <tbody>{pollen.map((namn) => <tr><td>{namn}</td>{dagar.map((d) => { const n = d.nivaer.find((x) => x.pollen === namn)?.niva; return <td>{n == null ? "–" : <span class={`niva niva-${n}`} title={nivaText(n)}>{nivaText(n)}</span>}</td>; })}</tr>)}</tbody>
+  </table></div>}
+  <p class="kalla">Prognos: {KALLA_NRM}, återgiven oförändrad (CC BY-ND 4.0).</p>
+</>}

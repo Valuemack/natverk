@@ -1,0 +1,105 @@
+{
+  "utesluten": [
+    "Capio Fysioterapi Vålberg, Grums",
+    "Capio Samtalsmottagningen Vålberg",
+    "Familjecentralen Grums",
+    "Fysioterapimottagningen Jösse vårdcentral Arvika",
+    "Fysioterapimottagningen Vårdcentralen Töcksfors",
+    "Gynekologisk cellprovtagning Åttkanten Karlstad, Södra Kyrkogatan 11, Karlstad",
+    "Jourcentralen i Motala",
+    "Jourcentralen Karlstad",
+    "Jourcentralen Kristinehamn",
+    "Jourcentralen Linköping",
+    "Jourcentralen Norrköping",
+    "Jourcentralen Torsby",
+    "Kommunikationsavdelningen",
+    "Mottagning för funktionsnedsättning i primärvård",
+    "Näsets Läkargrupp- Filial Specialmottagning, Höllviken",
+    "Provtagning vårdcentralen Kasernhöjden Karlstad",
+    "Samtalsmottagningen vårdcentralen Kil",
+    "Samtalsmottagningen Vårdcentralen Töcksfors",
+    "Vårdcentralernas digitala mottagning",
+    "Vårdhotellet Eira",
+    "Äldrevårdcentral Karlstad"
+  ],
+  "saknar_kort": [],
+  "kommun_konflikt": [],
+  "koordinat_avvikelse": [],
+  "vardbetyg_utan_1177": [
+    "Allmänmedicinsk mottagning | Karlstad | SE165560772419-11DS",
+    "Allmänmedicinska mottagningen vårdcentralen Herrhagen Karlstad | Karlstad | SE162321000156-4B5B",
+    "Bräkne-Hoby vårdcentral | Ronneby | SE2321000081-b3228",
+    "Enköpings jourmottagning | Enköping | SE162321000024-0023124",
+    "Jourcentralen i Motala | Motala | SE2321000040-4KQM",
+    "Jourcentralen Linköping | Linköping | SE2321000040-4TZ0",
+    "Jourcentralen Norrköping | Norrköping | SE2321000040-4H7M",
+    "Jourmottagning Tierp NVH | Tierp | SE162321000024-0089874",
+    "Jourmottagning Östhammar NVH | Östhammar | SE162321000024-0089875",
+    "Läkarhuset vårdcentral Väster filial Jönköping | Jönköping | SE2321000057-BM5F",
+    "Mottagning Grycksbo | Falun | SE2321000180-46TB",
+    "Mottagning Svärdsjö | Falun | SE2321000180-4702",
+    "Samariten vårdcentral | Karlshamn | SE2321000081-b3232",
+    "Tvings läkarmottagning | Karlskrona | SE5567819080-b3216",
+    "Karlshamn jourcentral | Karlshamn | SE2321000081-b402",
+    "Karlskrona Jourcentral | Karlskrona | SE2321000081-b307",
+    "Läkarhuset i Huskvarna | Jönköping | SE2321000057-5SRL"
+  ],
+  "dubblett_koordinat": [
+    {
+      "punkt": "60.666105,17.150107",
+      "enheter": [
+        "Capio Hälsocentral Gävle",
+        "Södertull Din hälsocentral"
+      ]
+    },
+    {
+      "punkt": "58.406318,13.853332",
+      "enheter": [
+        "Capio Vårdcentral Skövde City, Skövde",
+        "Capio Vårdcentral Skövde Lunden, Skövde"
+      ]
+    },
+    {
+      "punkt": "59.535608,18.082885",
+      "enheter": [
+        "Husläkarmottagningen Korallen",
+        "Vallentuna Husläkargrupp"
+      ]
+    },
+    {
+      "punkt": "57.319833,15.580023",
+      "enheter": [
+        "Läkarmottagning Dorrit Ruge",
+        "Virserums läkarhus"
+      ]
+    },
+    {
+      "punkt": "59.343688,18.050491",
+      "enheter": [
+        "Meliva Vårdcentral Matteus",
+        "Surbrunns vårdcentral"
+      ]
+    },
+    {
+      "punkt": "60.608689,16.759726",
+      "enheter": [
+        "Sandviken Norra Din hälsocentral",
+        "Sandviken Södra Din hälsocentral"
+      ]
+    },
+    {
+      "punkt": "56.836311,13.934313",
+      "enheter": [
+        "Vårdcentralen Kungshögen, Ljungby",
+        "Vårdcentralen Sländan, Ljungby"
+      ]
+    },
+    {
+      "punkt": "57.640088,18.309561",
+      "enheter": [
+        "Vårdcentralen Visby Norr, Visby",
+        "Vårdcentralen Wisby Söder, Visby"
+      ]
+    }
+  ]
+}

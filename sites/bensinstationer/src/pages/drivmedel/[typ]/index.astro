@@ -1,0 +1,48 @@
+---
+// Stationer med ett visst drivmedel (HVO100, E85, fordonsgas …) per län och kommun.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, DRIVMEDEL, harDrivmedel, LISTPRISER, kr } from "../../../site.js";
+
+const OM = {
+  hvo100: "HVO100 är en förnybar diesel av restprodukter och vegetabiliska oljor. Den kan användas i de flesta moderna dieselbilar som tillverkaren har godkänt för HVO.",
+  e85: "E85 är etanolbränsle med upp till 85 % etanol. Det kräver en bil som är byggd för etanol (flexifuel).",
+  fordonsgas: "Fordonsgas är biogas eller naturgas för gasbilar. Den säljs per kilo, inte per liter.",
+  laddning: "Laddning för elbil vid bensinstationer är oftast snabbladdning längs större vägar.",
+  adblue: "AdBlue är en urealösning som moderna dieselbilar och lastbilar behöver för att rena avgaserna.",
+  vatgas: "Vätgas används i bränslecellsbilar. Det finns bara ett fåtal tankställen i Sverige.",
+};
+export function getStaticPaths() {
+  return DRIVMEDEL.filter(([k, , , s]) => s && KAT.enheter.some((e) => harDrivmedel(e, k)))
+    .map(([nyckel, kort, namn, s]) => ({ params: { typ: s }, props: { nyckel, kort, namn, s } }));
+}
+const { nyckel, kort, namn, s } = Astro.props;
+const st = KAT.enheter.filter((e) => harDrivmedel(e, nyckel));
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: st.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const kedjor = rakna(st, (e) => e.kedja ?? "Övriga").slice(0, 8);
+const pris = LISTPRISER.snitt?.[nyckel];
+const enhet = nyckel === "biogas" ? "kg" : "l";
+const fragor = [
+  { fraga: `Var kan man tanka ${kort}?`, svar: `Vi har hittat ${st.length} stationer med ${namn} i ${perLan.length} län. Flest har ${kedjor.slice(0, 3).map(([k, n]) => `${k} (${n})`).join(", ")}.` },
+  pris && { fraga: `Vad kostar ${kort} idag?`, svar: `Snittet av kedjornas listpriser för företagskunder är ${kr(pris.pris)} per ${enhet} inkl. moms (${LISTPRISER.datum}). Priset vid pumpen kan skilja sig.` },
+  OM[s] && { fraga: `Vad är ${kort}?`, svar: OM[s] },
+].filter(Boolean);
+const titel = [`${namn} – ${st.length} stationer i Sverige`, `${kort} – ${st.length} stationer`].find((t) => t.length <= 60);
+---
+<Layout site={SITE} titel={nyckel === "el" ? `Laddning på bensinstationer – ${st.length} stationer` : `Tanka ${kort} – ${st.length} stationer med ${namn}`.length <= 60 ? `Tanka ${kort} – ${st.length} stationer med ${namn}` : titel}
+  beskrivning={`Alla ${st.length} bensinstationer med ${namn} i Sverige, sorterade per län och kommun.${pris ? ` ✓ Listpris idag ${kr(pris.pris)}/${enhet}` : ""} ✓ Öppettider ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Drivmedel", href: "/drivmedel/" }, { namn, href: `/drivmedel/${s}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Stationer med {namn}</h1>
+  <p class="svar"><strong>{st.length} stationer</strong> i {perLan.length} län säljer {namn}.{pris && <> Kedjornas listpris idag är i snitt <strong>{kr(pris.pris)}/{enhet}</strong>.</>} {OM[s]}</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="drivmedel-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>{namn} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Uppgifterna om drivmedel kommer från kedjorna och OpenStreetMap och kan vara ofullständiga.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

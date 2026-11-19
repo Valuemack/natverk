@@ -1,0 +1,38 @@
+---
+// En sida per kedja/organisation (Myrorna, Erikshjälpen, Röda Korset …) med alla butiker per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { slug, rakna, oppetHelg } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
+
+export function getStaticPaths() {
+  return rakna(KAT.enheter, (e) => e.kedja).filter(([, n]) => n >= 5)
+    .map(([kedja]) => ({ params: { kedja: slug(kedja) }, props: { kedja } }));
+}
+const { kedja } = Astro.props;
+const butiker = KAT.enheter.filter((e) => e.kedja === kedja);
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: butiker.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const storst = rakna(butiker, (e) => e.kommun).slice(0, 3);
+const sondag = butiker.filter((e) => oppetHelg(e, "sun") === true).length;
+const lordag = butiker.filter((e) => oppetHelg(e, "sat") === true).length;
+const fragor = [
+  { fraga: `Hur många butiker har ${kedja}?`, svar: `Vi listar ${butiker.length} butiker från ${kedja} i ${perLan.length} län. Flest finns i ${storst.map(([k, n]) => `${k} (${n})`).join(", ")}.` },
+  { fraga: `Har ${kedja} öppet på helger?`, svar: `${lordag} av ${kedja}s butiker har öppet på lördagar och ${sondag} på söndagar enligt våra uppgifter. Se varje butik för exakta tider.` },
+];
+---
+<Layout site={SITE} titel={`${kedja} – alla ${butiker.length} butiker med öppettider`}
+  beskrivning={`Alla ${butiker.length} ${kedja}-butiker i Sverige med adress och öppettider, sorterade per län. ✓ Öppet nu ✓ Lördagsöppet ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: kedja, href: `/kedja/${slug(kedja)}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{kedja} – butiker och öppettider</h1>
+  <p class="svar"><strong>{kedja}</strong> har <strong>{butiker.length} butiker</strong> i {perLan.length} län. {lordag} har öppet på lördagar{sondag > 0 && <> och {sondag} på söndagar</>}.</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="kedja-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>{kedja} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Sajten är oberoende och inte ansluten till {kedja}.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

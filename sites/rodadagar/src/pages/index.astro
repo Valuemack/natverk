@@ -1,0 +1,58 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import { lang, kort, veckodag, versal, isoVecka } from "@natverk/core/datum.js";
+import HelgTabell from "../components/HelgTabell.astro";
+import { helgdagarAr, rodaDagarAr, klamdagarAr, nastaHelgdag } from "../lib/helgdagar.js";
+import { omDagar, st } from "../lib/text.js";
+import { SITE, IDAG, AR, AR_LISTA, UPPDATERAD } from "../site.js";
+
+const nastaRod = nastaHelgdag(IDAG, "rod");
+const nastaLedig = nastaHelgdag(IDAG);
+const kommande = [...helgdagarAr(AR), ...helgdagarAr(AR + 1)].filter((h) => h.datum >= IDAG).slice(0, 8);
+const nastaAr = helgdagarAr(AR + 1);
+const klamNasta = klamdagarAr(AR + 1);
+const vecka = isoVecka(IDAG).vecka;
+
+const fragor = [
+  { fraga: "När är nästa röda dag?", svar: `Nästa röda dag är ${nastaRod.namn.toLowerCase()}, ${lang(nastaRod.datum)}.` },
+  { fraga: `Hur många röda dagar finns det ${AR + 1}?`, svar: `${AR + 1} har ${rodaDagarAr(AR + 1).length} röda dagar (allmänna helgdagar) i Sverige, plus helgaftnarna midsommarafton, julafton och nyårsafton.` },
+  { fraga: "Vilken vecka är det idag?", svar: `Idag, ${lang(IDAG)}, är det vecka ${vecka}.` },
+  { fraga: "Vad är skillnaden mellan röd dag och helgafton?", svar: "Röda dagar är allmänna helgdagar enligt lag (1989:253). Midsommarafton, julafton och nyårsafton är inte röda dagar, men jämställs med söndag i semesterlagen och är därför lediga för de flesta." },
+];
+---
+<Layout site={SITE} titel={`Röda dagar ${AR} och ${AR + 1} – alla helgdagar i Sverige`}
+  beskrivning={`Nästa röda dag är ${nastaRod.namn.toLowerCase()} ${kort(nastaRod.datum)}. ✓ Alla röda dagar ${AR} och ${AR + 1} ✓ Klämdagar och långhelger ✓ Veckonummer och flaggdagar – uppdateras varje dag.`}
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Röda dagar i Sverige</h1>
+  <p class="svar">
+    Nästa röda dag är <strong>{nastaRod.namn.toLowerCase()}, {lang(nastaRod.datum)}</strong> – {omDagar(IDAG, nastaRod.datum)}.
+    {nastaLedig.id !== nastaRod.id && <> Dessförinnan är det {nastaLedig.namn.toLowerCase()} {kort(nastaLedig.datum)}.</>}{" "}
+    Idag är det vecka {vecka}.
+  </p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/${y}/`}>Röda dagar {y}</a>)}</div>
+
+  <h2>Kommande helgdagar</h2>
+  <HelgTabell dagar={kommande} idag={IDAG} visaAr />
+
+  <Annons plats="start-1" />
+
+  <h2>Röda dagar {AR + 1}</h2>
+  <HelgTabell dagar={nastaAr} idag={IDAG} />
+  <p>{AR + 1} finns det {st(klamNasta.length, "klämdag", "klämdagar")}. <a href={`/${AR + 1}/`}>Se klämdagar, långhelger och arbetsdagar {AR + 1} →</a></p>
+
+  <h2>Hitta rätt datum</h2>
+  <div class="kort">
+    <a href="/pask/"><strong>Påsk</strong><small>Påskdagen och påskhelgen</small></a>
+    <a href="/midsommar/"><strong>Midsommar</strong><small>Midsommarafton varje år</small></a>
+    <a href="/kristi-himmelsfardsdag/"><strong>Kristi himmelsfärd</strong><small>Och klämdagen efter</small></a>
+    <a href="/julafton/"><strong>Julafton</strong><small>Veckodag år för år</small></a>
+    <a href="/klamdagar/"><strong>Klämdagar</strong><small>Ta ledigt smart</small></a>
+    <a href="/vecka/"><strong>Vecka {vecka}</strong><small>Vilken vecka är det?</small></a>
+  </div>
+
+  <Annons plats="start-2" />
+  <Faq fragor={fragor} />
+</Layout>

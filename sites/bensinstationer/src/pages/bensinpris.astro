@@ -1,0 +1,46 @@
+---
+// Dagens listpriser från kedjorna som publicerar dem (företagspris inkl. moms).
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { slug } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, LISTPRISER, DRIVMEDEL, kr } from "../site.js";
+
+const P = LISTPRISER;
+const SORTER = ["bensin95", "bensin98", "diesel", "e85", "hvo100", "biogas", "adblue"];
+const namn = (k) => (k === "biogas" ? "Fordonsgas (kr/kg)" : DRIVMEDEL.find((x) => x[0] === k)?.[2] ?? k);
+const sorter = SORTER.filter((k) => P.kedjor.some((c) => c.priser?.[k]));
+const lagst = (k) => Math.min(...P.kedjor.map((c) => c.priser?.[k]?.pris).filter(Boolean));
+const datum = new Date(`${P.datum}T12:00:00`).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" });
+const s = P.snitt ?? {};
+const antalSt = (kedja) => KAT.enheter.filter((e) => e.kedja === kedja).length;
+const fragor = [
+  s.bensin95 && { fraga: "Vad kostar bensin idag?", svar: `Den ${datum} är kedjornas listpris för 95 oktan i snitt ${kr(s.bensin95.pris)} per liter (${kr(s.bensin95.min)}–${kr(s.bensin95.max)}).` },
+  s.diesel && { fraga: "Vad kostar diesel idag?", svar: `Listpriset för diesel är i snitt ${kr(s.diesel.pris)} per liter den ${datum}.` },
+  { fraga: "Varför är priset vid pumpen ett annat?", svar: "Kedjorna sätter priset lokalt på varje station efter konkurrensen i området. Listpriset är kedjans pris för företagskunder och fungerar som ett riktpris. Obemannade stationer och lågpriskedjor ligger ofta under listpriset." },
+  { fraga: "Hur ofta ändras bensinpriset?", svar: "Listpriserna ändras ofta flera gånger i veckan, i takt med världsmarknadspriset och kronkursen. Vi hämtar priserna varje natt." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Bensinpris idag ${datum} – 95, diesel och E85`}
+  beskrivning={`Dagens bensinpris: 95 kostar ${s.bensin95 ? kr(s.bensin95.pris) : "–"}/l och diesel ${s.diesel ? kr(s.diesel.pris) : "–"}/l i snitt (${datum}). ✓ Listpriser från OKQ8, Circle K och Preem ✓ E85 och HVO100.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Bensinpris idag", href: "/bensinpris/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris idag</h1>
+  <p class="svar">{s.bensin95 && <>95 oktan kostar i snitt <strong>{kr(s.bensin95.pris)}</strong> per liter</>}{s.diesel && <> och diesel <strong>{kr(s.diesel.pris)}</strong></>} enligt kedjornas listpriser den {datum}.</p>
+
+  <h2>Listpriser per kedja</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th>{P.kedjor.map((c) => <th class="num">{c.kedja}</th>)}<th class="num">Snitt</th></tr></thead>
+    <tbody>{sorter.map((k) => <tr><td>{namn(k)}</td>{P.kedjor.map((c) => { const v = c.priser?.[k]?.pris; return <td class="num">{v ? (v === lagst(k) && P.kedjor.filter((x) => x.priser?.[k]).length > 1 ? <strong>{kr(v)}</strong> : kr(v)) : "–"}</td>; })}<td class="num">{s[k] ? kr(s[k].pris) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kedjornas listpriser för företagskunder inkl. moms, hämtade {P.datum}. Lägst pris i fetstil. Priset vid pumpen sätts lokalt och kan skilja sig.</p>
+
+  <Annons plats="pris-1" />
+
+  <h2>Kedjorna</h2>
+  <ul>{P.kedjor.map((c) => <li><a href={`/kedja/${slug(c.kedja)}/`}>{c.kedja}</a> – {antalSt(c.kedja)} stationer. {c.pristyp}.{c.url && <> <a href={c.url} rel="nofollow">Källa</a></>}</li>)}</ul>
+  <p>St1, Ingo, Qstar och flera andra kedjor publicerar inga listpriser.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källor: OKQ8, Circle K och Preem (publicerade listpriser). Sajten är oberoende och inte ansluten till någon kedja.</p>
+</Layout>

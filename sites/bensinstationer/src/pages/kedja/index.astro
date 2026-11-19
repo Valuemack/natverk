@@ -1,0 +1,19 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { slug, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../site.js";
+
+const kedjor = rakna(KAT.enheter, (e) => e.kedja).filter(([k, n]) => k && n >= 5);
+const ovriga = KAT.enheter.filter((e) => !e.kedja || !kedjor.some(([k]) => k === e.kedja)).length;
+---
+<Layout site={SITE} titel="Bensinkedjor i Sverige – antal stationer per kedja"
+  beskrivning={`Alla ${kedjor.length} bensinkedjor med minst fem stationer – OKQ8, St1, Circle K, Preem, Ingo, Qstar och fler – med antal stationer och öppettider.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Kedjor", href: "/kedja/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinkedjor i Sverige</h1>
+  <p class="svar">Vi listar <strong>{kedjor.length} kedjor</strong> med minst fem stationer. Störst är {kedjor.slice(0, 3).map(([k, n]) => `${k} (${n})`).join(", ")}. Ytterligare {ovriga} stationer drivs av mindre kedjor eller fristående handlare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">Dygnet runt</th></tr></thead>
+    <tbody>{kedjor.map(([k, n]) => <tr><td><a href={`/kedja/${slug(k)}/`}>{k}</a></td><td class="num">{n}</td><td class="num">{KAT.enheter.filter((e) => e.kedja === k && e.extra?.tankning_dygnet_runt).length || "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">{KALLA}</p>
+</Layout>

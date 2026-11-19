@@ -1,0 +1,34 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { kort, mandagIVecka, plusDagar, veckorIAr, iso, isoVecka } from "@natverk/core/datum.js";
+import { helgdagarAr } from "../../lib/helgdagar.js";
+import { SITE, IDAG, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
+const { ar } = Astro.props;
+const antal = veckorIAr(ar);
+const helg = new Map();
+for (const y of [ar - 1, ar, ar + 1]) for (const h of helgdagarAr(y)) {
+  const v = isoVecka(h.datum); if (v.ar === ar) helg.set(v.vecka, [...(helg.get(v.vecka) || []), h]);
+}
+const idagV = isoVecka(IDAG);
+const veckor = Array.from({ length: antal }, (_, i) => { const m = mandagIVecka(ar, i + 1); return { v: i + 1, m, s: plusDagar(m, 6) }; });
+---
+<Layout site={SITE} titel={`Veckonummer ${ar} – alla ${antal} veckor med datum`}
+  beskrivning={`Alla veckonummer ${ar} med datum för måndag och söndag. ✓ ${antal} veckor ✓ Helgdagar markerade ✓ Enligt ISO 8601.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }, { namn: `${ar}`, href: `/vecka/${ar}/` }]} uppdaterad={UPPDATERAD}>
+  <h1>Veckonummer {ar}</h1>
+  <p class="svar">{ar} har <strong>{antal} veckor</strong>. Vecka 1 börjar måndag {kort(veckor[0].m)} {veckor[0].m.getUTCFullYear()} och vecka {antal} slutar söndag {kort(veckor.at(-1).s)} {veckor.at(-1).s.getUTCFullYear()}.</p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/vecka/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Vecka</th><th>Måndag</th><th>Söndag</th><th>Helgdagar</th></tr></thead>
+    <tbody>{veckor.map(({ v, m, s }) => (
+      <tr class:list={{ markerad: idagV.ar === ar && idagV.vecka === v }}>
+        <td class="num">{v}</td><td>{kort(m)}</td><td>{kort(s)}</td>
+        <td>{(helg.get(v) || []).map((h, i) => <>{i > 0 && ", "}<a href={`/${h.slug}/`}>{h.namn}</a></>)}</td>
+      </tr>
+    ))}</tbody>
+  </table></div>
+  <Annons plats="vecka-ar" />
+</Layout>

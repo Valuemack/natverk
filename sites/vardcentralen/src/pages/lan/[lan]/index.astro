@@ -1,0 +1,8 @@
+---
+import KatalogLan from "@natverk/core/katalog/KatalogLan.astro";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../../../site.js";
+
+export const getStaticPaths = () => KAT.lan.map((l) => ({ params: { lan: l.slug }, props: { lan: l } }));
+const { lan } = Astro.props;
+---
+<KatalogLan site={SITE} kat={KAT} lan={lan} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} />

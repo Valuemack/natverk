@@ -1,0 +1,79 @@
+---
+// Pollenprognos för en mätort: senaste prognos (ordagrant), uppmätta halter och ortens pollenkalender.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Prognos from "../../components/Prognos.astro";
+import { SITE, UPPDATERAD, KALLA, KALLA_NRM, REGIONER, TYPER, prognosFor, aktuell, MATNINGAR, MATT_FRAN, MATT_TILL, kalenderFor, KALENDER_AR, mmdd, datumText, kornText, nivaText, kommunerNara } from "../../site.js";
+
+export const getStaticPaths = () => REGIONER.map((r) => ({ params: { ort: r.slug }, props: { region: r } }));
+const { region: r } = Astro.props;
+const p = prognosFor(r);
+const pagar = aktuell(p);
+const idag = pagar ? (p.dagar.find((d) => d.datum === UPPDATERAD) ?? p.dagar[0]) : null;
+const hogst = idag ? [...idag.nivaer].filter((n) => n.niva > 0).sort((a, b) => b.niva - a.niva).slice(0, 3) : [];
+const matt = MATNINGAR.filter((m) => m.region_id === r.id);
+const mattDatum = [...new Set(matt.map((m) => m.datum))].sort();
+const mattPollen = [...new Set(matt.filter((m) => m.dygnsvarde > 0).map((m) => m.pollen))];
+const kal = TYPER.map((t) => ({ t, k: kalenderFor(r, t) })).filter((x) => x.k && x.k.dagar_over_mattlig_snitt + x.k.hogsta_dygnsvarde > 0)
+  .sort((a, b) => a.k.typisk_start.localeCompare(b.k.typisk_start));
+const kalBjork = kal.find((x) => x.t.slug === "bjork")?.k, kalGras = kal.find((x) => x.t.slug === "gras")?.k;
+const forsta = kal[0]?.k;
+const nara = kommunerNara(r).slice(0, 24);
+const arText = KALENDER_AR.length ? `${KALENDER_AR[0]}–${KALENDER_AR.at(-1)}` : "";
+const fragor = [
+  kalBjork && { fraga: `När börjar björkpollensäsongen i ${r.namn}?`, svar: `Under ${arText} började björkpollensäsongen i ${r.namn} i snitt runt ${mmdd(kalBjork.typisk_start)} och var som intensivast kring ${mmdd(kalBjork.typisk_topp)}. Den var i stort sett över runt ${mmdd(kalBjork.typiskt_slut)}.` },
+  kalGras && { fraga: `När är gräspollensäsongen i ${r.namn}?`, svar: `Gräspollen förekommer i ${r.namn} ungefär från ${mmdd(kalGras.typisk_start)} till ${mmdd(kalGras.typiskt_slut)}, med högst halter kring ${mmdd(kalGras.typisk_topp)} (median ${arText}).` },
+  forsta && { fraga: `När kommer första pollenprognosen för ${r.namn}?`, svar: `Säsongen börjar oftast med ${forsta.pollen.toLowerCase()}, som i ${r.namn} brukar komma igång runt ${mmdd(forsta.typisk_start)}. Naturhistoriska riksmuseet publicerar prognoser när halterna börjar stiga.` },
+  { fraga: `Gäller pollenprognosen för ${r.namn} även för närliggande orter?`, svar: `Prognosen bygger på mätningar i ${r.namn} och ger en bra bild av läget i omgivningen${nara.length > 1 ? `, till exempel ${nara.slice(1, 4).map((k) => k.namn).join(", ")}` : ""}. Lokalt kan halterna skilja sig, särskilt nära stora björkbestånd eller gräsytor.` },
+].filter(Boolean);
+const titel = pagar ? `Pollenprognos ${r.namn} idag – björk, gräs och fler` : `Pollenprognos ${r.namn} – pollenkalender och halter`;
+---
+<Layout site={SITE} titel={titel.length <= 60 ? titel : `Pollenprognos ${r.namn}`}
+  beskrivning={`Pollenläget i ${r.namn}: ${pagar ? "dagens prognos" : "senaste prognosen"} från Naturhistoriska riksmuseet, uppmätta halter och när björk-, gräs- och hasselsäsongen brukar börja.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: r.namn, href: `/${r.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Pollenprognos {r.namn}</h1>
+  <p class="svar">
+    {pagar
+      ? (hogst.length ? <>Idag väntas {hogst.map((n, i) => <>{i > 0 && (i === hogst.length - 1 ? " och " : ", ")}<strong>{nivaText(n.niva).toLowerCase()} halter av {n.pollen.toLowerCase()}</strong></>)} i {r.namn}.</> : <>Idag väntas inga halter av pollen i {r.namn}.</>)
+      : <>Pollensäsongen är slut för i år i {r.namn}.{forsta && <> Nästa säsong börjar oftast med {forsta.pollen.toLowerCase()} runt <strong>{mmdd(forsta.typisk_start)}</strong>.</>}{kalBjork && <> Björkpollen brukar komma runt {mmdd(kalBjork.typisk_start)}.</>}</>}
+  </p>
+
+  <h2>{pagar ? "Dagens prognos" : "Senaste prognosen"}</h2>
+  {p ? <Prognos prognos={p} /> : <p>Det finns ingen prognos för {r.namn} just nu.</p>}
+
+  <Annons plats="ort-1" />
+
+  <h2>Uppmätta halter i {r.namn}</h2>
+  {mattPollen.length > 0 ? <>
+    <div class="tabell"><table>
+      <thead><tr><th>Pollenslag</th>{mattDatum.map((d) => <th class="num">{+d.slice(8, 10)}/{+d.slice(5, 7)}</th>)}</tr></thead>
+      <tbody>{mattPollen.map((namn) => <tr><td>{namn}</td>{mattDatum.map((d) => { const m = matt.find((x) => x.pollen === namn && x.datum === d); return <td class="num">{m ? (m.tekniskt_fel ? "fel" : m.dygnsvarde) : "–"}</td>; })}</tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Dygnsmedelvärden i pollenkorn per kubikmeter luft. "Fel" betyder att mätningen saknas, inte att halten var noll.</p>
+  </> : <p>Inga pollen uppmättes i {r.namn} {MATT_FRAN && MATT_TILL ? `mellan ${datumText(MATT_FRAN)} och ${datumText(MATT_TILL)}` : "den senaste veckan"}.</p>}
+
+  {kal.length > 0 && <>
+    <h2 id="kalender">Pollenkalender för {r.namn}</h2>
+    <p>När säsongen för varje pollenslag brukar börja, toppa och ta slut i {r.namn}. Median för {arText}, räknat från uppmätta halter (säsong = dagarna mellan 5 och 95 procent av årets pollenmängd).</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Pollenslag</th><th>Börjar</th><th>Topp</th><th>Slutar</th><th class="num">Dagar med höga halter*</th><th class="num">Högsta dygnsvärde</th></tr></thead>
+      <tbody>{kal.map(({ t, k }) => <tr><td><a href={`/pollen/${t.slug}/`}>{t.namn}</a></td><td>{mmdd(k.typisk_start, false)}</td><td>{mmdd(k.typisk_topp, false)}</td><td>{mmdd(k.typiskt_slut, false)}</td><td class="num">{k.dagar_over_mattlig_snitt}</td><td class="num">{kornText(k.hogsta_dygnsvarde)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">* Snitt per år med halter över gränsen för måttliga halter för respektive pollenslag. Bearbetning av uppmätta halter från {KALLA_NRM} (CC BY-SA 4.0).</p>
+  </>}
+
+  {nara.length > 1 && <>
+    <h2>Närliggande kommuner</h2>
+    <p>{r.namn} är närmaste mätort för de här kommunerna:</p>
+    <ul class="kolumner">{nara.map((k) => <li>{k.namn} <small>({k.km} km)</small></li>)}</ul>
+  </>}
+
+  <h2>Andra orter</h2>
+  <ul class="kolumner">{REGIONER.filter((x) => x !== r).map((x) => <li><a href={`/${x.slug}/`}>{x.namn}</a></li>)}</ul>
+
+  <Annons plats="ort-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

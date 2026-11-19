@@ -1,0 +1,24 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../site.js";
+---
+<Layout site={SITE} titel="Om rödadagar.nu – källor och metod"
+  beskrivning="Så räknar rödadagar.nu ut röda dagar, klämdagar, flaggdagar och veckonummer: källor, lagar och metod."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om rödadagar.nu</h1>
+  <p class="ingress">rödadagar.nu samlar alla röda dagar, helgaftnar, klämdagar, flaggdagar och veckonummer i Sverige på ett ställe – snabbt, utan inloggning och uppdaterat varje dag.</p>
+
+  <h2 id="kallor">Källor och metod</h2>
+  <ul>
+    <li><strong>Röda dagar:</strong> lag (1989:253) om allmänna helgdagar.</li>
+    <li><strong>Helgaftnar:</strong> midsommarafton, julafton och nyårsafton jämställs med söndag enligt semesterlagen (1977:480) 3 a §.</li>
+    <li><strong>Flaggdagar:</strong> förordning (1982:270) om allmänna flaggdagar.</li>
+    <li><strong>Påskdagen</strong> räknas ut med den gregorianska påskberäkningen (Meeus/Jones/Butcher). Övriga rörliga helgdagar räknas från påskdagen eller från lagens regler, t.ex. "lördagen mellan 20 och 26 juni".</li>
+    <li><strong>Veckonummer</strong> följer ISO 8601, som används i Sverige.</li>
+    <li><strong>Klämdagar</strong> definieras här som en vardag där både dagen före och dagen efter är lediga (helg, röd dag eller helgafton).</li>
+  </ul>
+  <p>Alla datum räknas fram automatiskt och kontrolleras mot officiella datum. Sajten byggs om varje natt så att "idag", "nästa röda dag" och veckonumret alltid stämmer.</p>
+
+  <h2 id="kontakt">Kontakt</h2>
+  <p>Har du hittat ett fel? Hör av dig så rättar vi det.</p>
+</Layout>

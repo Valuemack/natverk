@@ -1,0 +1,29 @@
+---
+// Översikt: second hand som går till välgörenhet, per organisation.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { slug, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const valg = KAT.enheter.filter((e) => e.valgorenhet);
+const kedjor = rakna(valg, (e) => e.kedja ?? e.organisation);
+const fragor = [
+  { fraga: "Vilka second hand-butiker går till välgörenhet?", svar: `Bland annat ${kedjor.slice(0, 6).map(([k]) => k).join(", ")}. Vi listar ${valg.length} butiker där överskottet går till välgörande ändamål.` },
+  { fraga: "Kan man skänka saker till second hand?", svar: "Ja, de flesta välgörenhetsbutiker tar emot kläder, husgeråd, böcker och möbler i gott skick under öppettiderna. Kontrollera med butiken vad de tar emot – många tar inte emot stora möbler eller vitvaror." },
+];
+---
+<Layout site={SITE} titel={`Second hand för välgörenhet – ${valg.length} butiker i Sverige`}
+  beskrivning={`${valg.length} second hand-butiker där överskottet går till välgörenhet: ${kedjor.slice(0, 4).map(([k]) => k).join(", ")} m.fl. ✓ Öppettider ✓ Per kommun.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Välgörenhet", href: "/valgorenhet/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Second hand som går till välgörenhet</h1>
+  <p class="svar">Vi listar <strong>{valg.length} butiker</strong> där överskottet går till välgörande ändamål, fördelade på {kedjor.length} organisationer.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Organisation</th><th class="num">Butiker</th></tr></thead>
+    <tbody>{kedjor.map(([k, n]) => <tr><td>{n >= 5 && KAT.enheter.some((e) => e.kedja === k) ? <a href={`/kedja/${slug(k)}/`}>{k}</a> : k}</td><td class="num">{n}</td></tr>)}</tbody>
+  </table></div>
+  <Annons plats="valg-1" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

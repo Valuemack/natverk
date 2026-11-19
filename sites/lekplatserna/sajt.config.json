@@ -1,0 +1,22 @@
+{
+  "mapp": "lekplatserna",
+  "namn": "Lekplatserna",
+  "visningsnamn": "lekplatserna.nu",
+  "url": "https://lekplatserna.nu",
+  "tema": "natur",
+  "tagline": "Lekplatser i hela Sverige",
+  "tjanstText": "Oberoende lekplatsguide · Uppgifter från kommuner och OpenStreetMap",
+  "kallor": ["Kommunernas öppna data", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Lekplatser i alla Sveriges kommuner – temalekplatser, naturlekplatser och lekplatser med linbana, vattenlek och kompisgunga. Uppdateras varje natt.",
+  "farg": "#2f6b2f",
+  "ord": { "sing": "lekplats", "plur": "lekplatser", "art": "en" },
+  "schemaTyp": "Playground",
+  "titelOrd": "utrustning",
+  "datafil": "../parkering-lek/data/lekplatser.json",
+  "dataSkript": "node ../parkering-lek/scripts/run-all.mjs",
+  "startTitel": "Lekplatser nära dig – temalekplatser och utrustning",
+  "startH1": "Hitta en lekplats nära dig",
+  "kallaText": "Källor: kommunernas öppna data och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).",
+  "harEgenSida": "(e) => false",
+  "meny": [{ "namn": "Temalekplatser", "href": "/temalekplatser/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

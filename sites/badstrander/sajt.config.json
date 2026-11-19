@@ -1,0 +1,18 @@
+{
+  "mapp": "badstrander",
+  "namn": "Badstränder",
+  "visningsnamn": "badstränder.se",
+  "url": "https://xn--badstrnder-v5a.se",
+  "beskrivning": "Alla badplatser och badstränder i Sverige med vattenkvalitet, provsvar och badtemperatur – från Havs- och vattenmyndighetens öppna data. Uppdateras varje natt.",
+  "farg": "#0b6e99",
+  "ikonText": "~",
+  "ord": { "sing": "badplats", "plur": "badplatser", "art": "en" },
+  "schemaTyp": "Beach",
+  "titelOrd": "vattenkvalitet",
+  "datafil": "../api-data/data/badplatser.json",
+  "startTitel": "Badplatser och badstränder i Sverige – vattenkvalitet",
+  "startH1": "Badplatser och badstränder i Sverige",
+  "kallaText": "Källa: Havs- och vattenmyndigheten (HaV), öppna data om badplatser och badvatten. Provtagning görs av kommunerna under badsäsongen.",
+  "harEgenSida": "(e) => !!(e.extra?.antal_prov || e.extra?.beskrivning || e.extra?.sammanfattning)",
+  "meny": [{ "namn": "Bästa vattenkvalitet", "href": "/basta-vattenkvalitet/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

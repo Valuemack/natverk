@@ -1,0 +1,17 @@
+---
+// Öppettidstabell för en enhet. Dagens rad markeras i webbläsaren (OppetNuSkript).
+import { DAGAR, DAGNAMN, dagText } from "../katalog.js";
+const { oppettider, rubrik = "Öppettider" } = Astro.props;
+---
+{oppettider && (
+  <div class="tabell oppettider">
+    <table>
+      <caption class="vis-ej">{rubrik}</caption>
+      <tbody>
+        {DAGAR.map((d) => (
+          <tr data-dag={d}><th scope="row">{DAGNAMN[d]}</th><td>{dagText(oppettider[d])}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}

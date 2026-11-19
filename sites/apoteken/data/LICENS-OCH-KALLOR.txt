@@ -1,0 +1,7 @@
+Källor för apotek.json
+- Läkemedelsverket, "Sök apotek som har tillstånd" (masterlista: namn, adress, kommun, län, tillståndshavare, GLN).
+  Öppna data (CC0 / CC BY 4.0 enligt lakemedelsverket.se/sv/om-webbplatsen/oppna-data) — ange "Källa: Läkemedelsverket".
+- Kedjornas egna apotekssök (Apoteket, Kronans Apotek, Apotek Hjärtat): koordinater, öppettider, telefon.
+- OpenStreetMap: © OpenStreetMap contributors, ODbL 1.0, https://www.openstreetmap.org/copyright
+  Sidor som visar OSM-härledda data (koordinater/öppettider med källa OpenStreetMap) måste visa attribution.
+- SCB: kommun- och länskoder (CC0).

@@ -1,0 +1,16 @@
+---
+// En dynamisk route för både årssidor (/2027/) och helgdagssidor (/pask/).
+import ArSida from "../../components/ArSida.astro";
+import HelgdagSida from "../../components/HelgdagSida.astro";
+import { HELGDAGAR } from "../../lib/helgdagar.js";
+import { AR_LISTA } from "../../site.js";
+
+export function getStaticPaths() {
+  return [
+    ...AR_LISTA.map((ar) => ({ params: { sida: String(ar) }, props: { typ: "ar", ar } })),
+    ...HELGDAGAR.map((h) => ({ params: { sida: h.slug }, props: { typ: "helgdag", h } })),
+  ];
+}
+const p = Astro.props;
+---
+{p.typ === "ar" ? <ArSida ar={p.ar} /> : <HelgdagSida h={p.h} />}

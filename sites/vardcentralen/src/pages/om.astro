@@ -1,0 +1,15 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+---
+<Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
+  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om ${ORD.plur} i Sverige: källor, uppdatering och rättelser.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om {SITE.visningsnamn}</h1>
+  <p class="ingress">{SITE.beskrivning}</p>
+  <h2 id="kallor">Källor och metod</h2>
+  <p>{KALLA}</p>
+  <p>Just nu listar vi {KAT.enheter.length} {ORD.plur} i {KAT.kommuner.length} kommuner. Uppgifterna hämtas och kontrolleras automatiskt varje natt. Öppettider kan avvika vid helgdagar – kontrollera gärna med verksamheten innan du åker.</p>
+  <h2 id="kontakt">Kontakt och rättelser</h2>
+  <p>Har du hittat ett fel eller saknas något? Hör av dig så rättar vi det.</p>
+</Layout>

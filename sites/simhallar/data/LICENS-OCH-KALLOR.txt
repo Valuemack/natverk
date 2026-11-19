@@ -1,0 +1,42 @@
+LICENS OCH KÄLLOR – data/simhallar.json
+========================================
+
+1. OpenStreetMap
+   Basposter (namn, koordinater, ibland adress/öppettider) kommer från OpenStreetMap
+   via ../osm-data/data/simhallar.json och ../osm-data/data/raw/.
+   © OpenStreetMap-bidragsgivare. Licens: Open Database License (ODbL) 1.0,
+   https://www.openstreetmap.org/copyright
+   Krav: ange "© OpenStreetMap-bidragsgivare" på sajten. Härledd databas som
+   publiceras i sin helhet ska delas under ODbL.
+
+2. Kommunernas och operatörernas webbplatser
+   Faktauppgifter (öppettider, priser, bassängmått, faciliteter, adress, telefon,
+   avvikande tider) har hämtats från kommunernas webbplatser, anläggningarnas egna
+   sajter och operatörerna Medley (medley.se) och Actic (actic.se).
+   Endast fakta har extraherats – inga texter, bilder eller logotyper. Källsidor
+   per post finns i fälten "kallor" och "extra.kalla_urls", med datum i
+   "extra.senast_kontrollerad". Fakta ska kontrolleras mot källan, uppgifter kan ändras.
+
+3. Wikidata
+   Kommunernas webbadresser (P856) och kommunkoder (P525). CC0 1.0.
+
+4. SCB – kommungränser
+   Används för punkt-i-polygon (kommun/län). data/raw/scb-kommuner.json. CC0 1.0.
+
+HÄMTNINGSREGLER
+   robots.txt följs (inkl. regler riktade mot AI-crawlers), max 1 anrop/s per värd,
+   generisk User-Agent, inga försök att kringgå CAPTCHA, inloggning eller botskydd.
+
+BLOCKERADE / ÖVERHOPPADE VÄRDAR (senaste körning, se data/raw/crawl-summary.json)
+   robots.txt blockerar AI-agenter:
+     www.tanum.se, tanum.se, ersbodabadet.valei.com,
+     boxholmssimhall.valei.com, www.campcation.com, bibliotek.gislaved.se,
+     bibliotek.sundbyberg.se, bibliotek.staffanstorp.se, bibliotek.lessebo.se
+   robots.txt Disallow: /
+     www.kagebadet.com, hogevall.se, www.parkbadet.se, service.falun.se,
+     public.paloma.se, spoxy4.insipio.com, sjalvservice3.tranemo.se, miljo-bygg.vdmb.se
+   Botskydd (HTTP 403):
+     www.sibbarpssaltsjobad.se
+   Crawl-delay över 10 s:
+     faluvildvattenpark.se (20 s)
+   För dessa används endast OSM-uppgifter.

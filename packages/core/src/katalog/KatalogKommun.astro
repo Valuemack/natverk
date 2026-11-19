@@ -1,0 +1,89 @@
+---
+// Kommunsida: alla enheter i en kommun, grupperade per ort när kommunen är stor.
+// Unikt per kommun: antal, söndags-/kvällsöppet, kedjefördelning, orter, grannkommuner.
+import Layout from "../Layout.astro";
+import Annons from "../Annons.astro";
+import Faq from "../Faq.astro";
+import { faqLd } from "../seo.js";
+import EnhetLista from "./EnhetLista.astro";
+import OppetNuSkript from "./OppetNuSkript.astro";
+import { harOppettider, oppetHelg, sentOppet, grannkommuner, rakna } from "../katalog.js";
+
+const { site, kat, kommun: k, ord, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider" } = Astro.props;
+const Plur = ord.plur[0].toUpperCase() + ord.plur.slice(1);
+const lan = kat.lan.find((l) => l.slug === k.lanSlug);
+const n = k.enheter.length;
+const medTider = k.enheter.filter(harOppettider);
+const visaTider = medTider.length >= Math.max(1, n * 0.5);
+const sondag = k.enheter.filter((e) => oppetHelg(e, "sun") === true);
+const lordag = k.enheter.filter((e) => oppetHelg(e, "sat") === true);
+const kvall = k.enheter.filter(sentOppet);
+const kedjor = rakna(k.enheter, (e) => e.kedja).filter(([, c]) => c > 0);
+const orter = rakna(k.enheter, (e) => e.ort);
+const perOrt = n > 8 && orter.length > 1;
+const grannar = grannkommuner(k, kat.kommuner, 6);
+const ingen = ord.art === "ett" ? "inget" : "ingen";
+const en = ord.art === "ett" ? "Ett" : "En";
+const antalText = (x) => (x === 1 ? `1 ${ord.sing}` : `${x} ${ord.plur}`);
+
+const titelKandidater = [`${Plur} i ${k.namn} – ${n} st med ${titelOrd}`, `${Plur} i ${k.namn} – ${n} st`];
+const titel = titelKandidater.find((t) => t.length <= 60) ?? titelKandidater.at(-1);
+const beskrivning = `${n === 1 ? `${ord.art === "ett" ? "Det" : "Den"} enda` : `Alla ${n}`} ${n === 1 ? ord.sing : ord.plur} i ${k.namn} med ${visaTider ? "adress och öppettider" : titelOrd}.${visaTider ? " ✓ Öppet nu" : ""}${visaTider && sondag.length ? " ✓ Söndagsöppet" : ""} ✓ Närmaste ${ord.sing} i grannkommunerna.`;
+
+const lista = (arr) => arr.slice(0, 5).map((e) => e.namn).join(", ") + (arr.length > 5 ? ` och ${arr.length - 5} till` : "");
+const fragor = [
+  { fraga: `Hur många ${ord.plur} finns det i ${k.namn}?`, svar: `Det finns ${antalText(n)} i ${k.namn} kommun${orter.length > 1 ? `, fördelade på ${orter.length} orter` : ""}.` },
+  visaTider && { fraga: `Vilka ${ord.plur} har öppet på söndagar i ${k.namn}?`, svar: sondag.length ? `${sondag.length === 1 ? en : sondag.length} har söndagsöppet: ${lista(sondag)}.` : `Enligt våra uppgifter har ${ingen} ${ord.sing} i ${k.namn} öppet på söndagar.${grannar[0] ? ` Prova ${grannar[0].namn}.` : ""}` },
+  visaTider && kvall.length > 0 && { fraga: `Vilka ${ord.plur} har öppet sent i ${k.namn}?`, svar: `${lista(kvall)} har öppet till klockan 20 eller senare någon vardag.` },
+  kedjor.length > 1 && { fraga: `Vilka kedjor finns i ${k.namn}?`, svar: kedjor.map(([namn, c]) => `${namn} (${c})`).join(", ") + "." },
+  ...extraFragor,
+].filter(Boolean);
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+---
+<Layout site={site} titel={titel} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={uppdaterad}>
+  <h1>{Plur} i {k.namn}</h1>
+  <p class="svar">
+    I {k.namn} finns <strong>{antalText(n)}</strong>{orter.length > 1 && <> på {orter.length} orter</>}.
+    {visaTider && <> {sondag.length ? <><strong>{sondag.length}</strong> har öppet på söndagar</> : <>{ingen[0].toUpperCase() + ingen.slice(1)} har öppet på söndagar</>}{lordag.length > 0 && <> och {lordag.length} på lördagar</>}.</>}
+    {kedjor.length > 0 && kedjor[0][1] > 1 && <> Flest har {kedjor[0][0]} ({kedjor[0][1]} st).</>}
+  </p>
+  <slot name="ingress" />
+
+  {perOrt ? orter.map(([ort], i) => (
+    <>
+      <h2>{Plur} i {ort}</h2>
+      <EnhetLista enheter={k.enheter.filter((e) => e.ort === ort)} />
+      {i === 0 && <Annons plats="kommun-1" />}
+    </>
+  )) : <>
+    <h2>Alla {ord.plur} i {k.namn}</h2>
+    <EnhetLista enheter={k.enheter} />
+    <Annons plats="kommun-1" />
+  </>}
+  {perOrt && k.enheter.some((e) => !e.ort) && <EnhetLista enheter={k.enheter.filter((e) => !e.ort)} />}
+
+  {visaTider && sondag.length > 0 && sondag.length < n && <>
+    <h2>Söndagsöppet i {k.namn}</h2>
+    <ul>{sondag.map((e) => <li><a href={e.href}>{e.namn}</a>{e.ort && e.ort !== k.namn && `, ${e.ort}`}</li>)}</ul>
+  </>}
+
+  {kedjor.length > 1 && <>
+    <h2>Kedjor i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Kedja</th><th class="num">Antal</th></tr></thead>
+      <tbody>{kedjor.map(([namn, c]) => <tr><td>{namn}</td><td class="num">{c}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  <slot />
+
+  {grannar.length > 0 && <>
+    <h2>{Plur} i närliggande kommuner</h2>
+    <div class="kort">{grannar.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{antalText(g.enheter.length)}</small></a>)}</div>
+  </>}
+
+  <Annons plats="kommun-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{kallaText} Hittar du ett fel? <a href="/om/#kontakt">Tipsa oss</a>.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

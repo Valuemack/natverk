@@ -1,0 +1,23 @@
+---
+import { lang, kort, veckodag, isoVecka, iso, versal } from "@natverk/core/datum.js";
+const { dagar, idag, visaAr = false } = Astro.props;
+const nastaIso = dagar.find((d) => d.datum >= idag) ? iso(dagar.find((d) => d.datum >= idag).datum) : null;
+---
+<div class="tabell">
+  <table>
+    <thead><tr><th>Helgdag</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th></tr></thead>
+    <tbody>
+      {dagar.map((d) => (
+        <tr class:list={{ markerad: iso(d.datum) === nastaIso }}>
+          <td>
+            <a href={`/${d.slug}/`}>{d.namn}</a>
+            {d.typ === "rod" ? <span class="etikett rod">Röd dag</span> : <span class="etikett">Helgafton</span>}
+          </td>
+          <td>{visaAr ? kort(d.datum) + " " + d.datum.getUTCFullYear() : kort(d.datum)}</td>
+          <td>{versal(veckodag(d.datum))}</td>
+          <td class="num">{isoVecka(d.datum).vecka}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

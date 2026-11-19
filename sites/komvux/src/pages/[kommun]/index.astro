@@ -1,0 +1,117 @@
+---
+// Komvux och sfi i en kommun: enheter per utbildningsform + Skolverkets jämförelsetal mot riket och grannkommuner.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { grannkommuner } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor, grupp } from "../../site.js";
+
+export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+const { kommun: k } = Astro.props;
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const n = k.enheter.length;
+const har = (niva) => k.enheter.some((e) => e.extra?.nivaer?.includes(niva));
+const GRUPPER = [
+  { id: "komvux", rubrik: `Komvux i ${k.namn}`, enheter: k.enheter.filter((e) => grupp(e) === "komvux") },
+  { id: "sfi", rubrik: `Sfi i ${k.namn}`, enheter: k.enheter.filter((e) => grupp(e) === "sfi") },
+  { id: "anpassad", rubrik: `Anpassad utbildning för vuxna i ${k.namn}`, enheter: k.enheter.filter((e) => grupp(e) === "anpassad") },
+].filter((g) => g.enheter.length);
+const s = statFor(k);
+const kv = s?.komvux, sf = s?.sfi;
+const grannar = grannkommuner(k, KAT.kommuner, 6);
+// Utbildningsanordnare som kommunen anlitar på entreprenad (unika namn).
+const anordnare = [...new Map(k.enheter.flatMap((e) => e.extra?.entreprenad_anordnare ?? []).filter((a) => a.anordnare !== `${k.namn} kommun`).map((a) => [a.anordnare, a])).values()]
+  .sort((a, b) => a.anordnare.localeCompare(b.anordnare, "sv"));
+const gen = (x) => (/[sxz]$/i.test(x) ? x : `${x}s`);
+const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
+const jmf = (v, r, hogreBattre) => {
+  if (v == null || r == null || v === r || hogreBattre === undefined) return "";
+  return (hogreBattre ? v > r : v < r) ? "bättre än riket" : "sämre än riket";
+};
+const rad = (namn, v, r, opt = {}) => ({ namn, v, r, ...opt });
+const KOMVUX = kv ? [
+  rad("Elever, grundläggande nivå", kv.elever_grundlaggande, null, { antal: true }),
+  rad("Elever, gymnasial nivå", kv.elever_gymnasial, null, { antal: true }),
+  rad("Studerar på distans, gymnasial", kv.andel_distans_gymnasial, RIKET.komvux?.andel_distans_gymnasial, { pct: true }),
+  rad("Studerar på distans, grundläggande", kv.andel_distans_grundlaggande, RIKET.komvux?.andel_distans_grundlaggande, { pct: true }),
+  rad("Hos annan anordnare än kommunen, gymnasial", kv.andel_annan_anordnare_gymnasial, RIKET.komvux?.andel_annan_anordnare_gymnasial, { pct: true }),
+  rad("Kvinnor, gymnasial nivå", kv.andel_kvinnor_gymnasial, RIKET.komvux?.andel_kvinnor_gymnasial, { pct: true }),
+  rad("Elever från annan kommun, gymnasial", kv.andel_fran_annan_kommun_gymnasial, RIKET.komvux?.andel_fran_annan_kommun_gymnasial, { pct: true }),
+].filter((x) => x.v != null) : [];
+const SFI = sf ? [
+  rad("Elever i sfi", sf.elever, null, { antal: true }),
+  rad("Godkända av avslutade kurser", sf.andel_godkanda_av_avslutade_eller_avbrutna, RIKET.sfi?.andel_godkanda_av_avslutade_eller_avbrutna, { pct: true, hb: true }),
+  rad("Avbrutna kurser", sf.andel_avbrutna, RIKET.sfi?.andel_avbrutna, { pct: true, hb: false }),
+  rad("Studerar på distans", sf.andel_distans, RIKET.sfi?.andel_distans, { pct: true }),
+  rad("Hos annan anordnare än kommunen", sf.andel_annan_anordnare, RIKET.sfi?.andel_annan_anordnare, { pct: true }),
+  rad("Kvinnor", sf.andel_kvinnor, RIKET.sfi?.andel_kvinnor, { pct: true }),
+].filter((x) => x.v != null) : [];
+
+const vad = [har("grundläggande") || har("gymnasial") ? "komvux" : null, har("sfi") ? "sfi" : null].filter(Boolean);
+const vadText = vad.length ? vad.join(" och ") : "vuxenutbildning";
+const titel = [`Komvux i ${k.namn} – ${vadText}, skolor och statistik`, `Komvux i ${k.namn} – ${vadText} och statistik`, `Komvux i ${k.namn} – ${n} skolor`].find((t) => t.length <= 60);
+const fragor = [
+  { fraga: `Var finns komvux i ${k.namn}?`, svar: `Skolverket har ${n} registrerade skolenheter för vuxenutbildning i ${k.namn}: ${GRUPPER.map((g) => `${g.enheter.length} för ${g.id === "anpassad" ? "anpassad utbildning" : g.id}`).join(", ")}. Adresserna finns i listan på sidan.` },
+  { fraga: `Hur söker man komvux i ${k.namn}?`, svar: `Du söker till komvux och sfi hos din hemkommun, oftast via ${gen(k.namn)} e-tjänst för vuxenutbildning. Kommunen bestämmer vilken anordnare du får läsa hos. Det är gratis att studera, men du kan behöva köpa kurslitteratur.` },
+  kv?.andel_distans_gymnasial != null && { fraga: `Kan man läsa komvux på distans i ${k.namn}?`, svar: `Ja. ${tal(kv.andel_distans_gymnasial)} % av eleverna på gymnasial nivå i ${k.namn} läste på distans (riket ${tal(RIKET.komvux?.andel_distans_gymnasial)} %, ${kv.ar}).` },
+  sf?.andel_godkanda_av_avslutade_eller_avbrutna != null && { fraga: `Hur många klarar sfi i ${k.namn}?`, svar: `Av de sfi-kurser som avslutades eller avbröts i ${k.namn} ${sf.ar} blev ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} % godkända, jämfört med ${tal(RIKET.sfi?.andel_godkanda_av_avslutade_eller_avbrutna)} % i hela riket.` },
+  { fraga: "Vem har rätt att läsa på komvux?", svar: "Du har rätt att läsa på komvux från den 1 juli det år du fyller 20, eller tidigare om du redan har gått klart gymnasiet. Sfi kan du läsa från den 1 juli det år du fyller 16, om du bor i Sverige och saknar grundläggande kunskaper i svenska." },
+].filter(Boolean);
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+---
+<Layout site={SITE} titel={titel ?? `Komvux i ${k.namn}`}
+  beskrivning={`Komvux och sfi i ${k.namn}: ${n} ${n === 1 ? "skolenhet" : "skolenheter"} med adress och utbildningar.${kv?.elever_gymnasial ? ` ✓ ${tal(kv.elever_gymnasial, 0)} elever på gymnasial nivå` : ""}${sf?.andel_godkanda_av_avslutade_eller_avbrutna != null ? ` ✓ ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna, 0)} % godkända i sfi` : ""} ✓ Så söker du.`}
+  smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Komvux i {k.namn}</h1>
+  <p class="svar">
+    I {k.namn} finns <strong>{n} {n === 1 ? "skolenhet" : "skolenheter"}</strong> för vuxenutbildning{vad.length > 0 && <> med {vadText}</>}.
+    {kv?.elever_gymnasial != null && <> {tal(kv.elever_gymnasial, 0)} personer läste på gymnasial nivå och {tal(kv.elever_grundlaggande, 0)} på grundläggande nivå ({kv.ar}).</>}
+    {" "}Du söker alltid via din hemkommun.
+  </p>
+
+  {GRUPPER.map((g, i) => <>
+    <h2 id={g.id}>{g.rubrik}</h2>
+    <EnhetLista enheter={g.enheter} />
+    {i === 0 && <Annons plats="kommun-1" />}
+  </>)}
+
+  {KOMVUX.length > 0 && <>
+    <h2>Komvux i {k.namn} jämfört med riket</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Nyckeltal ({kv.ar})</th><th class="num">{k.namn}</th><th class="num">Riket</th></tr></thead>
+      <tbody>{KOMVUX.map((x) => <tr><td>{x.namn}</td><td class="num"><strong>{tal(x.v, x.antal ? 0 : 1)}{x.pct && " %"}</strong></td><td class="num">{x.r == null ? "" : <>{tal(x.r)}{x.pct && " %"}</>}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  {SFI.length > 0 && <>
+    <h2>Sfi i {k.namn} jämfört med riket</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Nyckeltal ({sf.ar})</th><th class="num">{k.namn}</th><th class="num">Riket</th><th></th></tr></thead>
+      <tbody>{SFI.map((x) => <tr><td>{x.namn}</td><td class="num"><strong>{tal(x.v, x.antal ? 0 : 1)}{x.pct && " %"}</strong></td><td class="num">{x.r == null ? "" : <>{tal(x.r)}{x.pct && " %"}</>}</td><td><small>{jmf(x.v, x.r, x.hb)}</small></td></tr>)}</tbody>
+    </table></div>
+  </>}
+  {(KOMVUX.length > 0 || SFI.length > 0) && <p class="kalla">Källa: Skolverket, kommunala jämförelsetal. Värdena gäller kommunens vuxenutbildning sammantaget, inte enskilda skolor.</p>}
+
+  {anordnare.length > 0 && <>
+    <h2>Anordnare som {k.namn} anlitar</h2>
+    <p>Kommunen köper delar av utbildningen från de här anordnarna enligt Skolenhetsregistrets entreprenadavtal. Vilken anordnare du kan välja framgår av kommunens ansökan.</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Anordnare</th><th>Utbildningar</th></tr></thead>
+      <tbody>{anordnare.map((a) => <tr><td>{a.anordnare}</td><td>{(a.nivaer ?? []).join(", ")}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  {grannar.length > 0 && <>
+    <h2>Jämför med grannkommunerna</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Kommun</th><th class="num">Skolenheter</th><th class="num">Elever gymn.</th><th class="num">Sfi godkända</th></tr></thead>
+      <tbody>{[k, ...grannar].map((g) => { const gs = statFor(g); return <tr class:list={{ markerad: g === k }}><td>{g === k ? g.namn : <a href={g.href}>{g.namn}</a>}</td><td class="num">{g.enheter.length}</td><td class="num">{tal(gs?.komvux?.elever_gymnasial, 0)}</td><td class="num">{gs?.sfi?.andel_godkanda_av_avslutade_eller_avbrutna != null ? `${tal(gs.sfi.andel_godkanda_av_avslutade_eller_avbrutna, 0)} %` : "–"}</td></tr>; })}</tbody>
+    </table></div>
+  </>}
+
+  <Annons plats="kommun-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

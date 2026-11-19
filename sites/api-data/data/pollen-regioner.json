@@ -1,0 +1,194 @@
+[
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a33",
+    "namn": "Borlänge",
+    "slug": "borlange",
+    "hela_landet": false,
+    "lat": 60.48694,
+    "lon": 15.40722
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3131",
+    "namn": "Bräkne-Hoby",
+    "slug": "brakne-hoby",
+    "hela_landet": false,
+    "lat": 56.22517,
+    "lon": 15.12286
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3134",
+    "namn": "Eskilstuna",
+    "slug": "eskilstuna",
+    "hela_landet": false,
+    "lat": 59.36294,
+    "lon": 16.53489
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a34",
+    "namn": "Forshaga",
+    "slug": "forshaga",
+    "hela_landet": false,
+    "lat": 59.53414,
+    "lon": 13.48208
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a35",
+    "namn": "Gävle",
+    "slug": "gavle",
+    "hela_landet": false,
+    "lat": 60.667478,
+    "lon": 17.113161
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+    "namn": "Göteborg",
+    "slug": "goteborg",
+    "hela_landet": false,
+    "lat": 57.72117,
+    "lon": 12.05183
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3130",
+    "namn": "Hässleholm",
+    "slug": "hassleholm",
+    "hela_landet": false,
+    "lat": 56.16022,
+    "lon": 13.77647
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a36",
+    "namn": "Jönköping",
+    "slug": "jonkoping",
+    "hela_landet": false,
+    "lat": 57.76647,
+    "lon": 14.19417
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3232",
+    "namn": "Kiruna",
+    "slug": "kiruna",
+    "hela_landet": false,
+    "lat": 67.84906,
+    "lon": 20.30242
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3132",
+    "namn": "Kristianstad",
+    "slug": "kristianstad",
+    "hela_landet": false,
+    "lat": 56.02992,
+    "lon": 14.174
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3233",
+    "namn": "Ljusdal",
+    "slug": "ljusdal",
+    "hela_landet": false,
+    "lat": 61.826207,
+    "lon": 16.104151
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a30",
+    "namn": "Malmö",
+    "slug": "malmo",
+    "hela_landet": false,
+    "lat": 55.58469,
+    "lon": 13.00353
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3135",
+    "namn": "Norrköping",
+    "slug": "norrkoping",
+    "hela_landet": false,
+    "lat": 58.56324,
+    "lon": 16.17831
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3133",
+    "namn": "Nässjö",
+    "slug": "nassjo",
+    "hela_landet": false,
+    "lat": 57.65608,
+    "lon": 14.698
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3231",
+    "namn": "Piteå",
+    "slug": "pitea",
+    "hela_landet": false,
+    "lat": 65.31914,
+    "lon": 21.47706
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3136",
+    "namn": "Skövde",
+    "slug": "skovde",
+    "hela_landet": false,
+    "lat": 58.42461,
+    "lon": 13.85042
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+    "namn": "Stockholm",
+    "slug": "stockholm",
+    "hela_landet": false,
+    "lat": 59.36561,
+    "lon": 18.05964
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a303a313234",
+    "namn": "Storuman",
+    "slug": "storuman",
+    "hela_landet": false,
+    "lat": 65.09553,
+    "lon": 17.11744
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3137",
+    "namn": "Sundsvall",
+    "slug": "sundsvall",
+    "hela_landet": false,
+    "lat": 62.40839,
+    "lon": 17.30558
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3138",
+    "namn": "Umeå",
+    "slug": "umea",
+    "hela_landet": false,
+    "lat": 63.82189,
+    "lon": 20.30458
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a37",
+    "namn": "Visby",
+    "slug": "visby",
+    "hela_landet": false,
+    "lat": 57.61367,
+    "lon": 18.28203
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3139",
+    "namn": "Västervik",
+    "slug": "vastervik",
+    "hela_landet": false,
+    "lat": 57.7558,
+    "lon": 16.635462
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3230",
+    "namn": "Östersund",
+    "slug": "ostersund",
+    "hela_landet": false,
+    "lat": 63.1835,
+    "lon": 14.63325
+  },
+  {
+    "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a31",
+    "namn": "Sverige",
+    "slug": "sverige",
+    "hela_landet": true,
+    "lat": null,
+    "lon": null
+  }
+]

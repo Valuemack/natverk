@@ -1,0 +1,59 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { lang, kort, veckodag, isoVecka, versal, iso } from "@natverk/core/datum.js";
+import { HELGDAGAR, nastaForekomst } from "../lib/helgdagar.js";
+import { fras, omDagar } from "../lib/text.js";
+import { SITE, IDAG, TABELL_AR, UPPDATERAD } from "../site.js";
+
+const { h } = Astro.props;
+const nasta = nastaForekomst(h, IDAG);
+const Y = nasta.getUTCFullYear();
+const f = fras(h);
+const rad = TABELL_AR.map((y) => ({ y, d: h.berakna(y) }));
+const efter = h.berakna(Y + 1);
+const relaterade = HELGDAGAR.filter((x) => x.id !== h.id).map((x) => ({ x, d: nastaForekomst(x, IDAG) }))
+  .sort((a, b) => a.d - b.d).slice(0, 6);
+const rod = h.typ === "rod";
+
+const fragor = [
+  { fraga: `När är ${f} ${Y}?`, svar: `${h.namn} ${Y} infaller ${lang(nasta)}, vecka ${isoVecka(nasta).vecka}.` },
+  { fraga: `När är ${f} ${Y + 1}?`, svar: `${h.namn} ${Y + 1} infaller ${lang(efter)}, vecka ${isoVecka(efter).vecka}.` },
+  { fraga: `Är ${h.namn.toLowerCase()} en röd dag?`,
+    svar: rod ? `Ja. ${h.namn} är en allmän helgdag (röd dag) enligt lag (1989:253) om allmänna helgdagar.`
+              : `Nej, ${h.namn.toLowerCase()} är ingen allmän helgdag enligt lag. ${h.id === "paskafton" ? "Den infaller alltid på en lördag." : "Den jämställs dock med söndag i semesterlagen och är ledig för de flesta."}` },
+  { fraga: `Hur räknas datumet för ${h.namn.toLowerCase()} ut?`, svar: h.regel },
+];
+---
+<Layout site={SITE} titel={`När är ${f} ${Y}? Datum ${TABELL_AR[0]}–${TABELL_AR.at(-1)}`}
+  beskrivning={`${h.namn} ${Y} infaller ${lang(nasta)}. ✓ Datum och veckodag för ${f} ${TABELL_AR[0]}–${TABELL_AR.at(-1)} ✓ ${rod ? "Röd dag" : "Helgafton"} ✓ Så räknas datumet ut.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }, { namn: h.namn, href: `/${h.slug}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>När är {f} {Y}?</h1>
+  <p class="svar">{h.namn} {Y} infaller <strong>{lang(nasta)}</strong> (vecka {isoVecka(nasta).vecka}) – {omDagar(IDAG, nasta)}.</p>
+  <p>{h.regel} {rod ? `${h.namn} är en röd dag.` : ""}</p>
+
+  <Annons plats="helgdag-1" />
+
+  <h2>{h.namn} {TABELL_AR[0]}–{TABELL_AR.at(-1)}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th></tr></thead>
+    <tbody>{rad.map(({ y, d }) => (
+      <tr class:list={{ markerad: iso(d) === iso(nasta) }}>
+        <td><a href={`/${y}/`}>{y}</a></td><td>{kort(d)}</td><td>{versal(veckodag(d))}</td><td class="num">{isoVecka(d).vecka}</td>
+      </tr>
+    ))}</tbody>
+  </table></div>
+
+  <h2>Kommande helgdagar</h2>
+  <div class="kort">
+    {relaterade.map(({ x, d }) => (
+      <a href={`/${x.slug}/`}><strong>{x.namn}</strong><small>{versal(veckodag(d))} {kort(d)} {d.getUTCFullYear()}</small></a>
+    ))}
+  </div>
+
+  <Annons plats="helgdag-2" />
+  <Faq fragor={fragor} />
+</Layout>

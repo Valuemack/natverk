@@ -1,0 +1,30 @@
+---
+// Badplatser med "Utmärkt kvalitet" i senaste klassificeringen, per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const senasteKlass = (e) => [e.extra?.klassificering, ...(e.extra?.klassificeringar ?? [])].find((k) => k && !/pågår|ej klass/i.test(k.klass));
+const utmarkt = KAT.enheter.filter((e) => /utmärkt/i.test(senasteKlass(e)?.klass ?? ""));
+const ar = Math.max(...utmarkt.map((e) => senasteKlass(e).ar));
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: utmarkt.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const klassade = KAT.enheter.filter(senasteKlass).length;
+const fragor = [
+  { fraga: "Hur klassas vattenkvaliteten på badplatser?", svar: "EU-badplatser klassas varje år som utmärkt, bra, tillfredsställande eller dålig kvalitet. Klassningen bygger på provsvar för bakterierna E. coli och intestinala enterokocker från de fyra senaste badsäsongerna." },
+  { fraga: "Hur många badplatser har utmärkt vattenkvalitet?", svar: `${utmarkt.length} av ${klassade} klassade badplatser i Sverige har utmärkt kvalitet i senaste klassificeringen.` },
+];
+---
+<Layout site={SITE} titel={`Bäst vattenkvalitet – ${utmarkt.length} badplatser med utmärkt kvalitet`}
+  beskrivning={`${utmarkt.length} badplatser i Sverige har utmärkt vattenkvalitet enligt senaste klassificeringen. ✓ Per län ✓ Provsvar och badtemperatur ✓ Från HaV:s öppna data.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Bäst vattenkvalitet", href: "/basta-vattenkvalitet/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Badplatser med bäst vattenkvalitet</h1>
+  <p class="svar"><strong>{utmarkt.length} badplatser</strong> har utmärkt vattenkvalitet i senaste klassificeringen (upp till {ar}). Flest finns i {[...perLan].sort((a, b) => b.enheter.length - a.enheter.length)[0]?.lan.namn}.</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="basta-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>Utmärkt vattenkvalitet i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

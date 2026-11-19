@@ -1,0 +1,43 @@
+Källor för stationer.json och listpriser.json (bensinstationer.nu). Uppdateras av scripts/run-all.mjs.
+
+STATIONSFAKTA (namn, adress, koordinater, öppettider, drivmedel, tjänster) – från kedjornas publika stationssök.
+Endast fakta har tagits, inga texter eller bilder. Fakta i sig är inte upphovsrättsskyddade, men sammanställningarna
+kan ha databasskydd (katalogskydd, URL 49 §). Vi tar ut stationsfakta för att visa dem per station med källhänvisning
+och länk till kedjans egen stationssida; vi kopierar inte kedjornas sajter. Inhämtningen är beslutad av projektägaren
+(inte avtalad med kedjorna) och följer robots.txt, max 1 anrop/s per domän och generisk User-Agent.
+- Circle K Sverige AB, www.circlek.se/station-search (omfattar även INGO och Circle K Truck). robots.txt: tillåtet.
+- OKQ8, www.okq8.se/hitta-station/ (omfattar även Tanka och IDS). robots.txt: tillåtet (bara /sok/ spärrad).
+- Preem AB, www.preem.se/stationer/ (omfattar även Såifa, TRB, Gasum m.fl. på Preem-kartan). robots.txt: tillåtet.
+- St1 Sverige AB, st1.se/hitta-station. robots.txt: tillåtet, men har signalen "Content-Usage: ai=n"
+  (IETF aipref: inte för träning av AI-modeller). Vi använder datat för listning, inte AI-träning – får inte skickas vidare till AI-träning.
+- Qstar, kartdata från qstar-backend-prod.herokuapp.com (kartan på qstar.se/hitta/; omfattar Bilisten och Pump).
+  Ingen robots.txt på API-domänen (404 = inga begränsningar); qstar.se:s robots.txt spärrar bara två PDF:er.
+- Gulf (Sverige), gulfsverige.com/hitta-station/. robots.txt: tillåtet (bara /wp-admin/).
+- Din-X (din-x.se): EJ HÄMTAT – servern svarade inte (anslutnings-timeout) 2026-11-19. Din-X-stationer kommer från OSM.
+Visa per station: "Källa: <kedja>" och gärna länk till extra-fältet webb (kedjans stationssida) när det finns.
+
+OPENSTREETMAP
+- © OpenStreetMap-bidragsgivare, Open Database License (ODbL) 1.0. Gäller poster med "OpenStreetMap" i kallor
+  (luckfyllnad: webb, telefon, drivmedel, öppettider; samt alla poster med extra.endast_osm = true).
+  Varje sida som visar datat ska visa "© OpenStreetMap-bidragsgivare" med länk till https://www.openstreetmap.org/copyright.
+  ODbL är share-alike: stationer.json är en härledd databas och ska, om den delas ut som databas, erbjudas under ODbL.
+  (Att visa den på webbsidor = "Produced Work" – kräver bara attribution.)
+
+KOMMUN/LÄN
+- SCB, digitala kommungränser (CC0), för kedjestationer som saknar OSM-match (data/ref/scb-kommuner.json, kopierad från vardcentralen-pipelinen).
+
+PRISER (data/listpriser.json)
+- Inga kedjor publicerar pumppris per station: Circle K har "frivilligt valt att ta bort priserna på hemsidan" och Preem
+  publicerar "inga rekommenderade cirkapriser" för privatpersoner. Därför är extra.priser = null för alla stationer.
+- listpriser.json = kedjornas publicerade LISTPRISER för företagskunder inkl. moms (pumppriset på enskild station kan avvika):
+  OKQ8 www.okq8.se/foretag/priser/, Circle K www.circlek.se/foretag/drivmedel/priser, Preem www.preem.se/foretag/listpriser/.
+  Ange kedjan som källa och att det är listpris (företag), inte stationspris.
+- Granskade men EJ använda prisaggregatorer:
+  * bensinpriser.nu (användarrapporterade pumppriser): robots.txt blockerar uttryckligen ClaudeBot, anthropic-ai, Claude-Web,
+    GPTBot m.fl. och har "Content-Signal: ai-train=no, use=reference" med reservation enligt DSM-direktivet art. 4. Inget öppet API.
+    Respekteras – hämtas inte.
+  * EU-kommissionens Weekly Oil Bulletin (energy.ec.europa.eu): öppna data, veckovisa nationella snittpriser inkl. Sverige,
+    återanvändning med källangivelse enligt kommissionens återanvändningspolicy (normalt CC BY 4.0 – verifiera på sidan
+    innan användning). Inte inkopplat ännu (XLSX-fil);
+    lämpligt för en "veckosnitt"-graf.
+  * Drivkraft Sverige (f.d. SPBI) publicerar prisstatistik, men utan uttalad öppen licens – används inte utan tillstånd.

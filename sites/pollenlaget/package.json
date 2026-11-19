@@ -1,0 +1,16 @@
+{
+  "name": "pollenlaget",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "data": "node ../api-data/scripts/hamta-pollen.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@natverk/core": "*",
+    "astro": "^7.4.13"
+  }
+}

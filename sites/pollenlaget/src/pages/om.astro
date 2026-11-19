@@ -1,0 +1,25 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD, KALLA_NRM, KALENDER_AR } from "../site.js";
+const arText = KALENDER_AR.length ? `${KALENDER_AR[0]}–${KALENDER_AR.at(-1)}` : "";
+---
+<Layout site={SITE} titel="Om pollenläget.se – källor, licenser och metod"
+  beskrivning="Varifrån pollenläget.se hämtar prognoser och mätningar, hur pollenkalendern räknas fram och vilka licenser som gäller."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om pollenläget.se</h1>
+  <p class="ingress">pollenläget.se samlar pollenprognoser, uppmätta halter och en pollenkalender för 23 orter i Sverige på ett ställe. Sajten är oberoende och drivs inte av Naturhistoriska riksmuseet.</p>
+
+  <h2 id="kallor">Källor och licenser</h2>
+  <ul>
+    <li><strong>Prognoser:</strong> {KALLA_NRM}, via det öppna API:t Pollenrapporten. Prognostexter och nivåer återges oförändrade enligt licensen <a href="https://creativecommons.org/licenses/by-nd/4.0/deed.sv" rel="nofollow">CC BY-ND 4.0</a>. Prognosens datum visas alltid.</li>
+    <li><strong>Uppmätta halter:</strong> {KALLA_NRM}, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="nofollow">CC BY-SA 4.0</a>.</li>
+    <li><strong>Pollenkalendern</strong> är vår bearbetning av de uppmätta dygnsvärdena {arText}. För varje ort, pollenslag och år räknar vi säsongen som dagarna mellan 5 och 95 procent av årets totala pollenmängd. Typiska datum är medianen över åren. Dagar med tekniska fel tas bort, och år med färre än 60 mätdagar räknas inte. Kalendern sprids under samma licens som mätdata, CC BY-SA 4.0.</li>
+    <li><strong>Närmaste mätort per kommun</strong> räknas från kommunens ungefärliga mittpunkt.</li>
+    <li>Texterna om varje pollenslag är skrivna av oss.</li>
+  </ul>
+  <p>Under säsongen hämtas nya prognoser flera gånger per dag. Utanför säsongen uppdateras sajten en gång per dag.</p>
+  <p>Informationen ersätter inte råd från vården. Kontakta 1177 Vårdguiden om du har frågor om allergi.</p>
+
+  <h2 id="kontakt">Kontakt</h2>
+  <p>Har du hittat ett fel? Hör av dig så rättar vi det.</p>
+</Layout>

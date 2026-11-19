@@ -1,0 +1,22 @@
+{
+  "mapp": "bensinstationer",
+  "namn": "Bensinstationer",
+  "visningsnamn": "bensinstationer.nu",
+  "url": "https://bensinstationer.nu",
+  "tema": "bensin",
+  "tagline": "Alla bensinstationer i Sverige",
+  "tjanstText": "Oberoende guide till tankställen · Uppdateras varje natt",
+  "kallor": ["Bensinbolagens stationssök", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Alla bensinstationer och tankställen i Sverige med adress, öppettider och drivmedel – hitta närmaste mack med diesel, E85, HVO100 eller laddning. Uppdateras varje natt.",
+  "farg": "#1f4f8f",
+  "ord": { "sing": "bensinstation", "plur": "bensinstationer", "art": "en" },
+  "schemaTyp": "GasStation",
+  "titelOrd": "öppettider",
+  "datafil": "data/stationer.json",
+  "dataSkript": "node scripts/run-all.mjs",
+  "startTitel": "Bensinstationer nära dig – alla mackar i Sverige",
+  "startH1": "Hitta bensinstation nära dig",
+  "kallaText": "Källor: bensinbolagens egna stationsuppgifter och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).",
+  "harEgenSida": "(e) => !!(e.gatuadress || e.oppettider || e.kedja)",
+  "meny": [{ "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

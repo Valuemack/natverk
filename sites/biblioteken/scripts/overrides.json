@@ -1,0 +1,5 @@
+{
+  "_doc": "Manual corrections applied by build.mjs. libraries: { <sigel>: { namn?, typ?, exclude?: <reason> } }, kedja: { <kommunkod>: <name> }",
+  "libraries": {},
+  "kedja": {}
+}

@@ -1,0 +1,13 @@
+---
+// Vanliga frågor som synlig lista. JSON-LD (FAQPage) skickas via Layout med faqLd().
+const { fragor, rubrik = "Vanliga frågor" } = Astro.props;
+---
+<section class="faq">
+  <h2>{rubrik}</h2>
+  {fragor.map((f) => (
+    <details>
+      <summary><h3>{f.fraga}</h3></summary>
+      <p set:html={f.svarHtml ?? f.svar} />
+    </details>
+  ))}
+</section>

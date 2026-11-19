@@ -1,0 +1,42 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import HittaNarmaste from "@natverk/core/katalog/HittaNarmaste.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+
+const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
+const n = KAT.enheter.length;
+const sondag = KAT.enheter.filter((e) => oppetHelg(e, "sun") === true).length;
+const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 12);
+const fragor = [
+  { fraga: `Hur många ${ORD.plur} finns det i Sverige?`, svar: `Vi listar ${n} ${ORD.plur} i ${KAT.kommuner.length} kommuner. Listan uppdateras varje natt.` },
+  storst[0] && { fraga: `Vilken kommun har flest ${ORD.plur}?`, svar: `${storst[0].namn} har flest med ${storst[0].enheter.length} st, följt av ${storst.slice(1, 3).map((k) => `${k.namn} (${k.enheter.length})`).join(" och ")}.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel="Vårdcentral nära dig – alla vårdcentraler i Sverige"
+  beskrivning={`Hitta ${ORD.plur} nära dig – alla ${n} i Sverige med adress och öppettider. ✓ Öppet nu ✓ Närmaste ${ORD.sing} ✓ Uppdateras varje natt.`}
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Hitta vårdcentral nära dig</h1>
+  <p class="svar">Här finns <strong>{n} {ORD.plur}</strong> i {KAT.kommuner.length} kommuner med adress{KAT.enheter.some(harOppettider) && " och öppettider"}.{sondag > 0 && <> <strong>{sondag}</strong> har öppet på söndagar.</>}</p>
+  <HittaNarmaste ord={ORD} />
+
+  <h2>Flest {ORD.plur}</h2>
+  <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
+
+  <Annons plats="start-1" />
+
+  <h2 id="lan">{Plur} per län och kommun</h2>
+  {KAT.lan.map((l) => (
+    <>
+      <h3><a href={l.href}>{l.namn}</a> <small>({l.antal})</small></h3>
+      <ul class="kolumner">{l.kommuner.map((k) => <li><a href={k.href}>{k.namn}</a> ({k.enheter.length})</li>)}</ul>
+    </>
+  ))}
+
+  <Annons plats="start-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

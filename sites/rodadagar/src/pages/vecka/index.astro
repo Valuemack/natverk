@@ -1,0 +1,45 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { lang, kort, isoVecka, mandagIVecka, plusDagar, veckorIAr } from "@natverk/core/datum.js";
+import { SITE, IDAG, UPPDATERAD } from "../../site.js";
+
+const { ar, vecka } = isoVecka(IDAG);
+const mandag = mandagIVecka(ar, vecka);
+const runt = Array.from({ length: 9 }, (_, i) => plusDagar(mandag, (i - 2) * 7)).map((m) => ({ m, v: isoVecka(m) }));
+const fragor = [
+  { fraga: "Vilken vecka är det?", svar: `Idag, ${lang(IDAG)}, är det vecka ${vecka}.` },
+  { fraga: `Hur många veckor har ${ar}?`, svar: `${ar} har ${veckorIAr(ar)} veckor enligt ISO 8601, som används i Sverige.` },
+  { fraga: "Hur räknas veckonummer i Sverige?", svar: "Sverige följer ISO 8601: veckan börjar på måndag och vecka 1 är den vecka som innehåller årets första torsdag." },
+];
+---
+<Layout site={SITE} titel={`Vilken vecka är det? Idag är det vecka ${vecka} (${ar})`}
+  beskrivning={`Idag är det vecka ${vecka}. ✓ Veckonummer idag ✓ Måndag–söndag för veckan ✓ Alla veckor ${ar} med datum.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Vilken vecka är det?</h1>
+  <p class="svar" id="vecka-svar" data-idag={IDAG.toISOString().slice(0, 10)}>Idag, {lang(IDAG)}, är det <strong>vecka {vecka}</strong>.</p>
+  <p>Vecka {vecka} {ar} är måndag {kort(mandag)} – söndag {kort(plusDagar(mandag, 6))}.</p>
+  <h2>Veckor runt idag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Vecka</th><th>Måndag</th><th>Söndag</th></tr></thead>
+    <tbody>{runt.map(({ m, v }) => (
+      <tr class:list={{ markerad: v.vecka === vecka && v.ar === ar }}><td class="num">{v.vecka}</td><td>{kort(m)} {m.getUTCFullYear()}</td><td>{kort(plusDagar(m, 6))} {plusDagar(m, 6).getUTCFullYear()}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p><a href={`/vecka/${ar}/`}>Alla veckonummer {ar} →</a> · <a href={`/vecka/${ar + 1}/`}>Veckonummer {ar + 1} →</a></p>
+  <Annons plats="vecka-1" />
+  <Faq fragor={fragor} />
+  <script slot="skript" is:inline>
+    // Sidan byggs om varje natt; detta uppdaterar svaret om besökaren har en annan dag.
+    (function () {
+      var el = document.getElementById("vecka-svar"); if (!el) return;
+      var n = new Date(), d = new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()));
+      if (d.toISOString().slice(0, 10) === el.dataset.idag) return;
+      var t = new Date(d); t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+      var v = Math.ceil(((t - Date.UTC(t.getUTCFullYear(), 0, 1)) / 864e5 + 1) / 7);
+      el.innerHTML = "Idag är det <strong>vecka " + v + "</strong>.";
+    })();
+  </script>
+</Layout>

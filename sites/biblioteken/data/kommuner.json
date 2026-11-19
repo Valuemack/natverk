@@ -1,0 +1,4315 @@
+[
+ {
+  "kommunkod": "0114",
+  "namn": "Upplands Väsby",
+  "lan": "Stockholms län",
+  "slug": "upplands-vasby",
+  "kedja": "Upplands Väsby bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Uppl",
+  "bibliotek": [
+   "bibdb-Uppl"
+  ]
+ },
+ {
+  "kommunkod": "0115",
+  "namn": "Vallentuna",
+  "lan": "Stockholms län",
+  "slug": "vallentuna",
+  "kedja": "Vallentuna bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Vall",
+  "bibliotek": [
+   "bibdb-8aoa",
+   "bibdb-8anz",
+   "bibdb-8any",
+   "bibdb-Vall"
+  ]
+ },
+ {
+  "kommunkod": "0117",
+  "namn": "Österåker",
+  "lan": "Stockholms län",
+  "slug": "osteraker",
+  "kedja": "Österåkers bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Osta",
+  "bibliotek": [
+   "bibdb-8afx",
+   "bibdb-8anr",
+   "bibdb-Osta"
+  ]
+ },
+ {
+  "kommunkod": "0120",
+  "namn": "Värmdö",
+  "lan": "Stockholms län",
+  "slug": "varmdo",
+  "kedja": "Värmdö bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Gust",
+  "bibliotek": [
+   "bibdb-8ahg",
+   "bibdb-8ahe",
+   "bibdb-Gust"
+  ]
+ },
+ {
+  "kommunkod": "0123",
+  "namn": "Järfälla",
+  "lan": "Stockholms län",
+  "slug": "jarfalla",
+  "kedja": "Järfälla bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Jflb",
+  "bibliotek": [
+   "bibdb-8amb",
+   "bibdb-Jflh",
+   "bibdb-Jflb",
+   "bibdb-Kalh",
+   "bibdb-Viks"
+  ]
+ },
+ {
+  "kommunkod": "0125",
+  "namn": "Ekerö",
+  "lan": "Stockholms län",
+  "slug": "ekero",
+  "kedja": "Ekerö biblioteket",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Eker",
+  "bibliotek": [
+   "bibdb-8amo",
+   "bibdb-Eker"
+  ]
+ },
+ {
+  "kommunkod": "0126",
+  "namn": "Huddinge",
+  "lan": "Stockholms län",
+  "slug": "huddinge",
+  "kedja": "Huddinge bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Hudb",
+  "bibliotek": [
+   "bibdb-Flem",
+   "bibdb-Hudb",
+   "bibdb-Sebi",
+   "bibdb-Skog",
+   "bibdb-Hvy"
+  ]
+ },
+ {
+  "kommunkod": "0127",
+  "namn": "Botkyrka",
+  "lan": "Stockholms län",
+  "slug": "botkyrka",
+  "kedja": null,
+  "antal_bibliotek": 6,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Bota",
+   "bibdb-Botf",
+   "bibdb-Botn",
+   "bibdb-Botu",
+   "bibdb-Botm",
+   "bibdb-Botv"
+  ]
+ },
+ {
+  "kommunkod": "0128",
+  "namn": "Salem",
+  "lan": "Stockholms län",
+  "slug": "salem",
+  "kedja": "Salems bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Ronn",
+  "bibliotek": [
+   "bibdb-Ronn"
+  ]
+ },
+ {
+  "kommunkod": "0136",
+  "namn": "Haninge",
+  "lan": "Stockholms län",
+  "slug": "haninge",
+  "kedja": "Biblioteken i Haninge",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-8agx",
+   "bibdb-Hafb",
+   "bibdb-8agw",
+   "bibdb-8afy",
+   "bibdb-Haf2"
+  ]
+ },
+ {
+  "kommunkod": "0138",
+  "namn": "Tyresö",
+  "lan": "Stockholms län",
+  "slug": "tyreso",
+  "kedja": "Tyresö kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Tykb",
+  "bibliotek": [
+   "bibdb-8agq",
+   "bibdb-8ago",
+   "bibdb-Tykb"
+  ]
+ },
+ {
+  "kommunkod": "0139",
+  "namn": "Upplands-Bro",
+  "lan": "Stockholms län",
+  "slug": "upplands-bro",
+  "kedja": null,
+  "antal_bibliotek": 2,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Kung",
+   "bibdb-8apc"
+  ]
+ },
+ {
+  "kommunkod": "0140",
+  "namn": "Nykvarn",
+  "lan": "Stockholms län",
+  "slug": "nykvarn",
+  "kedja": "Nykvarns bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Nykv",
+  "bibliotek": [
+   "bibdb-Nykv"
+  ]
+ },
+ {
+  "kommunkod": "0160",
+  "namn": "Täby",
+  "lan": "Stockholms län",
+  "slug": "taby",
+  "kedja": "Täby bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Taby",
+  "bibliotek": [
+   "bibdb-8aoe",
+   "bibdb-8ank",
+   "bibdb-8ani",
+   "bibdb-8aoc",
+   "bibdb-Taby",
+   "bibdb-8ann"
+  ]
+ },
+ {
+  "kommunkod": "0162",
+  "namn": "Danderyd",
+  "lan": "Stockholms län",
+  "slug": "danderyd",
+  "kedja": "Danderyds bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Dand",
+  "bibliotek": [
+   "bibdb-Dand5",
+   "bibdb-Dand",
+   "bibdb-Dadj",
+   "bibdb-Daen",
+   "bibdb-Dast"
+  ]
+ },
+ {
+  "kommunkod": "0163",
+  "namn": "Sollentuna",
+  "lan": "Stockholms län",
+  "slug": "sollentuna",
+  "kedja": "Sollentuna bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sob",
+  "bibliotek": [
+   "bibdb-8aog",
+   "bibdb-8aol",
+   "bibdb-Sob"
+  ]
+ },
+ {
+  "kommunkod": "0180",
+  "namn": "Stockholm",
+  "lan": "Stockholms län",
+  "slug": "stockholm",
+  "kedja": "Stockholms stadsbibliotek",
+  "antal_bibliotek": 46,
+  "huvudbibliotek": "bibdb-Ssb",
+  "bibliotek": [
+   "bibdb-8aku",
+   "bibdb-8afg",
+   "bibdb-8aft",
+   "bibdb-8blb",
+   "bibdb-8aeg",
+   "bibdb-8ale",
+   "bibdb-8afi",
+   "bibdb-8ajl",
+   "bibdb-8aeh",
+   "bibdb-8aet",
+   "bibdb-8afw",
+   "bibdb-8adn",
+   "bibdb-8aep",
+   "bibdb-8aue",
+   "bibdb-8adk",
+   "bibdb-8akd",
+   "bibdb-8akl",
+   "bibdb-8aks",
+   "bibdb-8aeu",
+   "bibdb-8akh",
+   "bibdb-8aap",
+   "bibdb-8aav",
+   "bibdb-8eas",
+   "bibdb-8adz",
+   "bibdb-Medb",
+   "bibdb-8acx",
+   "bibdb-8ajq",
+   "bibdb-8acw",
+   "bibdb-8aaq",
+   "bibdb-8afr",
+   "bibdb-8afo",
+   "bibdb-8afq",
+   "bibdb-8aju",
+   "bibdb-Ssb",
+   "bibdb-8abb",
+   "bibdb-8afd",
+   "bibdb-8adl",
+   "bibdb-8ajp",
+   "bibdb-8aas",
+   "bibdb-8adu",
+   "bibdb-8ajn",
+   "bibdb-8adw",
+   "bibdb-8aez",
+   "bibdb-8aey",
+   "bibdb-8osb",
+   "bibdb-8aaa"
+  ]
+ },
+ {
+  "kommunkod": "0181",
+  "namn": "Södertälje",
+  "lan": "Stockholms län",
+  "slug": "sodertalje",
+  "kedja": "Biblioteken i Södertälje",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Sosb",
+  "bibliotek": [
+   "bibdb-Enbi",
+   "bibdb-Sohs",
+   "bibdb-Soh",
+   "bibdb-Soj",
+   "bibdb-Mbo",
+   "bibdb-Sosb"
+  ]
+ },
+ {
+  "kommunkod": "0182",
+  "namn": "Nacka",
+  "lan": "Stockholms län",
+  "slug": "nacka",
+  "kedja": "Nacka Forum bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Nasb",
+  "bibliotek": [
+   "bibdb-Ndi",
+   "bibdb-Nfs",
+   "bibdb-Nasb",
+   "bibdb-Orm",
+   "bibdb-Nsn",
+   "bibdb-Nalt"
+  ]
+ },
+ {
+  "kommunkod": "0183",
+  "namn": "Sundbyberg",
+  "lan": "Stockholms län",
+  "slug": "sundbyberg",
+  "kedja": "Bibliotek Sundbyberg",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Sund",
+  "bibliotek": [
+   "bibdb-8aly",
+   "bibdb-Sund"
+  ]
+ },
+ {
+  "kommunkod": "0184",
+  "namn": "Solna",
+  "lan": "Stockholms län",
+  "slug": "solna",
+  "kedja": "Solna stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Solb",
+  "bibliotek": [
+   "bibdb-8alp",
+   "bibdb-8alr",
+   "bibdb-Solb"
+  ]
+ },
+ {
+  "kommunkod": "0186",
+  "namn": "Lidingö",
+  "lan": "Stockholms län",
+  "slug": "lidingo",
+  "kedja": "Lidingö stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Lisb",
+  "bibliotek": [
+   "bibdb-Lisb"
+  ]
+ },
+ {
+  "kommunkod": "0187",
+  "namn": "Vaxholm",
+  "lan": "Stockholms län",
+  "slug": "vaxholm",
+  "kedja": "Vaxholms stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Vaxh",
+  "bibliotek": [
+   "bibdb-Vaxh"
+  ]
+ },
+ {
+  "kommunkod": "0188",
+  "namn": "Norrtälje",
+  "lan": "Stockholms län",
+  "slug": "norrtalje",
+  "kedja": "Norrtälje Stadsbibliotek",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-Norr",
+  "bibliotek": [
+   "bibdb-8cta",
+   "bibdb-8ctb",
+   "bibdb-Hvik",
+   "bibdb-8ctd",
+   "bibdb-Norr",
+   "bibdb-Rimb",
+   "bibdb-8ctk",
+   "bibdb-Vadd"
+  ]
+ },
+ {
+  "kommunkod": "0191",
+  "namn": "Sigtuna",
+  "lan": "Stockholms län",
+  "slug": "sigtuna",
+  "kedja": "Sigtuna bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-8aop",
+  "bibliotek": [
+   "bibdb-8aov",
+   "bibdb-8aop",
+   "bibdb-Skb",
+   "bibdb-8aou"
+  ]
+ },
+ {
+  "kommunkod": "0192",
+  "namn": "Nynäshamn",
+  "lan": "Stockholms län",
+  "slug": "nynashamn",
+  "kedja": "Nynäshamns bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Nykb",
+  "bibliotek": [
+   "bibdb-Nykb",
+   "bibdb-8aiq",
+   "bibdb-Soru",
+   "bibdb-8aip"
+  ]
+ },
+ {
+  "kommunkod": "0305",
+  "namn": "Håbo",
+  "lan": "Uppsala län",
+  "slug": "habo",
+  "kedja": "Håbo bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Bals",
+  "bibliotek": [
+   "bibdb-Bals"
+  ]
+ },
+ {
+  "kommunkod": "0319",
+  "namn": "Älvkarleby",
+  "lan": "Uppsala län",
+  "slug": "alvkarleby",
+  "kedja": "Älvkarleby folkbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Skut",
+  "bibliotek": [
+   "bibdb-Skut"
+  ]
+ },
+ {
+  "kommunkod": "0330",
+  "namn": "Knivsta",
+  "lan": "Uppsala län",
+  "slug": "knivsta",
+  "kedja": "Knivsta bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kniv",
+  "bibliotek": [
+   "bibdb-Kniv"
+  ]
+ },
+ {
+  "kommunkod": "0331",
+  "namn": "Heby",
+  "lan": "Uppsala län",
+  "slug": "heby",
+  "kedja": "Heby bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Heby",
+  "bibliotek": [
+   "bibdb-Heby",
+   "bibdb-Tarn",
+   "bibdb-Osbi"
+  ]
+ },
+ {
+  "kommunkod": "0360",
+  "namn": "Tierp",
+  "lan": "Uppsala län",
+  "slug": "tierp",
+  "kedja": null,
+  "antal_bibliotek": 7,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Tob",
+   "bibdb-8cxw",
+   "bibdb-Kaho",
+   "bibdb-Tier",
+   "bibdb-Skar",
+   "bibdb-Sofo",
+   "bibdb-Orby"
+  ]
+ },
+ {
+  "kommunkod": "0380",
+  "namn": "Uppsala",
+  "lan": "Uppsala län",
+  "slug": "uppsala",
+  "kedja": "Bibliotek Uppsala",
+  "antal_bibliotek": 14,
+  "huvudbibliotek": "bibdb-Usb",
+  "bibliotek": [
+   "bibdb-8cqg",
+   "bibdb-8cqq",
+   "bibdb-8css",
+   "bibdb-8cqr",
+   "bibdb-8csi",
+   "bibdb-8cro",
+   "bibdb-Gbs",
+   "bibdb-8ose",
+   "bibdb-8csj",
+   "bibdb-8cqo",
+   "bibdb-8csz",
+   "bibdb-Usb",
+   "bibdb-8cqp",
+   "bibdb-8cqh"
+  ]
+ },
+ {
+  "kommunkod": "0381",
+  "namn": "Enköping",
+  "lan": "Uppsala län",
+  "slug": "enkoping",
+  "kedja": "Enköpings kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Enko",
+  "bibliotek": [
+   "bibdb-Enko",
+   "bibdb-8crl",
+   "bibdb-8crk"
+  ]
+ },
+ {
+  "kommunkod": "0382",
+  "namn": "Östhammar",
+  "lan": "Uppsala län",
+  "slug": "osthammar",
+  "kedja": "Östhammars stadsbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Osth",
+  "bibliotek": [
+   "bibdb-Alun",
+   "bibdb-Gimo",
+   "bibdb-Oreg",
+   "bibdb-Ostb",
+   "bibdb-Osth"
+  ]
+ },
+ {
+  "kommunkod": "0428",
+  "namn": "Vingåker",
+  "lan": "Södermanlands län",
+  "slug": "vingaker",
+  "kedja": "Vingåkers bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Vifb",
+  "bibliotek": [
+   "bibdb-8cia",
+   "bibdb-Vifb"
+  ]
+ },
+ {
+  "kommunkod": "0461",
+  "namn": "Gnesta",
+  "lan": "Södermanlands län",
+  "slug": "gnesta",
+  "kedja": "Gnesta bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Gnes",
+  "bibliotek": [
+   "bibdb-Gnes",
+   "bibdb-8cix"
+  ]
+ },
+ {
+  "kommunkod": "0480",
+  "namn": "Nyköping",
+  "lan": "Södermanlands län",
+  "slug": "nykoping",
+  "kedja": "Nyköpings stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Nyks",
+  "bibliotek": [
+   "bibdb-Nyb",
+   "bibdb-Nyks",
+   "bibdb-8cfs"
+  ]
+ },
+ {
+  "kommunkod": "0481",
+  "namn": "Oxelösund",
+  "lan": "Södermanlands län",
+  "slug": "oxelosund",
+  "kedja": "Oxelösunds bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Oxel",
+  "bibliotek": [
+   "bibdb-Oxel"
+  ]
+ },
+ {
+  "kommunkod": "0482",
+  "namn": "Flen",
+  "lan": "Södermanlands län",
+  "slug": "flen",
+  "kedja": "Flens stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Flen",
+  "bibliotek": [
+   "bibdb-8cie",
+   "bibdb-Flen",
+   "bibdb-8cjd",
+   "bibdb-8cin"
+  ]
+ },
+ {
+  "kommunkod": "0483",
+  "namn": "Katrineholm",
+  "lan": "Södermanlands län",
+  "slug": "katrineholm",
+  "kedja": "Katrineholms bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Ksb",
+  "bibliotek": [
+   "bibdb-8lin",
+   "bibdb-8cib",
+   "bibdb-8cid",
+   "bibdb-Ksb",
+   "bibdb-8cic"
+  ]
+ },
+ {
+  "kommunkod": "0484",
+  "namn": "Eskilstuna",
+  "lan": "Södermanlands län",
+  "slug": "eskilstuna",
+  "kedja": "Eskilstuna bibliotek",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-Es1",
+  "bibliotek": [
+   "bibdb-Es1",
+   "bibdb-8cif",
+   "bibdb-8chm",
+   "bibdb-8chy",
+   "bibdb-8chw",
+   "bibdb-8chp",
+   "bibdb-Esto",
+   "bibdb-8chs"
+  ]
+ },
+ {
+  "kommunkod": "0486",
+  "namn": "Strängnäs",
+  "lan": "Södermanlands län",
+  "slug": "strangnas",
+  "kedja": "Strängnäs bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Stra",
+  "bibliotek": [
+   "bibdb-8cja",
+   "bibdb-8civ",
+   "bibdb-Stra",
+   "bibdb-8cjc"
+  ]
+ },
+ {
+  "kommunkod": "0488",
+  "namn": "Trosa",
+  "lan": "Södermanlands län",
+  "slug": "trosa",
+  "kedja": "Trosa stadsbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Tros",
+  "bibliotek": [
+   "bibdb-8cft",
+   "bibdb-Tros"
+  ]
+ },
+ {
+  "kommunkod": "0509",
+  "namn": "Ödeshög",
+  "lan": "Östergötlands län",
+  "slug": "odeshog",
+  "kedja": "Ödeshögs kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Odes",
+  "bibliotek": [
+   "bibdb-Odes"
+  ]
+ },
+ {
+  "kommunkod": "0512",
+  "namn": "Ydre",
+  "lan": "Östergötlands län",
+  "slug": "ydre",
+  "kedja": "Ydre kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Ydre",
+  "bibliotek": [
+   "bibdb-8cbc",
+   "bibdb-Ydre"
+  ]
+ },
+ {
+  "kommunkod": "0513",
+  "namn": "Kinda",
+  "lan": "Östergötlands län",
+  "slug": "kinda",
+  "kedja": "Kinda bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Kisa",
+  "bibliotek": [
+   "bibdb-8cdn",
+   "bibdb-Kisa",
+   "bibdb-8cdo"
+  ]
+ },
+ {
+  "kommunkod": "0560",
+  "namn": "Boxholm",
+  "lan": "Östergötlands län",
+  "slug": "boxholm",
+  "kedja": "Boxholms kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Boxh",
+  "bibliotek": [
+   "bibdb-Boxh"
+  ]
+ },
+ {
+  "kommunkod": "0561",
+  "namn": "Åtvidaberg",
+  "lan": "Östergötlands län",
+  "slug": "atvidaberg",
+  "kedja": "Åtvidabergs kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Atvi",
+  "bibliotek": [
+   "bibdb-Atvi"
+  ]
+ },
+ {
+  "kommunkod": "0562",
+  "namn": "Finspång",
+  "lan": "Östergötlands län",
+  "slug": "finspang",
+  "kedja": "Finspångs bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Fibi",
+  "bibliotek": [
+   "bibdb-Fibi",
+   "bibdb-8cfn",
+   "bibdb-8cfo"
+  ]
+ },
+ {
+  "kommunkod": "0563",
+  "namn": "Valdemarsvik",
+  "lan": "Östergötlands län",
+  "slug": "valdemarsvik",
+  "kedja": "Valdemarsvik bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Vald",
+  "bibliotek": [
+   "bibdb-8cfq",
+   "bibdb-8cfr",
+   "bibdb-Vald"
+  ]
+ },
+ {
+  "kommunkod": "0580",
+  "namn": "Linköping",
+  "lan": "Östergötlands län",
+  "slug": "linkoping",
+  "kedja": "Linköpings stadsbibliotek",
+  "antal_bibliotek": 12,
+  "huvudbibliotek": "bibdb-Lin1",
+  "bibliotek": [
+   "bibdb-8bga",
+   "bibdb-Lin3",
+   "bibdb-8cdb",
+   "bibdb-8ccy",
+   "bibdb-8cco",
+   "bibdb-8ccs",
+   "bibdb-Lin1",
+   "bibdb-8cds",
+   "bibdb-8ccw",
+   "bibdb-8ccq",
+   "bibdb-8ccu",
+   "bibdb-8cdr"
+  ]
+ },
+ {
+  "kommunkod": "0581",
+  "namn": "Norrköping",
+  "lan": "Östergötlands län",
+  "slug": "norrkoping",
+  "kedja": "Norrköpings stadsbibliotek",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-No",
+  "bibliotek": [
+   "bibdb-8cfe",
+   "bibdb-8cfk",
+   "bibdb-8cgh",
+   "bibdb-No",
+   "bibdb-8cgg",
+   "bibdb-8cfj",
+   "bibdb-8cgf",
+   "bibdb-8cfp"
+  ]
+ },
+ {
+  "kommunkod": "0582",
+  "namn": "Söderköping",
+  "lan": "Östergötlands län",
+  "slug": "soderkoping",
+  "kedja": "Söderköpings bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sode",
+  "bibliotek": [
+   "bibdb-8cgc",
+   "bibdb-Sode",
+   "bibdb-8cgd"
+  ]
+ },
+ {
+  "kommunkod": "0583",
+  "namn": "Motala",
+  "lan": "Östergötlands län",
+  "slug": "motala",
+  "kedja": "Motala bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Mota",
+  "bibliotek": [
+   "bibdb-8cdi",
+   "bibdb-Mota",
+   "bibdb-8cdk"
+  ]
+ },
+ {
+  "kommunkod": "0584",
+  "namn": "Vadstena",
+  "lan": "Östergötlands län",
+  "slug": "vadstena",
+  "kedja": "Vadstena bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Vads",
+  "bibliotek": [
+   "bibdb-8ces",
+   "bibdb-Vads"
+  ]
+ },
+ {
+  "kommunkod": "0586",
+  "namn": "Mjölby",
+  "lan": "Östergötlands län",
+  "slug": "mjolby",
+  "kedja": "Mjölby kommun biblioteket",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Mjob",
+  "bibliotek": [
+   "bibdb-8cde",
+   "bibdb-Mjob",
+   "bibdb-8cef",
+   "bibdb-8cdg"
+  ]
+ },
+ {
+  "kommunkod": "0604",
+  "namn": "Aneby",
+  "lan": "Jönköpings län",
+  "slug": "aneby",
+  "kedja": "Aneby bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Aneb",
+  "bibliotek": [
+   "bibdb-Aneb"
+  ]
+ },
+ {
+  "kommunkod": "0617",
+  "namn": "Gnosjö",
+  "lan": "Jönköpings län",
+  "slug": "gnosjo",
+  "kedja": "Gnosjö bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Gnos",
+  "bibliotek": [
+   "bibdb-Gnos",
+   "bibdb-8bfp",
+   "bibdb-8bgd"
+  ]
+ },
+ {
+  "kommunkod": "0642",
+  "namn": "Mullsjö",
+  "lan": "Jönköpings län",
+  "slug": "mullsjo",
+  "kedja": "Mullsjö kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Mull",
+  "bibliotek": [
+   "bibdb-Mull"
+  ]
+ },
+ {
+  "kommunkod": "0643",
+  "namn": "Habo",
+  "lan": "Jönköpings län",
+  "slug": "habo",
+  "kedja": "Habo bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Habo",
+  "bibliotek": [
+   "bibdb-Habo"
+  ]
+ },
+ {
+  "kommunkod": "0662",
+  "namn": "Gislaved",
+  "lan": "Jönköpings län",
+  "slug": "gislaved",
+  "kedja": "Gislaveds bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Gisl",
+  "bibliotek": [
+   "bibdb-Ande",
+   "bibdb-Broa",
+   "bibdb-Gisl",
+   "bibdb-Hest",
+   "bibdb-Reft",
+   "bibdb-Smal"
+  ]
+ },
+ {
+  "kommunkod": "0665",
+  "namn": "Vaggeryd",
+  "lan": "Jönköpings län",
+  "slug": "vaggeryd",
+  "kedja": "Vaggeryds bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Vagg",
+  "bibliotek": [
+   "bibdb-8cac",
+   "bibdb-8bzh",
+   "bibdb-Skil",
+   "bibdb-Vagg"
+  ]
+ },
+ {
+  "kommunkod": "0680",
+  "namn": "Jönköping",
+  "lan": "Jönköpings län",
+  "slug": "jonkoping",
+  "kedja": "Jönköpings stadsbibliotek",
+  "antal_bibliotek": 13,
+  "huvudbibliotek": "bibdb-Jos",
+  "bibliotek": [
+   "bibdb-Bank",
+   "bibdb-8bzi",
+   "bibdb-Ga",
+   "bibdb-Husk",
+   "bibdb-Jos",
+   "bibdb-Nr",
+   "bibdb-Rt",
+   "bibdb-Tab",
+   "bibdb-Tenh",
+   "bibdb-8bzl",
+   "bibdb-8bzk",
+   "bibdb-Oste",
+   "bibdb-Oxne"
+  ]
+ },
+ {
+  "kommunkod": "0682",
+  "namn": "Nässjö",
+  "lan": "Jönköpings län",
+  "slug": "nassjo",
+  "kedja": "Nässjö stadsbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Nass",
+  "bibliotek": [
+   "bibdb-8caj",
+   "bibdb-8car",
+   "bibdb-8cas",
+   "bibdb-8cai",
+   "bibdb-Nass"
+  ]
+ },
+ {
+  "kommunkod": "0683",
+  "namn": "Värnamo",
+  "lan": "Jönköpings län",
+  "slug": "varnamo",
+  "kedja": "Värnamo kommunbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Vmo",
+  "bibliotek": [
+   "bibdb-8bfj",
+   "bibdb-8bff",
+   "bibdb-8bfh",
+   "bibdb-8bfl",
+   "bibdb-Vmo"
+  ]
+ },
+ {
+  "kommunkod": "0684",
+  "namn": "Sävsjö",
+  "lan": "Jönköpings län",
+  "slug": "savsjo",
+  "kedja": "Sävsjö stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Savs",
+  "bibliotek": [
+   "bibdb-8cad",
+   "bibdb-8cae",
+   "bibdb-Savs",
+   "bibdb-8caf"
+  ]
+ },
+ {
+  "kommunkod": "0685",
+  "namn": "Vetlanda",
+  "lan": "Jönköpings län",
+  "slug": "vetlanda",
+  "kedja": "Vetlanda bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Vetb",
+  "bibliotek": [
+   "bibdb-8cah",
+   "bibdb-8cbj",
+   "bibdb-Vetb"
+  ]
+ },
+ {
+  "kommunkod": "0686",
+  "namn": "Eksjö",
+  "lan": "Jönköpings län",
+  "slug": "eksjo",
+  "kedja": "Eksjö stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Eksj",
+  "bibliotek": [
+   "bibdb-Eksj",
+   "bibdb-8cak",
+   "bibdb-8cey"
+  ]
+ },
+ {
+  "kommunkod": "0687",
+  "namn": "Tranås",
+  "lan": "Jönköpings län",
+  "slug": "tranas",
+  "kedja": "Tranås stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Tras",
+  "bibliotek": [
+   "bibdb-Tras"
+  ]
+ },
+ {
+  "kommunkod": "0760",
+  "namn": "Uppvidinge",
+  "lan": "Kronobergs län",
+  "slug": "uppvidinge",
+  "kedja": "Uppvidinge bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-8bjh",
+  "bibliotek": [
+   "bibdb-8biu",
+   "bibdb-8bit",
+   "bibdb-8bjh",
+   "bibdb-8biw"
+  ]
+ },
+ {
+  "kommunkod": "0761",
+  "namn": "Lessebo",
+  "lan": "Kronobergs län",
+  "slug": "lessebo",
+  "kedja": "Lessebo kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Less",
+  "bibliotek": [
+   "bibdb-8bio",
+   "bibdb-8bip",
+   "bibdb-Less",
+   "bibdb-8biq"
+  ]
+ },
+ {
+  "kommunkod": "0763",
+  "namn": "Tingsryd",
+  "lan": "Kronobergs län",
+  "slug": "tingsryd",
+  "kedja": "Tingsryds bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Ting",
+  "bibliotek": [
+   "bibdb-8bic",
+   "bibdb-Ting",
+   "bibdb-8bif"
+  ]
+ },
+ {
+  "kommunkod": "0764",
+  "namn": "Alvesta",
+  "lan": "Kronobergs län",
+  "slug": "alvesta",
+  "kedja": "Alvesta bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Alve",
+  "bibliotek": [
+   "bibdb-Alve",
+   "bibdb-8bgg",
+   "bibdb-8bgn",
+   "bibdb-8bgo",
+   "bibdb-8bgm"
+  ]
+ },
+ {
+  "kommunkod": "0765",
+  "namn": "Älmhult",
+  "lan": "Kronobergs län",
+  "slug": "almhult",
+  "kedja": "Älmhults bibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Almh",
+  "bibliotek": [
+   "bibdb-8bgv",
+   "bibdb-8bgx",
+   "bibdb-8bha",
+   "bibdb-8bgz",
+   "bibdb-8bhb",
+   "bibdb-8bgy",
+   "bibdb-Almh"
+  ]
+ },
+ {
+  "kommunkod": "0767",
+  "namn": "Markaryd",
+  "lan": "Kronobergs län",
+  "slug": "markaryd",
+  "kedja": "Markaryds bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Mark",
+  "bibliotek": [
+   "bibdb-Mark",
+   "bibdb-Snas",
+   "bibdb-8bbu"
+  ]
+ },
+ {
+  "kommunkod": "0780",
+  "namn": "Växjö",
+  "lan": "Kronobergs län",
+  "slug": "vaxjo",
+  "kedja": "Växjö stadsbibliotek",
+  "antal_bibliotek": 10,
+  "huvudbibliotek": "bibdb-Va1",
+  "bibliotek": [
+   "bibdb-8bij",
+   "bibdb-8bii",
+   "bibdb-8bhx",
+   "bibdb-8bil",
+   "bibdb-8bih",
+   "bibdb-8bjg",
+   "bibdb-8tall",
+   "bibdb-8bhu",
+   "bibdb-Va1",
+   "bibdb-8bik"
+  ]
+ },
+ {
+  "kommunkod": "0781",
+  "namn": "Ljungby",
+  "lan": "Kronobergs län",
+  "slug": "ljungby",
+  "kedja": "Ljungby kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Ljun",
+  "bibliotek": [
+   "bibdb-8bgf",
+   "bibdb-8bge",
+   "bibdb-8bgi",
+   "bibdb-Ljun"
+  ]
+ },
+ {
+  "kommunkod": "0821",
+  "namn": "Högsby",
+  "lan": "Kalmar län",
+  "slug": "hogsby",
+  "kedja": "Högsby kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Hogs",
+  "bibliotek": [
+   "bibdb-Hogs"
+  ]
+ },
+ {
+  "kommunkod": "0834",
+  "namn": "Torsås",
+  "lan": "Kalmar län",
+  "slug": "torsas",
+  "kedja": "Torsås folkbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Tors",
+  "bibliotek": [
+   "bibdb-Tors"
+  ]
+ },
+ {
+  "kommunkod": "0840",
+  "namn": "Mörbylånga",
+  "lan": "Kalmar län",
+  "slug": "morbylanga",
+  "kedja": "Mörbylånga kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Morb",
+  "bibliotek": [
+   "bibdb-8blo",
+   "bibdb-8blm",
+   "bibdb-Morb"
+  ]
+ },
+ {
+  "kommunkod": "0860",
+  "namn": "Hultsfred",
+  "lan": "Kalmar län",
+  "slug": "hultsfred",
+  "kedja": "Hultsfreds bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hult",
+  "bibliotek": [
+   "bibdb-Hult",
+   "bibdb-8cam"
+  ]
+ },
+ {
+  "kommunkod": "0861",
+  "namn": "Mönsterås",
+  "lan": "Kalmar län",
+  "slug": "monsteras",
+  "kedja": "Mönsterås kommunbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Mons",
+  "bibliotek": [
+   "bibdb-8blh",
+   "bibdb-8bkx",
+   "bibdb-Mons",
+   "bibdb-8bkw",
+   "bibdb-8bli"
+  ]
+ },
+ {
+  "kommunkod": "0862",
+  "namn": "Emmaboda",
+  "lan": "Kalmar län",
+  "slug": "emmaboda",
+  "kedja": "Emmabodas folkbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-8biy",
+  "bibliotek": [
+   "bibdb-Emma",
+   "bibdb-8biy",
+   "bibdb-8bja",
+   "bibdb-8biz",
+   "bibdb-8bjc",
+   "bibdb-8bir"
+  ]
+ },
+ {
+  "kommunkod": "0880",
+  "namn": "Kalmar",
+  "lan": "Kalmar län",
+  "slug": "kalmar",
+  "kedja": "Kalmar stadsbibliotek",
+  "antal_bibliotek": 11,
+  "huvudbibliotek": "bibdb-Kal1",
+  "bibliotek": [
+   "bibdb-8bmf",
+   "bibdb-8blw",
+   "bibdb-Kal1",
+   "bibdb-Kal2",
+   "bibdb-8bmg",
+   "bibdb-8blt",
+   "bibdb-8blv",
+   "bibdb-8bmi",
+   "bibdb-8bkv",
+   "bibdb-8bmh",
+   "bibdb-8blu"
+  ]
+ },
+ {
+  "kommunkod": "0881",
+  "namn": "Nybro",
+  "lan": "Kalmar län",
+  "slug": "nybro",
+  "kedja": "Nybro bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Nybr",
+  "bibliotek": [
+   "bibdb-Nybr"
+  ]
+ },
+ {
+  "kommunkod": "0882",
+  "namn": "Oskarshamn",
+  "lan": "Kalmar län",
+  "slug": "oskarshamn",
+  "kedja": "Oskarshamns bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Oska",
+  "bibliotek": [
+   "bibdb-8caz",
+   "bibdb-8cao",
+   "bibdb-Oska",
+   "bibdb-8can"
+  ]
+ },
+ {
+  "kommunkod": "0883",
+  "namn": "Västervik",
+  "lan": "Kalmar län",
+  "slug": "vastervik",
+  "kedja": "Västerviks kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Vkb",
+  "bibliotek": [
+   "bibdb-8cdw",
+   "bibdb-8cen",
+   "bibdb-Vkb"
+  ]
+ },
+ {
+  "kommunkod": "0884",
+  "namn": "Vimmerby",
+  "lan": "Kalmar län",
+  "slug": "vimmerby",
+  "kedja": "Vimmerby bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Vimm",
+  "bibliotek": [
+   "bibdb-Vims",
+   "bibdb-Vimv",
+   "bibdb-Vimm"
+  ]
+ },
+ {
+  "kommunkod": "0885",
+  "namn": "Borgholm",
+  "lan": "Kalmar län",
+  "slug": "borgholm",
+  "kedja": "Borgholms bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Borg",
+  "bibliotek": [
+   "bibdb-Borg",
+   "bibdb-8bkz",
+   "bibdb-8blq",
+   "bibdb-8bls"
+  ]
+ },
+ {
+  "kommunkod": "0980",
+  "namn": "Gotland",
+  "lan": "Gotlands län",
+  "slug": "gotland",
+  "kedja": "Gotlands folkbibliotek",
+  "antal_bibliotek": 11,
+  "huvudbibliotek": "bibdb-8cgq",
+  "bibliotek": [
+   "bibdb-8cgy",
+   "bibdb-8chg",
+   "bibdb-8cgq",
+   "bibdb-8cgn",
+   "bibdb-8cha",
+   "bibdb-8chc",
+   "bibdb-8cgw",
+   "bibdb-8eaw",
+   "bibdb-8cgx",
+   "bibdb-8che",
+   "bibdb-8chb"
+  ]
+ },
+ {
+  "kommunkod": "1060",
+  "namn": "Olofström",
+  "lan": "Blekinge län",
+  "slug": "olofstrom",
+  "kedja": "Olofströms bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Ofb",
+  "bibliotek": [
+   "bibdb-8bcy",
+   "bibdb-8bcc",
+   "bibdb-Ofb"
+  ]
+ },
+ {
+  "kommunkod": "1080",
+  "namn": "Karlskrona",
+  "lan": "Blekinge län",
+  "slug": "karlskrona",
+  "kedja": "Biblioteken i Karlskrona",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-Kka",
+  "bibliotek": [
+   "bibdb-8bjn",
+   "bibdb-8bkk",
+   "bibdb-Kka",
+   "bibdb-8bjv",
+   "bibdb-8bjy",
+   "bibdb-8bjk",
+   "bibdb-8bjm",
+   "bibdb-8bjp"
+  ]
+ },
+ {
+  "kommunkod": "1081",
+  "namn": "Ronneby",
+  "lan": "Blekinge län",
+  "slug": "ronneby",
+  "kedja": "Ronneby stadsbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Rsb",
+  "bibliotek": [
+   "bibdb-8bkh",
+   "bibdb-8bjj",
+   "bibdb-8bkg",
+   "bibdb-8bki",
+   "bibdb-Rsb"
+  ]
+ },
+ {
+  "kommunkod": "1082",
+  "namn": "Karlshamn",
+  "lan": "Blekinge län",
+  "slug": "karlshamn",
+  "kedja": "Karlshamns stadsbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Khkb",
+  "bibliotek": [
+   "bibdb-8bkp",
+   "bibdb-8bkq",
+   "bibdb-Khkb",
+   "bibdb-8bks",
+   "bibdb-8bko",
+   "bibdb-8bku"
+  ]
+ },
+ {
+  "kommunkod": "1083",
+  "namn": "Sölvesborg",
+  "lan": "Blekinge län",
+  "slug": "solvesborg",
+  "kedja": "Sölvesborgs bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Sol",
+  "bibliotek": [
+   "bibdb-8bde",
+   "bibdb-8bdc",
+   "bibdb-8bdf",
+   "bibdb-Sol"
+  ]
+ },
+ {
+  "kommunkod": "1214",
+  "namn": "Svalöv",
+  "lan": "Skåne län",
+  "slug": "svalov",
+  "kedja": "Svalövs folkbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Slov",
+  "bibliotek": [
+   "bibdb-8azn",
+   "bibdb-8azo",
+   "bibdb-8azl",
+   "bibdb-Slov",
+   "bibdb-8azm"
+  ]
+ },
+ {
+  "kommunkod": "1230",
+  "namn": "Staffanstorp",
+  "lan": "Skåne län",
+  "slug": "staffanstorp",
+  "kedja": "Staffanstorps bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Staf",
+  "bibliotek": [
+   "bibdb-8avw",
+   "bibdb-Staf"
+  ]
+ },
+ {
+  "kommunkod": "1231",
+  "namn": "Burlöv",
+  "lan": "Skåne län",
+  "slug": "burlov",
+  "kedja": null,
+  "antal_bibliotek": 2,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Arlo",
+   "bibdb-8atx"
+  ]
+ },
+ {
+  "kommunkod": "1233",
+  "namn": "Vellinge",
+  "lan": "Skåne län",
+  "slug": "vellinge",
+  "kedja": "Vellinge bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Vell",
+  "bibliotek": [
+   "bibdb-Holl",
+   "bibdb-Skan",
+   "bibdb-Vell",
+   "bibdb-Vib"
+  ]
+ },
+ {
+  "kommunkod": "1256",
+  "namn": "Östra Göinge",
+  "lan": "Skåne län",
+  "slug": "ostra-goinge",
+  "kedja": "Östra Göinge bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Brob",
+  "bibliotek": [
+   "bibdb-8bax",
+   "bibdb-8bbx",
+   "bibdb-8bbw",
+   "bibdb-8bby",
+   "bibdb-Brob"
+  ]
+ },
+ {
+  "kommunkod": "1257",
+  "namn": "Örkelljunga",
+  "lan": "Skåne län",
+  "slug": "orkelljunga",
+  "kedja": "Örkelljunga bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Orke",
+  "bibliotek": [
+   "bibdb-8bav",
+   "bibdb-Orke"
+  ]
+ },
+ {
+  "kommunkod": "1260",
+  "namn": "Bjuv",
+  "lan": "Skåne län",
+  "slug": "bjuv",
+  "kedja": "Bjuvs kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Bjuv",
+  "bibliotek": [
+   "bibdb-8azi",
+   "bibdb-Bjuv",
+   "bibdb-8azj"
+  ]
+ },
+ {
+  "kommunkod": "1261",
+  "namn": "Kävlinge",
+  "lan": "Skåne län",
+  "slug": "kavlinge",
+  "kedja": "Kävlinge bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Kavl",
+  "bibliotek": [
+   "bibdb-Kavl",
+   "bibdb-8awc"
+  ]
+ },
+ {
+  "kommunkod": "1262",
+  "namn": "Lomma",
+  "lan": "Skåne län",
+  "slug": "lomma",
+  "kedja": "Lomma bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Lomm",
+  "bibliotek": [
+   "bibdb-Bjar",
+   "bibdb-Lomm"
+  ]
+ },
+ {
+  "kommunkod": "1263",
+  "namn": "Svedala",
+  "lan": "Skåne län",
+  "slug": "svedala",
+  "kedja": "Svedala bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sved",
+  "bibliotek": [
+   "bibdb-Kla",
+   "bibdb-Sved",
+   "bibdb-Bara"
+  ]
+ },
+ {
+  "kommunkod": "1264",
+  "namn": "Skurup",
+  "lan": "Skåne län",
+  "slug": "skurup",
+  "kedja": "Skurups kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Skur",
+  "bibliotek": [
+   "bibdb-8baj",
+   "bibdb-8bak",
+   "bibdb-8bal",
+   "bibdb-Skur"
+  ]
+ },
+ {
+  "kommunkod": "1265",
+  "namn": "Sjöbo",
+  "lan": "Skåne län",
+  "slug": "sjobo",
+  "kedja": "Sjöbo bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Sjob",
+  "bibliotek": [
+   "bibdb-8ban",
+   "bibdb-8bap",
+   "bibdb-Sjob",
+   "bibdb-8bao"
+  ]
+ },
+ {
+  "kommunkod": "1266",
+  "namn": "Hörby",
+  "lan": "Skåne län",
+  "slug": "horby",
+  "kedja": "Hörby bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Horb",
+  "bibliotek": [
+   "bibdb-Horb"
+  ]
+ },
+ {
+  "kommunkod": "1267",
+  "namn": "Höör",
+  "lan": "Skåne län",
+  "slug": "hoor",
+  "kedja": "Höörs bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Hoor",
+  "bibliotek": [
+   "bibdb-Hoor"
+  ]
+ },
+ {
+  "kommunkod": "1270",
+  "namn": "Tomelilla",
+  "lan": "Skåne län",
+  "slug": "tomelilla",
+  "kedja": "Tomelilla bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Tome",
+  "bibliotek": [
+   "bibdb-8baq",
+   "bibdb-8bag",
+   "bibdb-8bah",
+   "bibdb-Tome"
+  ]
+ },
+ {
+  "kommunkod": "1272",
+  "namn": "Bromölla",
+  "lan": "Skåne län",
+  "slug": "bromolla",
+  "kedja": "Bromölla folkbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Brom",
+  "bibliotek": [
+   "bibdb-Brom",
+   "bibdb-8bdi"
+  ]
+ },
+ {
+  "kommunkod": "1273",
+  "namn": "Osby",
+  "lan": "Skåne län",
+  "slug": "osby",
+  "kedja": "Osby bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Osb",
+  "bibliotek": [
+   "bibdb-8baz",
+   "bibdb-8bay",
+   "bibdb-Osb"
+  ]
+ },
+ {
+  "kommunkod": "1275",
+  "namn": "Perstorp",
+  "lan": "Skåne län",
+  "slug": "perstorp",
+  "kedja": "Perstorps bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Pb",
+  "bibliotek": [
+   "bibdb-Pb"
+  ]
+ },
+ {
+  "kommunkod": "1276",
+  "namn": "Klippan",
+  "lan": "Skåne län",
+  "slug": "klippan",
+  "kedja": "Klippans bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Klip",
+  "bibliotek": [
+   "bibdb-Klip",
+   "bibdb-8ayr",
+   "bibdb-8ays"
+  ]
+ },
+ {
+  "kommunkod": "1277",
+  "namn": "Åstorp",
+  "lan": "Skåne län",
+  "slug": "astorp",
+  "kedja": "Åstorps bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Asto",
+  "bibliotek": [
+   "bibdb-8ayv",
+   "bibdb-8ayu",
+   "bibdb-8ayw",
+   "bibdb-Asto"
+  ]
+ },
+ {
+  "kommunkod": "1278",
+  "namn": "Båstad",
+  "lan": "Skåne län",
+  "slug": "bastad",
+  "kedja": "Båstads bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Bast",
+  "bibliotek": [
+   "bibdb-Bast",
+   "bibdb-Forb",
+   "bibdb-8axs",
+   "bibdb-8azu",
+   "bibdb-8azs"
+  ]
+ },
+ {
+  "kommunkod": "1280",
+  "namn": "Malmö",
+  "lan": "Skåne län",
+  "slug": "malmo",
+  "kedja": "Malmö stadsbibliotek",
+  "antal_bibliotek": 14,
+  "huvudbibliotek": "bibdb-Mo",
+  "bibliotek": [
+   "bibdb-8arn",
+   "bibdb-8arp",
+   "bibdb-8aph",
+   "bibdb-8aqc",
+   "bibdb-8hlb",
+   "bibdb-8aqa",
+   "bibdb-8arg",
+   "bibdb-8arb",
+   "bibdb-Mo",
+   "bibdb-8mas",
+   "bibdb-8aus",
+   "bibdb-8aql",
+   "bibdb-8mos",
+   "bibdb-8ars"
+  ]
+ },
+ {
+  "kommunkod": "1281",
+  "namn": "Lund",
+  "lan": "Skåne län",
+  "slug": "lund",
+  "kedja": "Lunds stadsbibliotek",
+  "antal_bibliotek": 11,
+  "huvudbibliotek": "bibdb-8ask",
+  "bibliotek": [
+   "bibdb-8fol",
+   "bibdb-8nbl",
+   "bibdb-8awj",
+   "bibdb-8awo",
+   "bibdb-8asn",
+   "bibdb-8atd",
+   "bibdb-8ask",
+   "bibdb-8atg",
+   "bibdb-8atj",
+   "bibdb-8awf",
+   "bibdb-8awl"
+  ]
+ },
+ {
+  "kommunkod": "1282",
+  "namn": "Landskrona",
+  "lan": "Skåne län",
+  "slug": "landskrona",
+  "kedja": "Landskrona stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Lasb",
+  "bibliotek": [
+   "bibdb-8axw",
+   "bibdb-8axx",
+   "bibdb-Lasb",
+   "bibdb-8axq"
+  ]
+ },
+ {
+  "kommunkod": "1283",
+  "namn": "Helsingborg",
+  "lan": "Skåne län",
+  "slug": "helsingborg",
+  "kedja": "Helsingborgs stadsbibliotek",
+  "antal_bibliotek": 10,
+  "huvudbibliotek": "bibdb-Hesb",
+  "bibliotek": [
+   "bibdb-Dro",
+   "bibdb-Heel",
+   "bibdb-Hesb",
+   "bibdb-Lro",
+   "bibdb-Hepa",
+   "bibdb-Rin",
+   "bibdb-Ros",
+   "bibdb-Ryde",
+   "bibdb-Hera",
+   "bibdb-Heod"
+  ]
+ },
+ {
+  "kommunkod": "1284",
+  "namn": "Höganäs",
+  "lan": "Skåne län",
+  "slug": "hoganas",
+  "kedja": "Höganäs bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Hoas",
+  "bibliotek": [
+   "bibdb-Hoas",
+   "bibdb-8ayn",
+   "bibdb-8ayk",
+   "bibdb-8ayo",
+   "bibdb-8ayl",
+   "bibdb-8aym"
+  ]
+ },
+ {
+  "kommunkod": "1285",
+  "namn": "Eslöv",
+  "lan": "Skåne län",
+  "slug": "eslov",
+  "kedja": "Eslövs stadsbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Eslo",
+  "bibliotek": [
+   "bibdb-Eslo",
+   "bibdb-8awh",
+   "bibdb-8avi",
+   "bibdb-8avg",
+   "bibdb-8avj",
+   "bibdb-8avk"
+  ]
+ },
+ {
+  "kommunkod": "1286",
+  "namn": "Ystad",
+  "lan": "Skåne län",
+  "slug": "ystad",
+  "kedja": "Ystads bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Ysta",
+  "bibliotek": [
+   "bibdb-8azv",
+   "bibdb-8azy",
+   "bibdb-8azz",
+   "bibdb-8bac",
+   "bibdb-Ysta"
+  ]
+ },
+ {
+  "kommunkod": "1287",
+  "namn": "Trelleborg",
+  "lan": "Skåne län",
+  "slug": "trelleborg",
+  "kedja": "Trelleborgs bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Trel",
+  "bibliotek": [
+   "bibdb-8atq",
+   "bibdb-8atr",
+   "bibdb-Trel"
+  ]
+ },
+ {
+  "kommunkod": "1290",
+  "namn": "Kristianstad",
+  "lan": "Skåne län",
+  "slug": "kristianstad",
+  "kedja": "Kristianstads stadsbibliotek",
+  "antal_bibliotek": 14,
+  "huvudbibliotek": "bibdb-Kri1",
+  "bibliotek": [
+   "bibdb-8bca",
+   "bibdb-Bkr",
+   "bibdb-8bdl",
+   "bibdb-8bdm",
+   "bibdb-8bbz",
+   "bibdb-8bct",
+   "bibdb-8bcj",
+   "bibdb-Kri1",
+   "bibdb-8bdp",
+   "bibdb-8bdn",
+   "bibdb-8bcp",
+   "bibdb-8bdj",
+   "bibdb-8bdq",
+   "bibdb-8bcs"
+  ]
+ },
+ {
+  "kommunkod": "1291",
+  "namn": "Simrishamn",
+  "lan": "Skåne län",
+  "slug": "simrishamn",
+  "kedja": "Simrishamns bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Simr",
+  "bibliotek": [
+   "bibdb-Simr"
+  ]
+ },
+ {
+  "kommunkod": "1292",
+  "namn": "Ängelholm",
+  "lan": "Skåne län",
+  "slug": "angelholm",
+  "kedja": "Ängelholms bibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Asb",
+  "bibliotek": [
+   "bibdb-8aze",
+   "bibdb-8azc",
+   "bibdb-8ayd",
+   "bibdb-8ayf",
+   "bibdb-8ayb",
+   "bibdb-8azd",
+   "bibdb-Asb"
+  ]
+ },
+ {
+  "kommunkod": "1293",
+  "namn": "Hässleholm",
+  "lan": "Skåne län",
+  "slug": "hassleholm",
+  "kedja": "Hässleholms stadsbibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Hkb",
+  "bibliotek": [
+   "bibdb-8bas",
+   "bibdb-Hkb",
+   "bibdb-8bau",
+   "bibdb-8bar",
+   "bibdb-8bbf",
+   "bibdb-8bbv",
+   "bibdb-8bat"
+  ]
+ },
+ {
+  "kommunkod": "1315",
+  "namn": "Hylte",
+  "lan": "Hallands län",
+  "slug": "hylte",
+  "kedja": "Hylte folkbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Hylt",
+  "bibliotek": [
+   "bibdb-Hylt",
+   "bibdb-8bfe",
+   "bibdb-8bel"
+  ]
+ },
+ {
+  "kommunkod": "1380",
+  "namn": "Halmstad",
+  "lan": "Hallands län",
+  "slug": "halmstad",
+  "kedja": "Halmstads stadsbibliotek",
+  "antal_bibliotek": 10,
+  "huvudbibliotek": "bibdb-Hasb",
+  "bibliotek": [
+   "bibdb-8bec",
+   "bibdb-8Hfr",
+   "bibdb-8bed",
+   "bibdb-8beh",
+   "bibdb-Hasb",
+   "bibdb-8beg",
+   "bibdb-8bfc",
+   "bibdb-8bej",
+   "bibdb-8bef",
+   "bibdb-8bds"
+  ]
+ },
+ {
+  "kommunkod": "1381",
+  "namn": "Laholm",
+  "lan": "Hallands län",
+  "slug": "laholm",
+  "kedja": "Laholms bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Laho",
+  "bibliotek": [
+   "bibdb-8bei",
+   "bibdb-Laho",
+   "bibdb-8bez",
+   "bibdb-8bfa"
+  ]
+ },
+ {
+  "kommunkod": "1382",
+  "namn": "Falkenberg",
+  "lan": "Hallands län",
+  "slug": "falkenberg",
+  "kedja": "Falkenbergs bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Falk",
+  "bibliotek": [
+   "bibdb-Falk",
+   "bibdb-8bem",
+   "bibdb-8beu",
+   "bibdb-8bes",
+   "bibdb-8bet",
+   "bibdb-8bek"
+  ]
+ },
+ {
+  "kommunkod": "1383",
+  "namn": "Varberg",
+  "lan": "Hallands län",
+  "slug": "varberg",
+  "kedja": "Varbergs bibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Varb",
+  "bibliotek": [
+   "bibdb-8bqb",
+   "bibdb-8bwa",
+   "bibdb-8bpo",
+   "bibdb-8bqd",
+   "bibdb-8bqe",
+   "bibdb-Varb",
+   "bibdb-8bpp"
+  ]
+ },
+ {
+  "kommunkod": "1384",
+  "namn": "Kungsbacka",
+  "lan": "Hallands län",
+  "slug": "kungsbacka",
+  "kedja": "Kungsbacka bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Kbb",
+  "bibliotek": [
+   "bibdb-8bqz",
+   "bibdb-8bqy",
+   "bibdb-8bpn",
+   "bibdb-Kbb",
+   "bibdb-8bqv",
+   "bibdb-8bqx"
+  ]
+ },
+ {
+  "kommunkod": "1401",
+  "namn": "Härryda",
+  "lan": "Västra Götalands län",
+  "slug": "harryda",
+  "kedja": "Härryda folkbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Lyck",
+  "bibliotek": [
+   "bibdb-8bqu",
+   "bibdb-8hul",
+   "bibdb-Lyck",
+   "bibdb-8bqr",
+   "bibdb-8bqt"
+  ]
+ },
+ {
+  "kommunkod": "1402",
+  "namn": "Partille",
+  "lan": "Västra Götalands län",
+  "slug": "partille",
+  "kedja": "Partille bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Part",
+  "bibliotek": [
+   "bibdb-Part"
+  ]
+ },
+ {
+  "kommunkod": "1407",
+  "namn": "Öckerö",
+  "lan": "Västra Götalands län",
+  "slug": "ockero",
+  "kedja": "Öckerö bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Ockb",
+  "bibliotek": [
+   "bibdb-8bps",
+   "bibdb-8buc",
+   "bibdb-8bub",
+   "bibdb-8bud",
+   "bibdb-Ockb"
+  ]
+ },
+ {
+  "kommunkod": "1415",
+  "namn": "Stenungsund",
+  "lan": "Västra Götalands län",
+  "slug": "stenungsund",
+  "kedja": "Stenungsunds bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Sten",
+  "bibliotek": [
+   "bibdb-Sten"
+  ]
+ },
+ {
+  "kommunkod": "1419",
+  "namn": "Tjörn",
+  "lan": "Västra Götalands län",
+  "slug": "tjorn",
+  "kedja": "Tjörns Kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Tjor",
+  "bibliotek": [
+   "bibdb-8btv",
+   "bibdb-Tjor"
+  ]
+ },
+ {
+  "kommunkod": "1421",
+  "namn": "Orust",
+  "lan": "Västra Götalands län",
+  "slug": "orust",
+  "kedja": "Orusts kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Hena",
+  "bibliotek": [
+   "bibdb-8bua",
+   "bibdb-Hena",
+   "bibdb-8btx",
+   "bibdb-8bty"
+  ]
+ },
+ {
+  "kommunkod": "1427",
+  "namn": "Sotenäs",
+  "lan": "Västra Götalands län",
+  "slug": "sotenas",
+  "kedja": "Sotenäs kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hamn",
+  "bibliotek": [
+   "bibdb-8bsr",
+   "bibdb-Hamn"
+  ]
+ },
+ {
+  "kommunkod": "1430",
+  "namn": "Munkedal",
+  "lan": "Västra Götalands län",
+  "slug": "munkedal",
+  "kedja": "Munkedals bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Munk",
+  "bibliotek": [
+   "bibdb-8bsp",
+   "bibdb-8bso",
+   "bibdb-8bsw",
+   "bibdb-Munk"
+  ]
+ },
+ {
+  "kommunkod": "1435",
+  "namn": "Tanum",
+  "lan": "Västra Götalands län",
+  "slug": "tanum",
+  "kedja": "Tanums bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Tanu",
+  "bibliotek": [
+   "bibdb-8bsv",
+   "bibdb-8bst",
+   "bibdb-8bsu",
+   "bibdb-Tanu"
+  ]
+ },
+ {
+  "kommunkod": "1438",
+  "namn": "Dals-Ed",
+  "lan": "Västra Götalands län",
+  "slug": "dals-ed",
+  "kedja": "Dals-Eds bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Ed",
+  "bibliotek": [
+   "bibdb-Ed"
+  ]
+ },
+ {
+  "kommunkod": "1439",
+  "namn": "Färgelanda",
+  "lan": "Västra Götalands län",
+  "slug": "fargelanda",
+  "kedja": "Färgelanda kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Farg",
+  "bibliotek": [
+   "bibdb-Farg"
+  ]
+ },
+ {
+  "kommunkod": "1440",
+  "namn": "Ale",
+  "lan": "Västra Götalands län",
+  "slug": "ale",
+  "kedja": "Ale bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Nodi",
+  "bibliotek": [
+   "bibdb-Nodi",
+   "bibdb-8bru",
+   "bibdb-8brr",
+   "bibdb-8brs"
+  ]
+ },
+ {
+  "kommunkod": "1441",
+  "namn": "Lerum",
+  "lan": "Västra Götalands län",
+  "slug": "lerum",
+  "kedja": "Lerums bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Leru",
+  "bibliotek": [
+   "bibdb-8brw",
+   "bibdb-8brm",
+   "bibdb-Leru",
+   "bibdb-8brn",
+   "bibdb-8brx"
+  ]
+ },
+ {
+  "kommunkod": "1442",
+  "namn": "Vårgårda",
+  "lan": "Västra Götalands län",
+  "slug": "vargarda",
+  "kedja": "Vårgårda bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Varg",
+  "bibliotek": [
+   "bibdb-Varg"
+  ]
+ },
+ {
+  "kommunkod": "1443",
+  "namn": "Bollebygd",
+  "lan": "Västra Götalands län",
+  "slug": "bollebygd",
+  "kedja": "Bollebygds bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Bole",
+  "bibliotek": [
+   "bibdb-Bole",
+   "bibdb-8bvw"
+  ]
+ },
+ {
+  "kommunkod": "1444",
+  "namn": "Grästorp",
+  "lan": "Västra Götalands län",
+  "slug": "grastorp",
+  "kedja": "Grästorps kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Gras",
+  "bibliotek": [
+   "bibdb-Gras"
+  ]
+ },
+ {
+  "kommunkod": "1445",
+  "namn": "Essunga",
+  "lan": "Västra Götalands län",
+  "slug": "essunga",
+  "kedja": "Essunga bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Essu",
+  "bibliotek": [
+   "bibdb-Essu"
+  ]
+ },
+ {
+  "kommunkod": "1446",
+  "namn": "Karlsborg",
+  "lan": "Västra Götalands län",
+  "slug": "karlsborg",
+  "kedja": "Karlsborgs bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Kabo",
+  "bibliotek": [
+   "bibdb-Kabo",
+   "bibdb-8byl",
+   "bibdb-8bym"
+  ]
+ },
+ {
+  "kommunkod": "1447",
+  "namn": "Gullspång",
+  "lan": "Västra Götalands län",
+  "slug": "gullspang",
+  "kedja": "Gullspångs kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Gull",
+  "bibliotek": [
+   "bibdb-Gull",
+   "bibdb-Hova"
+  ]
+ },
+ {
+  "kommunkod": "1452",
+  "namn": "Tranemo",
+  "lan": "Västra Götalands län",
+  "slug": "tranemo",
+  "kedja": "Tranemo bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Trmo",
+  "bibliotek": [
+   "bibdb-Trmo"
+  ]
+ },
+ {
+  "kommunkod": "1460",
+  "namn": "Bengtsfors",
+  "lan": "Västra Götalands län",
+  "slug": "bengtsfors",
+  "kedja": "Bengtsfors bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Benf",
+  "bibliotek": [
+   "bibdb-Benf",
+   "bibdb-8ckr",
+   "bibdb-8cjw",
+   "bibdb-Stby"
+  ]
+ },
+ {
+  "kommunkod": "1461",
+  "namn": "Mellerud",
+  "lan": "Västra Götalands län",
+  "slug": "mellerud",
+  "kedja": "Melleruds kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Mell",
+  "bibliotek": [
+   "bibdb-Mell"
+  ]
+ },
+ {
+  "kommunkod": "1462",
+  "namn": "Lilla Edet",
+  "lan": "Västra Götalands län",
+  "slug": "lilla-edet",
+  "kedja": "Lilla Edets bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Edet",
+  "bibliotek": [
+   "bibdb-Edet",
+   "bibdb-8btn"
+  ]
+ },
+ {
+  "kommunkod": "1463",
+  "namn": "Mark",
+  "lan": "Västra Götalands län",
+  "slug": "mark",
+  "kedja": null,
+  "antal_bibliotek": 6,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Bjok",
+   "bibdb-Frit",
+   "bibdb-Hred",
+   "bibdb-8bvf",
+   "bibdb-Sken",
+   "bibdb-Satl"
+  ]
+ },
+ {
+  "kommunkod": "1465",
+  "namn": "Svenljunga",
+  "lan": "Västra Götalands län",
+  "slug": "svenljunga",
+  "kedja": "Svenljunga kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Sven",
+  "bibliotek": [
+   "bibdb-Sven"
+  ]
+ },
+ {
+  "kommunkod": "1466",
+  "namn": "Herrljunga",
+  "lan": "Västra Götalands län",
+  "slug": "herrljunga",
+  "kedja": "Herrljunga folkbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Herr",
+  "bibliotek": [
+   "bibdb-Herr",
+   "bibdb-8bxb"
+  ]
+ },
+ {
+  "kommunkod": "1470",
+  "namn": "Vara",
+  "lan": "Västra Götalands län",
+  "slug": "vara",
+  "kedja": "Vara folkbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Vara",
+  "bibliotek": [
+   "bibdb-Kvan",
+   "bibdb-8bxo",
+   "bibdb-Vara",
+   "bibdb-8bxm"
+  ]
+ },
+ {
+  "kommunkod": "1471",
+  "namn": "Götene",
+  "lan": "Västra Götalands län",
+  "slug": "gotene",
+  "kedja": "Götene bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Gote",
+  "bibliotek": [
+   "bibdb-Gote"
+  ]
+ },
+ {
+  "kommunkod": "1472",
+  "namn": "Tibro",
+  "lan": "Västra Götalands län",
+  "slug": "tibro",
+  "kedja": null,
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Tikf",
+  "bibliotek": [
+   "bibdb-Tikf"
+  ]
+ },
+ {
+  "kommunkod": "1473",
+  "namn": "Töreboda",
+  "lan": "Västra Götalands län",
+  "slug": "toreboda",
+  "kedja": "Töreboda kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Tore",
+  "bibliotek": [
+   "bibdb-8bys",
+   "bibdb-Tore",
+   "bibdb-8byi"
+  ]
+ },
+ {
+  "kommunkod": "1480",
+  "namn": "Göteborg",
+  "lan": "Västra Götalands län",
+  "slug": "goteborg",
+  "kedja": "Biblioteken i Göteborg",
+  "antal_bibliotek": 27,
+  "huvudbibliotek": "bibdb-Gbg",
+  "bibliotek": [
+   "bibdb-Ange",
+   "bibdb-Askb",
+   "bibdb-Back",
+   "bibdb-Bsj",
+   "bibdb-8bof",
+   "bibdb-Bisk",
+   "bibdb-8eri",
+   "bibdb-8ftb",
+   "bibdb-Vfb",
+   "bibdb-Vrl",
+   "bibdb-Guld",
+   "bibdb-Gbg",
+   "bibdb-Hkbk",
+   "bibdb-Hja",
+   "bibdb-Harl",
+   "bibdb-Hogb",
+   "bibdb-Kor",
+   "bibdb-Kybi",
+   "bibdb-Lnb",
+   "bibdb-Hisi",
+   "bibdb-Majo",
+   "bibdb-Opal",
+   "bibdb-8bnb",
+   "bibdb-8bov",
+   "bibdb-Sty",
+   "bibdb-Tobi",
+   "bibdb-Tuve"
+  ]
+ },
+ {
+  "kommunkod": "1481",
+  "namn": "Mölndal",
+  "lan": "Västra Götalands län",
+  "slug": "molndal",
+  "kedja": "Mölndals stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Moln",
+  "bibliotek": [
+   "bibdb-8bpv",
+   "bibdb-8bpk",
+   "bibdb-8bqq",
+   "bibdb-Moln"
+  ]
+ },
+ {
+  "kommunkod": "1482",
+  "namn": "Kungälv",
+  "lan": "Västra Götalands län",
+  "slug": "kungalv",
+  "kedja": "Kungälvs stadsbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Kusb",
+  "bibliotek": [
+   "bibdb-8bre",
+   "bibdb-8kod",
+   "bibdb-Kusb",
+   "bibdb-8brk",
+   "bibdb-8brj",
+   "bibdb-8bri"
+  ]
+ },
+ {
+  "kommunkod": "1484",
+  "namn": "Lysekil",
+  "lan": "Västra Götalands län",
+  "slug": "lysekil",
+  "kedja": "Lysekils stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Lyse",
+  "bibliotek": [
+   "bibdb-8bsl",
+   "bibdb-Lyse",
+   "bibdb-8brz"
+  ]
+ },
+ {
+  "kommunkod": "1485",
+  "namn": "Uddevalla",
+  "lan": "Västra Götalands län",
+  "slug": "uddevalla",
+  "kedja": "Uddevalla stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Udd",
+  "bibliotek": [
+   "bibdb-8bse",
+   "bibdb-8bsz",
+   "bibdb-8amp",
+   "bibdb-Udd"
+  ]
+ },
+ {
+  "kommunkod": "1486",
+  "namn": "Strömstad",
+  "lan": "Västra Götalands län",
+  "slug": "stromstad",
+  "kedja": "Strömstads stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Skkf",
+  "bibliotek": [
+   "bibdb-Skkf"
+  ]
+ },
+ {
+  "kommunkod": "1487",
+  "namn": "Vänersborg",
+  "lan": "Västra Götalands län",
+  "slug": "vanersborg",
+  "kedja": "Vänersborgs bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Vane",
+  "bibliotek": [
+   "bibdb-8btp",
+   "bibdb-8btl",
+   "bibdb-8btu",
+   "bibdb-Vane"
+  ]
+ },
+ {
+  "kommunkod": "1488",
+  "namn": "Trollhättan",
+  "lan": "Västra Götalands län",
+  "slug": "trollhattan",
+  "kedja": "Trollhättans Stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Tkb",
+  "bibliotek": [
+   "bibdb-8btf",
+   "bibdb-8bte",
+   "bibdb-Tkb"
+  ]
+ },
+ {
+  "kommunkod": "1489",
+  "namn": "Alingsås",
+  "lan": "Västra Götalands län",
+  "slug": "alingsas",
+  "kedja": "Alingsås bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Afb",
+  "bibliotek": [
+   "bibdb-Afb",
+   "bibdb-8brd",
+   "bibdb-8btr"
+  ]
+ },
+ {
+  "kommunkod": "1490",
+  "namn": "Borås",
+  "lan": "Västra Götalands län",
+  "slug": "boras",
+  "kedja": "Borås stadsbibliotek",
+  "antal_bibliotek": 12,
+  "huvudbibliotek": "bibdb-Bo",
+  "bibliotek": [
+   "bibdb-Bo",
+   "bibdb-8buq",
+   "bibdb-8bvs",
+   "bibdb-8bvn",
+   "bibdb-8buk",
+   "bibdb-8buw",
+   "bibdb-8buo",
+   "bibdb-8bum",
+   "bibdb-8bvy",
+   "bibdb-8buv",
+   "bibdb-8buz",
+   "bibdb-8bvr"
+  ]
+ },
+ {
+  "kommunkod": "1491",
+  "namn": "Ulricehamn",
+  "lan": "Västra Götalands län",
+  "slug": "ulricehamn",
+  "kedja": "Ulricehamns stadsbibliotek",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-Ulri",
+  "bibliotek": [
+   "bibdb-8bwc",
+   "bibdb-8bwd",
+   "bibdb-8bwz",
+   "bibdb-8bwb",
+   "bibdb-8bww",
+   "bibdb-8bws",
+   "bibdb-Ulri",
+   "bibdb-8bwy"
+  ]
+ },
+ {
+  "kommunkod": "1492",
+  "namn": "Åmål",
+  "lan": "Västra Götalands län",
+  "slug": "amal",
+  "kedja": "Åmåls stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Amsb",
+  "bibliotek": [
+   "bibdb-Amsb"
+  ]
+ },
+ {
+  "kommunkod": "1493",
+  "namn": "Mariestad",
+  "lan": "Västra Götalands län",
+  "slug": "mariestad",
+  "kedja": "Mariestads bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Mari",
+  "bibliotek": [
+   "bibdb-8byq",
+   "bibdb-Mari"
+  ]
+ },
+ {
+  "kommunkod": "1494",
+  "namn": "Lidköping",
+  "lan": "Västra Götalands län",
+  "slug": "lidkoping",
+  "kedja": "Lidköpings stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Ldsb",
+  "bibliotek": [
+   "bibdb-8bxg",
+   "bibdb-Ldsb",
+   "bibdb-8bxh",
+   "bibdb-8bxc"
+  ]
+ },
+ {
+  "kommunkod": "1495",
+  "namn": "Skara",
+  "lan": "Västra Götalands län",
+  "slug": "skara",
+  "kedja": "Stifts- och landsbiblioteket i Skara",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Sk",
+  "bibliotek": [
+   "bibdb-Sk"
+  ]
+ },
+ {
+  "kommunkod": "1496",
+  "namn": "Skövde",
+  "lan": "Västra Götalands län",
+  "slug": "skovde",
+  "kedja": "Skövde stadsbibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Sksb",
+  "bibliotek": [
+   "bibdb-8bxz",
+   "bibdb-Sksb",
+   "bibdb-8byb",
+   "bibdb-8bya",
+   "bibdb-8byr",
+   "bibdb-8bxq",
+   "bibdb-8byc"
+  ]
+ },
+ {
+  "kommunkod": "1497",
+  "namn": "Hjo",
+  "lan": "Västra Götalands län",
+  "slug": "hjo",
+  "kedja": "Hjo stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Hjo",
+  "bibliotek": [
+   "bibdb-Hjo"
+  ]
+ },
+ {
+  "kommunkod": "1498",
+  "namn": "Tidaholm",
+  "lan": "Västra Götalands län",
+  "slug": "tidaholm",
+  "kedja": "Tidaholms bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Tida",
+  "bibliotek": [
+   "bibdb-8bwr",
+   "bibdb-Tida"
+  ]
+ },
+ {
+  "kommunkod": "1499",
+  "namn": "Falköping",
+  "lan": "Västra Götalands län",
+  "slug": "falkoping",
+  "kedja": "Falköpings bibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Fab",
+  "bibliotek": [
+   "bibdb-8bwo",
+   "bibdb-Fab",
+   "bibdb-8bwj",
+   "bibdb-8bwl",
+   "bibdb-8bwk",
+   "bibdb-8bwg",
+   "bibdb-8bwf"
+  ]
+ },
+ {
+  "kommunkod": "1715",
+  "namn": "Kil",
+  "lan": "Värmlands län",
+  "slug": "kil",
+  "kedja": "Kils bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Kils",
+  "bibliotek": [
+   "bibdb-8ckm",
+   "bibdb-8ckl",
+   "bibdb-Kils"
+  ]
+ },
+ {
+  "kommunkod": "1730",
+  "namn": "Eda",
+  "lan": "Värmlands län",
+  "slug": "eda",
+  "kedja": "Eda kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-8clb",
+  "bibliotek": [
+   "bibdb-8clb",
+   "bibdb-8ckv",
+   "bibdb-8cku"
+  ]
+ },
+ {
+  "kommunkod": "1737",
+  "namn": "Torsby",
+  "lan": "Värmlands län",
+  "slug": "torsby",
+  "kedja": "Torsby bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Torb",
+  "bibliotek": [
+   "bibdb-Syb",
+   "bibdb-Torb"
+  ]
+ },
+ {
+  "kommunkod": "1760",
+  "namn": "Storfors",
+  "lan": "Värmlands län",
+  "slug": "storfors",
+  "kedja": "Storfors folkbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Stof",
+  "bibliotek": [
+   "bibdb-Stof"
+  ]
+ },
+ {
+  "kommunkod": "1761",
+  "namn": "Hammarö",
+  "lan": "Värmlands län",
+  "slug": "hammaro",
+  "kedja": "Hammarö bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Hama",
+  "bibliotek": [
+   "bibdb-Hama"
+  ]
+ },
+ {
+  "kommunkod": "1762",
+  "namn": "Munkfors",
+  "lan": "Värmlands län",
+  "slug": "munkfors",
+  "kedja": "Munkfors bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Munf",
+  "bibliotek": [
+   "bibdb-Munf"
+  ]
+ },
+ {
+  "kommunkod": "1763",
+  "namn": "Forshaga",
+  "lan": "Värmlands län",
+  "slug": "forshaga",
+  "kedja": "Forshaga bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Forh",
+  "bibliotek": [
+   "bibdb-8cks",
+   "bibdb-Forh"
+  ]
+ },
+ {
+  "kommunkod": "1764",
+  "namn": "Grums",
+  "lan": "Värmlands län",
+  "slug": "grums",
+  "kedja": "Grums bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Grum",
+  "bibliotek": [
+   "bibdb-Grum"
+  ]
+ },
+ {
+  "kommunkod": "1765",
+  "namn": "Årjäng",
+  "lan": "Värmlands län",
+  "slug": "arjang",
+  "kedja": "Årjängs folkbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Arja",
+  "bibliotek": [
+   "bibdb-8ckt",
+   "bibdb-Arja"
+  ]
+ },
+ {
+  "kommunkod": "1766",
+  "namn": "Sunne",
+  "lan": "Värmlands län",
+  "slug": "sunne",
+  "kedja": "Sunne bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Sunn",
+  "bibliotek": [
+   "bibdb-Sunn"
+  ]
+ },
+ {
+  "kommunkod": "1780",
+  "namn": "Karlstad",
+  "lan": "Värmlands län",
+  "slug": "karlstad",
+  "kedja": "Karlstads stadsbibliotek",
+  "antal_bibliotek": 10,
+  "huvudbibliotek": "bibdb-Kld1",
+  "bibliotek": [
+   "bibdb-8cjz",
+   "bibdb-Kld1",
+   "bibdb-8cjh",
+   "bibdb-8ckb",
+   "bibdb-8cjv",
+   "bibdb-8cjg",
+   "bibdb-8cjx",
+   "bibdb-8cjr",
+   "bibdb-8cka",
+   "bibdb-8ckc"
+  ]
+ },
+ {
+  "kommunkod": "1781",
+  "namn": "Kristinehamn",
+  "lan": "Värmlands län",
+  "slug": "kristinehamn",
+  "kedja": "Kristinehamns bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kris",
+  "bibliotek": [
+   "bibdb-Kris"
+  ]
+ },
+ {
+  "kommunkod": "1782",
+  "namn": "Filipstad",
+  "lan": "Värmlands län",
+  "slug": "filipstad",
+  "kedja": "Filipstad Bergslags bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Fili",
+  "bibliotek": [
+   "bibdb-Fili",
+   "bibdb-8clh"
+  ]
+ },
+ {
+  "kommunkod": "1783",
+  "namn": "Hagfors",
+  "lan": "Värmlands län",
+  "slug": "hagfors",
+  "kedja": "Hagfors bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hagf",
+  "bibliotek": [
+   "bibdb-Hagf",
+   "bibdb-8cld"
+  ]
+ },
+ {
+  "kommunkod": "1784",
+  "namn": "Arvika",
+  "lan": "Värmlands län",
+  "slug": "arvika",
+  "kedja": "Arvika bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Arvk",
+  "bibliotek": [
+   "bibdb-Arvk"
+  ]
+ },
+ {
+  "kommunkod": "1785",
+  "namn": "Säffle",
+  "lan": "Värmlands län",
+  "slug": "saffle",
+  "kedja": "Säffle bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Safb",
+  "bibliotek": [
+   "bibdb-Safb"
+  ]
+ },
+ {
+  "kommunkod": "1814",
+  "namn": "Lekeberg",
+  "lan": "Örebro län",
+  "slug": "lekeberg",
+  "kedja": "Lekebergs bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Fjug",
+  "bibliotek": [
+   "bibdb-Fjug"
+  ]
+ },
+ {
+  "kommunkod": "1860",
+  "namn": "Laxå",
+  "lan": "Örebro län",
+  "slug": "laxa",
+  "kedja": "Laxå bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Laxa",
+  "bibliotek": [
+   "bibdb-Laxa"
+  ]
+ },
+ {
+  "kommunkod": "1861",
+  "namn": "Hallsberg",
+  "lan": "Örebro län",
+  "slug": "hallsberg",
+  "kedja": "Hallsbergs bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Habg",
+  "bibliotek": [
+   "bibdb-Habg",
+   "bibdb-8cmq",
+   "bibdb-8cmn"
+  ]
+ },
+ {
+  "kommunkod": "1862",
+  "namn": "Degerfors",
+  "lan": "Örebro län",
+  "slug": "degerfors",
+  "kedja": "Degerfors bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Dege",
+  "bibliotek": [
+   "bibdb-Dege"
+  ]
+ },
+ {
+  "kommunkod": "1863",
+  "namn": "Hällefors",
+  "lan": "Örebro län",
+  "slug": "hallefors",
+  "kedja": "Hällefors bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hell",
+  "bibliotek": [
+   "bibdb-8coc",
+   "bibdb-Hell"
+  ]
+ },
+ {
+  "kommunkod": "1864",
+  "namn": "Ljusnarsberg",
+  "lan": "Örebro län",
+  "slug": "ljusnarsberg",
+  "kedja": "Ljusnarsbergs bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Kopp",
+  "bibliotek": [
+   "bibdb-8cog",
+   "bibdb-Kopp"
+  ]
+ },
+ {
+  "kommunkod": "1880",
+  "namn": "Örebro",
+  "lan": "Örebro län",
+  "slug": "orebro",
+  "kedja": "Örebro bibliotek",
+  "antal_bibliotek": 13,
+  "huvudbibliotek": "bibdb-Or1",
+  "bibliotek": [
+   "bibdb-8cnc",
+   "bibdb-8cnd",
+   "bibdb-8com",
+   "bibdb-8cnu",
+   "bibdb-8cne",
+   "bibdb-8cnt",
+   "bibdb-8orn",
+   "bibdb-8coh",
+   "bibdb-8cnh",
+   "bibdb-8cnj",
+   "bibdb-8col",
+   "bibdb-8cnr",
+   "bibdb-Or1"
+  ]
+ },
+ {
+  "kommunkod": "1881",
+  "namn": "Kumla",
+  "lan": "Örebro län",
+  "slug": "kumla",
+  "kedja": "Kumla bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kuml",
+  "bibliotek": [
+   "bibdb-Kuml"
+  ]
+ },
+ {
+  "kommunkod": "1882",
+  "namn": "Askersund",
+  "lan": "Örebro län",
+  "slug": "askersund",
+  "kedja": "Askersunds bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Aske",
+  "bibliotek": [
+   "bibdb-Aske",
+   "bibdb-8cmf"
+  ]
+ },
+ {
+  "kommunkod": "1883",
+  "namn": "Karlskoga",
+  "lan": "Örebro län",
+  "slug": "karlskoga",
+  "kedja": "Karlskoga bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kssb",
+  "bibliotek": [
+   "bibdb-Kssb"
+  ]
+ },
+ {
+  "kommunkod": "1884",
+  "namn": "Nora",
+  "lan": "Örebro län",
+  "slug": "nora",
+  "kedja": "Nora kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Nora",
+  "bibliotek": [
+   "bibdb-Nora"
+  ]
+ },
+ {
+  "kommunkod": "1885",
+  "namn": "Lindesberg",
+  "lan": "Örebro län",
+  "slug": "lindesberg",
+  "kedja": "Lindesbergs bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Lind",
+  "bibliotek": [
+   "bibdb-8cnw",
+   "bibdb-8coj",
+   "bibdb-Lind",
+   "bibdb-8cnz"
+  ]
+ },
+ {
+  "kommunkod": "1904",
+  "namn": "Skinnskatteberg",
+  "lan": "Västmanlands län",
+  "slug": "skinnskatteberg",
+  "kedja": "Skinnskattebergs bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Skin",
+  "bibliotek": [
+   "bibdb-Skin"
+  ]
+ },
+ {
+  "kommunkod": "1907",
+  "namn": "Surahammar",
+  "lan": "Västmanlands län",
+  "slug": "surahammar",
+  "kedja": "Surahammars folkbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sufb",
+  "bibliotek": [
+   "bibdb-8cpe",
+   "bibdb-Sufb",
+   "bibdb-8cpf"
+  ]
+ },
+ {
+  "kommunkod": "1960",
+  "namn": "Kungsör",
+  "lan": "Västmanlands län",
+  "slug": "kungsor",
+  "kedja": "Kungsörs bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kun",
+  "bibliotek": [
+   "bibdb-Kun"
+  ]
+ },
+ {
+  "kommunkod": "1961",
+  "namn": "Hallstahammar",
+  "lan": "Västmanlands län",
+  "slug": "hallstahammar",
+  "kedja": "Hallstahammars bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hall",
+  "bibliotek": [
+   "bibdb-Hall",
+   "bibdb-8cpv"
+  ]
+ },
+ {
+  "kommunkod": "1962",
+  "namn": "Norberg",
+  "lan": "Västmanlands län",
+  "slug": "norberg",
+  "kedja": "Norbergs bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Nore",
+  "bibliotek": [
+   "bibdb-Nore"
+  ]
+ },
+ {
+  "kommunkod": "1980",
+  "namn": "Västerås",
+  "lan": "Västmanlands län",
+  "slug": "vasteras",
+  "kedja": "Västerås stadsbibliotek",
+  "antal_bibliotek": 10,
+  "huvudbibliotek": "bibdb-Vasb",
+  "bibliotek": [
+   "bibdb-8cpb",
+   "bibdb-8hkv",
+   "bibdb-Vkck",
+   "bibdb-8coz",
+   "bibdb-8cox",
+   "bibdb-8cpd",
+   "bibdb-8cov",
+   "bibdb-8cor",
+   "bibdb-Vasb",
+   "bibdb-8cos"
+  ]
+ },
+ {
+  "kommunkod": "1981",
+  "namn": "Sala",
+  "lan": "Västmanlands län",
+  "slug": "sala",
+  "kedja": "Sala stadsbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sala",
+  "bibliotek": [
+   "bibdb-8cpr",
+   "bibdb-Sala",
+   "bibdb-Vafb"
+  ]
+ },
+ {
+  "kommunkod": "1982",
+  "namn": "Fagersta",
+  "lan": "Västmanlands län",
+  "slug": "fagersta",
+  "kedja": "Fagersta bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Fage",
+  "bibliotek": [
+   "bibdb-Fage",
+   "bibdb-8cqc"
+  ]
+ },
+ {
+  "kommunkod": "1983",
+  "namn": "Köping",
+  "lan": "Västmanlands län",
+  "slug": "koping",
+  "kedja": "Köpings stadsbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Kopb",
+  "bibliotek": [
+   "bibdb-Kkoc",
+   "bibdb-Kopb"
+  ]
+ },
+ {
+  "kommunkod": "1984",
+  "namn": "Arboga",
+  "lan": "Västmanlands län",
+  "slug": "arboga",
+  "kedja": "Arboga bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Arbo",
+  "bibliotek": [
+   "bibdb-Arbo"
+  ]
+ },
+ {
+  "kommunkod": "2021",
+  "namn": "Vansbro",
+  "lan": "Dalarnas län",
+  "slug": "vansbro",
+  "kedja": "Vansbro kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Vans",
+  "bibliotek": [
+   "bibdb-Vans"
+  ]
+ },
+ {
+  "kommunkod": "2023",
+  "namn": "Malung-Sälen",
+  "lan": "Dalarnas län",
+  "slug": "malung-salen",
+  "kedja": null,
+  "antal_bibliotek": 2,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-Malu",
+   "bibdb-8cum"
+  ]
+ },
+ {
+  "kommunkod": "2026",
+  "namn": "Gagnef",
+  "lan": "Dalarnas län",
+  "slug": "gagnef",
+  "kedja": "Gagnefs kommunbibliotek, Djurås bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Gagn",
+  "bibliotek": [
+   "bibdb-8cvb",
+   "bibdb-8cva",
+   "bibdb-Gagn",
+   "bibdb-8cuz"
+  ]
+ },
+ {
+  "kommunkod": "2029",
+  "namn": "Leksand",
+  "lan": "Dalarnas län",
+  "slug": "leksand",
+  "kedja": "Leksands bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Leks",
+  "bibliotek": [
+   "bibdb-8cwf",
+   "bibdb-Leks"
+  ]
+ },
+ {
+  "kommunkod": "2031",
+  "namn": "Rättvik",
+  "lan": "Dalarnas län",
+  "slug": "rattvik",
+  "kedja": "Rättviks bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Ratt",
+  "bibliotek": [
+   "bibdb-8cwm",
+   "bibdb-8cvk",
+   "bibdb-Ratt"
+  ]
+ },
+ {
+  "kommunkod": "2034",
+  "namn": "Orsa",
+  "lan": "Dalarnas län",
+  "slug": "orsa",
+  "kedja": "Orsa sockenbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Orsa",
+  "bibliotek": [
+   "bibdb-Orsa"
+  ]
+ },
+ {
+  "kommunkod": "2039",
+  "namn": "Älvdalen",
+  "lan": "Dalarnas län",
+  "slug": "alvdalen",
+  "kedja": "Älvdalens sockenbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Alvd",
+  "bibliotek": [
+   "bibdb-Idre",
+   "bibdb-Sarn",
+   "bibdb-Alvd"
+  ]
+ },
+ {
+  "kommunkod": "2061",
+  "namn": "Smedjebacken",
+  "lan": "Dalarnas län",
+  "slug": "smedjebacken",
+  "kedja": "Smedjebackens bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Smed",
+  "bibliotek": [
+   "bibdb-Smed",
+   "bibdb-8cui"
+  ]
+ },
+ {
+  "kommunkod": "2062",
+  "namn": "Mora",
+  "lan": "Dalarnas län",
+  "slug": "mora",
+  "kedja": "Mora folkbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Mofb",
+  "bibliotek": [
+   "bibdb-Mofb",
+   "bibdb-8cwa",
+   "bibdb-8cwb",
+   "bibdb-8cwc"
+  ]
+ },
+ {
+  "kommunkod": "2080",
+  "namn": "Falun",
+  "lan": "Dalarnas län",
+  "slug": "falun",
+  "kedja": "Falu stadsbibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Fa1",
+  "bibliotek": [
+   "bibdb-8cvf",
+   "bibdb-8cvj",
+   "bibdb-Fa1",
+   "bibdb-8cve",
+   "bibdb-8cvd",
+   "bibdb-8cvh",
+   "bibdb-8cvw"
+  ]
+ },
+ {
+  "kommunkod": "2081",
+  "namn": "Borlänge",
+  "lan": "Dalarnas län",
+  "slug": "borlange",
+  "kedja": "Borlänge bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Borb",
+  "bibliotek": [
+   "bibdb-Borb",
+   "bibdb-8cuy",
+   "bibdb-Tbib"
+  ]
+ },
+ {
+  "kommunkod": "2082",
+  "namn": "Säter",
+  "lan": "Dalarnas län",
+  "slug": "sater",
+  "kedja": "Säters bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Satr",
+  "bibliotek": [
+   "bibdb-8cuv",
+   "bibdb-Svik",
+   "bibdb-8cuw",
+   "bibdb-Satr"
+  ]
+ },
+ {
+  "kommunkod": "2083",
+  "namn": "Hedemora",
+  "lan": "Dalarnas län",
+  "slug": "hedemora",
+  "kedja": "Hedemora stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Heds",
+  "bibliotek": [
+   "bibdb-Heds"
+  ]
+ },
+ {
+  "kommunkod": "2084",
+  "namn": "Avesta",
+  "lan": "Dalarnas län",
+  "slug": "avesta",
+  "kedja": "Avesta bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Ave",
+  "bibliotek": [
+   "bibdb-Ave",
+   "bibdb-8cub",
+   "bibdb-8ctz"
+  ]
+ },
+ {
+  "kommunkod": "2085",
+  "namn": "Ludvika",
+  "lan": "Dalarnas län",
+  "slug": "ludvika",
+  "kedja": "Ludvika bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Lvab",
+  "bibliotek": [
+   "bibdb-8cto",
+   "bibdb-8ctu",
+   "bibdb-Lvab",
+   "bibdb-8ctq",
+   "bibdb-8ctp"
+  ]
+ },
+ {
+  "kommunkod": "2101",
+  "namn": "Ockelbo",
+  "lan": "Gävleborgs län",
+  "slug": "ockelbo",
+  "kedja": "Ockelbo folkbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Ocke",
+  "bibliotek": [
+   "bibdb-Ocke"
+  ]
+ },
+ {
+  "kommunkod": "2104",
+  "namn": "Hofors",
+  "lan": "Gävleborgs län",
+  "slug": "hofors",
+  "kedja": "Hofors bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Hofo",
+  "bibliotek": [
+   "bibdb-Hofo",
+   "bibdb-8cxp"
+  ]
+ },
+ {
+  "kommunkod": "2121",
+  "namn": "Ovanåker",
+  "lan": "Gävleborgs län",
+  "slug": "ovanaker",
+  "kedja": null,
+  "antal_bibliotek": 2,
+  "huvudbibliotek": null,
+  "bibliotek": [
+   "bibdb-8cyv",
+   "bibdb-Edsb"
+  ]
+ },
+ {
+  "kommunkod": "2132",
+  "namn": "Nordanstig",
+  "lan": "Gävleborgs län",
+  "slug": "nordanstig",
+  "kedja": "Nordanstigs kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Bers",
+  "bibliotek": [
+   "bibdb-8cyr",
+   "bibdb-8cyq",
+   "bibdb-8cys",
+   "bibdb-Bers"
+  ]
+ },
+ {
+  "kommunkod": "2161",
+  "namn": "Ljusdal",
+  "lan": "Gävleborgs län",
+  "slug": "ljusdal",
+  "kedja": "Ljusdals kommunbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Ljus",
+  "bibliotek": [
+   "bibdb-8cyh",
+   "bibdb-8cyg",
+   "bibdb-Ljus",
+   "bibdb-8cyj",
+   "bibdb-8cyi"
+  ]
+ },
+ {
+  "kommunkod": "2180",
+  "namn": "Gävle",
+  "lan": "Gävleborgs län",
+  "slug": "gavle",
+  "kedja": "Gävle stadsbibliotek",
+  "antal_bibliotek": 9,
+  "huvudbibliotek": "bibdb-Gav",
+  "bibliotek": [
+   "bibdb-8cwu",
+   "bibdb-8cxy",
+   "bibdb-8cxb",
+   "bibdb-8cya",
+   "bibdb-Gav",
+   "bibdb-8cxg",
+   "bibdb-8cxe",
+   "bibdb-8cxd",
+   "bibdb-8cxz"
+  ]
+ },
+ {
+  "kommunkod": "2181",
+  "namn": "Sandviken",
+  "lan": "Gävleborgs län",
+  "slug": "sandviken",
+  "kedja": "Folkbiblioteket",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Sfb",
+  "bibliotek": [
+   "bibdb-8cxk",
+   "bibdb-Sfb",
+   "bibdb-8cxl",
+   "bibdb-8cxm",
+   "bibdb-8cxn",
+   "bibdb-8cxf"
+  ]
+ },
+ {
+  "kommunkod": "2182",
+  "namn": "Söderhamn",
+  "lan": "Gävleborgs län",
+  "slug": "soderhamn",
+  "kedja": "Söderhamns stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Sods",
+  "bibliotek": [
+   "bibdb-8cye",
+   "bibdb-8cyd",
+   "bibdb-8cyf",
+   "bibdb-Sods"
+  ]
+ },
+ {
+  "kommunkod": "2183",
+  "namn": "Bollnäs",
+  "lan": "Gävleborgs län",
+  "slug": "bollnas",
+  "kedja": "Bollnäs bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Boln",
+  "bibliotek": [
+   "bibdb-8cyc",
+   "bibdb-Boln",
+   "bibdb-8cyw"
+  ]
+ },
+ {
+  "kommunkod": "2184",
+  "namn": "Hudiksvall",
+  "lan": "Gävleborgs län",
+  "slug": "hudiksvall",
+  "kedja": "Hudiksvalls bibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Hudi",
+  "bibliotek": [
+   "bibdb-8cyl",
+   "bibdb-8cyk",
+   "bibdb-8czb",
+   "bibdb-Hudi",
+   "bibdb-8cza",
+   "bibdb-8cym",
+   "bibdb-8cyn"
+  ]
+ },
+ {
+  "kommunkod": "2260",
+  "namn": "Ånge",
+  "lan": "Västernorrlands län",
+  "slug": "ange",
+  "kedja": "Ånge folkbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Angb",
+  "bibliotek": [
+   "bibdb-8dbi",
+   "bibdb-8dar",
+   "bibdb-8daq",
+   "bibdb-8das",
+   "bibdb-Angb"
+  ]
+ },
+ {
+  "kommunkod": "2262",
+  "namn": "Timrå",
+  "lan": "Västernorrlands län",
+  "slug": "timra",
+  "kedja": "Timrå bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Tim",
+  "bibliotek": [
+   "bibdb-8lju",
+   "bibdb-8dca",
+   "bibdb-Tim"
+  ]
+ },
+ {
+  "kommunkod": "2280",
+  "namn": "Härnösand",
+  "lan": "Västernorrlands län",
+  "slug": "harnosand",
+  "kedja": "Härnösands bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Hsd",
+  "bibliotek": [
+   "bibdb-Hsd",
+   "bibdb-8dcn",
+   "bibdb-Sabi",
+   "bibdb-8dcv"
+  ]
+ },
+ {
+  "kommunkod": "2281",
+  "namn": "Sundsvall",
+  "lan": "Västernorrlands län",
+  "slug": "sundsvall",
+  "kedja": "Sundsvalls stadsbibliotek",
+  "antal_bibliotek": 12,
+  "huvudbibliotek": "bibdb-Svl",
+  "bibliotek": [
+   "bibdb-8dci",
+   "bibdb-8dbw",
+   "bibdb-8dbx",
+   "bibdb-8dcb",
+   "bibdb-8dcf",
+   "bibdb-8dcg",
+   "bibdb-8dch",
+   "bibdb-8dbr",
+   "bibdb-8dbt",
+   "bibdb-8dbs",
+   "bibdb-8dby",
+   "bibdb-Svl"
+  ]
+ },
+ {
+  "kommunkod": "2282",
+  "namn": "Kramfors",
+  "lan": "Västernorrlands län",
+  "slug": "kramfors",
+  "kedja": "Kramfors kommunbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Krkb",
+  "bibliotek": [
+   "bibdb-Krkb",
+   "bibdb-8dcl",
+   "bibdb-8dcm"
+  ]
+ },
+ {
+  "kommunkod": "2283",
+  "namn": "Sollefteå",
+  "lan": "Västernorrlands län",
+  "slug": "solleftea",
+  "kedja": "Sollefteå kommunbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Soll",
+  "bibliotek": [
+   "bibdb-8ddb",
+   "bibdb-8ddi",
+   "bibdb-8dcz",
+   "bibdb-Ramb",
+   "bibdb-8dda",
+   "bibdb-Soll"
+  ]
+ },
+ {
+  "kommunkod": "2284",
+  "namn": "Örnsköldsvik",
+  "lan": "Västernorrlands län",
+  "slug": "ornskoldsvik",
+  "kedja": "Örnsköldsviks bibliotek Arkenbiblioteket",
+  "antal_bibliotek": 8,
+  "huvudbibliotek": "bibdb-Okb",
+  "bibliotek": [
+   "bibdb-8ddr",
+   "bibdb-8ddj",
+   "bibdb-8dds",
+   "bibdb-8ddu",
+   "bibdb-8ddw",
+   "bibdb-8ddv",
+   "bibdb-8ddq",
+   "bibdb-Okb"
+  ]
+ },
+ {
+  "kommunkod": "2303",
+  "namn": "Ragunda",
+  "lan": "Jämtlands län",
+  "slug": "ragunda",
+  "kedja": "Ragunda folkbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-8daz",
+  "bibliotek": [
+   "bibdb-Bisp",
+   "bibdb-Hamm",
+   "bibdb-8daz",
+   "bibdb-Stug"
+  ]
+ },
+ {
+  "kommunkod": "2305",
+  "namn": "Bräcke",
+  "lan": "Jämtlands län",
+  "slug": "bracke",
+  "kedja": "Bräcke bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Brac",
+  "bibliotek": [
+   "bibdb-Brac",
+   "bibdb-Galo",
+   "bibdb-Kala"
+  ]
+ },
+ {
+  "kommunkod": "2309",
+  "namn": "Krokom",
+  "lan": "Jämtlands län",
+  "slug": "krokom",
+  "kedja": "Krokoms kommunbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Krok",
+  "bibliotek": [
+   "bibdb-8czu",
+   "bibdb-8dao",
+   "bibdb-Krok",
+   "bibdb-8dam",
+   "bibdb-8dap",
+   "bibdb-8czt"
+  ]
+ },
+ {
+  "kommunkod": "2313",
+  "namn": "Strömsund",
+  "lan": "Jämtlands län",
+  "slug": "stromsund",
+  "kedja": "Strömsunds centralbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Stcb",
+  "bibliotek": [
+   "bibdb-8ddd",
+   "bibdb-8czy",
+   "bibdb-8czv",
+   "bibdb-8czx",
+   "bibdb-Stcb"
+  ]
+ },
+ {
+  "kommunkod": "2321",
+  "namn": "Åre",
+  "lan": "Jämtlands län",
+  "slug": "are",
+  "kedja": "Åre bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Are",
+  "bibliotek": [
+   "bibdb-8czq",
+   "bibdb-8czj",
+   "bibdb-8czl",
+   "bibdb-8czm",
+   "bibdb-8czk",
+   "bibdb-Are"
+  ]
+ },
+ {
+  "kommunkod": "2326",
+  "namn": "Berg",
+  "lan": "Jämtlands län",
+  "slug": "berg",
+  "kedja": "Bergs Kommunbibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Sves",
+  "bibliotek": [
+   "bibdb-Sves",
+   "bibdb-Hack",
+   "bibdb-Myr",
+   "bibdb-Ratb",
+   "bibdb-Sveb"
+  ]
+ },
+ {
+  "kommunkod": "2361",
+  "namn": "Härjedalen",
+  "lan": "Jämtlands län",
+  "slug": "harjedalen",
+  "kedja": "Härjedalens bibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Sveg",
+  "bibliotek": [
+   "bibdb-Funa",
+   "bibdb-Hedb",
+   "bibdb-Sveg",
+   "bibdb-Lilb",
+   "bibdb-Vemd",
+   "bibdb-Ytte"
+  ]
+ },
+ {
+  "kommunkod": "2380",
+  "namn": "Östersund",
+  "lan": "Jämtlands län",
+  "slug": "ostersund",
+  "kedja": "Östersunds bibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Os",
+  "bibliotek": [
+   "bibdb-8dal",
+   "bibdb-8lit",
+   "bibdb-8dai",
+   "bibdb-Os"
+  ]
+ },
+ {
+  "kommunkod": "2401",
+  "namn": "Nordmaling",
+  "lan": "Västerbottens län",
+  "slug": "nordmaling",
+  "kedja": "Nordmalings bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Norb",
+  "bibliotek": [
+   "bibdb-Norb"
+  ]
+ },
+ {
+  "kommunkod": "2403",
+  "namn": "Bjurholm",
+  "lan": "Västerbottens län",
+  "slug": "bjurholm",
+  "kedja": "Bjurholms bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Bjur",
+  "bibliotek": [
+   "bibdb-Bjur"
+  ]
+ },
+ {
+  "kommunkod": "2404",
+  "namn": "Vindeln",
+  "lan": "Västerbottens län",
+  "slug": "vindeln",
+  "kedja": "Vindelns bibliotek",
+  "antal_bibliotek": 5,
+  "huvudbibliotek": "bibdb-Vind",
+  "bibliotek": [
+   "bibdb-8dfw",
+   "bibdb-8dft",
+   "bibdb-8dfv",
+   "bibdb-Vind",
+   "bibdb-8dfu"
+  ]
+ },
+ {
+  "kommunkod": "2409",
+  "namn": "Robertsfors",
+  "lan": "Västerbottens län",
+  "slug": "robertsfors",
+  "kedja": "Robertsfors folkbibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Robf",
+  "bibliotek": [
+   "bibdb-8dfh",
+   "bibdb-Robf",
+   "bibdb-8dfg"
+  ]
+ },
+ {
+  "kommunkod": "2417",
+  "namn": "Norsjö",
+  "lan": "Västerbottens län",
+  "slug": "norsjo",
+  "kedja": "Norsjö bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Nors",
+  "bibliotek": [
+   "bibdb-Nors"
+  ]
+ },
+ {
+  "kommunkod": "2418",
+  "namn": "Malå",
+  "lan": "Västerbottens län",
+  "slug": "mala",
+  "kedja": "Malå bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Mala",
+  "bibliotek": [
+   "bibdb-Mala"
+  ]
+ },
+ {
+  "kommunkod": "2421",
+  "namn": "Storuman",
+  "lan": "Västerbottens län",
+  "slug": "storuman",
+  "kedja": "Storumans kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Stou",
+  "bibliotek": [
+   "bibdb-Stou",
+   "bibdb-Tby"
+  ]
+ },
+ {
+  "kommunkod": "2422",
+  "namn": "Sorsele",
+  "lan": "Västerbottens län",
+  "slug": "sorsele",
+  "kedja": "Sorsele bibliotek",
+  "antal_bibliotek": 3,
+  "huvudbibliotek": "bibdb-Sors",
+  "bibliotek": [
+   "bibdb-8dgb",
+   "bibdb-8dga",
+   "bibdb-Sors"
+  ]
+ },
+ {
+  "kommunkod": "2425",
+  "namn": "Dorotea",
+  "lan": "Västerbottens län",
+  "slug": "dorotea",
+  "kedja": "Dorotea bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Doro",
+  "bibliotek": [
+   "bibdb-Doro"
+  ]
+ },
+ {
+  "kommunkod": "2460",
+  "namn": "Vännäs",
+  "lan": "Västerbottens län",
+  "slug": "vannas",
+  "kedja": "Vännäs kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Vkom",
+  "bibliotek": [
+   "bibdb-Vkom",
+   "bibdb-Vby2"
+  ]
+ },
+ {
+  "kommunkod": "2462",
+  "namn": "Vilhelmina",
+  "lan": "Västerbottens län",
+  "slug": "vilhelmina",
+  "kedja": "Vilhelmina bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Vilh",
+  "bibliotek": [
+   "bibdb-Vilh"
+  ]
+ },
+ {
+  "kommunkod": "2463",
+  "namn": "Åsele",
+  "lan": "Västerbottens län",
+  "slug": "asele",
+  "kedja": "Åsele bibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Asel",
+  "bibliotek": [
+   "bibdb-Asel"
+  ]
+ },
+ {
+  "kommunkod": "2480",
+  "namn": "Umeå",
+  "lan": "Västerbottens län",
+  "slug": "umea",
+  "kedja": "Umeå stadsbibliotek",
+  "antal_bibliotek": 11,
+  "huvudbibliotek": "bibdb-Um",
+  "bibliotek": [
+   "bibdb-8dep",
+   "bibdb-Gru",
+   "bibdb-Umho",
+   "bibdb-8den",
+   "bibdb-8deq",
+   "bibdb-8dfd",
+   "bibdb-8dfk",
+   "bibdb-8del",
+   "bibdb-8dei",
+   "bibdb-Um",
+   "bibdb-Alid"
+  ]
+ },
+ {
+  "kommunkod": "2481",
+  "namn": "Lycksele",
+  "lan": "Västerbottens län",
+  "slug": "lycksele",
+  "kedja": "Lycksele bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Lyb",
+  "bibliotek": [
+   "bibdb-Lyb",
+   "bibdb-7Lbb"
+  ]
+ },
+ {
+  "kommunkod": "2482",
+  "namn": "Skellefteå",
+  "lan": "Västerbottens län",
+  "slug": "skelleftea",
+  "kedja": "Skellefteå folkbibliotek",
+  "antal_bibliotek": 12,
+  "huvudbibliotek": "bibdb-Skfb",
+  "bibliotek": [
+   "bibdb-8dgf",
+   "bibdb-Bokb",
+   "bibdb-Boli",
+   "bibdb-Bure",
+   "bibdb-Burt",
+   "bibdb-Bysk",
+   "bibdb-Jorn",
+   "bibdb-Kage",
+   "bibdb-Lova",
+   "bibdb-Skel",
+   "bibdb-Skfb",
+   "bibdb-Ursv"
+  ]
+ },
+ {
+  "kommunkod": "2505",
+  "namn": "Arvidsjaur",
+  "lan": "Norrbottens län",
+  "slug": "arvidsjaur",
+  "kedja": "Arvidsjaurs kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Arvi",
+  "bibliotek": [
+   "bibdb-Arvi",
+   "bibdb-8eaq"
+  ]
+ },
+ {
+  "kommunkod": "2506",
+  "namn": "Arjeplog",
+  "lan": "Norrbottens län",
+  "slug": "arjeplog",
+  "kedja": "Arjeplogs kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Arje",
+  "bibliotek": [
+   "bibdb-Arje"
+  ]
+ },
+ {
+  "kommunkod": "2510",
+  "namn": "Jokkmokk",
+  "lan": "Norrbottens län",
+  "slug": "jokkmokk",
+  "kedja": "Jokkmokks kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Jokk",
+  "bibliotek": [
+   "bibdb-Jokk",
+   "bibdb-8dhw"
+  ]
+ },
+ {
+  "kommunkod": "2513",
+  "namn": "Överkalix",
+  "lan": "Norrbottens län",
+  "slug": "overkalix",
+  "kedja": "Överkalix kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Over",
+  "bibliotek": [
+   "bibdb-Over"
+  ]
+ },
+ {
+  "kommunkod": "2514",
+  "namn": "Kalix",
+  "lan": "Norrbottens län",
+  "slug": "kalix",
+  "kedja": "Kalix kommunbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Kali",
+  "bibliotek": [
+   "bibdb-Kali"
+  ]
+ },
+ {
+  "kommunkod": "2518",
+  "namn": "Övertorneå",
+  "lan": "Norrbottens län",
+  "slug": "overtornea",
+  "kedja": null,
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Ovet",
+  "bibliotek": [
+   "bibdb-Ovet"
+  ]
+ },
+ {
+  "kommunkod": "2521",
+  "namn": "Pajala",
+  "lan": "Norrbottens län",
+  "slug": "pajala",
+  "kedja": "Pajala kommunbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Paja",
+  "bibliotek": [
+   "bibdb-8div",
+   "bibdb-8dit",
+   "bibdb-Paja",
+   "bibdb-8diu"
+  ]
+ },
+ {
+  "kommunkod": "2523",
+  "namn": "Gällivare",
+  "lan": "Norrbottens län",
+  "slug": "gallivare",
+  "kedja": "Gällivare bibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Gall",
+  "bibliotek": [
+   "bibdb-Bokg",
+   "bibdb-Gall"
+  ]
+ },
+ {
+  "kommunkod": "2560",
+  "namn": "Älvsbyn",
+  "lan": "Norrbottens län",
+  "slug": "alvsbyn",
+  "kedja": "Älvsbyns kommunbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Alvb",
+  "bibliotek": [
+   "bibdb-8dhf",
+   "bibdb-Alvb"
+  ]
+ },
+ {
+  "kommunkod": "2580",
+  "namn": "Luleå",
+  "lan": "Norrbottens län",
+  "slug": "lulea",
+  "kedja": "Luleå stadsbibliotek",
+  "antal_bibliotek": 7,
+  "huvudbibliotek": "bibdb-Lule",
+  "bibliotek": [
+   "bibdb-8dio",
+   "bibdb-8dhr",
+   "bibdb-8din",
+   "bibdb-Lule",
+   "bibdb-8dim",
+   "bibdb-8dip",
+   "bibdb-Ranb"
+  ]
+ },
+ {
+  "kommunkod": "2581",
+  "namn": "Piteå",
+  "lan": "Norrbottens län",
+  "slug": "pitea",
+  "kedja": "Piteå stadsbibliotek",
+  "antal_bibliotek": 6,
+  "huvudbibliotek": "bibdb-Pite",
+  "bibliotek": [
+   "bibdb-8dhi",
+   "bibdb-8dhk",
+   "bibdb-Pite",
+   "bibdb-8dhj",
+   "bibdb-8dhl",
+   "bibdb-8dhh"
+  ]
+ },
+ {
+  "kommunkod": "2582",
+  "namn": "Boden",
+  "lan": "Norrbottens län",
+  "slug": "boden",
+  "kedja": "Bodens stadsbibliotek",
+  "antal_bibliotek": 2,
+  "huvudbibliotek": "bibdb-Bode",
+  "bibliotek": [
+   "bibdb-Bode",
+   "bibdb-8dhv"
+  ]
+ },
+ {
+  "kommunkod": "2583",
+  "namn": "Haparanda",
+  "lan": "Norrbottens län",
+  "slug": "haparanda",
+  "kedja": "Haparanda stadsbibliotek",
+  "antal_bibliotek": 1,
+  "huvudbibliotek": "bibdb-Hapa",
+  "bibliotek": [
+   "bibdb-Hapa"
+  ]
+ },
+ {
+  "kommunkod": "2584",
+  "namn": "Kiruna",
+  "lan": "Norrbottens län",
+  "slug": "kiruna",
+  "kedja": "Kiruna stadsbibliotek",
+  "antal_bibliotek": 4,
+  "huvudbibliotek": "bibdb-Kisb",
+  "bibliotek": [
+   "bibdb-8dir",
+   "bibdb-Kisb",
+   "bibdb-8dis",
+   "bibdb-8diq"
+  ]
+ }
+]

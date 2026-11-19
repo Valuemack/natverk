@@ -1,0 +1,636 @@
+{
+  "genererad": "2026-11-19T12:13:38.738Z",
+  "lekplatser": {
+    "officiella_dubbletter_borttagna": 11,
+    "utrustningspunkter_kopplade": 1038,
+    "antal": 21400,
+    "fran_osm": 20701,
+    "nya_officiella": 699,
+    "matchade_osm_officiell": 1194,
+    "med_namn": 20621,
+    "med_adress": 594,
+    "med_utrustning": 1990,
+    "med_tema": 86,
+    "typ": {
+      "lekplats": 21284,
+      "temalekplats": 104,
+      "naturlekplats": 12
+    },
+    "med_tillganglighet": 669,
+    "med_beskrivning": 313,
+    "med_webb": 823,
+    "i_kommuner_med_officiell_data": 5186,
+    "kallor": {
+      "malmo": {
+        "kommun": "Malmö",
+        "licens": "CC0 1.0",
+        "antal": 246,
+        "url": "https://opendata-api.malmo.se/dataset/c08d7231-9b49-4af5-94bd-3bc6ed5cf7a2/resource/c18f001e-891c-42c6-86e2-f30b8749e26f/download/lekplatser.geojson"
+      },
+      "sodertalje": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "antal": 62,
+        "url": "https://static-content.sodertalje.se/opendata/lekplatser.json"
+      },
+      "boras": {
+        "kommun": "Borås",
+        "licens": "CC0 1.0",
+        "antal": 160,
+        "url": "https://catalog.boras.se/store/1/resource/74"
+      },
+      "gavle": {
+        "kommun": "Gävle",
+        "licens": "CC0 1.0",
+        "antal": 82,
+        "url": "https://catalog.gavle.se/store/1/resource/83"
+      },
+      "vara": {
+        "kommun": "Vara",
+        "licens": "CC0 1.0",
+        "antal": 18,
+        "url": "https://catalog.vara.se/rowstore/dataset/2d0adb30-6c72-41ff-a4b9-ff56e7ffabb6"
+      },
+      "botkyrka": {
+        "kommun": "Botkyrka",
+        "licens": "CC0 1.0",
+        "antal": 88,
+        "url": "https://data.botkyrka.se/store/3/resource/173"
+      },
+      "stenungsund": {
+        "kommun": "Stenungsund",
+        "licens": "CC0 1.0",
+        "antal": 22,
+        "url": "https://catalog.stenungsund.se/rowstore/dataset/fc6ad312-1a22-4fa3-88c0-de26daf66cc4"
+      },
+      "skovde": {
+        "kommun": "Skövde",
+        "licens": "CC0 1.0",
+        "antal": 70,
+        "url": "https://karta.skovde.se/linkdokument/OpenData/lekplatser.json"
+      },
+      "kungsbacka": {
+        "kommun": "Kungsbacka",
+        "licens": "CC0 1.0",
+        "antal": 32,
+        "url": "https://kungsbacka.entryscape.net/store/1/resource/188"
+      },
+      "eslov": {
+        "kommun": "Eslöv",
+        "licens": "CC0 1.0",
+        "antal": 34,
+        "url": "https://catalog.eslov.se/rowstore/dataset/08b5e92d-7bc7-41de-aa56-f67f6662e919"
+      },
+      "lomma": {
+        "kommun": "Lomma",
+        "licens": "CC0 1.0",
+        "antal": 67,
+        "url": "https://catalog.lomma.se/store/1/resource/52"
+      },
+      "lomma-utrustning": {
+        "kommun": "Lomma",
+        "licens": "CC0 1.0",
+        "antal": 1269,
+        "url": "https://catalog.lomma.se/store/1/resource/228"
+      },
+      "falun": {
+        "kommun": "Falun",
+        "antal": 0,
+        "status": "saknas (ej hämtad/blockerad)"
+      },
+      "karlstad": {
+        "kommun": "Karlstad",
+        "licens": "CC0 1.0",
+        "antal": 227,
+        "url": "https://gi.karlstad.se/geoserver/oppnadata/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=oppnadata%3Akarlstad_lekplatser&outputFormat=application%2Fjson"
+      },
+      "ystad": {
+        "kommun": "Ystad",
+        "licens": "CC0 1.0",
+        "antal": 35,
+        "url": "https://ystad.entryscape.net/store/1/resource/39"
+      },
+      "tomelilla": {
+        "kommun": "Tomelilla",
+        "licens": "ej angiven",
+        "antal": 16,
+        "url": "https://data.tomelilla.se/rowstore/dataset/6f5ff23b-0e05-4746-a37d-ad2dad3ada29"
+      },
+      "bastad": {
+        "kommun": "Båstad",
+        "licens": "ej angiven",
+        "antal": 31,
+        "url": "https://geodata.bastad.se/maps/Oppen_data/Lekplatser_4_0_databas/data.json"
+      },
+      "engelholm": {
+        "kommun": "Ängelholm",
+        "licens": "ej angiven",
+        "antal": 11,
+        "url": "https://geodata.engelholm.se/maps/oppen_data/geodirekt_4_lekplatser/data.json"
+      },
+      "harryda": {
+        "kommun": "Härryda",
+        "licens": "ej angiven",
+        "antal": 22,
+        "url": "https://catalog.harryda.se/rowstore/dataset/977bd7e6-a7a1-48c1-8392-bc5897772ac9"
+      },
+      "kungalv": {
+        "kommun": "Kungälv",
+        "licens": "ej angiven",
+        "antal": 49,
+        "url": "https://catalog.kungalv.se/rowstore/dataset/eaf573d8-94ff-4d89-8286-474f5deb9fda"
+      },
+      "oxelosund": {
+        "kommun": "Oxelösund",
+        "licens": "ej angiven",
+        "antal": 10,
+        "url": "https://geodok.oxelosund.se/oppna_data/Lekplatser_oxelosund.csv"
+      },
+      "trelleborg": {
+        "kommun": "Trelleborg",
+        "antal": 0,
+        "status": "saknas (ej hämtad/blockerad)"
+      },
+      "vasteras": {
+        "kommun": "Västerås",
+        "licens": "ej angiven",
+        "antal": 123,
+        "url": "https://services-eu1.arcgis.com/lyiwM2rVk68OQ7Fd/arcgis/rest/services/Kommunala_lekplatser/FeatureServer"
+      },
+      "uppsala": {
+        "kommun": "Uppsala",
+        "licens": "CC BY",
+        "antal": 119,
+        "url": "https://services.arcgis.com/hrh7HJqpzvUrwY6X/arcgis/rest/services/Lekplatser_uppsala/FeatureServer"
+      },
+      "lulea": {
+        "kommun": "Luleå",
+        "licens": "CC BY",
+        "antal": 73,
+        "url": "https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/lekplatser/FeatureServer"
+      },
+      "skelleftea": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "antal": 90,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Park_och_natur_ext/FeatureServer"
+      },
+      "skelleftea-utrustning": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "antal": 1073,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Park_och_natur_ext/FeatureServer"
+      },
+      "gotland": {
+        "kommun": "Gotland",
+        "antal": 0,
+        "status": "saknas (ej hämtad/blockerad)"
+      },
+      "varberg": {
+        "kommun": "Varberg",
+        "licens": "ej angiven",
+        "antal": 72,
+        "url": "https://services3.arcgis.com/rusrCBFktCNPtUy3/arcgis/rest/services/Kommunala_lekplatser_vy_typ/FeatureServer"
+      },
+      "vellinge": {
+        "kommun": "Vellinge",
+        "licens": "ej angiven",
+        "antal": 51,
+        "url": "https://services3.arcgis.com/V1E24miEW9adAZYb/arcgis/rest/services/Lekplatser_oppnadata/FeatureServer"
+      },
+      "borlange": {
+        "kommun": "Borlänge",
+        "licens": "ej angiven",
+        "antal": 75,
+        "url": "https://services-eu1.arcgis.com/k9fhBrx5QiIxrnsD/arcgis/rest/services/Lekplatser_punkter/FeatureServer"
+      },
+      "sater": {
+        "kommun": "Säter",
+        "licens": "ej angiven",
+        "antal": 19,
+        "url": "https://services-eu1.arcgis.com/Edg0lenBBoWlakRf/arcgis/rest/services/Lekplatser/FeatureServer"
+      },
+      "hallstahammar": {
+        "kommun": "Hallstahammar",
+        "licens": "ej angiven",
+        "antal": 0,
+        "url": "https://services-eu1.arcgis.com/vkGU9ZuRu3qDJH0t/arcgis/rest/services/Lekplats/FeatureServer"
+      }
+    },
+    "pct": {
+      "namn": 96.4,
+      "adress": 2.8,
+      "utrustning": 9.3,
+      "tema": 0.4
+    }
+  },
+  "parkeringar": {
+    "antal": 8942,
+    "fran_osm": 3763,
+    "nya_officiella": 5179,
+    "osm_berikade_med_officiell": 379,
+    "med_adress": 3938,
+    "med_kapacitet": 5904,
+    "med_taxa": 4729,
+    "med_taxa_per_timme": 4136,
+    "med_avgift_kand": 6293,
+    "gratis": 1130,
+    "med_oppettider": 3732,
+    "med_hojdbegransning": 399,
+    "med_laddplatser": 440,
+    "med_handikapplatser": 1814,
+    "med_zonkod": 2600,
+    "med_kommunal_taxezon": 1267,
+    "flygplatsparkeringar": 55,
+    "kedjor": {
+      "Aimo Park": 2114,
+      "Ronneby kommun": 3,
+      "APCOA": 1275,
+      "Q-Park": 13,
+      "okänd": 7,
+      "Mora Kommun": 1,
+      "Svenska Kyrkan": 1,
+      "Nornäs Camping": 1,
+      "Gävle parkeringsservice": 1,
+      "Gavlegårdarna": 14,
+      "Teknik- och fritidsförvaltningen Halmstad": 1,
+      "Länsstyrelsen Halland": 1,
+      "Skallkrokens båtsällskap": 1,
+      "Dagcenter Kungsbacka": 1,
+      "Genvalla IF": 1,
+      "Handelsmannen": 1,
+      "Drivers First": 1,
+      "Jönköpings kommun": 2,
+      "audi": 1,
+      "Missionskyrkan Skillingaryd": 2,
+      "Vetlanda kommun": 2,
+      "trafikverket": 33,
+      "Markägare": 1,
+      "Tjust Weternriders": 1,
+      "Sveaskog": 2,
+      "Coop": 4,
+      "Privat": 1,
+      "Tesla": 2,
+      "VAIS": 1,
+      "Boliden": 1,
+      "Billerud": 1,
+      "Luleå kommun": 2,
+      "Helsingborgs Stad": 4,
+      "Sundsgårdens folkhögskola": 1,
+      "OSG Bevakning AB": 1,
+      "Höganäs kommun": 1,
+      "Länsstyrelsen i Skåne län": 1,
+      "Kiaby kyrka": 1,
+      "LKP": 25,
+      "LKPAB": 1,
+      "Malmö stad": 2,
+      "Smart Parkering Sverige AB": 1,
+      "Parkman": 8,
+      "Parkering Malmö": 3,
+      "Malmö Parkering": 1,
+      "P Malmö": 1,
+      "Malmöhus Bevakning": 1,
+      "Simrishamns kommun": 194,
+      "Trelleborgs kommun": 1,
+      "Ängelholms kommun": 1,
+      "Haninge Kommun": 3,
+      "K-rauta": 1,
+      "Huddinge Samhällsfastigheter AB": 1,
+      "Stockholms Stad": 1,
+      "Parkando": 1,
+      "Stockholm Parkering": 532,
+      "Nacka Forum": 1,
+      "Norrtälje kommun": 2,
+      "Gräsö": 1,
+      "Spillersboda Ö-kontakt": 1,
+      "Sverige Parkering AB - Fastigheter AB Balder": 1,
+      "Swedavia": 10,
+      "https://arnlangtidsparkering.se/": 1,
+      "Lindskrog Parkering": 1,
+      "Måby Park AB": 1,
+      "Humlegården": 1,
+      "EPark": 1,
+      "EasyPark": 2,
+      "JBK Båtklubb": 1,
+      "Vallentuna kommun": 2,
+      "Skolparkering": 1,
+      "Skeppsdals Båthamn AB": 1,
+      "Eskilstuna kommun": 1,
+      "kommunen": 1,
+      "Nyköpings kommun": 1,
+      "Länsstyrelsen Södermanland": 1,
+      "BRF knivstahus nr2": 3,
+      "Länsstyrelsen": 6,
+      "Region Uppsala": 6,
+      "Berkingebadet": 1,
+      "Gräsöfonden": 1,
+      "Stiftelsen Glaskogen": 2,
+      "Arvika Teknik AB": 1,
+      "Forshaga kommun": 1,
+      "UPAB": 4,
+      "Parkster": 3,
+      "Härnösands Kommun": 1,
+      "Sundsvalls Parkera AB": 6,
+      "Länsstyrelsen Västernorrland": 1,
+      "Övik parkering": 1,
+      "Västerås Parkering": 1,
+      "Mimer": 1,
+      "Borås kommuns Parkerings AB": 1,
+      "Fastighets AB Balder": 1,
+      "Falköpings kommun": 27,
+      "Centrumkyrkan Kinnarp/Slutarp": 1,
+      "Östertullsgatan": 1,
+      "Göteborgs Stad": 1,
+      "Parkering Göteborg": 6,
+      "Västtrafik": 1,
+      "Poseidon": 1,
+      "Bilia": 1,
+      "Securitas": 1,
+      "Kungälvs kommun": 2,
+      "Lidköpings kommun": 6,
+      "Allum": 1,
+      "Citypark": 1,
+      "Stora Höga Norravägförening": 1,
+      "Daftö resort": 1,
+      "Montessoriskolan": 1,
+      "Uddevalla kommun": 1,
+      "First Camp": 1,
+      "Örebro kommun": 2,
+      "Swisslog-Accalon AB": 2,
+      "Dukaten": 34,
+      "Dukaten Parkering": 2,
+      "Europark": 1,
+      "Norrköpings kommun": 2,
+      "Vadstena kommun": 1
+    },
+    "typ": {
+      "parkering": 862,
+      "markparkering": 5882,
+      "parkeringshus": 685,
+      "gatuparkering": 446,
+      "parkeringsgarage": 476,
+      "flygplatsparkering": 55,
+      "pendlarparkering": 107,
+      "friluftsparkering": 157,
+      "rastficka": 259,
+      "takparkering": 2,
+      "husbilsparkering": 11
+    },
+    "kallor": {
+      "sodertalje-parkeringshus": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 5,
+        "url": "https://static-content.sodertalje.se/opendata/parkeringshus.json"
+      },
+      "sodertalje-stora": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 7,
+        "url": "https://static-content.sodertalje.se/opendata/stora_parkeringar.json"
+      },
+      "sodertalje-infart": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 5,
+        "url": "https://static-content.sodertalje.se/opendata/infartsparkeringar.json"
+      },
+      "sodertalje-husbil": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 1,
+        "url": "https://static-content.sodertalje.se/opendata/husbilsparkering.json"
+      },
+      "sodertalje-motion": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 6,
+        "url": "https://static-content.sodertalje.se/opendata/parkering_vid_motionsspar.json"
+      },
+      "sodertalje-friluft": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 19,
+        "url": "https://static-content.sodertalje.se/opendata/parkering_friluftsliv.json"
+      },
+      "gavle-zoner": {
+        "kommun": "Gävle",
+        "licens": "CC0 1.0",
+        "roll": "avgiftszoner",
+        "antal": 39,
+        "url": "https://catalog.gavle.se/store/1/resource/115"
+      },
+      "skovde": {
+        "kommun": "Skövde",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 178,
+        "url": "https://karta.skovde.se/linkdokument/OpenData/parkeringsplats.json"
+      },
+      "lidingo-infart": {
+        "kommun": "Lidingö",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 7,
+        "url": "https://metadata.lidingo.se/store/9/resource/12"
+      },
+      "harryda": {
+        "kommun": "Härryda",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 36,
+        "url": "https://catalog.harryda.se/rowstore/dataset/db6fa782-cad3-46c5-aa2b-c38254a53bf2"
+      },
+      "tjorn": {
+        "kommun": "Tjörn",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 24,
+        "url": "https://catalog.tjorn.se/store/1/resource/23"
+      },
+      "mariestad": {
+        "kommun": "Mariestad",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 43,
+        "url": "https://catalog.mariestad.se/store/1/resource/17"
+      },
+      "toreboda": {
+        "kommun": "Töreboda",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 10,
+        "url": "https://catalog.toreboda.se/store/1/resource/15"
+      },
+      "gullspang": {
+        "kommun": "Gullspång",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 5,
+        "url": "https://catalog.gullspang.se/store/1/resource/17"
+      },
+      "haninge-infart": {
+        "kommun": "Haninge",
+        "licens": "ej angiven",
+        "roll": "anläggningar",
+        "antal": 7,
+        "url": "https://haninge.entryscape.net/rowstore/dataset/a4a2e2ca-2fbb-4288-9644-37589346c742"
+      },
+      "helsingborg-laddplatser": {
+        "kommun": "Helsingborg",
+        "licens": "CC BY 4.0",
+        "roll": "laddplatser",
+        "antal": 6,
+        "url": "https://oppnadata.helsingborg.se/sbf/transport/parkeringsplatser_ovriga/laddpl.geojson"
+      },
+      "helsingborg-rorelsehindrade": {
+        "kommun": "Helsingborg",
+        "licens": "CC BY 4.0",
+        "roll": "handikapplatser",
+        "antal": 181,
+        "url": "https://oppnadata.helsingborg.se/sbf/transport/parkeringsplatser_ovriga/rorelseh.geojson"
+      },
+      "malmo-avgifter": {
+        "kommun": "Malmö",
+        "licens": "CC0 1.0",
+        "roll": "avgiftslinjer",
+        "antal": 3398,
+        "url": "https://opendata-api.malmo.se/dataset/c06939a6-65b4-4078-9cb5-b49aa48b9140/resource/1a6bd68b-30ca-40a5-9d62-01e2a566982e/download/parkeringsavgifter.geojson"
+      },
+      "stockholm-ltf": {
+        "kommun": "Stockholm",
+        "licens": "licensfritt",
+        "roll": "avgiftslinjer",
+        "antal": 20182,
+        "url": "https://openparking.stockholm.se/LTF-Tolken/v1/ptillaten/all?outputFormat=json"
+      },
+      "sodertalje-betalzoner": {
+        "kommun": "Södertälje",
+        "licens": "CC0 1.0",
+        "roll": "avgiftszoner",
+        "antal": 12,
+        "url": "https://static-content.sodertalje.se/opendata/betalparkeringszoner.json"
+      },
+      "jonkoping-ytor": {
+        "kommun": "Jönköping",
+        "licens": "CC BY",
+        "roll": "anläggningar",
+        "antal": 546,
+        "url": "https://gis.jonkoping.se/arcgis/rest/services/OpenData/MapServer/44"
+      },
+      "jonkoping-kff": {
+        "kommun": "Jönköping",
+        "licens": "CC0 1.0",
+        "roll": "anläggningar",
+        "antal": 124,
+        "url": "https://gis.jonkoping.se/arcgis/rest/services/open_data_digg/MapServer/43"
+      },
+      "lulea-phus": {
+        "kommun": "Luleå",
+        "licens": "CC BY",
+        "roll": "anläggningar",
+        "antal": 5,
+        "url": "https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/Parkeringshus/FeatureServer"
+      },
+      "lulea-taxa": {
+        "kommun": "Luleå",
+        "licens": "CC BY",
+        "roll": "avgiftszoner",
+        "antal": 7,
+        "url": "https://services.arcgis.com/f1FD2L08bel8cfME/arcgis/rest/services/Parkeringstaxa/FeatureServer"
+      },
+      "skelleftea-phus": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "roll": "anläggningar",
+        "antal": 2,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer"
+      },
+      "skelleftea-pendlar": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "roll": "anläggningar",
+        "antal": 2,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer"
+      },
+      "skelleftea-ytor": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "roll": "anläggningar",
+        "antal": 95,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer"
+      },
+      "skelleftea-taxa": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "roll": "avgiftszoner",
+        "antal": 5,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer"
+      },
+      "skelleftea-ladd": {
+        "kommun": "Skellefteå",
+        "licens": "CC BY 4.0",
+        "roll": "laddplatser",
+        "antal": 1601,
+        "url": "https://gis.skelleftea.se/arcgis2/rest/services/Gata_park/SKE_Trafik_och_parkering_ext/FeatureServer"
+      },
+      "vaxjo": {
+        "kommun": "Växjö",
+        "licens": "CC BY",
+        "roll": "anläggningar",
+        "antal": 227,
+        "url": "https://services5.arcgis.com/WJV4fyJf1eDrDMiY/arcgis/rest/services/Parkeringskartan_1_0_WFL1_1_View_Layer/FeatureServer/17"
+      },
+      "simrishamn": {
+        "kommun": "Simrishamn",
+        "licens": "ej angiven",
+        "roll": "anläggningar",
+        "antal": 267,
+        "url": "https://services9.arcgis.com/NkmmUTvsR98rrIbx/arcgis/rest/services/Parkeringsplatser/FeatureServer"
+      },
+      "orust": {
+        "kommun": "Orust",
+        "licens": "ej angiven",
+        "roll": "anläggningar",
+        "antal": 178,
+        "url": "https://services2.arcgis.com/1Nvz85KbF7OLwYjb/arcgis/rest/services/Parkering_2020/FeatureServer"
+      }
+    },
+    "operatorer": {
+      "stockholmparkering": {
+        "anlaggningar_med_besoksparkering": 528,
+        "endast_uthyrning_uteslutna": 507,
+        "totalt_sidor": 1492
+      },
+      "aimo": {
+        "anlaggningar_med_besoksparkering": 2089,
+        "endast_uthyrning_uteslutna": 789,
+        "totalt_sidor": 3071
+      },
+      "apcoa": {
+        "anlaggningar_med_besoksparkering": 1272,
+        "endast_uthyrning_uteslutna": 47,
+        "totalt_sidor": 1320
+      }
+    },
+    "pct": {
+      "adress": 44,
+      "kapacitet": 66,
+      "taxa": 52.9,
+      "oppettider": 41.7
+    }
+  },
+  "fore_berikning": {
+    "lekplatser_med_riktigt_namn": 1527,
+    "lekplatser_med_utrustning": 1229,
+    "parkeringar_med_adress": 81,
+    "parkeringar_med_kapacitet": 1396,
+    "parkeringar_med_oppettider": 118
+  }
+}

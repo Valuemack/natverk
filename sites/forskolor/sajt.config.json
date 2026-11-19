@@ -1,0 +1,21 @@
+{
+  "mapp": "forskolor",
+  "namn": "Förskolor",
+  "visningsnamn": "förskolor.nu",
+  "url": "https://xn--frskolor-n4a.nu",
+  "tema": "skola",
+  "tagline": "Alla förskolor i Sverige",
+  "tjanstText": "Oberoende förskoleguide · Statistik från Skolverket och SCB",
+  "kallor": ["SCB, öppna geodata Förskolor", "Skolverket, kommunala jämförelsetal", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Alla förskolor i Sverige per kommun – kommunala och fristående, med adress, barngruppernas storlek och andel förskollärare. Uppdateras varje natt.",
+  "farg": "#1d5c63",
+  "ord": { "sing": "förskola", "plur": "förskolor", "art": "en" },
+  "schemaTyp": "Preschool",
+  "titelOrd": "barngrupper",
+  "datafil": "../skolor/data/forskolor.json",
+  "startTitel": "Förskolor i Sverige – hitta förskola i din kommun",
+  "startH1": "Hitta förskola i din kommun",
+  "kallaText": "Källor: SCB (öppna geodata, förskolor), Skolverket (kommunala jämförelsetal) och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL). Statistiken gäller hela kommunen, inte enskilda förskolor.",
+  "harEgenSida": "(e) => !!(e.gatuadress && (e.telefon || e.webb || e.extra?.inriktning))",
+  "meny": [{ "namn": "Jämför kommuner", "href": "/jamfor/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

@@ -1,0 +1,8 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, AR } from "../site.js";
+---
+<Layout site={SITE} titel="Sidan finns inte – rödadagar.nu" beskrivning="Sidan du sökte finns inte." noindex>
+  <h1>Sidan finns inte</h1>
+  <p>Prova <a href={`/${AR}/`}>röda dagar {AR}</a>, <a href={`/${AR + 1}/`}>{AR + 1}</a>, <a href="/klamdagar/">klämdagar</a> eller <a href="/vecka/">vilken vecka det är</a>.</p>
+</Layout>

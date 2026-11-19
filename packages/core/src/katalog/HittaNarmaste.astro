@@ -1,0 +1,35 @@
+---
+// Knapp "Hitta närmaste": hämtar /narmaste.json (namn, href, lat, lon) och visar de 5 närmaste.
+// Positionen lämnar aldrig webbläsaren.
+const { ord } = Astro.props;
+---
+<div class="hitta-narmaste">
+  <button class="knapp" type="button" id="hitta-knapp">📍 Hitta närmaste {ord.sing}</button>
+  <p class="kalla" id="hitta-status" aria-live="polite"></p>
+  <ul class="enheter" id="hitta-lista"></ul>
+</div>
+<script is:inline>
+(() => {
+  const knapp = document.getElementById("hitta-knapp"), status = document.getElementById("hitta-status"), lista = document.getElementById("hitta-lista");
+  if (!("geolocation" in navigator)) { knapp.hidden = true; return; }
+  const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b[0] - a[0]) * r / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin((b[1] - a[1]) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+  knapp.addEventListener("click", () => {
+    status.textContent = "Hämtar din position …";
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      try {
+        const data = await (await fetch("/narmaste.json")).json();
+        const jag = [pos.coords.latitude, pos.coords.longitude];
+        const topp = data.map((e) => ({ ...e, km: km(jag, [e.lat, e.lon]) })).sort((a, b) => a.km - b.km).slice(0, 5);
+        lista.replaceChildren(...topp.map((e) => {
+          const li = document.createElement("li"), a = document.createElement("a"), s = document.createElement("span"), d = document.createElement("span");
+          d.className = "avst"; d.textContent = e.km < 1 ? `${Math.round(e.km * 100) * 10} m` : `${e.km.toFixed(1).replace(".", ",")} km`;
+          a.href = e.href; a.textContent = e.namn; a.className = "namn";
+          s.className = "rad"; s.textContent = e.adress || "";
+          li.append(d, a, s); return li;
+        }));
+        status.textContent = "Avstånd fågelvägen från din position.";
+      } catch { status.textContent = "Kunde inte hämta listan. Försök igen."; }
+    }, () => { status.textContent = "Du behöver tillåta platsåtkomst för att se närmaste."; }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+  });
+})();
+</script>

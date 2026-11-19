@@ -1,0 +1,31 @@
+---
+// Jämför alla kommuners förskolor: barngrupper och andel förskollärare (Skolverket).
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor } from "../site.js";
+
+const rader = KAT.kommuner.map((k) => ({ k, s: statFor(k) })).filter((x) => x.s?.barn_per_grupp != null);
+const minstGrupp = [...rader].sort((a, b) => a.s.barn_per_grupp - b.s.barn_per_grupp);
+const flestLarare = [...rader].filter((x) => x.s.andel_forskollarexamen != null).sort((a, b) => b.s.andel_forskollarexamen - a.s.andel_forskollarexamen);
+const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
+const ar = rader[0]?.s.ar;
+const fragor = [
+  { fraga: "Vilken kommun har minst barngrupper i förskolan?", svar: `${minstGrupp[0].k.namn} har minst barngrupper med i snitt ${tal(minstGrupp[0].s.barn_per_grupp)} barn per grupp, följt av ${minstGrupp.slice(1, 3).map((x) => `${x.k.namn} (${tal(x.s.barn_per_grupp)})`).join(" och ")}. Riksgenomsnittet är ${tal(RIKET?.barn_per_grupp)} (${ar}).` },
+  { fraga: "Vilken kommun har flest förskollärare?", svar: `${flestLarare[0].k.namn} har högst andel personal med förskollärarexamen: ${tal(flestLarare[0].s.andel_forskollarexamen)} %. Riksgenomsnittet är ${tal(RIKET?.andel_forskollarexamen)} %.` },
+];
+---
+<Layout site={SITE} titel={`Jämför förskolor i alla kommuner – barngrupper ${ar}`}
+  beskrivning={`Jämför förskolan i Sveriges ${rader.length} kommuner: barn per grupp, barn per anställd och andel förskollärare. ✓ Skolverkets statistik ${ar} ✓ Sortera och jämför.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Jämför kommuner", href: "/jamfor/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Jämför förskolan i alla kommuner</h1>
+  <p class="svar">Minst barngrupper har <strong>{minstGrupp[0].k.namn}</strong> ({tal(minstGrupp[0].s.barn_per_grupp)} barn per grupp) och högst andel förskollärare har <strong>{flestLarare[0].k.namn}</strong> ({tal(flestLarare[0].s.andel_forskollarexamen)} %). Riket: {tal(RIKET?.barn_per_grupp)} barn per grupp och {tal(RIKET?.andel_forskollarexamen)} % förskollärare ({ar}).</p>
+  <Annons plats="jamfor-1" />
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Förskolor</th><th class="num">Barn/grupp</th><th class="num">Barn/anställd</th><th class="num">Förskollärare</th></tr></thead>
+    <tbody>{rader.map(({ k, s }) => <tr><td><a href={k.href}>{k.namn}</a></td><td class="num">{k.enheter.length}</td><td class="num">{tal(s.barn_per_grupp)}</td><td class="num">{tal(s.barn_per_heltidstjanst)}</td><td class="num">{s.andel_forskollarexamen != null ? `${tal(s.andel_forskollarexamen, 0)} %` : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

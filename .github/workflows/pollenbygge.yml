@@ -1,0 +1,62 @@
+# Säsongsbygge för pollenläget.se: Naturhistoriska riksmuseet ger ut nya prognoser flera gånger per dag i säsong.
+# Samma steg som nattbygget men bara för pollenläget, kl 07.30, 11.30 och 15.30 svensk sommartid, februari–september.
+# Hemligheter som behövs i GitHub (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   – token med behörigheten "Cloudflare Pages: Edit"
+#   CLOUDFLARE_ACCOUNT_ID  – konto-ID från Cloudflare-panelen
+#   INDEXNOW_KEY           – valfri slumpsträng (32 tecken a-z0-9), samma för alla sajter
+name: Pollenbygge
+
+on:
+  schedule:
+    - cron: "30 5,9,13 * 2-9 *"
+  workflow_dispatch:
+
+concurrency:
+  group: pollenbygge
+  cancel-in-progress: false
+
+jobs:
+  bygg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        # sajt = mapp under sites/, projekt = Cloudflare Pages-projektets namn.
+        # Lägg till en rad här när en ny sajt är klar.
+        include:
+          - { sajt: pollenlaget, projekt: pollenlaget }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tester
+        run: npm test
+
+      - name: Hämta färsk data
+        run: npm run data --if-present -w sites/${{ matrix.sajt }}
+
+      - name: Bygg
+        run: npm run build -w sites/${{ matrix.sajt }}
+
+      - name: Sitemap-lastmod och IndexNow-förberedelse
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }}
+
+      - name: Publicera till Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy sites/${{ matrix.sajt }}/dist --project-name=${{ matrix.projekt }} --branch=main --commit-dirty=true
+
+      - name: Pinga IndexNow (Bing m.fl.)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }} --skicka

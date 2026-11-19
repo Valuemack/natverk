@@ -1,0 +1,16 @@
+{
+  "name": "natverk",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "sites/*"
+  ],
+  "scripts": {
+    "dev:rodadagar": "npm run dev -w sites/rodadagar",
+    "build:rodadagar": "npm run build -w sites/rodadagar",
+    "test": "node --test \"sites/*/test/*.test.js\"",
+    "uppdatera": "node scripts/uppdatera.mjs",
+    "bygg": "node scripts/uppdatera.mjs --bara-bygg"
+  }
+}

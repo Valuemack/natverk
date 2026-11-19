@@ -1,0 +1,91 @@
+---
+// Förskolor i en kommun: lista per ort + Skolverkets jämförelsetal mot riket och grannkommuner.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { grannkommuner, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor } from "../../site.js";
+
+export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+const { kommun: k } = Astro.props;
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const n = k.enheter.length;
+const kommunala = k.enheter.filter((e) => e.typ === "kommunal förskola").length;
+const fristaende = n - kommunala;
+const s = statFor(k);
+const orter = rakna(k.enheter, (e) => e.ort);
+const perOrt = n > 10 && orter.length > 1;
+const grannar = grannkommuner(k, KAT.kommuner, 6);
+const huvudman = rakna(k.enheter.filter((e) => e.typ !== "kommunal förskola"), (e) => e.kedja).slice(0, 8);
+const gen = (x) => (/[sxz]$/i.test(x) ? x : `${x}s`);
+const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
+const jmf = (v, r, hogreBattre) => {
+  if (v == null || r == null || v === r) return "";
+  const battre = hogreBattre ? v > r : v < r;
+  return battre ? "bättre än riket" : "sämre än riket";
+};
+const RADER = s && RIKET ? [
+  { namn: "Barn per barngrupp", v: s.barn_per_grupp, r: RIKET.barn_per_grupp, hb: false },
+  { namn: "Barn per grupp, 1–3 år", v: s.barn_per_grupp_1_3_ar, r: RIKET.barn_per_grupp_1_3_ar, hb: false },
+  { namn: "Barn per grupp, 4–5 år", v: s.barn_per_grupp_4_5_ar, r: RIKET.barn_per_grupp_4_5_ar, hb: false },
+  { namn: "Barn per heltidstjänst", v: s.barn_per_heltidstjanst, r: RIKET.barn_per_heltidstjanst, hb: false },
+  { namn: "Andel med förskollärarexamen", v: s.andel_forskollarexamen, r: RIKET.andel_forskollarexamen, hb: true, pct: true },
+  { namn: "Andel med förskollärarlegitimation", v: s.andel_forskollarlegitimation, r: RIKET.andel_forskollarlegitimation, hb: true, pct: true },
+  { namn: "Andel barn i fristående förskola", v: s.andel_barn_enskild_regi, r: RIKET.andel_barn_enskild_regi, pct: true },
+  { namn: "Andel barn 1–5 år i förskola", v: s.andel_barn_1_5_inskrivna, r: RIKET.andel_barn_1_5_inskrivna, pct: true },
+].filter((x) => x.v != null) : [];
+
+const titel = [`Förskolor i ${k.namn} – ${n} st, barngrupper och personal`, `Förskolor i ${k.namn} – ${n} st med statistik`, `Förskolor i ${k.namn} – ${n} st`].find((t) => t.length <= 60);
+const fragor = [
+  { fraga: `Hur många förskolor finns det i ${k.namn}?`, svar: `Det finns ${n} förskolor i ${k.namn}: ${kommunala} kommunala och ${fristaende} fristående.${s?.barn_inskrivna ? ` Totalt går ${tal(s.barn_inskrivna, 0)} barn i förskola i kommunen.` : ""}` },
+  s?.barn_per_grupp != null && { fraga: `Hur stora är barngrupperna i ${k.namn}?`, svar: `I ${k.namn} går i snitt ${tal(s.barn_per_grupp)} barn per barngrupp (riket: ${tal(RIKET?.barn_per_grupp)}).${s.barn_per_grupp_1_3_ar != null ? ` För de yngsta barnen (1–3 år) är snittet ${tal(s.barn_per_grupp_1_3_ar)} barn per grupp.` : ""} Skolverkets riktmärke är 6–12 barn för 1–3-åringar och 9–15 för 4–5-åringar.` },
+  s?.andel_forskollarexamen != null && { fraga: `Hur många förskollärare finns det i ${gen(k.namn)} förskolor?`, svar: `${tal(s.andel_forskollarexamen)} % av personalen i ${gen(k.namn)} förskolor har förskollärarexamen, jämfört med ${tal(RIKET?.andel_forskollarexamen)} % i hela riket (${s.ar}).` },
+  { fraga: `Hur söker man förskola i ${k.namn}?`, svar: `Du ansöker om förskoleplats hos ${k.namn} kommun, oftast via kommunens e-tjänst. Det gäller även många fristående förskolor. Kommunen ska erbjuda plats inom fyra månader från ansökan enligt skollagen.` },
+].filter(Boolean);
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+---
+<Layout site={SITE} titel={titel ?? `Förskolor i ${k.namn}`}
+  beskrivning={`Alla ${n} förskolor i ${k.namn} – ${kommunala} kommunala och ${fristaende} fristående.${s?.barn_per_grupp != null ? ` ✓ ${tal(s.barn_per_grupp)} barn per grupp` : ""}${s?.andel_forskollarexamen != null ? ` ✓ ${tal(s.andel_forskollarexamen, 0)} % förskollärare` : ""} ✓ Jämför med riket.`}
+  smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Förskolor i {k.namn}</h1>
+  <p class="svar">
+    I {k.namn} finns <strong>{n} förskolor</strong> – {kommunala} kommunala och {fristaende} fristående.
+    {s?.barn_per_grupp != null && <> I snitt går <strong>{tal(s.barn_per_grupp)} barn per barngrupp</strong> (riket {tal(RIKET?.barn_per_grupp)})</>}{s?.andel_forskollarexamen != null && <> och {tal(s.andel_forskollarexamen)} % av personalen är förskollärare</>}{s && "."}
+  </p>
+
+  {RADER.length > 0 && <>
+    <h2>{k.namn} jämfört med riket</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Nyckeltal ({s.ar})</th><th class="num">{k.namn}</th><th class="num">Riket</th><th></th></tr></thead>
+      <tbody>{RADER.map((x) => <tr><td>{x.namn}</td><td class="num"><strong>{tal(x.v)}{x.pct && " %"}</strong></td><td class="num">{tal(x.r)}{x.pct && " %"}</td><td><small>{x.hb !== undefined && jmf(x.v, x.r, x.hb)}</small></td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Källa: Skolverket, kommunala jämförelsetal. Värdena gäller kommunens förskolor sammantaget, inte enskilda förskolor.</p>
+  </>}
+
+  <Annons plats="kommun-1" />
+
+  {perOrt ? orter.map(([ort]) => <><h2>Förskolor i {ort}</h2><EnhetLista enheter={k.enheter.filter((e) => e.ort === ort)} /></>)
+    : <><h2>Alla förskolor i {k.namn}</h2><EnhetLista enheter={k.enheter} /></>}
+
+  {huvudman.length > 1 && <>
+    <h2>Fristående huvudmän i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Huvudman</th><th class="num">Förskolor</th></tr></thead>
+      <tbody>{huvudman.map(([h, c]) => <tr><td>{h}</td><td class="num">{c}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  {grannar.length > 0 && <>
+    <h2>Jämför med grannkommunerna</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Kommun</th><th class="num">Förskolor</th><th class="num">Barn/grupp</th><th class="num">Förskollärare</th></tr></thead>
+      <tbody>{[k, ...grannar].map((g) => { const gs = statFor(g); return <tr class:list={{ markerad: g === k }}><td>{g === k ? g.namn : <a href={g.href}>{g.namn}</a>}</td><td class="num">{g.enheter.length}</td><td class="num">{tal(gs?.barn_per_grupp)}</td><td class="num">{gs?.andel_forskollarexamen != null ? `${tal(gs.andel_forskollarexamen, 0)} %` : "–"}</td></tr>; })}</tbody>
+    </table></div>
+  </>}
+
+  <Annons plats="kommun-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

@@ -1,0 +1,120 @@
+# Dagligt bygge: hämtar färsk data, bygger varje sajt och publicerar till Cloudflare Pages.
+# Körs på GitHubs servrar – din dator och Claude behöver inte vara igång.
+# Rådata och sidcache (sites/*/data/raw, data/cache) sparas mellan körningarna med actions/cache.
+# Operatörssidorna för parkeringar cachas 7 dagar per sida, så en daglig körning hämtar bara ungefär en sjundedel.
+# OSM-underlaget (bensinstationer, parkeringar, lekplatser) hämtas först i ett eget jobb.
+# Hemligheter som behövs i GitHub (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   – token med behörigheten "Cloudflare Pages: Edit"
+#   CLOUDFLARE_ACCOUNT_ID  – konto-ID från Cloudflare-panelen
+#   INDEXNOW_KEY           – valfri slumpsträng (32 tecken a-z0-9), samma för alla sajter
+name: Dagligt bygge
+
+on:
+  schedule:
+    - cron: "15 1 * * *" # 02:15 svensk vintertid / 03:15 sommartid
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: publicera
+  cancel-in-progress: false
+
+jobs:
+  osm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Hämta OSM-underlag
+        working-directory: sites/osm-data
+        run: node scripts/run.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: osm-data
+          path: sites/osm-data/data/*.json
+          retention-days: 2
+
+  bygg:
+    needs: osm
+    if: ${{ !cancelled() }} # bygg även om OSM-hämtningen misslyckas; då används OSM-datan i repot
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        # sajt = mapp under sites/, projekt = Cloudflare Pages-projektets namn.
+        # Lägg till en rad här när en ny sajt är klar.
+        include:
+          - { sajt: rodadagar, projekt: rodadagar }
+          - { sajt: apoteken, projekt: apoteken }
+          - { sajt: vardcentralen, projekt: vardcentralen }
+          - { sajt: biblioteken, projekt: biblioteken }
+          - { sajt: badstrander, projekt: badstrander }
+          - { sajt: loppisar, projekt: loppisar }
+          - { sajt: forskolor, projekt: forskolor }
+          - { sajt: komvux, projekt: komvux }
+          - { sajt: bensinstationer, projekt: bensinstationer }
+          - { sajt: simhallar, projekt: simhallar }
+          - { sajt: pollenlaget, projekt: pollenlaget }
+          - { sajt: parkeringar, projekt: parkeringar }
+          - { sajt: lekplatserna, projekt: lekplatserna }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Färskt OSM-underlag
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: osm-data
+          path: sites/osm-data/data
+
+      - name: Rådata från tidigare körningar
+        uses: actions/cache@v4
+        with:
+          path: |
+            sites/*/data/raw
+            sites/*/data/cache
+          key: data-${{ matrix.sajt }}-${{ github.run_id }}
+          restore-keys: data-${{ matrix.sajt }}-
+
+      - name: Tester
+        run: npm test
+
+      - name: Hämta färsk data
+        # Misslyckas en källa byggs sajten ändå från förra datan.
+        continue-on-error: true
+        run: npm run data --if-present -w sites/${{ matrix.sajt }}
+
+      - name: Bygg
+        run: npm run build -w sites/${{ matrix.sajt }}
+
+      - name: Sitemap-lastmod och IndexNow-förberedelse
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }}
+
+      - name: Publicera till Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy sites/${{ matrix.sajt }}/dist --project-name=${{ matrix.projekt }} --branch=main --commit-dirty=true
+
+      - name: Pinga IndexNow (Bing m.fl.)
+        # Pingar bara när domänerna är aktiva: sätt repovariabeln INDEXNOW_PA till 1.
+        if: ${{ vars.INDEXNOW_PA == '1' }}
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }} --skicka

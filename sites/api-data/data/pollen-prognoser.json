@@ -1,0 +1,291 @@
+{
+  "_meta": {
+    "hamtad": "2026-11-19T04:02:47.605Z",
+    "kalla": "Palynologiska laboratoriet, Naturhistoriska riksmuseet",
+    "api": "https://api.pollenrapporten.se/v1",
+    "licens": "CC BY-ND 4.0 (prognostext och nivåvärden får inte ändras)",
+    "aktiva_idag": 0
+  },
+  "prognoser": [
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313930",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a33",
+      "region": "Borlänge",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323039",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3131",
+      "region": "Bräkne-Hoby",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38303439",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3134",
+      "region": "Eskilstuna",
+      "start": "2026-09-02",
+      "slut": "2026-09-02",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313931",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a34",
+      "region": "Forshaga",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313932",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a35",
+      "region": "Gävle",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323033",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323034",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3130",
+      "region": "Hässleholm",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313933",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a36",
+      "region": "Jönköping",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313934",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3232",
+      "region": "Kiruna",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323035",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3132",
+      "region": "Kristianstad",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313935",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3233",
+      "region": "Ljusdal",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323036",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a30",
+      "region": "Malmö",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313430",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3135",
+      "region": "Norrköping",
+      "start": "2026-09-11",
+      "slut": "2026-09-11",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323030",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3133",
+      "region": "Nässjö",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för den gångna säsongen och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323032",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3231",
+      "region": "Piteå",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323037",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3136",
+      "region": "Skövde",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313937",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313939",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a303a313234",
+      "region": "Storuman",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för den gångna säsongen och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323031",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3137",
+      "region": "Sundsvall",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313733",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a31",
+      "region": "Sverige",
+      "start": "2026-09-15",
+      "slut": "2026-09-30",
+      "sasongsslut": false,
+      "text": "LÅGA POLLENHALTER I HELA LANDET \r\nDetta är sista riskprognosen för säsongen. Ännu en tid kan pollen från både gräs och gråbo förekomma i luften, men framöver är det liten risk för att pollenhalterna ska bli höga. Malörtsambrosians blomning har startat i Sverige, men avtar på kontinenten. Därför kan pollen förekomma både från lokala plantor och från fjärrtransport, även om risken för höga halter är liten.\r\n\r\nGRÄS\r\nGräsblomningen har passerat sin kulmen i hela landet. Vissa arter blommar dock fortfarande exempelvis vass, blåtåtel och olika prydnadsgräs som blivit populära att använda i rabatter. Risken för höga halter är dock liten.\r\n\r\nGRÅBO\r\nBlomningen av gråbo är i stort sett över i hela landet och förhöjda nivåer av pollen från gråbo eller andra arter i malörtssläktet förekommer så här års nästan uteslutande vid fjärrtransport. \r\n\r\nMALÖRTSAMBROSIA \r\nMalörtsambrosia blommar på kontinenten där den är ett vanligt ogräs i solrosodlingar. I Sverige är växten ovanlig och den förekommer främst i trädgårdar där man matat fåglar under vintern, eftersom fröna kan följa med i fågelfröblandningar. Arten är en kortdagsväxt som kräver ett visst antal mörkertimmar för att blomma. Blomningen i södra Sverige inleds kring månadsskiftet augusti – september och i närheten av lokalt blommande exemplar i södra halvan av landet finns därför en liten risk för höga halter. Eventuell fjärrtransport innebär också en liten risk för höga halter.",
+      "bilder": [
+        {
+          "id": "2a2a2a2a-2a2a-423a-b831-373323342330",
+          "pollenId": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+          "url": "https://api.pollenrapporten.se/v1/images/2a2a2a2a-2a2a-423a-b831-373323342330.png"
+        },
+        {
+          "id": "2a2a2a2a-2a2a-423a-b831-373323342331",
+          "pollenId": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+          "url": "https://api.pollenrapporten.se/v1/images/2a2a2a2a-2a2a-423a-b831-373323342331.png"
+        },
+        {
+          "id": "2a2a2a2a-2a2a-423a-b831-373323342332",
+          "pollenId": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+          "url": "https://api.pollenrapporten.se/v1/images/2a2a2a2a-2a2a-423a-b831-373323342332.png"
+        }
+      ],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313938",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3138",
+      "region": "Umeå",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för den gångna säsongen och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313936",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a37",
+      "region": "Visby",
+      "start": "2026-09-17",
+      "slut": "2026-09-17",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38313131",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3139",
+      "region": "Västervik",
+      "start": "2026-09-07",
+      "slut": "2026-09-07",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-323a38323038",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a303a3230",
+      "region": "Östersund",
+      "start": "2026-09-18",
+      "slut": "2026-09-18",
+      "sasongsslut": true,
+      "text": "Pollen från gräs, gråbo och malörtsambrosia kan förekomma i luften ännu en tid.\r\n\r\nDet här är säsongens sista pollenprognos. Vi tackar för oss och återkommer med nya prognoser i vår.",
+      "bilder": [],
+      "dagar": []
+    }
+  ]
+}

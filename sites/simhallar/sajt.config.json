@@ -1,0 +1,22 @@
+{
+  "mapp": "simhallar",
+  "namn": "Simhallar",
+  "visningsnamn": "simhallar.se",
+  "url": "https://simhallar.se",
+  "tema": "sim",
+  "tagline": "Simhallar och badhus i hela Sverige",
+  "tjanstText": "Oberoende guide till simhallar · Uppgifter från kommuner och OpenStreetMap",
+  "kallor": ["Kommunernas och badens webbplatser", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Alla simhallar, badhus och äventyrsbad i Sverige med öppettider, priser och bassänger – se vilken simhall som har öppet nu. Uppdateras varje natt.",
+  "farg": "#007c91",
+  "ord": { "sing": "simhall", "plur": "simhallar", "art": "en" },
+  "schemaTyp": "PublicSwimmingPool",
+  "titelOrd": "öppettider och priser",
+  "datafil": "data/simhallar.json",
+  "dataSkript": "node scripts/run-all.mjs",
+  "startTitel": "Simhallar nära dig – öppettider, priser och bassänger",
+  "startH1": "Hitta en simhall nära dig",
+  "kallaText": "Källor: kommunernas och badanläggningarnas webbplatser samt OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL). Kontrollera tiderna hos badet före besöket.",
+  "harEgenSida": "(e) => !!(e.oppettider || e.extra?.priser || e.gatuadress)",
+  "meny": [{ "namn": "Äventyrsbad", "href": "/aventyrsbad/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

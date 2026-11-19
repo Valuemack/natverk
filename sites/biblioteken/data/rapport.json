@@ -1,0 +1,702 @@
+{
+ "genererad": "2026-11-19T08:38:28.837Z",
+ "kallor": {
+  "bibdb": {
+   "url": "https://bibdb.libris.kb.se/api/lib",
+   "hamtad": "2026-11-19T03:11:20.102Z",
+   "poster_totalt": 3695,
+   "valda": 1158
+  },
+  "osm": {
+   "endpoint": "https://overpass-api.de/api/interpreter",
+   "osm_base": "2026-11-19T03:19:35Z",
+   "element": 821,
+   "matchade": 530,
+   "licens": "ODbL 1.0, (c) OpenStreetMap contributors"
+  },
+  "scb": {
+   "url": "https://api.scb.se/OV0104/v1/doris/sv/ssd/BE/BE0101/BE0101A/BefolkningNy",
+   "hamtad": "2026-11-19T03:26:08.843Z",
+   "licens": "CC0 (SCB öppna data)"
+  },
+  "webb": {
+   "hamtad": "2026-11-19T03:58:37.871Z",
+   "user_agent": "biblioteken-dataset/1.0 (open-data aggregation; nightly)",
+   "sidor": 173,
+   "vardar": 270,
+   "bibliotek_med_strukturerade_tider": 1,
+   "overhoppade_vardar": 123,
+   "skal": {
+    "robots.txt blockerar AI-agenter": 119,
+    "robots.txt disallow": 3,
+    "botskydd/CAPTCHA – hoppas över": 1
+   }
+  }
+ },
+ "exkluderade": [
+  {
+   "sigel": "8abs",
+   "namn": "Stadsbiblioteket, ljudbiblioteket",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8atv",
+   "namn": "Skegrie bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: STÄNGT"
+  },
+  {
+   "sigel": "8azf",
+   "namn": "STÄNGT Tåstarps bibliotek",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8azt",
+   "namn": "Grevie bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: STÄNGT TILLS VIDARE"
+  },
+  {
+   "sigel": "8bmm",
+   "namn": "DUBBLETT med (Hisi) Lundby bibliotek",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8bvk",
+   "namn": "Kalvs bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Nedlagt"
+  },
+  {
+   "sigel": "8cab",
+   "namn": "Klevshults bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Vid nämndmöte den 17 maj har Kultur-och fritidsnämnden beslutat att upphöra med "
+  },
+  {
+   "sigel": "8cem",
+   "namn": "Musikbiblioteket & Visarkivet",
+   "skal": "nedlagt/stängt enligt bibdb: Beståndet ihopslaget med Västerviks stadsbibliotek"
+  },
+  {
+   "sigel": "8cgz",
+   "namn": "Havdhems bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: HAVDHEM BIBLIOTEK ÄR STÄNGT FR O M SOMMAREN 2017! Enligt webben."
+  },
+  {
+   "sigel": "8coa",
+   "namn": "Ramsbergs bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Nedlagt 2015"
+  },
+  {
+   "sigel": "8crj",
+   "namn": "Grillby bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Grillby bibliotek har 2019 inga lokaler"
+  },
+  {
+   "sigel": "8ctj",
+   "namn": "Skederids bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Finns ej med på Norrtäljes bibliotekslista"
+  },
+  {
+   "sigel": "8cul",
+   "namn": "STÄNGT Dala-Järna bibliotek",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8cup",
+   "namn": "Idkerbergets bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: Finns inte på Borlänge bibliotekslista"
+  },
+  {
+   "sigel": "8cux",
+   "namn": "Stora Tuna bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: lades ner september 2016"
+  },
+  {
+   "sigel": "8gav",
+   "namn": "Helgebiblioteken i Gävleborg",
+   "skal": "regional/länsövergripande post"
+  },
+  {
+   "sigel": "Axi2",
+   "namn": "Axiell test 2",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8sjh",
+   "namn": "Stockholms sjukhem biblioteket",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "BerE",
+   "namn": "Bergslagsbibblan e-medier",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Bvik",
+   "namn": "Brunnsviks Bokstuga",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "Elan",
+   "namn": "Götabiblioteken Länsbibliotek Östergötland",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Biv",
+   "namn": "Bibliotek Värmland E-böcker",
+   "skal": "regional/länsövergripande post"
+  },
+  {
+   "sigel": "BinE",
+   "namn": "Biblioteken i Norrbotten e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "BoE",
+   "namn": "Borås stadsbibliotek e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Bin",
+   "namn": "Biblioteken i Norrbotten - Fjärrlån",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Eble",
+   "namn": "Blekingebiblioteken e-medier",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "BleC",
+   "namn": "Blekingebiblioteken Cineasterna",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "DalE",
+   "namn": "Dalabiblioteken e-medier",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "BfhE",
+   "namn": "Familjen Helsingborg e-media",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "BfhC",
+   "namn": "Familjen Helsingborg e-filmer",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Gbg1",
+   "namn": "Göteborgs stadsbibliotek Fjärrlån",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "GbgE",
+   "namn": "Biblioteken i Göteborg e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Esno",
+   "namn": "Snoka-biblioteken e-medier",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Esso",
+   "namn": "Bibliotek Skåne Sydost e-medier",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Esod",
+   "namn": "E-media Södertörnssamarbetet",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Hyss",
+   "namn": "Hyssna bibliotek",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "Kclb",
+   "namn": "Karlskrona stadsbibliotek Carlskrona Läsesällskaps Bibliothek",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Hsd2",
+   "namn": "Härnösands bibliotek Kriminalvårdsverksamheten",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Helg",
+   "namn": "Helgebiblioteken e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "JosE",
+   "namn": "Jönköpings stadsbibliotek e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Kalu",
+   "namn": "Kalmar stadsbibliotek Uppsökande avdelning",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "JosV",
+   "namn": "Jönköpings stadsbibliotek e-film",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Kld",
+   "namn": "Länsbiblioteket i Värmland",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Lsb",
+   "namn": "Stadsbiblioteket Referensavdelningen",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Kri4",
+   "namn": "Österängs bibliotek",
+   "skal": "nedlagt/stängt enligt bibdb: STÄNGT"
+  },
+  {
+   "sigel": "KnaE",
+   "namn": "Borås stadsbibliotek Elib",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Munb",
+   "namn": "Munkebäcks bibliotek",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "MoE",
+   "namn": "Malmö stadsbibliotek Elib",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Mote",
+   "namn": "Mötesplats Tärnan",
+   "skal": "nedlagt/stängt enligt bibdb: STÄNGT 2019"
+  },
+  {
+   "sigel": "Mlc",
+   "namn": "Stockholms stadsbibliotek Mångspråkiga lånecentralen",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Nafd",
+   "namn": "Nacka bibliotek",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "Nykl",
+   "namn": "Nyköpings läroverkssamling",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "Mobi",
+   "namn": "Mölnlycke bibliotek",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "RanE",
+   "namn": "Biblioteken i Ranrike e-media",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Snv",
+   "namn": "Bibliotek Skåne Nordväst",
+   "skal": "administrativ post utan besöksadress/koordinater"
+  },
+  {
+   "sigel": "SsbE",
+   "namn": "Stockholms stadsbibliotek e-böcker",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Um1",
+   "namn": "Umeå stadsbibliotek Lär/Fjärrlån",
+   "skal": "icke-publik enhet (avdelning)"
+  },
+  {
+   "sigel": "Umdp",
+   "namn": "Sveriges depåbibliotek",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "TimE",
+   "namn": "Timrå bibliotek e-resurser",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "Vlib",
+   "namn": "V8 e-media",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "YstC",
+   "namn": "Ystads bibliotek, Cineasterna",
+   "skal": "icke-publik enhet/e-medier (namn)"
+  },
+  {
+   "sigel": "8aar",
+   "namn": "Lava, Kulturhuset",
+   "skal": "dubblett av 8aas: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "8adt",
+   "namn": "PUNKTmedis",
+   "skal": "dubblett av 8adu: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "8atk",
+   "namn": "Nöbbelövs bibliotek",
+   "skal": "dubblett av 8nbl: samma adress, liknande namn"
+  },
+  {
+   "sigel": "8chv",
+   "namn": "Mötesplats Palatzet Skiftinge",
+   "skal": "dubblett av 8chp: samma adress, liknande namn"
+  },
+  {
+   "sigel": "8hov",
+   "namn": "Skolbiblioteket på Bjärehovskolan",
+   "skal": "dubblett av Bjar: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "8Ndj",
+   "namn": "Norra Djurgårdsstadens bibliotek",
+   "skal": "dubblett av 8acx: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Areb",
+   "namn": "Årebiblioteken",
+   "skal": "dubblett av 8czl: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Ased",
+   "namn": "Åseda bibliotek",
+   "skal": "dubblett av 8bjh: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "8vng",
+   "namn": "Biblioteket på Väsby Nya Gymnasium",
+   "skal": "dubblett av Uppl: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Duve",
+   "namn": "Duveds bibliotek",
+   "skal": "dubblett av 8czq: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Eda",
+   "namn": "Eda kommunbibliotek",
+   "skal": "dubblett av 8clb: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Bgot",
+   "namn": "Biblioteken på Gotland",
+   "skal": "dubblett av 8cgq: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Botb",
+   "namn": "Bibliotek Botkyrka",
+   "skal": "dubblett av Botm: samma adress, organisationspost"
+  },
+  {
+   "sigel": "Hale",
+   "namn": "Hallens bibliotek",
+   "skal": "dubblett av 8czj: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Harj",
+   "namn": "Härjedalens bibliotek",
+   "skal": "dubblett av Sveg: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Hbib",
+   "namn": "Häljarps bibliotek",
+   "skal": "dubblett av 8axx: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Kall",
+   "namn": "Kalls bibliotek",
+   "skal": "dubblett av 8czm: samma adress, liknande namn"
+  },
+  {
+   "sigel": "HsdE",
+   "namn": "Härnösands bibliotek, Digitala resurser",
+   "skal": "dubblett av Hsd: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Khst",
+   "namn": "Kulturhuset Stadsteaterns bibliotek",
+   "skal": "dubblett av 8aas: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Ld",
+   "namn": "Stadsbiblioteket",
+   "skal": "dubblett av 8ask: samma adress, liknande namn"
+  },
+  {
+   "sigel": "KkaD",
+   "namn": "E-böcker",
+   "skal": "dubblett av Kka: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Lin2",
+   "namn": "Linköpings stadsbibliotek, Stiftsbiblioteket",
+   "skal": "dubblett av Lin1: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Lobj",
+   "namn": "Lomma bibliotek",
+   "skal": "dubblett av Lomm: samma namn i samma kommun"
+  },
+  {
+   "sigel": "Marb",
+   "namn": "Bibliotek Mark",
+   "skal": "dubblett av 8bvf: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Mors",
+   "namn": "Mörsils bibliotek",
+   "skal": "dubblett av 8czk: samma adress, liknande namn"
+  },
+  {
+   "sigel": "NoF",
+   "namn": "Norrköpings stadsbibliotek",
+   "skal": "dubblett av No: samma namn i samma kommun"
+  },
+  {
+   "sigel": "mohe",
+   "namn": "Mohedaskolans bibliotek",
+   "skal": "dubblett av 8bgo: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Osz",
+   "namn": "Zetterströmska biblioteket",
+   "skal": "dubblett av Os: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "RefB",
+   "namn": "Referensbiblioteket",
+   "skal": "dubblett av Mo: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "SDB",
+   "namn": "Svenska deckarbiblioteket",
+   "skal": "dubblett av Es1: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Skun",
+   "namn": "Stockholms stadsbibliotek",
+   "skal": "dubblett av 8aav: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Ssbk",
+   "namn": "Bibliotek Film & Musik, Kulturhuset",
+   "skal": "dubblett av 8aas: samma adress, ej i biblioteksstatistiken (delsamling/avdelning)"
+  },
+  {
+   "sigel": "Upor",
+   "namn": "Örsundsbro bibliotek",
+   "skal": "dubblett av 8crk: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Uvk",
+   "namn": "Uppsökande verksamhet Kristianstad",
+   "skal": "dubblett av Kri1: samma adress, liknande namn"
+  },
+  {
+   "sigel": "Farb",
+   "namn": "Fårösunds bibliotek",
+   "skal": "dubblett av 8chg: samma namn i samma kommun (efter kommunkorrigering)"
+  }
+ ],
+ "varningar": [
+  {
+   "sigel": "8aap",
+   "msg": "samma adress som 8aas (TioTretton, Kulturhuset) – båda behållna"
+  },
+  {
+   "sigel": "8eas",
+   "msg": "samma adress som 8aas (TioTretton, Kulturhuset) – båda behållna"
+  },
+  {
+   "sigel": "8aaq",
+   "msg": "samma adress som 8aas (TioTretton, Kulturhuset) – båda behållna"
+  },
+  {
+   "sigel": "8atx",
+   "msg": "samma adress som Arlo (Arlövs folkbibliotek i Burlövs bibliotek) – båda behållna"
+  },
+  {
+   "sigel": "8cdn",
+   "msg": "samma adress som Kisa (Kinda bibliotek) – båda behållna"
+  },
+  {
+   "sigel": "Stby",
+   "msg": "samma adress som 8cjw (Dals Långed bibliotek) – båda behållna"
+  },
+  {
+   "sigel": "8cta",
+   "msg": "samma adress som 8ctb (Edsbro bibliotek) – båda behållna"
+  },
+  {
+   "sigel": "8daz",
+   "msg": "samma adress som Hamm (Hammarstrands bibliotek) – båda behållna"
+  },
+  {
+   "sigel": "8aop",
+   "msg": "samma namn som Skb men 7975 m bort – båda behållna"
+  },
+  {
+   "sigel": "8bkp",
+   "msg": "kommunkod ändrad 0765 (Älmhult) -> 1082 (Karlshamn) enligt koordinat + postnummer/ort"
+  },
+  {
+   "sigel": "8dao",
+   "msg": "koordinat låg i Ödeshög men adressen i Krokom – koordinat borttagen"
+  },
+  {
+   "sigel": "8dgf",
+   "msg": "kommunkod ändrad 2417 (Norsjö) -> 2482 (Skellefteå) enligt koordinat + postnummer/ort"
+  },
+  {
+   "sigel": "Farb",
+   "msg": "kommunkod ändrad Uppsala -> Gotland (postnummer och ort pekar dit, koordinat saknas)"
+  },
+  {
+   "sigel": "Soru",
+   "msg": "kommun härledd från ort \"Sorunda\""
+  },
+  {
+   "sigel": "Haf2",
+   "msg": "saknar gatuadress"
+  },
+  {
+   "sigel": "Dand5",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Medb",
+   "msg": "saknar gatuadress"
+  },
+  {
+   "sigel": "Soru",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Kaho",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Gbs",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Nyb",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "8lin",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Kal2",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "8fol",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Bkr",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "8Hfr",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Bjok",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Vkck",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Svik",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "8cub",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Sabi",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "8dao",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "7Lbb",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Bokb",
+   "msg": "saknar gatuadress"
+  },
+  {
+   "sigel": "Bokb",
+   "msg": "saknar koordinater"
+  },
+  {
+   "sigel": "Bokg",
+   "msg": "saknar koordinater"
+  }
+ ],
+ "statistik": {
+  "bibliotek": 1123,
+  "typer": {
+   "huvudbibliotek": 282,
+   "filial": 802,
+   "bibliotek": 32,
+   "bokbuss": 4,
+   "utlaningsstation": 3
+  },
+  "kommuner_med_bibliotek": 290,
+  "kommuner_utan_bibliotek": [],
+  "med_koordinater": "98.3%",
+  "med_oppettider": "404 (36.0%)",
+  "med_kompletta_oppettider": "382 (34.0%)",
+  "oppettider_per_kalla": {
+   "osm": 223,
+   "bibdb": 180,
+   "webb": 1,
+   "ingen": 719
+  },
+  "meroppet_true": 24,
+  "med_adress": "99.7%",
+  "med_postnummer": "84.0%",
+  "med_telefon": "44.5%",
+  "med_webb": "45.1%",
+  "osm_matchade": 530,
+  "koordinatavvikelse_bibdb_osm_m": {
+   "median": 27,
+   "p90": 258,
+   "max": 2461
+  },
+  "kommun_kalla": {
+   "bibdb_kommunkod": 1120,
+   "ort": 1,
+   "koordinat_osm_polygon": 2
+  },
+  "exkluderade": 96
+ }
+}

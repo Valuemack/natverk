@@ -1,0 +1,25 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { kort, veckodag, versal } from "@natverk/core/datum.js";
+import { klamdagarAr } from "../../lib/helgdagar.js";
+import { SITE, IDAG, AR, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+const kommande = [...klamdagarAr(AR), ...klamdagarAr(AR + 1), ...klamdagarAr(AR + 2)].filter((k) => k.datum >= IDAG);
+const nasta = kommande[0];
+---
+<Layout site={SITE} titel={`Klämdagar ${AR + 1} och framåt – alla kommande klämdagar`}
+  beskrivning={`Nästa klämdag är ${nasta ? `${veckodag(nasta.datum)} ${kort(nasta.datum)} ${nasta.datum.getUTCFullYear()}` : "–"}. Alla kommande klämdagar i Sverige och hur många dagar du blir ledig.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Klämdagar", href: "/klamdagar/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Klämdagar</h1>
+  {nasta && <p class="svar">Nästa klämdag är <strong>{veckodag(nasta.datum)} {kort(nasta.datum)} {nasta.datum.getUTCFullYear()}</strong> ({nasta.orsak.namn.toLowerCase()}). Ta ledigt och bli ledig {nasta.ledigaDagar} dagar i rad.</p>}
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/klamdagar/${y}/`}>Klämdagar {y}</a>)}</div>
+  <h2>Kommande klämdagar</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Klämdag</th><th>Kläms av</th><th class="num">Lediga dagar i rad</th></tr></thead>
+    <tbody>{kommande.map((k) => (
+      <tr><td>{versal(veckodag(k.datum))} {kort(k.datum)} {k.datum.getUTCFullYear()}</td><td>{k.orsak.namn}</td><td class="num">{k.ledigaDagar}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <Annons plats="klam-hub" />
+</Layout>

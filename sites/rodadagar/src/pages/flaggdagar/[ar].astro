@@ -1,0 +1,35 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { kort, veckodag, versal, iso } from "@natverk/core/datum.js";
+import { flaggdagarAr } from "../../lib/helgdagar.js";
+import { SITE, IDAG, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
+const { ar } = Astro.props;
+const flagg = flaggdagarAr(ar);
+const nasta = flagg.find((f) => f.datum >= IDAG);
+const fragor = [
+  { fraga: `Hur många flaggdagar finns det ${ar}?`, svar: `${ar} har ${flagg.length} allmänna flaggdagar i Sverige enligt förordning (1982:270).` },
+  { fraga: "Måste man flagga på flaggdagar?", svar: "Nej. Statliga myndigheter flaggar på allmänna flaggdagar, men för privatpersoner och företag är det frivilligt." },
+];
+---
+<Layout site={SITE} titel={`Flaggdagar ${ar} – alla allmänna flaggdagar i Sverige`}
+  beskrivning={`Alla ${flagg.length} allmänna flaggdagar ${ar} med datum och veckodag. ✓ Enligt förordning (1982:270) ✓ Inklusive kungliga namns- och födelsedagar.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Flaggdagar", href: "/flaggdagar/" }, { namn: `${ar}`, href: `/flaggdagar/${ar}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Flaggdagar {ar}</h1>
+  <p class="svar">{ar} har <strong>{flagg.length} allmänna flaggdagar</strong>.{nasta && <> Nästa är {nasta.namn.toLowerCase()}, <strong>{veckodag(nasta.datum)} {kort(nasta.datum)}</strong>.</>}</p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/flaggdagar/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
+  <div class="tabell"><table>
+    <thead><tr><th>Datum</th><th>Veckodag</th><th>Flaggdag</th></tr></thead>
+    <tbody>{flagg.map((f) => (
+      <tr class:list={{ markerad: nasta && iso(f.datum) === iso(nasta.datum) }}><td>{kort(f.datum)}</td><td>{versal(veckodag(f.datum))}</td><td>{f.namn}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Flaggdagarna regleras i förordning (1982:270) om allmänna flaggdagar. Valdagen är flaggdag de år det är val till riksdagen eller Europaparlamentet.</p>
+  <Annons plats="flagg-1" />
+  <Faq fragor={fragor} />
+</Layout>

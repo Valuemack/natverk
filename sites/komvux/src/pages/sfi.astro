@@ -1,0 +1,52 @@
+---
+// Sfi i hela landet: skolor med sfi per län och kommunernas resultat enligt Skolverket.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor } from "../site.js";
+
+const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
+const pct = (v) => (v == null ? "–" : `${tal(v, 0)} %`);
+// Godkända + avbrutna ska rymmas inom samma kursdeltagare; annars är siffrorna inte jämförbara.
+const rimlig = (s) => s?.andel_godkanda_av_avslutade_eller_avbrutna != null && s.andel_avbrutna != null && s.andel_godkanda_av_avslutade_eller_avbrutna + s.andel_avbrutna <= 100.5;
+const sf = RIKET.sfi;
+const medSfi = (k) => k.enheter.filter((e) => e.extra?.nivaer?.includes("sfi"));
+const kommuner = KAT.kommuner.map((k) => ({ k, sfi: statFor(k)?.sfi, skolor: medSfi(k).length })).filter((x) => x.skolor > 0 || x.sfi);
+const medResultat = kommuner.filter((x) => rimlig(x.sfi) && x.sfi.elever >= 100);
+const bast = [...medResultat].sort((a, b) => b.sfi.andel_godkanda_av_avslutade_eller_avbrutna - a.sfi.andel_godkanda_av_avslutade_eller_avbrutna);
+const flest = [...kommuner].filter((x) => x.sfi?.elever).sort((a, b) => b.sfi.elever - a.sfi.elever).slice(0, 15);
+const antalSkolor = KAT.enheter.filter((e) => e.extra?.nivaer?.includes("sfi")).length;
+const fragor = [
+  { fraga: "Vad är sfi?", svar: "Sfi, svenska för invandrare, är kommunens kostnadsfria grundutbildning i svenska för vuxna som har ett annat modersmål. Sfi ingår i den kommunala vuxenutbildningen och har fyra kurser, A till D." },
+  { fraga: "Vem kan läsa sfi?", svar: "Du kan läsa sfi från den 1 juli det år du fyller 16 om du bor i Sverige och saknar grundläggande kunskaper i svenska. Du söker hos kommunen där du bor." },
+  sf && { fraga: "Hur många klarar sfi?", svar: `I hela landet blev ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} % av de sfi-kurser som avslutades eller avbröts ${sf.ar} godkända. ${tal(sf.andel_avbrutna)} % av kurserna avbröts.` },
+  bast[0] && { fraga: "Var klarar flest sfi?", svar: `Bland kommuner med minst 100 sfi-elever har ${bast[0].k.namn} högst andel godkända (${tal(bast[0].sfi.andel_godkanda_av_avslutade_eller_avbrutna)} %), följt av ${bast.slice(1, 3).map((x) => `${x.k.namn} (${tal(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)} %)`).join(" och ")}.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Sfi i alla kommuner – skolor och resultat ${sf?.ar ?? ""}`.trim()}
+  beskrivning={`Sfi – svenska för invandrare – i alla kommuner: ${antalSkolor} skolor med sfi och hur många som blir godkända i varje kommun. ✓ Statistik från Skolverket.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Sfi", href: "/sfi/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Sfi – svenska för invandrare</h1>
+  <p class="svar">{antalSkolor} skolenheter i {kommuner.filter((x) => x.skolor).length} kommuner har sfi.{sf && <> {tal(sf.elever, 0)} personer läste sfi {sf.ar} och <strong>{tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} %</strong> av de avslutade eller avbrutna kurserna blev godkända.</>}</p>
+
+  <h2>Flest sfi-elever</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Elever</th><th class="num">Godkända</th><th class="num">Distans</th></tr></thead>
+    <tbody>{flest.map((x) => <tr><td><a href={`${x.k.href}#sfi`}>{x.k.namn}</a></td><td class="num">{tal(x.sfi.elever, 0)}</td><td class="num">{pct(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)}</td><td class="num">{pct(x.sfi.andel_distans)}</td></tr>)}</tbody>
+  </table></div>
+
+  <Annons plats="sfi-1" />
+
+  <h2>Andel godkända per kommun</h2>
+  <p>Kommuner med minst 100 sfi-elever och kompletta uppgifter, sorterade efter andel godkända av de kurser som avslutades eller avbröts {sf?.ar}. Riket: {tal(sf?.andel_godkanda_av_avslutade_eller_avbrutna)} %.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Godkända</th><th class="num">Avbrutna</th><th class="num">Elever</th></tr></thead>
+    <tbody>{bast.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)}</td><td class="num">{pct(x.sfi.andel_avbrutna)}</td><td class="num">{tal(x.sfi.elever, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Skolverket, kommunala jämförelsetal. Andelen påverkas av elevernas bakgrund och studieväg, så jämför med försiktighet.</p>
+
+  <Annons plats="sfi-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

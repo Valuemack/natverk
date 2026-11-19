@@ -1,0 +1,118 @@
+---
+// Badplatssida: vattenkvalitet, provsvar, klassificering och fakta från HaV.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { enhetLd, narmaste, kmText, kartLank } from "@natverk/core/katalog.js";
+import { kort } from "@natverk/core/datum.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
+
+export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
+  .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
+const { enhet: e } = Astro.props;
+const x = e.extra ?? {};
+const kommun = KAT.kommuner.find((k) => k.slug === e.kommunSlug);
+const lan = KAT.lan.find((l) => l.slug === kommun.lanSlug);
+const nara = narmaste(e, KAT.enheter, 6, (o) => o.egenSida);
+const ovriga = kommun.enheter.filter((o) => o !== e && !nara.some((n) => n.enhet === o));
+
+const datum = (iso) => { const [y, m, d] = iso.split("-").map(Number); return `${kort(new Date(Date.UTC(y, m - 1, d)))} ${y}`; };
+const prov = (x.senaste_prov ?? []).filter((p) => p.datum);
+const senaste = prov[0];
+const klass = x.klassificering && !/pågår|ej klass/i.test(x.klassificering.klass) ? x.klassificering : (x.klassificeringar ?? []).find((k) => !/pågår|ej klass/i.test(k.klass));
+const temp = x.vattentemp?.senast_uppmatt;
+const typText = e.typ ?? "badplats";
+const avradan = (x.avradan ?? []).length > 0;
+const tjanligaAndel = prov.length ? Math.round(100 * prov.filter((p) => /^tjänligt$/i.test(p.bedomning ?? "")).length / prov.length) : null;
+
+const titel = [`${e.namn}, ${e.kommun} – vattenkvalitet och badtemperatur`, `${e.namn}, ${e.kommun} – vattenkvalitet`, `${e.namn} – vattenkvalitet`].find((t) => t.length <= 60) ?? `${e.namn} – vattenkvalitet`;
+const beskrivning = [
+  `${e.namn} är ett ${typText} i ${e.kommun} kommun.`,
+  klass && `✓ ${klass.klass} (${klass.ar})`,
+  senaste && `✓ Senaste prov ${datum(senaste.datum)}: ${senaste.bedomning?.toLowerCase() ?? "okänt"}`,
+  temp && `✓ ${String(temp.grader).replace(".", ",")} °C`,
+].filter(Boolean).join(" ").slice(0, 158);
+
+const fragor = [
+  senaste && { fraga: `Är det tjänligt att bada vid ${e.namn}?`, svar: `Senaste provet vid ${e.namn} togs ${datum(senaste.datum)} och bedömdes som ${senaste.bedomning?.toLowerCase() ?? "okänt"}.${tjanligaAndel != null ? ` Av de ${prov.length} senaste proverna var ${tjanligaAndel} % tjänliga.` : ""}${avradan ? " Just nu finns en avrådan från bad." : ""}` },
+  temp && { fraga: `Hur varmt är vattnet vid ${e.namn}?`, svar: `Senast uppmätta vattentemperatur var ${String(temp.grader).replace(".", ",")} °C (${datum(temp.datum)}).` },
+  klass && { fraga: `Vilken vattenkvalitet har ${e.namn}?`, svar: `${e.namn} fick klassificeringen "${klass.klass}" för ${klass.ar}. Klassificeringen bygger på provsvar från de senaste fyra badsäsongerna.` },
+  { fraga: `Är ${e.namn} en EU-badplats?`, svar: x.eu_badplats ? `Ja, ${e.namn} är en EU-badplats. Det betyder att kommunen tar regelbundna prover under badsäsongen och rapporterar dem till Havs- och vattenmyndigheten.` : `Nej, ${e.namn} är ingen EU-badplats, men kommunen kan ändå ta prover där.` },
+  x.badsasong?.start && { fraga: `När är badsäsongen vid ${e.namn}?`, svar: `Badsäsongen ${x.badsasong.start.slice(0, 4)} var ${datum(x.badsasong.start)} till ${datum(x.badsasong.slut)}.` },
+].filter(Boolean);
+
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: kommun.namn, href: kommun.href }, { namn: e.namn, href: e.href }];
+const ld = { ...enhetLd(e, SITE, "Beach"), ...(x.beskrivning && { description: x.beskrivning }) };
+const bedKlass = (b) => (/^tjänligt$/i.test(b ?? "") ? "ja" : /otjänligt/i.test(b ?? "") ? "nej" : "");
+---
+<Layout site={SITE} titel={titel} beskrivning={beskrivning} smulor={smulor} jsonld={[ld, faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{e.namn}</h1>
+  <p class="svar">
+    {e.namn} är ett <strong>{typText}</strong> i {e.kommun} kommun{x.eu_badplats && <> och en av Sveriges EU-badplatser</>}.
+    {klass && <> Vattenkvaliteten klassades som <strong>{klass.klass.toLowerCase()}</strong> {klass.ar}.</>}
+    {senaste && <> Senaste provet ({datum(senaste.datum)}) var <strong>{senaste.bedomning?.toLowerCase() ?? "okänt"}</strong>{senaste.vattentemp != null && <>, vattnet höll {String(senaste.vattentemp).replace(".", ",")} °C</>}.</>}
+  </p>
+  {avradan && <p class="svar" style="border-left-color:#c62828"><strong>Avrådan från bad:</strong> {x.avradan.map((a) => a.orsak ?? a.text ?? "se kommunens information").join(" ")}</p>}
+  <div class="knappar">
+    <a class="knapp" href={kartLank(e)} rel="nofollow noopener" target="_blank">Vägbeskrivning</a>
+    {e.webb && <a class="knapp sekundar" href={e.webb} rel="nofollow noopener" target="_blank">Mer hos HaV</a>}
+  </div>
+
+  {prov.length > 0 && <>
+    <h2>Provsvar och vattentemperatur</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Datum</th><th>Bedömning</th><th class="num">E. coli</th><th class="num">Entero&shy;kocker</th><th class="num">Temp</th></tr></thead>
+      <tbody>{prov.slice(0, 12).map((p) => (
+        <tr><td>{datum(p.datum)}</td><td><span class:list={["oppet-nu", bedKlass(p.bedomning)]}>{p.bedomning ?? "–"}</span></td>
+          <td class="num">{p.ecoli ?? "–"}</td><td class="num">{p.enterokocker_operator ?? ""}{p.enterokocker ?? "–"}</td>
+          <td class="num">{p.vattentemp != null ? `${String(p.vattentemp).replace(".", ",")} °C` : "–"}</td></tr>
+      ))}</tbody>
+    </table></div>
+    <p class="kalla">Bakterier anges i antal per 100 ml. Prov tas av kommunen under badsäsongen{x.badsasong?.start && ` (${datum(x.badsasong.start)}–${datum(x.badsasong.slut)})`}.</p>
+  </>}
+
+  <Annons plats="bad-1" />
+
+  {(x.beskrivning || x.sammanfattning || x.eu_motiv) && <>
+    <h2>Om {e.namn}</h2>
+    {x.beskrivning && <p>{x.beskrivning}</p>}
+    {x.sammanfattning && x.sammanfattning !== x.beskrivning && <p>{x.sammanfattning}</p>}
+    {x.eu_motiv && <p>{x.eu_motiv}</p>}
+  </>}
+
+  {(x.klassificeringar ?? []).length > 1 && <>
+    <h2>Klassificering år för år</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>År</th><th>Klassificering</th></tr></thead>
+      <tbody>{x.klassificeringar.map((k) => <tr><td>{k.ar}</td><td>{k.klass}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  <h2>Fakta</h2>
+  <dl class="fakta">
+    <dt>Typ</dt><dd>{typText[0].toUpperCase() + typText.slice(1)}</dd>
+    <dt>Kommun</dt><dd><a href={kommun.href}>{kommun.namn}</a></dd>
+    {lan && <><dt>Län</dt><dd><a href={lan.href}>{lan.namn}</a></dd></>}
+    <dt>EU-badplats</dt><dd>{x.eu_badplats ? "Ja" : "Nej"}</dd>
+    {x.antal_prov > 0 && <><dt>Antal prov</dt><dd>{x.antal_prov}</dd></>}
+    {x.blomningsrisk && (x.blomningsrisk.alger || x.blomningsrisk.cyanobakterier) && <><dt>Risk för algblomning</dt><dd>Ja{x.blomningsrisk.cyanobakterier && " (cyanobakterier)"}</dd></>}
+    {x.huvudman?.namn && <><dt>Ansvarig</dt><dd>{x.huvudman.namn}{x.kommun_fullnamn && `, ${x.kommun_fullnamn}`}</dd></>}
+    {x.tillsynsmyndighet?.namn && <><dt>Tillsyn</dt><dd>{x.tillsynsmyndighet.namn}</dd></>}
+    {e.lat != null && <><dt>Koordinater</dt><dd>{e.lat.toFixed(5)}, {e.lon.toFixed(5)}</dd></>}
+  </dl>
+
+  {nara.length > 0 && <>
+    <h2>Närmaste badplatser</h2>
+    <EnhetLista enheter={nara} visaKommun />
+  </>}
+  <Annons plats="bad-2" />
+  {ovriga.length > 0 && <>
+    <h2>Fler badplatser i {kommun.namn}</h2>
+    <EnhetLista enheter={ovriga.slice(0, 10)} />
+    {ovriga.length > 10 && <p><a href={kommun.href}>Alla {kommun.enheter.length} badplatser i {kommun.namn} →</a></p>}
+  </>}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

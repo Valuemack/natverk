@@ -1,0 +1,6 @@
+---
+// Platshållare som klientskriptet fyller med "Öppet nu · stänger 19.00" o.s.v.
+import { harOppettider } from "../katalog.js";
+const { enhet } = Astro.props;
+---
+{harOppettider(enhet) && <span class="oppet-nu" data-tider={JSON.stringify(enhet.oppettider)} hidden></span>}

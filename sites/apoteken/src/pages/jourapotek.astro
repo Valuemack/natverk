@@ -1,0 +1,40 @@
+---
+// Jourapotek: apotek med öppet sent på kvällen (minst till 21) eller dygnet runt, per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { DAGAR, tolkaIntervall } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const senast = (e) => Math.max(0, ...DAGAR.flatMap((d) => (tolkaIntervall(e.oppettider?.[d]) ?? []).map(([, b]) => b)));
+const dygnet = (e) => DAGAR.every((d) => (tolkaIntervall(e.oppettider?.[d]) ?? []).some(([a, b]) => b - a >= 1439));
+const jour = KAT.enheter.filter((e) => senast(e) >= 21 * 60).sort((a, b) => senast(b) - senast(a));
+const dygnetRunt = jour.filter(dygnet);
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: jour.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const fragor = [
+  { fraga: "Vad är ett jourapotek?", svar: "Jourapotek är apotek med långa öppettider på kvällar, helger och ibland dygnet runt. Det finns inget officiellt jourapotekssystem i Sverige – här listar vi apotek som enligt sina öppettider har öppet till klockan 21 eller senare." },
+  { fraga: "Finns det apotek som har öppet dygnet runt?", svar: dygnetRunt.length ? `Ja, ${dygnetRunt.length === 1 ? "ett apotek" : `${dygnetRunt.length} apotek`} har öppet dygnet runt: ${dygnetRunt.slice(0, 5).map((e) => `${e.namn} (${e.kommun})`).join(", ")}.` : "Enligt våra uppgifter har inget apotek i Sverige öppet dygnet runt just nu." },
+  { fraga: "Vad gör jag om jag behöver medicin på natten?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom, ring 112. Akutmottagningar kan i vissa fall lämna ut läkemedel till nästa dag." },
+];
+---
+<Layout site={SITE} titel="Jourapotek – apotek med öppet sent och dygnet runt"
+  beskrivning={`${jour.length} apotek i Sverige har öppet till minst 21 på kvällen${dygnetRunt.length ? `, varav ${dygnetRunt.length} dygnet runt` : ""}. ✓ Per län och kommun ✓ Öppet nu ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Jourapotek", href: "/jourapotek/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Jourapotek i Sverige</h1>
+  <p class="svar"><strong>{jour.length} apotek</strong> har öppet till klockan 21 eller senare minst en dag i veckan{dygnetRunt.length > 0 && <>, och <strong>{dygnetRunt.length}</strong> har öppet dygnet runt</>}. Akut behov av vård? Ring 1177, eller 112 vid nödsituation.</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="jour-1" />
+  {perLan.map((x) => (
+    <>
+      <h2 id={x.lan.slug}>Jourapotek i {x.lan.namn}</h2>
+      <EnhetLista enheter={x.enheter} visaKommun />
+    </>
+  ))}
+  <Annons plats="jour-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

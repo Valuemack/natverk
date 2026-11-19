@@ -1,0 +1,9 @@
+---
+// Annonsyta med reserverad höjd (ingen layoutförskjutning/CLS). AdSense-koden
+// läggs in här när kontot är godkänt; tills dess syns en markering bara i dev-läge.
+const { plats = "innehall", hojd = 280 } = Astro.props;
+const dev = import.meta.env.DEV;
+---
+<aside class:list={["annons", { "annons-dev": dev }]} style={`min-height:${hojd}px`} data-plats={plats} aria-label="Annons">
+  {dev && <span>Annonsplats ({plats})</span>}
+</aside>

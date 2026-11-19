@@ -1,0 +1,6326 @@
+[
+  {
+    "kommunkod": "0114",
+    "namn": "Upplands Väsby",
+    "lan": "Stockholms län",
+    "slug": "upplands-vasby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.upplandsvasby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-125889011",
+        "namn": "Vilundabadet",
+        "slug": "vilundabadet",
+        "typ": "utomhusbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0115",
+    "namn": "Vallentuna",
+    "lan": "Stockholms län",
+    "slug": "vallentuna",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vallentuna.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-11377519737",
+        "namn": "Sports Club Vallentuna Reception",
+        "slug": "sports-club-vallentuna-reception",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0117",
+    "namn": "Österåker",
+    "lan": "Stockholms län",
+    "slug": "osteraker",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.osteraker.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0117-solskiftesbadet",
+        "namn": "Solskiftesbadet",
+        "slug": "solskiftesbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-122673592",
+        "namn": "Söra Hallen",
+        "slug": "sora-hallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0120",
+    "namn": "Värmdö",
+    "lan": "Stockholms län",
+    "slug": "varmdo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.varmdo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0120-gustavsbergsbadet",
+        "namn": "Gustavsbergsbadet",
+        "slug": "gustavsbergsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0123",
+    "namn": "Järfälla",
+    "lan": "Stockholms län",
+    "slug": "jarfalla",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.jarfalla.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0123-jarfallabadet",
+        "namn": "Järfällabadet",
+        "slug": "jarfallabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0125",
+    "namn": "Ekerö",
+    "lan": "Stockholms län",
+    "slug": "ekero",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ekero.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-150675241",
+        "namn": "Ekerö badhus",
+        "slug": "ekero-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0126",
+    "namn": "Huddinge",
+    "lan": "Stockholms län",
+    "slug": "huddinge",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.huddinge.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-27775537",
+        "namn": "Huddingehallen",
+        "slug": "huddingehallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-163247917",
+        "namn": "Skogåshallen",
+        "slug": "skogashallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0127",
+    "namn": "Botkyrka",
+    "lan": "Stockholms län",
+    "slug": "botkyrka",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.botkyrka.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0127-fittjabadet",
+        "namn": "Fittjabadet",
+        "slug": "fittjabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-9539632",
+        "namn": "Storvretsbadet",
+        "slug": "storvretsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0128",
+    "namn": "Salem",
+    "lan": "Stockholms län",
+    "slug": "salem",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.salem.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-1302825422",
+        "namn": "Möllebadet",
+        "slug": "mollebadet",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-56094321",
+        "namn": "Säby Sim- och Sporthall",
+        "slug": "saby-sim-och-sporthall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0136",
+    "namn": "Haninge",
+    "lan": "Stockholms län",
+    "slug": "haninge",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.haninge.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-29346727",
+        "namn": "Torvalla simhall",
+        "slug": "torvalla-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0138",
+    "namn": "Tyresö",
+    "lan": "Stockholms län",
+    "slug": "tyreso",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tyreso.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-437096249",
+        "namn": "Krusbodabadet",
+        "slug": "krusbodabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-250489801",
+        "namn": "Tyresö Aquarena",
+        "slug": "tyreso-aquarena",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0139",
+    "namn": "Upplands-Bro",
+    "lan": "Stockholms län",
+    "slug": "upplands-bro",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.upplands-bro.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0140",
+    "namn": "Nykvarn",
+    "lan": "Stockholms län",
+    "slug": "nykvarn",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.nykvarn.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0160",
+    "namn": "Täby",
+    "lan": "Stockholms län",
+    "slug": "taby",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.taby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0160-norskogsbadet",
+        "namn": "Norskogsbadet",
+        "slug": "norskogsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1162999875",
+        "namn": "Täby simhall",
+        "slug": "taby-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-1413541725",
+        "namn": "Ängsholmsbadet",
+        "slug": "angsholmsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0162",
+    "namn": "Danderyd",
+    "lan": "Stockholms län",
+    "slug": "danderyd",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.danderyd.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0162-badhus-och-bassangbad",
+        "namn": "Badhus och bassängbad",
+        "slug": "badhus-och-bassangbad",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-121808105",
+        "namn": "Mörbybadet",
+        "slug": "morbybadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0163",
+    "namn": "Sollentuna",
+    "lan": "Stockholms län",
+    "slug": "sollentuna",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sollentuna.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "web-0163-sollentuna-simhall",
+        "namn": "Sollentuna Simhall",
+        "slug": "sollentuna-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1564761738",
+        "namn": "TSK Arena",
+        "slug": "tsk-arena",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0180",
+    "namn": "Stockholm",
+    "lan": "Stockholms län",
+    "slug": "stockholm",
+    "antal": 26,
+    "antal_med_officiella_uppgifter": 18,
+    "webbplats": "https://start.stockholm/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0180-6-marieviksbadet",
+        "namn": "6. Marieviksbadet",
+        "slug": "6-marieviksbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-170784726",
+        "namn": "Beckomberga sim- och idrottshall",
+        "slug": "beckomberga-sim-och-idrottshall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-14869751",
+        "namn": "Eriksdalsbadet",
+        "slug": "eriksdalsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-3762470669",
+        "namn": "Farstabadet",
+        "slug": "farstabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-7877366898",
+        "namn": "Forsgrenska",
+        "slug": "forsgrenska",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-560933916",
+        "namn": "GIH-badet",
+        "slug": "gih-badet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-24246198",
+        "namn": "Husbybadet",
+        "slug": "husbybadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-8089917",
+        "namn": "Hägerstensbadet",
+        "slug": "hagerstensbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-relation-17843360",
+        "namn": "Högdalshallen",
+        "slug": "hogdalshallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-84005682",
+        "namn": "Kampementsbadet",
+        "slug": "kampementsbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-node-251839208",
+        "namn": "Liljeholmsbadet",
+        "slug": "liljeholmsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-298219256",
+        "namn": "Långbrohallen",
+        "slug": "langbrohallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-297703231",
+        "namn": "Nytorpsbadet",
+        "slug": "nytorpsbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-way-24224253",
+        "namn": "Nälstabadet",
+        "slug": "nalstabadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-node-7045280035",
+        "namn": "Oasen",
+        "slug": "oasen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-489325031",
+        "namn": "Sandsborgsbadet",
+        "slug": "sandsborgsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-905860150",
+        "namn": "Simhall Blackeberg",
+        "slug": "simhall-blackeberg",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1302042382",
+        "namn": "Simhall Örby slott",
+        "slug": "simhall-orby-slott",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-97014880",
+        "namn": "Skärholmens sim- och idrottshall",
+        "slug": "skarholmens-sim-och-idrottshall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-24914597",
+        "namn": "Tensta sim- och idrottshall",
+        "slug": "tensta-sim-och-idrottshall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-6983683373",
+        "namn": "Trampoolin",
+        "slug": "trampoolin",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1320433993",
+        "namn": "Vanadisbadet",
+        "slug": "vanadisbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3480859632",
+        "namn": "Vattenhuset",
+        "slug": "vattenhuset-ostermalm",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-227914055",
+        "namn": "Vällingby sim- och idrottshall",
+        "slug": "vallingby-sim-och-idrottshall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-142172954",
+        "namn": "Västertorps sim- och idrottshall",
+        "slug": "vastertorps-sim-och-idrottshall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-24404372",
+        "namn": "Åkeshovs sim- och idrottshall",
+        "slug": "akeshovs-sim-och-idrottshall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0181",
+    "namn": "Södertälje",
+    "lan": "Stockholms län",
+    "slug": "sodertalje",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sodertalje.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-128277815",
+        "namn": "Sydpoolen",
+        "slug": "sydpoolen",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0182",
+    "namn": "Nacka",
+    "lan": "Stockholms län",
+    "slug": "nacka",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.nacka.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0182-myrsjo-badhus-bad-gym",
+        "namn": "Myrsjö Badhus BAD & GYM",
+        "slug": "myrsjo-badhus-bad-gym",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-node-4569075672",
+        "namn": "Nacka simhall",
+        "slug": "nacka-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-773646643",
+        "namn": "Näckenbadet",
+        "slug": "nackenbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-9977855993",
+        "namn": "Vattenhuset",
+        "slug": "vattenhuset",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0183",
+    "namn": "Sundbyberg",
+    "lan": "Stockholms län",
+    "slug": "sundbyberg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.sundbyberg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-41961426",
+        "namn": "Sundbybergs simhall",
+        "slug": "sundbybergs-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0184",
+    "namn": "Solna",
+    "lan": "Stockholms län",
+    "slug": "solna",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.solna.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-relation-14516116",
+        "namn": "Huvudstabadet",
+        "slug": "huvudstabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-867808729",
+        "namn": "Solna Simhall",
+        "slug": "solna-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-relation-19794360",
+        "namn": "Svedenbadet",
+        "slug": "svedenbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-38162708",
+        "namn": "Vasalundshallen",
+        "slug": "vasalundshallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0186",
+    "namn": "Lidingö",
+    "lan": "Stockholms län",
+    "slug": "lidingo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.lidingo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-22690711",
+        "namn": "Gångsätrahallen",
+        "slug": "gangsatrahallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-14137145401",
+        "namn": "Lidingö Simhall",
+        "slug": "lidingo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0187",
+    "namn": "Vaxholm",
+    "lan": "Stockholms län",
+    "slug": "vaxholm",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vaxholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0188",
+    "namn": "Norrtälje",
+    "lan": "Stockholms län",
+    "slug": "norrtalje",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.norrtalje.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-983812871",
+        "namn": "Hallstavik badhus",
+        "slug": "hallstavik-badhus",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-569153900",
+        "namn": "Hallstaviks badhus",
+        "slug": "hallstaviks-badhus",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-236383334",
+        "namn": "Norrtälje Badhus",
+        "slug": "norrtalje-badhus",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-12995952301",
+        "namn": "Rimbo badhus",
+        "slug": "rimbo-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0191",
+    "namn": "Sigtuna",
+    "lan": "Stockholms län",
+    "slug": "sigtuna",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sigtuna.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-822827252",
+        "namn": "Midgårdsbadet",
+        "slug": "midgardsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-121443252",
+        "namn": "Sigtuna Fritidscenter",
+        "slug": "sigtuna-fritidscenter",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0192",
+    "namn": "Nynäshamn",
+    "lan": "Stockholms län",
+    "slug": "nynashamn",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.nynashamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-173253492",
+        "namn": "Nickstabadets vattenrutschkana",
+        "slug": "nickstabadets-vattenrutschkana",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-172547354",
+        "namn": "Ösmo Simhall",
+        "slug": "osmo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0305",
+    "namn": "Håbo",
+    "lan": "Uppsala län",
+    "slug": "habo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.habo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0305-balsta-simhall",
+        "namn": "Bålsta simhall",
+        "slug": "balsta-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-937257804",
+        "namn": "Simhall Slottsskogen",
+        "slug": "simhall-slottsskogen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0319",
+    "namn": "Älvkarleby",
+    "lan": "Uppsala län",
+    "slug": "alvkarleby",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.alvkarleby.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0330",
+    "namn": "Knivsta",
+    "lan": "Uppsala län",
+    "slug": "knivsta",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.knivsta.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-144463765",
+        "namn": "Hälsohuset",
+        "slug": "halsohuset",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0331",
+    "namn": "Heby",
+    "lan": "Uppsala län",
+    "slug": "heby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.heby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-372818293",
+        "namn": "Simhall Heby",
+        "slug": "simhall-heby",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0360",
+    "namn": "Tierp",
+    "lan": "Uppsala län",
+    "slug": "tierp",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tierp.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-759423154",
+        "namn": "Aspenbadet",
+        "slug": "aspenbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3581697113",
+        "namn": "Djupöbadet",
+        "slug": "djupobadet",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-1421186023",
+        "namn": "Vendelbadet",
+        "slug": "vendelbadet",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0380",
+    "namn": "Uppsala",
+    "lan": "Uppsala län",
+    "slug": "uppsala",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.uppsala.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-715949812",
+        "namn": "Actic Centralbadet",
+        "slug": "actic-centralbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-10742375487",
+        "namn": "Badhusgaraget",
+        "slug": "badhusgaraget",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-25016662",
+        "namn": "Fyrishov",
+        "slug": "fyrishov",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1531243668",
+        "namn": "Uppsala simarena",
+        "slug": "uppsala-simarena",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0381",
+    "namn": "Enköping",
+    "lan": "Uppsala län",
+    "slug": "enkoping",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://enkoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-846654965",
+        "namn": "Pepparrotsbadet",
+        "slug": "pepparrotsbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0382",
+    "namn": "Östhammar",
+    "lan": "Uppsala län",
+    "slug": "osthammar",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.osthammar.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1019499666",
+        "namn": "Alundabadet",
+        "slug": "alundabadet",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-220600610",
+        "namn": "Gimo sim- och sporthall",
+        "slug": "gimo-sim-och-sporthall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-539289669",
+        "namn": "Simhall Österbybruk",
+        "slug": "simhall-osterbybruk",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0428",
+    "namn": "Vingåker",
+    "lan": "Södermanlands län",
+    "slug": "vingaker",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.vingaker.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1042236620",
+        "namn": "Vingåkers badhall",
+        "slug": "vingakers-badhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0461",
+    "namn": "Gnesta",
+    "lan": "Södermanlands län",
+    "slug": "gnesta",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.gnesta.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-576374340",
+        "namn": "Klemmingsbergsbadet",
+        "slug": "klemmingsbergsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0480",
+    "namn": "Nyköping",
+    "lan": "Södermanlands län",
+    "slug": "nykoping",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://nykoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-376734988",
+        "namn": "Hjortensbergsbadet",
+        "slug": "hjortensbergsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-798437688",
+        "namn": "Sjöskogsberget",
+        "slug": "sjoskogsberget",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0481",
+    "namn": "Oxelösund",
+    "lan": "Södermanlands län",
+    "slug": "oxelosund",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.oxelosund.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-243984459",
+        "namn": "Ramdalens Sportcenter - Medley",
+        "slug": "ramdalens-sportcenter-medley",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0482",
+    "namn": "Flen",
+    "lan": "Södermanlands län",
+    "slug": "flen",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://flen.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-498047478",
+        "namn": "Sim- och sporthall",
+        "slug": "sim-och-sporthall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0483",
+    "namn": "Katrineholm",
+    "lan": "Södermanlands län",
+    "slug": "katrineholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.katrineholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0483-katrineholm-duveholmshallen",
+        "namn": "Katrineholm, Duveholmshallen",
+        "slug": "katrineholm-duveholmshallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0484",
+    "namn": "Eskilstuna",
+    "lan": "Södermanlands län",
+    "slug": "eskilstuna",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.eskilstuna.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-126374543",
+        "namn": "Munktellbadet",
+        "slug": "munktellbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0486",
+    "namn": "Strängnäs",
+    "lan": "Södermanlands län",
+    "slug": "strangnas",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.strangnas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0486-larslunda-simhall",
+        "namn": "Larslunda simhall",
+        "slug": "larslunda-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-1582739345",
+        "namn": "Thomasbadet",
+        "slug": "thomasbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0486-akersbadet",
+        "namn": "Åkersbadet",
+        "slug": "akersbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0488",
+    "namn": "Trosa",
+    "lan": "Södermanlands län",
+    "slug": "trosa",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.trosa.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-403762552",
+        "namn": "Safiren",
+        "slug": "safiren",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0509",
+    "namn": "Ödeshög",
+    "lan": "Östergötlands län",
+    "slug": "odeshog",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.odeshog.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0512",
+    "namn": "Ydre",
+    "lan": "Östergötlands län",
+    "slug": "ydre",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ydre.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0513",
+    "namn": "Kinda",
+    "lan": "Östergötlands län",
+    "slug": "kinda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.kinda.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0560",
+    "namn": "Boxholm",
+    "lan": "Östergötlands län",
+    "slug": "boxholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.boxholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0560-boxholm-simhall",
+        "namn": "Boxholm simhall",
+        "slug": "boxholm-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0561",
+    "namn": "Åtvidaberg",
+    "lan": "Östergötlands län",
+    "slug": "atvidaberg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.atvidaberg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-6799207572",
+        "namn": "Simhall Domarvik",
+        "slug": "simhall-domarvik",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0562",
+    "namn": "Finspång",
+    "lan": "Östergötlands län",
+    "slug": "finspang",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.finspang.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-1493585071",
+        "namn": "Arena Grosvad",
+        "slug": "arena-grosvad",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0563",
+    "namn": "Valdemarsvik",
+    "lan": "Östergötlands län",
+    "slug": "valdemarsvik",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.valdemarsvik.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-615697426",
+        "namn": "Kaggebo Poolområde",
+        "slug": "kaggebo-poolomrade",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0580",
+    "namn": "Linköping",
+    "lan": "Östergötlands län",
+    "slug": "linkoping",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.linkoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-428941237",
+        "namn": "Glyttingebadet",
+        "slug": "glyttingebadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-311122322",
+        "namn": "Himnabadet",
+        "slug": "himnabadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-way-221560678",
+        "namn": "Ljungsbro fritidscenter",
+        "slug": "ljungsbro-fritidscenter",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-886318978",
+        "namn": "Tinnerbäcksbadet",
+        "slug": "tinnerbacksbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0581",
+    "namn": "Norrköping",
+    "lan": "Östergötlands län",
+    "slug": "norrkoping",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 4,
+    "webbplats": "https://www.norrkoping.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-87398826",
+        "namn": "Medley Centralbadet",
+        "slug": "medley-centralbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0581-rasslabadet",
+        "namn": "Råsslabadet",
+        "slug": "rasslabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0581-skarblackabadet",
+        "namn": "Skärblackabadet",
+        "slug": "skarblackabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0581-abybadet",
+        "namn": "Åbybadet",
+        "slug": "abybadet-aby",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0582",
+    "namn": "Söderköping",
+    "lan": "Östergötlands län",
+    "slug": "soderkoping",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.soderkoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0583",
+    "namn": "Motala",
+    "lan": "Östergötlands län",
+    "slug": "motala",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.motala.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1536649596",
+        "namn": "Badhuset i Medevi",
+        "slug": "badhuset-i-medevi",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0583-motala-simhall",
+        "namn": "Motala, Simhall",
+        "slug": "motala-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0584",
+    "namn": "Vadstena",
+    "lan": "Östergötlands län",
+    "slug": "vadstena",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vadstena.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0586",
+    "namn": "Mjölby",
+    "lan": "Östergötlands län",
+    "slug": "mjolby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.mjolby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-172383518",
+        "namn": "Väderkvarnsbacken",
+        "slug": "vaderkvarnsbacken",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0604",
+    "namn": "Aneby",
+    "lan": "Jönköpings län",
+    "slug": "aneby",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.aneby.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0617",
+    "namn": "Gnosjö",
+    "lan": "Jönköpings län",
+    "slug": "gnosjo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.gnosjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0617-simhallen-i-gnosjo",
+        "namn": "Simhallen i Gnosjö",
+        "slug": "simhallen-i-gnosjo",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0642",
+    "namn": "Mullsjö",
+    "lan": "Jönköpings län",
+    "slug": "mullsjo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.mullsjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-223474999",
+        "namn": "Mullsjö simhall",
+        "slug": "mullsjo-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-8395225712",
+        "namn": "Simhall Gravsjö",
+        "slug": "simhall-gravsjo",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0643",
+    "namn": "Habo",
+    "lan": "Jönköpings län",
+    "slug": "habo",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.habokommun.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0662",
+    "namn": "Gislaved",
+    "lan": "Jönköpings län",
+    "slug": "gislaved",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.gislaved.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-308951342",
+        "namn": "Gisle sportcenter",
+        "slug": "gisle-sportcenter",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-167791589",
+        "namn": "Simhall Anderstorp",
+        "slug": "simhall-anderstorp",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3111330055",
+        "namn": "Smålandsstenar simhall",
+        "slug": "smalandsstenar-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0665",
+    "namn": "Vaggeryd",
+    "lan": "Jönköpings län",
+    "slug": "vaggeryd",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.vaggeryd.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-1880808264",
+        "namn": "Simhall Rolstorp",
+        "slug": "simhall-rolstorp",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0665-skillingaryds-simhall",
+        "namn": "Skillingaryds simhall",
+        "slug": "skillingaryds-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0680",
+    "namn": "Jönköping",
+    "lan": "Jönköpings län",
+    "slug": "jonkoping",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.jonkoping.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-318857625",
+        "namn": "Attarpsbadet",
+        "slug": "attarpsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1106442633",
+        "namn": "Brunstorpsbadet",
+        "slug": "brunstorpsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-662955023",
+        "namn": "Norrahammar sportcenter",
+        "slug": "norrahammar-sportcenter",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-105254412",
+        "namn": "Rosenlundsbadet",
+        "slug": "rosenlundsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-2000068877",
+        "namn": "Simhall Rödjorna",
+        "slug": "simhall-rodjorna",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0682",
+    "namn": "Nässjö",
+    "lan": "Jönköpings län",
+    "slug": "nassjo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.nassjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-188671593",
+        "namn": "Nässjö Simhall",
+        "slug": "nassjo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0683",
+    "namn": "Värnamo",
+    "lan": "Jönköpings län",
+    "slug": "varnamo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://kommun.varnamo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-9152780384",
+        "namn": "Värnamo simhall",
+        "slug": "varnamo-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-relation-10576963",
+        "namn": "Värnamobadet",
+        "slug": "varnamobadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0684",
+    "namn": "Sävsjö",
+    "lan": "Jönköpings län",
+    "slug": "savsjo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.savsjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-98900817",
+        "namn": "Simhall Sävsjö",
+        "slug": "simhall-savsjo",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0685",
+    "namn": "Vetlanda",
+    "lan": "Jönköpings län",
+    "slug": "vetlanda",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://kommun.vetlanda.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-251819391",
+        "namn": "Badhuset i Vetlanda",
+        "slug": "badhuset-i-vetlanda",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-186929378",
+        "namn": "Myresjö simhall",
+        "slug": "myresjo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0686",
+    "namn": "Eksjö",
+    "lan": "Jönköpings län",
+    "slug": "eksjo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.eksjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-2968816909",
+        "namn": "Eksjö simhall",
+        "slug": "eksjo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0687",
+    "namn": "Tranås",
+    "lan": "Jönköpings län",
+    "slug": "tranas",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tranas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1137539490",
+        "namn": "Simhall Tranås",
+        "slug": "simhall-tranas",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-11508682495",
+        "namn": "Sävsjön",
+        "slug": "savsjon",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0760",
+    "namn": "Uppvidinge",
+    "lan": "Kronobergs län",
+    "slug": "uppvidinge",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.uppvidinge.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0761",
+    "namn": "Lessebo",
+    "lan": "Kronobergs län",
+    "slug": "lessebo",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.lessebo.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0763",
+    "namn": "Tingsryd",
+    "lan": "Kronobergs län",
+    "slug": "tingsryd",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://tingsryd.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-288844446",
+        "namn": "Blötan",
+        "slug": "blotan",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-126116556",
+        "namn": "Simhall Linneryd",
+        "slug": "simhall-linneryd",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-434708163",
+        "namn": "Örmobadet",
+        "slug": "ormobadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0764",
+    "namn": "Alvesta",
+    "lan": "Kronobergs län",
+    "slug": "alvesta",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.alvesta.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1076338815",
+        "namn": "Vislandabadet",
+        "slug": "vislandabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0765",
+    "namn": "Älmhult",
+    "lan": "Kronobergs län",
+    "slug": "almhult",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.almhult.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0767",
+    "namn": "Markaryd",
+    "lan": "Kronobergs län",
+    "slug": "markaryd",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.markaryd.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1032927113",
+        "namn": "Hannabadet",
+        "slug": "hannabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0767-stromsnasbadet",
+        "namn": "Strömsnäsbadet",
+        "slug": "stromsnasbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0780",
+    "namn": "Växjö",
+    "lan": "Kronobergs län",
+    "slug": "vaxjo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.vaxjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-103203079",
+        "namn": "Actic Växjö Simhall",
+        "slug": "actic-vaxjo-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-0780-lammhultsbadet",
+        "namn": "Lammhultsbadet",
+        "slug": "lammhultsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0781",
+    "namn": "Ljungby",
+    "lan": "Kronobergs län",
+    "slug": "ljungby",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.ljungby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0781-lidhults-simhall",
+        "namn": "Lidhults simhall",
+        "slug": "lidhults-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-416481832",
+        "namn": "Ljungby Simhall",
+        "slug": "ljungby-simhall",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-0781-ryssby-simhall",
+        "namn": "Ryssby simhall",
+        "slug": "ryssby-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-430113576",
+        "namn": "Simhall Lagan",
+        "slug": "simhall-lagan",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0821",
+    "namn": "Högsby",
+    "lan": "Kalmar län",
+    "slug": "hogsby",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.hogsby.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0834",
+    "namn": "Torsås",
+    "lan": "Kalmar län",
+    "slug": "torsas",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.torsas.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0840",
+    "namn": "Mörbylånga",
+    "lan": "Kalmar län",
+    "slug": "morbylanga",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.morbylanga.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0860",
+    "namn": "Hultsfred",
+    "lan": "Kalmar län",
+    "slug": "hultsfred",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.hultsfred.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "0861",
+    "namn": "Mönsterås",
+    "lan": "Kalmar län",
+    "slug": "monsteras",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.monsteras.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-5333313764",
+        "namn": "Simhall Storön",
+        "slug": "simhall-storon",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-96151763",
+        "namn": "Vattenpalatset",
+        "slug": "vattenpalatset-monsteras",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0862",
+    "namn": "Emmaboda",
+    "lan": "Kalmar län",
+    "slug": "emmaboda",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.emmaboda.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-268290870",
+        "namn": "Emmaboda Simhall",
+        "slug": "emmaboda-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0880",
+    "namn": "Kalmar",
+    "lan": "Kalmar län",
+    "slug": "kalmar",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://kalmar.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-38177115",
+        "namn": "Kalmar Sportcenter",
+        "slug": "kalmar-sportcenter",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1424934174",
+        "namn": "Vattnets Hus",
+        "slug": "vattnets-hus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0881",
+    "namn": "Nybro",
+    "lan": "Kalmar län",
+    "slug": "nybro",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.nybro.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-83074231",
+        "namn": "Nybro Simhallen",
+        "slug": "nybro-simhallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0882",
+    "namn": "Oskarshamn",
+    "lan": "Kalmar län",
+    "slug": "oskarshamn",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.oskarshamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-148484679",
+        "namn": "Arena Oskarshamn",
+        "slug": "arena-oskarshamn",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0883",
+    "namn": "Västervik",
+    "lan": "Kalmar län",
+    "slug": "vastervik",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vastervik.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-6978249502",
+        "namn": "Simhall Bergebo",
+        "slug": "simhall-bergebo",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1131518822",
+        "namn": "Warmbadhuset",
+        "slug": "warmbadhuset",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0884",
+    "namn": "Vimmerby",
+    "lan": "Kalmar län",
+    "slug": "vimmerby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.vimmerby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-4886391521",
+        "namn": "Simhall Gullringen",
+        "slug": "simhall-gullringen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0885",
+    "namn": "Borgholm",
+    "lan": "Kalmar län",
+    "slug": "borgholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.borgholm.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-822258529",
+        "namn": "Åkerbobadet",
+        "slug": "akerbobadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "0980",
+    "namn": "Gotland",
+    "lan": "Gotlands län",
+    "slug": "gotland",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.gotland.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-0980-hemsebadet",
+        "namn": "Hemsebadet",
+        "slug": "hemsebadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-232286255",
+        "namn": "Kneippbyn vattenland",
+        "slug": "kneippbyn-vattenland",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-0980-kustparksbadet",
+        "namn": "Kustparksbadet",
+        "slug": "kustparksbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-707428452",
+        "namn": "Simhall Åminne",
+        "slug": "simhall-aminne",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-33352218",
+        "namn": "Solbergabadet",
+        "slug": "solbergabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1060",
+    "namn": "Olofström",
+    "lan": "Blekinge län",
+    "slug": "olofstrom",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.olofstrom.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-868853967",
+        "namn": "Holjebadet",
+        "slug": "holjebadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1080",
+    "namn": "Karlskrona",
+    "lan": "Blekinge län",
+    "slug": "karlskrona",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.karlskrona.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-90377928",
+        "namn": "Karlskrona simhall och varmbadhus",
+        "slug": "karlskrona-simhall-och-varmbadhus",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1395996497",
+        "namn": "Rödeby utebad",
+        "slug": "rodeby-utebad",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-320317441",
+        "namn": "Saltö simstadion med hopptorn",
+        "slug": "salto-simstadion-med-hopptorn",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1081",
+    "namn": "Ronneby",
+    "lan": "Blekinge län",
+    "slug": "ronneby",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ronneby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-1474540649",
+        "namn": "Brunnsbadet",
+        "slug": "brunnsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-354099465",
+        "namn": "Elias Hallen",
+        "slug": "elias-hallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-235336517",
+        "namn": "Kallinge sporthall",
+        "slug": "kallinge-sporthall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-12558427271",
+        "namn": "Simhall Backaryd",
+        "slug": "simhall-backaryd",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-544174718",
+        "namn": "Varmbadhuset",
+        "slug": "varmbadhuset-ronneby-brunn",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1082",
+    "namn": "Karlshamn",
+    "lan": "Blekinge län",
+    "slug": "karlshamn",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.karlshamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-800288543",
+        "namn": "Väggabadet",
+        "slug": "vaggabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1083",
+    "namn": "Sölvesborg",
+    "lan": "Blekinge län",
+    "slug": "solvesborg",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.solvesborg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-1064393712",
+        "namn": "Hälleviksbadet",
+        "slug": "halleviksbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-12865178043",
+        "namn": "Victoriabadet",
+        "slug": "victoriabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1214",
+    "namn": "Svalöv",
+    "lan": "Skåne län",
+    "slug": "svalov",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.svalov.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1230",
+    "namn": "Staffanstorp",
+    "lan": "Skåne län",
+    "slug": "staffanstorp",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.staffanstorp.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-53119721",
+        "namn": "Bråhögsbadet",
+        "slug": "brahogsbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1231",
+    "namn": "Burlöv",
+    "lan": "Skåne län",
+    "slug": "burlov",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://burlov.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1087724894",
+        "namn": "Burlövsbadet",
+        "slug": "burlovsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1233",
+    "namn": "Vellinge",
+    "lan": "Skåne län",
+    "slug": "vellinge",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.vellinge.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-220611611",
+        "namn": "Vanningen",
+        "slug": "vanningen",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1256",
+    "namn": "Östra Göinge",
+    "lan": "Skåne län",
+    "slug": "ostra-goinge",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ostragoinge.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-482804806",
+        "namn": "Broby simhall",
+        "slug": "broby-simhall",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-338342815",
+        "namn": "Hanaskogsbadet",
+        "slug": "hanaskogsbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1257",
+    "namn": "Örkelljunga",
+    "lan": "Skåne län",
+    "slug": "orkelljunga",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.orkelljunga.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1260",
+    "namn": "Bjuv",
+    "lan": "Skåne län",
+    "slug": "bjuv",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.bjuv.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-5786472923",
+        "namn": "Billesholms Simhall",
+        "slug": "billesholms-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1261",
+    "namn": "Kävlinge",
+    "lan": "Skåne län",
+    "slug": "kavlinge",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kavlinge.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1091305936",
+        "namn": "Harjagersbadet",
+        "slug": "harjagersbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1262",
+    "namn": "Lomma",
+    "lan": "Skåne län",
+    "slug": "lomma",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://lomma.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1263",
+    "namn": "Svedala",
+    "lan": "Skåne län",
+    "slug": "svedala",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.svedala.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1264",
+    "namn": "Skurup",
+    "lan": "Skåne län",
+    "slug": "skurup",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.skurup.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1265",
+    "namn": "Sjöbo",
+    "lan": "Skåne län",
+    "slug": "sjobo",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sjobo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-411721727",
+        "namn": "Orebadet",
+        "slug": "orebadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-492620276",
+        "namn": "Sjöbo simanläggning",
+        "slug": "sjobo-simanlaggning",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1266",
+    "namn": "Hörby",
+    "lan": "Skåne län",
+    "slug": "horby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.horby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-77409959",
+        "namn": "Lågedammsbadet",
+        "slug": "lagedammsbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1267",
+    "namn": "Höör",
+    "lan": "Skåne län",
+    "slug": "hoor",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hoor.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1267-simhallen-i-hoor",
+        "namn": "Simhallen i Höör",
+        "slug": "simhallen-i-hoor",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1270",
+    "namn": "Tomelilla",
+    "lan": "Skåne län",
+    "slug": "tomelilla",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tomelilla.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1047395415",
+        "namn": "Spjutstorpsbadet",
+        "slug": "spjutstorpsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-721903120",
+        "namn": "Vattenlandet",
+        "slug": "vattenlandet-tylehogs-gard",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-1270-osterlenbadet",
+        "namn": "Österlenbadet",
+        "slug": "osterlenbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1272",
+    "namn": "Bromölla",
+    "lan": "Skåne län",
+    "slug": "bromolla",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.bromolla.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1273",
+    "namn": "Osby",
+    "lan": "Skåne län",
+    "slug": "osby",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.osby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1273-lonsboda-simhall",
+        "namn": "Lönsboda simhall",
+        "slug": "lonsboda-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-1273-osby-simhall",
+        "namn": "Osby simhall",
+        "slug": "osby-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1275",
+    "namn": "Perstorp",
+    "lan": "Skåne län",
+    "slug": "perstorp",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.perstorp.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1275-ugglebadet",
+        "namn": "Ugglebadet",
+        "slug": "ugglebadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1276",
+    "namn": "Klippan",
+    "lan": "Skåne län",
+    "slug": "klippan",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.klippan.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-1521035824",
+        "namn": "Klippans Badhus",
+        "slug": "klippans-badhus",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1277",
+    "namn": "Åstorp",
+    "lan": "Skåne län",
+    "slug": "astorp",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.astorp.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1278",
+    "namn": "Båstad",
+    "lan": "Skåne län",
+    "slug": "bastad",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.bastad.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1280",
+    "namn": "Malmö",
+    "lan": "Skåne län",
+    "slug": "malmo",
+    "antal": 7,
+    "antal_med_officiella_uppgifter": 5,
+    "webbplats": "https://www.malmo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-12142935783",
+        "namn": "Friskis & Svettis",
+        "slug": "friskis-svettis",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-37892937",
+        "namn": "Hoppbassängen avstängd tills vidare",
+        "slug": "hoppbassangen-avstangd-tills-vidare",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-335899280",
+        "namn": "Hylliebadet",
+        "slug": "hylliebadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-1280-lindangsbadet",
+        "namn": "Lindängsbadet",
+        "slug": "lindangsbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-way-336068930",
+        "namn": "Rosengårdsbadet",
+        "slug": "rosengardsbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-way-1492826355",
+        "namn": "Segevångsbadet",
+        "slug": "segevangsbadet",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-way-348735683",
+        "namn": "Sibbarps Saltsjöbad",
+        "slug": "sibbarps-saltsjobad",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1281",
+    "namn": "Lund",
+    "lan": "Skåne län",
+    "slug": "lund",
+    "antal": 6,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.lund.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-13026373589",
+        "namn": "Actic Delphinenbadet",
+        "slug": "actic-delphinenbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-105733269",
+        "namn": "Dalbybadet",
+        "slug": "dalbybadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-114253960",
+        "namn": "Genarpsbadet",
+        "slug": "genarpsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-340321228",
+        "namn": "Högevallsbadet",
+        "slug": "hogevallsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-88775083",
+        "namn": "Källbybadet",
+        "slug": "kallbybadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-477036431",
+        "namn": "Sandbybadet",
+        "slug": "sandbybadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1282",
+    "namn": "Landskrona",
+    "lan": "Skåne län",
+    "slug": "landskrona",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.landskrona.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-402443891",
+        "namn": "Härslövsbadet",
+        "slug": "harslovsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-239922492",
+        "namn": "Karlslundsbadet",
+        "slug": "karlslundsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1283",
+    "namn": "Helsingborg",
+    "lan": "Skåne län",
+    "slug": "helsingborg",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.helsingborg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-50489165",
+        "namn": "Simhallsbadet",
+        "slug": "simhallsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-154236940",
+        "namn": "Varmbadhuset",
+        "slug": "varmbadhuset",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1284",
+    "namn": "Höganäs",
+    "lan": "Skåne län",
+    "slug": "hoganas",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hoganas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1182083351",
+        "namn": "Fågelviken",
+        "slug": "fagelviken",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1285",
+    "namn": "Eslöv",
+    "lan": "Skåne län",
+    "slug": "eslov",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.eslov.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-265901547",
+        "namn": "Karlsrobadet",
+        "slug": "karlsrobadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1286",
+    "namn": "Ystad",
+    "lan": "Skåne län",
+    "slug": "ystad",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ystad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-493467111",
+        "namn": "Simhall Ystad",
+        "slug": "simhall-ystad",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1287",
+    "namn": "Trelleborg",
+    "lan": "Skåne län",
+    "slug": "trelleborg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.trelleborg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-237069159",
+        "namn": "Badhuset i Trelleborg",
+        "slug": "badhuset-i-trelleborg",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1290",
+    "namn": "Kristianstad",
+    "lan": "Skåne län",
+    "slug": "kristianstad",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kristianstad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-2150424159",
+        "namn": "Furuboda Kursgård",
+        "slug": "furuboda-kursgard",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1238510450",
+        "namn": "Kristianstads badrike",
+        "slug": "kristianstads-badrike",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-8967841801",
+        "namn": "Tivolibadet",
+        "slug": "tivolibadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1291",
+    "namn": "Simrishamn",
+    "lan": "Skåne län",
+    "slug": "simrishamn",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.simrishamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-994084372",
+        "namn": "Hammenhögsbadet",
+        "slug": "hammenhogsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-1291-korsavads-simhall",
+        "namn": "Korsavads simhall",
+        "slug": "korsavads-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-334429303",
+        "namn": "Tobisviksbadet",
+        "slug": "tobisviksbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1292",
+    "namn": "Ängelholm",
+    "lan": "Skåne län",
+    "slug": "angelholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.angelholm.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-787196266",
+        "namn": "Toftabadet",
+        "slug": "toftabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1293",
+    "namn": "Hässleholm",
+    "lan": "Skåne län",
+    "slug": "hassleholm",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.hassleholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-621835380",
+        "namn": "Bjärnums simhall",
+        "slug": "bjarnums-simhall",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-307562844",
+        "namn": "Qpoolen",
+        "slug": "qpoolen",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1379173233",
+        "namn": "Österåsbadet",
+        "slug": "osterasbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1315",
+    "namn": "Hylte",
+    "lan": "Hallands län",
+    "slug": "hylte",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hylte.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1315-simhallen-i-hylte",
+        "namn": "Simhallen i Hylte",
+        "slug": "simhallen-i-hylte",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1380",
+    "namn": "Halmstad",
+    "lan": "Hallands län",
+    "slug": "halmstad",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.halmstad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-relation-15460575",
+        "namn": "Furulundsbadet",
+        "slug": "furulundsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-5257577058",
+        "namn": "Halmstad Arena Bad",
+        "slug": "halmstad-arena-bad",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-645846781",
+        "namn": "Simstadion brottet",
+        "slug": "simstadion-brottet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1381",
+    "namn": "Laholm",
+    "lan": "Hallands län",
+    "slug": "laholm",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.laholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-32648630",
+        "namn": "Delfinen",
+        "slug": "delfinen",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-679914940",
+        "namn": "Flammabadet",
+        "slug": "flammabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1068160098",
+        "namn": "Folkhälsocentrum",
+        "slug": "folkhalsocentrum",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-788009153",
+        "namn": "Simhall Båstad",
+        "slug": "simhall-bastad",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-488916904",
+        "namn": "Veingebadet",
+        "slug": "veingebadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1382",
+    "namn": "Falkenberg",
+    "lan": "Hallands län",
+    "slug": "falkenberg",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://kommun.falkenberg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1382-klitterbadet",
+        "namn": "Klitterbadet",
+        "slug": "klitterbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1426087641",
+        "namn": "Sjövikenbadet",
+        "slug": "sjovikenbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-671141232",
+        "namn": "Vessigebadet",
+        "slug": "vessigebadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1383",
+    "namn": "Varberg",
+    "lan": "Hallands län",
+    "slug": "varberg",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.varberg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-177854090",
+        "namn": "Håstens Simhall",
+        "slug": "hastens-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-relation-9838105",
+        "namn": "Simstadion Varberg",
+        "slug": "simstadion-varberg",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-143345968",
+        "namn": "Varmbadhuset Friskvågen",
+        "slug": "varmbadhuset-friskvagen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1384",
+    "namn": "Kungsbacka",
+    "lan": "Hallands län",
+    "slug": "kungsbacka",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.kungsbacka.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-215050846",
+        "namn": "Fjärås simhall",
+        "slug": "fjaras-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-8265080188",
+        "namn": "Kungsbacka badhus",
+        "slug": "kungsbacka-badhus",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-relation-9508116",
+        "namn": "Särö Badhus",
+        "slug": "saro-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1401",
+    "namn": "Härryda",
+    "lan": "Västra Götalands län",
+    "slug": "harryda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.harryda.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1402",
+    "namn": "Partille",
+    "lan": "Västra Götalands län",
+    "slug": "partille",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.partille.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-129785283",
+        "namn": "Björndammens Bad & Motion",
+        "slug": "bjorndammens-bad-motion",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1407",
+    "namn": "Öckerö",
+    "lan": "Västra Götalands län",
+    "slug": "ockero",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ockero.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1415",
+    "namn": "Stenungsund",
+    "lan": "Västra Götalands län",
+    "slug": "stenungsund",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.stenungsund.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1415-simhallen-i-stenungsund",
+        "namn": "Simhallen i Stenungsund",
+        "slug": "simhallen-i-stenungsund",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1419",
+    "namn": "Tjörn",
+    "lan": "Västra Götalands län",
+    "slug": "tjorn",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://tjorn.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1421",
+    "namn": "Orust",
+    "lan": "Västra Götalands län",
+    "slug": "orust",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.orust.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-309064758",
+        "namn": "Varmbadhuset",
+        "slug": "varmbadhuset-karingon",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1427",
+    "namn": "Sotenäs",
+    "lan": "Västra Götalands län",
+    "slug": "sotenas",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sotenas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-174137737",
+        "namn": "Tumlaren",
+        "slug": "tumlaren",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1430",
+    "namn": "Munkedal",
+    "lan": "Västra Götalands län",
+    "slug": "munkedal",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.munkedal.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1435",
+    "namn": "Tanum",
+    "lan": "Västra Götalands län",
+    "slug": "tanum",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.tanum.se/",
+    "webb_status": "blockerad: robots.txt blockerar AI-agenter",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1438",
+    "namn": "Dals-Ed",
+    "lan": "Västra Götalands län",
+    "slug": "dals-ed",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.dalsed.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1439",
+    "namn": "Färgelanda",
+    "lan": "Västra Götalands län",
+    "slug": "fargelanda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.fargelanda.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1440",
+    "namn": "Ale",
+    "lan": "Västra Götalands län",
+    "slug": "ale",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ale.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-6284894844",
+        "namn": "Skepplanda simhall",
+        "slug": "skepplanda-simhall",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1441",
+    "namn": "Lerum",
+    "lan": "Västra Götalands län",
+    "slug": "lerum",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.lerum.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-295954120",
+        "namn": "Vattenpalatset",
+        "slug": "vattenpalatset",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1442",
+    "namn": "Vårgårda",
+    "lan": "Västra Götalands län",
+    "slug": "vargarda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vargarda.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1443",
+    "namn": "Bollebygd",
+    "lan": "Västra Götalands län",
+    "slug": "bollebygd",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.bollebygd.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1444",
+    "namn": "Grästorp",
+    "lan": "Västra Götalands län",
+    "slug": "grastorp",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.grastorp.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-606504827",
+        "namn": "Lunnevibadet",
+        "slug": "lunnevibadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1445",
+    "namn": "Essunga",
+    "lan": "Västra Götalands län",
+    "slug": "essunga",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.essunga.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-relation-11368089",
+        "namn": "Simhall Nossebro",
+        "slug": "simhall-nossebro",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1446",
+    "namn": "Karlsborg",
+    "lan": "Västra Götalands län",
+    "slug": "karlsborg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.karlsborg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1446-simhall-arena-moliden",
+        "namn": "Simhall Arena Moliden",
+        "slug": "simhall-arena-moliden",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1447",
+    "namn": "Gullspång",
+    "lan": "Västra Götalands län",
+    "slug": "gullspang",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://gullspang.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1452",
+    "namn": "Tranemo",
+    "lan": "Västra Götalands län",
+    "slug": "tranemo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.tranemo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-329649218",
+        "namn": "Tranemo sporthall",
+        "slug": "tranemo-sporthall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1460",
+    "namn": "Bengtsfors",
+    "lan": "Västra Götalands län",
+    "slug": "bengtsfors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.bengtsfors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1460-simhallen-i-bengtsfors",
+        "namn": "Simhallen i Bengtsfors",
+        "slug": "simhallen-i-bengtsfors",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1461",
+    "namn": "Mellerud",
+    "lan": "Västra Götalands län",
+    "slug": "mellerud",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.mellerud.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1462",
+    "namn": "Lilla Edet",
+    "lan": "Västra Götalands län",
+    "slug": "lilla-edet",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.lillaedet.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1463",
+    "namn": "Mark",
+    "lan": "Västra Götalands län",
+    "slug": "mark",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.mark.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-273715911",
+        "namn": "Badhuset Kaskad",
+        "slug": "badhuset-kaskad",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-661996542",
+        "namn": "Kungabergsbadet",
+        "slug": "kungabergsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1465",
+    "namn": "Svenljunga",
+    "lan": "Västra Götalands län",
+    "slug": "svenljunga",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.svenljunga.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-701828049",
+        "namn": "Moga Fritid",
+        "slug": "moga-fritid",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1466",
+    "namn": "Herrljunga",
+    "lan": "Västra Götalands län",
+    "slug": "herrljunga",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.herrljunga.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-2695246485",
+        "namn": "Badhuset i Herrljunga",
+        "slug": "badhuset-i-herrljunga",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1470",
+    "namn": "Vara",
+    "lan": "Västra Götalands län",
+    "slug": "vara",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.vara.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1084047168",
+        "namn": "Nästegårdsbadet",
+        "slug": "nastegardsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-297654426",
+        "namn": "Vara Badhus",
+        "slug": "vara-badhus",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1471",
+    "namn": "Götene",
+    "lan": "Västra Götalands län",
+    "slug": "gotene",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.gotene.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1472",
+    "namn": "Tibro",
+    "lan": "Västra Götalands län",
+    "slug": "tibro",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tibro.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-948271703",
+        "namn": "Simhall Tibro",
+        "slug": "simhall-tibro",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1473",
+    "namn": "Töreboda",
+    "lan": "Västra Götalands län",
+    "slug": "toreboda",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://toreboda.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-12735952195",
+        "namn": "Töreboda Simhall",
+        "slug": "toreboda-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1480",
+    "namn": "Göteborg",
+    "lan": "Västra Götalands län",
+    "slug": "goteborg",
+    "antal": 10,
+    "antal_med_officiella_uppgifter": 6,
+    "webbplats": "https://www.goteborg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-49600032",
+        "namn": "Angered Arena",
+        "slug": "angered-arena",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-85816428",
+        "namn": "Askims Sim- och Sporthall",
+        "slug": "askims-sim-och-sporthall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-699751831",
+        "namn": "Frölundabadet",
+        "slug": "frolundabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-115960363",
+        "namn": "Hammarbadet",
+        "slug": "hammarbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-166097956",
+        "namn": "Kortedala Simhall",
+        "slug": "kortedala-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-197100206",
+        "namn": "Kärra sim- och sporthall",
+        "slug": "karra-sim-och-sporthall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-26837166",
+        "namn": "Lundbybadet",
+        "slug": "lundbybadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3000066324",
+        "namn": "Styrsö simhall",
+        "slug": "styrso-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-113522001",
+        "namn": "Sörredsgården",
+        "slug": "sorredsgarden",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-563980014",
+        "namn": "Valhallabadet",
+        "slug": "valhallabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1481",
+    "namn": "Mölndal",
+    "lan": "Västra Götalands län",
+    "slug": "molndal",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.molndal.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1481-goco-active-bad-gym",
+        "namn": "GoCo Active BAD & GYM",
+        "slug": "goco-active-bad-gym",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-709060764",
+        "namn": "Streteredsbadet",
+        "slug": "streteredsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-33286895",
+        "namn": "Åbybadet",
+        "slug": "abybadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1482",
+    "namn": "Kungälv",
+    "lan": "Västra Götalands län",
+    "slug": "kungalv",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.kungalv.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-46711592",
+        "namn": "Oasen sim- och ishall",
+        "slug": "oasen-sim-och-ishall",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-1482-utebadet",
+        "namn": "Utebadet",
+        "slug": "utebadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1484",
+    "namn": "Lysekil",
+    "lan": "Västra Götalands län",
+    "slug": "lysekil",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.lysekil.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-52984634",
+        "namn": "Gullmarsborg",
+        "slug": "gullmarsborg",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-relation-8336788",
+        "namn": "Pinneviksbadet",
+        "slug": "pinneviksbadet",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-node-10982638510",
+        "namn": "Simhall Badhusberget",
+        "slug": "simhall-badhusberget",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1485",
+    "namn": "Uddevalla",
+    "lan": "Västra Götalands län",
+    "slug": "uddevalla",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.uddevalla.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-841803429",
+        "namn": "Simhall Stora Havsten",
+        "slug": "simhall-stora-havsten",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-89504757",
+        "namn": "Walkesborgsbadet",
+        "slug": "walkesborgsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1486",
+    "namn": "Strömstad",
+    "lan": "Västra Götalands län",
+    "slug": "stromstad",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.stromstad.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1487",
+    "namn": "Vänersborg",
+    "lan": "Västra Götalands län",
+    "slug": "vanersborg",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vanersborg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-9709894393",
+        "namn": "Hallevibadet",
+        "slug": "hallevibadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-304220112",
+        "namn": "Vattenpalatset",
+        "slug": "vattenpalatset-vanersborg",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1488",
+    "namn": "Trollhättan",
+    "lan": "Västra Götalands län",
+    "slug": "trollhattan",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.trollhattan.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-675800102",
+        "namn": "Simhall Trollhättan",
+        "slug": "simhall-trollhattan",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-667829145",
+        "namn": "Sjuntorps idrotts- och simhall",
+        "slug": "sjuntorps-idrotts-och-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1489",
+    "namn": "Alingsås",
+    "lan": "Västra Götalands län",
+    "slug": "alingsas",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.alingsas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-36966849",
+        "namn": "Nolhaga Parkbad",
+        "slug": "nolhaga-parkbad",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1490",
+    "namn": "Borås",
+    "lan": "Västra Götalands län",
+    "slug": "boras",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.boras.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-840202964",
+        "namn": "Borås Simarena",
+        "slug": "boras-simarena",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-11132720064",
+        "namn": "Dalsjöbadet",
+        "slug": "dalsjobadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-264587362",
+        "namn": "Sandaredsbadet",
+        "slug": "sandaredsbadet",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-84486649",
+        "namn": "Stadsparksbadet",
+        "slug": "stadsparksbadet",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1491",
+    "namn": "Ulricehamn",
+    "lan": "Västra Götalands län",
+    "slug": "ulricehamn",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ulricehamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-556059137",
+        "namn": "Simhall Ulricehamn",
+        "slug": "simhall-ulricehamn",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1492",
+    "namn": "Åmål",
+    "lan": "Västra Götalands län",
+    "slug": "amal",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.amal.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1164648750",
+        "namn": "Åmåls simhall",
+        "slug": "amals-simhall",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1493",
+    "namn": "Mariestad",
+    "lan": "Västra Götalands län",
+    "slug": "mariestad",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://mariestad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-531382088",
+        "namn": "Badhuset i Mariestad",
+        "slug": "badhuset-i-mariestad",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1494",
+    "namn": "Lidköping",
+    "lan": "Västra Götalands län",
+    "slug": "lidkoping",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://lidkoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1313821224",
+        "namn": "Framnäsbadet",
+        "slug": "framnasbadet",
+        "typ": "utomhusbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1495",
+    "namn": "Skara",
+    "lan": "Västra Götalands län",
+    "slug": "skara",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.skara.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-296849346",
+        "namn": "Simhall Vilans fritidsområde",
+        "slug": "simhall-vilans-fritidsomrade",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1496",
+    "namn": "Skövde",
+    "lan": "Västra Götalands län",
+    "slug": "skovde",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.skovde.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-766106426",
+        "namn": "Långenbadet",
+        "slug": "langenbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1497",
+    "namn": "Hjo",
+    "lan": "Västra Götalands län",
+    "slug": "hjo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-738356035",
+        "namn": "Varmbadhuset",
+        "slug": "varmbadhuset-hjo",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1498",
+    "namn": "Tidaholm",
+    "lan": "Västra Götalands län",
+    "slug": "tidaholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.tidaholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-2181253213",
+        "namn": "Forshallen",
+        "slug": "forshallen",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1499",
+    "namn": "Falköping",
+    "lan": "Västra Götalands län",
+    "slug": "falkoping",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.falkoping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-453769887",
+        "namn": "Odenbadet",
+        "slug": "odenbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1715",
+    "namn": "Kil",
+    "lan": "Värmlands län",
+    "slug": "kil",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.kil.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1730",
+    "namn": "Eda",
+    "lan": "Värmlands län",
+    "slug": "eda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.eda.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1737",
+    "namn": "Torsby",
+    "lan": "Värmlands län",
+    "slug": "torsby",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.torsby.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-10742044905",
+        "namn": "Recharge Sysslebäck Simhall",
+        "slug": "recharge-syssleback-simhall",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1760",
+    "namn": "Storfors",
+    "lan": "Värmlands län",
+    "slug": "storfors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.storfors.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-8618253350",
+        "namn": "Simhall Furuvik",
+        "slug": "simhall-furuvik",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1761",
+    "namn": "Hammarö",
+    "lan": "Värmlands län",
+    "slug": "hammaro",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.hammaro.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1762",
+    "namn": "Munkfors",
+    "lan": "Värmlands län",
+    "slug": "munkfors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.munkfors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-4503802415",
+        "namn": "Simhall Munkfors",
+        "slug": "simhall-munkfors",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1763",
+    "namn": "Forshaga",
+    "lan": "Värmlands län",
+    "slug": "forshaga",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.forshaga.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1763-klaralvsbadet",
+        "namn": "Klarälvsbadet",
+        "slug": "klaralvsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1764",
+    "namn": "Grums",
+    "lan": "Värmlands län",
+    "slug": "grums",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.grums.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-332351150",
+        "namn": "Grums bad och sport",
+        "slug": "grums-bad-och-sport",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1765",
+    "namn": "Årjäng",
+    "lan": "Värmlands län",
+    "slug": "arjang",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.arjang.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-4473468171",
+        "namn": "Årjängs Bad & Friskvårdscenter",
+        "slug": "arjangs-bad-friskvardscenter",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1766",
+    "namn": "Sunne",
+    "lan": "Värmlands län",
+    "slug": "sunne",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.sunne.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-103999986",
+        "namn": "Badhuset i Bäckalund",
+        "slug": "badhuset-i-backalund",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1780",
+    "namn": "Karlstad",
+    "lan": "Värmlands län",
+    "slug": "karlstad",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://karlstad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-3889610944",
+        "namn": "Parkbadet",
+        "slug": "parkbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-114306658",
+        "namn": "Skutbergets motionscentral",
+        "slug": "skutbergets-motionscentral",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-96307473",
+        "namn": "Sundstabadet",
+        "slug": "sundstabadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1160013355",
+        "namn": "Vålberg Simhall",
+        "slug": "valberg-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1781",
+    "namn": "Kristinehamn",
+    "lan": "Värmlands län",
+    "slug": "kristinehamn",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kristinehamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-352581050",
+        "namn": "Sannabadet",
+        "slug": "sannabadet",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1782",
+    "namn": "Filipstad",
+    "lan": "Värmlands län",
+    "slug": "filipstad",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.filipstad.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1782-simhallen-spangbergs-hallen-bad",
+        "namn": "Simhallen Spångbergs­hallen Bad",
+        "slug": "simhallen-spangbergs-hallen-bad",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1783",
+    "namn": "Hagfors",
+    "lan": "Värmlands län",
+    "slug": "hagfors",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.hagfors.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-429237125",
+        "namn": "Lidsbron",
+        "slug": "lidsbron",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-1416309477",
+        "namn": "Simhallen i Hagfors",
+        "slug": "simhallen-i-hagfors",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-431311302",
+        "namn": "Åsanland",
+        "slug": "asanland",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1784",
+    "namn": "Arvika",
+    "lan": "Värmlands län",
+    "slug": "arvika",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.arvika.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-2271651113",
+        "namn": "Simhallen i Arvika",
+        "slug": "simhallen-i-arvika",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1785",
+    "namn": "Säffle",
+    "lan": "Värmlands län",
+    "slug": "saffle",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.saffle.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1814",
+    "namn": "Lekeberg",
+    "lan": "Örebro län",
+    "slug": "lekeberg",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.lekeberg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-relation-7371409",
+        "namn": "Sannabadet",
+        "slug": "sannabadet-fjugesta",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-4237510437",
+        "namn": "Simhall Fjugesta",
+        "slug": "simhall-fjugesta",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1860",
+    "namn": "Laxå",
+    "lan": "Örebro län",
+    "slug": "laxa",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.laxa.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1861",
+    "namn": "Hallsberg",
+    "lan": "Örebro län",
+    "slug": "hallsberg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hallsberg.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1861-allehallens-simhall-och-gym",
+        "namn": "Alléhallens simhall och gym",
+        "slug": "allehallens-simhall-och-gym",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1862",
+    "namn": "Degerfors",
+    "lan": "Örebro län",
+    "slug": "degerfors",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.degerfors.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1863",
+    "namn": "Hällefors",
+    "lan": "Örebro län",
+    "slug": "hallefors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hellefors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1417573733",
+        "namn": "Hällefors Badhus",
+        "slug": "hallefors-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1864",
+    "namn": "Ljusnarsberg",
+    "lan": "Örebro län",
+    "slug": "ljusnarsberg",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ljusnarsberg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1880",
+    "namn": "Örebro",
+    "lan": "Örebro län",
+    "slug": "orebro",
+    "antal": 9,
+    "antal_med_officiella_uppgifter": 5,
+    "webbplats": "https://www.orebro.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-12651956248",
+        "namn": "Actic Örebro Brickebacken",
+        "slug": "actic-orebro-brickebacken",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-307104191",
+        "namn": "Badhuset i Brevens bruk",
+        "slug": "badhuset-i-brevens-bruk",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-223728083",
+        "namn": "Badhuset i Örebro",
+        "slug": "badhuset-i-orebro",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-151173792",
+        "namn": "Eyrabadet",
+        "slug": "eyrabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-7478475719",
+        "namn": "Hagabadet",
+        "slug": "hagabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-11735173675",
+        "namn": "Simhall Snavlunda",
+        "slug": "simhall-snavlunda",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-11735187876",
+        "namn": "Tegelbadet",
+        "slug": "tegelbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1358389405",
+        "namn": "Vivallabadet",
+        "slug": "vivallabadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1360404917",
+        "namn": "Voxbadet",
+        "slug": "voxbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1881",
+    "namn": "Kumla",
+    "lan": "Örebro län",
+    "slug": "kumla",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kumla.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-1881-djupadalsbadet",
+        "namn": "Djupadalsbadet",
+        "slug": "djupadalsbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1882",
+    "namn": "Askersund",
+    "lan": "Örebro län",
+    "slug": "askersund",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.askersund.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-713463839",
+        "namn": "Simhall Harge",
+        "slug": "simhall-harge",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1883",
+    "namn": "Karlskoga",
+    "lan": "Örebro län",
+    "slug": "karlskoga",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.karlskoga.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1884",
+    "namn": "Nora",
+    "lan": "Örebro län",
+    "slug": "nora",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.nora.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-411778546",
+        "namn": "Käppsta",
+        "slug": "kappsta",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-194792556",
+        "namn": "Nora sim & idrottshall",
+        "slug": "nora-sim-idrottshall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1885",
+    "namn": "Lindesberg",
+    "lan": "Örebro län",
+    "slug": "lindesberg",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.lindesberg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-326759695",
+        "namn": "Actic Energikällan",
+        "slug": "actic-energikallan",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1904",
+    "namn": "Skinnskatteberg",
+    "lan": "Västmanlands län",
+    "slug": "skinnskatteberg",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.skinnskatteberg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1907",
+    "namn": "Surahammar",
+    "lan": "Västmanlands län",
+    "slug": "surahammar",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.surahammar.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-620143559",
+        "namn": "Ekängsbadet",
+        "slug": "ekangsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1960",
+    "namn": "Kungsör",
+    "lan": "Västmanlands län",
+    "slug": "kungsor",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.kungsor.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1323505289",
+        "namn": "Kungsörs Badhus",
+        "slug": "kungsors-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1961",
+    "namn": "Hallstahammar",
+    "lan": "Västmanlands län",
+    "slug": "hallstahammar",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hallstahammar.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-7005004106",
+        "namn": "Simhall Kolbäck",
+        "slug": "simhall-kolback",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-5910187968",
+        "namn": "Simhall Mölntorp",
+        "slug": "simhall-molntorp",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-749078717",
+        "namn": "Vallmobadet",
+        "slug": "vallmobadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1962",
+    "namn": "Norberg",
+    "lan": "Västmanlands län",
+    "slug": "norberg",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.norberg.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "1980",
+    "namn": "Västerås",
+    "lan": "Västmanlands län",
+    "slug": "vasteras",
+    "antal": 6,
+    "antal_med_officiella_uppgifter": 4,
+    "webbplats": "https://www.vasteras.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-348845714",
+        "namn": "Bjurhovdabadet",
+        "slug": "bjurhovdabadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1164109343",
+        "namn": "Fredriksbergbadet",
+        "slug": "fredriksbergbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3729175990",
+        "namn": "Kokpunkten",
+        "slug": "kokpunkten",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-95150997",
+        "namn": "Kristiansborgbadet",
+        "slug": "kristiansborgbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-100006000",
+        "namn": "Lögarängsbadet",
+        "slug": "logarangsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1314375507",
+        "namn": "Simhall Skultuna",
+        "slug": "simhall-skultuna",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1981",
+    "namn": "Sala",
+    "lan": "Västmanlands län",
+    "slug": "sala",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.sala.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1232857658",
+        "namn": "Simhall Sör Husta",
+        "slug": "simhall-sor-husta",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1982",
+    "namn": "Fagersta",
+    "lan": "Västmanlands län",
+    "slug": "fagersta",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.fagersta.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-378431971",
+        "namn": "Fagerstahallen",
+        "slug": "fagerstahallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1983",
+    "namn": "Köping",
+    "lan": "Västmanlands län",
+    "slug": "koping",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.koping.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-537737373",
+        "namn": "Köpings bad & sport",
+        "slug": "kopings-bad-sport",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "1984",
+    "namn": "Arboga",
+    "lan": "Västmanlands län",
+    "slug": "arboga",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.arboga.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1242230578",
+        "namn": "Ekbacksbadet",
+        "slug": "ekbacksbadet",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2021",
+    "namn": "Vansbro",
+    "lan": "Dalarnas län",
+    "slug": "vansbro",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.vansbro.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-622466920",
+        "namn": "Storanget",
+        "slug": "storanget",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-4647914830",
+        "namn": "Vansbro Simhall",
+        "slug": "vansbro-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2023",
+    "namn": "Malung-Sälen",
+    "lan": "Dalarnas län",
+    "slug": "malung-salen",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.malung-salen.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-559095483",
+        "namn": "Experium Äventyrsbad",
+        "slug": "experium-aventyrsbad",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-2315555824",
+        "namn": "Hundfjällets poolarium",
+        "slug": "hundfjallets-poolarium",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1268947977",
+        "namn": "Malung-Sälens simhall",
+        "slug": "malung-salens-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2026",
+    "namn": "Gagnef",
+    "lan": "Dalarnas län",
+    "slug": "gagnef",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.gagnef.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2029",
+    "namn": "Leksand",
+    "lan": "Dalarnas län",
+    "slug": "leksand",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.leksand.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1124872763",
+        "namn": "Leksandshallen",
+        "slug": "leksandshallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-220255779",
+        "namn": "Vattenlandet",
+        "slug": "vattenlandet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2031",
+    "namn": "Rättvik",
+    "lan": "Dalarnas län",
+    "slug": "rattvik",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.rattvik.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2031-enabadet",
+        "namn": "Enåbadet",
+        "slug": "enabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2034",
+    "namn": "Orsa",
+    "lan": "Dalarnas län",
+    "slug": "orsa",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.orsa.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-200258007",
+        "namn": "Orsa Simhall",
+        "slug": "orsa-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2039",
+    "namn": "Älvdalen",
+    "lan": "Dalarnas län",
+    "slug": "alvdalen",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.alvdalen.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2039-sarna-simhall",
+        "namn": "Särna simhall",
+        "slug": "sarna-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-7657235752",
+        "namn": "Åsenbadet",
+        "slug": "asenbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2061",
+    "namn": "Smedjebacken",
+    "lan": "Dalarnas län",
+    "slug": "smedjebacken",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.smedjebacken.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-4599902380",
+        "namn": "Simhall Åsmansbo",
+        "slug": "simhall-asmansbo",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2062",
+    "namn": "Mora",
+    "lan": "Dalarnas län",
+    "slug": "mora",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://morakommun.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-304807863",
+        "namn": "Venjans Sim och Gymnastiksal",
+        "slug": "venjans-sim-och-gymnastiksal",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2080",
+    "namn": "Falun",
+    "lan": "Dalarnas län",
+    "slug": "falun",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.falun.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-825929885",
+        "namn": "Bjursåsbadet",
+        "slug": "bjursasbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-1123457335",
+        "namn": "Lugnets badhus",
+        "slug": "lugnets-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2081",
+    "namn": "Borlänge",
+    "lan": "Dalarnas län",
+    "slug": "borlange",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.borlange.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-96645659",
+        "namn": "Aqua Nova",
+        "slug": "aqua-nova",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-42280444",
+        "namn": "Maserhallen",
+        "slug": "maserhallen",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-164847632",
+        "namn": "Simhall Romme",
+        "slug": "simhall-romme",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2082",
+    "namn": "Säter",
+    "lan": "Dalarnas län",
+    "slug": "sater",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sater.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-210411948",
+        "namn": "Skönvikshallen",
+        "slug": "skonvikshallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2083",
+    "namn": "Hedemora",
+    "lan": "Dalarnas län",
+    "slug": "hedemora",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hedemora.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-10555402960",
+        "namn": "Haggårdsbadet",
+        "slug": "haggardsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-300571096",
+        "namn": "Vasahallen",
+        "slug": "vasahallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2084",
+    "namn": "Avesta",
+    "lan": "Dalarnas län",
+    "slug": "avesta",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.avesta.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-559199238",
+        "namn": "Avesta Simhall",
+        "slug": "avesta-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-147426675",
+        "namn": "Horndals badhus",
+        "slug": "horndals-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2085",
+    "namn": "Ludvika",
+    "lan": "Dalarnas län",
+    "slug": "ludvika",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.ludvika.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-393032277",
+        "namn": "Grängesbadet",
+        "slug": "grangesbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-796481491",
+        "namn": "Hillängsbadet",
+        "slug": "hillangsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-796481506",
+        "namn": "Knutsbo",
+        "slug": "knutsbo",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-53227811",
+        "namn": "Simhallen i Ludvika",
+        "slug": "simhallen-i-ludvika",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-796481500",
+        "namn": "Skuthamn",
+        "slug": "skuthamn",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2101",
+    "namn": "Ockelbo",
+    "lan": "Gävleborgs län",
+    "slug": "ockelbo",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://ockelbo.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2101-ockelbo-simhall",
+        "namn": "Ockelbo simhall",
+        "slug": "ockelbo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2104",
+    "namn": "Hofors",
+    "lan": "Gävleborgs län",
+    "slug": "hofors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.hofors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2104-hoforshallen-simhall",
+        "namn": "Hoforshallen Simhall",
+        "slug": "hoforshallen-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2121",
+    "namn": "Ovanåker",
+    "lan": "Gävleborgs län",
+    "slug": "ovanaker",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.ovanaker.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-475819848",
+        "namn": "Alfta Sport- och Simhall",
+        "slug": "alfta-sport-och-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-582249877",
+        "namn": "Celsiushallen",
+        "slug": "celsiushallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-2121-edsbyns-simhall",
+        "namn": "Edsbyns simhall",
+        "slug": "edsbyns-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2132",
+    "namn": "Nordanstig",
+    "lan": "Gävleborgs län",
+    "slug": "nordanstig",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.nordanstig.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2132-bergsjo-simhall",
+        "namn": "Bergsjö simhall",
+        "slug": "bergsjo-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2161",
+    "namn": "Ljusdal",
+    "lan": "Gävleborgs län",
+    "slug": "ljusdal",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ljusdal.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2180",
+    "namn": "Gävle",
+    "lan": "Gävleborgs län",
+    "slug": "gavle",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.gavle.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-37194523",
+        "namn": "Fjärran Höjderbadet",
+        "slug": "fjarran-hojderbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-831203780",
+        "namn": "Lillhagsbadet",
+        "slug": "lillhagsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-809813613",
+        "namn": "Poolen",
+        "slug": "poolen",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-2180-torsvedsbadet",
+        "namn": "Torsvedsbadet",
+        "slug": "torsvedsbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2181",
+    "namn": "Sandviken",
+    "lan": "Gävleborgs län",
+    "slug": "sandviken",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://sandviken.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-370675584",
+        "namn": "Parkbadet",
+        "slug": "parkbadet-sandviken",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1263879857",
+        "namn": "Storviksbadet",
+        "slug": "storviksbadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2182",
+    "namn": "Söderhamn",
+    "lan": "Gävleborgs län",
+    "slug": "soderhamn",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.soderhamn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-116452453",
+        "namn": "Aquarena",
+        "slug": "aquarena",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-413181895",
+        "namn": "Ljusne inomhusbad",
+        "slug": "ljusne-inomhusbad",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-351927364",
+        "namn": "Ljusnebadet",
+        "slug": "ljusnebadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2183",
+    "namn": "Bollnäs",
+    "lan": "Gävleborgs län",
+    "slug": "bollnas",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.bollnas.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2183-arbra-simhall",
+        "namn": "Arbrå simhall",
+        "slug": "arbra-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-2183-bollnas-simhall",
+        "namn": "Bollnäs simhall",
+        "slug": "bollnas-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-2183-kilafors-simhall",
+        "namn": "Kilafors simhall",
+        "slug": "kilafors-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2184",
+    "namn": "Hudiksvall",
+    "lan": "Gävleborgs län",
+    "slug": "hudiksvall",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 3,
+    "webbplats": "https://www.hudiksvall.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-12828610522",
+        "namn": "Delsbo simhall",
+        "slug": "delsbo-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-111403364",
+        "namn": "Hudiksvalls badhus",
+        "slug": "hudiksvalls-badhus",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-654215107",
+        "namn": "Iggesunds Badhus",
+        "slug": "iggesunds-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2260",
+    "namn": "Ånge",
+    "lan": "Västernorrlands län",
+    "slug": "ange",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ange.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1368649978",
+        "namn": "Ljungandalens Bad & Sport",
+        "slug": "ljungandalens-bad-sport",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2262",
+    "namn": "Timrå",
+    "lan": "Västernorrlands län",
+    "slug": "timra",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.timra.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1091684269",
+        "namn": "Timrå Sim och friskvårdscenter",
+        "slug": "timra-sim-och-friskvardscenter",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-1023553779",
+        "namn": "Timrå simhall",
+        "slug": "timra-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2280",
+    "namn": "Härnösand",
+    "lan": "Västernorrlands län",
+    "slug": "harnosand",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.harnosand.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-41815524",
+        "namn": "Friskvårdcentral Simhallen",
+        "slug": "friskvardcentral-simhallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2281",
+    "namn": "Sundsvall",
+    "lan": "Västernorrlands län",
+    "slug": "sundsvall",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.sundsvall.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2281-alnobadet",
+        "namn": "Alnöbadet",
+        "slug": "alnobadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-13658909140",
+        "namn": "Himlabadet",
+        "slug": "himlabadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-1447674632",
+        "namn": "Malandsbadet",
+        "slug": "malandsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-13691584752",
+        "namn": "Matforshallen",
+        "slug": "matforshallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-1055482849",
+        "namn": "Nackstabadet",
+        "slug": "nackstabadet",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2282",
+    "namn": "Kramfors",
+    "lan": "Västernorrlands län",
+    "slug": "kramfors",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kramfors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-312110456",
+        "namn": "Flogstabadet",
+        "slug": "flogstabadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2283",
+    "namn": "Sollefteå",
+    "lan": "Västernorrlands län",
+    "slug": "solleftea",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.solleftea.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2284",
+    "namn": "Örnsköldsvik",
+    "lan": "Västernorrlands län",
+    "slug": "ornskoldsvik",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ornskoldsvik.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-7023287548",
+        "namn": "Björna simhall",
+        "slug": "bjorna-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-7023287545",
+        "namn": "Bredbyns simhall",
+        "slug": "bredbyns-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-6499769756",
+        "namn": "Husum Simhall",
+        "slug": "husum-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-55507745",
+        "namn": "Paradisbadet",
+        "slug": "paradisbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-1004299505",
+        "namn": "Sandsjön",
+        "slug": "sandsjon",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2303",
+    "namn": "Ragunda",
+    "lan": "Jämtlands län",
+    "slug": "ragunda",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.ragunda.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2305",
+    "namn": "Bräcke",
+    "lan": "Jämtlands län",
+    "slug": "bracke",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.bracke.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-1491177410",
+        "namn": "Badhuset i Stavre",
+        "slug": "badhuset-i-stavre",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2309",
+    "namn": "Krokom",
+    "lan": "Jämtlands län",
+    "slug": "krokom",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.krokom.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-1534963646",
+        "namn": "Simhall Änge",
+        "slug": "simhall-ange",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-476648887",
+        "namn": "Önsjön",
+        "slug": "onsjon",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2313",
+    "namn": "Strömsund",
+    "lan": "Jämtlands län",
+    "slug": "stromsund",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.stromsund.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-298496399",
+        "namn": "Badhuset i Strömsund",
+        "slug": "badhuset-i-stromsund",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-689008873",
+        "namn": "Sågvika",
+        "slug": "sagvika",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2321",
+    "namn": "Åre",
+    "lan": "Jämtlands län",
+    "slug": "are",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.are.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2321-jarpens-badhus",
+        "namn": "Järpens badhus",
+        "slug": "jarpens-badhus",
+        "typ": "badhus"
+      },
+      {
+        "id": "web-2321-morsils-badhus",
+        "namn": "Mörsils badhus",
+        "slug": "morsils-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2326",
+    "namn": "Berg",
+    "lan": "Jämtlands län",
+    "slug": "berg",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.berg.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2361",
+    "namn": "Härjedalen",
+    "lan": "Jämtlands län",
+    "slug": "harjedalen",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.herjedalen.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2361-simhall-lillhardal",
+        "namn": "Simhall Lillhärdal",
+        "slug": "simhall-lillhardal",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-499142585",
+        "namn": "Svegs badhus",
+        "slug": "svegs-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2380",
+    "namn": "Östersund",
+    "lan": "Jämtlands län",
+    "slug": "ostersund",
+    "antal": 5,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.ostersund.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-87287884",
+        "namn": "Badhusparksscenen",
+        "slug": "badhusparksscenen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-236000648",
+        "namn": "Brunflobadet",
+        "slug": "brunflobadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-108508448",
+        "namn": "Simhall Frösön",
+        "slug": "simhall-froson",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-relation-1423282",
+        "namn": "Storsjöbadet",
+        "slug": "storsjobadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-4861924523",
+        "namn": "Surfbukten",
+        "slug": "surfbukten",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2401",
+    "namn": "Nordmaling",
+    "lan": "Västerbottens län",
+    "slug": "nordmaling",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.nordmaling.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-190385127",
+        "namn": "Hammarhallens simhall",
+        "slug": "hammarhallens-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2403",
+    "namn": "Bjurholm",
+    "lan": "Västerbottens län",
+    "slug": "bjurholm",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.bjurholm.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-700675008",
+        "namn": "Bjurholms Badhus",
+        "slug": "bjurholms-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2404",
+    "namn": "Vindeln",
+    "lan": "Västerbottens län",
+    "slug": "vindeln",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vindeln.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-10824959956",
+        "namn": "Vindelns Simhall",
+        "slug": "vindelns-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2409",
+    "namn": "Robertsfors",
+    "lan": "Västerbottens län",
+    "slug": "robertsfors",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.robertsfors.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-819047471",
+        "namn": "Luftabadet",
+        "slug": "luftabadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-583005270",
+        "namn": "Robertsfors Badhus",
+        "slug": "robertsfors-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2417",
+    "namn": "Norsjö",
+    "lan": "Västerbottens län",
+    "slug": "norsjo",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.norsjo.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2418",
+    "namn": "Malå",
+    "lan": "Västerbottens län",
+    "slug": "mala",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.mala.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-7228426024",
+        "namn": "Simhall Malå",
+        "slug": "simhall-mala",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2421",
+    "namn": "Storuman",
+    "lan": "Västerbottens län",
+    "slug": "storuman",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.storuman.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-5018529652",
+        "namn": "Simhallen i Hemevan",
+        "slug": "simhallen-i-hemevan",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-217495938",
+        "namn": "Simhallen i Storuman",
+        "slug": "simhallen-i-storuman",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2422",
+    "namn": "Sorsele",
+    "lan": "Västerbottens län",
+    "slug": "sorsele",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.sorsele.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2425",
+    "namn": "Dorotea",
+    "lan": "Västerbottens län",
+    "slug": "dorotea",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.dorotea.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2460",
+    "namn": "Vännäs",
+    "lan": "Västerbottens län",
+    "slug": "vannas",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vannas.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2462",
+    "namn": "Vilhelmina",
+    "lan": "Västerbottens län",
+    "slug": "vilhelmina",
+    "antal": 0,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.vilhelmina.se/",
+    "webb_status": "hämtad",
+    "simhallar": []
+  },
+  {
+    "kommunkod": "2463",
+    "namn": "Åsele",
+    "lan": "Västerbottens län",
+    "slug": "asele",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.asele.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-10552749837",
+        "namn": "Simhallen i Åsele",
+        "slug": "simhallen-i-asele",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2480",
+    "namn": "Umeå",
+    "lan": "Västerbottens län",
+    "slug": "umea",
+    "antal": 8,
+    "antal_med_officiella_uppgifter": 4,
+    "webbplats": "https://www.umea.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-4456346289",
+        "namn": "Aquarena",
+        "slug": "aquarena-holmsund",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-4705660370",
+        "namn": "Ersboda Bad & Gym",
+        "slug": "ersboda-bad-gym",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-251689366",
+        "namn": "Navet",
+        "slug": "navet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-475548806",
+        "namn": "Obbola Badet",
+        "slug": "obbola-badet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-7801918200",
+        "namn": "Storsjöhallen",
+        "slug": "storsjohallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-368610633",
+        "namn": "Sävar simhall och Gym",
+        "slug": "savar-simhall-och-gym",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-107364201",
+        "namn": "Umelagun",
+        "slug": "umelagun",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-164831550",
+        "namn": "Vallabadet",
+        "slug": "vallabadet",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2481",
+    "namn": "Lycksele",
+    "lan": "Västerbottens län",
+    "slug": "lycksele",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.lycksele.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-3064168210",
+        "namn": "Lycksele Simhall",
+        "slug": "lycksele-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-11380366620",
+        "namn": "Simhall Kristineberg",
+        "slug": "simhall-kristineberg",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2482",
+    "namn": "Skellefteå",
+    "lan": "Västerbottens län",
+    "slug": "skelleftea",
+    "antal": 8,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.skelleftea.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-292333074",
+        "namn": "Bureå simhall",
+        "slug": "burea-simhall",
+        "typ": "badhus"
+      },
+      {
+        "id": "osm-way-354178091",
+        "namn": "Byske Badhus",
+        "slug": "byske-badhus",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-468493970",
+        "namn": "Byske utebad",
+        "slug": "byske-utebad",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-123619430",
+        "namn": "Eddahallen",
+        "slug": "eddahallen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-67712957",
+        "namn": "Harrbäckssandsbadet",
+        "slug": "harrbackssandsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-relation-5419033",
+        "namn": "Kågebadet",
+        "slug": "kagebadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-relation-2759123",
+        "namn": "Vitbergsbadet",
+        "slug": "vitbergsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-2482-orjanshallen",
+        "namn": "Örjanshallen",
+        "slug": "orjanshallen",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2505",
+    "namn": "Arvidsjaur",
+    "lan": "Norrbottens län",
+    "slug": "arvidsjaur",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.arvidsjaur.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-7772364103",
+        "namn": "Centrumbadet",
+        "slug": "centrumbadet",
+        "typ": "äventyrsbad"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2506",
+    "namn": "Arjeplog",
+    "lan": "Norrbottens län",
+    "slug": "arjeplog",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.arjeplog.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-4523938526",
+        "namn": "Simhallen i Arjeplog",
+        "slug": "simhallen-i-arjeplog",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2510",
+    "namn": "Jokkmokk",
+    "lan": "Norrbottens län",
+    "slug": "jokkmokk",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.jokkmokk.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2510-simhallen-i-jokkmokk",
+        "namn": "Simhallen i Jokkmokk",
+        "slug": "simhallen-i-jokkmokk",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2513",
+    "namn": "Överkalix",
+    "lan": "Norrbottens län",
+    "slug": "overkalix",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.overkalix.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-13937933601",
+        "namn": "Badhuset i Överkalix",
+        "slug": "badhuset-i-overkalix",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2514",
+    "namn": "Kalix",
+    "lan": "Norrbottens län",
+    "slug": "kalix",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.kalix.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-792997992",
+        "namn": "Flakasand",
+        "slug": "flakasand",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-way-233723482",
+        "namn": "SportCity",
+        "slug": "sportcity",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2518",
+    "namn": "Övertorneå",
+    "lan": "Norrbottens län",
+    "slug": "overtornea",
+    "antal": 2,
+    "antal_med_officiella_uppgifter": 2,
+    "webbplats": "https://www.overtornea.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "web-2518-hedenaset-simhall",
+        "namn": "Hedenäset simhall",
+        "slug": "hedenaset-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-314653263",
+        "namn": "Övertorneå sim- och sporthall",
+        "slug": "overtornea-sim-och-sporthall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2521",
+    "namn": "Pajala",
+    "lan": "Norrbottens län",
+    "slug": "pajala",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.pajala.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-339942495",
+        "namn": "Pajala Badhus",
+        "slug": "pajala-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2523",
+    "namn": "Gällivare",
+    "lan": "Norrbottens län",
+    "slug": "gallivare",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.gellivare.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-way-554104986",
+        "namn": "Simhall Hakkas",
+        "slug": "simhall-hakkas",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2560",
+    "namn": "Älvsbyn",
+    "lan": "Norrbottens län",
+    "slug": "alvsbyn",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.alvsbyn.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-254031113",
+        "namn": "Simhall Älvsbyn",
+        "slug": "simhall-alvsbyn",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2580",
+    "namn": "Luleå",
+    "lan": "Norrbottens län",
+    "slug": "lulea",
+    "antal": 7,
+    "antal_med_officiella_uppgifter": 5,
+    "webbplats": "https://www.lulea.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-52492026",
+        "namn": "Arcusbadet",
+        "slug": "arcusbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-3144274539",
+        "namn": "Aronsbadet",
+        "slug": "aronsbadet",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-3174774156",
+        "namn": "Gammelstads badhus",
+        "slug": "gammelstads-badhus",
+        "typ": "badhus"
+      },
+      {
+        "id": "web-2580-hertso-badhus",
+        "namn": "Hertsö badhus",
+        "slug": "hertso-badhus",
+        "typ": "badhus"
+      },
+      {
+        "id": "web-2580-pontusbadet",
+        "namn": "Pontusbadet",
+        "slug": "pontusbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-972216851",
+        "namn": "Rånepoolen",
+        "slug": "ranepoolen",
+        "typ": "utomhusbad"
+      },
+      {
+        "id": "osm-node-2314445947",
+        "namn": "Råneå badhus",
+        "slug": "ranea-badhus",
+        "typ": "badhus"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2581",
+    "namn": "Piteå",
+    "lan": "Norrbottens län",
+    "slug": "pitea",
+    "antal": 4,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.pitea.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-462654088",
+        "namn": "Horlax simhall",
+        "slug": "horlax-simhall",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-262478260",
+        "namn": "Lillpitepoolen",
+        "slug": "lillpitepoolen",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-315741668",
+        "namn": "Munksunds simhall",
+        "slug": "munksunds-simhall",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-3158307769",
+        "namn": "Öjebyns Simhall",
+        "slug": "ojebyns-simhall",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2582",
+    "namn": "Boden",
+    "lan": "Norrbottens län",
+    "slug": "boden",
+    "antal": 3,
+    "antal_med_officiella_uppgifter": 0,
+    "webbplats": "https://www.boden.se/",
+    "webb_status": "inga simhallssidor hittade",
+    "simhallar": [
+      {
+        "id": "osm-node-10307608735",
+        "namn": "Nordpoolen",
+        "slug": "nordpoolen",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "osm-node-8439062088",
+        "namn": "Simhall Gunnarsbyn",
+        "slug": "simhall-gunnarsbyn",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-8446831570",
+        "namn": "Simhall Valvträsk",
+        "slug": "simhall-valvtrask",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2583",
+    "namn": "Haparanda",
+    "lan": "Norrbottens län",
+    "slug": "haparanda",
+    "antal": 1,
+    "antal_med_officiella_uppgifter": 1,
+    "webbplats": "https://www.haparanda.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-node-4901689713",
+        "namn": "Haparanda Badhus",
+        "slug": "haparanda-badhus",
+        "typ": "simhall"
+      }
+    ]
+  },
+  {
+    "kommunkod": "2584",
+    "namn": "Kiruna",
+    "lan": "Norrbottens län",
+    "slug": "kiruna",
+    "antal": 6,
+    "antal_med_officiella_uppgifter": 4,
+    "webbplats": "https://kiruna.se/",
+    "webb_status": "hämtad",
+    "simhallar": [
+      {
+        "id": "osm-way-426900211",
+        "namn": "Badhuset i Östermalm",
+        "slug": "badhuset-i-ostermalm",
+        "typ": "simhall"
+      },
+      {
+        "id": "web-2584-midnattssolsbadet",
+        "namn": "Midnattssolsbadet",
+        "slug": "midnattssolsbadet",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-1541264774",
+        "namn": "Simhall Karesuando",
+        "slug": "simhall-karesuando",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-way-619692615",
+        "namn": "Simhall Svappavaara",
+        "slug": "simhall-svappavaara",
+        "typ": "simhall"
+      },
+      {
+        "id": "osm-node-849813276",
+        "namn": "simhallsbadet",
+        "slug": "simhallsbadet-kiruna",
+        "typ": "äventyrsbad"
+      },
+      {
+        "id": "web-2584-vittangi-simhall",
+        "namn": "Vittangi simhall",
+        "slug": "vittangi-simhall",
+        "typ": "simhall"
+      }
+    ]
+  }
+]

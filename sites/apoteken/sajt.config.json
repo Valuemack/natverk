@@ -1,0 +1,17 @@
+{
+  "mapp": "apoteken",
+  "namn": "Apoteken",
+  "visningsnamn": "apoteken.nu",
+  "url": "https://apoteken.nu",
+  "beskrivning": "Alla apotek i Sverige med adress, telefon och öppettider – se vilka som har öppet nu, på kvällen och på söndagar. Uppdateras varje natt.",
+  "farg": "#0b7a4b",
+  "ikonText": "+",
+  "ord": { "sing": "apotek", "plur": "apotek", "art": "ett" },
+  "schemaTyp": "Pharmacy",
+  "titelOrd": "öppettider",
+  "datafil": "data/apotek.json",
+  "startTitel": "Apotek nära dig – öppettider för alla apotek i Sverige",
+  "startH1": "Hitta apotek nära dig",
+  "kallaText": "Källor: Läkemedelsverkets register över öppenvårdsapotek och OpenStreetMap (© OpenStreetMaps bidragsgivare, ODbL).",
+  "meny": [{ "namn": "Jourapotek", "href": "/jourapotek/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

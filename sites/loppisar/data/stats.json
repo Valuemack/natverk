@@ -1,0 +1,148 @@
+{
+ "generated": "2026-11-19T09:24:39.524Z",
+ "total": 1216,
+ "with_hours": 892,
+ "kommuner_covered": 259,
+ "per_kedja": {
+  "(oberoende)": 729,
+  "Röda Korset": 261,
+  "PMU Second Hand": 56,
+  "Stadsmissionen": 49,
+  "Erikshjälpen Second Hand": 47,
+  "Myrorna": 33,
+  "Hela Människan": 15,
+  "Emmaus": 14,
+  "Lindra Second Hand": 10,
+  "Frälsningsarmén": 1,
+  "Sackeus": 1
+ },
+ "per_typ": {
+  "second hand": 725,
+  "kupan": 261,
+  "loppis": 100,
+  "antikvariat": 53,
+  "återbruk": 28,
+  "vintage": 16,
+  "loppmarknad": 15,
+  "retro": 14,
+  "second hand outlet": 3,
+  "secondhand-varuhus": 1
+ },
+ "per_kommun_top": {
+  "Stockholm": 117,
+  "Göteborg": 70,
+  "Malmö": 35,
+  "Uppsala": 24,
+  "Linköping": 23,
+  "Gotland": 20,
+  "Norrköping": 15,
+  "Örnsköldsvik": 15,
+  "Karlstad": 13,
+  "Örebro": 13,
+  "Jönköping": 12,
+  "Solna": 12,
+  "Strängnäs": 12,
+  "Umeå": 12,
+  "Helsingborg": 11,
+  "Lund": 11,
+  "Nyköping": 11,
+  "Eskilstuna": 10,
+  "Gävle": 10,
+  "Halmstad": 10,
+  "Haninge": 10,
+  "Sandviken": 10,
+  "Hudiksvall": 9,
+  "Ljungby": 9,
+  "Södertälje": 9
+ },
+ "coord_quality": {
+  "osm": 748,
+  "källa": 289,
+  "osm-adress": 52,
+  "google-maps-embed": 48,
+  "store-page-map": 47,
+  "osm-gata": 18,
+  "postnummer": 8,
+  "ort": 4,
+  "postnummer-område": 2
+ },
+ "multi_source": 246,
+ "excluded": {
+  "osm: kedjebutik saknas i kedjans lista": 33,
+  "osm: saknar namn": 54,
+  "saknar koordinater/geokodning": 3
+ },
+ "sources": [
+  {
+   "source": "emmaus",
+   "kedja": "Emmaus",
+   "url": "https://artikel2.se/second-hand-butiker-stockholm/",
+   "fetched": "2026-11-19T08:10:09.061Z",
+   "stores": 8,
+   "terms_note": "robots.txt: artikel2.se (WooCommerce/Yoast defaults) and bjorkafrihet.se (/wp-admin/, /?page_id=8917/) - store pages allowed. No användarvillkor found."
+  },
+  {
+   "source": "erikshjalpen",
+   "kedja": "Erikshjälpen Second Hand",
+   "url": "https://erikshjalpen.se/butiker/",
+   "fetched": "2026-11-19T08:17:30.986Z",
+   "stores": 50,
+   "terms_note": "robots.txt: only /wp/wp-admin/, /sok/, /search/ and ?s= disallowed; WP REST API is public. No terms of use for site content found."
+  },
+  {
+   "source": "helamanniskan",
+   "kedja": "Hela Människan",
+   "url": "https://helamanniskan.se/second-hand/",
+   "fetched": "2026-11-19T07:59:01.911Z",
+   "stores": 14,
+   "terms_note": "robots.txt: only /wp-admin/ disallowed. No användarvillkor page found."
+  },
+  {
+   "source": "humanbridge",
+   "kedja": "Lindra Second Hand",
+   "url": "https://lindra.se/vara-butiker/",
+   "fetched": "2026-11-19T08:10:33.254Z",
+   "stores": 10,
+   "terms_note": "robots.txt (lindra.se, humanbridge.se): only /wp-admin/ disallowed. No användarvillkor page found."
+  },
+  {
+   "source": "myrorna",
+   "kedja": "Myrorna",
+   "url": "https://www.myrorna.se/butiker/",
+   "fetched": "2026-11-19T08:00:04.890Z",
+   "stores": 33,
+   "terms_note": "robots.txt: only /wp/wp-admin/ disallowed; WP REST API requires login (not used). No användarvillkor page found."
+  },
+  {
+   "source": "pmu",
+   "kedja": "PMU Second Hand",
+   "url": "https://pmu.se/hitta-butik/",
+   "fetched": "2026-11-19T08:01:17.104Z",
+   "stores": 56,
+   "terms_note": "robots.txt: only /wp-admin/ disallowed. /landing/villkor/ covers only the gift shop (purchases/donations), not site content."
+  },
+  {
+   "source": "rodakorset",
+   "kedja": "Röda Korset",
+   "url": "https://www.rodakorset.se/second-hand/butiker/",
+   "fetched": "2026-11-19T08:07:00.190Z",
+   "stores": 261,
+   "terms_note": "robots.txt disallows /episerver/CMS/, /util/, /*?timeline=*, /test/*, /installningar/*, /checkout/* - list (?p=&s=) and /ort/... store pages allowed. No usage terms for site content found."
+  },
+  {
+   "source": "stadsmissionen",
+   "kedja": "Stadsmissionen",
+   "url": "https://www.stadsmissionen.se/second-hand/hitta-butik",
+   "fetched": "2026-11-19T08:08:15.099Z",
+   "stores": 42,
+   "terms_note": "robots.txt checked per site: stadsmissionen.se (Drupal defaults, store pages allowed), stadsmissionen.org, skanestadsmission.se, uppsalastadsmission.se, kalmarstadsmission.se, vasterasstadsmission.se (WP/Yoast defaults, all allowed). Only köpvillkor (webshop purchase terms) found, no usage terms."
+  },
+  {
+   "source": "osm",
+   "url": "https://download.geofabrik.de/europe/sweden-latest.osm.pbf",
+   "fetched": "2026-11-19T09:24:09.801Z",
+   "stores": 1095,
+   "license": "ODbL 1.0 - © OpenStreetMap contributors. Attribution required (\"© OpenStreetMap contributors\" with link to https://www.openstreetmap.org/copyright); a published derived database must be offered under ODbL."
+  }
+ ]
+}

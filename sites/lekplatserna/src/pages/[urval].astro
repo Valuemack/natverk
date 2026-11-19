@@ -1,0 +1,38 @@
+---
+// Urvalssidor: temalekplatser och lekplatser med viss utrustning, per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+import { URVAL } from "../urval.js";
+
+export function getStaticPaths() {
+  return Object.entries(URVAL).filter(([, u]) => KAT.enheter.filter(u.filter).length >= 5).map(([urval]) => ({ params: { urval } }));
+}
+const { urval } = Astro.params;
+const u = URVAL[urval];
+const st = KAT.enheter.filter(u.filter).sort((a, b) => b.egenSida - a.egenSida);
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: st.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const storst = rakna(st, (e) => e.kommun).slice(0, 3);
+const fragor = [
+  { fraga: u.fraga, svar: u.svar },
+  { fraga: `Var finns flest ${u.namn.toLowerCase()}?`, svar: `Flest finns i ${storst.map(([k, n]) => `${k} (${n})`).join(", ")}.` },
+];
+const andra = Object.entries(URVAL).filter(([s]) => s !== urval);
+---
+<Layout site={SITE} titel={u.titel(st.length)}
+  beskrivning={`${u.namn} i Sverige – alla ${st.length} per län och kommun med redskap och vägbeskrivning. ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: u.namn, href: `/${urval}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{u.h1}</h1>
+  <p class="svar">{u.intro(st.length, perLan.length)}</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="urval-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>{u.namn} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <h2>Fler urval</h2>
+  <ul class="kolumner">{andra.map(([s, a]) => <li><a href={`/${s}/`}>{a.namn}</a></li>)}</ul>
+  <p class="kalla">{KALLA}</p>
+</Layout>

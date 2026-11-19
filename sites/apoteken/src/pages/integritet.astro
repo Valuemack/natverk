@@ -1,0 +1,15 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../site.js";
+---
+<Layout site={SITE} titel={`Integritet och cookies – ${SITE.visningsnamn}`}
+  beskrivning={`Hur ${SITE.visningsnamn} hanterar cookies, annonser och personuppgifter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Integritet och cookies", href: "/integritet/" }]} uppdaterad={UPPDATERAD} noindex>
+  <h1>Integritet och cookies</h1>
+  <p>{SITE.visningsnamn} kräver ingen inloggning och sparar inga personuppgifter om dig i egna system. Funktionen "Hitta närmaste" använder din position bara i din egen webbläsare – den skickas aldrig till oss.</p>
+  <h2>Annonser och cookies</h2>
+  <p>Sajten finansieras med annonser från Google AdSense. Google och dess partner kan använda cookies för att visa och mäta annonser, och – om du samtycker – för att anpassa dem efter dina intressen. Du väljer själv i samtyckesrutan som visas vid första besöket och kan ändra ditt val via länken "Cookieinställningar" längst ner på sidan.</p>
+  <p>Läs mer: <a href="https://policies.google.com/technologies/partner-sites" rel="nofollow">policies.google.com/technologies/partner-sites</a>.</p>
+  <h2>Statistik</h2>
+  <p>Vi mäter anonymt hur sajten används för att kunna förbättra den.</p>
+</Layout>

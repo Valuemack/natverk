@@ -1,0 +1,22 @@
+{
+  "mapp": "parkeringar",
+  "namn": "Parkeringar",
+  "visningsnamn": "parkeringar.nu",
+  "url": "https://parkeringar.nu",
+  "tema": "trafik",
+  "tagline": "Parkering i hela Sverige",
+  "tjanstText": "Oberoende parkeringsguide · Uppgifter från kommuner, operatörer och OpenStreetMap",
+  "kallor": ["Kommunernas öppna data", "Parkeringsoperatörernas anläggningssidor", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Parkeringar i hela Sverige med pris per timme, öppettider, antal platser och laddplatser – parkeringshus, garage, pendlarparkeringar och gratis parkering. Uppdateras varje natt.",
+  "farg": "#1659a8",
+  "ord": { "sing": "parkering", "plur": "parkeringar", "art": "en" },
+  "schemaTyp": "ParkingFacility",
+  "titelOrd": "pris och öppettider",
+  "datafil": "../parkering-lek/data/parkeringar.json",
+  "dataSkript": "node ../parkering-lek/scripts/run-all.mjs",
+  "startTitel": "Parkering nära dig – pris, öppettider och lediga platser",
+  "startH1": "Hitta parkering nära dig",
+  "kallaText": "Källor: kommunernas öppna data, parkeringsoperatörernas webbplatser och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL). Kontrollera alltid skyltningen på plats.",
+  "harEgenSida": "(e) => !!(e.extra?.taxa || e.oppettider || (e.gatuadress && e.extra?.kapacitet))",
+  "meny": [{ "namn": "Parkeringshus", "href": "/parkeringshus/" }, { "namn": "Gratis parkering", "href": "/gratis-parkering/" }, { "namn": "Pendlarparkering", "href": "/pendlarparkering/" }, { "namn": "Om", "href": "/om/" }]
+}

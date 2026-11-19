@@ -1,0 +1,20 @@
+{
+  "mapp": "loppisar",
+  "namn": "Loppisar",
+  "visningsnamn": "loppisar.nu",
+  "url": "https://loppisar.nu",
+  "tema": "loppis",
+  "tagline": "Loppis och second hand i hela Sverige",
+  "tjanstText": "Oberoende guide till loppisar och second hand · Uppdateras varje natt",
+  "kallor": ["Organisationernas butikssök (Röda Korset, Erikshjälpen, Myrorna, Stadsmissionen m.fl.)", "© OpenStreetMap-bidragsgivare (ODbL)"],
+  "beskrivning": "Alla loppisar, second hand-butiker och Kupan i Sverige med adress och öppettider – hitta loppis nära dig. Uppdateras varje natt.",
+  "farg": "#9a4b14",
+  "ord": { "sing": "loppis", "plur": "loppisar", "art": "en" },
+  "schemaTyp": "Store",
+  "titelOrd": "öppettider",
+  "datafil": "data/butiker.json",
+  "startTitel": "Loppis nära dig – loppisar och second hand i Sverige",
+  "startH1": "Hitta loppis nära dig",
+  "kallaText": "Källor: välgörenhetsorganisationernas och kedjornas egna butiksuppgifter samt OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).",
+  "meny": [{ "namn": "Välgörenhet", "href": "/valgorenhet/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

@@ -1,0 +1,3192 @@
+[
+ {
+  "kommunkod": "0114",
+  "namn": "Upplands Väsby",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 7,
+   "lekplatser": 72,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0115",
+  "namn": "Vallentuna",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 31,
+   "lekplatser": 70,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0117",
+  "namn": "Österåker",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 29,
+   "lekplatser": 54,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0120",
+  "namn": "Värmdö",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 34,
+   "lekplatser": 116,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0123",
+  "namn": "Järfälla",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 18,
+   "lekplatser": 131,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0125",
+  "namn": "Ekerö",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 12,
+   "lekplatser": 38,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0126",
+  "namn": "Huddinge",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 23,
+   "lekplatser": 161,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0127",
+  "namn": "Botkyrka",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 33,
+   "lekplatser": 191,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0128",
+  "namn": "Salem",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 9,
+   "lekplatser": 84,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0136",
+  "namn": "Haninge",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 22,
+   "parkeringar": 20,
+   "lekplatser": 191,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0138",
+  "namn": "Tyresö",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 15,
+   "lekplatser": 90,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0139",
+  "namn": "Upplands-Bro",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 18,
+   "lekplatser": 81,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0140",
+  "namn": "Nykvarn",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 7,
+   "lekplatser": 15,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0160",
+  "namn": "Täby",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 19,
+   "lekplatser": 190,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0162",
+  "namn": "Danderyd",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 4,
+   "lekplatser": 58,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0163",
+  "namn": "Sollentuna",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 40,
+   "lekplatser": 248,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0180",
+  "namn": "Stockholm",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 65,
+   "parkeringar": 200,
+   "lekplatser": 1272,
+   "simhallar": 28
+  }
+ },
+ {
+  "kommunkod": "0181",
+  "namn": "Södertälje",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 25,
+   "parkeringar": 23,
+   "lekplatser": 192,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0182",
+  "namn": "Nacka",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 55,
+   "lekplatser": 327,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "0183",
+  "namn": "Sundbyberg",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 13,
+   "lekplatser": 96,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0184",
+  "namn": "Solna",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 24,
+   "lekplatser": 134,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "0186",
+  "namn": "Lidingö",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 15,
+   "lekplatser": 74,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0187",
+  "namn": "Vaxholm",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 2,
+   "lekplatser": 13,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0188",
+  "namn": "Norrtälje",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 24,
+   "parkeringar": 37,
+   "lekplatser": 59,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "0191",
+  "namn": "Sigtuna",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 18,
+   "parkeringar": 41,
+   "lekplatser": 29,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0192",
+  "namn": "Nynäshamn",
+  "lan": "Stockholms län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 13,
+   "lekplatser": 36,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0305",
+  "namn": "Håbo",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 4,
+   "lekplatser": 40,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0319",
+  "namn": "Älvkarleby",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 1,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0330",
+  "namn": "Knivsta",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 13,
+   "lekplatser": 29,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0331",
+  "namn": "Heby",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 6,
+   "lekplatser": 22,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0360",
+  "namn": "Tierp",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 7,
+   "lekplatser": 23,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "0380",
+  "namn": "Uppsala",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 49,
+   "parkeringar": 60,
+   "lekplatser": 579,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "0381",
+  "namn": "Enköping",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 19,
+   "parkeringar": 5,
+   "lekplatser": 53,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0382",
+  "namn": "Östhammar",
+  "lan": "Uppsala län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 12,
+   "lekplatser": 52,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "0428",
+  "namn": "Vingåker",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 0,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0461",
+  "namn": "Gnesta",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 4,
+   "lekplatser": 50,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0480",
+  "namn": "Nyköping",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 25,
+   "parkeringar": 21,
+   "lekplatser": 134,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0481",
+  "namn": "Oxelösund",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 2,
+   "lekplatser": 16,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0482",
+  "namn": "Flen",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 1,
+   "lekplatser": 26,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0483",
+  "namn": "Katrineholm",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 6,
+   "lekplatser": 54,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0484",
+  "namn": "Eskilstuna",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 23,
+   "parkeringar": 26,
+   "lekplatser": 253,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0486",
+  "namn": "Strängnäs",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 9,
+   "lekplatser": 88,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0488",
+  "namn": "Trosa",
+  "lan": "Södermanlands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 2,
+   "lekplatser": 10,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0509",
+  "namn": "Ödeshög",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 3,
+   "lekplatser": 6,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0512",
+  "namn": "Ydre",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 4,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0513",
+  "namn": "Kinda",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 6,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0560",
+  "namn": "Boxholm",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 5,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0561",
+  "namn": "Åtvidaberg",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 4,
+   "lekplatser": 27,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0562",
+  "namn": "Finspång",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 5,
+   "lekplatser": 19,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0563",
+  "namn": "Valdemarsvik",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 4,
+   "lekplatser": 6,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0580",
+  "namn": "Linköping",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 40,
+   "parkeringar": 83,
+   "lekplatser": 687,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "0581",
+  "namn": "Norrköping",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 44,
+   "parkeringar": 25,
+   "lekplatser": 213,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0582",
+  "namn": "Söderköping",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 6,
+   "lekplatser": 39,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0583",
+  "namn": "Motala",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 18,
+   "parkeringar": 18,
+   "lekplatser": 98,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0584",
+  "namn": "Vadstena",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 1,
+   "parkeringar": 2,
+   "lekplatser": 15,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0586",
+  "namn": "Mjölby",
+  "lan": "Östergötlands län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 2,
+   "lekplatser": 63,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0604",
+  "namn": "Aneby",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0617",
+  "namn": "Gnosjö",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 4,
+   "lekplatser": 6,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0642",
+  "namn": "Mullsjö",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 10,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0643",
+  "namn": "Habo",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 2,
+   "lekplatser": 16,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0662",
+  "namn": "Gislaved",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 19,
+   "parkeringar": 6,
+   "lekplatser": 50,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "0665",
+  "namn": "Vaggeryd",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 9,
+   "lekplatser": 28,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0680",
+  "namn": "Jönköping",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 47,
+   "parkeringar": 50,
+   "lekplatser": 198,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "0682",
+  "namn": "Nässjö",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 4,
+   "lekplatser": 24,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0683",
+  "namn": "Värnamo",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 24,
+   "lekplatser": 104,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0684",
+  "namn": "Sävsjö",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 1,
+   "lekplatser": 26,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0685",
+  "namn": "Vetlanda",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 4,
+   "lekplatser": 27,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0686",
+  "namn": "Eksjö",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 6,
+   "lekplatser": 45,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0687",
+  "namn": "Tranås",
+  "lan": "Jönköpings län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 5,
+   "lekplatser": 14,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0760",
+  "namn": "Uppvidinge",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 2,
+   "lekplatser": 15,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0761",
+  "namn": "Lessebo",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 1,
+   "lekplatser": 7,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0763",
+  "namn": "Tingsryd",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 2,
+   "lekplatser": 27,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "0764",
+  "namn": "Alvesta",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 6,
+   "lekplatser": 9,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0765",
+  "namn": "Älmhult",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 4,
+   "lekplatser": 22,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0767",
+  "namn": "Markaryd",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 2,
+   "lekplatser": 5,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0780",
+  "namn": "Växjö",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 38,
+   "parkeringar": 24,
+   "lekplatser": 161,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0781",
+  "namn": "Ljungby",
+  "lan": "Kronobergs län",
+  "antal": {
+   "bensinstationer": 22,
+   "parkeringar": 11,
+   "lekplatser": 54,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0821",
+  "namn": "Högsby",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 1,
+   "lekplatser": 4,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0834",
+  "namn": "Torsås",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 0,
+   "lekplatser": 5,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0840",
+  "namn": "Mörbylånga",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 10,
+   "lekplatser": 31,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0860",
+  "namn": "Hultsfred",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 4,
+   "lekplatser": 30,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "0861",
+  "namn": "Mönsterås",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 3,
+   "lekplatser": 15,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0862",
+  "namn": "Emmaboda",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 1,
+   "lekplatser": 15,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0880",
+  "namn": "Kalmar",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 26,
+   "parkeringar": 19,
+   "lekplatser": 99,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0881",
+  "namn": "Nybro",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 1,
+   "lekplatser": 29,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0882",
+  "namn": "Oskarshamn",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 10,
+   "lekplatser": 27,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0883",
+  "namn": "Västervik",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 20,
+   "parkeringar": 15,
+   "lekplatser": 45,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "0884",
+  "namn": "Vimmerby",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 10,
+   "lekplatser": 21,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0885",
+  "namn": "Borgholm",
+  "lan": "Kalmar län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 11,
+   "lekplatser": 20,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "0980",
+  "namn": "Gotland",
+  "lan": "Gotlands län",
+  "antal": {
+   "bensinstationer": 30,
+   "parkeringar": 14,
+   "lekplatser": 100,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1060",
+  "namn": "Olofström",
+  "lan": "Blekinge län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 15,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1080",
+  "namn": "Karlskrona",
+  "lan": "Blekinge län",
+  "antal": {
+   "bensinstationer": 28,
+   "parkeringar": 61,
+   "lekplatser": 107,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1081",
+  "namn": "Ronneby",
+  "lan": "Blekinge län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 58,
+   "lekplatser": 45,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "1082",
+  "namn": "Karlshamn",
+  "lan": "Blekinge län",
+  "antal": {
+   "bensinstationer": 20,
+   "parkeringar": 29,
+   "lekplatser": 34,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1083",
+  "namn": "Sölvesborg",
+  "lan": "Blekinge län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 16,
+   "lekplatser": 34,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1214",
+  "namn": "Svalöv",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 3,
+   "lekplatser": 57,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1230",
+  "namn": "Staffanstorp",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 9,
+   "lekplatser": 60,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1231",
+  "namn": "Burlöv",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 1,
+   "lekplatser": 77,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1233",
+  "namn": "Vellinge",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 6,
+   "lekplatser": 121,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1256",
+  "namn": "Östra Göinge",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 3,
+   "lekplatser": 13,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1257",
+  "namn": "Örkelljunga",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 0,
+   "lekplatser": 11,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1260",
+  "namn": "Bjuv",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 1,
+   "lekplatser": 26,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1261",
+  "namn": "Kävlinge",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 6,
+   "lekplatser": 101,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1262",
+  "namn": "Lomma",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 2,
+   "lekplatser": 100,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1263",
+  "namn": "Svedala",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 13,
+   "lekplatser": 135,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1264",
+  "namn": "Skurup",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 2,
+   "lekplatser": 47,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1265",
+  "namn": "Sjöbo",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 4,
+   "lekplatser": 41,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1266",
+  "namn": "Hörby",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 8,
+   "lekplatser": 19,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1267",
+  "namn": "Höör",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 10,
+   "lekplatser": 31,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1270",
+  "namn": "Tomelilla",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 0,
+   "lekplatser": 11,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1272",
+  "namn": "Bromölla",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 0,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1273",
+  "namn": "Osby",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 3,
+   "lekplatser": 22,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1275",
+  "namn": "Perstorp",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 35,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1276",
+  "namn": "Klippan",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 0,
+   "lekplatser": 18,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1277",
+  "namn": "Åstorp",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 0,
+   "lekplatser": 28,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1278",
+  "namn": "Båstad",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 5,
+   "lekplatser": 32,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1280",
+  "namn": "Malmö",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 53,
+   "parkeringar": 139,
+   "lekplatser": 772,
+   "simhallar": 6
+  }
+ },
+ {
+  "kommunkod": "1281",
+  "namn": "Lund",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 20,
+   "parkeringar": 60,
+   "lekplatser": 472,
+   "simhallar": 6
+  }
+ },
+ {
+  "kommunkod": "1282",
+  "namn": "Landskrona",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 4,
+   "lekplatser": 82,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1283",
+  "namn": "Helsingborg",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 32,
+   "parkeringar": 39,
+   "lekplatser": 632,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1284",
+  "namn": "Höganäs",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 17,
+   "lekplatser": 63,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1285",
+  "namn": "Eslöv",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 2,
+   "lekplatser": 93,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1286",
+  "namn": "Ystad",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 3,
+   "lekplatser": 58,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1287",
+  "namn": "Trelleborg",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 5,
+   "lekplatser": 157,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1290",
+  "namn": "Kristianstad",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 42,
+   "parkeringar": 10,
+   "lekplatser": 75,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1291",
+  "namn": "Simrishamn",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 17,
+   "lekplatser": 23,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1292",
+  "namn": "Ängelholm",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 12,
+   "lekplatser": 68,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1293",
+  "namn": "Hässleholm",
+  "lan": "Skåne län",
+  "antal": {
+   "bensinstationer": 19,
+   "parkeringar": 13,
+   "lekplatser": 76,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1315",
+  "namn": "Hylte",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 0,
+   "lekplatser": 7,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1380",
+  "namn": "Halmstad",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 34,
+   "parkeringar": 62,
+   "lekplatser": 233,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1381",
+  "namn": "Laholm",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 4,
+   "lekplatser": 30,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "1382",
+  "namn": "Falkenberg",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 21,
+   "parkeringar": 5,
+   "lekplatser": 89,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1383",
+  "namn": "Varberg",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 22,
+   "parkeringar": 12,
+   "lekplatser": 135,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1384",
+  "namn": "Kungsbacka",
+  "lan": "Hallands län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 12,
+   "lekplatser": 171,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1401",
+  "namn": "Härryda",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 18,
+   "lekplatser": 53,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1402",
+  "namn": "Partille",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 9,
+   "lekplatser": 149,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1407",
+  "namn": "Öckerö",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 1,
+   "lekplatser": 20,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1415",
+  "namn": "Stenungsund",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 5,
+   "lekplatser": 21,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1419",
+  "namn": "Tjörn",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 4,
+   "lekplatser": 17,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1421",
+  "namn": "Orust",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 6,
+   "lekplatser": 11,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1427",
+  "namn": "Sotenäs",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 5,
+   "lekplatser": 31,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1430",
+  "namn": "Munkedal",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 8,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1435",
+  "namn": "Tanum",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 6,
+   "lekplatser": 29,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1438",
+  "namn": "Dals-Ed",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 3,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1439",
+  "namn": "Färgelanda",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 3,
+   "lekplatser": 11,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1440",
+  "namn": "Ale",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 2,
+   "lekplatser": 70,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1441",
+  "namn": "Lerum",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 8,
+   "lekplatser": 80,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1442",
+  "namn": "Vårgårda",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 5,
+   "lekplatser": 56,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1443",
+  "namn": "Bollebygd",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 3,
+   "lekplatser": 5,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1444",
+  "namn": "Grästorp",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 1,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1445",
+  "namn": "Essunga",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 1,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1446",
+  "namn": "Karlsborg",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 4,
+   "lekplatser": 12,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1447",
+  "namn": "Gullspång",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 0,
+   "lekplatser": 5,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1452",
+  "namn": "Tranemo",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 1,
+   "lekplatser": 16,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1460",
+  "namn": "Bengtsfors",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 1,
+   "lekplatser": 14,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1461",
+  "namn": "Mellerud",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 9,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1462",
+  "namn": "Lilla Edet",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 0,
+   "lekplatser": 21,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1463",
+  "namn": "Mark",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 4,
+   "lekplatser": 36,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1465",
+  "namn": "Svenljunga",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 3,
+   "lekplatser": 21,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1466",
+  "namn": "Herrljunga",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 10,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1470",
+  "namn": "Vara",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 3,
+   "lekplatser": 16,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1471",
+  "namn": "Götene",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 2,
+   "lekplatser": 20,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1472",
+  "namn": "Tibro",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 0,
+   "lekplatser": 9,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1473",
+  "namn": "Töreboda",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 1,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1480",
+  "namn": "Göteborg",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 101,
+   "parkeringar": 203,
+   "lekplatser": 1266,
+   "simhallar": 10
+  }
+ },
+ {
+  "kommunkod": "1481",
+  "namn": "Mölndal",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 28,
+   "lekplatser": 240,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1482",
+  "namn": "Kungälv",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 14,
+   "lekplatser": 166,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1484",
+  "namn": "Lysekil",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 17,
+   "lekplatser": 14,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "1485",
+  "namn": "Uddevalla",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 22,
+   "parkeringar": 20,
+   "lekplatser": 102,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1486",
+  "namn": "Strömstad",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 11,
+   "lekplatser": 13,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1487",
+  "namn": "Vänersborg",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 8,
+   "lekplatser": 109,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1488",
+  "namn": "Trollhättan",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 31,
+   "lekplatser": 173,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1489",
+  "namn": "Alingsås",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 9,
+   "lekplatser": 55,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1490",
+  "namn": "Borås",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 38,
+   "parkeringar": 28,
+   "lekplatser": 111,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "1491",
+  "namn": "Ulricehamn",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 7,
+   "lekplatser": 64,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1492",
+  "namn": "Åmål",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 2,
+   "lekplatser": 11,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1493",
+  "namn": "Mariestad",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 19,
+   "parkeringar": 5,
+   "lekplatser": 30,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1494",
+  "namn": "Lidköping",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 13,
+   "lekplatser": 48,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1495",
+  "namn": "Skara",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 4,
+   "lekplatser": 46,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1496",
+  "namn": "Skövde",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 46,
+   "lekplatser": 251,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1497",
+  "namn": "Hjo",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 14,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1498",
+  "namn": "Tidaholm",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 1,
+   "parkeringar": 1,
+   "lekplatser": 28,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1499",
+  "namn": "Falköping",
+  "lan": "Västra Götalands län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 53,
+   "lekplatser": 55,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1715",
+  "namn": "Kil",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 18,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1730",
+  "namn": "Eda",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 0,
+   "lekplatser": 9,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1737",
+  "namn": "Torsby",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 6,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1760",
+  "namn": "Storfors",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 1,
+   "parkeringar": 2,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1761",
+  "namn": "Hammarö",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 27,
+   "lekplatser": 65,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1762",
+  "namn": "Munkfors",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 0,
+   "lekplatser": 4,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1763",
+  "namn": "Forshaga",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 3,
+   "lekplatser": 51,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1764",
+  "namn": "Grums",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 0,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1765",
+  "namn": "Årjäng",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 3,
+   "lekplatser": 23,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1766",
+  "namn": "Sunne",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 8,
+   "lekplatser": 13,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1780",
+  "namn": "Karlstad",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 23,
+   "parkeringar": 62,
+   "lekplatser": 272,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "1781",
+  "namn": "Kristinehamn",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 3,
+   "lekplatser": 15,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1782",
+  "namn": "Filipstad",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 1,
+   "lekplatser": 5,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1783",
+  "namn": "Hagfors",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 2,
+   "lekplatser": 15,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "1784",
+  "namn": "Arvika",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 8,
+   "lekplatser": 37,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1785",
+  "namn": "Säffle",
+  "lan": "Värmlands län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 3,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1814",
+  "namn": "Lekeberg",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 8,
+   "lekplatser": 10,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1860",
+  "namn": "Laxå",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 7,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1861",
+  "namn": "Hallsberg",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 2,
+   "lekplatser": 26,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1862",
+  "namn": "Degerfors",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 2,
+   "lekplatser": 13,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1863",
+  "namn": "Hällefors",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 4,
+   "lekplatser": 10,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1864",
+  "namn": "Ljusnarsberg",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 8,
+   "lekplatser": 6,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1880",
+  "namn": "Örebro",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 32,
+   "parkeringar": 61,
+   "lekplatser": 324,
+   "simhallar": 9
+  }
+ },
+ {
+  "kommunkod": "1881",
+  "namn": "Kumla",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 5,
+   "lekplatser": 61,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1882",
+  "namn": "Askersund",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 10,
+   "lekplatser": 23,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1883",
+  "namn": "Karlskoga",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 6,
+   "lekplatser": 42,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1884",
+  "namn": "Nora",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 3,
+   "lekplatser": 13,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "1885",
+  "namn": "Lindesberg",
+  "lan": "Örebro län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 2,
+   "lekplatser": 32,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1904",
+  "namn": "Skinnskatteberg",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 12,
+   "lekplatser": 1,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1907",
+  "namn": "Surahammar",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 7,
+   "lekplatser": 12,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1960",
+  "namn": "Kungsör",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 0,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1961",
+  "namn": "Hallstahammar",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 2,
+   "lekplatser": 24,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "1962",
+  "namn": "Norberg",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 3,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "1980",
+  "namn": "Västerås",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 36,
+   "parkeringar": 23,
+   "lekplatser": 341,
+   "simhallar": 6
+  }
+ },
+ {
+  "kommunkod": "1981",
+  "namn": "Sala",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 5,
+   "lekplatser": 53,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1982",
+  "namn": "Fagersta",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 6,
+   "lekplatser": 10,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1983",
+  "namn": "Köping",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 9,
+   "lekplatser": 87,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "1984",
+  "namn": "Arboga",
+  "lan": "Västmanlands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 0,
+   "lekplatser": 26,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2021",
+  "namn": "Vansbro",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 0,
+   "lekplatser": 0,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2023",
+  "namn": "Malung-Sälen",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 17,
+   "parkeringar": 6,
+   "lekplatser": 10,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2026",
+  "namn": "Gagnef",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 5,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2029",
+  "namn": "Leksand",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 6,
+   "lekplatser": 13,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2031",
+  "namn": "Rättvik",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 3,
+   "lekplatser": 3,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2034",
+  "namn": "Orsa",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 18,
+   "lekplatser": 7,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2039",
+  "namn": "Älvdalen",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 14,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2061",
+  "namn": "Smedjebacken",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 15,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2062",
+  "namn": "Mora",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 5,
+   "lekplatser": 48,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2080",
+  "namn": "Falun",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 25,
+   "parkeringar": 28,
+   "lekplatser": 159,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2081",
+  "namn": "Borlänge",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 22,
+   "parkeringar": 18,
+   "lekplatser": 86,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2082",
+  "namn": "Säter",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 7,
+   "lekplatser": 25,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2083",
+  "namn": "Hedemora",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 7,
+   "lekplatser": 8,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2084",
+  "namn": "Avesta",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 2,
+   "lekplatser": 9,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2085",
+  "namn": "Ludvika",
+  "lan": "Dalarnas län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 13,
+   "lekplatser": 31,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "2101",
+  "namn": "Ockelbo",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 1,
+   "lekplatser": 14,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2104",
+  "namn": "Hofors",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 0,
+   "lekplatser": 10,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2121",
+  "namn": "Ovanåker",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 2,
+   "lekplatser": 21,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2132",
+  "namn": "Nordanstig",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 9,
+   "parkeringar": 1,
+   "lekplatser": 9,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2161",
+  "namn": "Ljusdal",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 3,
+   "lekplatser": 29,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2180",
+  "namn": "Gävle",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 34,
+   "parkeringar": 28,
+   "lekplatser": 358,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2181",
+  "namn": "Sandviken",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 16,
+   "parkeringar": 2,
+   "lekplatser": 98,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2182",
+  "namn": "Söderhamn",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 3,
+   "lekplatser": 74,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2183",
+  "namn": "Bollnäs",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 1,
+   "lekplatser": 50,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2184",
+  "namn": "Hudiksvall",
+  "lan": "Gävleborgs län",
+  "antal": {
+   "bensinstationer": 23,
+   "parkeringar": 9,
+   "lekplatser": 77,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2260",
+  "namn": "Ånge",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 3,
+   "lekplatser": 2,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2262",
+  "namn": "Timrå",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 13,
+   "lekplatser": 44,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2280",
+  "namn": "Härnösand",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 14,
+   "lekplatser": 42,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2281",
+  "namn": "Sundsvall",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 47,
+   "parkeringar": 77,
+   "lekplatser": 335,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "2282",
+  "namn": "Kramfors",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 12,
+   "lekplatser": 35,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2283",
+  "namn": "Sollefteå",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 3,
+   "lekplatser": 20,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2284",
+  "namn": "Örnsköldsvik",
+  "lan": "Västernorrlands län",
+  "antal": {
+   "bensinstationer": 30,
+   "parkeringar": 28,
+   "lekplatser": 60,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "2303",
+  "namn": "Ragunda",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 1,
+   "lekplatser": 8,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2305",
+  "namn": "Bräcke",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 1,
+   "lekplatser": 4,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2309",
+  "namn": "Krokom",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 2,
+   "lekplatser": 9,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2313",
+  "namn": "Strömsund",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 14,
+   "parkeringar": 5,
+   "lekplatser": 4,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2321",
+  "namn": "Åre",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 25,
+   "lekplatser": 18,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2326",
+  "namn": "Berg",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 5,
+   "lekplatser": 1,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2361",
+  "namn": "Härjedalen",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 15,
+   "parkeringar": 6,
+   "lekplatser": 19,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2380",
+  "namn": "Östersund",
+  "lan": "Jämtlands län",
+  "antal": {
+   "bensinstationer": 28,
+   "parkeringar": 16,
+   "lekplatser": 114,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "2401",
+  "namn": "Nordmaling",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 0,
+   "lekplatser": 8,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2403",
+  "namn": "Bjurholm",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 3,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2404",
+  "namn": "Vindeln",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 6,
+   "lekplatser": 6,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2409",
+  "namn": "Robertsfors",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 12,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2417",
+  "namn": "Norsjö",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 0,
+   "lekplatser": 20,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2418",
+  "namn": "Malå",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 3,
+   "parkeringar": 1,
+   "lekplatser": 4,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2421",
+  "namn": "Storuman",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 3,
+   "lekplatser": 6,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2422",
+  "namn": "Sorsele",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 4,
+   "lekplatser": 2,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2425",
+  "namn": "Dorotea",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 2,
+   "parkeringar": 1,
+   "lekplatser": 1,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2460",
+  "namn": "Vännäs",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 0,
+   "lekplatser": 14,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2462",
+  "namn": "Vilhelmina",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 8,
+   "parkeringar": 3,
+   "lekplatser": 3,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2463",
+  "namn": "Åsele",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 0,
+   "lekplatser": 4,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2480",
+  "namn": "Umeå",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 35,
+   "parkeringar": 27,
+   "lekplatser": 486,
+   "simhallar": 8
+  }
+ },
+ {
+  "kommunkod": "2481",
+  "namn": "Lycksele",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 7,
+   "lekplatser": 19,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2482",
+  "namn": "Skellefteå",
+  "lan": "Västerbottens län",
+  "antal": {
+   "bensinstationer": 28,
+   "parkeringar": 6,
+   "lekplatser": 91,
+   "simhallar": 7
+  }
+ },
+ {
+  "kommunkod": "2505",
+  "namn": "Arvidsjaur",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 3,
+   "lekplatser": 12,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2506",
+  "namn": "Arjeplog",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 7,
+   "parkeringar": 240,
+   "lekplatser": 6,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2510",
+  "namn": "Jokkmokk",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 10,
+   "parkeringar": 6,
+   "lekplatser": 3,
+   "simhallar": 0
+  }
+ },
+ {
+  "kommunkod": "2513",
+  "namn": "Överkalix",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 2,
+   "lekplatser": 1,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2514",
+  "namn": "Kalix",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 12,
+   "parkeringar": 11,
+   "lekplatser": 24,
+   "simhallar": 2
+  }
+ },
+ {
+  "kommunkod": "2518",
+  "namn": "Övertorneå",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 6,
+   "lekplatser": 14,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2521",
+  "namn": "Pajala",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 6,
+   "parkeringar": 4,
+   "lekplatser": 4,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2523",
+  "namn": "Gällivare",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 11,
+   "parkeringar": 8,
+   "lekplatser": 51,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2560",
+  "namn": "Älvsbyn",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 4,
+   "parkeringar": 2,
+   "lekplatser": 14,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2580",
+  "namn": "Luleå",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 26,
+   "parkeringar": 22,
+   "lekplatser": 159,
+   "simhallar": 5
+  }
+ },
+ {
+  "kommunkod": "2581",
+  "namn": "Piteå",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 19,
+   "parkeringar": 11,
+   "lekplatser": 54,
+   "simhallar": 4
+  }
+ },
+ {
+  "kommunkod": "2582",
+  "namn": "Boden",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 6,
+   "lekplatser": 65,
+   "simhallar": 3
+  }
+ },
+ {
+  "kommunkod": "2583",
+  "namn": "Haparanda",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 5,
+   "parkeringar": 3,
+   "lekplatser": 11,
+   "simhallar": 1
+  }
+ },
+ {
+  "kommunkod": "2584",
+  "namn": "Kiruna",
+  "lan": "Norrbottens län",
+  "antal": {
+   "bensinstationer": 13,
+   "parkeringar": 21,
+   "lekplatser": 23,
+   "simhallar": 4
+  }
+ }
+]

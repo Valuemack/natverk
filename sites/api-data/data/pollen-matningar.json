@@ -1,0 +1,1612 @@
+{
+  "_meta": {
+    "hamtad": "2026-11-19T04:02:47.626Z",
+    "kalla": "Palynologiska laboratoriet, Naturhistoriska riksmuseet",
+    "api": "https://api.pollenrapporten.se/v1",
+    "licens": "CC BY-SA 4.0",
+    "fran": "2026-11-12",
+    "till": "2026-11-19"
+  },
+  "matningar": [
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 1,
+      "beskrivning": "Låga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-12",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-13",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-14",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 1,
+      "beskrivning": "Låga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 1,
+      "beskrivning": "Låga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-15",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a38",
+      "region": "Göteborg",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-16",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "pollen": "Hassel",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "pollen": "Al",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "pollen": "Tall",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "pollen": "Sälg och viden",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "pollen": "Alm",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "pollen": "Björk",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "pollen": "Bok",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "pollen": "Ek",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "pollen": "Gran",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "pollen": "Gräs",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "pollen": "Gråbo",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "pollen": "Malörtsambrosia",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "pollen": "Alternaria",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "pollen": "Cladosporium",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    },
+    {
+      "datum": "2026-11-17",
+      "region_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a2a2a303a32",
+      "region": "Stockholm",
+      "pollen_id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "pollen": "Epicoccum",
+      "dygnsvarde": 0,
+      "beskrivning": "Inga halter",
+      "tekniskt_fel": false
+    }
+  ]
+}

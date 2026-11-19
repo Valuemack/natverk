@@ -1,0 +1,46 @@
+---
+// Klientskript: fyller i "Öppet nu"/"Stängt nu" och markerar dagens rad i öppettidstabeller.
+// Allt i statisk HTML är dagsoberoende (så sidorna bara ändras när datan ändras); dagens status
+// räknas här i webbläsaren efter svensk tid.
+---
+<script is:inline>
+(() => {
+  const D = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  const NAMN = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    .formatToParts(new Date()).map((x) => [x.type, x.value]));
+  const dag = D.indexOf(p.weekday.toLowerCase().slice(0, 3));
+  const min = +p.hour * 60 + +p.minute;
+  const iv = (v) => {
+    if (v == null || v === "") return null;
+    if (/^stängt$/i.test(v)) return [];
+    return String(v).split(/\s*,\s*/).map((d) => {
+      const [a, b] = d.split(/\s*[-–]\s*/).map((t) => { const m = /^(\d{1,2})[:.](\d{2})$/.exec(t || ""); return m ? +m[1] * 60 + +m[2] : NaN; });
+      return [a, b <= a ? b + 1440 : b];
+    }).filter(([a, b]) => !isNaN(a) && !isNaN(b));
+  };
+  const kl = (m) => { const h = Math.floor(m / 60) % 24, mm = m % 60; return `${String(h).padStart(2, "0")}.${String(mm).padStart(2, "0")}`; };
+  for (const el of document.querySelectorAll("[data-tider]")) {
+    let t; try { t = JSON.parse(el.dataset.tider); } catch { continue; }
+    const idag = iv(t[D[dag]]), igar = iv(t[D[(dag + 6) % 7]]);
+    if (idag === null) continue;
+    const nu = idag.find(([a, b]) => min >= a && min < b) || (igar || []).filter(([, b]) => b > 1440 && min < b - 1440).map(([a, b]) => [a - 1440, b - 1440])[0];
+    if (nu) {
+      el.textContent = nu[1] - nu[0] >= 1439 ? "Öppet dygnet runt" : `Öppet nu · stänger ${kl(nu[1])}`;
+      el.classList.add("ja");
+    } else {
+      let text = "Stängt nu";
+      const senare = idag.find(([a]) => a > min);
+      if (senare) text += ` · öppnar ${kl(senare[0])}`;
+      else for (let i = 1; i <= 7; i++) {
+        const n = iv(t[D[(dag + i) % 7]]);
+        if (n && n.length) { text += ` · öppnar ${i === 1 ? "imorgon" : NAMN[(dag + i) % 7]} ${kl(n[0][0])}`; break; }
+      }
+      el.textContent = text;
+      el.classList.add("nej");
+    }
+    el.hidden = false;
+  }
+  for (const rad of document.querySelectorAll(`[data-dag="${D[dag]}"]`)) rad.classList.add("markerad");
+})();
+</script>

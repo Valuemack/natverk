@@ -1,0 +1,21 @@
+{
+  "mapp": "komvux",
+  "namn": "Komvux",
+  "visningsnamn": "komvux.nu",
+  "url": "https://komvux.nu",
+  "tema": "vuxen",
+  "tagline": "Komvux och sfi i alla kommuner",
+  "tjanstText": "Oberoende guide till vuxenutbildning · Uppgifter från Skolverket",
+  "kallor": ["Skolverket, Skolenhetsregistret", "Skolverket, kommunala jämförelsetal"],
+  "beskrivning": "Komvux och sfi i alla Sveriges kommuner – skolor, utbildningsnivåer, distansstudier och statistik från Skolverket. Uppdateras varje natt.",
+  "farg": "#3b3f8f",
+  "ord": { "sing": "komvuxskola", "plur": "komvuxskolor", "art": "en" },
+  "schemaTyp": "EducationalOrganization",
+  "titelOrd": "adress och utbildningar",
+  "datafil": "../skolor/data/komvux.json",
+  "startTitel": "Komvux i din kommun – skolor, sfi och distans",
+  "startH1": "Hitta komvux i din kommun",
+  "kallaText": "Källor: Skolverket (Skolenhetsregistret och kommunala jämförelsetal). Ansökan till komvux görs alltid hos din hemkommun.",
+  "harEgenSida": "(e) => !!e.gatuadress",
+  "meny": [{ "namn": "Sfi", "href": "/sfi/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

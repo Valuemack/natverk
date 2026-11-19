@@ -1,0 +1,43 @@
+---
+// Pollenkalender för hela landet: när varje pollenslag brukar börja på varje ort.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, KALLA, KALLA_NRM, REGIONER, TYPER, kalenderFor, KALENDER_AR, mmdd } from "../site.js";
+
+const arText = KALENDER_AR.length ? `${KALENDER_AR[0]}–${KALENDER_AR.at(-1)}` : "";
+// Pollenslag i den ordning de brukar börja (median över orterna).
+const median = (a) => { const s = [...a].sort(); return s[s.length >> 1]; };
+const typer = TYPER.map((t) => ({ t, start: median(REGIONER.map((r) => kalenderFor(r, t)?.typisk_start).filter(Boolean)) }))
+  .filter((x) => x.start).sort((a, b) => a.start.localeCompare(b.start));
+const MAN = ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September"];
+const perManad = MAN.map((m, i) => ({ m, typer: typer.filter((x) => +x.start.slice(0, 2) === i + 1) })).filter((x) => x.typer.length);
+const fragor = [
+  { fraga: "När börjar pollensäsongen i Sverige?", svar: `Säsongen börjar med ${typer[0]?.t.namn.toLowerCase() ?? "hassel"} i södra Sverige, oftast i februari eller mars beroende på vädret. I norra Sverige börjar den flera veckor senare.` },
+  { fraga: "Vilka månader är värst för pollenallergiker?", svar: "Maj är oftast värst eftersom björken blommar då. Gräset tar över från juni och håller i sig till augusti. Ambrosia och gråbo kan ge besvär i augusti och september." },
+  { fraga: "Hur är pollenkalendern framtagen?", svar: `Den bygger på Naturhistoriska riksmuseets uppmätta dygnsvärden för ${arText}. För varje ort och pollenslag räknar vi säsongen som dagarna mellan 5 och 95 procent av årets totala pollenmängd och tar medianen över åren.` },
+];
+---
+<Layout site={SITE} titel={`Pollenkalender – när kommer björk, gräs och hassel?`}
+  beskrivning={`Pollenkalender för 23 orter i Sverige: när hassel, al, björk, gräs och fler pollenslag brukar börja, toppa och ta slut. Räknad från uppmätta halter ${arText}.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Pollenkalender", href: "/pollenkalender/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Pollenkalender för Sverige</h1>
+  <p class="svar">Pollensäsongen börjar i söder och flyttar norrut. Tabellerna visar när säsongen för varje pollenslag brukar börja på varje ort, räknat från uppmätta halter {arText}.</p>
+
+  <h2>Pollenslagen månad för månad</h2>
+  <ul>{perManad.map((x) => <li><strong>{x.m}:</strong> {x.typer.map((y, i) => <>{i > 0 && ", "}<a href={`/pollen/${y.t.slug}/`}>{y.t.namn.toLowerCase()}</a></>)}</li>)}</ul>
+  <p class="kalla">Månaden då säsongen brukar börja, median över alla mätorter.</p>
+
+  <Annons plats="kalender-1" />
+
+  <h2>Säsongsstart per ort</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th>{typer.map((x) => <th><a href={`/pollen/${x.t.slug}/`}>{x.t.namn}</a></th>)}</tr></thead>
+    <tbody>{[...REGIONER].reverse().map((r) => <tr><td><a href={`/${r.slug}/#kalender`}>{r.namn}</a></td>{typer.map((x) => <td>{mmdd(kalenderFor(r, x.t)?.typisk_start, false)}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Orterna står från söder till norr. Bearbetning av uppmätta halter från {KALLA_NRM} (CC BY-SA 4.0).</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

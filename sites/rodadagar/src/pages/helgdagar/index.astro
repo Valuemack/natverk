@@ -1,0 +1,26 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { kort, veckodag, versal } from "@natverk/core/datum.js";
+import { HELGDAGAR, nastaForekomst } from "../../lib/helgdagar.js";
+import { SITE, IDAG, UPPDATERAD } from "../../site.js";
+
+const rader = HELGDAGAR.map((h) => ({ h, d: nastaForekomst(h, IDAG) }));
+---
+<Layout site={SITE} titel="Alla svenska helgdagar – lista med datum och regler"
+  beskrivning="Lista över alla allmänna helgdagar och helgaftnar i Sverige: nästa datum, veckodag och hur datumet räknas ut enligt lag."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Alla helgdagar i Sverige</h1>
+  <p class="svar">Sverige har <strong>13 allmänna helgdagar</strong> enligt lag (1989:253), plus alla söndagar. Midsommarafton, julafton och nyårsafton är helgaftnar som jämställs med söndag i semesterlagen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Helgdag</th><th>Nästa gång</th><th>Så räknas datumet</th></tr></thead>
+    <tbody>{rader.map(({ h, d }) => (
+      <tr>
+        <td><a href={`/${h.slug}/`}>{h.namn}</a> {h.typ === "rod" ? <span class="etikett rod">Röd dag</span> : <span class="etikett">Helgafton</span>}</td>
+        <td>{versal(veckodag(d))} {kort(d)} {d.getUTCFullYear()}</td>
+        <td>{h.regel.split(". ")[0]}.</td>
+      </tr>
+    ))}</tbody>
+  </table></div>
+  <Annons plats="helgdagar-1" />
+</Layout>

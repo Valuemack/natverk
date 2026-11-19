@@ -1,0 +1,1532 @@
+[
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen Second Hand",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Gästgivaregatan 4",
+  "ort": "Vrigstad",
+  "lat": 57.356691,
+  "lon": 14.47647,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/882311414",
+    "url": "https://www.openstreetmap.org/node/882311414",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Kupan",
+  "kedja": "Röda Korset",
+  "gatuadress": "Varvsgränd 7",
+  "ort": "Sundsvall",
+  "lat": 62.390817,
+  "lon": 17.302719,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/1179315603",
+    "url": "https://www.openstreetmap.org/node/1179315603",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 60.547358,
+  "lon": 14.36192,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/1782024503",
+    "url": "https://www.openstreetmap.org/node/1782024503",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: PMU Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "PMU / Pingstkyrkans Second Hand",
+  "kedja": "PMU Second Hand",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 60.730534,
+  "lon": 15.010323,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/2299617598",
+    "url": "https://www.openstreetmap.org/node/2299617598",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Magasinsgatan 11",
+  "ort": null,
+  "lat": 62.636231,
+  "lon": 17.937198,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/2594439125",
+    "url": "https://www.openstreetmap.org/node/2594439125",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen Timrå",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Verkstadsvägen 4",
+  "ort": "Timrå",
+  "lat": 62.491055,
+  "lon": 17.324228,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/2665512242",
+    "url": "https://www.openstreetmap.org/node/2665512242",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Västergatan 18b",
+  "ort": null,
+  "lat": 55.631444,
+  "lon": 13.701396,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3170405420",
+    "url": "https://www.openstreetmap.org/node/3170405420",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Lindra Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Läkarmissionen",
+  "kedja": "Lindra Second Hand",
+  "gatuadress": "Gjutjärnsgatan 5",
+  "ort": "Västerås",
+  "lat": 59.595562,
+  "lon": 16.494008,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3402696484",
+    "url": "https://www.openstreetmap.org/node/3402696484",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.732563,
+  "lon": 12.010075,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3526001599",
+    "url": "https://www.openstreetmap.org/node/3526001599",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Tollarpsvägen 66",
+  "ort": "Linderöd",
+  "lat": 55.934288,
+  "lon": 13.835276,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3571825695",
+    "url": "https://www.openstreetmap.org/node/3571825695",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Ringvägen",
+  "ort": null,
+  "lat": 64.951513,
+  "lon": 21.203853,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3599281471",
+    "url": "https://www.openstreetmap.org/node/3599281471",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda korsets Second Hand",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 63.900604,
+  "lon": 20.551566,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3740742531",
+    "url": "https://www.openstreetmap.org/node/3740742531",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Stallgatan 4",
+  "ort": "Eslöv",
+  "lat": 55.844886,
+  "lon": 13.299367,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3770219776",
+    "url": "https://www.openstreetmap.org/node/3770219776",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 62.926665,
+  "lon": 17.786945,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/3800658193",
+    "url": "https://www.openstreetmap.org/node/3800658193",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.097231,
+  "lon": 18.474012,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4318305760",
+    "url": "https://www.openstreetmap.org/node/4318305760",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset Second Hand",
+  "kedja": "Röda Korset",
+  "gatuadress": "Skäggetorps centrum 24",
+  "ort": null,
+  "lat": 58.426176,
+  "lon": 15.580503,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4319359263",
+    "url": "https://www.openstreetmap.org/node/4319359263",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.947792,
+  "lon": 17.501038,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4450902311",
+    "url": "https://www.openstreetmap.org/node/4450902311",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Svenska Röda Korset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Sundsgatan 21",
+  "ort": "Vänersborg",
+  "lat": 58.379505,
+  "lon": 12.323253,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4517764591",
+    "url": "https://www.openstreetmap.org/node/4517764591",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Storgatan 8",
+  "ort": "Charlottenberg",
+  "lat": 59.884603,
+  "lon": 12.300766,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4745440420",
+    "url": "https://www.openstreetmap.org/node/4745440420",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.649455,
+  "lon": 16.462264,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4792912095",
+    "url": "https://www.openstreetmap.org/node/4792912095",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.649765,
+  "lon": 16.478174,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4792939424",
+    "url": "https://www.openstreetmap.org/node/4792939424",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Lindra Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Läkarmissionens second hand Vällingby",
+  "kedja": "Lindra Second Hand",
+  "gatuadress": "Siktgatan 8",
+  "ort": null,
+  "lat": 59.371367,
+  "lon": 17.858498,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4911678542",
+    "url": "https://www.openstreetmap.org/node/4911678542",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.96402,
+  "lon": 13.748009,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/4952457688",
+    "url": "https://www.openstreetmap.org/node/4952457688",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Storgatan 20",
+  "ort": "Tranås",
+  "lat": 58.037915,
+  "lon": 14.978828,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5000355968",
+    "url": "https://www.openstreetmap.org/node/5000355968",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.656691,
+  "lon": 12.588135,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5004926465",
+    "url": "https://www.openstreetmap.org/node/5004926465",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 60.045113,
+  "lon": 18.598344,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5494917736",
+    "url": "https://www.openstreetmap.org/node/5494917736",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Gottstavägen 10",
+  "ort": null,
+  "lat": 60.048526,
+  "lon": 18.597279,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5495089058",
+    "url": "https://www.openstreetmap.org/node/5495089058",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Järnvägsgatan 31",
+  "ort": "Storvik",
+  "lat": 60.582298,
+  "lon": 16.534238,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5581329168",
+    "url": "https://www.openstreetmap.org/node/5581329168",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.286047,
+  "lon": 13.93666,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5714859158",
+    "url": "https://www.openstreetmap.org/node/5714859158",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Storgatan 51",
+  "ort": "Örebro",
+  "lat": 59.282519,
+  "lon": 15.22089,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/5852914657",
+    "url": "https://www.openstreetmap.org/node/5852914657",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen varuinlämning",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Varvsgatan 16",
+  "ort": null,
+  "lat": 62.636939,
+  "lon": 17.938029,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/6043995499",
+    "url": "https://www.openstreetmap.org/node/6043995499",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: PMU Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "PMU Second hand",
+  "kedja": "PMU Second Hand",
+  "gatuadress": "Braxenvägen 5",
+  "ort": null,
+  "lat": 59.737754,
+  "lon": 18.702974,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/6472760494",
+    "url": "https://www.openstreetmap.org/node/6472760494",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset Second Hand",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.120134,
+  "lon": 12.255568,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/6523166585",
+    "url": "https://www.openstreetmap.org/node/6523166585",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.635203,
+  "lon": 17.079221,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/7161128885",
+    "url": "https://www.openstreetmap.org/node/7161128885",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda korset Second hand Gävle",
+  "kedja": "Röda Korset",
+  "gatuadress": "Klockar-Calles gata 5",
+  "ort": null,
+  "lat": 60.675695,
+  "lon": 17.214094,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/7765523583",
+    "url": "https://www.openstreetmap.org/node/7765523583",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.327439,
+  "lon": 14.507416,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/7829203560",
+    "url": "https://www.openstreetmap.org/node/7829203560",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.97481,
+  "lon": 15.047305,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/7860972930",
+    "url": "https://www.openstreetmap.org/node/7860972930",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.885645,
+  "lon": 14.329138,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/8929273137",
+    "url": "https://www.openstreetmap.org/node/8929273137",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 63.731112,
+  "lon": 15.48715,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/8995843679",
+    "url": "https://www.openstreetmap.org/node/8995843679",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": "Röda Korset",
+  "gatuadress": "Storgatan 20",
+  "ort": null,
+  "lat": 56.20011,
+  "lon": 12.570291,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9248942005",
+    "url": "https://www.openstreetmap.org/node/9248942005",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Vejlegatan 9",
+  "ort": null,
+  "lat": 59.40136,
+  "lon": 17.942562,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9527367054",
+    "url": "https://www.openstreetmap.org/node/9527367054",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.754763,
+  "lon": 16.625712,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9739892884",
+    "url": "https://www.openstreetmap.org/node/9739892884",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Mötesplats Kupan",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.196808,
+  "lon": 15.653657,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9771425910",
+    "url": "https://www.openstreetmap.org/node/9771425910",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Svenska Röda Korset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Schaktmästaregatan 5",
+  "ort": "Gällivare",
+  "lat": 67.133943,
+  "lon": 20.66478,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9868156645",
+    "url": "https://www.openstreetmap.org/node/9868156645",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.379522,
+  "lon": 16.51912,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/9931614556",
+    "url": "https://www.openstreetmap.org/node/9931614556",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Second Hand",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.27296,
+  "lon": 15.231928,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/10240360567",
+    "url": "https://www.openstreetmap.org/node/10240360567",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.275206,
+  "lon": 11.430531,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/10982324163",
+    "url": "https://www.openstreetmap.org/node/10982324163",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 62.439406,
+  "lon": 12.691357,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11018382105",
+    "url": "https://www.openstreetmap.org/node/11018382105",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.378657,
+  "lon": 13.493609,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11083760501",
+    "url": "https://www.openstreetmap.org/node/11083760501",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen Second Hand Bollnäs",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Renshammarvägen 8B",
+  "ort": "Bollnäs",
+  "lat": 61.355145,
+  "lon": 16.431794,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11176496594",
+    "url": "https://www.openstreetmap.org/node/11176496594",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Myrorna finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Myrorna",
+  "kedja": "Myrorna",
+  "gatuadress": "Stortorget 223",
+  "ort": "Täby",
+  "lat": 59.445022,
+  "lon": 18.069769,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11389758524",
+    "url": "https://www.openstreetmap.org/node/11389758524",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.455535,
+  "lon": 15.579233,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11505685275",
+    "url": "https://www.openstreetmap.org/node/11505685275",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.878124,
+  "lon": 11.984166,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/11940605908",
+    "url": "https://www.openstreetmap.org/node/11940605908",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 64.116701,
+  "lon": 16.203372,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12055966056",
+    "url": "https://www.openstreetmap.org/node/12055966056",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 60.224825,
+  "lon": 14.474888,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12057060181",
+    "url": "https://www.openstreetmap.org/node/12057060181",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.518856,
+  "lon": 13.320626,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12076711876",
+    "url": "https://www.openstreetmap.org/node/12076711876",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "RödaKorset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Christoffer Schrödersgatan 4",
+  "ort": "Karlshamn",
+  "lat": 56.170292,
+  "lon": 14.860882,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12649376371",
+    "url": "https://www.openstreetmap.org/node/12649376371",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: PMU Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "PMU Tyresö",
+  "kedja": "PMU Second Hand",
+  "gatuadress": "Vintervägen 3",
+  "ort": null,
+  "lat": 59.242754,
+  "lon": 18.217714,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12762241771",
+    "url": "https://www.openstreetmap.org/node/12762241771",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.677005,
+  "lon": 16.522039,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12875146722",
+    "url": "https://www.openstreetmap.org/node/12875146722",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.490254,
+  "lon": 13.103959,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/12979602449",
+    "url": "https://www.openstreetmap.org/node/12979602449",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.710223,
+  "lon": 13.819971,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13081679901",
+    "url": "https://www.openstreetmap.org/node/13081679901",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Lindra Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Läkarmissionen",
+  "kedja": "Lindra Second Hand",
+  "gatuadress": "Stenbygatan 3D",
+  "ort": "Västerås",
+  "lat": 59.63658,
+  "lon": 16.566888,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13230729800",
+    "url": "https://www.openstreetmap.org/node/13230729800",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Storgatan 38",
+  "ort": "Jörn",
+  "lat": 65.059109,
+  "lon": 20.039499,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13528991526",
+    "url": "https://www.openstreetmap.org/node/13528991526",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.4082,
+  "lon": 14.656711,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13625438009",
+    "url": "https://www.openstreetmap.org/node/13625438009",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 55.985457,
+  "lon": 12.842559,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13847149580",
+    "url": "https://www.openstreetmap.org/node/13847149580",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Kristineplan 1",
+  "ort": null,
+  "lat": 59.876366,
+  "lon": 14.994286,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13960096740",
+    "url": "https://www.openstreetmap.org/node/13960096740",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 55.948285,
+  "lon": 14.155806,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/13988823501",
+    "url": "https://www.openstreetmap.org/node/13988823501",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda korset",
+  "kedja": "Röda Korset",
+  "gatuadress": "Järntorgsgatan 4B",
+  "ort": "Arboga",
+  "lat": 59.395141,
+  "lon": 15.841106,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/14014006894",
+    "url": "https://www.openstreetmap.org/node/14014006894",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.18928,
+  "lon": 12.720834,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/14020249880",
+    "url": "https://www.openstreetmap.org/node/14020249880",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "RödaKorset Secondhandbutik",
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 60.174539,
+  "lon": 13.495725,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/14072974798",
+    "url": "https://www.openstreetmap.org/node/14072974798",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Wedavägen 10",
+  "ort": null,
+  "lat": 59.206515,
+  "lon": 17.643175,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "node/14111873277",
+    "url": "https://www.openstreetmap.org/node/14111873277",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset Second hand",
+  "kedja": "Röda Korset",
+  "gatuadress": "Norra Järnvägsgatan 19",
+  "ort": "Falun",
+  "lat": 60.618639,
+  "lon": 15.622258,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/95018049",
+    "url": "https://www.openstreetmap.org/way/95018049",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 64.709183,
+  "lon": 21.131424,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/171552156",
+    "url": "https://www.openstreetmap.org/way/171552156",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 58.070335,
+  "lon": 14.175442,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/212441396",
+    "url": "https://www.openstreetmap.org/way/212441396",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Skärgårdsvägen 11",
+  "ort": "Gustavsberg",
+  "lat": 59.325417,
+  "lon": 18.393169,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/233573756",
+    "url": "https://www.openstreetmap.org/way/233573756",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 67.838391,
+  "lon": 20.262527,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/247837183",
+    "url": "https://www.openstreetmap.org/way/247837183",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Erikshjälpen Second Hand finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Erikshjälpen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Bergmossevägen 8",
+  "ort": "Holsbybrunn",
+  "lat": 57.440823,
+  "lon": 15.183239,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/252678413",
+    "url": "https://www.openstreetmap.org/way/252678413",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Byggmästaregatan 8",
+  "ort": "Kungälv",
+  "lat": 57.878861,
+  "lon": 11.980474,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/267334176",
+    "url": "https://www.openstreetmap.org/way/267334176",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": "Storgatan 9",
+  "ort": "Emmaboda",
+  "lat": 56.630581,
+  "lon": 15.540114,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/268401496",
+    "url": "https://www.openstreetmap.org/way/268401496",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.995566,
+  "lon": 12.715202,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/300818521",
+    "url": "https://www.openstreetmap.org/way/300818521",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 56.628629,
+  "lon": 15.531909,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/375706141",
+    "url": "https://www.openstreetmap.org/way/375706141",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: Röda Korset finns inte i kedjans butikslista (troligen stängd/flyttad)",
+  "namn": "Röda Korset Mötesplats Kupan",
+  "kedja": "Röda Korset",
+  "gatuadress": "Bergagatan 19",
+  "ort": "Ljungby",
+  "lat": 56.836201,
+  "lon": 13.940417,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/420246751",
+    "url": "https://www.openstreetmap.org/way/420246751",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": "Röda Korset",
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.199621,
+  "lon": 13.282725,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/503019396",
+    "url": "https://www.openstreetmap.org/way/503019396",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.962549,
+  "lon": 17.917787,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/1330735112",
+    "url": "https://www.openstreetmap.org/way/1330735112",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.713802,
+  "lon": 16.232943,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/1394817283",
+    "url": "https://www.openstreetmap.org/way/1394817283",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 59.573418,
+  "lon": 15.227242,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/1416381840",
+    "url": "https://www.openstreetmap.org/way/1416381840",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "osm: saknar namn",
+  "namn": null,
+  "kedja": null,
+  "gatuadress": null,
+  "ort": null,
+  "lat": 57.648536,
+  "lon": 12.051348,
+  "kallor": [
+   {
+    "kalla": "osm",
+    "id": "way/1558338004",
+    "url": "https://www.openstreetmap.org/way/1558338004",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "saknar koordinater/geokodning",
+  "namn": "Erikshjälpen Second Hand M&E Second Hand Sentrum",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Storgata 32",
+  "ort": null,
+  "lat": null,
+  "lon": null,
+  "kallor": [
+   {
+    "kalla": "erikshjalpen",
+    "id": "33483",
+    "url": "https://erikshjalpen.se/butiker/m-och-e-second-hand-sentrum/",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "saknar koordinater/geokodning",
+  "namn": "Erikshjälpen Second Hand Oslo Hasle",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Økernveien 99",
+  "ort": null,
+  "lat": null,
+  "lon": null,
+  "kallor": [
+   {
+    "kalla": "erikshjalpen",
+    "id": "6328",
+    "url": "https://erikshjalpen.se/butiker/m-and-e-second-hand-oslo-hasle/",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ },
+ {
+  "reason": "saknar koordinater/geokodning",
+  "namn": "Erikshjälpen Second Hand Oslo Grensen",
+  "kedja": "Erikshjälpen Second Hand",
+  "gatuadress": "Grensen 3",
+  "ort": null,
+  "lat": null,
+  "lon": null,
+  "kallor": [
+   {
+    "kalla": "erikshjalpen",
+    "id": "6318",
+    "url": "https://erikshjalpen.se/butiker/m-and-e-second-hand-oslo-grensen/",
+    "hamtad": "2026-11-19"
+   }
+  ]
+ }
+]

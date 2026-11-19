@@ -1,0 +1,8 @@
+---
+import KatalogKommun from "@natverk/core/katalog/KatalogKommun.astro";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA, TITEL_ORD } from "../../site.js";
+
+export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+const { kommun } = Astro.props;
+---
+<KatalogKommun site={SITE} kat={KAT} kommun={kommun} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />

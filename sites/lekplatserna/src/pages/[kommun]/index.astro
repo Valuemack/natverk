@@ -1,0 +1,82 @@
+---
+// Lekplatser i en kommun: utvalda lekplatser, redskap i kommunen och alla lekplatser per ort.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { grannkommuner, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning } from "../../site.js";
+
+export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+const { kommun: k } = Astro.props;
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const alla = k.enheter;
+const n = alla.length;
+const tema = alla.filter((e) => e.typ !== "lekplats");
+const tillg = alla.filter((e) => e.extra?.tillganglighet === "tillgänglighetsanpassad");
+const officiell = alla.some((e) => e.extra?.kommun_har_officiell_data);
+const redskap = Object.keys(UTRUSTNING).map((u) => [u, alla.filter((e) => e.extra?.utrustning?.includes(u))]).filter(([, l]) => l.length).sort((a, b) => b[1].length - a[1].length);
+const sarskilda = ["linbana", "vattenlek", "studsmatta", "kompisgunga", "klättervägg", "hinderbana", "skatepark", "hoppkudde"].map((u) => [u, alla.filter((e) => e.extra?.utrustning?.includes(u))]).filter(([, l]) => l.length);
+const orter = rakna(alla, (e) => e.ort ?? k.namn);
+// Lekplatser med egen sida eller kända redskap visas som lista; övriga som kompakt namnlista per ort.
+const MAX = 100;
+const huvud = alla.filter((e) => e.egenSida || utrustning(e).length > 0).sort((a, b) => (b.egenSida - a.egenSida) || utrustning(b).length - utrustning(a).length);
+const visa = huvud.slice(0, MAX);
+const resten = alla.filter((e) => !visa.includes(e));
+const utanNamn = resten.filter((e) => /^(Lekplats|Temalekplats|Naturlekplats) i /.test(e.namn));
+const medNamn = resten.filter((e) => !utanNamn.includes(e));
+const restOrter = rakna(medNamn, (e) => e.ort ?? k.namn).map(([ort]) => [ort, medNamn.filter((e) => (e.ort ?? k.namn) === ort).map((e) => e.namn)]).map(([ort, l]) => [ort, rakna(l, (x) => x).sort((a, b) => a[0].localeCompare(b[0], "sv")).map(([x, c]) => (c > 1 ? `${x} (${c} st)` : x))]);
+const grannar = grannkommuner(k, KAT.kommuner, 6);
+const fragor = [
+  { fraga: `Hur många lekplatser finns det i ${k.namn}?`, svar: `Vi känner till ${n} lekplatser i ${k.namn}${orter.length > 1 ? ` på ${orter.length} orter` : ""}.${officiell ? " Uppgifterna kommer delvis från kommunens öppna data." : " Uppgifterna kommer från OpenStreetMap och kan vara ofullständiga."}` },
+  tema.length > 0 && { fraga: `Finns det temalekplatser i ${k.namn}?`, svar: `Ja, till exempel ${tema.slice(0, 3).map((e) => `${e.namn}${e.extra?.tema ? ` (${e.extra.tema.toLowerCase()})` : ""}`).join(", ")}.` },
+  ...sarskilda.slice(0, 2).map(([u, l]) => ({ fraga: `Vilka lekplatser i ${k.namn} har ${UTRUSTNING[u].toLowerCase()}?`, svar: `${l.length} ${l.length === 1 ? "lekplats" : "lekplatser"} i ${k.namn} har ${UTRUSTNING[u].toLowerCase()} enligt våra uppgifter, bland annat ${l.slice(0, 3).map((e) => e.namn).join(", ")}.` })),
+  tillg.length > 0 && { fraga: `Finns det tillgänglighetsanpassade lekplatser i ${k.namn}?`, svar: `${tillg.length} lekplatser i ${k.namn} är tillgänglighetsanpassade enligt kommunen, till exempel ${tillg.slice(0, 3).map((e) => e.namn).join(", ")}.` },
+].filter(Boolean);
+const titel = [tema.length > 0 && `Lekplatser i ${k.namn} – ${n} st med redskap och teman`, redskap.length > 2 && `Lekplatser i ${k.namn} – ${n} st och deras redskap`, `Lekplatser i ${k.namn} – ${n} st`].filter(Boolean).find((t) => t.length <= 60) ?? `Lekplatser i ${k.namn}`;
+---
+<Layout site={SITE} titel={titel}
+  beskrivning={`Alla ${n} lekplatser i ${k.namn}${sarskilda.length ? ` – bland annat med ${sarskilda.slice(0, 3).map(([u]) => UTRUSTNING[u].toLowerCase()).join(", ")}` : ""}.${tema.length ? ` ✓ ${tema.length} temalekplatser` : ""} ✓ Närmaste lekplats ✓ Vägbeskrivning.`.slice(0, 158)}
+  smulor={[{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Lekplatser i {k.namn}</h1>
+  <p class="svar">
+    I {k.namn} finns <strong>{n} lekplatser</strong>{orter.length > 1 && <> på {orter.length} orter</>}.
+    {tema.length > 0 && <> {tema.length} är tema- eller naturlekplatser.</>}
+    {sarskilda.length > 0 && <> Det finns bland annat {sarskilda.slice(0, 3).map(([u, l]) => `${UTRUSTNING[u].toLowerCase()} på ${l.length} ${l.length === 1 ? "lekplats" : "lekplatser"}`).join(", ")}.</>}
+  </p>
+
+  {redskap.length > 2 && <>
+    <h2>Redskap på lekplatserna i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Redskap</th><th class="num">Lekplatser</th></tr></thead>
+      <tbody>{redskap.slice(0, 15).map(([u, l]) => <tr><td>{UTRUSTNING[u]}</td><td class="num">{l.length}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Redskap är kända för {alla.filter((e) => utrustning(e).length).length} av {n} lekplatser.</p>
+  </>}
+
+  <Annons plats="kommun-1" />
+
+  {visa.length > 0 && <>
+    <h2>{resten.length ? `Lekplatser med redskap i ${k.namn}` : `Alla lekplatser i ${k.namn}`}</h2>
+    <EnhetLista enheter={visa} />
+  </>}
+
+  {resten.length > 0 && <>
+    <h2>{visa.length ? "Fler lekplatser" : `Alla lekplatser i ${k.namn}`}</h2>
+    {restOrter.map(([ort, namn]) => <>
+      {restOrter.length > 1 && <h3>{ort}</h3>}
+      <ul class="kolumner">{namn.map((x) => <li>{x}</li>)}</ul>
+    </>)}
+    {utanNamn.length > 0 && <p class="kalla">Ytterligare {utanNamn.length} {utanNamn.length === 1 ? "lekplats saknar" : "lekplatser saknar"} namn och adress i källorna och visas därför inte i listan, men finns med i sökningen efter närmaste lekplats.</p>}
+  </>}
+
+  {grannar.length > 0 && <>
+    <h2>Lekplatser i närliggande kommuner</h2>
+    <ul class="kolumner">{grannar.map((g) => <li><a href={g.href}>{g.namn}</a> ({g.enheter.length})</li>)}</ul>
+  </>}
+
+  <Annons plats="kommun-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}{!officiell && " Kommunen publicerar ingen öppen lekplatsdata, så listan bygger på OpenStreetMap."}</p>
+</Layout>

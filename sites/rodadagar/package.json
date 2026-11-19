@@ -1,0 +1,15 @@
+{
+  "name": "rodadagar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@natverk/core": "*",
+    "astro": "^7.4.13"
+  }
+}

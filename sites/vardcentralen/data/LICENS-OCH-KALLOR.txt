@@ -1,0 +1,6 @@
+Källor för enheter.json (byggd 2026-11-19)
+- 1177.se Hitta vård (Inera AB), uppgifter ur HSA-katalogen. Ange 1177 som källa och länka till kontaktkortet (extra.url_1177).
+- Vårdbetyg (vardbetyg.se), CC BY 4.0 – attribution krävs.
+- Västra Götalandsregionen, Vårdcentraler i Vårdval vårdcentral, CC0.
+- SCB, digitala kommungränser, CC0.
+- © OpenStreetMap-bidragsgivare, ODbL 1.0 (endast reservkoordinater/webb för enheter med "OpenStreetMap" i kallor) – attribution krävs.

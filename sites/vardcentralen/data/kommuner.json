@@ -1,0 +1,3211 @@
+[
+  {
+    "kommunkod": "0114",
+    "kommun": "Upplands Väsby",
+    "slug": "upplands-vasby",
+    "lan": "Stockholms län",
+    "antal": 5,
+    "orter": [
+      "Upplands Väsby"
+    ]
+  },
+  {
+    "kommunkod": "0115",
+    "kommun": "Vallentuna",
+    "slug": "vallentuna",
+    "lan": "Stockholms län",
+    "antal": 3,
+    "orter": [
+      "Vallentuna"
+    ]
+  },
+  {
+    "kommunkod": "0117",
+    "kommun": "Österåker",
+    "slug": "osteraker",
+    "lan": "Stockholms län",
+    "antal": 4,
+    "orter": [
+      "Ljusterö",
+      "Åkersberga"
+    ]
+  },
+  {
+    "kommunkod": "0120",
+    "kommun": "Värmdö",
+    "slug": "varmdo",
+    "lan": "Stockholms län",
+    "antal": 4,
+    "orter": [
+      "Djurhamn",
+      "Gustavsberg"
+    ]
+  },
+  {
+    "kommunkod": "0123",
+    "kommun": "Järfälla",
+    "slug": "jarfalla",
+    "lan": "Stockholms län",
+    "antal": 9,
+    "orter": [
+      "Järfälla"
+    ]
+  },
+  {
+    "kommunkod": "0125",
+    "kommun": "Ekerö",
+    "slug": "ekero",
+    "lan": "Stockholms län",
+    "antal": 2,
+    "orter": [
+      "Ekerö",
+      "Stenhamra"
+    ]
+  },
+  {
+    "kommunkod": "0126",
+    "kommun": "Huddinge",
+    "slug": "huddinge",
+    "lan": "Stockholms län",
+    "antal": 7,
+    "orter": [
+      "Huddinge",
+      "Segeltorp",
+      "Skogås",
+      "Trångsund",
+      "Vårby"
+    ]
+  },
+  {
+    "kommunkod": "0127",
+    "kommun": "Botkyrka",
+    "slug": "botkyrka",
+    "lan": "Stockholms län",
+    "antal": 9,
+    "orter": [
+      "Norsborg",
+      "Tullinge",
+      "Tumba"
+    ]
+  },
+  {
+    "kommunkod": "0128",
+    "kommun": "Salem",
+    "slug": "salem",
+    "lan": "Stockholms län",
+    "antal": 1,
+    "orter": [
+      "Rönninge"
+    ]
+  },
+  {
+    "kommunkod": "0136",
+    "kommun": "Haninge",
+    "slug": "haninge",
+    "lan": "Stockholms län",
+    "antal": 9,
+    "orter": [
+      "Brandbergen",
+      "Dalarö",
+      "Handen",
+      "Jordbro",
+      "Tungelsta",
+      "Vendelsö",
+      "Västerhaninge"
+    ]
+  },
+  {
+    "kommunkod": "0138",
+    "kommun": "Tyresö",
+    "slug": "tyreso",
+    "lan": "Stockholms län",
+    "antal": 5,
+    "orter": [
+      "Tyresö"
+    ]
+  },
+  {
+    "kommunkod": "0139",
+    "kommun": "Upplands-Bro",
+    "slug": "upplands-bro",
+    "lan": "Stockholms län",
+    "antal": 3,
+    "orter": [
+      "Bro",
+      "Kungsängen"
+    ]
+  },
+  {
+    "kommunkod": "0140",
+    "kommun": "Nykvarn",
+    "slug": "nykvarn",
+    "lan": "Stockholms län",
+    "antal": 1,
+    "orter": [
+      "Nykvarn"
+    ]
+  },
+  {
+    "kommunkod": "0160",
+    "kommun": "Täby",
+    "slug": "taby",
+    "lan": "Stockholms län",
+    "antal": 8,
+    "orter": [
+      "Täby"
+    ]
+  },
+  {
+    "kommunkod": "0162",
+    "kommun": "Danderyd",
+    "slug": "danderyd",
+    "lan": "Stockholms län",
+    "antal": 6,
+    "orter": [
+      "Danderyd",
+      "Djursholm",
+      "Enebyberg",
+      "Stocksund"
+    ]
+  },
+  {
+    "kommunkod": "0163",
+    "kommun": "Sollentuna",
+    "slug": "sollentuna",
+    "lan": "Stockholms län",
+    "antal": 10,
+    "orter": [
+      "Sollentuna"
+    ]
+  },
+  {
+    "kommunkod": "0180",
+    "kommun": "Stockholm",
+    "slug": "stockholm",
+    "lan": "Stockholms län",
+    "antal": 100,
+    "orter": [
+      "Bagarmossen",
+      "Bandhagen",
+      "Bromma",
+      "Enskede",
+      "Enskededalen",
+      "Farsta",
+      "Hägersten",
+      "Hässelby",
+      "Johanneshov",
+      "Kista",
+      "Skarpnäck",
+      "Skärholmen",
+      "Sköndal",
+      "Spånga",
+      "Stockholm",
+      "Vällingby",
+      "Årsta",
+      "Älvsjö"
+    ]
+  },
+  {
+    "kommunkod": "0181",
+    "kommun": "Södertälje",
+    "slug": "sodertalje",
+    "lan": "Stockholms län",
+    "antal": 13,
+    "orter": [
+      "Järna",
+      "Södertälje"
+    ]
+  },
+  {
+    "kommunkod": "0182",
+    "kommun": "Nacka",
+    "slug": "nacka",
+    "lan": "Stockholms län",
+    "antal": 12,
+    "orter": [
+      "Nacka",
+      "Nacka Strand",
+      "Saltsjö-Boo",
+      "Saltsjöbaden",
+      "Älta"
+    ]
+  },
+  {
+    "kommunkod": "0183",
+    "kommun": "Sundbyberg",
+    "slug": "sundbyberg",
+    "lan": "Stockholms län",
+    "antal": 5,
+    "orter": [
+      "Sundbyberg"
+    ]
+  },
+  {
+    "kommunkod": "0184",
+    "kommun": "Solna",
+    "slug": "solna",
+    "lan": "Stockholms län",
+    "antal": 11,
+    "orter": [
+      "Solna"
+    ]
+  },
+  {
+    "kommunkod": "0186",
+    "kommun": "Lidingö",
+    "slug": "lidingo",
+    "lan": "Stockholms län",
+    "antal": 5,
+    "orter": [
+      "Lidingö"
+    ]
+  },
+  {
+    "kommunkod": "0187",
+    "kommun": "Vaxholm",
+    "slug": "vaxholm",
+    "lan": "Stockholms län",
+    "antal": 1,
+    "orter": [
+      "Vaxholm"
+    ]
+  },
+  {
+    "kommunkod": "0188",
+    "kommun": "Norrtälje",
+    "slug": "norrtalje",
+    "lan": "Stockholms län",
+    "antal": 9,
+    "orter": [
+      "Bergshamra",
+      "Blidö",
+      "Edsbro",
+      "Hallstavik",
+      "Norrtälje",
+      "Rimbo",
+      "Väddö"
+    ]
+  },
+  {
+    "kommunkod": "0191",
+    "kommun": "Sigtuna",
+    "slug": "sigtuna",
+    "lan": "Stockholms län",
+    "antal": 8,
+    "orter": [
+      "Arlandastad",
+      "Märsta",
+      "Sigtuna",
+      "Stockholm-Arlanda"
+    ]
+  },
+  {
+    "kommunkod": "0192",
+    "kommun": "Nynäshamn",
+    "slug": "nynashamn",
+    "lan": "Stockholms län",
+    "antal": 3,
+    "orter": [
+      "Nynäshamn",
+      "Ösmo"
+    ]
+  },
+  {
+    "kommunkod": "0305",
+    "kommun": "Håbo",
+    "slug": "habo",
+    "lan": "Uppsala län",
+    "antal": 3,
+    "orter": [
+      "Bålsta",
+      "Skokloster"
+    ]
+  },
+  {
+    "kommunkod": "0319",
+    "kommun": "Älvkarleby",
+    "slug": "alvkarleby",
+    "lan": "Uppsala län",
+    "antal": 1,
+    "orter": [
+      "Skutskär"
+    ]
+  },
+  {
+    "kommunkod": "0330",
+    "kommun": "Knivsta",
+    "slug": "knivsta",
+    "lan": "Uppsala län",
+    "antal": 2,
+    "orter": [
+      "Knivsta"
+    ]
+  },
+  {
+    "kommunkod": "0331",
+    "kommun": "Heby",
+    "slug": "heby",
+    "lan": "Uppsala län",
+    "antal": 2,
+    "orter": [
+      "Heby",
+      "Östervåla"
+    ]
+  },
+  {
+    "kommunkod": "0360",
+    "kommun": "Tierp",
+    "slug": "tierp",
+    "lan": "Uppsala län",
+    "antal": 1,
+    "orter": [
+      "Tierp"
+    ]
+  },
+  {
+    "kommunkod": "0380",
+    "kommun": "Uppsala",
+    "slug": "uppsala",
+    "lan": "Uppsala län",
+    "antal": 31,
+    "orter": [
+      "Almunge",
+      "Bälinge",
+      "Storvreta",
+      "Uppsala"
+    ]
+  },
+  {
+    "kommunkod": "0381",
+    "kommun": "Enköping",
+    "slug": "enkoping",
+    "lan": "Uppsala län",
+    "antal": 7,
+    "orter": [
+      "Enköping",
+      "Fjärdhundra",
+      "Örsundsbro"
+    ]
+  },
+  {
+    "kommunkod": "0382",
+    "kommun": "Östhammar",
+    "slug": "osthammar",
+    "lan": "Uppsala län",
+    "antal": 5,
+    "orter": [
+      "Alunda",
+      "Gimo",
+      "Öregrund",
+      "Österbybruk",
+      "Östhammar"
+    ]
+  },
+  {
+    "kommunkod": "0428",
+    "kommun": "Vingåker",
+    "slug": "vingaker",
+    "lan": "Södermanlands län",
+    "antal": 1,
+    "orter": [
+      "Vingåker"
+    ]
+  },
+  {
+    "kommunkod": "0461",
+    "kommun": "Gnesta",
+    "slug": "gnesta",
+    "lan": "Södermanlands län",
+    "antal": 2,
+    "orter": [
+      "Gnesta"
+    ]
+  },
+  {
+    "kommunkod": "0480",
+    "kommun": "Nyköping",
+    "slug": "nykoping",
+    "lan": "Södermanlands län",
+    "antal": 6,
+    "orter": [
+      "Nyköping"
+    ]
+  },
+  {
+    "kommunkod": "0481",
+    "kommun": "Oxelösund",
+    "slug": "oxelosund",
+    "lan": "Södermanlands län",
+    "antal": 1,
+    "orter": [
+      "Oxelösund"
+    ]
+  },
+  {
+    "kommunkod": "0482",
+    "kommun": "Flen",
+    "slug": "flen",
+    "lan": "Södermanlands län",
+    "antal": 3,
+    "orter": [
+      "Flen",
+      "Malmköping"
+    ]
+  },
+  {
+    "kommunkod": "0483",
+    "kommun": "Katrineholm",
+    "slug": "katrineholm",
+    "lan": "Södermanlands län",
+    "antal": 3,
+    "orter": [
+      "Katrineholm"
+    ]
+  },
+  {
+    "kommunkod": "0484",
+    "kommun": "Eskilstuna",
+    "slug": "eskilstuna",
+    "lan": "Södermanlands län",
+    "antal": 10,
+    "orter": [
+      "Eskilstuna",
+      "Torshälla"
+    ]
+  },
+  {
+    "kommunkod": "0486",
+    "kommun": "Strängnäs",
+    "slug": "strangnas",
+    "lan": "Södermanlands län",
+    "antal": 4,
+    "orter": [
+      "Eskilstuna",
+      "Mariefred",
+      "Strängnäs"
+    ]
+  },
+  {
+    "kommunkod": "0488",
+    "kommun": "Trosa",
+    "slug": "trosa",
+    "lan": "Södermanlands län",
+    "antal": 1,
+    "orter": [
+      "Trosa"
+    ]
+  },
+  {
+    "kommunkod": "0509",
+    "kommun": "Ödeshög",
+    "slug": "odeshog",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Ödeshög"
+    ]
+  },
+  {
+    "kommunkod": "0512",
+    "kommun": "Ydre",
+    "slug": "ydre",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Österbymo"
+    ]
+  },
+  {
+    "kommunkod": "0513",
+    "kommun": "Kinda",
+    "slug": "kinda",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Kisa"
+    ]
+  },
+  {
+    "kommunkod": "0560",
+    "kommun": "Boxholm",
+    "slug": "boxholm",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Boxholm"
+    ]
+  },
+  {
+    "kommunkod": "0561",
+    "kommun": "Åtvidaberg",
+    "slug": "atvidaberg",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Åtvidaberg"
+    ]
+  },
+  {
+    "kommunkod": "0562",
+    "kommun": "Finspång",
+    "slug": "finspang",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Finspång"
+    ]
+  },
+  {
+    "kommunkod": "0563",
+    "kommun": "Valdemarsvik",
+    "slug": "valdemarsvik",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Valdemarsvik"
+    ]
+  },
+  {
+    "kommunkod": "0580",
+    "kommun": "Linköping",
+    "slug": "linkoping",
+    "lan": "Östergötlands län",
+    "antal": 17,
+    "orter": [
+      "Linghem",
+      "Linköping",
+      "Ljungsbro",
+      "Malmslätt"
+    ]
+  },
+  {
+    "kommunkod": "0581",
+    "kommun": "Norrköping",
+    "slug": "norrkoping",
+    "lan": "Östergötlands län",
+    "antal": 14,
+    "orter": [
+      "Kolmården",
+      "Norrköping",
+      "Skärblacka",
+      "Åby",
+      "Östra Husby"
+    ]
+  },
+  {
+    "kommunkod": "0582",
+    "kommun": "Söderköping",
+    "slug": "soderkoping",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Söderköping"
+    ]
+  },
+  {
+    "kommunkod": "0583",
+    "kommun": "Motala",
+    "slug": "motala",
+    "lan": "Östergötlands län",
+    "antal": 4,
+    "orter": [
+      "Borensberg",
+      "Motala"
+    ]
+  },
+  {
+    "kommunkod": "0584",
+    "kommun": "Vadstena",
+    "slug": "vadstena",
+    "lan": "Östergötlands län",
+    "antal": 1,
+    "orter": [
+      "Vadstena"
+    ]
+  },
+  {
+    "kommunkod": "0586",
+    "kommun": "Mjölby",
+    "slug": "mjolby",
+    "lan": "Östergötlands län",
+    "antal": 4,
+    "orter": [
+      "Mantorp",
+      "Mjölby",
+      "Skänninge"
+    ]
+  },
+  {
+    "kommunkod": "0604",
+    "kommun": "Aneby",
+    "slug": "aneby",
+    "lan": "Jönköpings län",
+    "antal": 1,
+    "orter": [
+      "Aneby"
+    ]
+  },
+  {
+    "kommunkod": "0617",
+    "kommun": "Gnosjö",
+    "slug": "gnosjo",
+    "lan": "Jönköpings län",
+    "antal": 1,
+    "orter": [
+      "Gnosjö"
+    ]
+  },
+  {
+    "kommunkod": "0642",
+    "kommun": "Mullsjö",
+    "slug": "mullsjo",
+    "lan": "Jönköpings län",
+    "antal": 1,
+    "orter": [
+      "Mullsjö"
+    ]
+  },
+  {
+    "kommunkod": "0643",
+    "kommun": "Habo",
+    "slug": "habo",
+    "lan": "Jönköpings län",
+    "antal": 1,
+    "orter": [
+      "Habo"
+    ]
+  },
+  {
+    "kommunkod": "0662",
+    "kommun": "Gislaved",
+    "slug": "gislaved",
+    "lan": "Jönköpings län",
+    "antal": 6,
+    "orter": [
+      "Anderstorp",
+      "Gislaved",
+      "Hestra",
+      "Reftele",
+      "Smålandsstenar"
+    ]
+  },
+  {
+    "kommunkod": "0665",
+    "kommun": "Vaggeryd",
+    "slug": "vaggeryd",
+    "lan": "Jönköpings län",
+    "antal": 3,
+    "orter": [
+      "Skillingaryd",
+      "Vaggeryd"
+    ]
+  },
+  {
+    "kommunkod": "0680",
+    "kommun": "Jönköping",
+    "slug": "jonkoping",
+    "lan": "Jönköpings län",
+    "antal": 19,
+    "orter": [
+      "Bankeryd",
+      "Gränna",
+      "Huskvarna",
+      "Jönköping",
+      "Norrahammar",
+      "Tenhult"
+    ]
+  },
+  {
+    "kommunkod": "0682",
+    "kommun": "Nässjö",
+    "slug": "nassjo",
+    "lan": "Jönköpings län",
+    "antal": 7,
+    "orter": [
+      "Bodafors",
+      "Forserum",
+      "Malmbäck",
+      "Nässjö"
+    ]
+  },
+  {
+    "kommunkod": "0683",
+    "kommun": "Värnamo",
+    "slug": "varnamo",
+    "lan": "Jönköpings län",
+    "antal": 6,
+    "orter": [
+      "Bredaryd",
+      "Forsheda",
+      "Rydaholm",
+      "Värnamo"
+    ]
+  },
+  {
+    "kommunkod": "0684",
+    "kommun": "Sävsjö",
+    "slug": "savsjo",
+    "lan": "Jönköpings län",
+    "antal": 2,
+    "orter": [
+      "Sävsjö",
+      "Vrigstad"
+    ]
+  },
+  {
+    "kommunkod": "0685",
+    "kommun": "Vetlanda",
+    "slug": "vetlanda",
+    "lan": "Jönköpings län",
+    "antal": 4,
+    "orter": [
+      "Landsbro",
+      "Vetlanda"
+    ]
+  },
+  {
+    "kommunkod": "0686",
+    "kommun": "Eksjö",
+    "slug": "eksjo",
+    "lan": "Jönköpings län",
+    "antal": 3,
+    "orter": [
+      "Eksjö",
+      "Mariannelund"
+    ]
+  },
+  {
+    "kommunkod": "0687",
+    "kommun": "Tranås",
+    "slug": "tranas",
+    "lan": "Jönköpings län",
+    "antal": 2,
+    "orter": [
+      "Tranås"
+    ]
+  },
+  {
+    "kommunkod": "0760",
+    "kommun": "Uppvidinge",
+    "slug": "uppvidinge",
+    "lan": "Kronobergs län",
+    "antal": 3,
+    "orter": [
+      "Alstermo",
+      "Lenhovda",
+      "Åseda"
+    ]
+  },
+  {
+    "kommunkod": "0761",
+    "kommun": "Lessebo",
+    "slug": "lessebo",
+    "lan": "Kronobergs län",
+    "antal": 1,
+    "orter": [
+      "Lessebo"
+    ]
+  },
+  {
+    "kommunkod": "0763",
+    "kommun": "Tingsryd",
+    "slug": "tingsryd",
+    "lan": "Kronobergs län",
+    "antal": 2,
+    "orter": [
+      "Ryd",
+      "Tingsryd"
+    ]
+  },
+  {
+    "kommunkod": "0764",
+    "kommun": "Alvesta",
+    "slug": "alvesta",
+    "lan": "Kronobergs län",
+    "antal": 3,
+    "orter": [
+      "Alvesta",
+      "Moheda",
+      "Vislanda"
+    ]
+  },
+  {
+    "kommunkod": "0765",
+    "kommun": "Älmhult",
+    "slug": "almhult",
+    "lan": "Kronobergs län",
+    "antal": 2,
+    "orter": [
+      "Älmhult"
+    ]
+  },
+  {
+    "kommunkod": "0767",
+    "kommun": "Markaryd",
+    "slug": "markaryd",
+    "lan": "Kronobergs län",
+    "antal": 3,
+    "orter": [
+      "Markaryd",
+      "Strömsnäsbruk"
+    ]
+  },
+  {
+    "kommunkod": "0780",
+    "kommun": "Växjö",
+    "slug": "vaxjo",
+    "lan": "Kronobergs län",
+    "antal": 13,
+    "orter": [
+      "Braås.",
+      "Ingelstad",
+      "Lammhult",
+      "Rottne",
+      "Växjö"
+    ]
+  },
+  {
+    "kommunkod": "0781",
+    "kommun": "Ljungby",
+    "slug": "ljungby",
+    "lan": "Kronobergs län",
+    "antal": 5,
+    "orter": [
+      "Lagan.",
+      "Ljungby",
+      "Ljungby."
+    ]
+  },
+  {
+    "kommunkod": "0821",
+    "kommun": "Högsby",
+    "slug": "hogsby",
+    "lan": "Kalmar län",
+    "antal": 1,
+    "orter": [
+      "Högsby"
+    ]
+  },
+  {
+    "kommunkod": "0834",
+    "kommun": "Torsås",
+    "slug": "torsas",
+    "lan": "Kalmar län",
+    "antal": 2,
+    "orter": [
+      "Söderåkra",
+      "Torsås"
+    ]
+  },
+  {
+    "kommunkod": "0840",
+    "kommun": "Mörbylånga",
+    "slug": "morbylanga",
+    "lan": "Kalmar län",
+    "antal": 2,
+    "orter": [
+      "Färjestaden",
+      "Mörbylånga"
+    ]
+  },
+  {
+    "kommunkod": "0860",
+    "kommun": "Hultsfred",
+    "slug": "hultsfred",
+    "lan": "Kalmar län",
+    "antal": 4,
+    "orter": [
+      "Hultsfred",
+      "Mörlunda",
+      "Virserum"
+    ]
+  },
+  {
+    "kommunkod": "0861",
+    "kommun": "Mönsterås",
+    "slug": "monsteras",
+    "lan": "Kalmar län",
+    "antal": 2,
+    "orter": [
+      "Blomstermåla",
+      "Mönsterås"
+    ]
+  },
+  {
+    "kommunkod": "0862",
+    "kommun": "Emmaboda",
+    "slug": "emmaboda",
+    "lan": "Kalmar län",
+    "antal": 2,
+    "orter": [
+      "Emmaboda"
+    ]
+  },
+  {
+    "kommunkod": "0880",
+    "kommun": "Kalmar",
+    "slug": "kalmar",
+    "lan": "Kalmar län",
+    "antal": 12,
+    "orter": [
+      "Kalmar",
+      "Ljungbyholm"
+    ]
+  },
+  {
+    "kommunkod": "0881",
+    "kommun": "Nybro",
+    "slug": "nybro",
+    "lan": "Kalmar län",
+    "antal": 3,
+    "orter": [
+      "Nybro"
+    ]
+  },
+  {
+    "kommunkod": "0882",
+    "kommun": "Oskarshamn",
+    "slug": "oskarshamn",
+    "lan": "Kalmar län",
+    "antal": 4,
+    "orter": [
+      "Oskarshamn"
+    ]
+  },
+  {
+    "kommunkod": "0883",
+    "kommun": "Västervik",
+    "slug": "vastervik",
+    "lan": "Kalmar län",
+    "antal": 6,
+    "orter": [
+      "Ankarsrum",
+      "Gamleby",
+      "Västervik",
+      "Överum"
+    ]
+  },
+  {
+    "kommunkod": "0884",
+    "kommun": "Vimmerby",
+    "slug": "vimmerby",
+    "lan": "Kalmar län",
+    "antal": 1,
+    "orter": [
+      "Vimmerby"
+    ]
+  },
+  {
+    "kommunkod": "0885",
+    "kommun": "Borgholm",
+    "slug": "borgholm",
+    "lan": "Kalmar län",
+    "antal": 2,
+    "orter": [
+      "Borgholm",
+      "Löttorp"
+    ]
+  },
+  {
+    "kommunkod": "0980",
+    "kommun": "Gotland",
+    "slug": "gotland",
+    "lan": "Gotlands län",
+    "antal": 6,
+    "orter": [
+      "Hemse",
+      "Slite",
+      "Visby"
+    ]
+  },
+  {
+    "kommunkod": "1060",
+    "kommun": "Olofström",
+    "slug": "olofstrom",
+    "lan": "Blekinge län",
+    "antal": 2,
+    "orter": [
+      "Olofström"
+    ]
+  },
+  {
+    "kommunkod": "1080",
+    "kommun": "Karlskrona",
+    "slug": "karlskrona",
+    "lan": "Blekinge län",
+    "antal": 8,
+    "orter": [
+      "Jämjö",
+      "Karlskrona",
+      "Lyckeby",
+      "Nättraby",
+      "Rödeby"
+    ]
+  },
+  {
+    "kommunkod": "1081",
+    "kommun": "Ronneby",
+    "slug": "ronneby",
+    "lan": "Blekinge län",
+    "antal": 3,
+    "orter": [
+      "Kallinge",
+      "Ronneby"
+    ]
+  },
+  {
+    "kommunkod": "1082",
+    "kommun": "Karlshamn",
+    "slug": "karlshamn",
+    "lan": "Blekinge län",
+    "antal": 3,
+    "orter": [
+      "Karlshamn"
+    ]
+  },
+  {
+    "kommunkod": "1083",
+    "kommun": "Sölvesborg",
+    "slug": "solvesborg",
+    "lan": "Blekinge län",
+    "antal": 2,
+    "orter": [
+      "Sölvesborg"
+    ]
+  },
+  {
+    "kommunkod": "1214",
+    "kommun": "Svalöv",
+    "slug": "svalov",
+    "lan": "Skåne län",
+    "antal": 1,
+    "orter": [
+      "Svalöv"
+    ]
+  },
+  {
+    "kommunkod": "1230",
+    "kommun": "Staffanstorp",
+    "slug": "staffanstorp",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Hjärup",
+      "Staffanstorp"
+    ]
+  },
+  {
+    "kommunkod": "1231",
+    "kommun": "Burlöv",
+    "slug": "burlov",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Arlöv"
+    ]
+  },
+  {
+    "kommunkod": "1233",
+    "kommun": "Vellinge",
+    "slug": "vellinge",
+    "lan": "Skåne län",
+    "antal": 4,
+    "orter": [
+      "Höllviken",
+      "Skanör",
+      "Vellinge"
+    ]
+  },
+  {
+    "kommunkod": "1256",
+    "kommun": "Östra Göinge",
+    "slug": "ostra-goinge",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Broby",
+      "Knislinge"
+    ]
+  },
+  {
+    "kommunkod": "1257",
+    "kommun": "Örkelljunga",
+    "slug": "orkelljunga",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Örkelljunga"
+    ]
+  },
+  {
+    "kommunkod": "1260",
+    "kommun": "Bjuv",
+    "slug": "bjuv",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Bjuv",
+      "Ekeby"
+    ]
+  },
+  {
+    "kommunkod": "1261",
+    "kommun": "Kävlinge",
+    "slug": "kavlinge",
+    "lan": "Skåne län",
+    "antal": 4,
+    "orter": [
+      "Kävlinge",
+      "Löddeköpinge"
+    ]
+  },
+  {
+    "kommunkod": "1262",
+    "kommun": "Lomma",
+    "slug": "lomma",
+    "lan": "Skåne län",
+    "antal": 4,
+    "orter": [
+      "Bjärred",
+      "Lomma"
+    ]
+  },
+  {
+    "kommunkod": "1263",
+    "kommun": "Svedala",
+    "slug": "svedala",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Bara",
+      "Svedala"
+    ]
+  },
+  {
+    "kommunkod": "1264",
+    "kommun": "Skurup",
+    "slug": "skurup",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Rydsgård",
+      "Skurup"
+    ]
+  },
+  {
+    "kommunkod": "1265",
+    "kommun": "Sjöbo",
+    "slug": "sjobo",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Sjöbo"
+    ]
+  },
+  {
+    "kommunkod": "1266",
+    "kommun": "Hörby",
+    "slug": "horby",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Hörby"
+    ]
+  },
+  {
+    "kommunkod": "1267",
+    "kommun": "Höör",
+    "slug": "hoor",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Höör"
+    ]
+  },
+  {
+    "kommunkod": "1270",
+    "kommun": "Tomelilla",
+    "slug": "tomelilla",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Brösarp",
+      "Tomelilla"
+    ]
+  },
+  {
+    "kommunkod": "1272",
+    "kommun": "Bromölla",
+    "slug": "bromolla",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Bromölla"
+    ]
+  },
+  {
+    "kommunkod": "1273",
+    "kommun": "Osby",
+    "slug": "osby",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Osby"
+    ]
+  },
+  {
+    "kommunkod": "1275",
+    "kommun": "Perstorp",
+    "slug": "perstorp",
+    "lan": "Skåne län",
+    "antal": 1,
+    "orter": [
+      "Perstorp"
+    ]
+  },
+  {
+    "kommunkod": "1276",
+    "kommun": "Klippan",
+    "slug": "klippan",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Klippan",
+      "Ljungbyhed"
+    ]
+  },
+  {
+    "kommunkod": "1277",
+    "kommun": "Åstorp",
+    "slug": "astorp",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Åstorp"
+    ]
+  },
+  {
+    "kommunkod": "1278",
+    "kommun": "Båstad",
+    "slug": "bastad",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Båstad",
+      "Förslöv",
+      "Grevie"
+    ]
+  },
+  {
+    "kommunkod": "1280",
+    "kommun": "Malmö",
+    "slug": "malmo",
+    "lan": "Skåne län",
+    "antal": 46,
+    "orter": [
+      "Bunkeflostrand",
+      "Limhamn",
+      "Malmö",
+      "Oxie"
+    ]
+  },
+  {
+    "kommunkod": "1281",
+    "kommun": "Lund",
+    "slug": "lund",
+    "lan": "Skåne län",
+    "antal": 16,
+    "orter": [
+      "Dalby",
+      "Lund",
+      "Södra Sandby",
+      "Veberöd"
+    ]
+  },
+  {
+    "kommunkod": "1282",
+    "kommun": "Landskrona",
+    "slug": "landskrona",
+    "lan": "Skåne län",
+    "antal": 5,
+    "orter": [
+      "Landskrona"
+    ]
+  },
+  {
+    "kommunkod": "1283",
+    "kommun": "Helsingborg",
+    "slug": "helsingborg",
+    "lan": "Skåne län",
+    "antal": 22,
+    "orter": [
+      "Helsingborg",
+      "Påarp",
+      "Rydebäck",
+      "Råå"
+    ]
+  },
+  {
+    "kommunkod": "1284",
+    "kommun": "Höganäs",
+    "slug": "hoganas",
+    "lan": "Skåne län",
+    "antal": 3,
+    "orter": [
+      "Höganäs"
+    ]
+  },
+  {
+    "kommunkod": "1285",
+    "kommun": "Eslöv",
+    "slug": "eslov",
+    "lan": "Skåne län",
+    "antal": 4,
+    "orter": [
+      "Eslöv",
+      "Löberöd"
+    ]
+  },
+  {
+    "kommunkod": "1286",
+    "kommun": "Ystad",
+    "slug": "ystad",
+    "lan": "Skåne län",
+    "antal": 4,
+    "orter": [
+      "Ystad"
+    ]
+  },
+  {
+    "kommunkod": "1287",
+    "kommun": "Trelleborg",
+    "slug": "trelleborg",
+    "lan": "Skåne län",
+    "antal": 5,
+    "orter": [
+      "Anderslöv",
+      "Trelleborg"
+    ]
+  },
+  {
+    "kommunkod": "1290",
+    "kommun": "Kristianstad",
+    "slug": "kristianstad",
+    "lan": "Skåne län",
+    "antal": 11,
+    "orter": [
+      "Kristianstad",
+      "Tollarp",
+      "Åhus"
+    ]
+  },
+  {
+    "kommunkod": "1291",
+    "kommun": "Simrishamn",
+    "slug": "simrishamn",
+    "lan": "Skåne län",
+    "antal": 2,
+    "orter": [
+      "Borrby",
+      "Simrishamn"
+    ]
+  },
+  {
+    "kommunkod": "1292",
+    "kommun": "Ängelholm",
+    "slug": "angelholm",
+    "lan": "Skåne län",
+    "antal": 5,
+    "orter": [
+      "Munka-Ljungby",
+      "Ängelholm"
+    ]
+  },
+  {
+    "kommunkod": "1293",
+    "kommun": "Hässleholm",
+    "slug": "hassleholm",
+    "lan": "Skåne län",
+    "antal": 9,
+    "orter": [
+      "Bjärnum",
+      "Hässleholm",
+      "Sösdala",
+      "Tyringe",
+      "Vinslöv",
+      "Vittsjö"
+    ]
+  },
+  {
+    "kommunkod": "1315",
+    "kommun": "Hylte",
+    "slug": "hylte",
+    "lan": "Hallands län",
+    "antal": 1,
+    "orter": [
+      "Torup"
+    ]
+  },
+  {
+    "kommunkod": "1380",
+    "kommun": "Halmstad",
+    "slug": "halmstad",
+    "lan": "Hallands län",
+    "antal": 14,
+    "orter": [
+      "Getinge",
+      "Halmstad",
+      "Oskarström"
+    ]
+  },
+  {
+    "kommunkod": "1381",
+    "kommun": "Laholm",
+    "slug": "laholm",
+    "lan": "Hallands län",
+    "antal": 5,
+    "orter": [
+      "Knäred",
+      "Laholm",
+      "Mellbystrand"
+    ]
+  },
+  {
+    "kommunkod": "1382",
+    "kommun": "Falkenberg",
+    "slug": "falkenberg",
+    "lan": "Hallands län",
+    "antal": 7,
+    "orter": [
+      "Falkenberg",
+      "Slöinge",
+      "Ullared",
+      "Vessigebro"
+    ]
+  },
+  {
+    "kommunkod": "1383",
+    "kommun": "Varberg",
+    "slug": "varberg",
+    "lan": "Hallands län",
+    "antal": 9,
+    "orter": [
+      "Träslövsläge",
+      "Tvååker",
+      "Varberg",
+      "Veddige"
+    ]
+  },
+  {
+    "kommunkod": "1384",
+    "kommun": "Kungsbacka",
+    "slug": "kungsbacka",
+    "lan": "Hallands län",
+    "antal": 12,
+    "orter": [
+      "Billdal",
+      "Fjärås",
+      "Frillesås",
+      "Kungsbacka",
+      "Onsala",
+      "Särö",
+      "Vallda",
+      "Åsa"
+    ]
+  },
+  {
+    "kommunkod": "1401",
+    "kommun": "Härryda",
+    "slug": "harryda",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Hindås",
+      "Landvetter",
+      "Mölnlycke",
+      "Rävlanda"
+    ]
+  },
+  {
+    "kommunkod": "1402",
+    "kommun": "Partille",
+    "slug": "partille",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Partille",
+      "Sävedalen",
+      "Öjersjö"
+    ]
+  },
+  {
+    "kommunkod": "1407",
+    "kommun": "Öckerö",
+    "slug": "ockero",
+    "lan": "Västra Götalands län",
+    "antal": 3,
+    "orter": [
+      "Bohus-Björkö",
+      "Hönö",
+      "Öckerö"
+    ]
+  },
+  {
+    "kommunkod": "1415",
+    "kommun": "Stenungsund",
+    "slug": "stenungsund",
+    "lan": "Västra Götalands län",
+    "antal": 4,
+    "orter": [
+      "Stenungsund",
+      "Stora Höga"
+    ]
+  },
+  {
+    "kommunkod": "1419",
+    "kommun": "Tjörn",
+    "slug": "tjorn",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Kållekärr",
+      "Myggenäs"
+    ]
+  },
+  {
+    "kommunkod": "1421",
+    "kommun": "Orust",
+    "slug": "orust",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Henån",
+      "Varekil"
+    ]
+  },
+  {
+    "kommunkod": "1427",
+    "kommun": "Sotenäs",
+    "slug": "sotenas",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Hunnebostrand",
+      "Kungshamn"
+    ]
+  },
+  {
+    "kommunkod": "1430",
+    "kommun": "Munkedal",
+    "slug": "munkedal",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Munkedal"
+    ]
+  },
+  {
+    "kommunkod": "1435",
+    "kommun": "Tanum",
+    "slug": "tanum",
+    "lan": "Västra Götalands län",
+    "antal": 3,
+    "orter": [
+      "Fjällbacka",
+      "Tanumshede"
+    ]
+  },
+  {
+    "kommunkod": "1438",
+    "kommun": "Dals-Ed",
+    "slug": "dals-ed",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Ed"
+    ]
+  },
+  {
+    "kommunkod": "1439",
+    "kommun": "Färgelanda",
+    "slug": "fargelanda",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Färgelanda"
+    ]
+  },
+  {
+    "kommunkod": "1440",
+    "kommun": "Ale",
+    "slug": "ale",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Bohus",
+      "Nol",
+      "Nödinge",
+      "Skepplanda",
+      "Älvängen"
+    ]
+  },
+  {
+    "kommunkod": "1441",
+    "kommun": "Lerum",
+    "slug": "lerum",
+    "lan": "Västra Götalands län",
+    "antal": 4,
+    "orter": [
+      "Floda",
+      "Gråbo",
+      "Lerum"
+    ]
+  },
+  {
+    "kommunkod": "1442",
+    "kommun": "Vårgårda",
+    "slug": "vargarda",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Vårgårda"
+    ]
+  },
+  {
+    "kommunkod": "1443",
+    "kommun": "Bollebygd",
+    "slug": "bollebygd",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Bollebygd"
+    ]
+  },
+  {
+    "kommunkod": "1444",
+    "kommun": "Grästorp",
+    "slug": "grastorp",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Grästorp"
+    ]
+  },
+  {
+    "kommunkod": "1445",
+    "kommun": "Essunga",
+    "slug": "essunga",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Nossebro"
+    ]
+  },
+  {
+    "kommunkod": "1446",
+    "kommun": "Karlsborg",
+    "slug": "karlsborg",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Karlsborg"
+    ]
+  },
+  {
+    "kommunkod": "1447",
+    "kommun": "Gullspång",
+    "slug": "gullspang",
+    "lan": "Västra Götalands län",
+    "antal": 4,
+    "orter": [
+      "Gullspång",
+      "Hova"
+    ]
+  },
+  {
+    "kommunkod": "1452",
+    "kommun": "Tranemo",
+    "slug": "tranemo",
+    "lan": "Västra Götalands län",
+    "antal": 3,
+    "orter": [
+      "Dalstorp",
+      "Tranemo"
+    ]
+  },
+  {
+    "kommunkod": "1460",
+    "kommun": "Bengtsfors",
+    "slug": "bengtsfors",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Bengtsfors",
+      "Bäckefors"
+    ]
+  },
+  {
+    "kommunkod": "1461",
+    "kommun": "Mellerud",
+    "slug": "mellerud",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Mellerud"
+    ]
+  },
+  {
+    "kommunkod": "1462",
+    "kommun": "Lilla Edet",
+    "slug": "lilla-edet",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Lilla Edet",
+      "Lödöse"
+    ]
+  },
+  {
+    "kommunkod": "1463",
+    "kommun": "Mark",
+    "slug": "mark",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Horred",
+      "Kinna",
+      "Skene",
+      "Sätila",
+      "Örby"
+    ]
+  },
+  {
+    "kommunkod": "1465",
+    "kommun": "Svenljunga",
+    "slug": "svenljunga",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Svenljunga"
+    ]
+  },
+  {
+    "kommunkod": "1466",
+    "kommun": "Herrljunga",
+    "slug": "herrljunga",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Herrljunga"
+    ]
+  },
+  {
+    "kommunkod": "1470",
+    "kommun": "Vara",
+    "slug": "vara",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Vara"
+    ]
+  },
+  {
+    "kommunkod": "1471",
+    "kommun": "Götene",
+    "slug": "gotene",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Götene"
+    ]
+  },
+  {
+    "kommunkod": "1472",
+    "kommun": "Tibro",
+    "slug": "tibro",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Tibro"
+    ]
+  },
+  {
+    "kommunkod": "1473",
+    "kommun": "Töreboda",
+    "slug": "toreboda",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Töreboda"
+    ]
+  },
+  {
+    "kommunkod": "1480",
+    "kommun": "Göteborg",
+    "slug": "goteborg",
+    "lan": "Västra Götalands län",
+    "antal": 66,
+    "orter": [
+      "Angered",
+      "Askim",
+      "Göteborg",
+      "Hisings Backa",
+      "Hisings Kärra",
+      "Hovås",
+      "Styrsö",
+      "Torslanda",
+      "Västra Frölunda"
+    ]
+  },
+  {
+    "kommunkod": "1481",
+    "kommun": "Mölndal",
+    "slug": "molndal",
+    "lan": "Västra Götalands län",
+    "antal": 10,
+    "orter": [
+      "Kållered",
+      "Lindome",
+      "Mölndal"
+    ]
+  },
+  {
+    "kommunkod": "1482",
+    "kommun": "Kungälv",
+    "slug": "kungalv",
+    "lan": "Västra Götalands län",
+    "antal": 8,
+    "orter": [
+      "Kungälv",
+      "Kärna",
+      "Marstrand",
+      "Ytterby"
+    ]
+  },
+  {
+    "kommunkod": "1484",
+    "kommun": "Lysekil",
+    "slug": "lysekil",
+    "lan": "Västra Götalands län",
+    "antal": 3,
+    "orter": [
+      "Brastad",
+      "Lysekil"
+    ]
+  },
+  {
+    "kommunkod": "1485",
+    "kommun": "Uddevalla",
+    "slug": "uddevalla",
+    "lan": "Västra Götalands län",
+    "antal": 7,
+    "orter": [
+      "Ljungskile",
+      "Uddevalla"
+    ]
+  },
+  {
+    "kommunkod": "1486",
+    "kommun": "Strömstad",
+    "slug": "stromstad",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Strömstad"
+    ]
+  },
+  {
+    "kommunkod": "1487",
+    "kommun": "Vänersborg",
+    "slug": "vanersborg",
+    "lan": "Västra Götalands län",
+    "antal": 4,
+    "orter": [
+      "Vargön",
+      "Vänersborg"
+    ]
+  },
+  {
+    "kommunkod": "1488",
+    "kommun": "Trollhättan",
+    "slug": "trollhattan",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Trollhättan"
+    ]
+  },
+  {
+    "kommunkod": "1489",
+    "kommun": "Alingsås",
+    "slug": "alingsas",
+    "lan": "Västra Götalands län",
+    "antal": 6,
+    "orter": [
+      "Alingsås",
+      "Sollebrunn"
+    ]
+  },
+  {
+    "kommunkod": "1490",
+    "kommun": "Borås",
+    "slug": "boras",
+    "lan": "Västra Götalands län",
+    "antal": 16,
+    "orter": [
+      "Borås",
+      "Brämhult",
+      "Dalsjöfors",
+      "Fristad",
+      "Sandared",
+      "Viskafors"
+    ]
+  },
+  {
+    "kommunkod": "1491",
+    "kommun": "Ulricehamn",
+    "slug": "ulricehamn",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Ulricehamn"
+    ]
+  },
+  {
+    "kommunkod": "1492",
+    "kommun": "Åmål",
+    "slug": "amal",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Åmål"
+    ]
+  },
+  {
+    "kommunkod": "1493",
+    "kommun": "Mariestad",
+    "slug": "mariestad",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Mariestad"
+    ]
+  },
+  {
+    "kommunkod": "1494",
+    "kommun": "Lidköping",
+    "slug": "lidkoping",
+    "lan": "Västra Götalands län",
+    "antal": 3,
+    "orter": [
+      "Lidköping"
+    ]
+  },
+  {
+    "kommunkod": "1495",
+    "kommun": "Skara",
+    "slug": "skara",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Skara"
+    ]
+  },
+  {
+    "kommunkod": "1496",
+    "kommun": "Skövde",
+    "slug": "skovde",
+    "lan": "Västra Götalands län",
+    "antal": 8,
+    "orter": [
+      "Skövde",
+      "Tidan"
+    ]
+  },
+  {
+    "kommunkod": "1497",
+    "kommun": "Hjo",
+    "slug": "hjo",
+    "lan": "Västra Götalands län",
+    "antal": 2,
+    "orter": [
+      "Hjo"
+    ]
+  },
+  {
+    "kommunkod": "1498",
+    "kommun": "Tidaholm",
+    "slug": "tidaholm",
+    "lan": "Västra Götalands län",
+    "antal": 1,
+    "orter": [
+      "Tidaholm"
+    ]
+  },
+  {
+    "kommunkod": "1499",
+    "kommun": "Falköping",
+    "slug": "falkoping",
+    "lan": "Västra Götalands län",
+    "antal": 4,
+    "orter": [
+      "Falköping",
+      "Stenstorp"
+    ]
+  },
+  {
+    "kommunkod": "1715",
+    "kommun": "Kil",
+    "slug": "kil",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Kil"
+    ]
+  },
+  {
+    "kommunkod": "1730",
+    "kommun": "Eda",
+    "slug": "eda",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Charlottenberg"
+    ]
+  },
+  {
+    "kommunkod": "1737",
+    "kommun": "Torsby",
+    "slug": "torsby",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Likenäs",
+      "Torsby"
+    ]
+  },
+  {
+    "kommunkod": "1760",
+    "kommun": "Storfors",
+    "slug": "storfors",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Storfors"
+    ]
+  },
+  {
+    "kommunkod": "1761",
+    "kommun": "Hammarö",
+    "slug": "hammaro",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Skoghall"
+    ]
+  },
+  {
+    "kommunkod": "1762",
+    "kommun": "Munkfors",
+    "slug": "munkfors",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Munkfors"
+    ]
+  },
+  {
+    "kommunkod": "1763",
+    "kommun": "Forshaga",
+    "slug": "forshaga",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Forshaga"
+    ]
+  },
+  {
+    "kommunkod": "1764",
+    "kommun": "Grums",
+    "slug": "grums",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Grums"
+    ]
+  },
+  {
+    "kommunkod": "1765",
+    "kommun": "Årjäng",
+    "slug": "arjang",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Töcksfors",
+      "Årjäng"
+    ]
+  },
+  {
+    "kommunkod": "1766",
+    "kommun": "Sunne",
+    "slug": "sunne",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Sunne"
+    ]
+  },
+  {
+    "kommunkod": "1780",
+    "kommun": "Karlstad",
+    "slug": "karlstad",
+    "lan": "Värmlands län",
+    "antal": 11,
+    "orter": [
+      "Karlstad",
+      "Molkom",
+      "Vålberg"
+    ]
+  },
+  {
+    "kommunkod": "1781",
+    "kommun": "Kristinehamn",
+    "slug": "kristinehamn",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Kristinehamn"
+    ]
+  },
+  {
+    "kommunkod": "1782",
+    "kommun": "Filipstad",
+    "slug": "filipstad",
+    "lan": "Värmlands län",
+    "antal": 1,
+    "orter": [
+      "Filipstad"
+    ]
+  },
+  {
+    "kommunkod": "1783",
+    "kommun": "Hagfors",
+    "slug": "hagfors",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Ekshärad",
+      "Hagfors"
+    ]
+  },
+  {
+    "kommunkod": "1784",
+    "kommun": "Arvika",
+    "slug": "arvika",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Arvika"
+    ]
+  },
+  {
+    "kommunkod": "1785",
+    "kommun": "Säffle",
+    "slug": "saffle",
+    "lan": "Värmlands län",
+    "antal": 2,
+    "orter": [
+      "Säffle",
+      "Värmlands Nysäter"
+    ]
+  },
+  {
+    "kommunkod": "1814",
+    "kommun": "Lekeberg",
+    "slug": "lekeberg",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Fjugesta"
+    ]
+  },
+  {
+    "kommunkod": "1860",
+    "kommun": "Laxå",
+    "slug": "laxa",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Laxå"
+    ]
+  },
+  {
+    "kommunkod": "1861",
+    "kommun": "Hallsberg",
+    "slug": "hallsberg",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Hallsberg"
+    ]
+  },
+  {
+    "kommunkod": "1862",
+    "kommun": "Degerfors",
+    "slug": "degerfors",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Degerfors"
+    ]
+  },
+  {
+    "kommunkod": "1863",
+    "kommun": "Hällefors",
+    "slug": "hallefors",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Hällefors"
+    ]
+  },
+  {
+    "kommunkod": "1864",
+    "kommun": "Ljusnarsberg",
+    "slug": "ljusnarsberg",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Kopparberg"
+    ]
+  },
+  {
+    "kommunkod": "1880",
+    "kommun": "Örebro",
+    "slug": "orebro",
+    "lan": "Örebro län",
+    "antal": 15,
+    "orter": [
+      "Odensbacken",
+      "Örebro"
+    ]
+  },
+  {
+    "kommunkod": "1881",
+    "kommun": "Kumla",
+    "slug": "kumla",
+    "lan": "Örebro län",
+    "antal": 2,
+    "orter": [
+      "Kumla",
+      "Örebro"
+    ]
+  },
+  {
+    "kommunkod": "1882",
+    "kommun": "Askersund",
+    "slug": "askersund",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Askersund"
+    ]
+  },
+  {
+    "kommunkod": "1883",
+    "kommun": "Karlskoga",
+    "slug": "karlskoga",
+    "lan": "Örebro län",
+    "antal": 4,
+    "orter": [
+      "Karlskoga",
+      "Örebro"
+    ]
+  },
+  {
+    "kommunkod": "1884",
+    "kommun": "Nora",
+    "slug": "nora",
+    "lan": "Örebro län",
+    "antal": 1,
+    "orter": [
+      "Nora"
+    ]
+  },
+  {
+    "kommunkod": "1885",
+    "kommun": "Lindesberg",
+    "slug": "lindesberg",
+    "lan": "Örebro län",
+    "antal": 3,
+    "orter": [
+      "Frövi",
+      "Lindesberg",
+      "Storå"
+    ]
+  },
+  {
+    "kommunkod": "1904",
+    "kommun": "Skinnskatteberg",
+    "slug": "skinnskatteberg",
+    "lan": "Västmanlands län",
+    "antal": 1,
+    "orter": [
+      "Skinnskatteberg"
+    ]
+  },
+  {
+    "kommunkod": "1907",
+    "kommun": "Surahammar",
+    "slug": "surahammar",
+    "lan": "Västmanlands län",
+    "antal": 1,
+    "orter": [
+      "Surahammar"
+    ]
+  },
+  {
+    "kommunkod": "1960",
+    "kommun": "Kungsör",
+    "slug": "kungsor",
+    "lan": "Västmanlands län",
+    "antal": 1,
+    "orter": [
+      "Kungsör"
+    ]
+  },
+  {
+    "kommunkod": "1961",
+    "kommun": "Hallstahammar",
+    "slug": "hallstahammar",
+    "lan": "Västmanlands län",
+    "antal": 1,
+    "orter": [
+      "Hallstahammar"
+    ]
+  },
+  {
+    "kommunkod": "1962",
+    "kommun": "Norberg",
+    "slug": "norberg",
+    "lan": "Västmanlands län",
+    "antal": 1,
+    "orter": [
+      "Norberg"
+    ]
+  },
+  {
+    "kommunkod": "1980",
+    "kommun": "Västerås",
+    "slug": "vasteras",
+    "lan": "Västmanlands län",
+    "antal": 13,
+    "orter": [
+      "Västerås"
+    ]
+  },
+  {
+    "kommunkod": "1981",
+    "kommun": "Sala",
+    "slug": "sala",
+    "lan": "Västmanlands län",
+    "antal": 2,
+    "orter": [
+      "Sala"
+    ]
+  },
+  {
+    "kommunkod": "1982",
+    "kommun": "Fagersta",
+    "slug": "fagersta",
+    "lan": "Västmanlands län",
+    "antal": 2,
+    "orter": [
+      "Fagersta"
+    ]
+  },
+  {
+    "kommunkod": "1983",
+    "kommun": "Köping",
+    "slug": "koping",
+    "lan": "Västmanlands län",
+    "antal": 4,
+    "orter": [
+      "Kolsva",
+      "Köping"
+    ]
+  },
+  {
+    "kommunkod": "1984",
+    "kommun": "Arboga",
+    "slug": "arboga",
+    "lan": "Västmanlands län",
+    "antal": 2,
+    "orter": [
+      "Arboga"
+    ]
+  },
+  {
+    "kommunkod": "2021",
+    "kommun": "Vansbro",
+    "slug": "vansbro",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Vansbro"
+    ]
+  },
+  {
+    "kommunkod": "2023",
+    "kommun": "Malung-Sälen",
+    "slug": "malung-salen",
+    "lan": "Dalarnas län",
+    "antal": 2,
+    "orter": [
+      "Malung",
+      "Sälen"
+    ]
+  },
+  {
+    "kommunkod": "2026",
+    "kommun": "Gagnef",
+    "slug": "gagnef",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Djurås"
+    ]
+  },
+  {
+    "kommunkod": "2029",
+    "kommun": "Leksand",
+    "slug": "leksand",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Leksand"
+    ]
+  },
+  {
+    "kommunkod": "2031",
+    "kommun": "Rättvik",
+    "slug": "rattvik",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Rättvik"
+    ]
+  },
+  {
+    "kommunkod": "2034",
+    "kommun": "Orsa",
+    "slug": "orsa",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Orsa"
+    ]
+  },
+  {
+    "kommunkod": "2039",
+    "kommun": "Älvdalen",
+    "slug": "alvdalen",
+    "lan": "Dalarnas län",
+    "antal": 2,
+    "orter": [
+      "Idre",
+      "Älvdalen"
+    ]
+  },
+  {
+    "kommunkod": "2061",
+    "kommun": "Smedjebacken",
+    "slug": "smedjebacken",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Smedjebacken"
+    ]
+  },
+  {
+    "kommunkod": "2062",
+    "kommun": "Mora",
+    "slug": "mora",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Mora"
+    ]
+  },
+  {
+    "kommunkod": "2080",
+    "kommun": "Falun",
+    "slug": "falun",
+    "lan": "Dalarnas län",
+    "antal": 5,
+    "orter": [
+      "Falun",
+      "Grycksbo",
+      "Svärdsjö"
+    ]
+  },
+  {
+    "kommunkod": "2081",
+    "kommun": "Borlänge",
+    "slug": "borlange",
+    "lan": "Dalarnas län",
+    "antal": 4,
+    "orter": [
+      "Borlänge"
+    ]
+  },
+  {
+    "kommunkod": "2082",
+    "kommun": "Säter",
+    "slug": "sater",
+    "lan": "Dalarnas län",
+    "antal": 1,
+    "orter": [
+      "Säter"
+    ]
+  },
+  {
+    "kommunkod": "2083",
+    "kommun": "Hedemora",
+    "slug": "hedemora",
+    "lan": "Dalarnas län",
+    "antal": 2,
+    "orter": [
+      "Hedemora",
+      "Långshyttan"
+    ]
+  },
+  {
+    "kommunkod": "2084",
+    "kommun": "Avesta",
+    "slug": "avesta",
+    "lan": "Dalarnas län",
+    "antal": 3,
+    "orter": [
+      "Avesta"
+    ]
+  },
+  {
+    "kommunkod": "2085",
+    "kommun": "Ludvika",
+    "slug": "ludvika",
+    "lan": "Dalarnas län",
+    "antal": 3,
+    "orter": [
+      "Ludvika",
+      "Sunnansjö"
+    ]
+  },
+  {
+    "kommunkod": "2101",
+    "kommun": "Ockelbo",
+    "slug": "ockelbo",
+    "lan": "Gävleborgs län",
+    "antal": 1,
+    "orter": [
+      "Ockelbo"
+    ]
+  },
+  {
+    "kommunkod": "2104",
+    "kommun": "Hofors",
+    "slug": "hofors",
+    "lan": "Gävleborgs län",
+    "antal": 1,
+    "orter": [
+      "Hofors"
+    ]
+  },
+  {
+    "kommunkod": "2121",
+    "kommun": "Ovanåker",
+    "slug": "ovanaker",
+    "lan": "Gävleborgs län",
+    "antal": 3,
+    "orter": [
+      "Alfta",
+      "Edsbyn"
+    ]
+  },
+  {
+    "kommunkod": "2132",
+    "kommun": "Nordanstig",
+    "slug": "nordanstig",
+    "lan": "Gävleborgs län",
+    "antal": 2,
+    "orter": [
+      "Bergsjö",
+      "Harmånger"
+    ]
+  },
+  {
+    "kommunkod": "2161",
+    "kommun": "Ljusdal",
+    "slug": "ljusdal",
+    "lan": "Gävleborgs län",
+    "antal": 3,
+    "orter": [
+      "Färila",
+      "Järvsö",
+      "Ljusdal"
+    ]
+  },
+  {
+    "kommunkod": "2180",
+    "kommun": "Gävle",
+    "slug": "gavle",
+    "lan": "Gävleborgs län",
+    "antal": 14,
+    "orter": [
+      "Bergby",
+      "Gävle",
+      "Hedesunda",
+      "Valbo"
+    ]
+  },
+  {
+    "kommunkod": "2181",
+    "kommun": "Sandviken",
+    "slug": "sandviken",
+    "lan": "Gävleborgs län",
+    "antal": 4,
+    "orter": [
+      "Sandviken",
+      "Storvik"
+    ]
+  },
+  {
+    "kommunkod": "2182",
+    "kommun": "Söderhamn",
+    "slug": "soderhamn",
+    "lan": "Gävleborgs län",
+    "antal": 5,
+    "orter": [
+      "Bergvik",
+      "Söderhamn"
+    ]
+  },
+  {
+    "kommunkod": "2183",
+    "kommun": "Bollnäs",
+    "slug": "bollnas",
+    "lan": "Gävleborgs län",
+    "antal": 3,
+    "orter": [
+      "Arbrå",
+      "Bollnäs",
+      "Kilafors"
+    ]
+  },
+  {
+    "kommunkod": "2184",
+    "kommun": "Hudiksvall",
+    "slug": "hudiksvall",
+    "lan": "Gävleborgs län",
+    "antal": 5,
+    "orter": [
+      "Delsbo",
+      "Hudiksvall",
+      "Iggesund"
+    ]
+  },
+  {
+    "kommunkod": "2260",
+    "kommun": "Ånge",
+    "slug": "ange",
+    "lan": "Västernorrlands län",
+    "antal": 2,
+    "orter": [
+      "Fränsta",
+      "Ånge"
+    ]
+  },
+  {
+    "kommunkod": "2262",
+    "kommun": "Timrå",
+    "slug": "timra",
+    "lan": "Västernorrlands län",
+    "antal": 2,
+    "orter": [
+      "Söråker",
+      "Timrå"
+    ]
+  },
+  {
+    "kommunkod": "2280",
+    "kommun": "Härnösand",
+    "slug": "harnosand",
+    "lan": "Västernorrlands län",
+    "antal": 3,
+    "orter": [
+      "Härnösand"
+    ]
+  },
+  {
+    "kommunkod": "2281",
+    "kommun": "Sundsvall",
+    "slug": "sundsvall",
+    "lan": "Västernorrlands län",
+    "antal": 13,
+    "orter": [
+      "Alnö",
+      "Kvissleby",
+      "Liden",
+      "Matfors",
+      "Stöde",
+      "Sundsbruk",
+      "Sundsvall"
+    ]
+  },
+  {
+    "kommunkod": "2282",
+    "kommun": "Kramfors",
+    "slug": "kramfors",
+    "lan": "Västernorrlands län",
+    "antal": 3,
+    "orter": [
+      "Kramfors",
+      "Nyland",
+      "Ullånger"
+    ]
+  },
+  {
+    "kommunkod": "2283",
+    "kommun": "Sollefteå",
+    "slug": "solleftea",
+    "lan": "Västernorrlands län",
+    "antal": 3,
+    "orter": [
+      "Junsele",
+      "Ramsele",
+      "Sollefteå"
+    ]
+  },
+  {
+    "kommunkod": "2284",
+    "kommun": "Örnsköldsvik",
+    "slug": "ornskoldsvik",
+    "lan": "Västernorrlands län",
+    "antal": 8,
+    "orter": [
+      "Bjästa",
+      "Björna",
+      "Bredbyn",
+      "Domsjö",
+      "Husum",
+      "Själevad",
+      "Örnsköldsvik"
+    ]
+  },
+  {
+    "kommunkod": "2303",
+    "kommun": "Ragunda",
+    "slug": "ragunda",
+    "lan": "Jämtlands län",
+    "antal": 3,
+    "orter": [
+      "Bispgården",
+      "Hammarstrand",
+      "Stugun"
+    ]
+  },
+  {
+    "kommunkod": "2305",
+    "kommun": "Bräcke",
+    "slug": "bracke",
+    "lan": "Jämtlands län",
+    "antal": 3,
+    "orter": [
+      "Bräcke",
+      "Gällö",
+      "Kälarne"
+    ]
+  },
+  {
+    "kommunkod": "2309",
+    "kommun": "Krokom",
+    "slug": "krokom",
+    "lan": "Jämtlands län",
+    "antal": 4,
+    "orter": [
+      "Föllinge",
+      "Krokom",
+      "Offerdal"
+    ]
+  },
+  {
+    "kommunkod": "2313",
+    "kommun": "Strömsund",
+    "slug": "stromsund",
+    "lan": "Jämtlands län",
+    "antal": 4,
+    "orter": [
+      "Backe",
+      "Gäddede",
+      "Hoting",
+      "Strömsund"
+    ]
+  },
+  {
+    "kommunkod": "2321",
+    "kommun": "Åre",
+    "slug": "are",
+    "lan": "Jämtlands län",
+    "antal": 6,
+    "orter": [
+      "Duved",
+      "Hallen",
+      "Järpen",
+      "Mörsil",
+      "Åre"
+    ]
+  },
+  {
+    "kommunkod": "2326",
+    "kommun": "Berg",
+    "slug": "berg",
+    "lan": "Jämtlands län",
+    "antal": 3,
+    "orter": [
+      "Oviken",
+      "Storsjö Kapell",
+      "Svenstavik"
+    ]
+  },
+  {
+    "kommunkod": "2361",
+    "kommun": "Härjedalen",
+    "slug": "harjedalen",
+    "lan": "Jämtlands län",
+    "antal": 3,
+    "orter": [
+      "Funäsdalen",
+      "Hede",
+      "Sveg"
+    ]
+  },
+  {
+    "kommunkod": "2380",
+    "kommun": "Östersund",
+    "slug": "ostersund",
+    "lan": "Jämtlands län",
+    "antal": 8,
+    "orter": [
+      "Brunflo",
+      "Frösön",
+      "Lit",
+      "Östersund"
+    ]
+  },
+  {
+    "kommunkod": "2401",
+    "kommun": "Nordmaling",
+    "slug": "nordmaling",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Nordmaling"
+    ]
+  },
+  {
+    "kommunkod": "2403",
+    "kommun": "Bjurholm",
+    "slug": "bjurholm",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Bjurholm"
+    ]
+  },
+  {
+    "kommunkod": "2404",
+    "kommun": "Vindeln",
+    "slug": "vindeln",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Vindeln"
+    ]
+  },
+  {
+    "kommunkod": "2409",
+    "kommun": "Robertsfors",
+    "slug": "robertsfors",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Robertsfors"
+    ]
+  },
+  {
+    "kommunkod": "2417",
+    "kommun": "Norsjö",
+    "slug": "norsjo",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Norsjö"
+    ]
+  },
+  {
+    "kommunkod": "2418",
+    "kommun": "Malå",
+    "slug": "mala",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Malå"
+    ]
+  },
+  {
+    "kommunkod": "2421",
+    "kommun": "Storuman",
+    "slug": "storuman",
+    "lan": "Västerbottens län",
+    "antal": 2,
+    "orter": [
+      "Storuman",
+      "Tärnaby"
+    ]
+  },
+  {
+    "kommunkod": "2422",
+    "kommun": "Sorsele",
+    "slug": "sorsele",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Sorsele"
+    ]
+  },
+  {
+    "kommunkod": "2425",
+    "kommun": "Dorotea",
+    "slug": "dorotea",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Dorotea"
+    ]
+  },
+  {
+    "kommunkod": "2460",
+    "kommun": "Vännäs",
+    "slug": "vannas",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Vännäs"
+    ]
+  },
+  {
+    "kommunkod": "2462",
+    "kommun": "Vilhelmina",
+    "slug": "vilhelmina",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Vilhelmina"
+    ]
+  },
+  {
+    "kommunkod": "2463",
+    "kommun": "Åsele",
+    "slug": "asele",
+    "lan": "Västerbottens län",
+    "antal": 1,
+    "orter": [
+      "Åsele"
+    ]
+  },
+  {
+    "kommunkod": "2480",
+    "kommun": "Umeå",
+    "slug": "umea",
+    "lan": "Västerbottens län",
+    "antal": 12,
+    "orter": [
+      "Holmsund",
+      "Hörnefors",
+      "Sävar",
+      "Umeå"
+    ]
+  },
+  {
+    "kommunkod": "2481",
+    "kommun": "Lycksele",
+    "slug": "lycksele",
+    "lan": "Västerbottens län",
+    "antal": 2,
+    "orter": [
+      "Lycksele"
+    ]
+  },
+  {
+    "kommunkod": "2482",
+    "kommun": "Skellefteå",
+    "slug": "skelleftea",
+    "lan": "Västerbottens län",
+    "antal": 11,
+    "orter": [
+      "Boliden",
+      "Bureå",
+      "Burträsk",
+      "Byske",
+      "Kåge",
+      "Lövånger",
+      "Skellefteå",
+      "Ursviken"
+    ]
+  },
+  {
+    "kommunkod": "2505",
+    "kommun": "Arvidsjaur",
+    "slug": "arvidsjaur",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Arvidsjaur"
+    ]
+  },
+  {
+    "kommunkod": "2506",
+    "kommun": "Arjeplog",
+    "slug": "arjeplog",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Arjeplog"
+    ]
+  },
+  {
+    "kommunkod": "2510",
+    "kommun": "Jokkmokk",
+    "slug": "jokkmokk",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Jokkmokk"
+    ]
+  },
+  {
+    "kommunkod": "2513",
+    "kommun": "Överkalix",
+    "slug": "overkalix",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Överkalix"
+    ]
+  },
+  {
+    "kommunkod": "2514",
+    "kommun": "Kalix",
+    "slug": "kalix",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Kalix"
+    ]
+  },
+  {
+    "kommunkod": "2518",
+    "kommun": "Övertorneå",
+    "slug": "overtornea",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Övertorneå"
+    ]
+  },
+  {
+    "kommunkod": "2521",
+    "kommun": "Pajala",
+    "slug": "pajala",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Pajala"
+    ]
+  },
+  {
+    "kommunkod": "2523",
+    "kommun": "Gällivare",
+    "slug": "gallivare",
+    "lan": "Norrbottens län",
+    "antal": 2,
+    "orter": [
+      "Gällivare"
+    ]
+  },
+  {
+    "kommunkod": "2560",
+    "kommun": "Älvsbyn",
+    "slug": "alvsbyn",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Älvsbyn"
+    ]
+  },
+  {
+    "kommunkod": "2580",
+    "kommun": "Luleå",
+    "slug": "lulea",
+    "lan": "Norrbottens län",
+    "antal": 9,
+    "orter": [
+      "Gammelstad",
+      "Luleå",
+      "Råneå"
+    ]
+  },
+  {
+    "kommunkod": "2581",
+    "kommun": "Piteå",
+    "slug": "pitea",
+    "lan": "Norrbottens län",
+    "antal": 4,
+    "orter": [
+      "Hortlax",
+      "Piteå",
+      "Öjebyn"
+    ]
+  },
+  {
+    "kommunkod": "2582",
+    "kommun": "Boden",
+    "slug": "boden",
+    "lan": "Norrbottens län",
+    "antal": 4,
+    "orter": [
+      "Boden"
+    ]
+  },
+  {
+    "kommunkod": "2583",
+    "kommun": "Haparanda",
+    "slug": "haparanda",
+    "lan": "Norrbottens län",
+    "antal": 1,
+    "orter": [
+      "Haparanda"
+    ]
+  },
+  {
+    "kommunkod": "2584",
+    "kommun": "Kiruna",
+    "slug": "kiruna",
+    "lan": "Norrbottens län",
+    "antal": 2,
+    "orter": [
+      "Kiruna",
+      "Vittangi"
+    ]
+  }
+]

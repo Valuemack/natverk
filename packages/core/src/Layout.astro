@@ -1,0 +1,83 @@
+---
+// Gemensam layout för alla nätverkssajter: <head> med all SEO, header, brödsmulor,
+// innehåll och footer. Varje sajt skickar in sin site-konfiguration.
+import "./bas.css";
+import { abs, breadcrumbLd } from "./seo.js";
+import { TEMAN } from "./teman.js";
+
+const { site, titel, beskrivning, sokvag = Astro.url.pathname, smulor = [], jsonld = [],
+  uppdaterad, noindex = false, ogTyp = "website" } = Astro.props;
+const canonical = abs(site, sokvag);
+const tema = site.tema ?? "kalender";
+const logga = TEMAN[tema]?.logga ?? "";
+const allaLd = [...(smulor.length > 1 ? [breadcrumbLd(site, smulor)] : []), ...jsonld];
+---
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titel}</title>
+    <meta name="description" content={beskrivning} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:type" content={ogTyp} />
+    <meta property="og:site_name" content={site.namn} />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:title" content={titel} />
+    <meta property="og:description" content={beskrivning} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content={site.farg} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style set:html={`:root{--farg:${site.farg}}`}></style>
+    {allaLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+  </head>
+  <body class={`tema-${tema}`}>
+    <a class="hoppa" href="#innehall">Till innehållet</a>
+    <div class="tjanstelist">
+      <div class="ram">
+        <span>{site.tjanstText ?? "Oberoende informationstjänst"}</span>
+        {uppdaterad && <span>Uppdaterad {uppdaterad}</span>}
+      </div>
+    </div>
+    <header class="topp">
+      <div class="ram">
+        <a class="logga" href="/">
+          <span class="logga-ikon" set:html={logga} />
+          <span class="logga-text"><strong>{site.visningsnamn}</strong>{site.tagline && <small>{site.tagline}</small>}</span>
+        </a>
+        <nav aria-label="Huvudmeny">
+          {site.meny.map((m) => <a href={m.href}>{m.namn}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main class="ram" id="innehall">
+      {smulor.length > 1 && (
+        <nav class="smulor" aria-label="Brödsmulor">
+          <ol>
+            {smulor.map((s, i) => (
+              <li>{i < smulor.length - 1 ? <a href={s.href}>{s.namn}</a> : <span aria-current="page">{s.namn}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <slot />
+      {uppdaterad && <p class="uppdaterad">Uppdaterad <time datetime={uppdaterad}>{uppdaterad}</time></p>}
+    </main>
+    <footer class="botten">
+      <div class="ram">
+        <nav aria-label="Sidfot">
+          {site.sidfot.map((m) => <a href={m.href}>{m.namn}</a>)}
+        </nav>
+        {site.natverk?.length > 0 && (
+          <p class="natverk">Fler nyttiga sajter: {site.natverk.map((n, i) => <>{i > 0 && " · "}<a href={n.href}>{n.namn}</a></>)}</p>
+        )}
+        {site.kallor?.length > 0 && <p class="kallor-rad"><strong>Datakällor:</strong> {site.kallor.join(" · ")}</p>}
+        <p>{site.sidfotText}</p>
+        <p>© {new Date().getFullYear()} {site.organisation}. Oberoende tjänst – inte ansluten till någon myndighet, region eller kedja.</p>
+      </div>
+    </footer>
+    <slot name="skript" />
+  </body>
+</html>

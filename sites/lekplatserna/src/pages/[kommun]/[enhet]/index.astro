@@ -1,0 +1,77 @@
+---
+// En lekplats: var den ligger, redskap, tema, tillgänglighet och närmaste lekplatser.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { narmaste, kmText, kartLank } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning, TYPNAMN, underlag } from "../../../site.js";
+
+export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
+  .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
+const { enhet: e } = Astro.props;
+const x = e.extra ?? {};
+const kommun = KAT.kommuner.find((k) => k.slug === e.kommunSlug);
+const lan = KAT.lan.find((l) => l.slug === kommun.lanSlug);
+const u = utrustning(e);
+const nara = narmaste(e, KAT.enheter, 5, (y) => y.egenSida || utrustning(y).length > 0, 10);
+const plats = e.ort && e.ort !== e.kommun ? `${e.ort} i ${e.kommun}` : e.kommun;
+const typ = e.typ === "lekplats" ? "lekplatsen" : e.typ === "temalekplats" ? "temalekplatsen" : "naturlekplatsen";
+const Typ = e.typ[0].toUpperCase() + e.typ.slice(1);
+const tillg = { "tillgänglighetsanpassad": "Tillgänglighetsanpassad", "delvis tillgänglighetsanpassad": "Delvis tillgänglighetsanpassad", "ej tillgänglighetsanpassad": "Inte tillgänglighetsanpassad" }[x.tillganglighet];
+const fakta = [
+  { namn: "Typ", varde: Typ },
+  x.tema && { namn: "Tema", varde: x.tema },
+  e.gatuadress && { namn: "Adress", varde: e.gatuadress },
+  { namn: "Kommun", varde: `${e.kommun}, ${e.lan}` },
+  x.storlek && { namn: "Storlek", varde: x.storlek[0].toUpperCase() + x.storlek.slice(1) },
+  tillg && { namn: "Tillgänglighet", varde: tillg },
+  underlag(x.underlag ?? x.surface) && { namn: "Underlag", varde: underlag(x.underlag ?? x.surface) },
+  x.toalett === true && { namn: "Toalett", varde: "Ja" },
+  x.belysning === true && { namn: "Belysning", varde: "Ja" },
+  (x.inhagnad === true || x.fenced === "yes") && { namn: "Inhägnad", varde: "Ja" },
+  x.alder && { namn: "Ålder", varde: String(x.alder) },
+  x.senast_renoverad && { namn: "Senast renoverad", varde: String(x.senast_renoverad) },
+  e.kedja && { namn: "Ansvarig", varde: e.kedja },
+].filter(Boolean);
+const titel = [`${e.namn}, ${plats} – ${typ} och redskap`, `${e.namn} i ${e.kommun} – redskap och läge`, `${e.namn}, ${e.kommun} – redskap`, `${e.namn} – ${e.typ} i ${e.kommun}`].find((t) => t.length <= 60) ?? e.namn;
+const fragor = [
+  u.length > 0 && { fraga: `Vad finns det på ${e.namn}?`, svar: `${e.namn} har ${u.map((v) => UTRUSTNING[v].toLowerCase()).join(", ")} enligt ${x.officiell_kalla ? "kommunens" : "OpenStreetMaps"} uppgifter.` },
+  { fraga: `Var ligger ${e.namn}?`, svar: `${e.namn} ligger ${e.gatuadress ? `vid ${e.gatuadress} ` : ""}i ${plats}, ${e.lan}.` },
+  nara[0] && { fraga: `Vilken lekplats ligger närmast ${e.namn}?`, svar: `Närmast ligger ${nara[0].enhet.namn}, ${kmText(nara[0].km)} bort fågelvägen.` },
+].filter(Boolean);
+const ld = { "@context": "https://schema.org", "@type": "Playground", name: e.namn, address: { "@type": "PostalAddress", streetAddress: e.gatuadress ?? undefined, addressLocality: e.ort ?? e.kommun, addressRegion: e.lan, addressCountry: "SE" }, geo: { "@type": "GeoCoordinates", latitude: e.lat, longitude: e.lon }, isAccessibleForFree: true };
+---
+<Layout site={SITE} titel={titel}
+  beskrivning={`${e.namn} i ${plats}: ${u.length ? `${u.slice(0, 5).map((v) => UTRUSTNING[v].toLowerCase()).join(", ")}` : Typ.toLowerCase()}.${tillg ? ` ✓ ${tillg}` : ""} ✓ Vägbeskrivning ✓ Närmaste lekplatser.`.slice(0, 158)}
+  smulor={[{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: kommun.namn, href: kommun.href }, { namn: e.namn, href: e.href }]}
+  jsonld={[ld, ...(fragor.length ? [faqLd(fragor)] : [])]} uppdaterad={UPPDATERAD}>
+  <h1>{e.namn}</h1>
+  <p class="svar">
+    {e.namn} är en {e.typ} i <strong>{plats}</strong>{x.tema && <> med temat <strong>{x.tema.toLowerCase()}</strong></>}.
+    {u.length > 0 && <> Här finns {u.slice(0, 6).map((v) => UTRUSTNING[v].toLowerCase()).join(", ")}.</>}
+  </p>
+  <div class="knappar"><a class="knapp" href={kartLank(e)} rel="nofollow noopener" target="_blank">Vägbeskrivning</a>{e.webb && <a class="knapp sekundar" href={e.webb} rel="nofollow noopener" target="_blank">Kommunens sida</a>}</div>
+
+  {x.beskrivning && <><h2>Om {typ}</h2><p>{x.beskrivning}</p></>}
+
+  {u.length > 0 && <>
+    <h2>Redskap och aktiviteter</h2>
+    <ul class="kolumner">{u.map((v) => <li>{UTRUSTNING[v]}</li>)}</ul>
+  </>}
+
+  <h2>Fakta</h2>
+  <dl class="fakta">{fakta.map((f) => <><dt>{f.namn}</dt><dd>{f.varde}</dd></>)}</dl>
+
+  <Annons plats="enhet-1" />
+
+  {nara.length > 0 && <>
+    <h2>Lekplatser i närheten</h2>
+    <EnhetLista enheter={nara.map((n) => n.enhet)} />
+  </>}
+  <p><a href={kommun.href}>Alla {kommun.enheter.length} lekplatser i {kommun.namn} →</a></p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}{x.officiell_kalla && ` Uppgifter från ${e.kommun} kommun (${x.officiell_licens ?? "öppna data"}).`}</p>
+</Layout>

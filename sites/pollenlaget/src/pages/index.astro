@@ -1,0 +1,57 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import Prognos from "../components/Prognos.astro";
+import { SITE, UPPDATERAD, KALLA, REGIONER, TYPER, SVERIGE, prognosFor, aktuell, SASONG_PAGAR, kalenderFor, mmdd, nivaText, datumText } from "../site.js";
+
+const riks = SVERIGE ? prognosFor(SVERIGE) : null;
+const rader = REGIONER.map((r) => {
+  const p = prognosFor(r);
+  const d = aktuell(p) ? (p.dagar.find((x) => x.datum === UPPDATERAD) ?? p.dagar[0]) : null;
+  const hogst = d ? [...d.nivaer].sort((a, b) => b.niva - a.niva)[0] : null;
+  return { r, p, hogst };
+});
+const hassel = TYPER.find((t) => t.slug === "hassel"), bjork = TYPER.find((t) => t.slug === "bjork");
+const sodra = REGIONER.at(-1);
+const hStart = hassel && sodra ? kalenderFor(sodra, hassel)?.typisk_start : null;
+const fragor = [
+  { fraga: "Var kommer pollenprognoserna ifrån?", svar: "Prognoserna görs av Palynologiska laboratoriet vid Naturhistoriska riksmuseet utifrån pollenmätningar på 23 orter i Sverige. Vi visar prognoserna oförändrade och uppdaterar sajten varje dag." },
+  !SASONG_PAGAR && { fraga: "När kommer nästa pollenprognos?", svar: `Prognoserna börjar när hassel och al börjar blomma.${hStart ? ` I ${sodra.namn} har det under senare år skett runt ${mmdd(hStart)}.` : ""} Säsongens sista prognos kom ${riks ? datumText(riks.start) : "i september"}.` },
+  { fraga: "Hur länge varar pollensäsongen?", svar: "I södra Sverige från februari till september: hassel och al först, björk i april och maj, gräs under sommaren och gråbo och ambrosia i augusti. I norr är säsongen kortare och börjar senare." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={SASONG_PAGAR ? "Pollenprognos idag – pollenläget i hela Sverige" : "Pollenprognos och pollenkalender för hela Sverige"}
+  beskrivning="Pollenläget i Sverige: dagens prognos för 23 orter från Naturhistoriska riksmuseet, uppmätta halter av björk, gräs, hassel och al, och en pollenkalender per ort."
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Pollenläget i Sverige</h1>
+  <p class="svar">
+    {SASONG_PAGAR
+      ? <>Här är dagens pollenprognos för {REGIONER.length} orter. Välj din ort för prognosen, uppmätta halter och ortens pollenkalender.</>
+      : <>Pollensäsongen är slut för i år. Nya prognoser kommer när hassel och al börjar blomma{hStart && <>, i {sodra.namn} oftast runt <strong>{mmdd(hStart)}</strong></>}. Under tiden kan du se <a href="/pollenkalender/">när varje pollenslag brukar komma</a> på din ort.</>}
+  </p>
+
+  <h2 id="orter">Pollenprognos per ort</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>{SASONG_PAGAR ? "Högst halt idag" : "Björk brukar börja"}</th></tr></thead>
+    <tbody>{rader.map(({ r, hogst }) => <tr><td><a href={`/${r.slug}/`}>{r.namn}</a></td><td>{SASONG_PAGAR
+      ? (hogst && hogst.niva > 0 ? <><span class={`niva niva-${hogst.niva}`}>{nivaText(hogst.niva)}</span> {hogst.pollen.toLowerCase()}</> : "Inga halter")
+      : mmdd(bjork ? kalenderFor(r, bjork)?.typisk_start : null)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Orterna står från norr till söder.</p>
+
+  <Annons plats="start-1" />
+
+  {riks?.text && <>
+    <h2>Riskprognos för hela landet</h2>
+    <Prognos prognos={riks} visaNivaer={false} />
+  </>}
+
+  <h2>Pollenslag</h2>
+  <div class="kort">{TYPER.map((t) => <a href={`/pollen/${t.slug}/`}><strong>{t.namn}</strong><small>Prognos och säsong</small></a>)}</div>
+
+  <Annons plats="start-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

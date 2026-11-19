@@ -1,0 +1,95 @@
+---
+// Parkering i en kommun: sammanfattning (pris, gratis, laddning), billigaste parkeringarna och listor per typ.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { grannkommuner, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, TYP, krTim, arGratis } from "../../site.js";
+
+export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+const { kommun: k } = Astro.props;
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const alla = k.enheter;
+const n = alla.length;
+const medPris = alla.filter((e) => e.extra?.taxa_per_timme > 0).sort((a, b) => a.extra.taxa_per_timme - b.extra.taxa_per_timme);
+const gratis = alla.filter(arGratis);
+const hus = alla.filter((e) => ["parkeringshus", "parkeringsgarage"].includes(e.typ));
+const pendlar = alla.filter((e) => e.typ === "pendlarparkering");
+const ladd = alla.filter((e) => e.extra?.laddplatser > 0);
+const laddPlatser = ladd.reduce((s, e) => s + e.extra.laddplatser, 0);
+const platser = alla.reduce((s, e) => s + (e.extra?.kapacitet ?? 0), 0);
+const medianPris = medPris.length ? medPris[Math.floor(medPris.length / 2)].extra.taxa_per_timme : null;
+const operatorer = rakna(alla.filter((e) => e.kedja), (e) => e.kedja).slice(0, 8);
+const grannar = grannkommuner(k, KAT.kommuner, 6);
+// Långa listor kortas: visa parkeringar med egen sida, räkna resten.
+const MAX = 60;
+const ordning = ["parkeringshus", "parkeringsgarage", "pendlarparkering", "markparkering", "gatuparkering", "flygplatsparkering", "husbilsparkering", "friluftsparkering", "rastficka", "takparkering", "parkering"];
+const grupper = ordning.map((t) => {
+  const e = alla.filter((x) => x.typ === t);
+  const visa = e.length > MAX ? e.filter((x) => x.egenSida).slice(0, MAX * 2) : e;
+  return { t, e, visa, ovriga: e.length - visa.length };
+}).filter((g) => g.e.length);
+const gen = (x) => (/[sxz]$/i.test(x) ? x : `${x}s`);
+const fragor = [
+  medPris.length > 0 && { fraga: `Vad kostar det att parkera i ${k.namn}?`, svar: `Bland de ${medPris.length} parkeringar i ${k.namn} där vi har ett timpris kostar det från ${krTim(medPris[0].extra.taxa_per_timme)} (${medPris[0].namn}). Mittenvärdet är ${krTim(medianPris)}. Gatuparkering följer kommunens taxezoner.` },
+  { fraga: `Finns det gratis parkering i ${k.namn}?`, svar: gratis.length ? `Ja, ${gratis.length} parkeringar i ${k.namn} är avgiftsfria enligt våra källor, till exempel ${gratis.slice(0, 3).map((e) => e.namn).join(", ")}. Kontrollera alltid skyltningen, eftersom tidsbegränsning och p-skiva kan gälla.` : `Vi har inga uppgifter om avgiftsfria parkeringar i ${k.namn}. Utanför centrum är markparkeringar ofta gratis men kan ha tidsbegränsning.` },
+  hus.length > 0 && { fraga: `Hur många parkeringshus finns det i ${k.namn}?`, svar: `Vi listar ${hus.length} parkeringshus och garage i ${k.namn}${operatorer.length ? `. Störst operatörer är ${operatorer.slice(0, 3).map(([o, c]) => `${o} (${c})`).join(", ")}` : ""}.` },
+  ladd.length > 0 && { fraga: `Var kan man ladda elbilen när man parkerar i ${k.namn}?`, svar: `${ladd.length} parkeringar i ${k.namn} har laddplatser, totalt ${laddPlatser} platser enligt våra uppgifter.` },
+].filter(Boolean);
+const titel = [`Parkering i ${k.namn} – pris, gratis parkering och p-hus`, `Parkering i ${k.namn} – pris och p-hus`, `Parkering i ${k.namn}`].find((t) => t.length <= 60);
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+---
+<Layout site={SITE} titel={titel}
+  beskrivning={`${n} parkeringar i ${k.namn}${medPris.length ? ` – från ${krTim(medPris[0].extra.taxa_per_timme)}` : ""}.${gratis.length ? ` ✓ ${gratis.length} gratis` : ""}${hus.length ? ` ✓ ${hus.length} p-hus och garage` : ""}${ladd.length ? " ✓ Laddplatser" : ""} ✓ Öppettider och antal platser.`}
+  smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Parkering i {k.namn}</h1>
+  <p class="svar">
+    Vi listar <strong>{n} parkeringar</strong> i {k.namn}{platser > 0 && <> med minst {platser.toLocaleString("sv-SE")} platser</>}.
+    {medPris.length > 0 && <> Billigast timpris har <strong>{medPris[0].namn}</strong> ({krTim(medPris[0].extra.taxa_per_timme)}).</>}
+    {gratis.length > 0 && <> {gratis.length} är avgiftsfria.</>}
+  </p>
+
+  {medPris.length >= 3 && <>
+    <h2>Billigast att parkera i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Parkering</th><th>Typ</th><th class="num">Pris per timme</th></tr></thead>
+      <tbody>{medPris.slice(0, 10).map((e) => <tr><td>{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</td><td>{TYP[e.typ] ?? "Parkering"}</td><td class="num">{krTim(e.extra.taxa_per_timme)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Ordinarie timpris enligt operatör eller kommun. Dygns- och kvällstaxor finns på varje parkerings sida.</p>
+  </>}
+
+  <Annons plats="kommun-1" />
+
+  {gratis.length > 0 && <>
+    <h2 id="gratis">Gratis parkering i {k.namn}</h2>
+    <EnhetLista enheter={gratis.slice(0, 40)} />
+    {gratis.length > 40 && <p>… och {gratis.length - 40} till.</p>}
+  </>}
+
+  {grupper.map((g) => <>
+    <h2 id={g.t}>{g.t === "parkering" ? "Övriga parkeringar" : `${TYP[g.t]} i ${k.namn}`}</h2>
+    <EnhetLista enheter={g.visa} />
+    {g.ovriga > 0 && <p class="kalla">Ytterligare {g.ovriga} mindre parkeringar av den här typen utan uppgifter om pris eller öppettider visas inte i listan.</p>}
+  </>)}
+
+  {operatorer.length > 1 && <>
+    <h2>Parkeringsoperatörer i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Operatör</th><th class="num">Anläggningar</th></tr></thead>
+      <tbody>{operatorer.map(([o, c]) => <tr><td>{o}</td><td class="num">{c}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  {grannar.length > 0 && <>
+    <h2>Parkering i närliggande kommuner</h2>
+    <ul class="kolumner">{grannar.map((g) => <li><a href={g.href}>{g.namn}</a> ({g.enheter.length})</li>)}</ul>
+  </>}
+
+  <Annons plats="kommun-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

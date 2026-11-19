@@ -1,0 +1,1578 @@
+{
+  "skapad": "2026-11-19T11:21:38.798Z",
+  "osm_exkluderade": [
+    {
+      "id": "osm-node-6810215874",
+      "namn": "Falu Vildvattenpark",
+      "kommun": "Falun"
+    },
+    {
+      "id": "osm-way-1084476454",
+      "namn": "Nybrostrandsbadet",
+      "kommun": "Ystad"
+    },
+    {
+      "id": "osm-way-914242069",
+      "namn": "Ådalens plaskdamm",
+      "kommun": "Stockholm"
+    },
+    {
+      "id": "osm-relation-18050368",
+      "namn": "Garnvikensbadet",
+      "kommun": "Österåker"
+    },
+    {
+      "id": "osm-node-346144355",
+      "namn": "Älvstrandsbadet",
+      "kommun": "Hagfors"
+    },
+    {
+      "id": "osm-way-100310698",
+      "namn": "Sunne vattenpark",
+      "kommun": "Sunne"
+    },
+    {
+      "id": "osm-way-828988762",
+      "namn": "Ansia Badpark",
+      "kommun": "Lycksele"
+    },
+    {
+      "id": "osm-way-151917158",
+      "namn": "Strandbadet",
+      "kommun": "Karlskoga"
+    }
+  ],
+  "osm_dubbletter": [
+    {
+      "behallen": "osm-way-14869751",
+      "borttagen": "osm-way-502190887",
+      "namn": "Eriksdalsbadet"
+    },
+    {
+      "behallen": "osm-node-3762470669",
+      "borttagen": "osm-way-104122645",
+      "namn": "Farstahallen"
+    },
+    {
+      "behallen": "osm-node-7005004106",
+      "borttagen": "osm-node-7005004107",
+      "namn": "Simhall Kolbäck"
+    }
+  ],
+  "matchningar": 260,
+  "nya_fran_webb": [
+    {
+      "id": "web-0120-gustavsbergsbadet",
+      "namn": "Gustavsbergsbadet",
+      "kommun": "Värmdö",
+      "koordinater": true,
+      "url": "https://www.varmdo.se/gustavsbergsbadet.4.4e920ca319618e167edfb20.html"
+    },
+    {
+      "id": "web-0127-fittjabadet",
+      "namn": "Fittjabadet",
+      "kommun": "Botkyrka",
+      "koordinater": false,
+      "url": "https://www.botkyrka.se/uppleva-och-gora/simhallar/fittjabadet"
+    },
+    {
+      "id": "web-0162-badhus-och-bassangbad",
+      "namn": "Badhus och bassängbad",
+      "kommun": "Danderyd",
+      "koordinater": false,
+      "url": "https://www.danderyd.se/uppleva-och-gora/idrott-motion-och-friluftsliv/bad/badhus-och-bassangbad/"
+    },
+    {
+      "id": "web-0180-6-marieviksbadet",
+      "namn": "6. Marieviksbadet",
+      "kommun": "Stockholm",
+      "koordinater": false,
+      "url": "https://start.stockholm/om-stockholms-stad/priser-och-utmarkelser/priser/arets-stockholmsbyggnad/6.-marieviksbadet"
+    },
+    {
+      "id": "web-0305-balsta-simhall",
+      "namn": "Bålsta simhall",
+      "kommun": "Håbo",
+      "koordinater": true,
+      "url": "https://www.habo.se/uppleva-och-gora/balsta-simhall.html"
+    },
+    {
+      "id": "web-0486-larslunda-simhall",
+      "namn": "Larslunda simhall",
+      "kommun": "Strängnäs",
+      "koordinater": false,
+      "url": "https://www.strangnas.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar/larslunda-simhall"
+    },
+    {
+      "id": "web-0486-akersbadet",
+      "namn": "Åkersbadet",
+      "kommun": "Strängnäs",
+      "koordinater": true,
+      "url": "https://www.strangnas.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar/akersbadet"
+    },
+    {
+      "id": "web-0560-boxholm-simhall",
+      "namn": "Boxholm simhall",
+      "kommun": "Boxholm",
+      "koordinater": false,
+      "url": "https://www.boxholmshus.se/boxholm-simhall"
+    },
+    {
+      "id": "web-0665-skillingaryds-simhall",
+      "namn": "Skillingaryds simhall",
+      "kommun": "Vaggeryd",
+      "koordinater": false,
+      "url": "https://www.vaggeryd.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallen-skillingaryd.html"
+    },
+    {
+      "id": "web-0767-stromsnasbadet",
+      "namn": "Strömsnäsbadet",
+      "kommun": "Markaryd",
+      "koordinater": false,
+      "url": "https://www.markaryd.se/sidor/uppleva-och-gora/bad/stromsnasbadet.html"
+    },
+    {
+      "id": "web-0780-lammhultsbadet",
+      "namn": "Lammhultsbadet",
+      "kommun": "Växjö",
+      "koordinater": false,
+      "url": "https://www.vaxjo.se/sidor/se-och-gora/motion-och-friluftsliv/simning-och-bad/lammhultsbadet.html"
+    },
+    {
+      "id": "web-0781-lidhults-simhall",
+      "namn": "Lidhults simhall",
+      "kommun": "Ljungby",
+      "koordinater": false,
+      "url": "https://www.ljungby.se/uppleva-och-gora/idrott-motion-och-friluftsliv/bad/lidhults-simhall"
+    },
+    {
+      "id": "web-0781-ryssby-simhall",
+      "namn": "Ryssby simhall",
+      "kommun": "Ljungby",
+      "koordinater": false,
+      "url": "https://www.ljungby.se/uppleva-och-gora/idrott-motion-och-friluftsliv/bad/ryssby-simhall"
+    },
+    {
+      "id": "web-0980-hemsebadet",
+      "namn": "Hemsebadet",
+      "kommun": "Gotland",
+      "koordinater": false,
+      "url": "https://gotland.se/kultur-och-fritid/idrott-motion-och-friluftsliv/simhallar/hemsebadet"
+    },
+    {
+      "id": "web-0980-kustparksbadet",
+      "namn": "Kustparksbadet",
+      "kommun": "Gotland",
+      "koordinater": false,
+      "url": "https://gotland.se/kultur-och-fritid/idrott-motion-och-friluftsliv/simhallar/kustparksbadet"
+    },
+    {
+      "id": "web-1270-osterlenbadet",
+      "namn": "Österlenbadet",
+      "kommun": "Tomelilla",
+      "koordinater": false,
+      "url": "https://tomelilla.se/upplevaochgora/badochsimskola.795.html"
+    },
+    {
+      "id": "web-1273-osby-simhall",
+      "namn": "Osby simhall",
+      "kommun": "Osby",
+      "koordinater": true,
+      "url": "https://www.osby.se/se--gora/motionsanlaggningar/motionsanlaggningar/2017-11-01-osby-simhall.html"
+    },
+    {
+      "id": "web-1273-lonsboda-simhall",
+      "namn": "Lönsboda simhall",
+      "kommun": "Osby",
+      "koordinater": false,
+      "url": "https://www.osby.se/se--gora/motionsanlaggningar/motionsanlaggningar/2017-11-01-lonsboda-simhall.html"
+    },
+    {
+      "id": "web-1275-ugglebadet",
+      "namn": "Ugglebadet",
+      "kommun": "Perstorp",
+      "koordinater": false,
+      "url": "https://www.ugglebadet.se/"
+    },
+    {
+      "id": "web-1280-lindangsbadet",
+      "namn": "Lindängsbadet",
+      "kommun": "Malmö",
+      "koordinater": false,
+      "url": "https://malmo.se/Uppleva-och-gora/Bada-och-simma/Utomhusbassanger/Lindangsbadet.html"
+    },
+    {
+      "id": "web-1291-korsavads-simhall",
+      "namn": "Korsavads simhall",
+      "kommun": "Simrishamn",
+      "koordinater": false,
+      "url": "https://www.simrishamn.se/kultur/fritid-och-forening/bad"
+    },
+    {
+      "id": "web-1382-klitterbadet",
+      "namn": "Klitterbadet",
+      "kommun": "Falkenberg",
+      "koordinater": false,
+      "url": "https://www.klitterbadet.se/"
+    },
+    {
+      "id": "web-1446-simhall-arena-moliden",
+      "namn": "Simhall Arena Moliden",
+      "kommun": "Karlsborg",
+      "koordinater": false,
+      "url": "https://karlsborg.se/kultur--fritid/arena-moliden/molidens-sim-anlaggning/"
+    },
+    {
+      "id": "web-1482-utebadet",
+      "namn": "Utebadet",
+      "kommun": "Kungälv",
+      "koordinater": false,
+      "url": "https://www.kungalv.se/kultur--fritid/bada/utebadet/"
+    },
+    {
+      "id": "web-1763-klaralvsbadet",
+      "namn": "Klarälvsbadet",
+      "kommun": "Forshaga",
+      "koordinater": false,
+      "url": "https://www.forshaga.se/upplevaochgora/idrottmotionochfriluftsliv/klaralvsbadet.4.2125f62918bcc1d23309fa6.html"
+    },
+    {
+      "id": "web-1782-simhallen-spangbergs-hallen-bad",
+      "namn": "Simhallen Spångbergs­hallen Bad",
+      "kommun": "Filipstad",
+      "koordinater": true,
+      "url": "https://www.filipstad.se/toppmeny/upplevaochgora/sportochfritid/simhallenspangbergshallenbad.1504.html"
+    },
+    {
+      "id": "web-1861-allehallens-simhall-och-gym",
+      "namn": "Alléhallens simhall och gym",
+      "kommun": "Hallsberg",
+      "koordinater": false,
+      "url": "https://www.hallsberg.se/kultur-och-fritid/allehallens-simhall-och-gym.html"
+    },
+    {
+      "id": "web-1881-djupadalsbadet",
+      "namn": "Djupadalsbadet",
+      "kommun": "Kumla",
+      "koordinater": true,
+      "url": "https://www.djupadalsbadet.se/"
+    },
+    {
+      "id": "web-2031-enabadet",
+      "namn": "Enåbadet",
+      "kommun": "Rättvik",
+      "koordinater": true,
+      "url": "https://enabadet.se/"
+    },
+    {
+      "id": "web-2039-sarna-simhall",
+      "namn": "Särna simhall",
+      "kommun": "Älvdalen",
+      "koordinater": false,
+      "url": "https://www.alvdalen.se/uppleva-och-gora/hallar-lokaler-och-idrottsanlaggningar/sarna-simhall.html"
+    },
+    {
+      "id": "web-2101-ockelbo-simhall",
+      "namn": "Ockelbo simhall",
+      "kommun": "Ockelbo",
+      "koordinater": false,
+      "url": "https://ockelbo.se/kultur--fritid/ockelbo-simhall"
+    },
+    {
+      "id": "web-2104-hoforshallen-simhall",
+      "namn": "Hoforshallen Simhall",
+      "kommun": "Hofors",
+      "koordinater": false,
+      "url": "https://www.hofors.se/kultur--fritid/idrottsanlaggningar/hoforshallen-simhall.html"
+    },
+    {
+      "id": "web-2121-edsbyns-simhall",
+      "namn": "Edsbyns simhall",
+      "kommun": "Ovanåker",
+      "koordinater": false,
+      "url": "https://www.ovanaker.se/kulturochfritid/simhallar/edsbynssimhall.335.html"
+    },
+    {
+      "id": "web-2132-bergsjo-simhall",
+      "namn": "Bergsjö simhall",
+      "kommun": "Nordanstig",
+      "koordinater": false,
+      "url": "https://nordanstig.se/startsida/sidor/uppleva-och-gora/bad/bergsjo-simhall.html"
+    },
+    {
+      "id": "web-2180-torsvedsbadet",
+      "namn": "Torsvedsbadet",
+      "kommun": "Gävle",
+      "koordinater": true,
+      "url": "https://www.gavle.se/torsvedsbadet/"
+    },
+    {
+      "id": "web-2183-arbra-simhall",
+      "namn": "Arbrå simhall",
+      "kommun": "Bollnäs",
+      "koordinater": false,
+      "url": "https://bollnas.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar/arbra-simhall"
+    },
+    {
+      "id": "web-2183-bollnas-simhall",
+      "namn": "Bollnäs simhall",
+      "kommun": "Bollnäs",
+      "koordinater": false,
+      "url": "https://bollnas.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar/bollnas-simhall"
+    },
+    {
+      "id": "web-2183-kilafors-simhall",
+      "namn": "Kilafors simhall",
+      "kommun": "Bollnäs",
+      "koordinater": false,
+      "url": "https://bollnas.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar/kilafors-simhall"
+    },
+    {
+      "id": "web-2281-alnobadet",
+      "namn": "Alnöbadet",
+      "kommun": "Sundsvall",
+      "koordinater": true,
+      "url": "https://sundsvall.se/kommun/uppleva-och-gora/idrott-motion-och-friluftsliv/bad/badhus-simhallar/alnobadet"
+    },
+    {
+      "id": "web-2321-jarpens-badhus",
+      "namn": "Järpens badhus",
+      "kommun": "Åre",
+      "koordinater": false,
+      "url": "https://www.are.se/kultur-och-fritid/idrott-motion-och-friluftsliv/bada-och-simma/jarpens-badhus"
+    },
+    {
+      "id": "web-2321-morsils-badhus",
+      "namn": "Mörsils badhus",
+      "kommun": "Åre",
+      "koordinater": false,
+      "url": "https://www.are.se/kultur-och-fritid/idrott-motion-och-friluftsliv/bada-och-simma/morsils-badhus"
+    },
+    {
+      "id": "web-2361-simhall-lillhardal",
+      "namn": "Simhall Lillhärdal",
+      "kommun": "Härjedalen",
+      "koordinater": false,
+      "url": "https://www.herjedalen.se/uppleva-och-gora/idrott-badhus-och-motion/badhus-och-simhallar/simhall-lillhardal.html"
+    },
+    {
+      "id": "web-2518-hedenaset-simhall",
+      "namn": "Hedenäset simhall",
+      "kommun": "Övertorneå",
+      "koordinater": false,
+      "url": "https://overtornea.se/kulturfritid/information-fran-hedenaset-simhall/"
+    },
+    {
+      "id": "web-2580-hertso-badhus",
+      "namn": "Hertsö badhus",
+      "kommun": "Luleå",
+      "koordinater": false,
+      "url": "https://www.lulea.se/uppleva--gora/idrott-och-motion/bad/hertso-badhus.html"
+    },
+    {
+      "id": "web-2580-pontusbadet",
+      "namn": "Pontusbadet",
+      "kommun": "Luleå",
+      "koordinater": true,
+      "url": "https://www.lulea.se/uppleva--gora/idrott-och-motion/bad/pontusbadet.html"
+    },
+    {
+      "id": "web-2584-midnattssolsbadet",
+      "namn": "Midnattssolsbadet",
+      "kommun": "Kiruna",
+      "koordinater": false,
+      "url": "https://kiruna.se/midnattssolsbadet/startsida.html"
+    },
+    {
+      "id": "web-2584-vittangi-simhall",
+      "namn": "Vittangi simhall",
+      "kommun": "Kiruna",
+      "koordinater": false,
+      "url": "https://kiruna.se/uppleva--gora/idrott-motion-och-friluftsliv/simhallar/vittangi-simhall.html"
+    },
+    {
+      "id": "web-0583-motala-simhall",
+      "namn": "Motala, Simhall",
+      "kommun": "Motala",
+      "koordinater": true,
+      "url": "https://www.actic.se/hitta-gym/gym-i-motala/motala-simhallen/"
+    },
+    {
+      "id": "web-0483-katrineholm-duveholmshallen",
+      "namn": "Katrineholm, Duveholmshallen",
+      "kommun": "Katrineholm",
+      "koordinater": true,
+      "url": "https://www.actic.se/hitta-gym/gym-i-katrineholm/katrineholm-duveholmshallen/"
+    },
+    {
+      "id": "web-0581-abybadet",
+      "namn": "Åbybadet",
+      "kommun": "Norrköping",
+      "koordinater": true,
+      "url": "https://www.medley.se/abybadet/"
+    },
+    {
+      "id": "web-1481-goco-active-bad-gym",
+      "namn": "GoCo Active BAD & GYM",
+      "kommun": "Mölndal",
+      "koordinater": true,
+      "url": "https://www.medley.se/goco/"
+    },
+    {
+      "id": "web-0123-jarfallabadet",
+      "namn": "Järfällabadet",
+      "kommun": "Järfälla",
+      "koordinater": true,
+      "url": "https://www.medley.se/jarfallabadet/"
+    },
+    {
+      "id": "web-0182-myrsjo-badhus-bad-gym",
+      "namn": "Myrsjö Badhus BAD & GYM",
+      "kommun": "Nacka",
+      "koordinater": true,
+      "url": "https://www.medley.se/myrsjo-badhus/"
+    },
+    {
+      "id": "web-0160-norskogsbadet",
+      "namn": "Norskogsbadet",
+      "kommun": "Täby",
+      "koordinater": true,
+      "url": "https://www.medley.se/norskogsbadet/"
+    },
+    {
+      "id": "web-2482-orjanshallen",
+      "namn": "Örjanshallen",
+      "kommun": "Skellefteå",
+      "koordinater": true,
+      "url": "https://www.medley.se/orjanshallen/"
+    },
+    {
+      "id": "web-0581-rasslabadet",
+      "namn": "Råsslabadet",
+      "kommun": "Norrköping",
+      "koordinater": true,
+      "url": "https://www.medley.se/rasslabadet/"
+    },
+    {
+      "id": "web-0581-skarblackabadet",
+      "namn": "Skärblackabadet",
+      "kommun": "Norrköping",
+      "koordinater": true,
+      "url": "https://www.medley.se/skarblackabadet/"
+    },
+    {
+      "id": "web-0163-sollentuna-simhall",
+      "namn": "Sollentuna Simhall",
+      "kommun": "Sollentuna",
+      "koordinater": true,
+      "url": "https://www.medley.se/sollentuna-sim-och-sporthall/"
+    },
+    {
+      "id": "web-0117-solskiftesbadet",
+      "namn": "Solskiftesbadet",
+      "kommun": "Österåker",
+      "koordinater": true,
+      "url": "https://www.medley.se/solskiftesbadet/"
+    },
+    {
+      "id": "web-0617-simhallen-i-gnosjo",
+      "namn": "Simhallen i Gnosjö",
+      "kommun": "Gnosjö",
+      "koordinater": false,
+      "url": "https://www.gnosjo.se/uppleva-och-gora/tollstorpshallen/simhall"
+    },
+    {
+      "id": "web-1267-simhallen-i-hoor",
+      "namn": "Simhallen i Höör",
+      "kommun": "Höör",
+      "koordinater": false,
+      "url": "https://www.hoor.se/uppleva-gora/hoors-bad-och-sportcentrum/"
+    },
+    {
+      "id": "web-1315-simhallen-i-hylte",
+      "namn": "Simhallen i Hylte",
+      "kommun": "Hylte",
+      "koordinater": false,
+      "url": "https://www.hylte.se/uppleva-och-gora/ornahallens-halsocenter/priser"
+    },
+    {
+      "id": "web-1415-simhallen-i-stenungsund",
+      "namn": "Simhallen i Stenungsund",
+      "kommun": "Stenungsund",
+      "koordinater": false,
+      "url": "https://www.stenungsund.se/arenan/stenungsund-arena/simhall"
+    },
+    {
+      "id": "web-1460-simhallen-i-bengtsfors",
+      "namn": "Simhallen i Bengtsfors",
+      "kommun": "Bengtsfors",
+      "koordinater": false,
+      "url": "https://www.bengtsfors.se/uppleva-och-gora/varmvattenbassang"
+    },
+    {
+      "id": "web-2510-simhallen-i-jokkmokk",
+      "namn": "Simhallen i Jokkmokk",
+      "kommun": "Jokkmokk",
+      "koordinater": false,
+      "url": "https://www.jokkmokk.se/kultur-och-fritid/idrott-och-motion/bad-och-idrottsanlaeggningar/"
+    }
+  ],
+  "omatchade_anlaggningar": [
+    {
+      "key": "osteraker.se/upplevagora/idrottmotionochfriluftsliv/simhallarochbadhus",
+      "namn": "Simhallar och badhus",
+      "filer": [
+        "0117"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "upplevjarfalla.se/parasimning-med-simklubben",
+      "namn": null,
+      "filer": [
+        "0123"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "haninge.se/uppleva-och-gora/simhallar-och-bad/hoglundabadet",
+      "namn": "Höglundabadet",
+      "filer": [
+        "0136"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "kvarnparksbadet.org",
+      "namn": "Kvarnparksbadet",
+      "filer": [
+        "0162",
+        "0187"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "habo.se/uppleva-och-gora/upplev-habo/for-barnfamiljen/balsta-simhall",
+      "namn": "Bålsta simhall",
+      "filer": [
+        "0305"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "uppsala.se/kultur-idrott-fritid/plats/simhallar-och-badhus/almunge-simhall",
+      "namn": "Almunge simhall",
+      "filer": [
+        "0380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gnesta.se/kulturfritid/gnestaguiden/boovernatta/klammingsbergsbadet",
+      "namn": "Klämmingsbergsbadet",
+      "filer": [
+        "0461"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gnesta.se/kulturfritid/gnestaguiden/naturaventyr/bada/klammingsbergsbadet",
+      "namn": "Klämmingsbergsbadet",
+      "filer": [
+        "0461"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gnesta.se/kulturfritid/gnestaguiden/forhelafamiljen/klammingsbergsbadet",
+      "namn": "Klämmingsbergsbadet",
+      "filer": [
+        "0461"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "nykoping.se/uppleva--gora/idrott-motion-och-friluftsliv/badhus-simhall-pool",
+      "namn": "Badhus, simhall, pool, hav, sjö",
+      "filer": [
+        "0480"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "kinda.se/upplevaochgora/idrottochmotion/beachvolleyplanasundabadet",
+      "namn": "Beachvolleyplan Åsundabadet",
+      "filer": [
+        "0513"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "motala.se/stadsplanering-och-trafik/motala-vaxer/ombyggnation-av-simhallen",
+      "namn": "Ombyggnation av simhallen",
+      "filer": [
+        "0583"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vadstena.se/nu-ar-anmalan-till-hostens-barngrupper-simhallen-oppen",
+      "namn": null,
+      "filer": [
+        "0584"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vadstena.se/vatterviksbadet-anmalan-oppen",
+      "namn": null,
+      "filer": [
+        "0584"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "mjolby.se/uppleva-och-gora/idrott-motion-och-friluftsliv/skogssjons-friluftsomrade/skogssjons-bad-och-sommarcafe",
+      "namn": "Skogssjöns bad och sommarcafé",
+      "filer": [
+        "0586"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "mullsjo.se/uppleva-och-gora/simhallen/simhallens-renovering",
+      "namn": null,
+      "filer": [
+        "0642"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gislaved.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhallar-badhus/anmalan-till-simhallsverksamhet",
+      "namn": null,
+      "filer": [
+        "0662"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "tranas.se/uppleva-och-gora/simhallen/fran-simhallen",
+      "namn": null,
+      "filer": [
+        "0687"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "tranas.se/uppleva-och-gora/simhallen/trivselregler-simhallen",
+      "namn": null,
+      "filer": [
+        "0687"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "ljungby.se/uppleva-och-gora/motesplatser-och-lokaler/boka-scen-arena-och-sporthallar",
+      "namn": "Hyra simhall",
+      "filer": [
+        "0781"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "torsas.se/kontakter/hemtjanst-gullabo-badhusgatan",
+      "namn": "Hemtjänst Gullabo, Badhusgatan",
+      "filer": [
+        "0834"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "emmaboda.se/informationsmeddelande/informationsmeddelanden/informationsmeddelande/2026-10-20-badet-fortsatt-stangt-och-grupptraning-oppnar-igen-den-20-oktober-bad-och-traningscenter",
+      "namn": null,
+      "filer": [
+        "0862"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "kalmar.se/uppleva-och-gora/idrott-och-motion/idrottsanlaggningar/parydsbadet",
+      "namn": "Besök Pårydsbadet",
+      "filer": [
+        "0880"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "svenskalag.se/ifkparyd/sida/3229/parydsbadet",
+      "namn": "Pårydsbadet",
+      "filer": [
+        "0880"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vastervik.se/uppleva-och-gora/idrott-motion-och-friluftsliv/simhall-badhus/bassanger-och-vattenrutschbana",
+      "namn": "Bassänger och vattenrutschbana",
+      "filer": [
+        "0883"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vastervik.se/uppleva-och-gora/ung-i-kommunen/lovaktiviteter/hostlov-simhallen",
+      "namn": null,
+      "filer": [
+        "0883"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gotlandsidrottscenter.se",
+      "namn": "Gotlands IdrottsCenter",
+      "filer": [
+        "0980"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "karlshamn.se/driftinformation/problem-med-belysning-badhusparken-asarum",
+      "namn": "Problem med belysning i Badhusparken, Asarum",
+      "filer": [
+        "1082"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "aquasund.se",
+      "namn": "Aquasund",
+      "filer": [
+        "1233"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "bromolla.se/uppleva-och-gora/fritid/simhallen/bassang-och",
+      "namn": "Bassäng och bastu",
+      "filer": [
+        "1272"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "bromolla.se/uppleva-och-gora/fritid/simhallen/ordning-och-reda-badet",
+      "namn": "Ordning och reda på badet",
+      "filer": [
+        "1272"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "bastad.se/uppleva-och-gora/idrott-motion-och-friluftsliv/malenbadet",
+      "namn": "Malenbadet",
+      "filer": [
+        "1278"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "malmo.se/uppleva-och-gora/bada-och-simma/simhallsbadet",
+      "namn": "Hoppbassängen avstängd tills vidare",
+      "filer": [
+        "1280"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "malmo.se/uppleva-och-gora/bada-och-simma/oxievangsbadet",
+      "namn": "Skolsim i stora bassängen vissa tider",
+      "filer": [
+        "1280"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "malmo.se/uppleva-och-gora/bada-och-simma/oresunds-funkis-badet-utan-hinder",
+      "namn": "badet utan hinder",
+      "filer": [
+        "1280"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "lund.se/uppleva-och-gora/habo-gard/varmvattenbassang-habo-gard",
+      "namn": "Varmvattenbassäng på Habo gård",
+      "filer": [
+        "1281"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "helsingborg.se/uppleva-och-gora/anlaggningar-och-sporthallar/badhus-och-bassangbad",
+      "namn": "Simhallsbadet",
+      "filer": [
+        "1283"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "helsingborgshem-arena.vitec.net",
+      "namn": "Drottninghögsbadet",
+      "filer": [
+        "1283"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "helsingborgshem.se/artikel/drottninghogsbadet",
+      "namn": "Drottninghögsbadet",
+      "filer": [
+        "1283"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "halmstadarena.se/bad/aftonbad-vuxna",
+      "namn": "Aftonbad för vuxna",
+      "filer": [
+        "1380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "halmstadarena.se/bad/badcafeet",
+      "namn": "Badcaféet",
+      "filer": [
+        "1380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "halmstadarena.se/bad/hostlov-badet",
+      "namn": "Halmstad Arena",
+      "filer": [
+        "1380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "halmstadarena.se/bad/regler-och-information/registrering-bad-utan-vuxen-galler-12-17-ar",
+      "namn": "Halmstad Arena",
+      "filer": [
+        "1380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "halmstadarena.se/bad/fakta-om-badet/badhusmiljon-vatten-stadning-och-ventilation",
+      "namn": "Badhusmiljön",
+      "filer": [
+        "1380"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "kommun.falkenberg.se/omsorg-och-hjalp/funktionsnedsattning/kultur-och-fritidsaktiviteter-foer-dig-med-funktionsnedsaettning/bad-klitterbadets-aktivitetsbassaeng",
+      "namn": "Bad i Klitterbadets aktivitetsbassäng",
+      "filer": [
+        "1382"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "ockero.se/fritid-och-kultur/idrott-motion-och-friluftsliv/idrottsanlaggningar/bassangen-hedens-by",
+      "namn": "Bassängen på Hedens by",
+      "filer": [
+        "1407"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "grimsas.com/bassangforeningen",
+      "namn": "Bassängföreningen",
+      "filer": [
+        "1452"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "herrljunga.se/uppleva-och-gora/simma-och-trana/barnkalas-simhallen",
+      "namn": "Barnkalas i simhallen",
+      "filer": [
+        "1466"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gotene.se/upplevaochgora/friluftslivochmotion/idrottsochfritidsanlaggningar/utvecklingavvasterbyomradet/nyabadhuset",
+      "namn": "Ett modernt badhus för alla åldrar",
+      "filer": [
+        "1471"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "tibro.se/kontakter/verksamheter/ovriga---ej-tibro-kommun/orlenbadet",
+      "namn": "Örlenbadet",
+      "filer": [
+        "1472"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "goteborg.se/wps/portal/start/uppleva-och-gora/idrott-motion-och-friluftsliv/simma-och-bada/bad--och-simhallar/trivselregler-simhallen",
+      "namn": null,
+      "filer": [
+        "1480"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "goteborg.se/wps/portal/start/uppleva-och-gora/idrott-motion-och-friluftsliv/simma-och-bada/bad--och-simhallar/fri-badentre-pensionarer-och-barn",
+      "namn": "Fri badentré för pensionärer och barn",
+      "filer": [
+        "1480"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "goteborg.se/wps/portal/start/uppleva-och-gora/idrott-motion-och-friluftsliv/simma-och-bada/bad--och-simhallar/tider-varmbassanger",
+      "namn": "Tider i varmbassänger",
+      "filer": [
+        "1480"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "badochbus.se",
+      "namn": "Barnsimmet Bad och Bus",
+      "filer": [
+        "1481"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "uddevalla.se/uppleva-och-gora/idrott-motion-och-friluftsliv/hallar-och-idrottsanlaggningar/rimnersbadet",
+      "namn": "Rimnersbadet",
+      "filer": [
+        "1485"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "stromstad-bad.se/rehabbassang",
+      "namn": "Rehabbassäng",
+      "filer": [
+        "1486"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "trollhattan.se/startsida/uppleva-och-gora/idrott-motion-och-friluftsliv/simma-och-bada/simhallar-badhus1",
+      "namn": "Simhallar, badhus",
+      "filer": [
+        "1488"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "arenaalvhogsborg.se",
+      "namn": "Arena Älvhögsborg",
+      "filer": [
+        "1488"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "boras.se/upplevaochgora/friluftslivochnatur/badochsjoar",
+      "namn": "Bad- och båtvett",
+      "filer": [
+        "1490"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skara.se/vilansfritidsomrade/badhus/allmanhetenstidivarmbassangen",
+      "namn": "Allmänhetens tid i varmbassängen",
+      "filer": [
+        "1495"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skara.se/upplevaochgora/idrottmotionochfriluftsliv/simbassangervilanbadetochardalabadet",
+      "namn": "Simbassänger",
+      "filer": [
+        "1495"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skovde.se/uppleva-gora/fritidsaktiviteter/nybobadet",
+      "namn": "Nybobadet",
+      "filer": [
+        "1496"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skovde.se/uppleva-gora/fritidsaktiviteter/tidanbadet",
+      "namn": "Tidanbadet",
+      "filer": [
+        "1496"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skovde.se/uppleva-gora/fritidsaktiviteter/meybobadet",
+      "namn": "Meybobadet",
+      "filer": [
+        "1496"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "skovde.se/uppleva-gora/fritidsaktiviteter/billingebadet",
+      "namn": "Billingebadet",
+      "filer": [
+        "1496"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "munkfors.se/vattenlacka-drabbar-simhallen-och-skolan",
+      "namn": null,
+      "filer": [
+        "1762"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "munkfors.se/forsnasbadet-oppnar-bassangen-igen-torsdag",
+      "namn": null,
+      "filer": [
+        "1762"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "munkfors.se/ny-trappa-forsnasbadet-gor-bassangen-mer-tillganglig",
+      "namn": null,
+      "filer": [
+        "1762"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "munkfors.se/bastun-forsnasbadet-oppnar-eftermiddag-fredag-9-10-kl-16-00",
+      "namn": null,
+      "filer": [
+        "1762"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vasteras.se/uppleva-och-gora/idrott-motion-och-friluftsliv/bad-badhus-och-simning/badanlaggningar/tillbergabadet",
+      "namn": "Tillbergabadet",
+      "filer": [
+        "1980"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vasterassim.nu",
+      "namn": "Multibassängen",
+      "filer": [
+        "1980"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "tillberga.se/verksamhet/tillbergabadet",
+      "namn": "Tillbergabadet",
+      "filer": [
+        "1980"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vdmb.se/miljo-halsa/bassangbad",
+      "namn": "Bassängbad",
+      "filer": [
+        "1982"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "koping.se/kultur-fritid--natur/simma-och-bada/malmabadet",
+      "namn": "Bassäng och omklädning",
+      "filer": [
+        "1983"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "vansbro.se/uppleva-och-gora/idrott-och-motion/simhall-och-gym/plasket-utomhusbassang",
+      "namn": "Plasket utomhusbassäng",
+      "filer": [
+        "2021"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "firstcamp.se/destinationer/enabadet-rattvik",
+      "namn": "Enåbadet",
+      "filer": [
+        "2031"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "alvdalen.se/uppleva-och-gora/hallar-lokaler-och-idrottsanlaggningar/idre-simhall",
+      "namn": "Idre simhall",
+      "filer": [
+        "2039"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "falun.se/gora--uppleva/motionsanlaggningar/bad-och-simanlaggningar",
+      "namn": null,
+      "filer": [
+        "2080"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "boverket.se/sv/pbl-kunskapsbanken/regler-om-byggande/tomter/fasta-bassanger",
+      "namn": "Fasta bassänger och pooler",
+      "filer": [
+        "2082"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "avesta.se/gora-och-uppleva/metropoolen",
+      "namn": "Undervisningsbassängen",
+      "filer": [
+        "2084"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "ludvika.se/uppleva-och-gora/hitta-aktiviteter-i-ludvika-kommun/bad-simning-och-ludvikabadet",
+      "namn": null,
+      "filer": [
+        "2085"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "nordanstig.se/startsida/sidor/uppleva-och-gora/boka-lokal-idrottsanlaggning/boka-idrottssalar-och-simhallen",
+      "namn": "Boka idrottssalar och simhallen",
+      "filer": [
+        "2132"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "nordanstig.e-serve.se/facilities/bergsjosimhall",
+      "namn": "Bergsjö simhall",
+      "filer": [
+        "2132"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gavle.se/okategoriserade/hostens-aktiviteter-badhuset-simma-basta-och-koppla-av",
+      "namn": "Höstens aktiviteter i badhuset",
+      "filer": [
+        "2180"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "gavle.se/fh-sm-bada-familjebad-och-simhall",
+      "namn": "familjebad och simhall",
+      "filer": [
+        "2180"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "hudiksvall.se/sidor/uppleva-och-gora/bada/trivselregler-vara-badhus",
+      "namn": null,
+      "filer": [
+        "2184"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "hudiksvall.se/sidor/uppleva-och-gora/bada/vattenkvalitet-vara-bad",
+      "namn": "Vattenkvalitet på våra bad",
+      "filer": [
+        "2184"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "sundsvall.se/kommun/uppleva-och-gora/idrott-motion-och-friluftsliv/bad/utomhuspooler",
+      "namn": null,
+      "filer": [
+        "2281"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "solleftea.se/solleftea-aquarena",
+      "namn": null,
+      "filer": [
+        "2283"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "ramsele.com/bad-lank",
+      "namn": null,
+      "filer": [
+        "2283"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "karta-ext.ornskoldsvik.se/ornkartawebb/simhall, simbassang",
+      "namn": "simhallsimbassäng",
+      "filer": [
+        "2284"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "krokom.se/se-och-gora/gora/bada-och-paddla-kanot-kajak",
+      "namn": null,
+      "filer": [
+        "2309"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "are.se/kultur-och-fritid/idrott-motion-och-friluftsliv/bada-och-simma/kalls-badhus",
+      "namn": "Kalls badhus",
+      "filer": [
+        "2321"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "rojsmohallen.se",
+      "namn": "Röjsmohallen Järpen",
+      "filer": [
+        "2321"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "are.e-serve.se/facilities/morsils simhall",
+      "namn": "Mörsils simhall",
+      "filer": [
+        "2321"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "are.e-serve.se/facilities/jarpensbadhus",
+      "namn": "Röjsmons Badhus Järpen",
+      "filer": [
+        "2321"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "norsjo.se/simhallen-stora-bassangen-stangd-den-5-september",
+      "namn": null,
+      "filer": [
+        "2417"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "norsjo.e-serve.se/facilities/simhalleninorsjo",
+      "namn": "Norsjö simhall",
+      "filer": [
+        "2417"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "prod.e-srv.se/facilities/simhalleninorsjo",
+      "namn": "Norsjö simhall",
+      "filer": [
+        "2417"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "storuman.se/kommun/kultur-fritid/idrott-friluftsliv-och-motion/simhallen-storuman",
+      "namn": "Våra bassänger",
+      "filer": [
+        "2421"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "umea.se/hemgardensbad",
+      "namn": "Hemgårdens bad och gym",
+      "filer": [
+        "2480"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "jokkmokk.se/kultur-och-fritid/allmaent-bad-oestra-simhall",
+      "namn": "allmänna badet, Östra simhall",
+      "filer": [
+        "2510"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "jokkmokk.se/kultur-och-fritid/idrott-och-motion/allmaent-bad-oestra-simhall",
+      "namn": "Allmänna badet Östra simhall",
+      "filer": [
+        "2510"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "overtornea.se/simhall-skarm",
+      "namn": "Simhall öppettider för skärm",
+      "filer": [
+        "2518"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "midnattssolsbadet.actorsmartbook.se",
+      "namn": "Midnattssolsbadet",
+      "filer": [
+        "2584"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "actic.se/hitta-gym/gym-i-ockelbo/ockelbo-sim-och-friskvardscenter",
+      "namn": "Ockelbo, Sim- och Friskvårdscenter",
+      "filer": [
+        "op-actic"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "actic.se/hitta-gym/gym-i-vara/vara-badhus",
+      "namn": "Vara, Badhus",
+      "filer": [
+        "op-actic"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "actic.se/hitta-gym/gym-i-skovde/skovde-arena-skovde",
+      "namn": "Skövde, Arena Skövde",
+      "filer": [
+        "op-actic"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "actic.se/hitta-gym/gym-i-ljusdal/ljusdal-farila-sim-och-sporthall",
+      "namn": "Träna i Ljusdal på Färila Sim- & Sporthall",
+      "filer": [
+        "op-actic"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "medley.se/eskilstuna-gym",
+      "namn": "Badupplevelser & vattenattraktioner",
+      "filer": [
+        "op-medley"
+      ],
+      "skal": "för lite fakta/namn"
+    },
+    {
+      "key": "medley.se/vattenpalatset-kaskad",
+      "namn": "Vattenpalatset BAD & GYM",
+      "filer": [
+        "op-medley"
+      ],
+      "skal": "för lite fakta/namn"
+    }
+  ],
+  "varningar": [
+    "ny inom 150 m från befintlig, hoppad: Luleå, Pontusbadet (Luleå)"
+  ],
+  "statistik": {
+    "antal": 484,
+    "fran_osm": 419,
+    "nya_fran_webb": 65,
+    "med_officiella_uppgifter": 267,
+    "adress": "47%",
+    "oppettider": "40%",
+    "oppettider_webb": "37%",
+    "priser": "35%",
+    "bassanger": "45%",
+    "bassanger_med_langd": "35%",
+    "telefon": "20%",
+    "webb": "58%",
+    "faciliteter": "54%",
+    "koordinater": "91%",
+    "kommuner_med_simhall": 230,
+    "kommuner_utan_simhall_i_data": [
+      "Upplands-Bro",
+      "Nykvarn",
+      "Vaxholm",
+      "Älvkarleby",
+      "Ödeshög",
+      "Ydre",
+      "Kinda",
+      "Söderköping",
+      "Vadstena",
+      "Aneby",
+      "Habo",
+      "Uppvidinge",
+      "Lessebo",
+      "Älmhult",
+      "Högsby",
+      "Torsås",
+      "Mörbylånga",
+      "Hultsfred",
+      "Svalöv",
+      "Örkelljunga",
+      "Lomma",
+      "Svedala",
+      "Skurup",
+      "Bromölla",
+      "Åstorp",
+      "Båstad",
+      "Härryda",
+      "Öckerö",
+      "Tjörn",
+      "Munkedal",
+      "Tanum",
+      "Dals-Ed",
+      "Färgelanda",
+      "Vårgårda",
+      "Bollebygd",
+      "Gullspång",
+      "Mellerud",
+      "Lilla Edet",
+      "Götene",
+      "Strömstad",
+      "Kil",
+      "Eda",
+      "Hammarö",
+      "Säffle",
+      "Laxå",
+      "Degerfors",
+      "Ljusnarsberg",
+      "Karlskoga",
+      "Skinnskatteberg",
+      "Norberg",
+      "Gagnef",
+      "Ljusdal",
+      "Sollefteå",
+      "Ragunda",
+      "Berg",
+      "Norsjö",
+      "Sorsele",
+      "Dorotea",
+      "Vännäs",
+      "Vilhelmina"
+    ],
+    "kommuner_med_officiella_uppgifter": 173,
+    "typ": {
+      "badhus": 47,
+      "äventyrsbad": 98,
+      "simhall": 328,
+      "utomhusbad": 11
+    }
+  },
+  "blockerade_vardar": [
+    {
+      "host": "www.sibbarpssaltsjobad.se",
+      "orsak": "botskydd (HTTP 403)"
+    },
+    {
+      "host": "www.kagebadet.com",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "hogevall.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "ersbodabadet.valei.com",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "bibliotek.gislaved.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "faluvildvattenpark.se",
+      "orsak": "Crawl-delay 20 s"
+    },
+    {
+      "host": "service.falun.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "public.paloma.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "www.campcation.com",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "www.parkbadet.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "spoxy4.insipio.com",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "bibliotek.sundbyberg.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "bibliotek.staffanstorp.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "sjalvservice3.tranemo.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "miljo-bygg.vdmb.se",
+      "orsak": "robots.txt Disallow: /"
+    },
+    {
+      "host": "boxholmssimhall.valei.com",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "bibliotek.lessebo.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "www.tanum.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    },
+    {
+      "host": "tanum.se",
+      "orsak": "robots.txt blockerar AI-agenter"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { kort, veckodag, versal } from "@natverk/core/datum.js";
+import { flaggdagarAr } from "../../lib/helgdagar.js";
+import { SITE, IDAG, AR, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+const kommande = [...flaggdagarAr(AR), ...flaggdagarAr(AR + 1)].filter((f) => f.datum >= IDAG).slice(0, 10);
+---
+<Layout site={SITE} titel="Flaggdagar i Sverige – nästa flaggdag och alla datum"
+  beskrivning={`Nästa flaggdag är ${kommande[0].namn.toLowerCase()} ${kort(kommande[0].datum)}. Alla allmänna flaggdagar i Sverige år för år.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Flaggdagar", href: "/flaggdagar/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Flaggdagar i Sverige</h1>
+  <p class="svar">Nästa flaggdag är <strong>{kommande[0].namn.toLowerCase()}, {veckodag(kommande[0].datum)} {kort(kommande[0].datum)} {kommande[0].datum.getUTCFullYear()}</strong>.</p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/flaggdagar/${y}/`}>Flaggdagar {y}</a>)}</div>
+  <h2>Kommande flaggdagar</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Datum</th><th>Flaggdag</th></tr></thead>
+    <tbody>{kommande.map((f) => <tr><td>{versal(veckodag(f.datum))} {kort(f.datum)} {f.datum.getUTCFullYear()}</td><td>{f.namn}</td></tr>)}</tbody>
+  </table></div>
+</Layout>

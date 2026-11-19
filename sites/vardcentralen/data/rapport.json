@@ -1,0 +1,285 @@
+{
+  "byggd": "2026-11-19T08:10:15.390Z",
+  "antal": 1290,
+  "andel_procent": {
+    "koordinater": 99.9,
+    "oppettider": 99.4,
+    "oppettider_alla_7_dagar": 99.4,
+    "telefon": 99.9,
+    "webb": 76,
+    "postnummer": 98.4,
+    "kedja": 79.4,
+    "huvudman": 99.9,
+    "dropin_kand": 21.7
+  },
+  "dropin": {
+    "ja": 149,
+    "nej": 131,
+    "okant": 1010
+  },
+  "narakut": 50,
+  "jourmottagning": 50,
+  "huvudman": {
+    "region": 679,
+    "privat": 610,
+    "okand": 1
+  },
+  "typ": {
+    "vårdcentral": 1002,
+    "läkarhus": 12,
+    "familjeläkarmottagning": 10,
+    "hälsocentral": 186,
+    "distriktssköterskemottagning": 5,
+    "filial": 30,
+    "husläkarmottagning": 35,
+    "sjukstuga": 7,
+    "närmottagning": 3
+  },
+  "kedjor": {
+    "(okänd)": 266,
+    "Närhälsan": 107,
+    "Capio": 100,
+    "Region Skåne": 80,
+    "Region Stockholm": 68,
+    "Praktikertjänst": 49,
+    "Bra Liv": 38,
+    "Region Västerbotten": 33,
+    "Region Östergötland": 33,
+    "Region Kalmar län": 29,
+    "Region Jämtland Härjedalen": 28,
+    "Meliva": 27,
+    "Kry": 26,
+    "Region Uppsala": 26,
+    "Din hälsocentral": 25,
+    "Region Halland": 25,
+    "Region Norrbotten": 24,
+    "Region Värmland": 24,
+    "Region Örebro län": 23,
+    "Region Dalarna": 23,
+    "Doktor.se": 21,
+    "Region Kronoberg": 21,
+    "Familjeläkarna": 21,
+    "Region Västernorrland": 21,
+    "Region Sörmland": 18,
+    "Region Blekinge": 12,
+    "Region Västmanland": 11,
+    "Nötkärnan": 10,
+    "Achima Care": 10,
+    "Omtanken": 9,
+    "Premicare": 9,
+    "Bräcke diakoni": 6,
+    "Tiohundra": 6,
+    "Medpro Clinic": 5,
+    "Prima Vård": 4,
+    "Region Gotland": 4,
+    "Kungsportsläkarna AB": 4,
+    "Wetterhälsan": 4,
+    "HMC": 4,
+    "Läkarhusen i Väst AB": 3,
+    "Distriktsläkarna i Västra Götaland AB": 3,
+    "Wästerläkarna AB": 2,
+    "Hälsocentralen i Hjo AB": 2,
+    "Vård i Rävlanda, Sätila AB": 2,
+    "Medinordab AB": 2,
+    "Skepplanda Läkarhus AB": 1,
+    "Borås vårdcentral AB": 1,
+    "Cityläkarna Borås AB": 1,
+    "Vega vårdcentral och BVC i Fristad AB": 1,
+    "Kvarnporten AB": 1,
+    "Västra Eketorps läkarmottagning AB": 1,
+    "Backaplan Vårdcentral AB": 1,
+    "Citysjukhuset Plus 7 AB": 1,
+    "WNJ Primärvård AB": 1,
+    "Högsboläkarna AB": 1,
+    "Medtanken Vård AB": 1,
+    "Stiftelsen Carlanderska sjukhuset": 1,
+    "Hälsorum Offerdal Jämtland ekonomisk förening": 1,
+    "Vårdcentral Engelbrekt Ludvika AB": 1,
+    "Hermelinen Vårdcentral AB": 1,
+    "Husläkarcentralen Sjuhärad AB": 1,
+    "Forsåker vårdcentral AB": 1,
+    "Medipart AB": 1,
+    "Stora Höga Läkarhus AB": 1,
+    "Nya Närvården NNV AB": 1,
+    "Tranehälsan AB": 1,
+    "Hönö Vårdcentral AB": 1
+  },
+  "per_lan": {
+    "Blekinge län": {
+      "antal": 18,
+      "koordinater": 18,
+      "oppettider": 17,
+      "telefon": 18,
+      "dropin_kand": 3,
+      "vardbetyg_register": 22
+    },
+    "Dalarnas län": {
+      "antal": 29,
+      "koordinater": 29,
+      "oppettider": 29,
+      "telefon": 29,
+      "dropin_kand": 1,
+      "vardbetyg_register": 31
+    },
+    "Gotlands län": {
+      "antal": 6,
+      "koordinater": 6,
+      "oppettider": 6,
+      "telefon": 6,
+      "dropin_kand": 0,
+      "vardbetyg_register": 6
+    },
+    "Gävleborgs län": {
+      "antal": 41,
+      "koordinater": 40,
+      "oppettider": 41,
+      "telefon": 41,
+      "dropin_kand": 4,
+      "vardbetyg_register": 41
+    },
+    "Hallands län": {
+      "antal": 48,
+      "koordinater": 48,
+      "oppettider": 48,
+      "telefon": 48,
+      "dropin_kand": 10,
+      "vardbetyg_register": 48
+    },
+    "Jämtlands län": {
+      "antal": 34,
+      "koordinater": 34,
+      "oppettider": 33,
+      "telefon": 34,
+      "dropin_kand": 11,
+      "vardbetyg_register": 28
+    },
+    "Jönköpings län": {
+      "antal": 56,
+      "koordinater": 56,
+      "oppettider": 55,
+      "telefon": 56,
+      "dropin_kand": 6,
+      "vardbetyg_register": 51
+    },
+    "Kalmar län": {
+      "antal": 41,
+      "koordinater": 41,
+      "oppettider": 41,
+      "telefon": 41,
+      "dropin_kand": 6,
+      "vardbetyg_register": 40
+    },
+    "Kronobergs län": {
+      "antal": 32,
+      "koordinater": 32,
+      "oppettider": 32,
+      "telefon": 32,
+      "dropin_kand": 5,
+      "vardbetyg_register": 32
+    },
+    "Norrbottens län": {
+      "antal": 30,
+      "koordinater": 30,
+      "oppettider": 28,
+      "telefon": 30,
+      "dropin_kand": 0,
+      "vardbetyg_register": 30
+    },
+    "Skåne län": {
+      "antal": 184,
+      "koordinater": 184,
+      "oppettider": 184,
+      "telefon": 184,
+      "dropin_kand": 39,
+      "vardbetyg_register": 180
+    },
+    "Stockholms län": {
+      "antal": 253,
+      "koordinater": 253,
+      "oppettider": 253,
+      "telefon": 253,
+      "dropin_kand": 37,
+      "vardbetyg_register": 248
+    },
+    "Södermanlands län": {
+      "antal": 31,
+      "koordinater": 31,
+      "oppettider": 31,
+      "telefon": 31,
+      "dropin_kand": 8,
+      "vardbetyg_register": 31
+    },
+    "Uppsala län": {
+      "antal": 52,
+      "koordinater": 52,
+      "oppettider": 52,
+      "telefon": 52,
+      "dropin_kand": 30,
+      "vardbetyg_register": 48
+    },
+    "Värmlands län": {
+      "antal": 32,
+      "koordinater": 32,
+      "oppettider": 32,
+      "telefon": 32,
+      "dropin_kand": 0,
+      "vardbetyg_register": 31
+    },
+    "Västerbottens län": {
+      "antal": 38,
+      "koordinater": 38,
+      "oppettider": 38,
+      "telefon": 38,
+      "dropin_kand": 7,
+      "vardbetyg_register": 38
+    },
+    "Västernorrlands län": {
+      "antal": 34,
+      "koordinater": 34,
+      "oppettider": 34,
+      "telefon": 34,
+      "dropin_kand": 3,
+      "vardbetyg_register": 33
+    },
+    "Västmanlands län": {
+      "antal": 28,
+      "koordinater": 28,
+      "oppettider": 28,
+      "telefon": 28,
+      "dropin_kand": 6,
+      "vardbetyg_register": 28
+    },
+    "Västra Götalands län": {
+      "antal": 223,
+      "koordinater": 223,
+      "oppettider": 222,
+      "telefon": 223,
+      "dropin_kand": 84,
+      "vardbetyg_register": 212
+    },
+    "Örebro län": {
+      "antal": 32,
+      "koordinater": 32,
+      "oppettider": 31,
+      "telefon": 31,
+      "dropin_kand": 17,
+      "vardbetyg_register": 30
+    },
+    "Östergötlands län": {
+      "antal": 48,
+      "koordinater": 48,
+      "oppettider": 47,
+      "telefon": 48,
+      "dropin_kand": 3,
+      "vardbetyg_register": 51
+    }
+  },
+  "qa_antal": {
+    "utesluten": 21,
+    "saknar_kort": 0,
+    "kommun_konflikt": 0,
+    "koordinat_avvikelse": 0,
+    "vardbetyg_utan_1177": 17,
+    "dubblett_koordinat": 8
+  }
+}

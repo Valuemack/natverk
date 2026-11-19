@@ -1,0 +1,233 @@
+{
+  "typer": [
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323233",
+      "namn": "Hassel",
+      "slug": "hassel",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323236",
+      "namn": "Al",
+      "slug": "al",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323239",
+      "namn": "Tall",
+      "slug": "tall",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323330",
+      "namn": "Sälg och viden",
+      "slug": "salg-och-viden",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323331",
+      "namn": "Alm",
+      "slug": "alm",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323332",
+      "namn": "Björk",
+      "slug": "bjork",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323335",
+      "namn": "Bok",
+      "slug": "bok",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323337",
+      "namn": "Ek",
+      "slug": "ek",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323338",
+      "namn": "Gran",
+      "slug": "gran",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 15000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323433",
+      "namn": "Gräs",
+      "slug": "gras",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 30,
+        "hog": 80,
+        "mycket_hog": 1000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323530",
+      "namn": "Gråbo",
+      "slug": "grabo",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 30,
+        "hog": 80,
+        "mycket_hog": 1000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323533",
+      "namn": "Malörtsambrosia",
+      "slug": "malortsambrosia",
+      "har_prognoser": true,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 10,
+        "mattlig": 30,
+        "hog": 80,
+        "mycket_hog": 1000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323833",
+      "namn": "Alternaria",
+      "slug": "alternaria",
+      "har_prognoser": false,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 20,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 10000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323834",
+      "namn": "Cladosporium",
+      "slug": "cladosporium",
+      "har_prognoser": false,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 2000,
+        "mattlig": 4000,
+        "hog": 10000,
+        "mycket_hog": 40000
+      }
+    },
+    {
+      "id": "2a2a2a2a-2a2a-4a2a-aa2a-2a313a323839",
+      "namn": "Epicoccum",
+      "slug": "epicoccum",
+      "har_prognoser": false,
+      "har_matningar": true,
+      "gransvarden": {
+        "lag": 20,
+        "mattlig": 100,
+        "hog": 1000,
+        "mycket_hog": 10000
+      }
+    }
+  ],
+  "nivaer": [
+    {
+      "niva": 0,
+      "namn": "Inga halter"
+    },
+    {
+      "niva": 1,
+      "namn": "Låga"
+    },
+    {
+      "niva": 2,
+      "namn": "Låga till måttliga"
+    },
+    {
+      "niva": 3,
+      "namn": "Måttliga"
+    },
+    {
+      "niva": 4,
+      "namn": "Måttliga till höga"
+    },
+    {
+      "niva": 5,
+      "namn": "Höga"
+    },
+    {
+      "niva": 6,
+      "namn": "Höga till mycket höga"
+    },
+    {
+      "niva": 7,
+      "namn": "Mycket höga"
+    }
+  ]
+}

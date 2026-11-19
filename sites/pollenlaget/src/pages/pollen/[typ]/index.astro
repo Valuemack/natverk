@@ -1,0 +1,86 @@
+---
+// Ett pollenslag (björk, gräs …): läget per ort idag, säsongen per ort enligt uppmätta halter och gränsvärden.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, KALLA, KALLA_NRM, REGIONER, TYPER, prognosFor, aktuell, kalenderFor, KALENDER_AR, mmdd, kornText, nivaText, OM_TYP } from "../../../site.js";
+
+export const getStaticPaths = () => TYPER.map((t) => ({ params: { typ: t.slug }, props: { typ: t } }));
+const { typ: t } = Astro.props;
+const lag = t.namn.toLowerCase();
+const ord = { "Sälg och viden": "sälg- och videpollen", Gräs: "gräspollen", Gråbo: "gråbopollen", Malörtsambrosia: "ambrosiapollen" }[t.namn] ?? `${lag}pollen`;
+const Ord = ord[0].toUpperCase() + ord.slice(1);
+const idag = REGIONER.map((r) => {
+  const p = prognosFor(r);
+  if (!aktuell(p)) return null;
+  const d = p.dagar.find((x) => x.datum === UPPDATERAD) ?? p.dagar[0];
+  const n = d.nivaer.find((x) => x.pollen === t.namn);
+  return n ? { r, niva: n.niva } : null;
+}).filter(Boolean);
+const kal = REGIONER.map((r) => ({ r, k: kalenderFor(r, t) })).filter((x) => x.k);
+const tidigast = [...kal].sort((a, b) => a.k.typisk_start.localeCompare(b.k.typisk_start))[0];
+const senast = [...kal].sort((a, b) => b.k.typisk_start.localeCompare(a.k.typisk_start))[0];
+const mest = [...kal].sort((a, b) => b.k.dagar_over_mattlig_snitt - a.k.dagar_over_mattlig_snitt)[0];
+const arText = KALENDER_AR.length ? `${KALENDER_AR[0]}–${KALENDER_AR.at(-1)}` : "";
+const g = t.gransvarden ?? {};
+const fragor = [
+  tidigast && { fraga: `När börjar ${ord}säsongen?`, svar: `${Ord} kommer först i södra Sverige. Under ${arText} började säsongen i ${tidigast.r.namn} i snitt runt ${mmdd(tidigast.k.typisk_start)}${senast && senast !== tidigast ? ` och i ${senast.r.namn} runt ${mmdd(senast.k.typisk_start)}` : ""}.` },
+  mest && mest.k.dagar_over_mattlig_snitt > 0 && { fraga: `Var är halterna av ${ord} högst?`, svar: `Av de 23 mätorterna hade ${mest.r.namn} flest dagar med halter över måttliga nivåer, i snitt ${mest.k.dagar_over_mattlig_snitt} dagar per år (${arText}).` },
+  g.lag != null && { fraga: `Vad räknas som höga halter av ${ord}?`, svar: `Naturhistoriska riksmuseet räknar för ${lag} upp till ${g.lag} korn/m³ som låga halter, upp till ${g.mattlig} som måttliga, upp till ${g.hog} som höga och däröver som mycket höga halter.` },
+  OM_TYP[t.slug] && { fraga: `Vad är ${ord}?`, svar: OM_TYP[t.slug] },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`${Ord} idag – prognos och säsong i hela Sverige`.length <= 60 ? `${Ord} idag – prognos och säsong i hela Sverige` : `${Ord} – prognos och säsong`}
+  beskrivning={`${Ord} i Sverige: dagens halter på 23 orter, när säsongen brukar börja och toppa på din ort och vad som räknas som höga halter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: Ord, href: `/pollen/${t.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{Ord}</h1>
+  <p class="svar">
+    {idag.length
+      ? <>Högst halter av {ord} idag väntas i {[...idag].sort((a, b) => b.niva - a.niva).slice(0, 3).map((x) => `${x.r.namn} (${nivaText(x.niva).toLowerCase()})`).join(", ")}.</>
+      : <>Det finns ingen aktuell prognos för {ord} just nu.{tidigast && <> Säsongen brukar börja i {tidigast.r.namn} runt <strong>{mmdd(tidigast.k.typisk_start)}</strong>.</>}</>}
+    {" "}{OM_TYP[t.slug]}
+  </p>
+
+  {idag.length > 0 && <>
+    <h2>{Ord} idag</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Ort</th><th>Nivå</th></tr></thead>
+      <tbody>{idag.map((x) => <tr><td><a href={`/${x.r.slug}/`}>{x.r.namn}</a></td><td><span class={`niva niva-${x.niva}`}>{nivaText(x.niva)}</span></td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Prognosnivåer: {KALLA_NRM} (CC BY-ND 4.0).</p>
+  </>}
+
+  <Annons plats="typ-1" />
+
+  {kal.length > 0 && <>
+    <h2>När kommer {ord}?</h2>
+    <p>Typisk säsong per ort, från söder till norr. Median för {arText} räknat från uppmätta halter.</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Ort</th><th>Börjar</th><th>Topp</th><th>Slutar</th><th class="num">Dagar med höga halter*</th><th class="num">Högsta dygnsvärde</th></tr></thead>
+      <tbody>{[...kal].reverse().map(({ r, k }) => <tr><td><a href={`/${r.slug}/`}>{r.namn}</a></td><td>{mmdd(k.typisk_start, false)}</td><td>{mmdd(k.typisk_topp, false)}</td><td>{mmdd(k.typiskt_slut, false)}</td><td class="num">{k.dagar_over_mattlig_snitt}</td><td class="num">{kornText(k.hogsta_dygnsvarde)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">* Snitt per år med dygnsvärden över {g.mattlig ?? "–"} korn/m³. Bearbetning av uppmätta halter från {KALLA_NRM} (CC BY-SA 4.0).</p>
+  </>}
+
+  {g.lag != null && <>
+    <h2>Gränsvärden för {ord}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Halt</th><th class="num">Pollenkorn per m³ luft</th></tr></thead>
+      <tbody>
+        <tr><td><span class="niva niva-1">Låga</span></td><td class="num">1–{g.lag}</td></tr>
+        <tr><td><span class="niva niva-3">Måttliga</span></td><td class="num">{g.lag + 1}–{g.mattlig}</td></tr>
+        <tr><td><span class="niva niva-5">Höga</span></td><td class="num">{g.mattlig + 1}–{g.hog}</td></tr>
+        <tr><td><span class="niva niva-7">Mycket höga</span></td><td class="num">över {g.hog}</td></tr>
+      </tbody>
+    </table></div>
+    <p class="kalla">Gränsvärden enligt {KALLA_NRM}.</p>
+  </>}
+
+  <h2>Andra pollenslag</h2>
+  <ul class="kolumner">{TYPER.filter((x) => x !== t).map((x) => <li><a href={`/pollen/${x.slug}/`}>{x.namn}</a></li>)}</ul>
+
+  <Annons plats="typ-2" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>

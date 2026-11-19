@@ -1,0 +1,17 @@
+{
+  "mapp": "biblioteken",
+  "namn": "Biblioteken",
+  "visningsnamn": "biblioteken.nu",
+  "url": "https://biblioteken.nu",
+  "beskrivning": "Alla folkbibliotek i Sverige med adress, telefon och öppettider – se vilka bibliotek som har öppet nu och på helger. Uppdateras varje natt.",
+  "farg": "#7a3e9d",
+  "ikonText": "B",
+  "ord": { "sing": "bibliotek", "plur": "bibliotek", "art": "ett" },
+  "schemaTyp": "Library",
+  "titelOrd": "öppettider",
+  "datafil": "data/bibliotek.json",
+  "startTitel": "Bibliotek nära dig – öppettider för alla bibliotek",
+  "startH1": "Hitta bibliotek nära dig",
+  "kallaText": "Källor: Kungliga bibliotekets biblioteksdatabas och OpenStreetMap (© OpenStreetMaps bidragsgivare, ODbL).",
+  "meny": [{ "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+}

@@ -1,0 +1,43 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { kort, veckodag, versal, isoVecka } from "@natverk/core/datum.js";
+import { klamdagarAr } from "../../lib/helgdagar.js";
+import { lista, st } from "../../lib/text.js";
+import { SITE, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
+const { ar } = Astro.props;
+const klam = klamdagarAr(ar);
+const max = Math.max(0, ...klam.map((k) => k.ledigaDagar));
+const fragor = [
+  { fraga: `Vilka klämdagar finns det ${ar}?`,
+    svar: klam.length ? `${ar} finns det ${st(klam.length, "klämdag", "klämdagar")}: ${lista(klam.map((k) => `${veckodag(k.datum)} ${kort(k.datum)}`))}.` : `${ar} finns det inga klämdagar.` },
+  { fraga: "Vad är en klämdag?", svar: "En klämdag är en vardag som ligger mellan en röd dag (eller helgafton) och en helg. Tar man ledigt den dagen får man en lång sammanhängande ledighet." },
+  { fraga: "Är klämdagar lediga?", svar: "Nej, klämdagar är vanliga arbetsdagar enligt lag. Vissa kollektivavtal och arbetsgivare ger ändå ledigt eller kortare arbetstid – kontrollera med din arbetsgivare." },
+];
+---
+<Layout site={SITE} titel={`Klämdagar ${ar} – ta ledigt 1 dag, få upp till ${max} dagar ledigt`}
+  beskrivning={`Alla klämdagar ${ar} i Sverige. ✓ ${st(klam.length, "klämdag", "klämdagar")} ✓ Se hur många dagar i rad du blir ledig ✓ Datum, veckodag och vecka.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Klämdagar", href: "/klamdagar/" }, { namn: `${ar}`, href: `/klamdagar/${ar}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Klämdagar {ar}</h1>
+  <p class="svar">{klam.length ? <>{ar} finns det <strong>{st(klam.length, "klämdag", "klämdagar")}</strong>. Ta ledigt {klam.length === 1 ? "den" : "en av dem"} och bli ledig upp till <strong>{max} dagar i rad</strong>.</> : <>{ar} finns det inga klämdagar.</>}</p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/klamdagar/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
+  {klam.length > 0 && (
+    <div class="tabell"><table>
+      <thead><tr><th>Klämdag</th><th class="num">Vecka</th><th>Kläms av</th><th>Ledig period om du tar ledigt</th><th class="num">Dagar</th></tr></thead>
+      <tbody>{klam.map((k) => (
+        <tr><td>{versal(veckodag(k.datum))} {kort(k.datum)}</td><td class="num">{isoVecka(k.datum).vecka}</td>
+          <td><a href={`/${k.orsak.slug}/`}>{k.orsak.namn}</a></td>
+          <td>{versal(veckodag(k.ledigFran))} {kort(k.ledigFran)} – {veckodag(k.ledigTill)} {kort(k.ledigTill)}</td>
+          <td class="num">{k.ledigaDagar}</td></tr>
+      ))}</tbody>
+    </table></div>
+  )}
+  <p><a href={`/${ar}/`}>Alla röda dagar {ar} →</a></p>
+  <Annons plats="klam-1" />
+  <Faq fragor={fragor} />
+</Layout>

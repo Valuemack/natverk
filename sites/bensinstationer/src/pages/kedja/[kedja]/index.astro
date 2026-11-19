@@ -1,0 +1,50 @@
+---
+// En sida per kedja (OKQ8, Circle K, Preem, St1 …) med alla stationer per län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { slug, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, DRIVMEDEL, harDrivmedel, listprisFor, kr } from "../../../site.js";
+
+export function getStaticPaths() {
+  return rakna(KAT.enheter, (e) => e.kedja).filter(([k, n]) => k && n >= 5)
+    .map(([kedja]) => ({ params: { kedja: slug(kedja) }, props: { kedja } }));
+}
+const { kedja } = Astro.props;
+const st = KAT.enheter.filter((e) => e.kedja === kedja);
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: st.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
+const storst = rakna(st, (e) => e.kommun).slice(0, 3);
+const dygnet = st.filter((e) => e.extra?.tankning_dygnet_runt).length;
+const obemannade = st.filter((e) => e.typ === "obemannad station").length;
+const dm = DRIVMEDEL.map(([k, , lang]) => [lang, st.filter((e) => harDrivmedel(e, k)).length]).filter(([, n]) => n > 0);
+const lp = listprisFor(kedja);
+const gen = (x) => (/[sxz]$/i.test(x) ? x : `${x}s`);
+const fragor = [
+  { fraga: `Hur många stationer har ${kedja}?`, svar: `Vi listar ${st.length} stationer från ${kedja} i ${perLan.length} län. Flest finns i ${storst.map(([k, n]) => `${k} (${n})`).join(", ")}.` },
+  dygnet > 0 && { fraga: `Kan man tanka dygnet runt hos ${kedja}?`, svar: `Ja, ${dygnet} av ${gen(kedja)} stationer har tankning dygnet runt med kort enligt kedjans uppgifter.` },
+  lp?.priser?.bensin95 && { fraga: `Vad kostar bensinen hos ${kedja} idag?`, svar: `${gen(kedja)} listpris för företagskunder är ${kr(lp.priser.bensin95.pris)} per liter för 95${lp.priser.diesel ? ` och ${kr(lp.priser.diesel.pris)} för diesel` : ""} (inkl. moms). Priset vid pumpen sätts lokalt och kan skilja sig.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={[`${kedja} – alla ${st.length} stationer med öppettider`, `${kedja} – ${st.length} stationer`].find((t) => t.length <= 60)}
+  beskrivning={`Alla ${st.length} ${kedja}-stationer i Sverige med adress, öppettider och drivmedel, sorterade per län.${dygnet ? ` ✓ ${dygnet} med tankning dygnet runt` : ""} ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Kedjor", href: "/kedja/" }, { namn: kedja, href: `/kedja/${slug(kedja)}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{kedja} – stationer och öppettider</h1>
+  <p class="svar"><strong>{kedja}</strong> har <strong>{st.length} stationer</strong> i {perLan.length} län{obemannade > 0 && <>, varav {obemannade} obemannade</>}.{dygnet > 0 && <> {dygnet} har tankning dygnet runt.</>}</p>
+  {dm.length > 0 && <>
+    <h2>Drivmedel hos {kedja}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Drivmedel</th><th class="num">Stationer</th>{lp && <th class="num">Listpris idag</th>}</tr></thead>
+      <tbody>{dm.map(([namn, n]) => { const k = DRIVMEDEL.find((x) => x[2] === namn)[0]; return <tr><td>{namn}</td><td class="num">{n}</td>{lp && <td class="num">{lp.priser?.[k] ? kr(lp.priser[k].pris) : ""}</td>}</tr>; })}</tbody>
+    </table></div>
+    {lp && <p class="kalla">Listpris för företagskunder inkl. moms från {lp.url ? <a href={lp.url} rel="nofollow">{kedja}</a> : kedja}. Priset vid pumpen kan skilja sig.</p>}
+  </>}
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <Annons plats="kedja-1" />
+  {perLan.map((x) => <><h2 id={x.lan.slug}>{kedja} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Sajten är oberoende och inte ansluten till {kedja}.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

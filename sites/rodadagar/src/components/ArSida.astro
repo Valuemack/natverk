@@ -1,0 +1,105 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { lang, kort, veckodag, MANADER, versal } from "@natverk/core/datum.js";
+import HelgTabell from "./HelgTabell.astro";
+import { helgdagarAr, rodaDagarAr, klamdagarAr, langhelgerAr, arbetsdagarAr } from "../lib/helgdagar.js";
+import { lista, kortMedAr, st } from "../lib/text.js";
+import { SITE, IDAG, AR_LISTA, UPPDATERAD } from "../site.js";
+
+const { ar } = Astro.props;
+const alla = helgdagarAr(ar);
+const roda = rodaDagarAr(ar);
+const vardagsRoda = roda.filter((h) => ![0, 6].includes(h.datum.getUTCDay()));
+const klam = klamdagarAr(ar);
+const langhelger = langhelgerAr(ar);
+const arbete = arbetsdagarAr(ar);
+const hitta = (id) => alla.find((h) => h.id === id).datum;
+const bastaKlam = klam.reduce((b, k) => (!b || k.ledigaDagar > b.ledigaDagar ? k : b), null);
+
+const fragor = [
+  { fraga: `Hur många röda dagar finns det ${ar}?`,
+    svar: `Det finns ${roda.length} allmänna helgdagar (röda dagar) i Sverige ${ar}. ${vardagsRoda.length} av dem infaller på en vardag måndag–fredag. Dessutom är midsommarafton, julafton och nyårsafton lediga för de flesta.` },
+  { fraga: `När är påsk ${ar}?`,
+    svar: `Påskdagen ${ar} infaller ${lang(hitta("paskdagen"))}. Långfredagen är ${lang(hitta("langfredagen"))} och annandag påsk ${lang(hitta("annandag-pask"))}.` },
+  { fraga: `När är midsommar ${ar}?`,
+    svar: `Midsommarafton ${ar} är ${lang(hitta("midsommarafton"))} och midsommardagen ${lang(hitta("midsommardagen"))}.` },
+  { fraga: `Vilka klämdagar finns det ${ar}?`,
+    svar: klam.length ? `${ar} finns det ${st(klam.length, "klämdag", "klämdagar")}: ${lista(klam.map((k) => `${veckodag(k.datum)} ${kort(k.datum)} (${k.orsak.namn.toLowerCase()})`))}.` : `${ar} finns det inga klämdagar.` },
+  { fraga: `Hur många arbetsdagar är det ${ar}?`,
+    svar: `${ar} har ${arbete.totalt} arbetsdagar, räknat som vardagar som inte är röda dagar, midsommarafton, julafton eller nyårsafton.` },
+];
+const forra = AR_LISTA.includes(ar - 1) ? ar - 1 : null;
+const nasta = AR_LISTA.includes(ar + 1) ? ar + 1 : null;
+---
+<Layout site={SITE} titel={`Röda dagar ${ar} – helgdagar, klämdagar och långhelger`}
+  beskrivning={`Alla röda dagar ${ar} i Sverige med datum, veckodag och vecka. ✓ ${roda.length} helgdagar ✓ ${st(klam.length, "klämdag", "klämdagar")} ✓ ${arbete.totalt} arbetsdagar ✓ Långhelger och flaggdagar.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: `Röda dagar ${ar}`, href: `/${ar}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Röda dagar {ar}</h1>
+  <p class="svar">
+    {ar} har <strong>{roda.length} röda dagar</strong>, varav {vardagsRoda.length} på en vardag.
+    Påskdagen är <strong>{kort(hitta("paskdagen"))}</strong>, midsommarafton <strong>{kort(hitta("midsommarafton"))}</strong>
+    {klam.length > 0 && <> och året har <strong>{st(klam.length, "klämdag", "klämdagar")}</strong></>}.
+  </p>
+  <div class="lank-rad">
+    {AR_LISTA.map((y) => <a href={`/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}
+  </div>
+
+  <h2>Alla röda dagar och helgaftnar {ar}</h2>
+  <HelgTabell dagar={alla} idag={IDAG} />
+  <p>Röda dagar är allmänna helgdagar enligt lag (1989:253). Alla söndagar är också helgdagar. Helgaftnarna
+    midsommarafton, julafton och nyårsafton är inte röda dagar, men jämställs med söndag i semesterlagen.</p>
+
+  <Annons plats="ar-1" />
+
+  <h2>Klämdagar {ar}</h2>
+  {klam.length ? (
+    <>
+      <p>En klämdag är en vardag som kläms in mellan en helgdag och en helg.
+        {bastaKlam && <> Bästa klämdagen {ar} är <strong>{veckodag(bastaKlam.datum)} {kort(bastaKlam.datum)}</strong>: ta ledigt en dag och bli ledig {bastaKlam.ledigaDagar} dagar i rad.</>}</p>
+      <div class="tabell"><table>
+        <thead><tr><th>Klämdag</th><th>Vid</th><th class="num">Lediga dagar i rad</th></tr></thead>
+        <tbody>{klam.map((k) => (
+          <tr><td>{versal(veckodag(k.datum))} {kort(k.datum)}</td><td>{k.orsak.namn}</td>
+            <td class="num">{k.ledigaDagar} ({kort(k.ledigFran)}–{kort(k.ledigTill)})</td></tr>
+        ))}</tbody>
+      </table></div>
+      <p><a href={`/klamdagar/${ar}/`}>Mer om klämdagar {ar} →</a></p>
+    </>
+  ) : <p>{ar} finns det inga klämdagar.</p>}
+
+  <h2>Långhelger {ar}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Långhelg</th><th>Period</th><th class="num">Dagar</th></tr></thead>
+    <tbody>{langhelger.map((l) => (
+      <tr><td>{[...new Set(l.helgdagar.map((h) => h.namn))].join(", ")}</td>
+        <td>{versal(veckodag(l.fran))} {kort(l.fran)} – {veckodag(l.till)} {kort(l.till)}</td>
+        <td class="num">{l.dagar}</td></tr>
+    ))}</tbody>
+  </table></div>
+
+  <Annons plats="ar-2" />
+
+  <h2>Arbetsdagar {ar} per månad</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Arbetsdagar</th></tr></thead>
+    <tbody>
+      {arbete.manader.map((n, i) => <tr><td>{versal(MANADER[i])}</td><td class="num">{n}</td></tr>)}
+      <tr class="markerad"><td>Hela {ar}</td><td class="num">{arbete.totalt}</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Mer om {ar}</h2>
+  <div class="kort">
+    <a href={`/klamdagar/${ar}/`}><strong>Klämdagar {ar}</strong><small>Ta ledigt smart</small></a>
+    <a href={`/flaggdagar/${ar}/`}><strong>Flaggdagar {ar}</strong><small>Alla allmänna flaggdagar</small></a>
+    <a href={`/vecka/${ar}/`}><strong>Veckonummer {ar}</strong><small>Alla veckor med datum</small></a>
+    {forra && <a href={`/${forra}/`}><strong>Röda dagar {forra}</strong><small>Föregående år</small></a>}
+    {nasta && <a href={`/${nasta}/`}><strong>Röda dagar {nasta}</strong><small>Nästa år</small></a>}
+  </div>
+
+  <Faq fragor={fragor} />
+</Layout>

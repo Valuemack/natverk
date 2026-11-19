@@ -1,0 +1,25 @@
+---
+// Lista med enheter. Enheter utan egen sida får ett ankare (id) så att de kan länkas ändå.
+import OppetNu from "./OppetNu.astro";
+import { adressRad, veckoSammanfattning, kmText, telLank } from "../katalog.js";
+const { enheter, rubrikNiva = "h3", visaKommun = false } = Astro.props;
+const Rubrik = rubrikNiva;
+---
+<ul class="enheter">
+  {enheter.map((x) => {
+    const e = x.enhet ?? x;
+    const vs = veckoSammanfattning(e.oppettider);
+    return (
+      <li id={e.egenSida ? undefined : e.slug}>
+        {x.km != null && <span class="avst">{kmText(x.km)}</span>}
+        <Rubrik class="namn" style="margin:0;font-size:1.05rem">{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</Rubrik>
+        {e.listaRad && <span class="rad">{e.listaRad}</span>}
+        {(adressRad(e) || e.ort) && <span class="rad">{adressRad(e) || e.ort}{visaKommun && e.kommun && e.ort !== e.kommun && ` (${e.kommun})`}</span>}
+        {visaKommun && !adressRad(e) && !e.ort && e.kommun && <span class="rad">{e.kommun}</span>}
+        {vs && <span class="rad">Öppet {vs}</span>}
+        {!e.egenSida && e.telefon && <span class="rad">Telefon <a href={telLank(e.telefon)}>{e.telefon}</a></span>}
+        <OppetNu enhet={e} />
+      </li>
+    );
+  })}
+</ul>

@@ -1,0 +1,2621 @@
+[
+ {
+  "osm": "node/4333805733",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ljungby",
+  "lat": 56.8276685,
+  "lon": 13.4354317,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4350243235",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ljungby",
+  "lat": 56.8634479,
+  "lon": 14.1651706,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4361571191",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ljungby",
+  "lat": 56.8268631,
+  "lon": 13.4376189,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12078407397",
+  "namn": "Medicinska fakultetens bibliotek",
+  "operator": "Lunds universitetsbibliotek",
+  "kommun": "Malmö",
+  "lat": 55.5885427,
+  "lon": 12.999072,
+  "opening_hours": "Mo-Tu 12:00-16:00; We 10:00-16:00; Th-Fr 12:00-16:00"
+ },
+ {
+  "osm": "node/12123899982",
+  "namn": "Orkanenbiblioteket",
+  "operator": "Malmö universitet",
+  "kommun": "Malmö",
+  "lat": 55.6107145,
+  "lon": 12.9953495,
+  "opening_hours": "Mo-Th 08:00-20:00; Sa 11:00-16:00; Fr 08:00-17:00; Jun 06-Jul 10, Aug 03-Aug 07: Mo-Fr 10:00-14:00; Jun 19, Jul 11-Aug 02: off; Aug 10-Aug 23: Mo-Fr 10:00-17:00"
+ },
+ {
+  "osm": "way/133957846",
+  "namn": "Hyllie Park Bibliotekshuset",
+  "operator": "Hyllie Park",
+  "kommun": "Malmö",
+  "lat": 55.5679816,
+  "lon": 12.9518494,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/263705569",
+  "namn": null,
+  "operator": null,
+  "kommun": "Svedala",
+  "lat": 55.5791281,
+  "lon": 13.1755414,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3890669412",
+  "namn": "Trelleborgs Biblotek (Automat)",
+  "operator": null,
+  "kommun": "Trelleborgs",
+  "lat": 55.3718874,
+  "lon": 13.1587407,
+  "opening_hours": "Mo-Su 00:00-00:00"
+ },
+ {
+  "osm": "node/9017317232",
+  "namn": null,
+  "operator": null,
+  "kommun": "Eslövs",
+  "lat": 55.863035,
+  "lon": 13.1667683,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1963452683",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kävlinge",
+  "lat": 55.7586716,
+  "lon": 13.0085501,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/253783563",
+  "namn": null,
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.727402,
+  "lon": 13.1722968,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1225268253",
+  "namn": "Geobiblioteket",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7094639,
+  "lon": 13.2013446,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1711171865",
+  "namn": "Asia Library",
+  "operator": "Lund University Joint Faculties of Humanities and Theology",
+  "kommun": "Lunds",
+  "lat": 55.711279,
+  "lon": 13.2066398,
+  "opening_hours": "Mo,We,Th 10:00-16:00; Tu,Fr 10:00-13:00"
+ },
+ {
+  "osm": "node/1952731198",
+  "namn": "Matematiska biblioteket",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7108843,
+  "lon": 13.2067261,
+  "opening_hours": "Mo-Th 10:15-16:00; Fr 10:15-13:00"
+ },
+ {
+  "osm": "node/1976850248",
+  "namn": "Laurentiistiftelsen",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.6954226,
+  "lon": 13.2010088,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4329577920",
+  "namn": "LUX-biblioteket",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7097151,
+  "lon": 13.2007013,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5598471896",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7157708,
+  "lon": 13.4979301,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9503428536",
+  "namn": "LUSEM Library",
+  "operator": "Lund University School of Economics and Management",
+  "kommun": "Lunds",
+  "lat": 55.7126916,
+  "lon": 13.2152835,
+  "opening_hours": "Sep-May Mo-Fr 10:00-19:00; Sep-May Sa 10:00-14:00"
+ },
+ {
+  "osm": "way/39440939",
+  "namn": "Lunds universitetsbibliotek",
+  "operator": "Lunds universitet",
+  "kommun": "Lunds",
+  "lat": 55.709063,
+  "lon": 13.1973429,
+  "opening_hours": "Mo-Fr 12:00-19:00; Sa,Su 10:00-15:00"
+ },
+ {
+  "osm": "way/48493583",
+  "namn": "Wrangel",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7066936,
+  "lon": 13.1998992,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/88300234",
+  "namn": "Språk- och litteraturbiblioteket",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7086374,
+  "lon": 13.1993213,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/88657267",
+  "namn": "Samhällsvetenskapliga fakultetens bibliotek",
+  "operator": null,
+  "kommun": "Lunds",
+  "lat": 55.7079637,
+  "lon": 13.1942965,
+  "opening_hours": "Mo-Th 09:00-20:00, Fr 09:00-18:00, Sa-Su 11:00-16:00"
+ },
+ {
+  "osm": "node/277629859",
+  "namn": null,
+  "operator": null,
+  "kommun": "Båstads",
+  "lat": 56.4243291,
+  "lon": 12.6288408,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3778757580",
+  "namn": "Kunskapcentrum Agardh",
+  "operator": null,
+  "kommun": "Båstads",
+  "lat": 56.4260648,
+  "lon": 12.8482409,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6225230890",
+  "namn": null,
+  "operator": null,
+  "kommun": "Båstads",
+  "lat": 56.3887268,
+  "lon": 12.7741545,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11779489232",
+  "namn": null,
+  "operator": null,
+  "kommun": "Halmstads",
+  "lat": 56.7826524,
+  "lon": 12.832738,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/199011155",
+  "namn": "Högskolebiblioteket",
+  "operator": null,
+  "kommun": "Halmstads",
+  "lat": 56.6648676,
+  "lon": 12.8789004,
+  "opening_hours": "Mo-Fr 08:00-19:00"
+ },
+ {
+  "osm": "way/1081143574",
+  "namn": null,
+  "operator": null,
+  "kommun": "Halmstads",
+  "lat": 56.7199149,
+  "lon": 13.1266123,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2150165863",
+  "namn": "Sundsgårdens bibliotek",
+  "operator": null,
+  "kommun": "Helsingborgs",
+  "lat": 55.9873956,
+  "lon": 12.7577721,
+  "opening_hours": "24/7"
+ },
+ {
+  "osm": "node/2383630908",
+  "namn": null,
+  "operator": null,
+  "kommun": "Helsingborgs",
+  "lat": 55.9660711,
+  "lon": 12.774112,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6484260206",
+  "namn": null,
+  "operator": null,
+  "kommun": "Svalövs",
+  "lat": 55.9994699,
+  "lon": 13.2944736,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6697985179",
+  "namn": null,
+  "operator": null,
+  "kommun": "Örkelljunga",
+  "lat": 56.2827288,
+  "lon": 13.2771304,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/471352006",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hässleholms",
+  "lat": 56.1572112,
+  "lon": 13.7639896,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1094434307",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hässleholms",
+  "lat": 56.3435124,
+  "lon": 13.662102,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1808610966",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hässleholms",
+  "lat": 56.0411061,
+  "lon": 13.6760064,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4770796234",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hässleholms",
+  "lat": 56.2848964,
+  "lon": 13.9380941,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3147644424",
+  "namn": null,
+  "operator": null,
+  "kommun": "Markaryds",
+  "lat": 56.4589263,
+  "lon": 13.5946732,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5111031924",
+  "namn": null,
+  "operator": null,
+  "kommun": "Markaryds",
+  "lat": 56.5499681,
+  "lon": 13.7302173,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6970254263",
+  "namn": null,
+  "operator": null,
+  "kommun": "Markaryds",
+  "lat": 56.5794273,
+  "lon": 13.7440449,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/283846615",
+  "namn": null,
+  "operator": null,
+  "kommun": "Laholms",
+  "lat": 56.5214129,
+  "lon": 13.3223521,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/427733838",
+  "namn": "Vallberga bibliotek",
+  "operator": null,
+  "kommun": "Laholms",
+  "lat": 56.4645558,
+  "lon": 13.0328025,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/773857743",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ängelholms",
+  "lat": 56.2587036,
+  "lon": 12.9707009,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/890467194",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ängelholms",
+  "lat": 56.3174631,
+  "lon": 12.9178344,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1649182135",
+  "namn": null,
+  "operator": null,
+  "kommun": "Bjuvs",
+  "lat": 56.0861177,
+  "lon": 12.9162248,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/610738666",
+  "namn": "Biblioteket",
+  "operator": null,
+  "kommun": "Bjuvs",
+  "lat": 56.0559357,
+  "lon": 12.973861,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/642323915",
+  "namn": null,
+  "operator": null,
+  "kommun": "Åstorps",
+  "lat": 56.1370664,
+  "lon": 13.0471239,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5810128793",
+  "namn": null,
+  "operator": null,
+  "kommun": "Perstorps",
+  "lat": 56.1374845,
+  "lon": 13.3950741,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/247163263",
+  "namn": null,
+  "operator": null,
+  "kommun": "Skurups",
+  "lat": 55.3943866,
+  "lon": 13.5942513,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/790302330",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kristianstads",
+  "lat": 55.8305651,
+  "lon": 14.0887321,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/792710546",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kristianstads",
+  "lat": 56.0018647,
+  "lon": 14.0956093,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4385578882",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kristianstads",
+  "lat": 56.0367852,
+  "lon": 14.2747244,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4396327895",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kristianstads",
+  "lat": 55.9787818,
+  "lon": 13.7989369,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1502082456",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sjöbo",
+  "lat": 55.6310056,
+  "lon": 13.7053602,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1542642132",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sjöbo",
+  "lat": 55.6470935,
+  "lon": 13.8896791,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1542644862",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sjöbo",
+  "lat": 55.7033415,
+  "lon": 13.790102,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1123845248",
+  "namn": null,
+  "operator": null,
+  "kommun": "Simrishamns",
+  "lat": 55.6383827,
+  "lon": 14.1272616,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/13124493610",
+  "namn": null,
+  "operator": null,
+  "kommun": "Simrishamns",
+  "lat": 55.5548501,
+  "lon": 14.3527125,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/301594526",
+  "namn": "Hörby Kulturhus",
+  "operator": null,
+  "kommun": "Hörby",
+  "lat": 55.8532576,
+  "lon": 13.6612044,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5181670632",
+  "namn": "Furulundsskolans bibliotek",
+  "operator": "Sölvesborgs bibliotek",
+  "kommun": "Sölvesborgs",
+  "lat": 56.0558525,
+  "lon": 14.5823536,
+  "opening_hours": "Mo-Fr 08:30-15:30"
+ },
+ {
+  "osm": "way/360844537",
+  "namn": "Mjällby bibliotek",
+  "operator": "Sölvesborgs kommun",
+  "kommun": "Sölvesborgs",
+  "lat": 56.0484902,
+  "lon": 14.6773094,
+  "opening_hours": "Tu 14:00-19:00"
+ },
+ {
+  "osm": "node/477083638",
+  "namn": null,
+  "operator": null,
+  "kommun": "Östra Göinge",
+  "lat": 56.2533501,
+  "lon": 14.0783955,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3078948604",
+  "namn": null,
+  "operator": null,
+  "kommun": "Lessebo",
+  "lat": 56.6754856,
+  "lon": 15.3615945,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/300628754",
+  "namn": null,
+  "operator": null,
+  "kommun": "Lessebo",
+  "lat": 56.7880717,
+  "lon": 15.1329905,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11102735329",
+  "namn": "Karlshamns stadsbibliotek",
+  "operator": "Karlshamns kommun",
+  "kommun": "Karlshamns",
+  "lat": 56.1707427,
+  "lon": 14.8603043,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/288567481",
+  "namn": "Hjorthöjdens bibliotek",
+  "operator": null,
+  "kommun": "Ronneby",
+  "lat": 56.2022514,
+  "lon": 15.2535941,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1398974413",
+  "namn": null,
+  "operator": null,
+  "kommun": "Tingsryds",
+  "lat": 56.6565244,
+  "lon": 15.1288703,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1927692524",
+  "namn": null,
+  "operator": null,
+  "kommun": "Tingsryds",
+  "lat": 56.5321999,
+  "lon": 14.8120178,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4326567433",
+  "namn": null,
+  "operator": null,
+  "kommun": "Tingsryds",
+  "lat": 56.5250279,
+  "lon": 14.9796074,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4591480146",
+  "namn": null,
+  "operator": null,
+  "kommun": "Tingsryds",
+  "lat": 56.6415056,
+  "lon": 14.917078,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4665370307",
+  "namn": null,
+  "operator": null,
+  "kommun": "Tingsryds",
+  "lat": 56.4653016,
+  "lon": 14.6930018,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5973156172",
+  "namn": null,
+  "operator": null,
+  "kommun": "Växjö",
+  "lat": 56.8259848,
+  "lon": 14.9778691,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9420458761",
+  "namn": null,
+  "operator": null,
+  "kommun": "Växjö",
+  "lat": 56.8522869,
+  "lon": 14.8204186,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/149966259",
+  "namn": "UB",
+  "operator": null,
+  "kommun": "Växjö",
+  "lat": 56.8552856,
+  "lon": 14.8296992,
+  "opening_hours": "Mo-Fr 08:00-22:00; Sa,Su 08:00-18:00"
+ },
+ {
+  "osm": "node/535251552",
+  "namn": null,
+  "operator": null,
+  "kommun": "Karlskrona",
+  "lat": 56.4173251,
+  "lon": 15.5435001,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2432638013",
+  "namn": "Hasslö Bibliotek",
+  "operator": null,
+  "kommun": "Karlskrona",
+  "lat": 56.115015,
+  "lon": 15.4736828,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1597684549",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kalmar",
+  "lat": 56.6693238,
+  "lon": 16.3439264,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/776733721",
+  "namn": "Stella",
+  "operator": "Linnéuniversitetet",
+  "kommun": "Kalmar",
+  "lat": 56.6594618,
+  "lon": 16.3634109,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/352039960",
+  "namn": "Huvudbiblioteket",
+  "operator": null,
+  "kommun": "Nybro",
+  "lat": 56.7437659,
+  "lon": 15.9138599,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6080808119",
+  "namn": "Boda bibliotek",
+  "operator": null,
+  "kommun": "Emmaboda",
+  "lat": 56.7298959,
+  "lon": 15.6691711,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9070947117",
+  "namn": "Färjestadens Bibliotek",
+  "operator": null,
+  "kommun": "Mörbylånga",
+  "lat": 56.6516313,
+  "lon": 16.4686967,
+  "opening_hours": "Mo 13:00-18:00; Tu 10:00-18:00; We-Fr 10:00-16:00; Sa 10:00-13:00"
+ },
+ {
+  "osm": "way/300720790",
+  "namn": "Gullholmens bibliotek",
+  "operator": null,
+  "kommun": "Orust",
+  "lat": 58.1797199,
+  "lon": 11.406387,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1215065231",
+  "namn": null,
+  "operator": null,
+  "kommun": "Säffle",
+  "lat": 59.1330746,
+  "lon": 12.9253077,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1608771294",
+  "namn": "Fyren",
+  "operator": null,
+  "kommun": "Kungsbacka",
+  "lat": 57.4906362,
+  "lon": 12.0753627,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9968719964",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kungsbacka",
+  "lat": 57.4618909,
+  "lon": 12.1818499,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10893943741",
+  "namn": "Diseröds bibliotek",
+  "operator": null,
+  "kommun": "Kungälvs",
+  "lat": 57.924354,
+  "lon": 12.0303702,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/611556135",
+  "namn": "Studietorget Campus Linné",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6914082,
+  "lon": 11.9560277,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1764100645",
+  "namn": "Älvstrandens bibliotek",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.7051524,
+  "lon": 11.9378138,
+  "opening_hours": "Mo,We 11:00-17:00; Tu,Th 11:00-19:00; Fr 11:00-16:00"
+ },
+ {
+  "osm": "node/1824906743",
+  "namn": "Biblioteket, Kulturhuset Kåken",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.7167816,
+  "lon": 12.0172036,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3401991995",
+  "namn": "Studietorget Hälsovetarbacken",
+  "operator": "Göteborgs Universitet",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6869956,
+  "lon": 11.9554947,
+  "opening_hours": "Mo-Fr 08:30-17:00"
+ },
+ {
+  "osm": "node/4408364030",
+  "namn": "Chalmers bibliotek Lindholmen",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.706797,
+  "lon": 11.9387719,
+  "opening_hours": "Mo-Fr 08:30-17:00"
+ },
+ {
+  "osm": "node/4446861069",
+  "namn": "Pedagogiska biblioteket",
+  "operator": "Göteborgs universitet",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.7017896,
+  "lon": 11.9644333,
+  "opening_hours": "Mo-Th 08:00-20:00; Fr 08:00-19:00; Sa 10:00-16:00"
+ },
+ {
+  "osm": "node/10754202809",
+  "namn": "Medicinska biblioteket Östra",
+  "operator": "Sahlgrenska Universitetssjukhuset",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.7217842,
+  "lon": 12.05052,
+  "opening_hours": "24/7"
+ },
+ {
+  "osm": "node/13995056801",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6159942,
+  "lon": 11.7838274,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/24059808",
+  "namn": "Samhällsvetenskapliga biblioteket",
+  "operator": "Göteborgs universitetsbibliotek",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6979352,
+  "lon": 11.9618786,
+  "opening_hours": "Mo-Th 08:00-18:00; Fr 08:00-16:00; Sa-Su off"
+ },
+ {
+  "osm": "way/34590068",
+  "namn": "Biomedicinska biblioteket",
+  "operator": "Göteborgs universitet",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6839511,
+  "lon": 11.9614711,
+  "opening_hours": "Mo-Th 08:00-19:00; Fr 08:00-18:00; Sa 10:00-16:00"
+ },
+ {
+  "osm": "way/49131879",
+  "namn": "Humanistiska biblioteket",
+  "operator": "Göteborgs universitet",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6954167,
+  "lon": 11.9853327,
+  "opening_hours": "Mo 08:30-20:00; Tu-Th 08:30-20:00; Fr 08:30-18:00; Sa 10:00-17:00"
+ },
+ {
+  "osm": "way/245170427",
+  "namn": "Ekonomiska biblioteket",
+  "operator": null,
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6973524,
+  "lon": 11.9610717,
+  "opening_hours": "Mo-Fr 09:00-16:00"
+ },
+ {
+  "osm": "way/370335713",
+  "namn": "Chalmers Bibliotek Huvudbibliotek",
+  "operator": "Chalmers Tekniska Högskola",
+  "kommun": "Göteborgs Stad",
+  "lat": 57.6904245,
+  "lon": 11.9786193,
+  "opening_hours": "Mo-Fr 09:00-20:00"
+ },
+ {
+  "osm": "node/6938940877",
+  "namn": "Dalabergs bibliotek",
+  "operator": null,
+  "kommun": "Uddevalla",
+  "lat": 58.3712902,
+  "lon": 11.9351444,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6416111383",
+  "namn": null,
+  "operator": "Tångaskolan",
+  "kommun": "Falkenbergs",
+  "lat": 56.9129686,
+  "lon": 12.4967506,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12628075473",
+  "namn": null,
+  "operator": null,
+  "kommun": "Falkenbergs",
+  "lat": 57.1216235,
+  "lon": 12.9481104,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2432946739",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hylte",
+  "lat": 56.9553555,
+  "lon": 13.5298575,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/407201323",
+  "namn": "Biblioteket",
+  "operator": null,
+  "kommun": "Svenljunga",
+  "lat": 57.4969104,
+  "lon": 13.1105042,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3140236603",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gislaveds",
+  "lat": 57.1721761,
+  "lon": 13.5990778,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14020234509",
+  "namn": null,
+  "operator": null,
+  "kommun": "Essunga",
+  "lat": 58.1899305,
+  "lon": 12.7193226,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3529103215",
+  "namn": "Huvudbiblioteket",
+  "operator": null,
+  "kommun": "Vänersborgs",
+  "lat": 58.3802972,
+  "lon": 12.3212152,
+  "opening_hours": "Mo-Fr 10:00-18:00; Sa 10:00-14:00"
+ },
+ {
+  "osm": "node/13276591113",
+  "namn": "Medicinska biblioteket Mölndal",
+  "operator": "Sahlgrenska Universitetssjukhuset",
+  "kommun": "Mölndals",
+  "lat": 57.660361,
+  "lon": 12.0091616,
+  "opening_hours": "24/7"
+ },
+ {
+  "osm": "node/6964844369",
+  "namn": "Slöjd och byggnadsvård Bibliotek",
+  "operator": null,
+  "kommun": "Lerums",
+  "lat": 57.8142823,
+  "lon": 12.3918054,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2955733543",
+  "namn": null,
+  "operator": null,
+  "kommun": "Härryda",
+  "lat": 57.6495636,
+  "lon": 12.4908251,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4053734599",
+  "namn": null,
+  "operator": null,
+  "kommun": "Lidköpings",
+  "lat": 58.4524379,
+  "lon": 13.2691067,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/24741743",
+  "namn": "Skara bibliotek (Forskaravdelningen)",
+  "operator": null,
+  "kommun": "Skara",
+  "lat": 58.3870259,
+  "lon": 13.4392609,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1734496057",
+  "namn": "Bibliotek & läranderesurser",
+  "operator": null,
+  "kommun": "Borås",
+  "lat": 57.7253785,
+  "lon": 12.9394104,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/328725372",
+  "namn": null,
+  "operator": null,
+  "kommun": "Borås",
+  "lat": 57.8255242,
+  "lon": 13.011389,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1361280269",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ulricehamns",
+  "lat": 57.9009543,
+  "lon": 13.459437,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/8727200783",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Ulricehamns",
+  "lat": 57.7903415,
+  "lon": 13.4102335,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/13104291818",
+  "namn": "Grönahögs bibliotek",
+  "operator": null,
+  "kommun": "Ulricehamns",
+  "lat": 57.6960711,
+  "lon": 13.5849682,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3489741416",
+  "namn": null,
+  "operator": null,
+  "kommun": "Falköpings",
+  "lat": 58.0966261,
+  "lon": 13.6320202,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3494902940",
+  "namn": null,
+  "operator": null,
+  "kommun": "Falköpings",
+  "lat": 58.0232459,
+  "lon": 13.5669277,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5397380385",
+  "namn": null,
+  "operator": "Tanums kommun",
+  "kommun": "Tanums",
+  "lat": 58.7969249,
+  "lon": 11.5579712,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/1307806968",
+  "namn": "Futura",
+  "operator": null,
+  "kommun": "Tanums",
+  "lat": 58.7291899,
+  "lon": 11.3152807,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/13072904601",
+  "namn": "Biblioteket",
+  "operator": null,
+  "kommun": "Dals-Eds",
+  "lat": 58.9119995,
+  "lon": 11.9325472,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5575678269",
+  "namn": null,
+  "operator": null,
+  "kommun": "Årjängs",
+  "lat": 59.3926827,
+  "lon": 12.1334983,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4367872975",
+  "namn": null,
+  "operator": null,
+  "kommun": "Götene",
+  "lat": 58.5276302,
+  "lon": 13.4946462,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/531381668",
+  "namn": null,
+  "operator": null,
+  "kommun": "Mariestads",
+  "lat": 58.7071214,
+  "lon": 13.8255163,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1108824358",
+  "namn": "Karlstads universitetsbibliotek",
+  "operator": null,
+  "kommun": "Karlstads",
+  "lat": 59.4064393,
+  "lon": 13.5806436,
+  "opening_hours": "Mo-Th 08:00-20:00; Fr 08:00-18:00; Sa,Su 10:00-15:00"
+ },
+ {
+  "osm": "node/11037170456",
+  "namn": "Karlstad Sjukhusbibliotek",
+  "operator": "Region Värmland",
+  "kommun": "Karlstads",
+  "lat": 59.3751397,
+  "lon": 13.477106,
+  "opening_hours": "Mo-Th 10:00-17:00; Fr 10:00-15:00"
+ },
+ {
+  "osm": "node/11151431505",
+  "namn": "Älvsbacka bibliotek",
+  "operator": "Karlstads kommun",
+  "kommun": "Karlstads",
+  "lat": 59.7186195,
+  "lon": 13.6646385,
+  "opening_hours": "Mo 11:00-13:00"
+ },
+ {
+  "osm": "node/1950170732",
+  "namn": null,
+  "operator": null,
+  "kommun": "Åre",
+  "lat": 63.3937928,
+  "lon": 12.9303158,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5796310507",
+  "namn": null,
+  "operator": null,
+  "kommun": "Åre",
+  "lat": 63.1762199,
+  "lon": 14.0940691,
+  "opening_hours": "Tu-Fr 10:00-17:00"
+ },
+ {
+  "osm": "way/193334713",
+  "namn": "Åredalens Folkhögskolan biblioteket",
+  "operator": null,
+  "kommun": "Åre",
+  "lat": 63.3186898,
+  "lon": 13.3510483,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5315211769",
+  "namn": "Härjedalensbibliothek",
+  "operator": null,
+  "kommun": "Härjedalens",
+  "lat": 62.4180408,
+  "lon": 13.5145381,
+  "opening_hours": "Mo 10:00-14:00, 16:00-19:00; Su 09:00-12:00; 15:00-19:00"
+ },
+ {
+  "osm": "node/3915008465",
+  "namn": null,
+  "operator": null,
+  "kommun": "Älvdalens",
+  "lat": 61.6931079,
+  "lon": 13.137374,
+  "opening_hours": "Tu 12:00-15:00, 16:00-19:00; Th 10:00-12:00, 15:00-18:00"
+ },
+ {
+  "osm": "node/4968459820",
+  "namn": null,
+  "operator": null,
+  "kommun": "Krokoms",
+  "lat": 63.3488859,
+  "lon": 14.250893,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7020464735",
+  "namn": null,
+  "operator": null,
+  "kommun": "Malung-Sälens",
+  "lat": 60.8086672,
+  "lon": 13.860311,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/859837961",
+  "namn": "Värnamo stadsbibliotek",
+  "operator": null,
+  "kommun": "Värnamo",
+  "lat": 57.1886083,
+  "lon": 14.0371368,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2681826976",
+  "namn": null,
+  "operator": null,
+  "kommun": "Vaggeryds",
+  "lat": 57.5038499,
+  "lon": 14.1369053,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/354978636",
+  "namn": "Stadsbibliotek",
+  "operator": null,
+  "kommun": "Ludvika",
+  "lat": 60.149241,
+  "lon": 15.1857908,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9698554254",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ludvika",
+  "lat": 60.141876,
+  "lon": 14.3726358,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/576073475",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ludvika",
+  "lat": 60.0793906,
+  "lon": 14.9909974,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2920517726",
+  "namn": "Eneby bibliotek",
+  "operator": null,
+  "kommun": "Norrköpings",
+  "lat": 58.603863,
+  "lon": 16.1439187,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/178132465",
+  "namn": "Culturum",
+  "operator": null,
+  "kommun": "Nyköpings",
+  "lat": 58.7543316,
+  "lon": 17.0093314,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11298011843",
+  "namn": "Porjus Biblioteket",
+  "operator": null,
+  "kommun": "Jokkmokks",
+  "lat": 66.9597191,
+  "lon": 19.8207896,
+  "opening_hours": "Mo 17:00-19:00"
+ },
+ {
+  "osm": "way/683347411",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Jokkmokks",
+  "lat": 66.6076403,
+  "lon": 19.8302322,
+  "opening_hours": "Mo 14:00-18:00; Tu,We 12:00-18:00; Th 14:00-17:00; Fr 12:00-14:00; Sa 11:00-14:00"
+ },
+ {
+  "osm": "way/1486112054",
+  "namn": null,
+  "operator": null,
+  "kommun": "Uppvidinge",
+  "lat": 57.1298102,
+  "lon": 15.1576625,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1976224750",
+  "namn": null,
+  "operator": null,
+  "kommun": "Nässjö",
+  "lat": 57.7223785,
+  "lon": 14.8029098,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4394324315",
+  "namn": null,
+  "operator": null,
+  "kommun": "Nässjö",
+  "lat": 57.6992732,
+  "lon": 14.4751945,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1811741504",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Habo",
+  "lat": 57.9089303,
+  "lon": 14.073599,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/861751897",
+  "namn": null,
+  "operator": null,
+  "kommun": "Skövde",
+  "lat": 58.4753124,
+  "lon": 13.8653753,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3433811627",
+  "namn": "Stadsblioteket",
+  "operator": null,
+  "kommun": "Skövde",
+  "lat": 58.3900733,
+  "lon": 13.8510401,
+  "opening_hours": "Mo-Th 10:00-19:00; Fr 10:00-18:00; Sa-Su 12:00-16:00"
+ },
+ {
+  "osm": "node/9385771728",
+  "namn": null,
+  "operator": null,
+  "kommun": "Skövde",
+  "lat": 58.5730127,
+  "lon": 14.002683,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/36776994",
+  "namn": "Högskolebibliotek",
+  "operator": null,
+  "kommun": "Skövde",
+  "lat": 58.3930241,
+  "lon": 13.8531297,
+  "opening_hours": "Mo-Fr 10:00-18:00; Sa 10:00-16:00"
+ },
+ {
+  "osm": "node/1820555066",
+  "namn": null,
+  "operator": null,
+  "kommun": "Jönköpings",
+  "lat": 57.7918571,
+  "lon": 14.2762384,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/269011464",
+  "namn": "Högskolebiblioteket",
+  "operator": null,
+  "kommun": "Jönköpings",
+  "lat": 57.7788519,
+  "lon": 14.1626666,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14022164989",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hjo",
+  "lat": 58.3037311,
+  "lon": 14.2902798,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/9904688867",
+  "namn": null,
+  "operator": null,
+  "kommun": "Mullsjö",
+  "lat": 57.9154779,
+  "lon": 13.8821882,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11328236979",
+  "namn": null,
+  "operator": null,
+  "kommun": "Mullsjö",
+  "lat": 57.9863465,
+  "lon": 13.7723923,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2104786713",
+  "namn": null,
+  "operator": null,
+  "kommun": "Boxholms",
+  "lat": 58.1970267,
+  "lon": 15.0526447,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/788414346",
+  "namn": "Misteln",
+  "operator": null,
+  "kommun": "Högsby",
+  "lat": 57.1651379,
+  "lon": 16.0261148,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4389390517",
+  "namn": null,
+  "operator": null,
+  "kommun": "Mönsterås",
+  "lat": 57.1247415,
+  "lon": 16.2658982,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3750673549",
+  "namn": "Vallabiblioteket",
+  "operator": "Linköpings universitet",
+  "kommun": "Linköpings",
+  "lat": 58.3970995,
+  "lon": 15.5782411,
+  "opening_hours": "Sep-May: Mo-Th 08:00-20:00; Sep-May: Fr 08:00-17:00; Sep-May: Sa 11:00-15:00; Jun-Aug: Mo-Fr 12:00-16:00; Sep-May: Su off"
+ },
+ {
+  "osm": "node/4159716674",
+  "namn": "Bibliotek Flygvapenmuseum",
+  "operator": null,
+  "kommun": "Linköpings",
+  "lat": 58.4101328,
+  "lon": 15.5246857,
+  "opening_hours": "Mo-Fr 10:00-16:00"
+ },
+ {
+  "osm": "node/5367135983",
+  "namn": null,
+  "operator": null,
+  "kommun": "Vimmerby",
+  "lat": 57.7404022,
+  "lon": 15.799698,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/345667818",
+  "namn": null,
+  "operator": null,
+  "kommun": "Vimmerby",
+  "lat": 57.6678352,
+  "lon": 15.8704679,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1178277356",
+  "namn": "Kisa Bibliotek",
+  "operator": null,
+  "kommun": "Kinda",
+  "lat": 57.9880299,
+  "lon": 15.6332132,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/490133073",
+  "namn": "Stinsen",
+  "operator": null,
+  "kommun": "Söderköpings",
+  "lat": 58.478293,
+  "lon": 16.3228826,
+  "opening_hours": "Mo,Tu 13:00-19:00; We-Fr 10:00-17:00"
+ },
+ {
+  "osm": "node/6214379563",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gullspångs",
+  "lat": 58.9800984,
+  "lon": 14.0873303,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12042647041",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gullspångs",
+  "lat": 58.857069,
+  "lon": 14.217928,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10657130719",
+  "namn": null,
+  "operator": null,
+  "kommun": "Karlsborgs",
+  "lat": 58.6550622,
+  "lon": 14.3992168,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10074632237",
+  "namn": null,
+  "operator": null,
+  "kommun": "Askersunds",
+  "lat": 58.8792841,
+  "lon": 14.9084379,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6372408849",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hallsbergs",
+  "lat": 59.0656893,
+  "lon": 15.1060758,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/8894352843",
+  "namn": "Haga Bibliotek",
+  "operator": null,
+  "kommun": "Örebro",
+  "lat": 59.2751579,
+  "lon": 15.165102,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/157436644",
+  "namn": "Gymnasiebiblioteket",
+  "operator": null,
+  "kommun": "Örebro",
+  "lat": 59.259641,
+  "lon": 15.2068913,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1340083101",
+  "namn": null,
+  "operator": null,
+  "kommun": "Motala",
+  "lat": 58.5625576,
+  "lon": 15.2810074,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/8615018196",
+  "namn": null,
+  "operator": null,
+  "kommun": "Storfors",
+  "lat": 59.4979484,
+  "lon": 14.1622782,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12132587700",
+  "namn": "Lindeskolans bibliotek",
+  "operator": "Lindesbergs kommun",
+  "kommun": "Lindesbergs",
+  "lat": 59.5934801,
+  "lon": 15.2154113,
+  "opening_hours": "Mo-Fr 08:00-16:00"
+ },
+ {
+  "osm": "node/12164457687",
+  "namn": "Patientbibliotek",
+  "operator": null,
+  "kommun": "Lindesbergs",
+  "lat": 59.6027321,
+  "lon": 15.2164014,
+  "opening_hours": "Mo-Th 07:30-16:15; Fr 07:30-15:00"
+ },
+ {
+  "osm": "node/13960096744",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ljusnarsbergs",
+  "lat": 59.8751815,
+  "lon": 14.9923792,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2982332717",
+  "namn": null,
+  "operator": null,
+  "kommun": "Katrineholms",
+  "lat": 59.0877039,
+  "lon": 16.2118122,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/301301341",
+  "namn": "Stadsbiblioteket",
+  "operator": null,
+  "kommun": "Katrineholms",
+  "lat": 58.9940044,
+  "lon": 16.203574,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2423370069",
+  "namn": null,
+  "operator": null,
+  "kommun": "Vingåkers",
+  "lat": 59.0429826,
+  "lon": 15.8719368,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/568432374",
+  "namn": null,
+  "operator": null,
+  "kommun": "Heby",
+  "lat": 59.9388041,
+  "lon": 16.8607916,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1309391564",
+  "namn": null,
+  "operator": null,
+  "kommun": "Enköpings",
+  "lat": 59.7748459,
+  "lon": 16.9266752,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2508772264",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sala",
+  "lat": 59.8095823,
+  "lon": 16.6305793,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6905013234",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sala",
+  "lat": 59.9215705,
+  "lon": 16.6053366,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14022216012",
+  "namn": "Roggebiblioteket",
+  "operator": "Kungliga biblioteket",
+  "kommun": "Strängnäs",
+  "lat": 59.3756776,
+  "lon": 17.0359365,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/155798502",
+  "namn": null,
+  "operator": null,
+  "kommun": "Västerås",
+  "lat": 59.6490036,
+  "lon": 16.5377918,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4190633815",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hallstahammars",
+  "lat": 59.5641597,
+  "lon": 16.2322315,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1425069369",
+  "namn": "BMC-biblioteket",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8422792,
+  "lon": 17.6340237,
+  "opening_hours": "05:00-23:59 \"campus card or access card\""
+ },
+ {
+  "osm": "node/2208623628",
+  "namn": "Stadsarkivet",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8608826,
+  "lon": 17.6357042,
+  "opening_hours": "Tu 10:00-18:00; We,Th 10:00-16:00; Fr 10:00-12:00; Mo off"
+ },
+ {
+  "osm": "node/4345442641",
+  "namn": null,
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8899797,
+  "lon": 17.6489994,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5559418790",
+  "namn": "Karin Boye-biblioteket",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8538393,
+  "lon": 17.6254478,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6314183985",
+  "namn": "Dag Hammarskjöldbiblioteket",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8554857,
+  "lon": 17.6375773,
+  "opening_hours": "Mo-Fr 08:30-20:00; Su 10:00-18:00"
+ },
+ {
+  "osm": "node/6423393965",
+  "namn": "Ångströmbiblioteket",
+  "operator": "Uppsala Universitet",
+  "kommun": "Uppsala",
+  "lat": 59.8398207,
+  "lon": 17.647123,
+  "opening_hours": "Mo-Fr 05:00-08:30 \"campus card or access card\", Mo-Fr 08:00-17:00, Mo-Fr 17:00-23:59 \"campus card or access card\"; Sa,Su,PH 05:00-23:59 \"campus card or access card\""
+ },
+ {
+  "osm": "node/9177238436",
+  "namn": "Geobiblioteket",
+  "operator": "Uppsala Universitet",
+  "kommun": "Uppsala",
+  "lat": 59.8487643,
+  "lon": 17.6300156,
+  "opening_hours": "Mo-Fr 05:00-07:30 \"campus card or access card\", Mo-Fr 07:30-16:30, Mo-Fr 16:30-23:59 \"campus card or access card\"; Sa,Su,PH 05:00-23:59 \"campus card or access card\""
+ },
+ {
+  "osm": "node/9177240124",
+  "namn": "Biologibiblioteket",
+  "operator": "Uppsala Universitet",
+  "kommun": "Uppsala",
+  "lat": 59.8500704,
+  "lon": 17.6256693,
+  "opening_hours": "Mo-Fr 05:00-08:00 \"campus card or access card\", Mo-Fr 08:00-16:00, Mo-Fr 16:00-23:59 \"campus card or access card\"; Sa,Su,PH 05:00-23:59 \"campus card or access card\""
+ },
+ {
+  "osm": "node/11340854401",
+  "namn": "Ultuna Biblioteket",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8153082,
+  "lon": 17.6629523,
+  "opening_hours": "Mo-Fr 09:00-16:00"
+ },
+ {
+  "osm": "node/14061205732",
+  "namn": "Gränbystadens bibliotek",
+  "operator": null,
+  "kommun": "Uppsala",
+  "lat": 59.8775337,
+  "lon": 17.6751658,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/27652301",
+  "namn": "Carolina Rediviva",
+  "operator": "Uppsala Universitet",
+  "kommun": "Uppsala",
+  "lat": 59.8549918,
+  "lon": 17.6311725,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4213935698",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Norrtälje",
+  "lat": 59.7382746,
+  "lon": 18.4995089,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2364336546",
+  "namn": "Ramsmora bibliotek",
+  "operator": null,
+  "kommun": "Värmdö",
+  "lat": 59.4239251,
+  "lon": 18.9096285,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/120395005",
+  "namn": "Hemmestaskolan Bibliotek",
+  "operator": null,
+  "kommun": "Värmdö",
+  "lat": 59.31988,
+  "lon": 18.486049,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/832213159",
+  "namn": null,
+  "operator": null,
+  "kommun": "Värmdö",
+  "lat": 59.1825367,
+  "lon": 18.6875151,
+  "opening_hours": null
+ },
+ {
+  "osm": "relation/6259621",
+  "namn": "Runda huset",
+  "operator": null,
+  "kommun": "Värmdö",
+  "lat": 59.3263248,
+  "lon": 18.3902029,
+  "opening_hours": "Mo-Th 10:00-19:00; Fr 10:00-20:00; Sa,Su 11:00-15:00"
+ },
+ {
+  "osm": "node/1079498447",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gotlands",
+  "lat": 57.8578018,
+  "lon": 19.058388,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14074625723",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gotlands",
+  "lat": 57.0303816,
+  "lon": 18.2752034,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/305107189",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gotlands",
+  "lat": 57.5053697,
+  "lon": 18.4556333,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/250885856",
+  "namn": null,
+  "operator": null,
+  "kommun": "Södertälje",
+  "lat": 59.0904011,
+  "lon": 17.5647466,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/440627887",
+  "namn": null,
+  "operator": null,
+  "kommun": "Nykvarns",
+  "lat": 59.1775543,
+  "lon": 17.4323092,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11149721144",
+  "namn": "Biblioteket i Vega",
+  "operator": "Haninge kommun",
+  "kommun": "Haninge",
+  "lat": 59.185119,
+  "lon": 18.1338259,
+  "opening_hours": "Mo 09:00-17:00; Tu 09:00-20:00; We,Th 09:00-17:00; Fr 09:00-20:00; Sa 11:00-15:00; Su off"
+ },
+ {
+  "osm": "way/26606374",
+  "namn": "Haninge kulturhus",
+  "operator": null,
+  "kommun": "Haninge",
+  "lat": 59.1672728,
+  "lon": 18.139934,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/30025922",
+  "namn": "Biblioteket i Västerhaninge",
+  "operator": "Haninge kommun",
+  "kommun": "Haninge",
+  "lat": 59.1224504,
+  "lon": 18.1044351,
+  "opening_hours": "Mo 10:00-17:00; Tu-Th 12:00-19:00; Fr 10:00-17:00; Sa 11:00-15:00; Su off"
+ },
+ {
+  "osm": "node/2531332918",
+  "namn": "Vårbyhuset",
+  "operator": null,
+  "kommun": "Huddinge",
+  "lat": 59.2645914,
+  "lon": 17.8829693,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12723562849",
+  "namn": "Flemingsbergs bibliotek",
+  "operator": null,
+  "kommun": "Huddinge",
+  "lat": 59.2189281,
+  "lon": 17.9495178,
+  "opening_hours": "Mo,We 11:00-19:00; Tu,Th,Fr 11:00-17:00"
+ },
+ {
+  "osm": "way/102577801",
+  "namn": "Södertörns bibliotek",
+  "operator": null,
+  "kommun": "Huddinge",
+  "lat": 59.2189716,
+  "lon": 17.941315,
+  "opening_hours": "Mo-Fr 08:30-16:30"
+ },
+ {
+  "osm": "node/150392605",
+  "namn": "Bro bibliotek",
+  "operator": null,
+  "kommun": "Upplands-Bro",
+  "lat": 59.5165246,
+  "lon": 17.6427488,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4960242321",
+  "namn": "Drakudden",
+  "operator": null,
+  "kommun": "Upplands-Bro",
+  "lat": 59.4864892,
+  "lon": 17.5694718,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7402804501",
+  "namn": "Kulturhus biblioteket",
+  "operator": null,
+  "kommun": "Upplands-Bro",
+  "lat": 59.4786334,
+  "lon": 17.7512197,
+  "opening_hours": "Mo-Th 10:00-19:00; Fr 11:00-17:00; Sa 11:00-15:00; Su off"
+ },
+ {
+  "osm": "node/11931582063",
+  "namn": "Sigtunastiftelsens bibliotek",
+  "operator": null,
+  "kommun": "Sigtuna",
+  "lat": 59.6153048,
+  "lon": 17.7103245,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14115983429",
+  "namn": "Rorsersbergs bibliotek",
+  "operator": null,
+  "kommun": "Sigtuna",
+  "lat": 59.5822529,
+  "lon": 17.8835104,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/325680455",
+  "namn": "Bibliotek Träffpunkten",
+  "operator": null,
+  "kommun": "Sigtuna",
+  "lat": 59.6215051,
+  "lon": 17.8563676,
+  "opening_hours": "Mo-Fr 10:00-15:00"
+ },
+ {
+  "osm": "node/370939234",
+  "namn": "Judiska Biblioteket",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3317121,
+  "lon": 18.0739876,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/965150935",
+  "namn": "Stockholms universitetsbibliotek",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3637434,
+  "lon": 18.0608245,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1771133445",
+  "namn": "Riksdagsbiblioteket",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3256642,
+  "lon": 18.068368,
+  "opening_hours": "Mo-Th 10:00-18:00; Fr 10:00-15:00; PH closed"
+ },
+ {
+  "osm": "node/2145200035",
+  "namn": "Geobiblioteket",
+  "operator": "Stockholms universitetsbibliotek",
+  "kommun": "Stockholms",
+  "lat": 59.3653591,
+  "lon": 18.0571998,
+  "opening_hours": "Mo-Th 09:00-17:00; Fr 09:00-16:00"
+ },
+ {
+  "osm": "node/2367678720",
+  "namn": "Asienbiblioteket",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3569159,
+  "lon": 18.0520909,
+  "opening_hours": "Mo-Fr 12:00-16:00; PH closed"
+ },
+ {
+  "osm": "node/5536645382",
+  "namn": "Goethe Institut",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3329273,
+  "lon": 18.0587865,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6071011007",
+  "namn": "ArkDes bibliotek",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3256971,
+  "lon": 18.0855167,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10814435438",
+  "namn": "Stadsbiblioteket Spelbomskan",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3432718,
+  "lon": 18.0534864,
+  "opening_hours": "Mo-Th 10:00-18:00; Fr 10:00-17:00; Sa-Su 11:00-15:00"
+ },
+ {
+  "osm": "node/11583945917",
+  "namn": "Konstfack bibliotek",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.2998873,
+  "lon": 17.9941863,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11915842923",
+  "namn": "Vitterhetsakademiens bibliotek",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3336671,
+  "lon": 18.0909121,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12151260008",
+  "namn": "Anna Lindh-biblioteket",
+  "operator": "Försvarshögskolan",
+  "kommun": "Stockholms",
+  "lat": 59.3490171,
+  "lon": 18.0690428,
+  "opening_hours": "Tu 11:30-17:00; We,Th 09:00-17:00; Fr 09:00-15:00"
+ },
+ {
+  "osm": "way/15803083",
+  "namn": "Kungliga biblioteket",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3382749,
+  "lon": 18.0721604,
+  "opening_hours": "Mo-Th 09:00-19:00; Fr 09:00-18:00; Sa 11:00-15:00"
+ },
+ {
+  "osm": "way/20683064",
+  "namn": "KTH: Biblioteket",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3478866,
+  "lon": 18.0721953,
+  "opening_hours": "Mo-Th 09:00-21:00; Fr 09:00-19:00; Sa 10:00-16:00"
+ },
+ {
+  "osm": "way/46977716",
+  "namn": "Vällingby bibliotek",
+  "operator": null,
+  "kommun": "Stockholms",
+  "lat": 59.3624519,
+  "lon": 17.870496,
+  "opening_hours": "Mo-Th 10:00-20:00; Fr-Su 10:00-17:00"
+ },
+ {
+  "osm": "way/80159491",
+  "namn": "Frescatibiblioteket",
+  "operator": "Stockholms universitetsbibliotek",
+  "kommun": "Stockholms",
+  "lat": 59.3636368,
+  "lon": 18.0611049,
+  "opening_hours": "Mo-Th 08:00-21:30; Fr 08:00-18:00; Sa-Su 08:00-17:00"
+ },
+ {
+  "osm": "node/358492656",
+  "namn": "Ljusteroe Bibliothek",
+  "operator": null,
+  "kommun": "Österåkers",
+  "lat": 59.526066,
+  "lon": 18.6227813,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1424158555",
+  "namn": "University Library",
+  "operator": null,
+  "kommun": "Solna",
+  "lat": 59.3463837,
+  "lon": 18.0239918,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10027773352",
+  "namn": "Ulriksdalsskolans bibliotek",
+  "operator": null,
+  "kommun": "Solna",
+  "lat": 59.3808707,
+  "lon": 18.00318,
+  "opening_hours": "Mo, Th 14:00-17:00"
+ },
+ {
+  "osm": "node/13006329107",
+  "namn": null,
+  "operator": null,
+  "kommun": "Solna",
+  "lat": 59.3485914,
+  "lon": 18.029569,
+  "opening_hours": "Mo-Fr 09:00-14:00; Sa-Su off"
+ },
+ {
+  "osm": "way/33038274",
+  "namn": "Bergshamra bibliotek",
+  "operator": null,
+  "kommun": "Solna",
+  "lat": 59.3810922,
+  "lon": 18.0349751,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/14019840969",
+  "namn": null,
+  "operator": null,
+  "kommun": "Nacka",
+  "lat": 59.3088448,
+  "lon": 18.1646606,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1385848119",
+  "namn": null,
+  "operator": null,
+  "kommun": "Vansbro",
+  "lat": 60.5479152,
+  "lon": 14.366547,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/222076306",
+  "namn": "Högskolebiblioteket",
+  "operator": "Högskolan i Gävle",
+  "kommun": "Gävle",
+  "lat": 60.668177,
+  "lon": 17.1192881,
+  "opening_hours": "Aug 25-Jun 07 Mo-Fr 08:00-18:00; Sa-Su off"
+ },
+ {
+  "osm": "node/320642166",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gävle",
+  "lat": 60.7258584,
+  "lon": 17.1671661,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4337607667",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Strömsunds",
+  "lat": 63.8100117,
+  "lon": 16.4034899,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10776351341",
+  "namn": null,
+  "operator": null,
+  "kommun": "Strömsunds",
+  "lat": 64.5000525,
+  "lon": 14.1416765,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/10298031286",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sundsvalls",
+  "lat": 62.4290658,
+  "lon": 17.4192353,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/6966815468",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ragunda",
+  "lat": 63.0267563,
+  "lon": 16.6248959,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11098815935",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ragunda",
+  "lat": 63.1029238,
+  "lon": 16.3585244,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11098838909",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ragunda",
+  "lat": 63.1678285,
+  "lon": 15.5970732,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4583605205",
+  "namn": null,
+  "operator": null,
+  "kommun": "Ljusdals",
+  "lat": 61.7398098,
+  "lon": 15.1673286,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/13033291129",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sollefteå",
+  "lat": 63.6942769,
+  "lon": 16.8803996,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/13041526594",
+  "namn": "Hasselagården",
+  "operator": null,
+  "kommun": "Nordanstigs",
+  "lat": 62.1104484,
+  "lon": 16.7096422,
+  "opening_hours": "\"Öppet vid evenemang\""
+ },
+ {
+  "osm": "node/1670684697",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gagnefs",
+  "lat": 60.5599213,
+  "lon": 15.1368536,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1809680581",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gagnefs",
+  "lat": 60.4591155,
+  "lon": 14.7118787,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12612600714",
+  "namn": null,
+  "operator": null,
+  "kommun": "Gagnefs",
+  "lat": 60.5085682,
+  "lon": 14.9663193,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/972590134",
+  "namn": "Domnarvets biblioteksfilial",
+  "operator": null,
+  "kommun": "Borlänge",
+  "lat": 60.5017417,
+  "lon": 15.4548991,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/925359767",
+  "namn": "Bispbergs bybliotek",
+  "operator": null,
+  "kommun": "Säters",
+  "lat": 60.3610159,
+  "lon": 15.785996,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2388389372",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hedemora",
+  "lat": 60.2781726,
+  "lon": 15.9883859,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/93784840",
+  "namn": "Högskolebiblioteket",
+  "operator": null,
+  "kommun": "Falu",
+  "lat": 60.6135618,
+  "lon": 15.6541673,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11913699555",
+  "namn": "Björksätraskolan biblioteket",
+  "operator": null,
+  "kommun": "Sandvikens",
+  "lat": 60.605071,
+  "lon": 16.7494677,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1691898719",
+  "namn": null,
+  "operator": null,
+  "kommun": "Hofors",
+  "lat": 60.5711218,
+  "lon": 16.2683674,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/582266732",
+  "namn": "Voxcultura",
+  "operator": null,
+  "kommun": "Ovanåkers",
+  "lat": 61.3786809,
+  "lon": 15.8153406,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/12012053769",
+  "namn": "Universitetsbiblioteket",
+  "operator": null,
+  "kommun": "Östersunds",
+  "lat": 63.1766868,
+  "lon": 14.649295,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7922503957",
+  "namn": "Biblioteket i Kulturhuset Möbeln",
+  "operator": null,
+  "kommun": "Tierps",
+  "lat": 60.3452994,
+  "lon": 17.5148853,
+  "opening_hours": "Mo-Th 08:30-19:00; Fr 08:30-16:00; Sa 10:00-14:00"
+ },
+ {
+  "osm": "node/1140772038",
+  "namn": null,
+  "operator": null,
+  "kommun": "Kramfors",
+  "lat": 62.9307284,
+  "lon": 18.2970284,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/282569093",
+  "namn": "Medicinska biblioteket",
+  "operator": null,
+  "kommun": "Umeå",
+  "lat": 63.8178154,
+  "lon": 20.3005461,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2003081669",
+  "namn": "Universitetsbiblioteket konstnärligt campus",
+  "operator": null,
+  "kommun": "Umeå",
+  "lat": 63.8206451,
+  "lon": 20.2749311,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2187427784",
+  "namn": "Skogsbiblioteket",
+  "operator": null,
+  "kommun": "Umeå",
+  "lat": 63.8211955,
+  "lon": 20.3137226,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/5747653678",
+  "namn": null,
+  "operator": null,
+  "kommun": "Umeå",
+  "lat": 63.6970089,
+  "lon": 20.3066428,
+  "opening_hours": null
+ },
+ {
+  "osm": "relation/1308268",
+  "namn": "Umeå universitetsbibliotek",
+  "operator": null,
+  "kommun": "Umeå",
+  "lat": 63.8215661,
+  "lon": 20.306803,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/1194094798",
+  "namn": null,
+  "operator": null,
+  "kommun": "Östhammars",
+  "lat": 60.233356,
+  "lon": 18.4384211,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/1453964733",
+  "namn": "Sjömansgården",
+  "operator": null,
+  "kommun": "Östhammars",
+  "lat": 60.1679941,
+  "lon": 18.4699443,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7673708828",
+  "namn": "Åsele bibliotek",
+  "operator": null,
+  "kommun": "Åsele",
+  "lat": 64.1622616,
+  "lon": 17.3564178,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7041879458",
+  "namn": null,
+  "operator": null,
+  "kommun": "Sorsele",
+  "lat": 65.3089743,
+  "lon": 17.971363,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1818145436",
+  "namn": "Kommunbibliotek",
+  "operator": null,
+  "kommun": "Vindelns",
+  "lat": 64.2063646,
+  "lon": 19.7176826,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/509069227",
+  "namn": "Valhall",
+  "operator": "Vindelns Folkhögskola",
+  "kommun": "Vindelns",
+  "lat": 64.2045868,
+  "lon": 19.7113466,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/7228318160",
+  "namn": null,
+  "operator": null,
+  "kommun": "Malå",
+  "lat": 65.1829857,
+  "lon": 18.7434473,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4311858561",
+  "namn": null,
+  "operator": null,
+  "kommun": "Älvsbyns",
+  "lat": 65.6718658,
+  "lon": 21.0082115,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1337363233",
+  "namn": null,
+  "operator": null,
+  "kommun": "Skellefteå",
+  "lat": 64.7140873,
+  "lon": 21.1599155,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2268143293",
+  "namn": "Morö Backe bibliotek",
+  "operator": null,
+  "kommun": "Skellefteå",
+  "lat": 64.7527312,
+  "lon": 21.027142,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/11901479779",
+  "namn": "Campusbiblioteket",
+  "operator": null,
+  "kommun": "Skellefteå",
+  "lat": 64.7461776,
+  "lon": 20.9570974,
+  "opening_hours": "Mo,We-Fr 10:00-16:00; Tu 10:00-19:00"
+ },
+ {
+  "osm": "node/2092658220",
+  "namn": null,
+  "operator": null,
+  "kommun": "Arvidsjaurs",
+  "lat": 65.2605007,
+  "lon": 19.639216,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/4216981072",
+  "namn": "Moskosels bibliotek",
+  "operator": null,
+  "kommun": "Arvidsjaurs",
+  "lat": 65.87524,
+  "lon": 19.4566575,
+  "opening_hours": null
+ },
+ {
+  "osm": "way/337865439",
+  "namn": "Bibliotek & Medborgarhus",
+  "operator": null,
+  "kommun": "Arvidsjaurs",
+  "lat": 65.5931993,
+  "lon": 19.172303,
+  "opening_hours": "Mo-We,Fr 12:00-16:00; Th 15:00-19:00"
+ },
+ {
+  "osm": "node/4721836125",
+  "namn": "Bibliotek",
+  "operator": null,
+  "kommun": "Kiruna",
+  "lat": 67.8490679,
+  "lon": 20.3043598,
+  "opening_hours": "Mo-Th 10:00-18:00; Fr 10:00-17:00; Sa 11:00-15:00; Su off"
+ },
+ {
+  "osm": "node/1891088618",
+  "namn": "Dalkarlså folkhögskolas bibliotek",
+  "operator": null,
+  "kommun": "Robertsfors",
+  "lat": 64.0448695,
+  "lon": 20.8580411,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/2095583340",
+  "namn": "Universitetsbiblioteket",
+  "operator": "Luleå tekniska universitet",
+  "kommun": "Luleå",
+  "lat": 65.6173209,
+  "lon": 22.1400441,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3113230157",
+  "namn": "Gymnasiebiblioteket",
+  "operator": null,
+  "kommun": "Luleå",
+  "lat": 65.582751,
+  "lon": 22.1396355,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/1369476598",
+  "namn": null,
+  "operator": null,
+  "kommun": "Överkalix",
+  "lat": 66.3261126,
+  "lon": 22.8362519,
+  "opening_hours": null
+ },
+ {
+  "osm": "node/3296124744",
+  "namn": "Nordkalottens Kultur- och Forskningscentrum",
+  "operator": "Övertorneå kommun",
+  "kommun": "Övertorneå",
+  "lat": 66.3906545,
+  "lon": 23.6593798,
+  "opening_hours": "Mo-Fr 09:00-12:00, 13:00-15:00;Sa-Su off"
+ }
+]

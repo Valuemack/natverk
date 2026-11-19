@@ -1,0 +1,104 @@
+{
+ "uppdaterad": "2026-11-19",
+ "kommuner": 290,
+ "forskolor": {
+  "antal": 9786,
+  "typ": {
+   "fristående förskola": 2731,
+   "kommunal förskola": 7055
+  },
+  "kommuner_med_minst_en": 290,
+  "andel_med_koordinater_pct": 100,
+  "falt_tackning_pct": {
+   "id": 100,
+   "namn": 100,
+   "kedja": 99.9,
+   "typ": 100,
+   "gatuadress": 100,
+   "postnummer": 61.2,
+   "ort": 100,
+   "kommun": 100,
+   "kommunkod": 100,
+   "lan": 100,
+   "lat": 100,
+   "lon": 100,
+   "telefon": 2.1,
+   "webb": 6.5,
+   "epost": 0.3,
+   "oppettider": 0.1,
+   "extra": 100,
+   "kallor": 100,
+   "uppdaterad": 100
+  },
+  "extra_tackning_pct": {
+   "huvudmanstyp": 100,
+   "kommunsnitt": 100,
+   "deso": 100,
+   "scb_ar": 100,
+   "slug": 100,
+   "tatort": 95,
+   "osm": 36.2,
+   "osm_namn": 22.8,
+   "inriktning": 10.7,
+   "rullstolsanpassad": 0.3,
+   "alder": 0.2,
+   "osm_kapacitet": 0.1
+  }
+ },
+ "komvux": {
+  "antal": 700,
+  "typ": {
+   "komvux": 549,
+   "sfi": 151
+  },
+  "kommuner_med_minst_en": 258,
+  "andel_med_koordinater_pct": 100,
+  "falt_tackning_pct": {
+   "id": 100,
+   "namn": 100,
+   "kedja": 100,
+   "typ": 100,
+   "gatuadress": 100,
+   "postnummer": 100,
+   "ort": 100,
+   "kommun": 100,
+   "kommunkod": 100,
+   "lan": 100,
+   "lat": 100,
+   "lon": 100,
+   "telefon": 100,
+   "webb": 99.6,
+   "epost": 70.6,
+   "oppettider": 0,
+   "extra": 100,
+   "kallor": 100,
+   "uppdaterad": 100
+  },
+  "extra_tackning_pct": {
+   "skolenhetskod": 100,
+   "huvudmanstyp": 100,
+   "huvudman_orgnr": 100,
+   "nivaer": 100,
+   "sfi": 100,
+   "grundlaggande": 100,
+   "gymnasial": 100,
+   "anpassad": 100,
+   "startdatum": 100,
+   "kalla_andrad": 100,
+   "slug": 100,
+   "skolnamn": 80.1,
+   "entreprenad_anordnare": 20.6,
+   "egen_regi": 15.9,
+   "huvudman_kommuner": 5.4,
+   "ovriga_skolformer": 2.7
+  }
+ },
+ "forskolor_tackning_mot_skolverket": {
+  "antal": 9786,
+  "skolverket_forskoleenheter": 8541,
+  "kvot_pct": 114.6,
+  "osm_omatchade_namngivna": 1269
+ },
+ "fel": [],
+ "antal_fel": 0
+}
