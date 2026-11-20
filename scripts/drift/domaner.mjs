@@ -6,6 +6,7 @@ export const HUVUD = [
   ["förskolor.nu", "forskolor"], ["komvux.nu", "komvux"], ["biblioteken.nu", "biblioteken"], ["bensinstationer.nu", "bensinstationer"],
   ["parkeringar.nu", "parkeringar"], ["pollenläget.se", "pollenlaget"], ["badstränder.se", "badstrander"], ["simhallar.se", "simhallar"],
   ["lekplatserna.nu", "lekplatserna"],
+  ["dagensbensinpris.se", "dagensbensinpris"],
 ].map(([namn, projekt]) => ({ namn, ascii: domainToASCII(namn), projekt }));
 
 // DNS-uppslag via Cloudflares offentliga DNS-over-HTTPS (inga nycklar).
@@ -16,6 +17,7 @@ export async function dns(namn, typ) {
 }
 
 // Omdirigeringsdomäner → mål (301, sökvägen behålls).
+// Bara åäö-varianterna ska vara omdirigeringar på sikt; övriga byggs ut till egna sajter och flyttas då till HUVUD.
 export const OMDIR = {
   "forskolor.nu": "https://xn--frskolor-n4a.nu",
   "badstrander.se": "https://xn--badstrnder-v5a.se",
@@ -27,5 +29,4 @@ export const OMDIR = {
   "gratisparkeringar.se": "https://parkeringar.nu/gratis-parkering/",
   "lovdagar.se": "https://xn--rdadagar-n4a.nu",
   "secondhandbutiker.se": "https://loppisar.nu",
-  "dagensbensinpris.se": "https://bensinstationer.nu/bensinpris/",
 };

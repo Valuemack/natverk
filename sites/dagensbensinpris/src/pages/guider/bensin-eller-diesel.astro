@@ -1,0 +1,52 @@
+---
+// Guide: bensin eller diesel – kostnad per mil med dagens priser och vanliga förbrukningar.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, UPPDATERAD, LP_DATUM, idagPris, kr, pris, datumText, VECKOR } from "../../site.js";
+
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const datum = datumText(LP_DATUM);
+// Exempel: dieselbilen drar ungefär 20 procent mindre än motsvarande bensinbil.
+const fall = [[0.5, 0.4], [0.6, 0.48], [0.7, 0.56], [0.8, 0.64]];
+const brytpunkt = (fb) => (fb * p95) / pd; // dieselförbrukning där kostnaden blir lika
+const milAr = 1500;
+const serie = VECKOR.slice(-261);
+const dyrareDiesel = VECKOR.filter((x) => x.diesel && x.diesel > x.b95);
+const fragor = [
+  { fraga: "Är diesel eller bensin billigast?", svar: `Per liter är ${pd > p95 ? "diesel dyrare" : "diesel billigare"} idag (${kr(pd)} mot ${kr(p95)} för 95). Men en dieselbil drar oftast mindre per mil. En bensinbil som drar 0,6 l/mil kostar ${kr(0.6 * p95)} per mil; en dieselbil måste dra under ${brytpunkt(0.6).toLocaleString("sv-SE", { maximumFractionDigits: 2 })} l/mil för att bli billigare.` },
+  { fraga: "Varför är diesel dyrare än bensin?", svar: "Dieselpriset följer världsmarknadspriset på diesel, som de senaste åren ofta legat över bensinens på grund av hög efterfrågan och begränsad raffinaderikapacitet. Skatterna per liter skiljer sig också mellan bensin och diesel." },
+  { fraga: "Hur ofta har diesel varit dyrare än bensin?", svar: `Under ${dyrareDiesel.length} av ${VECKOR.length} veckor sedan ${VECKOR[0].datum.slice(0, 4)} var genomsnittspriset för diesel högre än för 95.` },
+];
+---
+<Layout site={SITE} titel={`Bensin eller diesel – vad är billigast per mil? (${datum})`}
+  beskrivning={`Diesel kostar ${kr(pd)}/l och 95 ${kr(p95)}/l idag. Se vad det blir per mil och per år, och när en dieselbil lönar sig – räknat med dagens priser.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensin eller diesel", href: "/guider/bensin-eller-diesel/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensin eller diesel – vad är billigast?</h1>
+  <p class="svar">Idag kostar diesel <strong>{kr(pd)}</strong> och bensin 95 <strong>{kr(p95)}</strong> per liter. Om en bensinbil drar 0,6 liter per mil blir dieselbilen billigare i drift först om den drar under <strong>{brytpunkt(0.6).toLocaleString("sv-SE", { maximumFractionDigits: 2 })} liter per mil</strong>.</p>
+
+  <h2>Kostnad per mil och år med dagens priser</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Bensinbil</th><th class="num">Kr/mil</th><th>Dieselbil (20 % snålare)</th><th class="num">Kr/mil</th><th class="num">Skillnad per år ({milAr} mil)</th></tr></thead>
+    <tbody>{fall.map(([fb, fd]) => { const kb = fb * p95, kd = fd * pd; return (
+      <tr><td>{fb.toLocaleString("sv-SE")} l/mil</td><td class="num">{pris(kb)}</td><td>{fd.toLocaleString("sv-SE")} l/mil</td><td class="num">{pris(kd)}</td><td class="num">{kd < kb ? "diesel " : "bensin "}{kr(Math.abs(kb - kd) * milAr, 0)} billigare</td></tr>
+    ); })}</tbody>
+  </table></div>
+  <p class="kalla">Snittpris från kedjornas listpriser {LP_DATUM}. Antagandet att en dieselbil drar ungefär 20 procent mindre är ett räkneexempel; jämför med dina egna bilars förbrukning i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2>Diesel och bensin de senaste fem åren</h2>
+  <Kurva titel="Genomsnittligt pumppris i Sverige" linjer={[
+    { namn: "Bensin 95", farg: "#d97706", punkter: serie.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Diesel", farg: "#334155", punkter: serie.map((x) => ({ x: x.datum, y: x.diesel })) },
+  ]} />
+
+  <h2>Mer än bränslet</h2>
+  <p>Driftkostnaden per mil är bara en del. Fordonsskatten är oftast högre för dieselbilar, och inköpspris, service och andrahandsvärde skiljer sig. Kör du långt varje år väger bränslet tyngre; kör du mest korta sträckor väger de fasta kostnaderna mer.</p>
+
+  <Faq fragor={fragor} />
+  <p><a href="/diesel/">Dieselpris idag</a> · <a href="/bensin-95/">Bensin 95 idag</a> · <a href="/guider/">Fler guider</a></p>
+</Layout>

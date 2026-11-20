@@ -1,0 +1,67 @@
+---
+// Bensinprisets historik sedan 2005: hela kurvan och en tabell per år.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, UPPDATERAD, VECKOR, SENASTE_VECKA, AR_LISTA, arSammanfattning, kr, pris, procent, datumText, skattedelar } from "../../site.js";
+
+const ar = AR_LISTA.map(arSammanfattning).filter(Boolean);
+const forsta = VECKOR[0], v = SENASTE_VECKA;
+const rekord95 = VECKOR.reduce((a, b) => (b.b95 > a.b95 ? b : a));
+const rekordD = VECKOR.filter((x) => x.diesel).reduce((a, b) => (b.diesel > a.diesel ? b : a));
+const lagst95 = VECKOR.reduce((a, b) => (b.b95 < a.b95 ? b : a));
+const komplett = ar.filter((x) => x.komplett);
+const dyrastAr = [...komplett].sort((a, b) => b.b95.medel - a.b95.medel)[0];
+const billigastAr = [...komplett].sort((a, b) => a.b95.medel - b.b95.medel)[0];
+const forraTio = VECKOR.filter((x) => x.datum <= `${Number(v.datum.slice(0, 4)) - 10}${v.datum.slice(4)}`).at(-1);
+const skattNu = skattedelar(v), skattDa = skattedelar(forsta);
+
+const fragor = [
+  { fraga: "När var bensinen som dyrast i Sverige?", svar: `Det högsta veckopriset för 95 sedan 2005 var ${kr(rekord95.b95)} per liter, veckan som började ${datumText(rekord95.datum)}. Diesel var som dyrast ${kr(rekordD.diesel)} veckan som började ${datumText(rekordD.datum)}.` },
+  { fraga: "Vad kostade bensinen för 10 år sedan?", svar: forraTio ? `För tio år sedan, veckan som började ${datumText(forraTio.datum)}, var genomsnittspriset för 95 ${kr(forraTio.b95)} per liter. Senaste veckan var det ${kr(v.b95)}.` : "" },
+  { fraga: "Vilket år var bensinen dyrast?", svar: `Räknat som årsgenomsnitt var ${dyrastAr.ar} dyrast med ${kr(dyrastAr.b95.medel)} per liter för 95. Billigast var ${billigastAr.ar} med ${kr(billigastAr.b95.medel)}.` },
+  { fraga: "Har skatten på bensin ökat?", svar: skattNu && skattDa ? `Skatterna (energiskatt, koldioxidskatt och moms) var ${kr(skattDa.skatt)} per liter i början av ${forsta.datum.slice(0, 4)} och ${kr(skattNu.skatt)} senaste veckan. Skattens andel av priset har gått från ${procent(skattDa.andelSkatt * 100)} till ${procent(skattNu.andelSkatt * 100)}.` : "" },
+].filter((f) => f.svar);
+---
+<Layout site={SITE} titel={`Bensinpris historik ${forsta.datum.slice(0, 4)}–${v.datum.slice(0, 4)} – graf och årspriser`}
+  beskrivning={`Bensinprisets och dieselpriset utveckling sedan ${forsta.datum.slice(0, 4)}: graf över alla veckor, snittpris per år och rekordnivåer. Rekordet för 95 är ${kr(rekord95.b95)}/l.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Historik", href: "/historik/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinprisets historik sedan {forsta.datum.slice(0, 4)}</h1>
+  <p class="svar">Bensin 95 kostade i snitt <strong>{kr(forsta.b95)}</strong> per liter i början av {forsta.datum.slice(0, 4)} och <strong>{kr(v.b95)}</strong> veckan som började {datumText(v.datum)}. Rekordet är {kr(rekord95.b95)} från {datumText(rekord95.datum)}.</p>
+
+  <Kurva hojd={300} titel={`Genomsnittligt pumppris i Sverige ${forsta.datum.slice(0, 4)}–${v.datum.slice(0, 4)}`} linjer={[
+    { namn: "Bensin 95", farg: "#d97706", punkter: VECKOR.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Diesel", farg: "#334155", punkter: VECKOR.map((x) => ({ x: x.datum, y: x.diesel })) },
+  ]} />
+  <p class="kalla">Veckogenomsnitt av pumppriser inkl. skatt som Sverige rapporterar till EU-kommissionen (Weekly Oil Bulletin), omräknade till kronor.</p>
+
+  <h2>Rekord och lägsta nivåer</h2>
+  <ul>
+    <li>Högsta veckopris för 95: <strong>{kr(rekord95.b95)}</strong> ({datumText(rekord95.datum)})</li>
+    <li>Högsta veckopris för diesel: <strong>{kr(rekordD.diesel)}</strong> ({datumText(rekordD.datum)})</li>
+    <li>Lägsta veckopris för 95 sedan {forsta.datum.slice(0, 4)}: <strong>{kr(lagst95.b95)}</strong> ({datumText(lagst95.datum)})</li>
+  </ul>
+
+  <Annons plats="historik-1" />
+
+  <h2>Bensinpris per år</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">95 snitt</th><th class="num">95 lägst</th><th class="num">95 högst</th><th class="num">Diesel snitt</th><th class="num">Mot året innan (95)</th></tr></thead>
+    <tbody>{[...ar].reverse().map((x, i, arr) => { const f = arr[i + 1]; return (
+      <tr><td><a href={`/historik/${x.ar}/`}>{x.ar}</a>{!x.komplett && " *"}</td><td class="num">{pris(x.b95.medel)}</td><td class="num">{pris(x.b95.lag)}</td><td class="num">{pris(x.b95.hog)}</td><td class="num">{x.diesel ? pris(x.diesel.medel) : "–"}</td><td class="num">{f ? `${x.b95.medel >= f.b95.medel ? "+" : "−"}${procent(Math.abs(x.b95.medel / f.b95.medel - 1) * 100, 1)}` : ""}</td></tr>
+    ); })}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter. * = året är inte komplett. Klicka på ett år för priset månad för månad.</p>
+
+  {skattNu && skattDa && <>
+    <h2>Skatten då och nu</h2>
+    <p>I början av {forsta.datum.slice(0, 4)} var skatterna på en liter 95 sammanlagt {kr(skattDa.skatt)} ({procent(skattDa.andelSkatt * 100)} av priset). Senaste veckan var de {kr(skattNu.skatt)} ({procent(skattNu.andelSkatt * 100)}). Produktpriset utan skatt har gått från {kr(skattDa.produkt)} till {kr(skattNu.produkt)} per liter.</p>
+  </>}
+
+  <h2>Varför går priset upp och ner?</h2>
+  <p>Bensinpriset vid pumpen följer i första hand världsmarknadspriset på bensin, som i sin tur hänger ihop med råoljepriset. Eftersom oljan handlas i dollar påverkar också kronans värde. Skatterna ändras av riksdagen, oftast vid årsskiften, och slår igenom direkt på pumppriset. Läs mer i guiden <a href="/guider/vad-paverkar-bensinpriset/">Vad påverkar bensinpriset?</a></p>
+
+  <Faq fragor={fragor} />
+</Layout>

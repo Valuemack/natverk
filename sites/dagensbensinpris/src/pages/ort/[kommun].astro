@@ -1,0 +1,75 @@
+---
+// Bensinpris i en kommun: vilka kedjor som finns där, deras listpris idag, obemannade stationer och drivmedel.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, KOMMUNER, LISTKEDJOR, LP_DATUM, kedjePris, idagPris, kr, pris, datumText, BENSINSTATIONER_URL } from "../../site.js";
+
+export function getStaticPaths() {
+  return KOMMUNER.map((k) => ({ params: { kommun: k.slug }, props: { k } }));
+}
+const { k } = Astro.props;
+const st = k.stationer;
+const datum = datumText(LP_DATUM);
+const lan = st.find((s) => s.lan)?.lan ?? "";
+const perKedja = Object.entries(st.reduce((m, s) => ((m[s.kedja ?? "Fristående"] = (m[s.kedja ?? "Fristående"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const listKedjorHar = perKedja.map(([c]) => c).filter((c) => LISTKEDJOR.includes(c));
+const billigast = (nyckel) => listKedjorHar.map((c) => ({ c, p: kedjePris(c, nyckel) })).filter((x) => x.p != null).sort((a, b) => a.p - b.p)[0];
+const b95 = billigast("bensin95"), dsl = billigast("diesel");
+const obemannade = st.filter((s) => s.typ === "obemannad");
+const finns = (n) => st.filter((s) => s.drivmedel?.[n] === true).length;
+const drivmedel = [["bensin95", "Bensin 95"], ["diesel", "Diesel"], ["e85", "E85"], ["hvo100", "HVO100"], ["biogas", "Fordonsgas"], ["el", "Elbilsladdning"]].map(([n, namn]) => ({ namn, antal: finns(n) })).filter((x) => x.antal > 0);
+const lagpris = ["Ingo", "Tanka", "Qstar", "Din-X"].filter((c) => perKedja.some(([x]) => x === c));
+const grannar = KOMMUNER.filter((x) => x.slug !== k.slug && x.stationer.some((s) => s.lan === lan)).slice(0, 12);
+
+const fragor = [
+  { fraga: `Vad kostar bensin i ${k.namn} idag?`, svar: b95 ? `Billigast listpris bland kedjorna i ${k.namn} har ${b95.c}: ${kr(b95.p)} per liter 95 den ${datum}. Snittet i landet är ${kr(idagPris("bensin95"))}. Priset på en enskild station kan avvika.` : `Kedjorna i ${k.namn} publicerar inga listpriser. Snittet för 95 i landet är ${kr(idagPris("bensin95"))} per liter den ${datum}.` },
+  { fraga: `Hur många bensinstationer finns i ${k.namn}?`, svar: `Det finns ${st.length} stationer i ${k.namn}: ${perKedja.slice(0, 5).map(([c, n]) => `${n} ${c}`).join(", ")}${perKedja.length > 5 ? " med flera" : ""}.` },
+  obemannade.length > 0 && { fraga: `Finns det obemannade stationer i ${k.namn}?`, svar: `Ja, ${obemannade.length} av stationerna i ${k.namn} är obemannade. Obemannade stationer och lågpriskedjor brukar ha lägre pris än bemannade stationer.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Bensinpris ${k.namn} idag – ${b95 ? `från ${pris(b95.p)} kr/l, ` : ""}${st.length} stationer`}
+  beskrivning={`Bensinpris i ${k.namn} idag (${datum}): ${b95 ? `${b95.c} ${kr(b95.p)}/l för 95` : `snitt ${kr(idagPris("bensin95"))}/l`}. ✓ ${st.length} stationer ✓ Kedjornas priser ✓ ${obemannade.length} obemannade ✓ E85, HVO, fordonsgas.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Per ort", href: "/ort/" }, { namn: k.namn, href: `/ort/${k.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris i {k.namn} idag</h1>
+  <p class="svar">{b95
+    ? <>Lägst listpris för 95 bland kedjorna i {k.namn} har <strong>{b95.c}</strong> med <strong>{kr(b95.p)}</strong> per liter idag{dsl && <>, och diesel kostar från <strong>{kr(dsl.p)}</strong></>}.</>
+    : <>Kedjorna i {k.namn} publicerar inga listpriser. Snittet i landet är <strong>{kr(idagPris("bensin95"))}</strong> per liter för 95 idag.</>} Det finns {st.length} stationer i kommunen.</p>
+
+  <h2>Kedjorna i {k.namn} och deras pris idag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">95</th><th class="num">Diesel</th><th class="num">E85</th></tr></thead>
+    <tbody>{perKedja.map(([c, n]) => { const lp = LISTKEDJOR.includes(c); return (
+      <tr><td>{c}</td><td class="num">{n}</td>{lp ? ["bensin95", "diesel", "e85"].map((x) => <td class="num">{pris(kedjePris(c, x))}</td>) : <td class="num" colspan="3"><small>sätter pris per station</small></td>}</tr>
+    ); })}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter inkl. moms, kedjornas listpriser {LP_DATUM}. Priset på en enskild station kan avvika från kedjans listpris.</p>
+
+  {lagpris.length > 0 && <p>I {k.namn} finns också {lagpris.join(", ").replace(/, ([^,]*)$/, " och $1")}, som brukar ligga under de stora kedjornas listpris. De publicerar inga priser, så jämför på prisskylten.</p>}
+
+  <Annons plats="ort-1" />
+
+  {obemannade.length > 0 && <>
+    <h2>Obemannade stationer i {k.namn}</h2>
+    <p>Obemannade stationer har lägre kostnader och oftast lägre pris. {obemannade.length === 1 ? "Den här finns" : obemannade.length > 40 ? `Här är 40 av de ${obemannade.length} som finns` : `De här ${obemannade.length} finns`} i {k.namn}:</p>
+    <ul class="kolumner">{obemannade.slice(0, 40).map((s) => <li>{s.namn}{s.adress && <small> – {s.adress}</small>}</li>)}</ul>
+  </>}
+
+  <h2>Drivmedel i {k.namn}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th><th class="num">Stationer</th><th class="num">Snittpris idag</th></tr></thead>
+    <tbody>{drivmedel.map((d) => { const n = { "Bensin 95": "bensin95", Diesel: "diesel", E85: "e85", HVO100: "hvo100", Fordonsgas: "biogas" }[d.namn]; return <tr><td>{d.namn}</td><td class="num">{d.antal}</td><td class="num">{n ? `${pris(idagPris(n))}${n === "biogas" ? " kr/kg" : ""}` : "–"}</td></tr>; })}</tbody>
+  </table></div>
+
+  <h2>Alla stationer i {k.namn}</h2>
+  <ul class="kolumner">{st.map((s) => <li>{s.namn}{s.typ === "obemannad" && <small> (obemannad)</small>}</li>)}</ul>
+  <p>Adresser, öppettider och karta finns på <a href={`${BENSINSTATIONER_URL}/${k.slug}/`}>bensinstationer.nu/{k.slug}</a>.</p>
+
+  {grannar.length > 0 && <>
+    <h2>Bensinpris i andra kommuner i {lan}</h2>
+    <ul class="kolumner">{grannar.map((g) => <li><a href={`/ort/${g.slug}/`}>{g.namn}</a></li>)}</ul>
+  </>}
+
+  <Faq fragor={fragor} />
+</Layout>

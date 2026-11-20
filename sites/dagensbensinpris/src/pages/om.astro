@@ -1,0 +1,26 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD, LISTKEDJOR, EU, STATIONER, datumText } from "../site.js";
+---
+<Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
+  beskrivning={`Så tar ${SITE.visningsnamn} fram dagens bensinpris: kedjornas listpriser, EU-kommissionens veckopriser och ${STATIONER.length.toLocaleString("sv-SE")} stationer.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om {SITE.visningsnamn}</h1>
+  <p>{SITE.visningsnamn} visar vad bensin, diesel och andra drivmedel kostar i Sverige idag, hur priset har utvecklats och hur det står sig mot andra länder. Sajten är oberoende och inte ansluten till någon kedja, myndighet eller bransch­organisation. Allt hämtas och räknas om automatiskt varje natt.</p>
+
+  <h2 id="kallor">Källor och metod</h2>
+  <h3>Dagens pris</h3>
+  <p>Dagens pris är kedjornas publicerade listpriser inklusive moms från {LISTKEDJOR.join(", ")}. Listpriset är kedjans riktpris för företagskunder. Priset vid pumpen på en enskild station sätts lokalt och kan vara både högre och lägre. Snittpriset är medelvärdet av kedjornas listpriser. Ändringen mot föregående dag räknas från vår egen dagliga historik.</p>
+  <h3>Veckopris och historik</h3>
+  <p>Veckopriser, historik sedan 2005, skatteandelar och jämförelsen med andra länder bygger på EU-kommissionens <a href={EU.kalla_url} rel="nofollow">Weekly Oil Bulletin</a> (licens CC BY 4.0). Den innehåller det genomsnittliga pumppriset med och utan skatter som varje medlemsland rapporterar varje måndag. Vi räknar om priserna till kronor per liter med samma veckas växelkurs ur samma källa. Senaste veckan i datan: {datumText(EU.senaste)}.</p>
+  <h3>Stationer</h3>
+  <p>Uppgifter om vilka stationer som finns i varje kommun, vilken kedja de tillhör och vilka drivmedel de säljer kommer från stationsregistret på <a href="https://bensinstationer.nu/">bensinstationer.nu</a> ({STATIONER.length.toLocaleString("sv-SE")} stationer), som bygger på kedjornas egna stationsuppgifter och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).</p>
+  <h3>Det vi inte gör</h3>
+  <ul>
+    <li>Vi visar inga påhittade stationspriser. Kedjorna publicerar inte pumppriset per station, och det framgår tydligt på varje sida.</li>
+    <li>Vi gör inga prisprognoser. Guiderna förklarar vad som påverkar priset, med källor.</li>
+  </ul>
+
+  <h2>Hittat ett fel?</h2>
+  <p>Priserna uppdateras automatiskt. Om något ser fel ut beror det oftast på att en kedja har ändrat sin webbplats; vi rättar det så snart vi upptäcker det.</p>
+</Layout>

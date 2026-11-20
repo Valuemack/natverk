@@ -1,0 +1,50 @@
+---
+// Guide: så hittar du billigaste bensinen – med dagens listpriser och stationsdata.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, LISTKEDJOR, LP_DATUM, kedjePris, idagPris, kr, pris, datumText, STATIONER, KEDJOR } from "../../site.js";
+
+const datum = datumText(LP_DATUM);
+const kedjor95 = LISTKEDJOR.map((c) => ({ c, p: kedjePris(c, "bensin95") })).filter((x) => x.p).sort((a, b) => a.p - b.p);
+const obem = STATIONER.filter((s) => s.typ === "obemannad").length;
+const lagpris = KEDJOR.filter((k) => ["Ingo", "Tanka", "Qstar", "Din-X"].includes(k.namn));
+const tank = 50;
+const fragor = [
+  { fraga: "Var är bensinen billigast idag?", svar: `Bland kedjorna som publicerar listpriser har ${kedjor95[0].c} lägst pris på 95 idag (${kr(kedjor95[0].p)}). Obemannade stationer och lågpriskedjor som ${lagpris.map((k) => k.namn).join(", ")} brukar ligga under listpriset.` },
+  { fraga: "Är obemannade stationer billigare?", svar: `Oftast ja. De har lägre kostnader för personal och butik. Det finns ${obem.toLocaleString("sv-SE")} obemannade stationer i vårt register.` },
+  { fraga: "Hur mycket sparar man på att välja billigaste stationen?", svar: `Skillnaden mellan stationer i samma område kan vara en krona per liter eller mer. På en tank på ${tank} liter blir det ${kr(tank, 0)} per krona i prisskillnad.` },
+];
+---
+<Layout site={SITE} titel={`Billigaste bensinen idag – så hittar du lägsta priset (${datum})`}
+  beskrivning={`Billigast listpris på 95 idag har ${kedjor95[0].c} (${kr(kedjor95[0].p)}/l). Så hittar du billigaste bensinen: obemannade stationer, lågpriskedjor och när du ska tanka.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Billigaste bensinen", href: "/guider/billigaste-bensinen/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Så hittar du billigaste bensinen</h1>
+  <p class="svar">Idag har <strong>{kedjor95[0].c}</strong> lägst listpris på 95 bland de stora kedjorna: <strong>{kr(kedjor95[0].p)}</strong> per liter. Ännu billigare brukar obemannade stationer och lågpriskedjor vara.</p>
+
+  <h2>Kedjornas listpris idag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{kedjor95.map((x) => <tr><td><a href={`/kedja/${x.c.toLowerCase().replace(/\s+/g, "-")}/`}>{x.c}</a></td><td class="num">{pris(x.p)}</td><td class="num">{pris(kedjePris(x.c, "diesel"))}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Sex sätt att tanka billigare</h2>
+  <ol>
+    <li><strong>Välj obemannat.</strong> Obemannade stationer har lägre kostnader och oftast lägre pris. Det finns {obem.toLocaleString("sv-SE")} obemannade stationer i Sverige.</li>
+    <li><strong>Välj lågpriskedjor.</strong> {lagpris.map((k) => <><a href={`/kedja/${k.slug}/`}>{k.namn}</a> ({k.antal} stationer)</>).reduce((a, b) => [a, ", ", b])} ligger ofta under de stora kedjornas listpris. Ingo ägs av Circle K och Tanka av OKQ8.</li>
+    <li><strong>Undvik motorvägsstationer.</strong> Stationer utan konkurrens i närheten har sällan lägst pris.</li>
+    <li><strong>Jämför i din kommun.</strong> Se vilka kedjor som finns där du bor på <a href="/ort/">bensinpris per ort</a>.</li>
+    <li><strong>Använd kedjornas appar och kort.</strong> Kedjorna ger ofta rabatt per liter till medlemmar.</li>
+    <li><strong>Håll koll på trenden.</strong> Priset ändras flera gånger i veckan. Följ <a href="/">dagens pris</a> och <a href="/historik/">utvecklingen</a>.</li>
+  </ol>
+
+  <Annons plats="guide-1" />
+
+  <h2>Varför skiljer sig priset mellan stationer?</h2>
+  <p>Listpriset är kedjans riktpris, men varje station kan få ett eget pumppris. Kedjorna sänker priset där konkurrensen är hård och håller det högre där den är svag. Därför kan två stationer från samma kedja i olika delar av en kommun ha olika pris samma dag.</p>
+  <p>Snittpriset i landet idag är {kr(idagPris("bensin95"))} för 95 och {kr(idagPris("diesel"))} för diesel.</p>
+
+  <Faq fragor={fragor} />
+  <p><a href="/guider/">Fler guider</a> · <a href="/rakna/">Räkna ut bränslekostnaden</a></p>
+</Layout>

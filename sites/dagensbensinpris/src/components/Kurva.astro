@@ -1,0 +1,42 @@
+---
+// Statiskt linjediagram (SVG, inget JavaScript). linjer: [{ namn, farg, punkter: [{ x: "YYYY-MM-DD", y }] }].
+import { MANADER } from "@natverk/core/datum.js";
+const { linjer, hojd = 260, titel = "", enhet = "kr/l" } = Astro.props;
+const B = 720, H = hojd, V = 44, HO = 12, T = 12, U = 26;
+const alla = linjer.flatMap((l) => l.punkter.filter((p) => p.y != null));
+const ms = (s) => Date.parse(`${s}T00:00:00Z`);
+const x0 = Math.min(...alla.map((p) => ms(p.x))), x1 = Math.max(...alla.map((p) => ms(p.x)));
+let y0 = Math.min(...alla.map((p) => p.y)), y1 = Math.max(...alla.map((p) => p.y));
+const steg = [0.1, 0.2, 0.25, 0.5, 1, 2, 2.5, 5, 10, 20, 25, 50].find((s) => (y1 - y0) / s <= 6) ?? 100;
+y0 = Math.floor(y0 / steg) * steg; y1 = Math.ceil(y1 / steg) * steg; if (y1 === y0) y1 = y0 + steg;
+const X = (t) => V + ((t - x0) / Math.max(1, x1 - x0)) * (B - V - HO);
+const Y = (v) => T + (1 - (v - y0) / (y1 - y0)) * (H - T - U);
+const ytick = []; for (let v = y0; v <= y1 + 1e-9; v += steg) ytick.push(v);
+const dagar = (x1 - x0) / 86400000;
+const xtick = [];
+const d0 = new Date(x0), d1 = new Date(x1);
+if (dagar > 3 * 365) {
+  const hopp = dagar > 12 * 365 ? 3 : dagar > 6 * 365 ? 2 : 1;
+  for (let y = d0.getUTCFullYear() + 1; y <= d1.getUTCFullYear(); y += 1) if ((y - d0.getUTCFullYear() - 1) % hopp === 0) xtick.push({ t: Date.UTC(y, 0, 1), text: String(y) });
+} else {
+  const hopp = dagar > 400 ? 3 : dagar > 120 ? 1 : 1;
+  for (let t = Date.UTC(d0.getUTCFullYear(), d0.getUTCMonth() + 1, 1), i = 0; t <= x1; i++) {
+    const d = new Date(t);
+    if (i % hopp === 0) xtick.push({ t, text: `${MANADER[d.getUTCMonth()].slice(0, 3)}${d.getUTCMonth() === 0 ? ` ${d.getUTCFullYear()}` : ""}` });
+    t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+  }
+}
+const vagar = linjer.map((l) => ({ ...l, d: l.punkter.filter((p) => p.y != null).map((p, i) => `${i ? "L" : "M"}${X(ms(p.x)).toFixed(1)} ${Y(p.y).toFixed(1)}`).join("") }));
+const fmt = (v) => v.toLocaleString("sv-SE", { minimumFractionDigits: steg < 1 ? 2 : 0, maximumFractionDigits: steg < 1 ? 2 : 0 });
+---
+<figure>
+  <svg class="kurva" viewBox={`0 0 ${B} ${H}`} role="img" aria-label={titel || linjer.map((l) => l.namn).join(", ")}>
+    {ytick.map((v) => <><line class="rutnat" x1={V} x2={B - HO} y1={Y(v)} y2={Y(v)} /><text x={V - 6} y={Y(v) + 4} text-anchor="end">{fmt(v)}</text></>)}
+    {xtick.map((x) => <text x={X(x.t)} y={H - 8} text-anchor="middle">{x.text}</text>)}
+    {vagar.map((l) => <path d={l.d} fill="none" stroke={l.farg} stroke-width="2.2" stroke-linejoin="round" />)}
+  </svg>
+  <figcaption>
+    <ul class="forklaring">{linjer.map((l) => <li><span style={`background:${l.farg}`}></span>{l.namn}</li>)}</ul>
+    {titel && <small>{titel} ({enhet})</small>}
+  </figcaption>
+</figure>

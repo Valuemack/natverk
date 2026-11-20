@@ -1,0 +1,69 @@
+---
+// Bensinpriset i ett EU-land: senaste veckan i kronor och egen valuta, jämfört med Sverige, och utvecklingen.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, UPPDATERAD, LANDER, landPris, landSerie, SENASTE_VECKA, VECKOR, kr, pris, procent, datumText } from "../../site.js";
+
+export function getStaticPaths() {
+  return LANDER.filter((l) => landPris(l.kod)).map((l) => ({ params: { land: l.slug }, props: { l } }));
+}
+const { l } = Astro.props;
+const p = landPris(l.kod);
+const v = SENASTE_VECKA;
+const lokal = (x) => (x == null ? "–" : `${x.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${p.valuta === "EUR" ? "euro" : p.valuta}`);
+const diff95 = p.b95 - v.b95, diffD = p.diesel != null ? p.diesel - v.diesel : null;
+const tank = 50;
+const serie = landSerie(l.kod).filter((x) => x.datum >= VECKOR.at(-157).datum);
+const seSerie = VECKOR.slice(-157);
+const skattAndel = p.b95utan ? 1 - p.b95utan / p.b95 : null;
+const seSkatt = 1 - v.b95utan / v.b95;
+const i = (namn) => (/^(Cypern|Malta)$/.test(namn) ? "på" : "i");
+
+const fragor = [
+  { fraga: `Vad kostar bensin ${i(l.namn)} ${l.namn}?`, svar: `Bensin 95 kostade i snitt ${lokal(p.b95lokal)} per liter ${i(l.namn)} ${l.namn} veckan som började ${datumText(p.datum)}. Det motsvarar ${kr(p.b95)} per liter.` },
+  p.diesel && { fraga: `Vad kostar diesel ${i(l.namn)} ${l.namn}?`, svar: `Diesel kostade ${lokal(p.diesellokal)} per liter, eller ${kr(p.diesel)} omräknat till kronor.` },
+  { fraga: `Är bensinen billigare ${i(l.namn)} ${l.namn} än i Sverige?`, svar: `${diff95 < 0 ? "Ja" : "Nej"}. En liter 95 kostar ${kr(Math.abs(diff95))} ${diff95 < 0 ? "mindre" : "mer"} ${i(l.namn)} ${l.namn} än i Sverige. För en tank på ${tank} liter blir skillnaden ${kr(Math.abs(diff95) * tank, 0)}.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Bensinpris ${l.namn} idag – ${pris(p.b95)} kr/l (${lokal(p.b95lokal)})`}
+  beskrivning={`Bensinpriset ${i(l.namn)} ${l.namn}: 95 kostar ${lokal(p.b95lokal)} per liter (${kr(p.b95)}), ${kr(Math.abs(diff95))} ${diff95 < 0 ? "billigare" : "dyrare"} än i Sverige. Diesel, utveckling och skatter.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Europa", href: "/europa/" }, { namn: l.namn, href: `/europa/${l.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris {i(l.namn)} {l.namn}</h1>
+  <p class="svar">Bensin 95 kostade i snitt <strong>{lokal(p.b95lokal)}</strong> per liter {i(l.namn)} {l.namn} veckan som började {datumText(p.datum)}, vilket motsvarar <strong>{kr(p.b95)}</strong>. Det är {kr(Math.abs(diff95))} {diff95 < 0 ? "billigare" : "dyrare"} än i Sverige.</p>
+
+  <h2>{l.namn} jämfört med Sverige</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th><th class="num">{l.namn}</th><th class="num">I kronor</th><th class="num">Sverige</th><th class="num">Skillnad per {tank} l</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin 95</td><td class="num">{lokal(p.b95lokal)}</td><td class="num">{pris(p.b95)}</td><td class="num">{pris(v.b95)}</td><td class="num">{diff95 >= 0 ? "+" : "−"}{pris(Math.abs(diff95) * tank, 0)} kr</td></tr>
+      {p.diesel && <tr><td>Diesel</td><td class="num">{lokal(p.diesellokal)}</td><td class="num">{pris(p.diesel)}</td><td class="num">{pris(v.diesel)}</td><td class="num">{diffD >= 0 ? "+" : "−"}{pris(Math.abs(diffD) * tank, 0)} kr</td></tr>}
+    </tbody>
+  </table></div>
+  <p class="kalla">Genomsnittligt pumppris inkl. skatt per liter, veckan som började {datumText(p.datum)}. Omräknat till kronor med samma veckas växelkurs. Källa: EU-kommissionen, Weekly Oil Bulletin (CC BY 4.0).</p>
+
+  <Annons plats="land-1" />
+
+  <h2>Utvecklingen de senaste tre åren</h2>
+  <Kurva titel={`Bensin 95 i ${l.namn} och Sverige, kr per liter`} linjer={[
+    { namn: l.namn, farg: "#2563eb", punkter: serie.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Sverige", farg: "#d97706", punkter: seSerie.map((x) => ({ x: x.datum, y: x.b95 })) },
+  ]} />
+
+  {skattAndel && <>
+    <h2>Skatten på bensin {i(l.namn)} {l.namn}</h2>
+    <p>Utan skatt kostade en liter 95 {kr(p.b95utan)} {i(l.namn)} {l.namn}, {Math.abs(p.b95utan - v.b95utan) < 0.75 ? "nästan samma produktpris som" : `${kr(Math.abs(p.b95utan - v.b95utan))} ${p.b95utan > v.b95utan ? "mer" : "mindre"} än`} i Sverige ({kr(v.b95utan)}). Skatterna utgör {procent(skattAndel * 100)} av pumppriset {i(l.namn)} {l.namn} mot {procent(seSkatt * 100)} i Sverige. {Math.abs((p.b95 - p.b95utan) - (v.b95 - v.b95utan)) > Math.abs(p.b95utan - v.b95utan) ? "Det är skatterna som förklarar största delen av prisskillnaden mellan länderna." : "Här förklarar produktpriset (inköp, frakt och marginal) mer av skillnaden än skatterna."}</p>
+  </>}
+
+  <h2>Tips när du tankar utomlands</h2>
+  <ul>
+    <li>Priserna ovan är snittpriser. Motorvägsstationer är ofta dyrare än stationer i städer och vid stormarknader.</li>
+    <li>Kontrollera vilken bensin bilen tål: i många EU-länder är 95 märkt E10 (upp till 10 procent etanol).</li>
+    <li>Betalar du med kort i annan valuta, välj att betala i landets valuta – omräkning till kronor i automaten ger ofta sämre kurs.</li>
+  </ul>
+  <p><a href="/europa/">Alla EU-länder</a> · <a href="/">Bensinpris idag i Sverige</a></p>
+
+  <Faq fragor={fragor} />
+</Layout>

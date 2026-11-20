@@ -1,0 +1,100 @@
+---
+// Startsida: dagens bensinpris. Svaret först, sedan kedjor, veckopris, kurva och skatter.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import Kurva from "../components/Kurva.astro";
+import Prisrutor from "../components/Prisrutor.astro";
+import {
+  SITE, UPPDATERAD, AKTUELL, LP, LP_DATUM, DRIVMEDEL, LISTKEDJOR, idagPris, dagsAndring, kedjePris, kr, pris, andring, riktning, procent,
+  datumText, VECKOR, SENASTE_VECKA, FORRA_VECKAN, skattedelar, LANDER, landPris, KOMMUNER, KEDJOR, AR,
+} from "../site.js";
+
+const datum = datumText(LP_DATUM);
+const b95 = idagPris("bensin95"), dsl = idagPris("diesel");
+const a95 = dagsAndring("bensin95");
+const v = SENASTE_VECKA, fv = FORRA_VECKAN;
+const ar52 = VECKOR.slice(-53);
+const skatt = skattedelar();
+const europa = [{ kod: "SE", namn: "Sverige", ...{ b95: v.b95, diesel: v.diesel } }, ...LANDER.map((l) => ({ kod: l.kod, namn: l.namn, ...landPris(l.kod) }))].filter((x) => x.b95);
+const plats95 = [...europa].sort((a, b) => a.b95 - b.b95).findIndex((x) => x.kod === "SE") + 1;
+const lagst = (k) => Math.min(...LISTKEDJOR.map((c) => kedjePris(c, k)).filter(Boolean));
+const storaOrter = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping", "Örebro", "Västerås", "Helsingborg", "Norrköping", "Jönköping", "Umeå", "Lund"]
+  .map((n) => KOMMUNER.find((k) => k.namn === n)).filter(Boolean);
+const vecka = (d) => datumText(d);
+
+const fragor = [
+  { fraga: "Vad kostar bensin idag?", svar: `Den ${datum} är kedjornas listpris för bensin 95 i snitt ${kr(b95)} per liter. Bensin 98 kostar ${kr(idagPris("bensin98"))} och E85 ${kr(idagPris("e85"))} per liter.` },
+  { fraga: "Vad kostar diesel idag?", svar: `Diesel kostar i snitt ${kr(dsl)} per liter enligt kedjornas listpriser den ${datum}. HVO100 kostar ${kr(idagPris("hvo100"))} per liter.` },
+  { fraga: "Vilken kedja har billigast bensin idag?", svar: (() => { const k = LISTKEDJOR.filter((c) => kedjePris(c, "bensin95") === lagst("bensin95")); return `Bland kedjorna som publicerar listpriser har ${k.join(" och ")} lägst pris på 95 idag: ${kr(lagst("bensin95"))} per liter. Lågpriskedjor och obemannade stationer ligger ofta under listpriset, men de publicerar inga priser.`; })() },
+  { fraga: "Har bensinpriset gått upp eller ner?", svar: `Enligt EU-kommissionens veckostatistik var genomsnittspriset vid pump för 95 i Sverige ${kr(v.b95)} per liter veckan som började ${vecka(v.datum)}, ${v.b95 > fv.b95 ? "en ökning" : v.b95 < fv.b95 ? "en minskning" : "oförändrat"} med ${kr(Math.abs(v.b95 - fv.b95))} mot veckan innan.` },
+  skatt && { fraga: "Hur mycket av bensinpriset är skatt?", svar: `Ungefär ${procent(skatt.andelSkatt * 100)} av priset för 95 är skatt (energiskatt, koldioxidskatt och moms): ${kr(skatt.skatt)} av ${kr(skatt.pris)} per liter enligt den senaste veckostatistiken.` },
+  { fraga: "Varför är priset på min station ett annat?", svar: "Kedjorna sätter pumppriset lokalt på varje station efter konkurrensen i området. Listpriset är kedjans riktpris för företagskunder och visar nivån i landet. Obemannade stationer och lågpriskedjor brukar ligga under listpriset." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Bensinpris idag ${datum} – 95 ${pris(b95)} kr, diesel ${pris(dsl)} kr`}
+  beskrivning={`Dagens bensinpris: 95 kostar ${kr(b95)}/l och diesel ${kr(dsl)}/l i snitt (${datum}). ✓ Pris per kedja ✓ E85, HVO100, fordonsgas ✓ Historik och Europa.`}
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris idag</h1>
+  <p class="svar">{AKTUELL ? "Idag" : "Senast publicerat"}, {datum}, kostar bensin 95 i snitt <strong>{kr(b95)}</strong> per liter och diesel <strong>{kr(dsl)}</strong> enligt kedjornas listpriser.{a95 && Math.abs(a95.varde) > 0.004 && <> Det är <span class={riktning(a95.varde)}>{andring(a95.varde)}</span> för 95 jämfört med {datumText(a95.mot)}.</>}</p>
+
+  <Prisrutor />
+
+  <h2>Pris per kedja idag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th>{LISTKEDJOR.map((c) => <th class="num">{c}</th>)}<th class="num">Snitt</th></tr></thead>
+    <tbody>{DRIVMEDEL.filter((d) => idagPris(d.nyckel) != null).map((d) => (
+      <tr><td><a href={`/${d.slug}/`}>{d.namn}</a></td>{LISTKEDJOR.map((c) => { const p = kedjePris(c, d.nyckel); return <td class="num">{p == null ? "–" : p === lagst(d.nyckel) && new Set(LISTKEDJOR.map((x) => kedjePris(x, d.nyckel)).filter(Boolean)).size > 1 ? <strong>{pris(p)}</strong> : pris(p)}</td>; })}<td class="num">{pris(idagPris(d.nyckel))}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter (fordonsgas per kilo) inkl. moms. Kedjornas publicerade listpriser hämtade {LP_DATUM}; lägst pris i fetstil. Läs mer om <a href="/kedja/">kedjornas priser</a>.</p>
+
+  <Annons plats="start-1" />
+
+  <h2>Pumppriset i Sverige vecka för vecka</h2>
+  <p>Varje vecka rapporterar Sverige det genomsnittliga pumppriset till EU-kommissionen. Veckan som började {vecka(v.datum)} var snittpriset <strong>{kr(v.b95)}</strong> för 95 och <strong>{kr(v.diesel)}</strong> för diesel. Jämfört med veckan innan är det <span class={riktning(v.b95 - fv.b95)}>{andring(v.b95 - fv.b95)}</span> för 95 och <span class={riktning(v.diesel - fv.diesel)}>{andring(v.diesel - fv.diesel)}</span> för diesel.</p>
+  <Kurva titel="Genomsnittligt pumppris i Sverige senaste året" linjer={[
+    { namn: "Bensin 95", farg: "#d97706", punkter: ar52.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Diesel", farg: "#334155", punkter: ar52.map((x) => ({ x: x.datum, y: x.diesel })) },
+  ]} />
+  <p>Se hela utvecklingen sedan 2005 i <a href="/historik/">bensinprisets historik</a>.</p>
+
+  {skatt && <>
+    <h2>Så mycket av priset är skatt</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Del av priset för 95</th><th class="num">Kr per liter</th><th class="num">Andel</th></tr></thead>
+      <tbody>
+        <tr><td>Produkt, frakt och marginal</td><td class="num">{pris(skatt.produkt)}</td><td class="num">{procent(skatt.produkt / skatt.pris * 100)}</td></tr>
+        <tr><td>Energi- och koldioxidskatt</td><td class="num">{pris(skatt.punkt)}</td><td class="num">{procent(skatt.punkt / skatt.pris * 100)}</td></tr>
+        <tr><td>Moms (25 %)</td><td class="num">{pris(skatt.moms)}</td><td class="num">{procent(skatt.moms / skatt.pris * 100)}</td></tr>
+        <tr><td><strong>Pris vid pump</strong></td><td class="num"><strong>{pris(skatt.pris)}</strong></td><td class="num">100 %</td></tr>
+      </tbody>
+    </table></div>
+    <p class="kalla">Beräknat från EU-kommissionens priser med och utan skatt veckan som började {vecka(v.datum)}. <a href="/guider/vad-bestar-bensinpriset-av/">Så räknas det ut</a>.</p>
+  </>}
+
+  <h2>Bensinpriset i Europa</h2>
+  <p>Sverige har plats {plats95} av {europa.length} bland EU-länderna räknat från det billigaste priset på 95. Billigast är {[...europa].sort((a, b) => a.b95 - b.b95)[0].namn} ({kr([...europa].sort((a, b) => a.b95 - b.b95)[0].b95)}/l omräknat till kronor) och dyrast {[...europa].sort((a, b) => b.b95 - a.b95)[0].namn} ({kr([...europa].sort((a, b) => b.b95 - a.b95)[0].b95)}/l). <a href="/europa/">Se alla länder</a>.</p>
+
+  <Annons plats="start-2" />
+
+  <h2>Bensinpris där du bor</h2>
+  <p>Se vilka kedjor som finns i din kommun och deras listpris idag:</p>
+  <ul class="kolumner">{storaOrter.map((k) => <li><a href={`/ort/${k.slug}/`}>Bensinpris {k.namn}</a></li>)}</ul>
+  <p><a href="/ort/">Alla {KOMMUNER.length} kommuner</a></p>
+
+  <h2>Kedjor</h2>
+  <ul class="kolumner">{KEDJOR.map((k) => <li><a href={`/kedja/${k.slug}/`}>Bensinpris {k.namn}</a></li>)}</ul>
+
+  <h2>Mer om bensinpriset</h2>
+  <ul>
+    <li><a href="/rakna/">Räkna ut bränslekostnaden</a> för en resa eller per mil</li>
+    <li><a href={`/historik/${AR - 1}/`}>Bensinpriset {AR - 1}</a> och <a href={`/historik/${AR}/`}>{AR}</a> månad för månad</li>
+    <li><a href="/guider/billigaste-bensinen/">Så hittar du billigaste bensinen</a></li>
+    <li><a href="/guider/vad-paverkar-bensinpriset/">Vad påverkar bensinpriset framöver?</a></li>
+  </ul>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källor: kedjornas publicerade listpriser (OKQ8, Circle K, Preem) och European Commission, Weekly Oil Bulletin (CC BY 4.0). Sajten är oberoende och inte ansluten till någon kedja.</p>
+</Layout>

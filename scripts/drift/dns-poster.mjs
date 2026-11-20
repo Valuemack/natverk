@@ -10,7 +10,12 @@ for (const d of HUVUD) {
   const poster = await cfAlla(`/zones/${z.id}/dns_records`);
   const rad = [];
   for (const namn of [d.ascii, `www.${d.ascii}`]) {
-    const finns = poster.find((r) => r.name === namn);
+    let finns = poster.find((r) => r.name === namn);
+    // Platshållare (192.0.2.1) från när domänen bara omdirigerades ersätts med CNAME mot Pages.
+    if (finns?.type === "A" && finns.content === "192.0.2.1") {
+      for (const r of poster.filter((x) => x.name === namn && ["A", "AAAA"].includes(x.type))) await cf("DELETE", `/zones/${z.id}/dns_records/${r.id}`);
+      finns = null;
+    }
     if (finns) { rad.push(`${namn === d.ascii ? "@" : "www"}: finns (${finns.type} → ${finns.content})`); continue; }
     const j = await cf("POST", `/zones/${z.id}/dns_records`, { type: "CNAME", name: namn, content: mal, proxied: true, ttl: 1 });
     rad.push(`${namn === d.ascii ? "@" : "www"}: ${j.success ? `skapad → ${mal}` : `FEL ${JSON.stringify(j.errors)}`}`);

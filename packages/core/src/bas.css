@@ -182,8 +182,34 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tema-natur { --farg: #2f6b2f; --bakgrund: #f4f7f1; --radie: 12px;
   --topp-bg: #fff; --topp-kant: 4px solid #2f6b2f; --list-bg: #234f23; }
 
+/* Prisskylt (dagensbensinpris.se): grafit som en prisskylt, bärnstensgula siffror. */
+.tema-prisskylt { --farg: #9a4a00; --bakgrund: #f6f5f2; --radie: 4px;
+  --topp-bg: #23272d; --topp-text: #fff; --topp-kant: 4px solid #ffb21a; --logga-farg: #ffb21a; --list-bg: #15181c; }
+.tema-prisskylt .svar { background: #fff7e6; border-left-color: #ffb21a; }
+.prisrutor { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; margin: 1rem 0; padding: 0; list-style: none; }
+.prisrutor li { background: #23272d; color: #fff; border-radius: var(--radie); padding: .7rem .8rem; }
+.prisrutor a { color: inherit; text-decoration: none; display: block; }
+.prisrutor .rnamn { display: block; font-size: .85rem; opacity: .85; }
+.prisrutor .pris { display: block; font: 700 1.7rem/1.2 ui-monospace, "Cascadia Mono", Consolas, monospace; color: #ffb21a; font-variant-numeric: tabular-nums; }
+.prisrutor .andring { display: block; font-size: .8rem; opacity: .9; }
+.upp { color: #b42318; } .ned { color: #067647; }
+.prisrutor .upp { color: #ff8a80; } .prisrutor .ned { color: #7ee2a8; }
+.kurva { width: 100%; height: auto; display: block; margin: .5rem 0 0; }
+.kurva text { font-size: 11px; fill: currentColor; opacity: .75; }
+.kurva .rutnat { stroke: currentColor; opacity: .12; }
+.forklaring { display: flex; flex-wrap: wrap; gap: .4rem 1rem; font-size: .9rem; margin: .3rem 0 1rem; padding: 0; list-style: none; }
+.forklaring span { display: inline-block; width: 14px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: .35rem; }
+.stapel { display: block; height: .55rem; border-radius: 3px; background: var(--farg); min-width: 2px; }
+.stapel-se { background: #ffb21a; }
+.berakning { background: var(--yta); border-radius: var(--radie); padding: 1rem; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.berakning label { display: grid; gap: .2rem; font-size: .9rem; }
+.berakning input, .berakning select { font: inherit; padding: .45rem .5rem; border: 1px solid #c9c6bf; border-radius: var(--radie); }
+.berakning output { grid-column: 1 / -1; font-size: 1.15rem; }
+
 @media (prefers-color-scheme: dark) {
   [class^="tema-"] { --bakgrund: #141317; }
+  .tema-prisskylt .svar { background: var(--yta); }
+  .berakning input, .berakning select { background: #1d1c21; color: inherit; border-color: #3a3940; }
   .tema-kalender, .tema-apotek, .tema-loppis, .tema-natur, .tema-vuxen, .tema-sim { --topp-bg: var(--yta); }
   [class^="tema-"] .svar { background: var(--yta); }
   .tema-vard h1 { color: inherit; }

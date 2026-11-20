@@ -1,0 +1,83 @@
+---
+// Bränslekalkylator: kostnad för en resa och per mil, med dagens priser ifyllda. Tabellerna fungerar utan JavaScript.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, LP_DATUM, idagPris, kr, pris, datumText } from "../site.js";
+
+const datum = datumText(LP_DATUM);
+const p95 = idagPris("bensin95"), pd = idagPris("diesel"), pe = idagPris("e85");
+const forbrukningar = [0.4, 0.5, 0.6, 0.7, 0.8, 1.0];
+const strackor = [10, 50, 100, 250, 500];
+const fragor = [
+  { fraga: "Hur räknar man ut bränslekostnaden per mil?", svar: `Multiplicera bilens förbrukning i liter per mil med literpriset. En bil som drar 0,6 liter per mil kostar med dagens pris för 95 (${kr(p95)}) ${kr(0.6 * p95)} per mil.` },
+  { fraga: "Vad kostar det att köra 100 mil?", svar: `Med en förbrukning på 0,6 liter per mil går det åt 60 liter på 100 mil. Med bensin 95 för ${kr(p95)} blir det ${kr(60 * p95, 0)}, med diesel (${kr(pd)}) och en förbrukning på 0,5 liter per mil ${kr(50 * pd, 0)}.` },
+  { fraga: "Vad kostar det att tanka fullt?", svar: `En tank på 50 liter bensin 95 kostar ${kr(50 * p95, 0)} med dagens snittpris. 60 liter diesel kostar ${kr(60 * pd, 0)}.` },
+];
+---
+<Layout site={SITE} titel={`Bränslekalkylator – vad kostar resan? (priser ${datum})`}
+  beskrivning={`Räkna ut vad bilresan kostar i bensin eller diesel med dagens pris (95: ${kr(p95)}/l). Kostnad per mil, för en resa och för att tanka fullt.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Räkna", href: "/rakna/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Räkna ut bränslekostnaden</h1>
+  <p class="svar">Med dagens pris för 95 ({kr(p95)} per liter) kostar en bil som drar 0,6 liter per mil <strong>{kr(0.6 * p95)} per mil</strong>. Fyll i din bils förbrukning och sträcka nedan.</p>
+
+  <form class="berakning" id="kalk" onsubmit="return false">
+    <label>Sträcka (mil)<input name="mil" type="number" inputmode="decimal" min="0" step="0.1" value="10" /></label>
+    <label>Förbrukning (liter per mil)<input name="forb" type="number" inputmode="decimal" min="0" step="0.01" value="0.6" /></label>
+    <label>Drivmedel
+      <select name="typ">
+        <option value={p95}>Bensin 95 ({pris(p95)} kr)</option>
+        <option value={pd}>Diesel ({pris(pd)} kr)</option>
+        {pe && <option value={pe}>E85 ({pris(pe)} kr)</option>}
+      </select>
+    </label>
+    <label>Literpris (kr)<input name="pris" type="number" inputmode="decimal" min="0" step="0.01" value={p95.toFixed(2)} /></label>
+    <label>Antal som delar<input name="dela" type="number" inputmode="numeric" min="1" step="1" value="1" /></label>
+    <output name="ut" aria-live="polite"></output>
+  </form>
+  <script is:inline>
+    (() => {
+      const f = document.getElementById("kalk");
+      const kr = (v) => v.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " kr";
+      const tal = (n) => parseFloat(String(f[n].value).replace(",", ".")) || 0;
+      const rakna = () => {
+        const liter = tal("mil") * tal("forb"), total = liter * tal("pris"), dela = Math.max(1, tal("dela"));
+        f.ut.value = `${liter.toLocaleString("sv-SE", { maximumFractionDigits: 1 })} liter · ${kr(total)} totalt · ${kr(tal("forb") * tal("pris"))} per mil` + (dela > 1 ? ` · ${kr(total / dela)} per person` : "");
+      };
+      f.typ.addEventListener("change", () => { f.pris.value = Number(f.typ.value).toFixed(2); rakna(); });
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+
+  <h2>Kostnad per mil med dagens bensinpris</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Förbrukning</th><th class="num">95 ({pris(p95)} kr)</th><th class="num">Diesel ({pris(pd)} kr)</th>{pe && <th class="num">E85 ({pris(pe)} kr)</th>}</tr></thead>
+    <tbody>{forbrukningar.map((f) => <tr><td>{f.toLocaleString("sv-SE")} l/mil</td><td class="num">{pris(f * p95)}</td><td class="num">{pris(f * pd)}</td>{pe && <td class="num">{pris(f * pe)}</td>}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per mil med kedjornas snittpris {LP_DATUM}. E85 kräver flexifuelbil och ger ungefär 25–35 procent högre förbrukning.</p>
+
+  <Annons plats="rakna-1" />
+
+  <h2>Vad kostar resan? (bensin 95, 0,6 l/mil)</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Sträcka</th><th class="num">Liter</th><th class="num">Kostnad</th></tr></thead>
+    <tbody>{strackor.map((m) => <tr><td>{m} mil</td><td class="num">{(m * 0.6).toLocaleString("sv-SE")}</td><td class="num">{kr(m * 0.6 * p95, 0)}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Tanka fullt</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Tankvolym</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{[40, 50, 60, 70].map((l) => <tr><td>{l} liter</td><td class="num">{kr(l * p95, 0)}</td><td class="num">{kr(l * pd, 0)}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Så sänker du bränslekostnaden</h2>
+  <ul>
+    <li>Kör jämnt och i rätt fart – förbrukningen ökar snabbt över 90 km/h.</li>
+    <li>Håll rätt däcktryck. För lågt tryck ökar rullmotståndet.</li>
+    <li>Ta bort takbox och tung last som inte behövs.</li>
+    <li>Tanka på obemannade stationer eller hos lågpriskedjor. Se <a href="/guider/billigaste-bensinen/">så hittar du billigaste bensinen</a>.</li>
+  </ul>
+
+  <Faq fragor={fragor} />
+</Layout>

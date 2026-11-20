@@ -1,0 +1,20 @@
+---
+// Alla kedjor: vilka som publicerar listpris och dagens pris.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD, KEDJOR, kedjePris, kr, pris, LP_DATUM, datumText } from "../../site.js";
+const med = KEDJOR.filter((k) => k.listpris), utan = KEDJOR.filter((k) => !k.listpris);
+---
+<Layout site={SITE} titel={`Bensinpris per kedja idag – ${med.map((k) => k.namn).join(", ")} m.fl.`}
+  beskrivning={`Jämför kedjornas bensinpris idag (${datumText(LP_DATUM)}): ${med.map((k) => `${k.namn} ${kr(kedjePris(k.namn, "bensin95"))}`).join(", ")}. Plus ${utan.length} kedjor som sätter pris per station.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Kedjor", href: "/kedja/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris per kedja</h1>
+  <p class="svar">{med.length} kedjor publicerar listpriser. Idag tar {med.map((k) => `${k.namn} ${kr(kedjePris(k.namn, "bensin95"))}`).join(", ")} per liter 95.</p>
+  <h2>Kedjor med publicerat listpris</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">95</th><th class="num">Diesel</th><th class="num">E85</th><th class="num">Stationer</th></tr></thead>
+    <tbody>{med.map((k) => <tr><td><a href={`/kedja/${k.slug}/`}>{k.namn}</a></td><td class="num">{pris(kedjePris(k.namn, "bensin95"))}</td><td class="num">{pris(kedjePris(k.namn, "diesel"))}</td><td class="num">{pris(kedjePris(k.namn, "e85"))}</td><td class="num">{k.antal}</td></tr>)}</tbody>
+  </table></div>
+  <h2>Kedjor som sätter pris per station</h2>
+  <p>De här kedjorna publicerar inga listpriser. Flera av dem är lågpris- eller obemannade kedjor som brukar ligga under de stora kedjornas listpris.</p>
+  <ul class="kolumner">{utan.map((k) => <li><a href={`/kedja/${k.slug}/`}>{k.namn}</a> <small>({k.antal} stationer)</small></li>)}</ul>
+</Layout>

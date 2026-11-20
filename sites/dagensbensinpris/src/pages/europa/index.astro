@@ -1,0 +1,50 @@
+---
+// Bensinpriset i alla EU-länder senaste veckan, omräknat till kronor.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, LANDER, landPris, SENASTE_VECKA, kr, pris, procent, datumText } from "../../site.js";
+
+const v = SENASTE_VECKA;
+const rader = [{ kod: "SE", namn: "Sverige", slug: null, b95: v.b95, diesel: v.diesel, b95utan: v.b95utan }, ...LANDER.map((l) => ({ ...l, ...landPris(l.kod) }))].filter((x) => x.b95);
+const efter95 = [...rader].sort((a, b) => a.b95 - b.b95);
+const efterD = [...rader].filter((x) => x.diesel).sort((a, b) => a.diesel - b.diesel);
+const max95 = efter95.at(-1).b95;
+const plats = efter95.findIndex((x) => x.kod === "SE") + 1;
+const grannar = ["DK", "FI", "DE", "PL"].map((k) => rader.find((x) => x.kod === k)).filter(Boolean);
+
+const fragor = [
+  { fraga: "Var i Europa är bensinen billigast?", svar: `Senaste veckan var 95 billigast i ${efter95[0].namn} (${kr(efter95[0].b95)} per liter omräknat till kronor) och dyrast i ${efter95.at(-1).namn} (${kr(efter95.at(-1).b95)}).` },
+  { fraga: "Är bensinen dyrare i Sverige än i resten av Europa?", svar: `Sverige har plats ${plats} av ${rader.length} räknat från billigast. Ett liter 95 kostade i snitt ${kr(v.b95)} i Sverige veckan som började ${datumText(v.datum)}.` },
+  { fraga: "Är det billigare att tanka i Danmark eller Tyskland?", svar: grannar.map((g) => `${g.namn}: ${kr(g.b95)}`).join(", ") + ` per liter 95, jämfört med ${kr(v.b95)} i Sverige.` },
+];
+---
+<Layout site={SITE} titel={`Bensinpris i Europa ${datumText(v.datum)} – alla EU-länder i kronor`}
+  beskrivning={`Bensinpriset i alla EU-länder omräknat till kronor: billigast är ${efter95[0].namn} (${kr(efter95[0].b95)}/l), dyrast ${efter95.at(-1).namn}. Sverige har plats ${plats} av ${rader.length}.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Europa", href: "/europa/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris i Europa</h1>
+  <p class="svar">Veckan som började {datumText(v.datum)} var bensin 95 billigast i <strong>{efter95[0].namn}</strong> ({kr(efter95[0].b95)} per liter) och dyrast i <strong>{efter95.at(-1).namn}</strong> ({kr(efter95.at(-1).b95)}). Sverige har plats {plats} av {rader.length} med {kr(v.b95)}.</p>
+
+  <h2>Bensin 95 i EU-länderna</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>#</th><th>Land</th><th class="num">Kr per liter</th><th style="width:35%"></th><th class="num">Mot Sverige</th></tr></thead>
+    <tbody>{efter95.map((x, i) => (
+      <tr><td>{i + 1}</td><td>{x.slug ? <a href={`/europa/${x.slug}/`}>{x.namn}</a> : <strong>{x.namn}</strong>}</td><td class="num">{pris(x.b95)}</td><td><span class:list={["stapel", { "stapel-se": x.kod === "SE" }]} style={`width:${(x.b95 / max95 * 100).toFixed(1)}%`}></span></td><td class="num">{x.kod === "SE" ? "" : `${x.b95 >= v.b95 ? "+" : "−"}${pris(Math.abs(x.b95 - v.b95))}`}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Genomsnittligt pumppris inkl. skatt veckan som började {datumText(v.datum)}, omräknat till kronor med samma veckas växelkurs. Källa: EU-kommissionen, Weekly Oil Bulletin (CC BY 4.0). Norge ingår inte i EU:s statistik.</p>
+
+  <Annons plats="europa-1" />
+
+  <h2>Diesel i EU-länderna</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>#</th><th>Land</th><th class="num">Kr per liter</th><th class="num">Mot Sverige</th></tr></thead>
+    <tbody>{efterD.map((x, i) => <tr><td>{i + 1}</td><td>{x.slug ? <a href={`/europa/${x.slug}/`}>{x.namn}</a> : <strong>{x.namn}</strong>}</td><td class="num">{pris(x.diesel)}</td><td class="num">{x.kod === "SE" ? "" : `${x.diesel >= v.diesel ? "+" : "−"}${pris(Math.abs(x.diesel - v.diesel))}`}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Varför skiljer sig priserna så mycket?</h2>
+  <p>Produktpriset utan skatt är ganska likt i hela EU, eftersom bensin och diesel handlas på samma världsmarknad. Skillnaden vid pumpen beror främst på skatterna: energiskatt, koldioxidskatt och moms bestäms av varje land. I Sverige var produktpriset för 95 {kr(v.b95utan)} per liter senaste veckan; resten, {procent((1 - v.b95utan / v.b95) * 100)} av priset, var skatt.</p>
+
+  <Faq fragor={fragor} />
+</Layout>

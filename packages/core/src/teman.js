@@ -58,6 +58,11 @@ export const TEMAN = {
     logga: svg(`<path d="M16 4 7 17h5l-5 8h18l-5-8h5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 25v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`),
     favicon: { bg: "#2f6b2f", fg: "#fff" },
   },
+  // Prisskylt (dagensbensinpris.se): en prisskylt på stolpe med siffror och en kurva.
+  prisskylt: {
+    logga: svg(`<rect x="4" y="3.5" width="24" height="17" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8 15.5l4.5-4.5 3.5 3 6.5-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20.5V29M11 29h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`),
+    favicon: { bg: "#23272d", fg: "#ffb21a" },
+  },
 };
 
 /** Favicon-SVG med temats symbol i vitt på färgad ruta. */

@@ -1,0 +1,69 @@
+---
+// En kedja: listpris idag (om kedjan publicerar), utveckling, stationer per län och lågpris-alternativ.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Kurva from "../../components/Kurva.astro";
+import { OM_KEDJA } from "../../lib/texter.js";
+import { SITE, UPPDATERAD, KEDJOR, DRIVMEDEL, DAGAR, LP, LP_DATUM, idagPris, kedjePris, kr, pris, andring, datumText, STATIONER, KOMMUNER, BENSINSTATIONER_URL } from "../../site.js";
+
+export function getStaticPaths() {
+  return KEDJOR.map((k) => ({ params: { kedja: k.slug }, props: { k } }));
+}
+const { k } = Astro.props;
+const datum = datumText(LP_DATUM);
+const info = LP.kedjor.find((c) => c.kedja === k.namn);
+const rader = DRIVMEDEL.map((d) => ({ d, p: kedjePris(k.namn, d.nyckel), snitt: idagPris(d.nyckel) })).filter((x) => x.p != null);
+const st = STATIONER.filter((s) => s.kedja === k.namn);
+const obemannade = st.filter((s) => s.typ === "obemannad").length;
+const perLan = Object.entries(st.reduce((m, s) => ((m[s.lan ?? "Okänt"] = (m[s.lan ?? "Okänt"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const kommuner = KOMMUNER.filter((x) => x.stationer.some((s) => s.kedja === k.namn)).sort((a, b) => b.stationer.filter((s) => s.kedja === k.namn).length - a.stationer.filter((s) => s.kedja === k.namn).length);
+const serie = DAGAR.filter((x) => x.kedjor?.[k.namn]?.bensin95 != null).map((x) => ({ x: x.datum, y: x.kedjor[k.namn].bensin95 }));
+const p95 = kedjePris(k.namn, "bensin95");
+const ovriga = KEDJOR.filter((x) => x.slug !== k.slug);
+
+const fragor = [
+  k.listpris
+    ? { fraga: `Vad kostar bensin hos ${k.namn} idag?`, svar: `${k.namn}s listpris för 95 är ${kr(p95)} per liter den ${datum}${kedjePris(k.namn, "diesel") ? `, och diesel kostar ${kr(kedjePris(k.namn, "diesel"))}` : ""}. Priset på en enskild station kan avvika.` }
+    : { fraga: `Vad kostar bensin hos ${k.namn}?`, svar: `${k.namn} publicerar inget listpris; priset sätts på varje station. Som jämförelse är snittet av de stora kedjornas listpris för 95 ${kr(idagPris("bensin95"))} per liter den ${datum}.` },
+  { fraga: `Hur många stationer har ${k.namn}?`, svar: `${k.namn} har ${st.length} stationer i vårt register${obemannade ? `, varav ${obemannade} obemannade` : ""}. Flest finns i ${perLan[0]?.[0]} (${perLan[0]?.[1]}).` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={k.listpris ? `Bensinpris ${k.namn} idag – 95 ${pris(p95)} kr, alla drivmedel` : `Bensinpris ${k.namn} – ${st.length} stationer och prisnivå`}
+  beskrivning={k.listpris ? `${k.namn}s pris idag (${datum}): 95 ${kr(p95)}/l${kedjePris(k.namn, "diesel") ? `, diesel ${kr(kedjePris(k.namn, "diesel"))}/l` : ""}. Jämfört med snittet, utveckling och ${st.length} stationer.` : `${k.namn}: ${st.length} stationer${obemannade ? `, ${obemannade} obemannade` : ""}. Så sätts priset, och dagens snittpris för 95 (${kr(idagPris("bensin95"))}/l).`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Kedjor", href: "/kedja/" }, { namn: k.namn, href: `/kedja/${k.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinpris {k.namn}</h1>
+  {k.listpris
+    ? <p class="svar">{k.namn}s listpris för bensin 95 är <strong>{kr(p95)}</strong> per liter idag, {datum}.{kedjePris(k.namn, "diesel") && <> Diesel kostar <strong>{kr(kedjePris(k.namn, "diesel"))}</strong>.</>}</p>
+    : <p class="svar">{k.namn} publicerar inget listpris – priset sätts på varje station. Snittet av de stora kedjornas listpris för 95 är <strong>{kr(idagPris("bensin95"))}</strong> idag. {k.namn} har {st.length} stationer.</p>}
+
+  {OM_KEDJA[k.namn] && <p>{OM_KEDJA[k.namn]}</p>}
+
+  {k.listpris && <>
+    <h2>{k.namn}s priser idag</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Drivmedel</th><th class="num">{k.namn}</th><th class="num">Snitt kedjor</th><th class="num">Skillnad</th></tr></thead>
+      <tbody>{rader.map((x) => <tr><td><a href={`/${x.d.slug}/`}>{x.d.namn}</a></td><td class="num">{pris(x.p)}</td><td class="num">{pris(x.snitt)}</td><td class="num">{andring(x.p - x.snitt)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">{info?.pristyp}. Hämtat {LP_DATUM}. {info?.url && <>Källa: <a href={info.url} rel="nofollow">{k.namn}</a>.</>}</p>
+    {serie.length >= 14 && <Kurva titel={`${k.namn}s listpris för 95`} linjer={[{ namn: "Bensin 95", farg: "#d97706", punkter: serie }]} />}
+  </>}
+
+  <Annons plats="kedja-1" />
+
+  <h2>{k.namn}s stationer per län</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Stationer</th></tr></thead>
+    <tbody>{perLan.map(([lan, n]) => <tr><td>{lan}</td><td class="num">{n}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Bensinpris {k.namn} i din kommun</h2>
+  <ul class="kolumner">{kommuner.slice(0, 60).map((x) => <li><a href={`/ort/${x.slug}/`}>{x.namn}</a> <small>({x.stationer.filter((s) => s.kedja === k.namn).length})</small></li>)}</ul>
+  <p>Öppettider och adresser för {k.namn}s stationer finns på <a href={`${BENSINSTATIONER_URL}/kedja/${k.slug}/`}>bensinstationer.nu</a>.</p>
+
+  <h2>Andra kedjor</h2>
+  <ul class="kolumner">{ovriga.map((x) => <li><a href={`/kedja/${x.slug}/`}>{x.namn}</a></li>)}</ul>
+
+  <Faq fragor={fragor} />
+</Layout>

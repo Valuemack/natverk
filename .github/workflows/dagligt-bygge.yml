@@ -65,6 +65,8 @@ jobs:
           - { sajt: pollenlaget, projekt: pollenlaget }
           - { sajt: parkeringar, projekt: parkeringar }
           - { sajt: lekplatserna, projekt: lekplatserna }
+          # dagensbensinpris hämtar kedjornas listpriser via bensinstationers skript och läser dess stationsregister.
+          - { sajt: dagensbensinpris, projekt: dagensbensinpris }
     steps:
       - uses: actions/checkout@v4
 

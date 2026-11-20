@@ -1,0 +1,19 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../../site.js";
+const guider = [
+  { href: "/guider/vad-bestar-bensinpriset-av/", namn: "Vad består bensinpriset av?", text: "Priset uppdelat i produkt, energi- och koldioxidskatt och moms – räknat varje vecka." },
+  { href: "/guider/vad-paverkar-bensinpriset/", namn: "Vad påverkar bensinpriset?", text: "Världsmarknaden, dollarkursen, skatterna och konkurrensen." },
+  { href: "/guider/billigaste-bensinen/", namn: "Så hittar du billigaste bensinen", text: "Obemannade stationer, lågpriskedjor och dagens billigaste kedja." },
+  { href: "/guider/bensin-eller-diesel/", namn: "Bensin eller diesel?", text: "Kostnad per mil och år med dagens priser." },
+  { href: "/guider/lonar-sig-e85/", namn: "Lönar sig E85?", text: "Brytpunkten mellan E85 och 95 med dagens priser." },
+  { href: "/rakna/", namn: "Bränslekalkylator", text: "Vad kostar resan, per mil och för en full tank?" },
+];
+---
+<Layout site={SITE} titel="Guider om bensinpriset – skatter, diesel, E85 och spartips"
+  beskrivning="Guider om bensin- och dieselpriset: vad priset består av, vad som påverkar det, hur du hittar billigaste bensinen och om diesel eller E85 lönar sig."
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Guider om bensinpriset</h1>
+  <p class="svar">Alla guider räknar med dagens och veckans faktiska priser och uppdateras automatiskt.</p>
+  <ul>{guider.map((g) => <li><a href={g.href}><strong>{g.namn}</strong></a> – {g.text}</li>)}</ul>
+</Layout>

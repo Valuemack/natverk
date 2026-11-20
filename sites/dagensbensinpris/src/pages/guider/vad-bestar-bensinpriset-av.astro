@@ -1,0 +1,65 @@
+---
+// Guide: priset uppdelat i produkt, punktskatter och moms – räknat varje vecka från EU:s data.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, UPPDATERAD, SENASTE_VECKA, VECKOR, skattedelar, kr, pris, procent, datumText } from "../../site.js";
+
+const v = SENASTE_VECKA;
+const b = skattedelar(v, "b95"), d = skattedelar(v, "diesel");
+const serie = VECKOR.filter((x) => x.b95utan).map((x) => ({ datum: x.datum, ...skattedelar(x, "b95") }));
+const tank = 50;
+const fragor = [
+  { fraga: "Hur stor del av bensinpriset är skatt?", svar: `Senaste veckan var ${procent(b.andelSkatt * 100)} av priset för 95 skatt: ${kr(b.punkt)} i energi- och koldioxidskatt och ${kr(b.moms)} i moms per liter, av totalt ${kr(b.pris)}.` },
+  { fraga: "Betalar man moms på bensinskatten?", svar: "Ja. Momsen på 25 procent tas ut på hela priset, alltså även på energiskatten och koldioxidskatten. Därför ökar momsen när punktskatterna höjs." },
+  { fraga: "Hur mycket skatt betalar man för en full tank?", svar: `För ${tank} liter bensin 95 betalar du ungefär ${kr(b.skatt * tank, 0)} i skatt med den senaste veckans nivå, av totalt ${kr(b.pris * tank, 0)}.` },
+];
+---
+<Layout site={SITE} titel={`Vad består bensinpriset av? Skatt ${procent(b.andelSkatt * 100)} – så fördelas priset`}
+  beskrivning={`Av ${kr(b.pris)} per liter 95 är ${kr(b.skatt)} skatt (${procent(b.andelSkatt * 100)}). Se hur priset fördelas på produkt, energi- och koldioxidskatt och moms – uppdaterat varje vecka.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vad består bensinpriset av?", href: "/guider/vad-bestar-bensinpriset-av/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Vad består bensinpriset av?</h1>
+  <p class="svar">Av ett pumppris på <strong>{kr(b.pris)}</strong> per liter 95 var <strong>{kr(b.skatt)}</strong> skatt ({procent(b.andelSkatt * 100)}) veckan som började {datumText(v.datum)}. Resten, {kr(b.produkt)}, är själva bensinen, frakt och bolagens marginal.</p>
+
+  <h2>Priset uppdelat</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Del</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>
+      <tr><td>Produkt, frakt och marginal</td><td class="num">{pris(b.produkt)}</td><td class="num">{pris(d.produkt)}</td></tr>
+      <tr><td>Energiskatt och koldioxidskatt</td><td class="num">{pris(b.punkt)}</td><td class="num">{pris(d.punkt)}</td></tr>
+      <tr><td>Moms 25 %</td><td class="num">{pris(b.moms)}</td><td class="num">{pris(d.moms)}</td></tr>
+      <tr><td><strong>Pumppris</strong></td><td class="num"><strong>{pris(b.pris)}</strong></td><td class="num"><strong>{pris(d.pris)}</strong></td></tr>
+      <tr><td>Skattens andel</td><td class="num">{procent(b.andelSkatt * 100)}</td><td class="num">{procent(d.andelSkatt * 100)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter. Beräknat från EU-kommissionens genomsnittliga pumppris med och utan skatt för Sverige (Weekly Oil Bulletin).</p>
+
+  <h2>Så räknas det</h2>
+  <p>EU-kommissionen publicerar varje vecka två priser för varje land: pumppriset med alla skatter och priset utan skatter. Momsen är 25 procent av priset före moms, alltså en femtedel av pumppriset. När momsen dragits bort återstår produktpris plus punktskatter, och skillnaden mot priset utan skatt är energiskatten och koldioxidskatten.</p>
+  <ul>
+    <li>Moms = pumppris − pumppris ÷ 1,25 = {pris(b.pris)} − {pris(b.pris / 1.25)} = <strong>{pris(b.moms)} kr</strong></li>
+    <li>Punktskatter = pumppris ÷ 1,25 − pris utan skatt = {pris(b.pris / 1.25)} − {pris(b.produkt)} = <strong>{pris(b.punkt)} kr</strong></li>
+  </ul>
+
+  <Annons plats="guide-1" />
+
+  <h2>Skatt och produktpris över tid</h2>
+  <Kurva titel="Bensin 95: skatter och produktpris per liter" linjer={[
+    { namn: "Skatter totalt", farg: "#b42318", punkter: serie.map((x) => ({ x: x.datum, y: x.skatt })) },
+    { namn: "Produkt, frakt och marginal", farg: "#2563eb", punkter: serie.map((x) => ({ x: x.datum, y: x.produkt })) },
+  ]} />
+  <p>Kurvorna visar att produktpriset svänger med världsmarknaden, medan skatterna ligger stilla mellan riksdagens beslut. Momsen följer med upp och ner eftersom den är en procentsats av hela priset.</p>
+
+  <h2>De olika skatterna</h2>
+  <ul>
+    <li><strong>Energiskatt</strong> – en fast skatt per liter som tas ut på bränslets energiinnehåll.</li>
+    <li><strong>Koldioxidskatt</strong> – en fast skatt per liter efter hur mycket koldioxid bränslet ger vid förbränning. Förnybar inblandning kan ha lägre skatt.</li>
+    <li><strong>Moms</strong> – 25 procent på hela priset, inklusive energi- och koldioxidskatten.</li>
+  </ul>
+  <p>Skattesatserna beslutas av riksdagen och redovisas av <a href="https://www.skatteverket.se/4.15532c7b1442f256bae5e56.html" rel="nofollow">Skatteverket</a>.</p>
+
+  <Faq fragor={fragor} />
+  <p><a href="/guider/">Fler guider</a> · <a href="/">Bensinpris idag</a></p>
+</Layout>
