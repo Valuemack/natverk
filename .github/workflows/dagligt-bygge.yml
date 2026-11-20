@@ -57,8 +57,9 @@ jobs:
           - { sajt: biblioteken, projekt: biblioteken }
           - { sajt: badstrander, projekt: badstrander }
           - { sajt: loppisar, projekt: loppisar }
-          - { sajt: forskolor, projekt: forskolor }
-          - { sajt: komvux, projekt: komvux }
+          # forskolor och komvux hämtar samma Skolverket-underlag och delar därför cache.
+          - { sajt: forskolor, projekt: forskolor, cache: skolor }
+          - { sajt: komvux, projekt: komvux, cache: skolor }
           - { sajt: bensinstationer, projekt: bensinstationer }
           - { sajt: simhallar, projekt: simhallar }
           - { sajt: pollenlaget, projekt: pollenlaget }
@@ -87,15 +88,19 @@ jobs:
           path: |
             sites/*/data/raw
             sites/*/data/cache
-          key: data-${{ matrix.sajt }}-${{ github.run_id }}
-          restore-keys: data-${{ matrix.sajt }}-
+          key: data-${{ matrix.cache || matrix.sajt }}-${{ github.run_id }}-${{ matrix.sajt }}
+          # Andra raden: övergång från de gamla nycklarna (data-<sajt>-<körning>).
+          restore-keys: |
+            data-${{ matrix.cache || matrix.sajt }}-
+            data-${{ matrix.cache == 'skolor' && 'forskolor' || matrix.sajt }}-
 
       - name: Tester
         run: npm test
 
       - name: Hämta färsk data
-        # Misslyckas en källa byggs sajten ändå från förra datan.
+        # Misslyckas en källa, eller tar hämtningen för lång tid, byggs sajten ändå från förra datan (incheckad i repot).
         continue-on-error: true
+        timeout-minutes: 100
         run: npm run data --if-present -w sites/${{ matrix.sajt }}
 
       - name: Bygg

@@ -37,9 +37,14 @@ async function runda() {
   return kvar;
 }
 
-let kvar = await runda();
+// Ett nätverksfel (t.ex. när datorn somnar) ska inte stoppa vakten: räkna rundan som ej klar och försök igen.
+async function sakerRunda() {
+  try { return await runda(); } catch (e) { console.log(`\n${new Date().toLocaleString("sv-SE")}  nätverksfel: ${e.cause?.code ?? e.message}, försöker igen`); return Infinity; }
+}
+
+let kvar = await sakerRunda();
 if (vakta) {
-  const slut = Date.now() + 24 * 3600 * 1000;
-  while (kvar > 0 && Date.now() < slut) { await vanta(10 * 60 * 1000); kvar = await runda(); }
+  const slut = Date.now() + 72 * 3600 * 1000;
+  while (kvar > 0 && Date.now() < slut) { await vanta(10 * 60 * 1000); kvar = await sakerRunda(); }
 }
 console.log(kvar ? `\n${kvar} domäner återstår.` : "\nALLA KLARA: samtliga domäner pekar på Cloudflare.");
