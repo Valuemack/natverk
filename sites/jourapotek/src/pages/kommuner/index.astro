@@ -1,0 +1,28 @@
+---
+// Alla kommuner per län, med senaste stängningstid och söndagsöppet.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, UPPDATERAD, LAN, KOMMUNER, senastVardag, oppetDag, klSlut } from "../../site.js";
+
+const rad = (k) => ({ k, sen: Math.max(0, ...k.medTider.map(senastVardag)), son: k.medTider.filter((a) => oppetDag(a, "sun")).length });
+---
+<Layout site={SITE} titel={`Jourapotek i alla ${KOMMUNER.length} kommuner – öppet sent och söndag`}
+  beskrivning={`Hitta jourapotek i din kommun: vilket apotek som har öppet längst, söndagsöppet och helgdagar i ${KOMMUNER.length} kommuner.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Kommuner", href: "/kommuner/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Jourapotek per kommun</h1>
+  <p class="svar">Välj kommun för att se vilket apotek som har öppet längst varje dag, söndagsöppet, helgdagar och närmaste alternativ.</p>
+  <div class="lank-rad">{LAN.map((l) => <a href={`/lan/${l.slug}/`}>{l.kortnamn}</a>)}</div>
+  <Annons plats="kommuner-1" />
+  {LAN.map((l) => (
+    <>
+      <h2 id={l.slug}><a href={`/lan/${l.slug}/`}>{l.namn}</a></h2>
+      <div class="tabell"><table>
+        <thead><tr><th>Kommun</th><th class="num">Apotek</th><th class="num">Öppet till</th><th class="num">Söndagsöppna</th></tr></thead>
+        <tbody>{l.kommuner.map(rad).map(({ k, sen, son }) => (
+          <tr><td><a href={`/${k.slug}/`}>{k.namn}</a></td><td class="num">{k.apotek.length}</td><td class="num">{sen ? klSlut(sen) : "–"}</td><td class="num">{son}</td></tr>
+        ))}</tbody>
+      </table></div>
+    </>
+  ))}
+  <p class="kalla">"Öppet till" är den senaste stängningstiden en vardag bland kommunens apotek.</p>
+</Layout>

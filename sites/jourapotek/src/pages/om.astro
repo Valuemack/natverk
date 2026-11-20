@@ -1,0 +1,29 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD, APOTEK, MED_TIDER, KOMMUNER, APOTEKEN_URL, st } from "../site.js";
+const medAvv = APOTEK.filter((a) => Object.keys(a.avvikande).length).length;
+---
+<Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
+  beskrivning={`Så tar ${SITE.visningsnamn} fram vilka apotek som har öppet sent, på söndagar och helgdagar: ${st(MED_TIDER.length, "apotek", "apotek")} med öppettider i ${KOMMUNER.length} kommuner.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om {SITE.visningsnamn}</h1>
+  <p>{SITE.visningsnamn} visar vilka apotek i Sverige som har öppet när de flesta andra har stängt: sent på kvällen, tidigt på morgonen, på söndagar, helgdagar och dygnet runt. Sajten är oberoende och inte ansluten till någon apotekskedja, region eller myndighet. Allt hämtas och räknas om automatiskt varje natt.</p>
+
+  <h2 id="kallor">Källor och metod</h2>
+  <h3>Vilka apotek som finns</h3>
+  <p>Grunden är Läkemedelsverkets register över öppenvårdsapotek, som listar alla apotek med tillstånd att sälja läkemedel till allmänheten. Vi visar apotek som tar emot kunder på plats – inte e-handel, dosapotek eller sjukhusens interna apotek. Registret sammanställs med adresser och koordinater på <a href={`${APOTEKEN_URL}/`}>apoteken.nu</a>, som har en sida per apotek.</p>
+  <h3>Öppettider</h3>
+  <p>Öppettiderna kommer från apotekskedjornas egna apotekssök (Apoteket, Apotek Hjärtat, Kronans Apotek, DOZ Apotek med flera). {st(MED_TIDER.length, "apotek", "apotek")} av {APOTEK.length.toLocaleString("sv-SE")} har publicerade tider. Vi räknar ut vem som stänger sist och öppnar först per dag och kommun. "Öppet nu" räknas i din webbläsare efter svensk tid.</p>
+  <h3>Helgdagar</h3>
+  <p>Kedjorna publicerar avvikande tider inför helgdagar, oftast en till två veckor innan. Just nu har {st(medAvv, "apotek", "apotek")} publicerat sådana tider. Vi sparar dem varje natt, så att tiderna finns kvar även när kedjan bara visar de närmaste dagarna – och så att du kan se förra årets tider inför nästa helgdag.</p>
+  <h3>Vad är ett jourapotek?</h3>
+  <p>Sverige har inget officiellt jourapotekssystem. När Apoteket AB hade monopol fanns ett fåtal utpekade jourapotek; sedan omregleringen 2009 bestämmer varje apotek själv sina öppettider. Med jourapotek menar vi därför apotek med långa öppettider – och vi visar exakt vilka som har det.</p>
+
+  <h2>Det vi inte gör</h2>
+  <ul>
+    <li>Vi ger inga medicinska råd. Kontakta 1177 för sjukvårdsrådgivning eller 112 vid akut sjukdom eller skada.</li>
+    <li>Vi gissar inte helgtider. Har kedjan inte publicerat tider för en helgdag står det tydligt.</li>
+  </ul>
+  <h2>Hittat ett fel?</h2>
+  <p>Öppettiderna uppdateras automatiskt varje natt. Ser något fel ut beror det oftast på att apoteket ändrat sina tider på kort varsel – ring gärna apoteket innan du åker.</p>
+</Layout>

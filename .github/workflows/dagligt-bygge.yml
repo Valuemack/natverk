@@ -67,6 +67,8 @@ jobs:
           - { sajt: lekplatserna, projekt: lekplatserna }
           # dagensbensinpris hämtar kedjornas listpriser via bensinstationers skript och läser dess stationsregister.
           - { sajt: dagensbensinpris, projekt: dagensbensinpris }
+          # jourapotek kör apoteken.nus datahämtning och delar därför dess cache.
+          - { sajt: jourapotek, projekt: jourapotek, cache: apoteken }
     steps:
       - uses: actions/checkout@v4
 

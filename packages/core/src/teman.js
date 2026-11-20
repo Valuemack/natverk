@@ -63,6 +63,11 @@ export const TEMAN = {
     logga: svg(`<rect x="4" y="3.5" width="24" height="17" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8 15.5l4.5-4.5 3.5 3 6.5-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20.5V29M11 29h10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`),
     favicon: { bg: "#23272d", fg: "#ffb21a" },
   },
+  // Jour (jourapotek.se): halvmåne och klocka – öppet när andra har stängt.
+  jour: {
+    logga: svg(`<path d="M19 4.5a11.5 11.5 0 1 0 8.5 15.8A9.5 9.5 0 0 1 19 4.5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M14.5 12v5.5l3.5 2.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`),
+    favicon: { bg: "#14213d", fg: "#7ee0c3" },
+  },
 };
 
 /** Favicon-SVG med temats symbol i vitt på färgad ruta. */

@@ -1,0 +1,74 @@
+---
+// Startsida: jourapotek – vilka apotek har öppet nu, sent, söndag, helgdagar och dygnet runt.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import ApotekLista from "../components/ApotekLista.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import {
+  SITE, UPPDATERAD, MED_TIDER, KOMMUNER, LAN, HELGDAGAR, helgStatus, senastVardag, tidigastVardag, oppetDag,
+  klSlut, st, lista, datumTextAr, veckodagIso, fras,
+} from "../site.js";
+
+const n = (h) => MED_TIDER.filter((a) => senastVardag(a) >= h * 60).length;
+const son = MED_TIDER.filter((a) => oppetDag(a, "sun")).length;
+const dygnet = MED_TIDER.filter((a) => a.dygnet);
+const tidigt = MED_TIDER.filter((a) => tidigastVardag(a) <= 8 * 60).length;
+const helg = HELGDAGAR[0];
+const hs = helgStatus(helg.nasta);
+const hOppna = hs.filter((x) => x.oppet);
+const storst = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping", "Örebro", "Västerås", "Helsingborg", "Norrköping", "Jönköping", "Umeå", "Lund", "Borås", "Gävle", "Eskilstuna", "Karlstad"]
+  .map((x) => KOMMUNER.find((k) => k.namn === x)).filter(Boolean);
+const senast = [...MED_TIDER].filter((a) => !a.dygnet).sort((x, y) => senastVardag(y) - senastVardag(x)).slice(0, 8);
+const fragor = [
+  { fraga: "Vad är ett jourapotek?", svar: "Ett jourapotek är ett apotek med långa öppettider: sent på kvällen, på helger och ibland dygnet runt. Sverige har inget officiellt jourapotekssystem sedan apoteksmarknaden omreglerades 2009, så varje apotek bestämmer själv sina tider. Vi visar vilka som har öppet när." },
+  { fraga: "Finns det apotek öppna dygnet runt?", svar: dygnet.length ? `Ja: ${lista(dygnet.map((a) => `${a.namn} i ${a.kommun}`))}.` : "Inget apotek har öppet dygnet runt enligt kedjornas öppettider just nu." },
+  { fraga: "Hur många apotek har öppet sent?", svar: `${st(n(21), "apotek", "apotek")} har öppet till 21 eller senare på vardagar och ${n(22)} till 22 eller senare. ${son} apotek har öppet på söndagar.` },
+  { fraga: "Var hittar jag närmaste apotek som har öppet?", svar: "På sidan Öppet nu räknar vi ut vilka apotek nära dig som har öppet just nu, med hänsyn till helgdagar. Din position stannar i webbläsaren." },
+  { fraga: "Vad gör jag om apoteket har stängt och jag behöver hjälp?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112." },
+];
+---
+<Layout site={SITE} titel="Jourapotek – apotek öppet nu, sent, söndag och helgdagar"
+  beskrivning={`Hitta jourapotek i hela Sverige: ${n(21)} apotek har öppet till minst 21, ${son} på söndagar${dygnet.length ? `, ${dygnet.length} dygnet runt` : ""}. ✓ Öppet nu ✓ Helgdagar ✓ Alla kommuner.`}
+  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Jourapotek – apotek med öppet när andra har stängt</h1>
+  <p class="svar"><strong>{st(n(21), "apotek", "apotek")}</strong> i Sverige har öppet till klockan 21 eller senare på vardagar, och <strong>{son}</strong> har öppet på söndagar.{dygnet.length > 0 && <> {lista(dygnet.map((a) => a.namn))} har öppet dygnet runt.</>} <a href="/oppet-nu/">Se vilka som har öppet nu</a>.</p>
+
+  <ul class="tidsrutor">
+    <li><a href="/oppet-nu/"><span class="tnamn">Öppet just nu</span><span class="tal">Visa</span><span class="tinfo">närmaste öppna apotek</span></a></li>
+    <li><a href="/oppet-till/22/"><span class="tnamn">Öppet till 22</span><span class="tal">{n(22)}</span><span class="tinfo">apotek</span></a></li>
+    <li><a href="/sondagsoppet/"><span class="tnamn">Söndagsöppet</span><span class="tal">{son}</span><span class="tinfo">apotek</span></a></li>
+    <li><a href={`/helgdagar/${helg.slug}/`}><span class="tnamn">{helg.namn}</span><span class="tal">{hs.length ? hOppna.length : "–"}</span><span class="tinfo">{hs.length ? "apotek har öppet" : "tider ej publicerade"}</span></a></li>
+    <li><a href="/oppet-tidigt/"><span class="tnamn">Öppnar senast 08</span><span class="tal">{tidigt}</span><span class="tinfo">apotek</span></a></li>
+    <li><a href="/dygnet-runt/"><span class="tnamn">Dygnet runt</span><span class="tal">{dygnet.length}</span><span class="tinfo">apotek</span></a></li>
+  </ul>
+
+  <h2>Jourapotek i din stad</h2>
+  <ul class="kolumner">{storst.map((k) => <li><a href={`/${k.slug}/`}>Jourapotek {k.namn}</a></li>)}</ul>
+  <p><a href="/kommuner/">Alla {KOMMUNER.length} kommuner</a> · Per län: {LAN.map((l, i) => <>{i > 0 && ", "}<a href={`/lan/${l.slug}/`}>{l.kortnamn}</a></>)}</p>
+
+  <Annons plats="start-1" />
+
+  <h2>{helg.namn}: vilka apotek har öppet?</h2>
+  <p>{helg.namn} är {veckodagIso(helg.nasta)} den {datumTextAr(helg.nasta)}. {hs.length
+    ? <>{st(hOppna.length, "apotek", "apotek")} av {hs.length} som publicerat tider har öppet. <a href={`/helgdagar/${helg.slug}/`}>Se alla apotek som har öppet {fras(helg.namn)}</a>.</>
+    : <>Apoteken har inte publicerat tiderna ännu – <a href={`/helgdagar/${helg.slug}/`}>vi visar dem så fort de finns</a>.</>}</p>
+  <ul class="kolumner">{HELGDAGAR.slice(1, 9).map((h) => <li><a href={`/helgdagar/${h.slug}/`}>Apotek öppet {fras(h.kort)}</a></li>)}</ul>
+
+  <h2>Apoteken som stänger sist</h2>
+  <ApotekLista rader={senast.map((a) => ({ a, info: `vardagar till ${klSlut(senastVardag(a))}` }))} visaKommun />
+  <p><a href="/oppet-sent/">Alla apotek med öppet sent</a> · <a href="/sjukhusapotek/">Apotek vid sjukhus</a> · <a href="/lordagsoppet/">Lördag</a></p>
+
+  <Annons plats="start-2" />
+
+  <h2>Bra att veta</h2>
+  <ul>
+    <li><a href="/guider/apoteket-har-stangt/">Apoteket har stängt – vad gör jag?</a></li>
+    <li><a href="/guider/receptfria-lakemedel-i-butik/">Receptfria läkemedel i matbutik och på bensinstation</a></li>
+    <li><a href="/guider/hamta-ut-recept/">Hämta ut recept – åt dig själv eller någon annan</a></li>
+  </ul>
+  <p class="akut"><strong>Behöver du vård?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

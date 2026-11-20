@@ -1,0 +1,47 @@
+---
+// Klientskript: "Öppet nu"/"Stängt nu" efter svensk tid. Tar hänsyn till kedjornas avvikande tider
+// (data-avv = { "YYYY-MM-DD": "10:00-15:00" | "stängt" }) så att helgdagar visas rätt.
+---
+<script is:inline>
+(() => {
+  const D = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  const NAMN = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+  const nu = new Date();
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    .formatToParts(nu).map((x) => [x.type, x.value]));
+  const dag = D.indexOf(p.weekday.toLowerCase().slice(0, 3));
+  const min = +p.hour * 60 + +p.minute;
+  const isoPlus = (n) => { const d = new Date(Date.UTC(+p.year, +p.month - 1, +p.day + n)); return d.toISOString().slice(0, 10); };
+  const iv = (v) => {
+    if (v == null || v === "") return null;
+    if (/^stängt$/i.test(v)) return [];
+    return String(v).split(/\s*,\s*/).map((d) => {
+      const [a, b] = d.split(/\s*[-–]\s*/).map((t) => { const m = /^(\d{1,2})[:.](\d{2})$/.exec(t || ""); return m ? +m[1] * 60 + +m[2] : NaN; });
+      return [a, b <= a ? b + 1440 : b];
+    }).filter(([a, b]) => !isNaN(a) && !isNaN(b));
+  };
+  const kl = (m) => { const h = Math.floor(m / 60) % 24, mm = m % 60; return `${String(h).padStart(2, "0")}.${String(mm).padStart(2, "0")}`; };
+  window.jourStatus = (t, avv = {}) => {
+    const dagTid = (n) => avv[isoPlus(n)] ?? t[D[(dag + n + 7) % 7]];
+    const idag = iv(dagTid(0)), igar = iv(dagTid(-1));
+    if (idag === null) return null;
+    const oppet = idag.find(([a, b]) => min >= a && min < b) || (igar || []).filter(([, b]) => b > 1440 && min < b - 1440).map(([a, b]) => [a - 1440, b - 1440])[0];
+    if (oppet) return { oppet: true, text: oppet[1] - oppet[0] >= 1439 ? "Öppet dygnet runt" : `Öppet nu · stänger ${kl(oppet[1])}`, stanger: oppet[1] };
+    let text = "Stängt nu", oppnar = null;
+    const senare = idag.find(([a]) => a > min);
+    if (senare) { text += ` · öppnar ${kl(senare[0])}`; oppnar = senare[0] - min; }
+    else for (let i = 1; i <= 7; i++) {
+      const n = iv(dagTid(i));
+      if (n && n.length) { text += ` · öppnar ${i === 1 ? "imorgon" : NAMN[(dag + i) % 7]} ${kl(n[0][0])}`; oppnar = i * 1440 + n[0][0] - min; break; }
+    }
+    return { oppet: false, text, oppnar };
+  };
+  for (const el of document.querySelectorAll("[data-tider]")) {
+    let t, avv; try { t = JSON.parse(el.dataset.tider); avv = JSON.parse(el.dataset.avv || "{}"); } catch { continue; }
+    const s = window.jourStatus(t, avv);
+    if (!s) continue;
+    el.textContent = s.text; el.classList.add(s.oppet ? "ja" : "nej"); el.hidden = false;
+  }
+  for (const rad of document.querySelectorAll(`[data-dag="${D[dag]}"]`)) rad.classList.add("markerad");
+})();
+</script>

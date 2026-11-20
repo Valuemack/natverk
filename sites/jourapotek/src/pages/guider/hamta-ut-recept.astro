@@ -1,0 +1,39 @@
+---
+// Guide: hämta ut recept, åt dig själv eller någon annan (fullmakt, legitimation, barn).
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD } from "../../site.js";
+
+const fragor = [
+  { fraga: "Kan jag hämta ut recept på vilket apotek som helst?", svar: "Ja. E-recept sparas centralt och kan hämtas ut på alla öppenvårdsapotek i Sverige, även på kvällar och helger på apotek som har öppet. Ta med giltig legitimation." },
+  { fraga: "Kan jag hämta ut medicin åt någon annan?", svar: "Ja. Antingen med en fullmakt för apoteksärenden, eller genom att ta med både din och den andra personens legitimation till apoteket." },
+  { fraga: "Behöver föräldrar fullmakt för sina barn?", svar: "Nej, vårdnadshavare till minderåriga barn behöver ingen skriftlig fullmakt, men måste visa legitimation. För tonåringar har vårdnadshavare inte längre automatiskt tillgång till receptuppgifterna sedan 2019." },
+];
+---
+<Layout site={SITE} titel="Hämta ut recept – på kvällen, på helgen och åt någon annan"
+  beskrivning="Så hämtar du ut recept på vilket apotek som helst, även på kvällar och helger. Fullmakt, legitimation och regler när du hämtar ut åt någon annan eller åt ditt barn."
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Hämta ut recept", href: "/guider/hamta-ut-recept/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Hämta ut recept</h1>
+  <p class="svar">Ett e-recept kan hämtas ut på <strong>vilket öppenvårdsapotek som helst</strong> i Sverige – även sent på kvällen eller på söndagar på apotek som har öppet. Ta med giltig legitimation. Du kan också hämta ut åt någon annan, med fullmakt eller med båda era legitimationer.</p>
+
+  <h2>Åt dig själv</h2>
+  <p>Recepten sparas centralt hos E-hälsomyndigheten, så du behöver inte gå till ett visst apotek. Visa legitimation på apoteket. Har ditt vanliga apotek stängt kan du gå till ett som har öppet – se <a href="/oppet-nu/">apotek öppet nu</a> eller <a href="/oppet-sent/">apotek med öppet sent</a>.</p>
+  <p>Om apoteket inte har läkemedlet i lager kan det oftast beställas till nästa dag. Ring gärna innan om det är bråttom.</p>
+
+  <h2>Åt någon annan</h2>
+  <p>Det finns två sätt:</p>
+  <ul>
+    <li><strong>Fullmakt för apoteksärenden.</strong> Den som har recepten kan ge dig fullmakt. Med e-legitimation görs det på Läkemedelskollen eller på apotekens webbplatser; annars med en blankett från E-hälsomyndigheten som lämnas in på ett apotek. Fullmakten gäller på alla apotek i Sverige tills den går ut eller återkallas.</li>
+    <li><strong>Utan fullmakt.</strong> Ta med både din egen och den andra personens legitimation till apoteket.</li>
+  </ul>
+
+  <h2>Åt ditt barn</h2>
+  <p>Vårdnadshavare behöver ingen skriftlig fullmakt för minderåriga barn, men måste visa legitimation. Sedan 2019 har vårdnadshavare inte längre automatiskt tillgång till tonåringars recept.</p>
+
+  <h2>Vård och omsorg</h2>
+  <p>Personal inom vård och omsorg kan registreras hos E-hälsomyndigheten för att sköta apoteksärenden åt dem de hjälper.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källor: E-hälsomyndigheten (fullmakter för apoteksärenden) och 1177. Reglerna kan ändras – kontrollera hos E-hälsomyndigheten eller apoteket. Sajten ger inga medicinska råd.</p>
+</Layout>

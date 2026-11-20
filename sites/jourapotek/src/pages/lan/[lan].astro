@@ -1,0 +1,66 @@
+---
+// Jourapotek i ett län: senast öppna, söndagsöppna och kommande helgdag, per kommun.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import ApotekLista from "../../components/ApotekLista.astro";
+import OppetNuJour from "../../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, LAN, HELGDAGAR, senastVardag, oppetDag, efterStangning, helgStatus, klSlut, st, lista, dagText, datumText , fras } from "../../site.js";
+
+export function getStaticPaths() {
+  return LAN.filter((l) => l.kommuner.length).map((l) => ({ params: { lan: l.slug }, props: { l } }));
+}
+const { l } = Astro.props;
+const ap = l.kommuner.flatMap((k) => k.medTider);
+const sent = ap.filter((a) => senastVardag(a) >= 21 * 60).sort((x, y) => senastVardag(y) - senastVardag(x));
+const son = ap.filter((a) => oppetDag(a, "sun")).sort(efterStangning("sun"));
+const dygnet = ap.filter((a) => a.dygnet);
+const h = HELGDAGAR[0];
+const hs = helgStatus(h.nasta, ap).filter((x) => x.oppet).sort((x, y) => y.stanger - x.stanger);
+const rader = l.kommuner.map((k) => {
+  const sist = [...k.medTider].sort((x, y) => senastVardag(y) - senastVardag(x))[0];
+  const s = k.medTider.filter((a) => oppetDag(a, "sun")).sort(efterStangning("sun"))[0];
+  return { k, sist, s };
+});
+const fragor = [
+  { fraga: `Finns det jourapotek i ${l.namn}?`, svar: sent.length ? `${st(sent.length, "apotek", "apotek")} i ${l.namn} har öppet till klockan 21 eller senare på vardagar. Längst öppet har ${sent[0].namn} i ${sent[0].kommun}, till ${klSlut(senastVardag(sent[0]))}.` : `Inget apotek i ${l.namn} har öppet efter klockan 21. Se tabellen för vilket apotek som har öppet längst i varje kommun.` },
+  { fraga: `Vilka apotek har öppet på söndag i ${l.namn}?`, svar: son.length ? `${st(son.length, "apotek", "apotek")} i ${l.namn} har öppet på söndagar, längst ${son[0].namn} i ${son[0].kommun} till ${klSlut(son[0].stanger.sun)}.` : `Inget apotek i ${l.namn} har öppet på söndagar.` },
+];
+---
+<Layout site={SITE} titel={`Jourapotek ${l.kortnamn} – apotek öppet sent och söndag i ${l.namn}`}
+  beskrivning={`Jourapotek i ${l.namn}: ${sent.length} apotek öppna till 21 eller senare, ${son.length} söndagsöppna. ✓ Per kommun ✓ ${h.namn} ✓ Öppet nu.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Kommuner", href: "/kommuner/" }, { namn: l.namn, href: `/lan/${l.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Jourapotek i {l.namn}</h1>
+  <p class="svar">{sent.length
+    ? <><strong>{st(sent.length, "apotek", "apotek")}</strong> i {l.namn} har öppet till 21 eller senare på vardagar, längst <strong>{sent[0].namn}</strong> i {sent[0].kommun} till {klSlut(senastVardag(sent[0]))}.</>
+    : <>Inget apotek i {l.namn} har öppet efter 21 på vardagar.</>} {st(son.length, "apotek", "apotek")} har öppet på söndagar.{dygnet.length > 0 && <> {lista(dygnet.map((a) => a.namn))} har öppet dygnet runt.</>}</p>
+
+  <h2>Längst öppet i varje kommun</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Vardagar</th><th>Söndag</th></tr></thead>
+    <tbody>{rader.map(({ k, sist, s }) => (
+      <tr><td><a href={`/${k.slug}/`}>{k.namn}</a></td><td>{sist ? `${sist.namn}, till ${klSlut(senastVardag(sist))}` : "–"}</td><td>{s ? `${s.namn}, ${dagText(s.oppettider.sun).toLowerCase()}` : "Stängt"}</td></tr>
+    ))}</tbody>
+  </table></div>
+
+  <Annons plats="lan-1" />
+
+  {sent.length > 0 && <>
+    <h2>Apotek med öppet till 21 eller senare</h2>
+    <ApotekLista rader={sent.map((a) => ({ a, info: `vardagar till ${klSlut(senastVardag(a))}` }))} visaKommun />
+  </>}
+
+  {son.length > 0 && <>
+    <h2>Söndagsöppna apotek i {l.namn}</h2>
+    <ApotekLista rader={son.map((a) => ({ a, info: `söndag ${dagText(a.oppettider.sun).toLowerCase()}` }))} visaKommun />
+  </>}
+
+  <h2><a href={`/helgdagar/${h.slug}/`}>{h.namn}</a> ({datumText(h.nasta)})</h2>
+  {hs.length > 0
+    ? <ApotekLista rader={hs.map((x) => ({ a: x.a, info: x.tid.toLowerCase() }))} visaKommun />
+    : <p>Inga apotek i {l.namn} har publicerat öppna tider för {fras(h.namn)} ännu.</p>}
+
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

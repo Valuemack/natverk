@@ -1,0 +1,86 @@
+---
+// Apotek som har öppet just nu: närmaste med position, eller sök på ort. Allt räknas i webbläsaren.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, KOMMUNER, senastVardag, klSlut, st } from "../site.js";
+
+const sent = MED_TIDER.filter((a) => senastVardag(a) >= 22 * 60).length;
+const fragor = [
+  { fraga: "Vilket apotek har öppet nu?", svar: "Klicka på \"Visa närmaste\" så räknar sidan ut vilka apotek nära dig som har öppet just nu, efter svensk tid och med hänsyn till helgdagar. Du kan också skriva in din ort." },
+  { fraga: "Hur vet ni att apoteket har öppet?", svar: "Vi använder apotekskedjornas publicerade öppettider, inklusive avvikande tider för helgdagar, och uppdaterar dem varje natt. Tider kan ändras med kort varsel, så ring gärna apoteket om du ska åka långt." },
+  { fraga: "Vad gör jag om inget apotek har öppet?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112. Vissa receptfria läkemedel säljs i matbutiker och på bensinstationer." },
+];
+---
+<Layout site={SITE} titel="Apotek öppet nu – närmaste öppna apotek"
+  beskrivning={`Se vilka apotek som har öppet just nu nära dig. ✓ Närmaste öppna apotek ✓ Hänsyn till helgdagar ✓ ${st(MED_TIDER.length, "apotek", "apotek")} i hela Sverige.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Öppet nu", href: "/oppet-nu/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet nu</h1>
+  <p class="svar" id="nu-sammanfattning">Se vilka apotek som har öppet just nu. Tryck på knappen för att visa de närmaste, eller skriv din ort.</p>
+  <div class="berakning">
+    <button class="knapp" type="button" id="nu-knapp">📍 Visa närmaste öppna apotek</button>
+    <label>Eller sök ort eller kommun <input type="search" id="nu-sok" list="nu-orter" placeholder="t.ex. Uppsala" autocomplete="off" /></label>
+    <datalist id="nu-orter">{KOMMUNER.map((k) => <option value={k.namn} />)}</datalist>
+    <p class="kalla" id="nu-status" aria-live="polite"></p>
+  </div>
+  <ul class="oppet-lista" id="nu-lista"></ul>
+  <noscript><p>Sidan behöver JavaScript för att räkna ut vilka apotek som har öppet just nu. Se i stället <a href="/oppet-sent/">apotek med öppet sent</a> eller <a href="/kommuner/">din kommun</a>.</p></noscript>
+
+  <Annons plats="nu-1" />
+
+  <h2>Om du inte hittar ett öppet apotek</h2>
+  <ul>
+    <li><a href="/dygnet-runt/">Apotek öppna dygnet runt</a></li>
+    <li><a href="/oppet-till/22/">Apotek öppna till 22</a> ({sent} apotek)</li>
+    <li><a href="/sondagsoppet/">Söndagsöppna apotek</a></li>
+    <li><a href="/guider/apoteket-har-stangt/">Apoteket har stängt – vad gör jag?</a></li>
+  </ul>
+  <p class="akut"><strong>Behöver du vård?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+  <script is:inline slot="skript">
+  (() => {
+    const knapp = document.getElementById("nu-knapp"), sok = document.getElementById("nu-sok"), status = document.getElementById("nu-status"), lista = document.getElementById("nu-lista"), summa = document.getElementById("nu-sammanfattning");
+    let data = null;
+    const hamta = async () => data ??= await (await fetch("/data/tider.json")).json();
+    const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b[0] - a[0]) * r / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin((b[1] - a[1]) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+    const kmT = (k) => k < 1 ? `${Math.round(k * 100) * 10} m` : `${k.toFixed(k < 10 ? 1 : 0).replace(".", ",")} km`;
+    const visa = (rader, text) => {
+      lista.replaceChildren(...rader.map((e) => {
+        const li = document.createElement("li");
+        if (e.km != null) { const d = document.createElement("span"); d.className = "avst"; d.textContent = kmT(e.km); li.append(d); }
+        const n = document.createElement("strong"); n.textContent = e.n;
+        const s = document.createElement("span"); s.className = `oppet-nu ${e.st.oppet ? "ja" : "nej"}`; s.textContent = e.st.text;
+        const a = document.createElement("small"); a.textContent = `${e.a}${e.a.includes(e.k) ? "" : ` (${e.k})`}`;
+        const k = document.createElement("a"); k.href = `/${e.s}/`; k.textContent = `Fler apotek i ${e.k}`;
+        li.append(n, " ", s, document.createElement("br"), a, " · ", k); return li;
+      }));
+      status.textContent = text;
+    };
+    const status_ = (e) => ({ ...e, st: window.jourStatus(e.t, e.x || {}) || { oppet: false, text: "Okända tider" } });
+    const sortera = (a, b) => (b.st.oppet - a.st.oppet) || ((a.st.oppnar ?? 1e9) - (b.st.oppnar ?? 1e9));
+    hamta().then((d) => { const n = d.filter((e) => window.jourStatus(e.t, e.x || {})?.oppet).length; summa.innerHTML = `Just nu har <strong>${n.toLocaleString("sv-SE")}</strong> av ${d.length.toLocaleString("sv-SE")} apotek i Sverige öppet. Tryck på knappen för att se de närmaste, eller skriv din ort.`; }).catch(() => {});
+    knapp.addEventListener("click", () => {
+      if (!("geolocation" in navigator)) { status.textContent = "Din webbläsare kan inte dela position. Sök på ort i stället."; return; }
+      status.textContent = "Hämtar din position …";
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        try {
+          const jag = [pos.coords.latitude, pos.coords.longitude];
+          const alla = (await hamta()).map((e) => ({ ...status_(e), km: km(jag, [e.la, e.lo]) }));
+          const oppna = alla.filter((e) => e.st.oppet).sort((a, b) => a.km - b.km).slice(0, 10);
+          const snart = alla.filter((e) => !e.st.oppet && e.km < 30).sort((a, b) => (a.st.oppnar ?? 1e9) - (b.st.oppnar ?? 1e9)).slice(0, 3);
+          visa([...oppna, ...snart], oppna.length ? "Närmaste öppna apotek, avstånd fågelvägen. Längst ner: de som öppnar först i närheten." : "Inget apotek i närheten har öppet just nu. Här är de som öppnar först.");
+        } catch { status.textContent = "Kunde inte hämta listan. Försök igen."; }
+      }, () => { status.textContent = "Du behöver tillåta platsåtkomst. Du kan också söka på ort."; }, { timeout: 10000, maximumAge: 300000 });
+    });
+    sok.addEventListener("input", async () => {
+      const q = sok.value.trim().toLowerCase();
+      if (q.length < 2) return;
+      const traff = (await hamta()).filter((e) => e.k.toLowerCase().startsWith(q) || e.a.toLowerCase().includes(q)).map(status_).sort(sortera).slice(0, 25);
+      visa(traff, traff.length ? `${traff.filter((e) => e.st.oppet).length} öppna just nu av ${traff.length} träffar.` : "Inga apotek hittades. Prova kommunens namn.");
+    });
+  })();
+  </script>
+</Layout>

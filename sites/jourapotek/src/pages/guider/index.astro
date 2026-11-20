@@ -1,0 +1,16 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../../site.js";
+const guider = [
+  { href: "/guider/apoteket-har-stangt/", namn: "Apoteket har stängt – vad gör jag?", text: "1177, 112, receptfria läkemedel i butik och apotek med öppet sent." },
+  { href: "/guider/receptfria-lakemedel-i-butik/", namn: "Receptfria läkemedel i butik", text: "Vilka butiker får sälja läkemedel, 18-årsgräns och skillnaden mot apotek." },
+  { href: "/guider/hamta-ut-recept/", namn: "Hämta ut recept", text: "På vilket apotek som helst, åt någon annan och åt ditt barn." },
+];
+---
+<Layout site={SITE} titel="Guider – när apoteket har stängt, recept och receptfritt"
+  beskrivning="Guider om apotek utanför ordinarie öppettider: vad du gör när apoteket har stängt, receptfria läkemedel i butik och hur du hämtar ut recept."
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Guider</h1>
+  <ul>{guider.map((g) => <li><a href={g.href}><strong>{g.namn}</strong></a><br />{g.text}</li>)}</ul>
+  <p class="akut"><strong>Behöver du vård?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+</Layout>

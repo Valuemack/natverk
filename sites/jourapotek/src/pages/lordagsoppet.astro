@@ -1,0 +1,41 @@
+---
+// Apotek på lördagar: vem har öppet längst i varje kommun.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, MED_TIDER, LAN, oppetDag, efterStangning, klSlut, st } from "../site.js";
+
+const lor = MED_TIDER.filter((a) => oppetDag(a, "sat"));
+const sent = lor.filter((a) => a.stanger.sat >= 18 * 60);
+const langst = [...lor].sort(efterStangning("sat"))[0];
+const perLan = LAN.map((l) => ({
+  l,
+  rader: l.kommuner.map((k) => {
+    const oppna = k.medTider.filter((a) => oppetDag(a, "sat")).sort(efterStangning("sat"));
+    return { k, a: oppna[0], n: oppna.length };
+  }),
+})).filter((x) => x.rader.length);
+const fragor = [
+  { fraga: "Har apoteken öppet på lördagar?", svar: `Ja, ${st(lor.length, "apotek", "apotek")} av ${MED_TIDER.length.toLocaleString("sv-SE")} har öppet på lördagar. Vanligast är 10–15 eller 10–16, men ${sent.length} har öppet till 18 eller senare.` },
+  { fraga: "Vilket apotek har öppet längst på lördag?", svar: `${langst.namn} i ${langst.kommun} har öppet till ${klSlut(langst.stanger.sat)} på lördagar.` },
+];
+---
+<Layout site={SITE} titel="Apotek öppet lördag – längst öppet i varje kommun"
+  beskrivning={`Apotek med öppet på lördagar: ${lor.length} apotek, ${sent.length} till 18 eller senare. ✓ Längst öppet per kommun ✓ Alla län.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Lördag", href: "/lordagsoppet/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet på lördag</h1>
+  <p class="svar"><strong>{st(lor.length, "apotek", "apotek")}</strong> har öppet på lördagar, och <strong>{sent.length}</strong> av dem till 18 eller senare. Tabellerna visar vilket apotek som har öppet längst i varje kommun.</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.l.slug}`}>{x.l.kortnamn}</a>)}</div>
+  <Annons plats="lordag-1" />
+  {perLan.map(({ l, rader }) => (
+    <>
+      <h2 id={l.slug}>{l.namn}</h2>
+      <div class="tabell"><table>
+        <thead><tr><th>Kommun</th><th>Öppet längst på lördag</th><th class="num">Stänger</th><th class="num">Öppna</th></tr></thead>
+        <tbody>{rader.map(({ k, a, n }) => <tr><td><a href={`/${k.slug}/`}>{k.namn}</a></td>{a ? <><td>{a.namn}</td><td class="num">{klSlut(a.stanger.sat)}</td></> : <td colspan="2">Inget apotek öppet</td>}<td class="num">{n}</td></tr>)}</tbody>
+      </table></div>
+    </>
+  ))}
+  <Faq fragor={fragor} />
+</Layout>

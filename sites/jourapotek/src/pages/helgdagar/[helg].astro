@@ -1,0 +1,105 @@
+---
+// Apotek öppet en viss helgdag: kedjornas publicerade helgtider, per län och kommun, och förra årets tider.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../../components/LanGrupper.astro";
+import ApotekLista from "../../components/ApotekLista.astro";
+import OppetNuJour from "../../components/OppetNuJour.astro";
+import {
+  SITE, UPPDATERAD, HELGDAGAR, MED_TIDER, KOMMUNER, helgStatus, oppetDag, efterStangning,
+  klSlut, kl, st, lista, fras, datumText, datumTextAr, veckodagIso, dagText,
+} from "../../site.js";
+
+export function getStaticPaths() {
+  return HELGDAGAR.map((h) => ({ params: { helg: h.slug }, props: { h } }));
+}
+const { h } = Astro.props;
+const ar = h.nasta.slice(0, 4);
+// Rubriker använder kortformen som folk söker på ("påsk", "midsommar"), löptexten det fullständiga namnet.
+const titelOrd = fras(h.kort);
+const ord = fras(h.namn);
+const Ord = h.namn;
+const s = helgStatus(h.nasta);
+const oppna = s.filter((x) => x.oppet).sort((x, y) => y.stanger - x.stanger || x.a.namn.localeCompare(y.a.namn, "sv"));
+const stangda = s.filter((x) => !x.oppet);
+const forra = h.forra ? helgStatus(h.forra) : [];
+const forraOppna = forra.filter((x) => x.oppet).sort((x, y) => y.stanger - x.stanger);
+const harData = s.length > 0;
+const dagarKvar = Math.round((Date.parse(h.nasta) - Date.parse(UPPDATERAD)) / 86400000);
+const storstader = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping", "Örebro", "Västerås", "Helsingborg", "Norrköping", "Jönköping", "Umeå", "Lund"]
+  .map((n) => KOMMUNER.find((k) => k.namn === n)).filter(Boolean)
+  .map((k) => ({ k, oppna: oppna.filter((x) => x.a.kommun === k.namn), kanda: s.filter((x) => x.a.kommun === k.namn).length }));
+const vd = veckodagIso(h.nasta);
+const vdNyckel = { måndag: "mon", tisdag: "tue", onsdag: "wed", torsdag: "thu", fredag: "fri", lördag: "sat", söndag: "sun" }[vd];
+const sondagsOppna = MED_TIDER.filter((a) => oppetDag(a, "sun")).length;
+const andraHelger = HELGDAGAR.filter((x) => x.slug !== h.slug);
+
+const fragor = [
+  { fraga: `Har apoteken öppet ${titelOrd} ${ar}?`, svar: harData
+    ? `${st(oppna.length, "apotek", "apotek")} av de ${s.length} som publicerat tider för ${ord} (${datumText(h.nasta)}) har öppet. ${oppna[0] ? `Längst öppet har ${oppna[0].a.namn} i ${oppna[0].a.kommun}, ${oppna[0].tid.toLowerCase()}.` : ""} Övriga apotek har inte publicerat tider ännu.`
+    : `Apoteken har inte publicerat sina tider för ${ord} ${ar} ännu. Kedjorna lägger oftast ut helgtiderna en till två veckor innan. Många apotek i stormarknader och köpcentrum brukar ha öppet, ofta med kortare tider.` },
+  forraOppna.length > 0 && { fraga: `Vilka apotek hade öppet ${ord} förra året?`, svar: `${Ord} ${h.forra.slice(0, 4)} hade ${st(forraOppna.length, "apotek", "apotek")} av ${forra.length} med kända tider öppet.` },
+  { fraga: `När är ${ord} ${ar}?`, svar: `${Ord} infaller ${vd} den ${datumTextAr(h.nasta)}. ${h.regel}` },
+  { fraga: "Vad gör jag om apoteket har stängt?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112. Har du ett e-recept kan du hämta ut det på vilket apotek som helst som har öppet." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={harData ? `Apotek öppet ${titelOrd} ${ar} – ${oppna.length} apotek har öppet` : `Apotek öppet ${titelOrd} ${ar} – öppettider`}
+  beskrivning={`Vilka apotek har öppet ${ord} ${datumTextAr(h.nasta)}? ${harData ? `${oppna.length} av ${s.length} apotek med publicerade tider har öppet.` : "Helgtiderna publiceras en till två veckor innan."} ✓ Per kommun ✓ Storstäderna ✓ Förra årets tider.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }, { namn: h.namn, href: `/helgdagar/${h.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet {titelOrd} {ar}</h1>
+  <p class="svar">{Ord} är {vd} den <strong>{datumTextAr(h.nasta)}</strong>{dagarKvar > 0 && <>, om {st(dagarKvar, "dag", "dagar")}</>}{dagarKvar === 0 && <>, idag</>}. {harData
+    ? <><strong>{st(oppna.length, "apotek", "apotek")}</strong> av de {s.length} som hittills publicerat tider har öppet{oppna[0] && <>; längst öppet har {oppna[0].a.namn} i {oppna[0].a.kommun} ({oppna[0].tid.toLowerCase()})</>}.</>
+    : <>Apoteken har inte publicerat sina tider för {ord} ännu. Vi uppdaterar sidan varje natt så fort kedjorna lägger ut dem, oftast en till två veckor innan.</>}</p>
+
+  {harData && <ul class="tidsrutor">
+    <li><span class="tnamn">Öppet {ord}</span><span class="tal">{oppna.length}</span><span class="tinfo">apotek</span></li>
+    <li><span class="tnamn">Stängt</span><span class="tal">{stangda.length}</span><span class="tinfo">apotek</span></li>
+    <li><span class="tnamn">Ej publicerat</span><span class="tal">{MED_TIDER.length - s.length}</span><span class="tinfo">apotek</span></li>
+  </ul>}
+
+  <h2>{Ord} i storstäderna</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Öppna</th><th>Längst öppet</th></tr></thead>
+    <tbody>{storstader.map(({ k, oppna: o, kanda }) => (
+      <tr><td><a href={`/${k.slug}/`}>{k.namn}</a></td><td class="num">{kanda ? o.length : "–"}</td><td>{o[0] ? `${o[0].a.namn} ${o[0].tid.toLowerCase()}` : kanda ? "Alla med kända tider har stängt" : "Inte publicerat ännu"}</td></tr>
+    ))}</tbody>
+  </table></div>
+
+  <Annons plats="helg-1" />
+
+  {oppna.length > 0 && <>
+    <h2>Alla apotek som har öppet {ord}</h2>
+    <LanGrupper rader={oppna.map((x) => ({ a: x.a, info: `${ord} ${x.tid.toLowerCase()}` }))} />
+  </>}
+
+  {!harData && forraOppna.length > 0 && <>
+    <h2>Så hade apoteken öppet {ord} {h.forra.slice(0, 4)}</h2>
+    <p>Tiderna i år brukar likna förra årets. {st(forraOppna.length, "apotek", "apotek")} hade öppet:</p>
+    <LanGrupper rader={forraOppna.map((x) => ({ a: x.a, info: `${h.forra.slice(0, 4)}: ${x.tid.toLowerCase()}` }))} />
+  </>}
+
+  {!harData && <>
+    <h2>Det här brukar gälla {ord}</h2>
+    {h.typ === "afton"
+      ? <p>{Ord} är ingen röd dag enligt lag, men de flesta apotek har kortare öppettider än en vanlig {vd}. Apotek i stormarknader och köpcentrum har oftast öppet några timmar mitt på dagen, medan många mindre apotek har stängt.</p>
+      : <p>{Ord} är en röd dag. Många apotek har stängt eller söndagsöppet. Apotek i stormarknader och köpcentrum brukar ha öppet, ofta med samma eller kortare tider än en vanlig söndag. Just nu har {st(sondagsOppna, "apotek", "apotek")} öppet på vanliga söndagar – se <a href="/sondagsoppet/">söndagsöppna apotek</a>.</p>}
+    <p>Ring gärna apoteket innan du åker. På kommunsidorna ser du ordinarie tider och närmaste söndagsöppna apotek.</p>
+  </>}
+
+  {stangda.length > 0 && <>
+    <h2>Apotek som har stängt {ord}</h2>
+    <p>{st(stangda.length, "apotek", "apotek")} har meddelat att de håller stängt: {lista(stangda.slice(0, 30).map((x) => `${x.a.namn} (${x.a.kommun})`))}{stangda.length > 30 ? " med flera" : ""}.</p>
+  </>}
+
+  <h2>Om {ord}</h2>
+  <p>{h.regel}</p>
+
+  <h2>Andra helgdagar</h2>
+  <ul class="kolumner">{andraHelger.map((x) => <li><a href={`/helgdagar/${x.slug}/`}>{x.namn}</a> <small>({datumText(x.nasta)})</small></li>)}</ul>
+
+  <Faq fragor={fragor} />
+  <p class="akut"><strong>Behöver du vård?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+  <OppetNuJour slot="skript" />
+</Layout>

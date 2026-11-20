@@ -1,0 +1,44 @@
+---
+// Guide: vad man kan göra när apoteket har stängt. Inga medicinska råd – hänvisar till 1177 och 112.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, MED_TIDER, senastVardag, st, lista } from "../../site.js";
+
+const sent22 = MED_TIDER.filter((a) => senastVardag(a) >= 22 * 60).length;
+const dygnet = MED_TIDER.filter((a) => a.dygnet);
+const fragor = [
+  { fraga: "Vem ringer jag om jag behöver råd på natten?", svar: "Ring 1177. Sjukvårdsrådgivningen är öppen dygnet runt och kan bedöma om du behöver söka vård direkt eller om det kan vänta. Vid akut sjukdom eller skada, ring 112." },
+  { fraga: "Kan akutmottagningen ge mig läkemedel?", svar: "Akutmottagningar är till för akut sjukdom och skada, inte för att hämta ut läkemedel. Ring 1177 om du är osäker på om du behöver söka vård." },
+  { fraga: "Kan jag köpa receptfria läkemedel när apoteket har stängt?", svar: "Ja, vissa receptfria läkemedel säljs i matbutiker, kiosker och på bensinstationer som anmält försäljningen till Läkemedelsverket. Du måste ha fyllt 18 år." },
+];
+---
+<Layout site={SITE} titel="Apoteket har stängt – vad gör jag? 1177, butiker och nattöppet"
+  beskrivning="Apoteket har stängt och du behöver läkemedel eller råd? Så gör du: 1177 dygnet runt, 112 vid akut fara, receptfria läkemedel i butik och apotek med öppet sent."
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Apoteket har stängt", href: "/guider/apoteket-har-stangt/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apoteket har stängt – vad gör jag?</h1>
+  <p class="akut"><strong>Akut fara för liv eller hälsa? Ring 112.</strong> Behöver du råd om sjukdom, skada eller läkemedel – ring 1177, dygnet runt.</p>
+  <p class="svar">De flesta apotek stänger mellan 18 och 20, men {st(sent22, "apotek", "apotek")} har öppet till 22 eller senare{dygnet.length > 0 && <> och {lista(dygnet.map((a) => a.namn))} har öppet dygnet runt</>}. Hittar du inget öppet apotek finns det ändå flera vägar.</p>
+
+  <h2>1. Ta reda på om det kan vänta</h2>
+  <p>Sjukvårdsrådgivningen på <strong>1177</strong> svarar dygnet runt. En sjuksköterska kan bedöma hur bråttom det är, ge råd om egenvård och berätta vart du ska vända dig. Det gäller också om du är osäker på hur ett läkemedel ska tas eller om du har glömt en dos.</p>
+  <p>Vid misstänkt förgiftning – till exempel om ett barn har fått i sig läkemedel – ring 112 och be att få tala med Giftinformationscentralen.</p>
+
+  <h2>2. Hitta ett apotek som har öppet</h2>
+  <ul>
+    <li><a href="/oppet-nu/">Apotek öppet nu</a> – närmaste öppna apotek, med hänsyn till helgdagar.</li>
+    <li><a href="/oppet-till/22/">Apotek öppna till 22</a> och <a href="/dygnet-runt/">dygnet runt</a>.</li>
+    <li><a href="/kommuner/">Din kommun</a> – vem som stänger sist varje dag, och närmaste alternativ i grannkommunerna.</li>
+  </ul>
+  <p>Ett e-recept kan hämtas ut på vilket öppenvårdsapotek som helst i Sverige. Ta med giltig legitimation.</p>
+
+  <h2>3. Receptfria läkemedel i butik</h2>
+  <p>Sedan 2009 får vissa receptfria läkemedel säljas utanför apoteken, till exempel i matbutiker, kiosker och på bensinstationer. Det är Läkemedelsverket som bestämmer vilka läkemedel det gäller, och butiken måste ha anmält försäljningen. Du måste ha fyllt 18 år för att köpa. Läs mer i guiden om <a href="/guider/receptfria-lakemedel-i-butik/">receptfria läkemedel i butik</a>.</p>
+  <p>Fråga personalen i butiken om du är osäker – men de får inte ge råd om läkemedel på samma sätt som en farmaceut. Läs bipacksedeln, och ring 1177 om du är osäker.</p>
+
+  <h2>4. Beställ till nästa dag</h2>
+  <p>Kan det vänta kan du beställa från ett apotek på nätet. Flera apotek levererar redan samma dag eller nästa dag i större städer, och många har hämtskåp eller utlämning i butik. Det hjälper inte ikväll, men kan spara en resa.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Sajten ger inga medicinska råd. Vid frågor om sjukdom och läkemedel: kontakta 1177, en farmaceut eller din vårdcentral.</p>
+</Layout>

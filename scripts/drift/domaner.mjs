@@ -6,7 +6,7 @@ export const HUVUD = [
   ["förskolor.nu", "forskolor"], ["komvux.nu", "komvux"], ["biblioteken.nu", "biblioteken"], ["bensinstationer.nu", "bensinstationer"],
   ["parkeringar.nu", "parkeringar"], ["pollenläget.se", "pollenlaget"], ["badstränder.se", "badstrander"], ["simhallar.se", "simhallar"],
   ["lekplatserna.nu", "lekplatserna"],
-  ["dagensbensinpris.se", "dagensbensinpris"],
+  ["dagensbensinpris.se", "dagensbensinpris"], ["jourapotek.se", "jourapotek"],
 ].map(([namn, projekt]) => ({ namn, ascii: domainToASCII(namn), projekt }));
 
 // DNS-uppslag via Cloudflares offentliga DNS-over-HTTPS (inga nycklar).
@@ -23,7 +23,6 @@ export const OMDIR = {
   "badstrander.se": "https://xn--badstrnder-v5a.se",
   "pollenlaget.se": "https://xn--pollenlget-w5a.se",
   "apotekinfo.se": "https://apoteken.nu",
-  "jourapotek.se": "https://apoteken.nu/jourapotek/",
   "klämdagar.se": "https://xn--rdadagar-n4a.nu/klamdagar/",
   "folkbibliotek.se": "https://biblioteken.nu",
   "gratisparkeringar.se": "https://parkeringar.nu/gratis-parkering/",

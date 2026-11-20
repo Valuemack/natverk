@@ -1,0 +1,42 @@
+---
+// Apotek öppna dygnet runt och nattöppna apotek – och vad man gör om inget finns i närheten.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import ApotekLista from "../components/ApotekLista.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, DAGAR, senastVardag, klSlut, st, lista } from "../site.js";
+
+const dygnet = MED_TIDER.filter((a) => a.dygnet);
+const efterMidnatt = MED_TIDER.filter((a) => !a.dygnet && DAGAR.some((d) => (a.stanger[d] ?? 0) > 24 * 60));
+const sist = MED_TIDER.filter((a) => !a.dygnet && senastVardag(a) >= 22 * 60).sort((x, y) => senastVardag(y) - senastVardag(x));
+const fragor = [
+  { fraga: "Finns det apotek som har öppet dygnet runt?", svar: dygnet.length ? `Ja, ${st(dygnet.length, "apotek", "apotek")}: ${lista(dygnet.map((a) => `${a.namn} (${a.adress})`))}.` : "Just nu har inget apotek i Sverige öppet dygnet runt enligt kedjornas öppettider." },
+  { fraga: "Finns det nattöppna apotek?", svar: `Utöver ${dygnet.length ? lista(dygnet.map((a) => a.namn)) : "apotek med öppet dygnet runt"} finns inga apotek med öppet hela natten. Apotek med kvällsöppet stänger oftast klockan 22 eller 23.` },
+  { fraga: "Vad gör jag om jag behöver medicin på natten?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Sjuksköterskan kan bedöma om det kan vänta till morgonen eller om du behöver söka vård. Vid akut sjukdom eller skada, ring 112. Vissa receptfria läkemedel säljs i matbutiker och på bensinstationer, som ofta har öppet senare." },
+];
+---
+<Layout site={SITE} titel="Apotek öppet dygnet runt och nattöppna apotek"
+  beskrivning={`Apotek med öppet dygnet runt i Sverige${dygnet.length ? `: ${lista(dygnet.map((a) => a.namn))}` : ""}. ✓ Nattöppet ✓ Senast öppna apoteken ✓ Vad du gör på natten.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Dygnet runt", href: "/dygnet-runt/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet dygnet runt</h1>
+  <p class="svar">{dygnet.length
+    ? <>{dygnet.length === 1 ? "Ett apotek" : `${dygnet.length} apotek`} i Sverige har öppet dygnet runt, alla dagar: <strong>{lista(dygnet.map((a) => `${a.namn} i ${a.kommun}`))}</strong>.</>
+    : <>Inget apotek i Sverige har öppet dygnet runt enligt kedjornas publicerade öppettider just nu.</>} Övriga apotek stänger senast vid midnatt.</p>
+  {dygnet.length > 0 && <ApotekLista rader={dygnet.map((a) => ({ a, info: "öppet dygnet runt" }))} />}
+  {efterMidnatt.length > 0 && <>
+    <h2>Öppet efter midnatt</h2>
+    <ApotekLista rader={efterMidnatt.map((a) => ({ a, info: "öppet efter midnatt vissa dagar" }))} visaKommun />
+  </>}
+  <p class="akut"><strong>Behöver du hjälp på natten?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112. Vid misstänkt förgiftning: ring 112 och be om Giftinformationscentralen.</p>
+  <Annons plats="dygn-1" />
+  <h2>Apotek som har öppet senast på kvällen</h2>
+  <p>Utöver dygnet runt-apoteken är det här de apotek som stänger senast på vardagar:</p>
+  <ApotekLista rader={sist.slice(0, 40).map((a) => ({ a, info: `vardagar till ${klSlut(senastVardag(a))}` }))} visaKommun />
+  <p><a href="/oppet-till/22/">Alla apotek öppna till 22</a> · <a href="/oppet-sent/">Alla med öppet sent</a></p>
+  <h2>Om nattöppna apotek</h2>
+  <p>Innan apoteksmarknaden omreglerades 2009 hade Apoteket AB ett fåtal nattöppna jourapotek i de största städerna. I dag bestämmer varje apotek själv sina öppettider, och nattöppet finns bara där underlaget är störst. I stället har många fler apotek öppet sent på kvällen och på helgerna, ofta i stormarknader.</p>
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

@@ -1,0 +1,28 @@
+---
+// Apotek på eller vid sjukhus, med öppettider.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../components/LanGrupper.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, APOTEK, oppetDag, st } from "../site.js";
+import { veckoSammanfattning } from "@natverk/core/katalog.js";
+
+const sjh = APOTEK.filter((a) => a.sjukhus).sort((x, y) => x.namn.localeCompare(y.namn, "sv"));
+const helg = sjh.filter((a) => oppetDag(a, "sat") || oppetDag(a, "sun"));
+const fragor = [
+  { fraga: "Har sjukhusapoteken öppet på helgen?", svar: `${helg.length} av ${sjh.length} apotek vid sjukhus har öppet på lördag eller söndag. Många har bara öppet vardagar, eftersom de framför allt betjänar patienter som besöker mottagningar eller skrivs ut.` },
+  { fraga: "Kan vem som helst handla på ett sjukhusapotek?", svar: "Ja. Apoteken vid sjukhusens entréer är vanliga öppenvårdsapotek där alla kan hämta ut recept och köpa receptfria varor. Sjukhusens egna, interna läkemedelsförråd är något annat och inte öppna för allmänheten." },
+];
+---
+<Layout site={SITE} titel={`Sjukhusapotek – ${sjh.length} apotek vid sjukhus och öppettider`}
+  beskrivning={`Apotek vid Sveriges sjukhus och lasarett: ${sjh.length} apotek med öppettider. ✓ Helgöppet (${helg.length}) ✓ Per län ✓ Öppet nu.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Sjukhusapotek", href: "/sjukhusapotek/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek vid sjukhus</h1>
+  <p class="svar">Det finns <strong>{st(sjh.length, "apotek", "apotek")}</strong> vid sjukhus och lasarett i Sverige. <strong>{helg.length}</strong> av dem har öppet på helgen. Apoteken ligger oftast vid huvudentrén och är öppna för alla.</p>
+  <Annons plats="sjukhus-1" />
+  <LanGrupper rader={sjh.map((a) => ({ a, info: a.harTider ? veckoSammanfattning(a.oppettider) : "öppettider ej publicerade" }))} />
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

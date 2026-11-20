@@ -1,0 +1,17 @@
+---
+// Lista med apotek och en tidsrad ("öppet till 22.00"). Status "öppet nu" fylls i av klientskriptet.
+// Ingen länk per apotek till apoteken.nu (en kontextuell länk per sida räcker).
+import { telLank } from "@natverk/core/katalog.js";
+import { kmText, avvikandeFram } from "../site.js";
+const { rader, visaKommun = false } = Astro.props; // rader: [{ a, info, km? }]
+---
+<ul class="oppet-lista">
+  {rader.map(({ a, info, km }) => (
+    <li>
+      {km != null && <span class="avst">{kmText(km)}</span>}
+      <strong>{a.namn}</strong>{info && <> · <span class="tid">{info}</span></>}
+      <br /><small>{a.adress}{visaKommun && a.ort !== a.kommun && ` (${a.kommun})`}{a.telefon && <> · <a href={telLank(a.telefon)}>{a.telefon}</a></>}</small>
+      {a.harTider && <> <span class="oppet-nu" data-tider={JSON.stringify(a.oppettider)} data-avv={JSON.stringify(avvikandeFram(a))} hidden></span></>}
+    </li>
+  ))}
+</ul>

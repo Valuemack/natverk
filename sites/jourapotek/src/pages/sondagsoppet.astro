@@ -1,0 +1,33 @@
+---
+// Söndagsöppna apotek per län och kommun.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../components/LanGrupper.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, KOMMUNER, oppetDag, efterStangning, klSlut, kl, st, dagText } from "../site.js";
+
+const son = MED_TIDER.filter((a) => oppetDag(a, "sun")).sort(efterStangning("sun"));
+const andel = Math.round((son.length / MED_TIDER.length) * 100);
+const utan = KOMMUNER.filter((k) => k.medTider.length && !k.medTider.some((a) => oppetDag(a, "sun")));
+const sent = son.filter((a) => a.stanger.sun >= 20 * 60);
+const tidig = [...son].sort((x, y) => x.oppnar.sun - y.oppnar.sun)[0];
+const fragor = [
+  { fraga: "Har apoteken öppet på söndagar?", svar: `${st(son.length, "apotek", "apotek")} av ${MED_TIDER.length.toLocaleString("sv-SE")} (${andel} procent) har öppet på söndagar. De flesta har kortare öppettider än på vardagar, ofta 10–16 eller 11–17. Apotek i stormarknader har ofta öppet längre.` },
+  { fraga: "Vilket apotek har öppet längst på söndag?", svar: `${son[0].namn} i ${son[0].kommun} har öppet till ${klSlut(son[0].stanger.sun)}. ${sent.length} apotek har öppet till 20 eller senare på söndagar.` },
+  { fraga: "Hur tidigt öppnar apoteken på söndag?", svar: `Tidigast öppnar ${tidig.namn} i ${tidig.kommun}, klockan ${kl(tidig.oppnar.sun)}. De flesta öppnar 10 eller 11.` },
+  { fraga: "Hur många kommuner saknar söndagsöppet apotek?", svar: `${utan.length} kommuner har inget apotek med öppet på söndagar. På kommunsidorna visar vi närmaste söndagsöppna apotek.` },
+];
+---
+<Layout site={SITE} titel={`Söndagsöppet apotek – ${son.length} apotek har öppet på söndag`}
+  beskrivning={`Söndagsöppna apotek i hela Sverige: ${son.length} apotek har öppet på söndagar, ${sent.length} till 20 eller senare. ✓ Per län och kommun ✓ Öppettider ✓ Öppet nu.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Söndagsöppet", href: "/sondagsoppet/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Söndagsöppna apotek</h1>
+  <p class="svar"><strong>{st(son.length, "apotek", "apotek")}</strong> har öppet på söndagar, {andel} procent av alla apotek med publicerade tider. Längst öppet har {son[0].namn} i {son[0].kommun}, till {klSlut(son[0].stanger.sun)}. {utan.length} kommuner saknar söndagsöppet apotek.</p>
+  <p>Söndagstiderna gäller vanliga söndagar. På helgdagar som påskdagen och juldagen har många apotek andra tider – se <a href="/helgdagar/">apotek på helgdagar</a>.</p>
+  <Annons plats="sondag-1" />
+  <LanGrupper rader={son.map((a) => ({ a, info: `söndag ${dagText(a.oppettider.sun).toLowerCase()}` }))} />
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

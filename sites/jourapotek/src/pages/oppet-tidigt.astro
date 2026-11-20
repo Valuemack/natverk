@@ -1,0 +1,29 @@
+---
+// Apotek som öppnar tidigt på vardagar (senast 08.00).
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../components/LanGrupper.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, tidigastVardag, kl, st } from "../site.js";
+
+const urval = MED_TIDER.filter((a) => tidigastVardag(a) <= 8 * 60).sort((x, y) => tidigastVardag(x) - tidigastVardag(y) || x.namn.localeCompare(y.namn, "sv"));
+const fore7 = urval.filter((a) => tidigastVardag(a) < 7 * 60).length, fore730 = urval.filter((a) => tidigastVardag(a) <= 7.5 * 60).length;
+const helg = MED_TIDER.filter((a) => (a.oppnar.sat ?? 9999) <= 8 * 60 || (a.oppnar.sun ?? 9999) <= 8 * 60);
+const fragor = [
+  { fraga: "Vilka apotek öppnar tidigast?", svar: `${st(urval.length, "apotek", "apotek")} öppnar klockan 08 eller tidigare minst en vardag. ${fore730} öppnar senast 07.30 och ${fore7} före 07. De flesta apotek öppnar 09 eller 10.` },
+  { fraga: "Finns det apotek som öppnar klockan 7?", svar: `Ja, ${fore730} apotek öppnar 07.30 eller tidigare, oftast vid sjukhus, stora stationer och i stormarknader.` },
+  { fraga: "Öppnar något apotek tidigt på helgen?", svar: `${st(helg.length, "apotek", "apotek")} öppnar klockan 08 eller tidigare på lördag eller söndag.` },
+];
+---
+<Layout site={SITE} titel={`Apotek som öppnar tidigt – ${urval.length} öppnar senast 08`}
+  beskrivning={`Apotek som öppnar tidigt på morgonen: ${urval.length} öppnar 08 eller tidigare, ${fore730} senast 07.30. ✓ Per län och kommun ✓ Öppet nu.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Öppet tidigt", href: "/oppet-tidigt/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek som öppnar tidigt</h1>
+  <p class="svar"><strong>{st(urval.length, "apotek", "apotek")}</strong> öppnar klockan 08 eller tidigare minst en vardag. <strong>{fore730}</strong> öppnar senast 07.30{fore7 > 0 && <> och {fore7} redan före 07</>}.</p>
+  <Annons plats="tidigt-1" />
+  <LanGrupper rader={urval.map((a) => ({ a, info: `öppnar ${kl(tidigastVardag(a))} vardagar` }))} />
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

@@ -186,6 +186,21 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tema-prisskylt { --farg: #9a4a00; --bakgrund: #f6f5f2; --radie: 4px;
   --topp-bg: #23272d; --topp-text: #fff; --topp-kant: 4px solid #ffb21a; --logga-farg: #ffb21a; --list-bg: #15181c; }
 .tema-prisskylt .svar { background: #fff7e6; border-left-color: #ffb21a; }
+/* Jour (jourapotek.se): nattblått sidhuvud med mintgrön accent. */
+.tema-jour { --farg: #0f6b5a; --bakgrund: #f4f6fa; --radie: 8px;
+  --topp-bg: #14213d; --topp-text: #fff; --topp-kant: 4px solid #7ee0c3; --logga-farg: #7ee0c3; --list-bg: #0d1630; }
+.tema-jour .svar { background: #e8f6f1; border-left-color: #0f6b5a; }
+.tidsrutor { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .6rem; margin: 1rem 0; padding: 0; list-style: none; }
+.tidsrutor li { background: #14213d; color: #fff; border-radius: var(--radie); padding: .7rem .8rem; }
+.tidsrutor a { color: inherit; text-decoration: none; display: block; }
+.tidsrutor .tnamn { display: block; font-size: .85rem; opacity: .85; }
+.tidsrutor .tal { display: block; font: 700 1.6rem/1.2 ui-monospace, "Cascadia Mono", Consolas, monospace; color: #7ee0c3; font-variant-numeric: tabular-nums; }
+.tidsrutor .tinfo { display: block; font-size: .8rem; opacity: .9; }
+.oppet-lista { list-style: none; padding: 0; }
+.oppet-lista li { padding: .5rem 0; border-bottom: 1px solid var(--linje, #dde2ea); }
+.oppet-lista .tid { font-variant-numeric: tabular-nums; font-weight: 700; }
+.oppet-lista .avst { float: right; color: var(--dampad); font-size: .88rem; }
+.akut { border: 2px solid #b42318; border-radius: var(--radie); padding: .6rem .9rem; background: #fff5f4; }
 .prisrutor { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; margin: 1rem 0; padding: 0; list-style: none; }
 .prisrutor li { background: #23272d; color: #fff; border-radius: var(--radie); padding: .7rem .8rem; }
 .prisrutor a { color: inherit; text-decoration: none; display: block; }
@@ -209,6 +224,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 @media (prefers-color-scheme: dark) {
   [class^="tema-"] { --bakgrund: #141317; }
   .tema-prisskylt .svar { background: var(--yta); }
+  .akut { background: var(--yta); }
   .berakning input, .berakning select { background: #1d1c21; color: inherit; border-color: #3a3940; }
   .tema-kalender, .tema-apotek, .tema-loppis, .tema-natur, .tema-vuxen, .tema-sim { --topp-bg: var(--yta); }
   [class^="tema-"] .svar { background: var(--yta); }

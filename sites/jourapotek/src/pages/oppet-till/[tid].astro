@@ -1,0 +1,34 @@
+---
+// Apotek öppet till minst 20, 21, 22 eller 23 på vardagar.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../../components/LanGrupper.astro";
+import OppetNuJour from "../../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, VARDAGAR, senastVardag, klSlut, st, lista, oppetDag } from "../../site.js";
+
+export function getStaticPaths() {
+  return [20, 21, 22].map((h) => ({ params: { tid: String(h) }, props: { h } }));
+}
+const { h } = Astro.props;
+const urval = MED_TIDER.filter((a) => senastVardag(a) >= h * 60).sort((x, y) => senastVardag(y) - senastVardag(x) || x.namn.localeCompare(y.namn, "sv"));
+const allaDagar = urval.filter((a) => VARDAGAR.every((d) => (a.stanger[d] ?? 0) >= h * 60));
+const lor = urval.filter((a) => (a.stanger.sat ?? 0) >= h * 60), son = urval.filter((a) => (a.stanger.sun ?? 0) >= h * 60);
+const kommuner = [...new Set(urval.map((a) => a.kommun))];
+const fragor = [
+  { fraga: `Vilka apotek har öppet till ${h}?`, svar: `${st(urval.length, "apotek", "apotek")} i ${st(kommuner.length, "kommun", "kommuner")} har öppet till klockan ${h} eller senare minst en vardag. ${allaDagar.length} av dem har det alla vardagar.` },
+  { fraga: `Har något apotek öppet till ${h} på helgen?`, svar: `${st(lor.length, "apotek", "apotek")} har öppet till minst ${h} på lördagar och ${son.length} på söndagar.` },
+];
+---
+<Layout site={SITE} titel={`Apotek öppet till ${h} – ${st(urval.length, "apotek", "apotek")} i Sverige`}
+  beskrivning={`Apotek som har öppet till klockan ${h} eller senare: ${urval.length} apotek i ${kommuner.length} kommuner. ✓ Per län och kommun ✓ Helger ✓ Öppet nu.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Öppet sent", href: "/oppet-sent/" }, { namn: `Öppet till ${h}`, href: `/oppet-till/${h}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet till {h}</h1>
+  <p class="svar"><strong>{st(urval.length, "apotek", "apotek")}</strong> har öppet till klockan {h} eller senare minst en vardag, i {st(kommuner.length, "kommun", "kommuner")}. {allaDagar.length} har det alla vardagar. På lördagar har {lor.length} öppet så sent och på söndagar {son.length}.</p>
+  <p>{[20, 21, 22].filter((x) => x !== h).map((x, i) => <>{i > 0 && " · "}<a href={`/oppet-till/${x}/`}>Öppet till {x}</a></>)} · <a href="/oppet-sent/">Alla med öppet sent</a></p>
+  <Annons plats="till-1" />
+  <LanGrupper rader={urval.map((a) => ({ a, info: `vardagar till ${klSlut(senastVardag(a))}${(a.stanger.sun ?? 0) >= h * 60 ? `, söndag till ${klSlut(a.stanger.sun)}` : ""}` }))} />
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

@@ -1,0 +1,37 @@
+---
+// Apotek med öppet sent: översikt per stängningstid och län.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import LanGrupper from "../components/LanGrupper.astro";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, MED_TIDER, KOMMUNER, senastVardag, klSlut, st, lista } from "../site.js";
+
+const sent = MED_TIDER.filter((a) => senastVardag(a) >= 20 * 60).sort((x, y) => senastVardag(y) - senastVardag(x) || x.namn.localeCompare(y.namn, "sv"));
+const grans = [20, 21, 22, 23].map((h) => ({ h, n: MED_TIDER.filter((a) => senastVardag(a) >= h * 60).length }));
+const storst = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg"].map((n) => KOMMUNER.find((k) => k.namn === n)).filter(Boolean)
+  .map((k) => ({ k, a: [...k.medTider].sort((x, y) => senastVardag(y) - senastVardag(x))[0] })).filter((x) => x.a);
+const fragor = [
+  { fraga: "Vilka apotek har öppet sent?", svar: `${st(grans[0].n, "apotek", "apotek")} i Sverige har öppet till klockan 20 eller senare på vardagar, ${grans[1].n} till 21, ${grans[2].n} till 22 och ${grans[3].n} till 23 eller senare. De flesta ligger i stormarknader, köpcentrum och vid stora stationer.` },
+  { fraga: "Hur sent har apoteket öppet?", svar: "De flesta apotek stänger mellan 18 och 20 på vardagar. Apotek i stormarknader har ofta öppet till 21 eller 22, och i Stockholm finns apotek med öppet dygnet runt." },
+  { fraga: "Kan jag hämta ut recept sent på kvällen?", svar: "Ja, på apotek som har öppet. Har du ett e-recept kan du hämta ut det på vilket öppenvårdsapotek som helst. Ta med giltig legitimation." },
+];
+---
+<Layout site={SITE} titel={`Apotek öppet sent – ${grans[1].n} apotek öppna till 21 eller senare`}
+  beskrivning={`Apotek med öppet sent i hela Sverige: ${grans[0].n} har öppet till minst 20, ${grans[2].n} till 22. ✓ Per län och kommun ✓ Öppet nu ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Öppet sent", href: "/oppet-sent/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek med öppet sent</h1>
+  <p class="svar"><strong>{st(grans[0].n, "apotek", "apotek")}</strong> har öppet till klockan 20 eller senare minst en vardag. Till 22 har <strong>{grans[2].n}</strong> öppet{grans[3].n > 0 && <>, och {grans[3].n} har öppet till 23 eller senare</>}.</p>
+  <ul class="tidsrutor">{grans.slice(0, 3).map((g) => <li><a href={`/oppet-till/${g.h}/`}><span class="tnamn">Öppet till minst {g.h}</span><span class="tal">{g.n}</span><span class="tinfo">apotek</span></a></li>)}</ul>
+  <h2>Längst öppet i de största städerna</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Apotek</th><th class="num">Vardagar till</th></tr></thead>
+    <tbody>{storst.map(({ k, a }) => <tr><td><a href={`/${k.slug}/`}>{k.namn}</a></td><td>{a.namn}</td><td class="num">{klSlut(senastVardag(a))}</td></tr>)}</tbody>
+  </table></div>
+  <Annons plats="sent-1" />
+  <p>Alla apotek med öppet till minst 20 på vardagar, sorterade efter län och kommun:</p>
+  <LanGrupper rader={sent.map((a) => ({ a, info: `vardagar till ${klSlut(senastVardag(a))}` }))} />
+  <Faq fragor={fragor} />
+  <OppetNuJour slot="skript" />
+</Layout>

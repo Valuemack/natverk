@@ -1,0 +1,38 @@
+---
+// Översikt: apotekens öppettider på årets helgdagar.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, HELGDAGAR, helgStatus, st, datumTextAr, veckodagIso , fras } from "../../site.js";
+
+const rader = HELGDAGAR.map((h) => {
+  const s = helgStatus(h.nasta);
+  return { h, kanda: s.length, oppna: s.filter((x) => x.oppet).length };
+});
+const nasta = rader[0];
+const fragor = [
+  { fraga: "Har apoteken öppet på röda dagar?", svar: "Många apotek har öppet på röda dagar, men ofta med kortare tider. Apotek i stormarknader och köpcentrum har oftast öppet; mindre apotek har ofta stängt. Kedjorna publicerar helgtiderna en till två veckor innan, och vi visar dem så fort de finns." },
+  { fraga: "Vilken är nästa helgdag?", svar: `Nästa helgdag är ${fras(nasta.h.namn)}, ${veckodagIso(nasta.h.nasta)} ${datumTextAr(nasta.h.nasta)}.` },
+];
+---
+<Layout site={SITE} titel="Apotek öppet på helgdagar – jul, nyår, påsk och midsommar"
+  beskrivning="Vilka apotek har öppet på röda dagar? Kedjornas helgtider för julafton, juldagen, nyårsafton, påsk, 1 maj, nationaldagen och midsommar – per kommun."
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek öppet på helgdagar</h1>
+  <p class="svar">Nästa helgdag är <strong>{fras(nasta.h.namn)}</strong>, {veckodagIso(nasta.h.nasta)} {datumTextAr(nasta.h.nasta)}. {nasta.kanda
+    ? <>{st(nasta.oppna, "apotek", "apotek")} av {nasta.kanda} som publicerat tider har öppet.</>
+    : <>Apoteken har inte publicerat sina tider för den ännu.</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Helgdag</th><th>Datum</th><th class="num">Publicerat</th><th class="num">Öppna</th></tr></thead>
+    <tbody>{rader.map(({ h, kanda, oppna }) => (
+      <tr><td><a href={`/helgdagar/${h.slug}/`}>{h.namn}</a></td><td>{veckodagIso(h.nasta)} {datumTextAr(h.nasta)}</td><td class="num">{kanda || "–"}</td><td class="num">{kanda ? oppna : "–"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">"Publicerat" är antalet apotek som lagt ut tider för dagen. Kedjorna gör det oftast en till två veckor innan.</p>
+  <Annons plats="helger-1" />
+  <h2>Så fungerar apotekens helgtider</h2>
+  <p>Varje apotek bestämmer själv sina öppettider, även på helgdagar. Inför jul, nyår, påsk och midsommar lägger kedjorna ut avvikande tider i sina apotekssök. Vi hämtar dem varje natt och sparar dem, så att du kan se både årets och förra årets tider.</p>
+  <p>Julafton, nyårsafton, påskafton och midsommarafton är inga röda dagar enligt lag, men de flesta apotek har ändå kortare tider då. På juldagen och nyårsdagen har flest apotek stängt.</p>
+  <Faq fragor={fragor} />
+</Layout>

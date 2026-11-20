@@ -1,0 +1,42 @@
+---
+// Guide: receptfria läkemedel utanför apotek (lag 2009:730). Fakta om regler, inga råd om behandling.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD } from "../../site.js";
+
+const fragor = [
+  { fraga: "Får matbutiker sälja läkemedel?", svar: "Ja, vissa receptfria läkemedel får säljas i butiker, kiosker och på bensinstationer sedan 2009. Butiken måste anmäla försäljningen till Läkemedelsverket, och det är Läkemedelsverket som bestämmer vilka läkemedel som får säljas utanför apotek." },
+  { fraga: "Finns det åldersgräns för att köpa läkemedel i butik?", svar: "Ja. Läkemedel som säljs utanför apotek får inte säljas till den som inte har fyllt 18 år, och säljaren ska kontrollera åldern." },
+  { fraga: "Vad är skillnaden mot att köpa på apotek?", svar: "På apoteket finns farmaceuter som kan ge råd om läkemedel, och sortimentet är större. Vissa receptfria läkemedel och förpackningsstorlekar säljs bara på apotek." },
+];
+---
+<Layout site={SITE} titel="Receptfria läkemedel i matbutik och på bensinstation – så gäller reglerna"
+  beskrivning="Kan du köpa läkemedel när apoteket har stängt? Så fungerar receptfria läkemedel i butik: vilka butiker som får sälja, 18-årsgräns och skillnaden mot apotek."
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Receptfria läkemedel i butik", href: "/guider/receptfria-lakemedel-i-butik/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Receptfria läkemedel i butik</h1>
+  <p class="svar">När apoteket har stängt kan du köpa vissa receptfria läkemedel i matbutiker, kiosker och på bensinstationer. Det har varit tillåtet sedan den 1 november 2009, enligt lagen om handel med vissa receptfria läkemedel. Du måste ha fyllt 18 år.</p>
+
+  <h2>Vilka läkemedel säljs utanför apotek?</h2>
+  <p>Läkemedelsverket beslutar vilka läkemedel som får säljas utanför apotek och publicerar en lista på sin webbplats. Det handlar om vanliga receptfria läkemedel i mindre förpackningar, till exempel en del värk- och febernedsättande medel, nässpray och nikotinläkemedel. Läkemedlen måste ha svensk märkning och vara godkända för försäljning utanför apotek.</p>
+  <p>Allt receptfritt finns alltså inte i butik. Vissa läkemedel och större förpackningar säljs bara på apotek, där en farmaceut kan ge råd.</p>
+
+  <h2>Vilka butiker får sälja?</h2>
+  <p>Alla butiker som anmält försäljningen till Läkemedelsverket. Kommunen kontrollerar att butiken följer reglerna, bland annat om ålderskontroll och förvaring. Det är vanligt i större matbutiker, i pressbyråer och kiosker och på bemannade bensinstationer – ofta ställen som har öppet längre än apoteken.</p>
+
+  <h2>Åldersgräns 18 år</h2>
+  <p>Läkemedel som säljs utanför apotek får inte säljas till den som är under 18 år. Säljaren ska förvissa sig om att du har fyllt 18, så ha legitimation med dig.</p>
+
+  <h2>Tänk på det här</h2>
+  <ul>
+    <li>Läs bipacksedeln och följ doseringen.</li>
+    <li>Personalen i butiken får inte ge råd om läkemedel som en farmaceut. Är du osäker – ring 1177 eller fråga på ett apotek.</li>
+    <li>Barn, gravida och den som tar andra läkemedel bör alltid fråga en farmaceut eller 1177 först.</li>
+  </ul>
+
+  <h2>Hellre ett apotek som har öppet?</h2>
+  <p>Se <a href="/oppet-nu/">apotek som har öppet nu</a>, <a href="/oppet-sent/">apotek med öppet sent</a> och <a href="/dygnet-runt/">apotek öppna dygnet runt</a>.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källa: lag (2009:730) om handel med vissa receptfria läkemedel. Läkemedelsverket har den aktuella listan över läkemedel som får säljas utanför apotek. Sajten ger inga medicinska råd.</p>
+</Layout>

@@ -1,0 +1,22 @@
+---
+// Apotek grupperade per län och kommun, med länkar till kommunsidorna. rader: [{ a, info }].
+import ApotekLista from "./ApotekLista.astro";
+import { LAN, KOMMUNER } from "../site.js";
+const { rader, visaLankrad = true } = Astro.props;
+const grupper = LAN.map((l) => ({
+  l,
+  kommuner: l.kommuner.map((k) => ({ k, rader: rader.filter((r) => r.a.kommun === k.namn) })).filter((x) => x.rader.length),
+})).filter((g) => g.kommuner.length);
+---
+{visaLankrad && <div class="lank-rad">{grupper.map((g) => <a href={`#${g.l.slug}`}>{g.l.kortnamn} ({g.kommuner.reduce((s, x) => s + x.rader.length, 0)})</a>)}</div>}
+{grupper.map((g) => (
+  <>
+    <h2 id={g.l.slug}>{g.l.namn}</h2>
+    {g.kommuner.map((x) => (
+      <>
+        <h3><a href={`/${x.k.slug}/`}>{x.k.namn}</a></h3>
+        <ApotekLista rader={x.rader} />
+      </>
+    ))}
+  </>
+))}

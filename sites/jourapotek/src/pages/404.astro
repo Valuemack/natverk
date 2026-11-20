@@ -1,0 +1,8 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../site.js";
+---
+<Layout site={SITE} titel={`Sidan finns inte – ${SITE.visningsnamn}`} beskrivning="Sidan du sökte finns inte." noindex>
+  <h1>Sidan finns inte</h1>
+  <p>Sidan kan ha flyttats eller tagits bort. Se <a href="/oppet-nu/">apotek som har öppet nu</a>, <a href="/oppet-sent/">apotek med öppet sent</a>, <a href="/sondagsoppet/">söndagsöppna apotek</a> eller <a href="/kommuner/">jourapotek i din kommun</a>.</p>
+</Layout>
