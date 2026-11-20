@@ -1,0 +1,81 @@
+---
+// Apotekens öppettider i jul och nyår: alla röda dagar och aftnar från julafton till trettondedag jul i en tabell.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import OppetNuJour from "../components/OppetNuJour.astro";
+import { SITE, UPPDATERAD, HELGDAGAR, LAN, KOMMUNER, MED_TIDER, tidPaDatum, helgStatus, dagText, st, lista, datumText, veckodagIso, fras } from "../site.js";
+
+// Säsongen räknas från nästa julafton.
+const jul = HELGDAGAR.find((h) => h.slug === "julafton");
+const Y = Number(jul.nasta.slice(0, 4));
+const DAGAR_JUL = [
+  { iso: `${Y}-12-24`, namn: "Julafton", slug: "julafton" },
+  { iso: `${Y}-12-25`, namn: "Juldagen", slug: "juldagen" },
+  { iso: `${Y}-12-26`, namn: "Annandag jul", slug: "annandag-jul" },
+  { iso: `${Y}-12-31`, namn: "Nyårsafton", slug: "nyarsafton" },
+  { iso: `${Y + 1}-01-01`, namn: "Nyårsdagen", slug: "nyarsdagen" },
+  { iso: `${Y + 1}-01-06`, namn: "Trettondedag jul", slug: "trettondedag-jul" },
+].map((d) => {
+  const s = helgStatus(d.iso);
+  return { ...d, kanda: s.length, oppna: s.filter((x) => x.oppet).length };
+});
+// Apotek som publicerat minst en av dagarna, med en cell per dag.
+const rader = MED_TIDER.map((a) => ({ a, celler: DAGAR_JUL.map((d) => tidPaDatum(a, d.iso)) }))
+  .filter((r) => r.celler.some(Boolean))
+  .sort((x, y) => x.a.kommun.localeCompare(y.a.kommun, "sv") || x.a.namn.localeCompare(y.a.namn, "sv"));
+const cell = (c) => (c ? dagText(c.tid) : "–");
+const perLan = LAN.map((l) => ({ l, rader: rader.filter((r) => r.a.lan === l.namn) })).filter((x) => x.rader.length);
+const juldagenOppna = DAGAR_JUL[1].oppna;
+const fragor = [
+  { fraga: `Har apoteken öppet på julafton ${Y}?`, svar: DAGAR_JUL[0].kanda ? `${st(DAGAR_JUL[0].oppna, "apotek", "apotek")} av ${DAGAR_JUL[0].kanda} som publicerat tider har öppet på julafton, oftast några timmar mitt på dagen.` : "Apoteken har inte publicerat sina jultider ännu. De flesta har kortare tider på julafton, ofta några timmar mitt på dagen." },
+  { fraga: "Har apoteken öppet på juldagen?", svar: DAGAR_JUL[1].kanda ? `Få. ${st(juldagenOppna, "apotek", "apotek")} av ${DAGAR_JUL[1].kanda} med publicerade tider har öppet på juldagen.` : "Juldagen är den dag då flest apotek har stängt. Tiderna är inte publicerade ännu." },
+  { fraga: "När publicerar apoteken sina jultider?", svar: "Kronans Apotek publicerar oftast sina jul- och nyårstider flera veckor innan. Apoteket och Apotek Hjärtat visar dem bara några dagar framåt i sina apotekssök. Vi hämtar alla kedjornas tider varje natt och sparar dem här." },
+  { fraga: "Vad gör jag om jag behöver medicin när apoteken har stängt i jul?", svar: "Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112. Tänk på att hämta ut recept och fylla på receptfria läkemedel före jul." },
+];
+---
+<Layout site={SITE} titel={`Apotekens öppettider jul och nyår ${Y}–${Y + 1} – alla röda dagar`}
+  beskrivning={`Vilka apotek har öppet i jul och nyår ${Y}? Julafton, juldagen, annandag jul, nyårsafton, nyårsdagen och trettondagen i en tabell. ✓ ${rader.length} apotek med publicerade tider ✓ Uppdateras varje natt.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }, { namn: "Jul och nyår", href: "/jul-och-nyar/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotekens öppettider i jul och nyår {Y}</h1>
+  <p class="svar">Hittills har <strong>{st(rader.length, "apotek", "apotek")}</strong> publicerat sina tider för jul och nyår. På julafton har {DAGAR_JUL[0].oppna} av dem öppet och på juldagen {juldagenOppna}. Vi uppdaterar varje natt när fler apotek lägger ut sina tider.</p>
+
+  <div class="tabell"><table>
+    <thead><tr><th>Dag</th><th>Datum</th><th class="num">Publicerat</th><th class="num">Öppna</th></tr></thead>
+    <tbody>{DAGAR_JUL.map((d) => (
+      <tr><td><a href={`/helgdagar/${d.slug}/`}>{d.namn}</a></td><td>{veckodagIso(d.iso)} {datumText(d.iso)}</td><td class="num">{d.kanda || "–"}</td><td class="num">{d.kanda ? d.oppna : "–"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Mellandagarna (27–30 december) har de flesta apotek ordinarie eller något kortare tider. Ring gärna innan.</p>
+
+  <h2>Tänk på det här inför jul</h2>
+  <ul>
+    <li>Hämta ut recept i god tid – på juldagen och nyårsdagen har de flesta apotek stängt.</li>
+    <li>Apotek i stormarknader och köpcentrum har oftast öppet längst under helgerna.</li>
+    <li>Ett e-recept kan hämtas ut på vilket apotek som helst. Se <a href="/guider/hamta-ut-recept/">hämta ut recept</a>.</li>
+  </ul>
+
+  <Annons plats="jul-1" />
+
+  {perLan.length > 0
+    ? <>
+      <h2>Alla apotek med publicerade jul- och nyårstider</h2>
+      <div class="lank-rad">{perLan.map((x) => <a href={`#${x.l.slug}`}>{x.l.kortnamn} ({x.rader.length})</a>)}</div>
+      {perLan.map(({ l, rader: r }) => (
+        <>
+          <h3 id={l.slug}>{l.namn}</h3>
+          <div class="tabell"><table>
+            <thead><tr><th>Apotek</th>{DAGAR_JUL.map((d) => <th class="num">{d.namn.replace("Trettondedag jul", "Trettondag").replace("Annandag jul", "Annandag")}</th>)}</tr></thead>
+            <tbody>{r.map(({ a, celler }) => <tr><td>{a.namn}<br /><small><a href={`/${a.kommunSlug}/`}>{a.kommun}</a></small></td>{celler.map((c) => <td class="num">{cell(c)}</td>)}</tr>)}</tbody>
+          </table></div>
+        </>
+      ))}
+      <p class="kalla">"–" betyder att apoteket inte publicerat tider för dagen ännu.</p>
+    </>
+    : <p>Inga apotek har publicerat sina jul- och nyårstider ännu.</p>}
+
+  <Faq fragor={fragor} />
+  <p class="akut"><strong>Behöver du vård i jul?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+  <OppetNuJour slot="skript" />
+</Layout>

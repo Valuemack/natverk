@@ -1,0 +1,105 @@
+---
+// Apotek i en stadsdel i Stockholm, Göteborg eller Malmö: öppet sent, tidigt, söndag och helgdagar.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import ApotekLista from "../../components/ApotekLista.astro";
+import OppetNuJour from "../../components/OppetNuJour.astro";
+import { veckoSammanfattning } from "@natverk/core/katalog.js";
+import {
+  SITE, UPPDATERAD, OMRADEN, omradenI, HELGDAGAR, DAGAR, DAGNAMN_LITEN, helgStatus, narmasteMed,
+  senastVardag, tidigastVardag, oppetDag, efterStangning, efterOppning, kl, klSlut, st, lista, fras, datumText, veckodagIso, dagText, kmText,
+} from "../../site.js";
+
+export function getStaticPaths() {
+  return OMRADEN.map((o) => ({ params: { kommun: o.kommun.slug, omrade: o.slug }, props: { o } }));
+}
+const { o } = Astro.props;
+const k = o.kommun;
+// "på Södermalm" men "i Kista".
+const po = `${/^(Södermalm|Östermalm|Kungsholmen|Norrmalm|Hisingen)/.test(o.namn) ? "på" : "i"} ${o.namn}`;
+const ap = o.medTider;
+const sist = [...ap].sort((x, y) => senastVardag(y) - senastVardag(x))[0];
+const vSen = senastVardag(sist);
+const tidig = [...ap].sort((x, y) => tidigastVardag(x) - tidigastVardag(y))[0];
+const son = ap.filter((a) => oppetDag(a, "sun")).sort(efterStangning("sun"));
+const lor = ap.filter((a) => oppetDag(a, "sat")).sort(efterStangning("sat"));
+const perDag = DAGAR.map((d) => {
+  const oppna = ap.filter((a) => oppetDag(a, d));
+  return { d, sist: [...oppna].sort(efterStangning(d))[0], forst: [...oppna].sort(efterOppning(d))[0] };
+});
+const egna = new Set(o.apotek);
+const altSent = vSen < 22 * 60 ? narmasteMed(o, (a) => senastVardag(a) >= 22 * 60, 3, egna, 30) : [];
+const altSon = son.length < 2 ? narmasteMed(o, (a) => oppetDag(a, "sun"), 3, egna, 30) : [];
+const helger = HELGDAGAR.slice(0, 3).map((h) => {
+  const s = helgStatus(h.nasta, ap);
+  return { h, kanda: s.length, oppna: s.filter((x) => x.oppet).sort((x, y) => y.stanger - x.stanger) };
+});
+const syskon = omradenI(k).filter((x) => x.slug !== o.slug);
+
+const fragor = [
+  { fraga: `Vilket apotek ${po} har öppet längst?`, svar: `${sist.namn} (${sist.adress}) har öppet till ${klSlut(vSen)} på vardagar.${son[0] ? ` På söndagar har ${son[0].namn} öppet längst, ${dagText(son[0].oppettider.sun).toLowerCase()}.` : ""}` },
+  { fraga: `Finns det söndagsöppet apotek ${po}?`, svar: son.length ? `Ja, ${st(son.length, "apotek", "apotek")}: ${lista(son.slice(0, 4).map((a) => `${a.namn} (${dagText(a.oppettider.sun).toLowerCase()})`))}${son.length > 4 ? " med flera" : ""}.` : `Nej, inget apotek ${po} har öppet på söndagar.${altSon[0] ? ` Närmast är ${altSon[0].a.namn}, ${kmText(altSon[0].km)} bort.` : ""}` },
+  tidigastVardag(tidig) < Infinity && { fraga: `Vilket apotek ${po} öppnar tidigast?`, svar: `${tidig.namn} öppnar klockan ${kl(tidigastVardag(tidig))} på vardagar.` },
+  { fraga: `Hur många apotek finns det ${po}?`, svar: `Det finns ${st(o.apotek.length, "apotek", "apotek")} ${po} i ${k.namn}: ${lista(o.apotek.map((a) => a.namn))}.` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Apotek ${o.namn} – öppet till ${klSlut(vSen)}, söndag och helgdagar`}
+  beskrivning={`Apotek ${po} (${o.platser}): ${sist.namn} har öppet till ${klSlut(vSen)}. ✓ ${o.apotek.length} apotek ✓ Söndagsöppet (${son.length}) ✓ Öppet nu ✓ Helgdagar.`}
+  smulor={[{ namn: "Jourapotek", href: "/" }, { namn: k.namn, href: `/${k.slug}/` }, { namn: o.namn, href: `/${k.slug}/${o.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Apotek {po}</h1>
+  <p class="svar">{po.charAt(0).toUpperCase() + po.slice(1)} ({o.platser}) finns {st(o.apotek.length, "apotek", "apotek")}. Längst öppet på vardagar har <strong>{sist.namn}</strong>, till <strong>{klSlut(vSen)}</strong>. {son.length
+    ? <>På söndagar har {st(son.length, "apotek", "apotek")} öppet, längst {son[0].namn} till {klSlut(son[0].stanger.sun)}.</>
+    : <>Inget apotek här har öppet på söndagar.</>}</p>
+
+  <ul class="tidsrutor">
+    <li><span class="tnamn">Vardagar, senast</span><span class="tal">{klSlut(vSen)}</span><span class="tinfo">{sist.namn}</span></li>
+    {lor[0] && <li><span class="tnamn">Lördag, senast</span><span class="tal">{klSlut(lor[0].stanger.sat)}</span><span class="tinfo">{lor[0].namn}</span></li>}
+    <li><span class="tnamn">Söndag, senast</span><span class="tal">{son[0] ? klSlut(son[0].stanger.sun) : "stängt"}</span><span class="tinfo">{son[0]?.namn ?? "Inget söndagsöppet"}</span></li>
+    {tidigastVardag(tidig) < Infinity && <li><span class="tnamn">Vardagar, tidigast</span><span class="tal">{kl(tidigastVardag(tidig))}</span><span class="tinfo">{tidig.namn}</span></li>}
+  </ul>
+
+  <h2>Öppettider för apoteken {po}</h2>
+  <ApotekLista rader={[...ap].sort((x, y) => senastVardag(y) - senastVardag(x) || x.namn.localeCompare(y.namn, "sv")).map((a) => ({ a, info: veckoSammanfattning(a.oppettider) }))} />
+
+  <h2>Sist öppet och först öppet – dag för dag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Dag</th><th>Öppet längst</th><th class="num">Stänger</th><th>Öppnar först</th><th class="num">Öppnar</th></tr></thead>
+    <tbody>{perDag.map((x) => (
+      <tr data-dag={x.d}><td>{DAGNAMN_LITEN[x.d][0].toUpperCase() + DAGNAMN_LITEN[x.d].slice(1)}</td>
+        {x.sist ? <><td>{x.sist.namn}</td><td class="num">{klSlut(x.sist.stanger[x.d])}</td><td>{x.forst.namn}</td><td class="num">{kl(x.forst.oppnar[x.d])}</td></> : <td colspan="4">Alla apotek stängda</td>}
+      </tr>
+    ))}</tbody>
+  </table></div>
+
+  <Annons plats="omrade-1" />
+
+  {altSent.length > 0 && <>
+    <h2>Närmaste apotek med öppet till 22</h2>
+    <ApotekLista rader={altSent.map(({ a, km }) => ({ a, km, info: `vardagar till ${klSlut(senastVardag(a))}` }))} visaKommun />
+  </>}
+  {son.length > 0 && <>
+    <h2>Söndagsöppet {po}</h2>
+    <ApotekLista rader={son.map((a) => ({ a, info: `söndag ${dagText(a.oppettider.sun).toLowerCase()}` }))} />
+  </>}
+  {altSon.length > 0 && <>
+    <h2>Närmaste söndagsöppna apotek</h2>
+    <ApotekLista rader={altSon.map(({ a, km }) => ({ a, km, info: `söndag ${dagText(a.oppettider.sun).toLowerCase()}` }))} visaKommun />
+  </>}
+
+  <h2>Helgdagar</h2>
+  {helger.map(({ h, kanda, oppna }) => (
+    <p><strong><a href={`/helgdagar/${h.slug}/`}>{h.namn}</a></strong> ({veckodagIso(h.nasta)} {datumText(h.nasta)}): {kanda === 0
+      ? "tiderna är inte publicerade ännu."
+      : oppna.length ? lista(oppna.map((x) => `${x.a.namn} ${x.tid.toLowerCase()}`)) + "." : `de ${kanda} apotek som publicerat tider har stängt.`}</p>
+  ))}
+
+  <h2>Andra stadsdelar i {k.namn}</h2>
+  <ul class="kolumner">{syskon.map((x) => <li><a href={`/${k.slug}/${x.slug}/`}>Apotek {x.namn}</a></li>)}</ul>
+  <p><a href={`/${k.slug}/`}>Alla jourapotek i {k.namn}</a></p>
+
+  <Faq fragor={fragor} />
+  <p class="akut"><strong>Behöver du vård?</strong> Ring 1177 för sjukvårdsrådgivning dygnet runt. Vid akut sjukdom eller skada, ring 112.</p>
+  <OppetNuJour slot="skript" />
+</Layout>

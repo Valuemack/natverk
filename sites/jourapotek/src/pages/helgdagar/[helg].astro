@@ -93,6 +93,8 @@ const fragor = [
     <p>{st(stangda.length, "apotek", "apotek")} har meddelat att de håller stängt: {lista(stangda.slice(0, 30).map((x) => `${x.a.namn} (${x.a.kommun})`))}{stangda.length > 30 ? " med flera" : ""}.</p>
   </>}
 
+  {["julafton", "juldagen", "annandag-jul", "nyarsafton", "nyarsdagen", "trettondedag-jul"].includes(h.slug) && <p>Se alla dagar från julafton till trettondagen i en tabell: <a href="/jul-och-nyar/">apotekens öppettider i jul och nyår</a>.</p>}
+
   <h2>Om {ord}</h2>
   <p>{h.regel}</p>
 

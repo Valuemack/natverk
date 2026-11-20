@@ -9,7 +9,7 @@ import OppetNuJour from "../../components/OppetNuJour.astro";
 import {
   SITE, UPPDATERAD, KOMMUNER, HELGDAGAR, APOTEKEN_URL, DAGAR, DAGNAMN_LITEN, DAGNAMN_PLUR, VARDAGAR,
   kl, klSlut, st, lista, datumText, veckodagIso, senastVardag, tidigastVardag, oppetDag, efterStangning, efterOppning,
-  narmasteMed, helgStatus, kmText, dagText, fras,
+  narmasteMed, helgStatus, kmText, dagText, fras, omradenI,
 } from "../../site.js";
 import { veckoSammanfattning, grannkommuner } from "@natverk/core/katalog.js";
 
@@ -95,6 +95,11 @@ const titel = vSen >= 21 * 60
       ))}</tbody>
     </table></div>
     <p class="kalla">Ordinarie öppettider. Dagens rad markeras. På helgdagar gäller ofta andra tider – se nedan.</p>
+  </>}
+
+  {omradenI(k).length > 0 && <>
+    <h2>Apotek per stadsdel i {k.namn}</h2>
+    <ul class="kolumner">{omradenI(k).map((o) => <li><a href={`/${k.slug}/${o.slug}/`}>{o.namn}</a> <small>({o.apotek.length})</small></li>)}</ul>
   </>}
 
   <h2>Apotek i {k.namn} som har öppet sent</h2>

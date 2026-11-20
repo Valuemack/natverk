@@ -54,6 +54,7 @@ const fragor = [
   <p>{helg.namn} är {veckodagIso(helg.nasta)} den {datumTextAr(helg.nasta)}. {hs.length
     ? <>{st(hOppna.length, "apotek", "apotek")} av {hs.length} som publicerat tider har öppet. <a href={`/helgdagar/${helg.slug}/`}>Se alla apotek som har öppet {fras(helg.namn)}</a>.</>
     : <>Apoteken har inte publicerat tiderna ännu – <a href={`/helgdagar/${helg.slug}/`}>vi visar dem så fort de finns</a>.</>}</p>
+  <p><a href="/jul-och-nyar/">Apotekens öppettider i jul och nyår – alla dagar i en tabell</a></p>
   <ul class="kolumner">{HELGDAGAR.slice(1, 9).map((h) => <li><a href={`/helgdagar/${h.slug}/`}>Apotek öppet {fras(h.kort)}</a></li>)}</ul>
 
   <h2>Apoteken som stänger sist</h2>

@@ -133,6 +133,67 @@ export function narmasteMed(punkt, villkor, n = 3, utom = new Set(), maxKm = 150
 }
 export const kmText = (km) => (km < 10 ? `${km.toFixed(1).replace(".", ",")} km` : `${Math.round(km)} km`);
 
+// ---------- Stadsdelar i storstäderna ----------
+// Avgränsade med postort (t.ex. Bromma) eller postnummerområde (t.ex. 116/118 = Södermalm).
+// Bara områden med minst tre apotek får en egen sida.
+const pnr = (a) => a.adress.match(/\b(\d{3}) ?\d{2} [^\d,]+$/)?.[1]; // postnumret före postorten sist i adressen
+const postort = (...orter) => (a) => orter.includes((a.ort ?? "").toLowerCase());
+const kod = (...koder) => (a) => koder.includes(pnr(a));
+const OMRADE_DEF = {
+  Stockholm: [
+    ["norrmalm", "Norrmalm och City", "Sergels torg, Centralen, Hötorget och Norrmalm", (a) => kod("111")(a) && !/lindhagen/i.test(a.adress)],
+    ["kungsholmen", "Kungsholmen", "Fridhemsplan, S:t Eriksplan och Lindhagen", (a) => kod("112")(a) || /lindhagen/i.test(a.adress)],
+    ["vasastan", "Vasastan", "Odenplan, Sankt Eriksplan och Vasastan", kod("113")],
+    ["ostermalm", "Östermalm", "Stureplan, Karlaplan, Östermalmstorg och Gärdet", kod("114", "115")],
+    ["sodermalm", "Södermalm", "Medborgarplatsen, Slussen, Skanstull och Hornstull", (a) => kod("116", "118")(a) || (kod("117")(a) && !/liljeholm|gröndal/i.test(a.adress))],
+    ["liljeholmen", "Liljeholmen och Gröndal", "Liljeholmstorget och Gröndal", (a) => kod("117")(a) && /liljeholm|gröndal/i.test(a.adress)],
+    ["hammarby-sjostad", "Hammarby sjöstad och Årsta", "Hammarby allé och Årsta", (a) => kod("120")(a)],
+    ["johanneshov", "Johanneshov", "Gullmarsplan, Globen och Skärholmen söderut", postort("johanneshov")],
+    ["hagersten", "Hägersten", "Hägerstensåsen, Fruängen, Västertorp och Mälarhöjden", postort("hägersten")],
+    ["bromma", "Bromma", "Brommaplan, Alvik och Bromma Blocks", postort("bromma")],
+    ["kista", "Kista", "Kista Galleria och Husby", postort("kista")],
+    ["spanga", "Spånga", "Spånga, Tensta och Rinkeby", postort("spånga")],
+    ["skarholmen", "Skärholmen", "Skärholmens centrum och Kungens kurva", postort("skärholmen")],
+    ["bandhagen", "Bandhagen och Högdalen", "Högdalen, Bandhagen och Stureby", postort("bandhagen")],
+    ["farsta", "Farsta", "Farsta centrum", postort("farsta")],
+    ["enskede-skarpnack", "Enskede och Skarpnäck", "Gubbängen, Enskededalen, Skarpnäck, Bagarmossen och Sköndal", postort("enskede", "enskededalen", "skarpnäck", "bagarmossen", "sköndal")],
+    ["vallingby", "Vällingby", "Vällingby centrum", postort("vällingby")],
+    ["hasselby", "Hässelby", "Hässelby gård och Hässelby strand", postort("hässelby")],
+    ["alvsjo", "Älvsjö", "Älvsjö centrum", postort("älvsjö")],
+  ],
+  Göteborg: [
+    ["centrum", "Göteborg centrum", "Nordstan, Centralen och Inom Vallgraven", kod("411")],
+    ["johanneberg-garda", "Johanneberg och Gårda", "Korsvägen, Gårda och Krokslätt", kod("412")],
+    ["linne-majorna", "Linné och Majorna", "Linnégatan, Masthugget och Majorna", kod("413", "414")],
+    ["ostra-goteborg", "Östra Göteborg", "Gamlestaden, Kortedala, Redbergslid och Östra sjukhuset", kod("415", "416")],
+    ["hisingen", "Hisingen", "Backaplan, Eriksberg, Bäckebol och Torslanda", (a) => kod("417", "418")(a) || postort("hisings backa", "hisings kärra", "torslanda")(a)],
+    ["vastra-frolunda", "Västra Frölunda", "Frölunda torg, Askim och Hovås", postort("västra frölunda", "askim", "hovås")],
+    ["angered", "Angered", "Angered centrum och Gårdsten", postort("angered")],
+  ],
+  Malmö: [
+    ["centrum", "Malmö centrum", "Gamla staden, Triangeln och Västra hamnen", kod("211")],
+    ["limhamn", "Limhamn", "Limhamn och Bunkeflostrand", (a) => kod("216")(a) || postort("limhamn", "bunkeflostrand")(a)],
+    ["vastra-malmo", "Västra Malmö", "Kronprinsen och Västra innerstaden", kod("217")],
+    ["sodra-innerstaden", "Södra innerstaden och Mobilia", "Möllevången, Södervärn och Mobilia", kod("214")],
+    ["ostra-malmo", "Östra Malmö", "Rosengård, Jägersro och Värnhem", kod("212", "213")],
+    ["hyllie-fosie", "Hyllie och Fosie", "Emporia, Hyllie och Lindängen", kod("215")],
+  ],
+};
+export const OMRADEN = Object.entries(OMRADE_DEF).flatMap(([kommun, lista]) => {
+  const k = KOMMUNER.find((x) => x.namn === kommun);
+  if (!k) return [];
+  return lista.map(([slug, namn, platser, test]) => {
+    const apotek = k.apotek.filter(test);
+    const med = apotek.filter((a) => a.lat != null);
+    return {
+      slug, namn, platser, kommun: k, apotek, medTider: apotek.filter((a) => a.harTider),
+      lat: med.length ? med.reduce((x, a) => x + a.lat, 0) / med.length : null,
+      lon: med.length ? med.reduce((x, a) => x + a.lon, 0) / med.length : null,
+    };
+  }).filter((o) => o.medTider.length >= 3);
+});
+export const omradenI = (k) => OMRADEN.filter((o) => o.kommun.slug === k.slug);
+
 // ---------- Helgdagar ----------
 // Helgtider som sparats tidigare nätter (kedjorna publicerar bara några dagar framåt), se scripts/historik.mjs.
 export const HELGTIDER = las("data/helgtider.json", { datum: {} });

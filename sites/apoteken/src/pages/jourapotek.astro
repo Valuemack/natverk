@@ -25,6 +25,7 @@ const fragor = [
   smulor={[{ namn: "Start", href: "/" }, { namn: "Jourapotek", href: "/jourapotek/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Jourapotek i Sverige</h1>
   <p class="svar"><strong>{jour.length} apotek</strong> har öppet till klockan 21 eller senare minst en dag i veckan{dygnetRunt.length > 0 && <>, och <strong>{dygnetRunt.length}</strong> har öppet dygnet runt</>}. Akut behov av vård? Ring 1177, eller 112 vid nödsituation.</p>
+  <p>Vilket apotek som stänger sist i din kommun, söndagsöppna apotek och apotekens tider på julafton och andra helgdagar finns samlat på <a href="https://jourapotek.se/helgdagar/">jourapotek.se</a>.</p>
   <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
   <Annons plats="jour-1" />
   {perLan.map((x) => (
