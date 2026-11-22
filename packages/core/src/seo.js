@@ -2,6 +2,21 @@
 
 export const abs = (site, path) => new URL(path, site.url).href;
 
+/**
+ * Metabeskrivning inom 70–160 tecken: börjar med `huvud` och lägger till delar ur `fyll`
+ * (i ordning) så länge texten är under ~120 tecken och nästa del ryms. Är den för lång kortas
+ * den vid ett ordslut.
+ */
+export function besk(huvud, ...fyll) {
+  let t = String(huvud).trim();
+  for (const del of fyll.flat().filter(Boolean)) {
+    if (t.length >= 120) break;
+    if ((t + " " + del).length <= 160) t += " " + del;
+  }
+  if (t.length > 160) t = t.slice(0, 157).replace(/\s+\S*$/, "") + " …";
+  return t;
+}
+
 export const websiteLd = (site) => ({
   "@context": "https://schema.org",
   "@type": "WebSite",

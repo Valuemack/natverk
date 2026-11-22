@@ -4,7 +4,7 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, besk } from "@natverk/core/seo.js";
 import { enhetLd, narmaste, kmText, kartLank } from "@natverk/core/katalog.js";
 import { kort } from "@natverk/core/datum.js";
 import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
@@ -28,12 +28,14 @@ const avradan = (x.avradan ?? []).length > 0;
 const tjanligaAndel = prov.length ? Math.round(100 * prov.filter((p) => /^tjänligt$/i.test(p.bedomning ?? "")).length / prov.length) : null;
 
 const titel = [`${e.namn}, ${e.kommun} – vattenkvalitet och badtemperatur`, `${e.namn}, ${e.kommun} – vattenkvalitet`, `${e.namn} – vattenkvalitet`].find((t) => t.length <= 60) ?? `${e.namn} – vattenkvalitet`;
-const beskrivning = [
-  `${e.namn} är ett ${typText} i ${e.kommun} kommun.`,
+const beskrivning = besk(
+  `${e.namn} är ett ${typText} i ${e.kommun} kommun${lan ? `, ${lan.namn}` : ""}.`,
   klass && `✓ ${klass.klass} (${klass.ar})`,
   senaste && `✓ Senaste prov ${datum(senaste.datum)}: ${senaste.bedomning?.toLowerCase() ?? "okänt"}`,
   temp && `✓ ${String(temp.grader).replace(".", ",")} °C`,
-].filter(Boolean).join(" ").slice(0, 158);
+  "✓ Vägbeskrivning och karta",
+  "✓ Närmaste badplatser",
+);
 
 const fragor = [
   senaste && { fraga: `Är det tjänligt att bada vid ${e.namn}?`, svar: `Senaste provet vid ${e.namn} togs ${datum(senaste.datum)} och bedömdes som ${senaste.bedomning?.toLowerCase() ?? "okänt"}.${tjanligaAndel != null ? ` Av de ${prov.length} senaste proverna var ${tjanligaAndel} % tjänliga.` : ""}${avradan ? " Just nu finns en avrådan från bad." : ""}` },

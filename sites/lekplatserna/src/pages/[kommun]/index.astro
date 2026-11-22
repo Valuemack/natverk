@@ -4,12 +4,14 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { grannkommuner, rakna } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning } from "../../site.js";
+import KommunTathet from "@natverk/core/katalog/KommunTathet.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { grannkommuner, rakna, kommunTathet } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning, ORD } from "../../site.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun: k } = Astro.props;
+const tt = kommunTathet(KAT, k, ORD);
 const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
 const alla = k.enheter;
 const n = alla.length;
@@ -37,7 +39,7 @@ const fragor = [
 const titel = [tema.length > 0 && `Lekplatser i ${k.namn} – ${n} st med redskap och teman`, redskap.length > 2 && `Lekplatser i ${k.namn} – ${n} st och deras redskap`, `Lekplatser i ${k.namn} – ${n} st`].filter(Boolean).find((t) => t.length <= 60) ?? `Lekplatser i ${k.namn}`;
 ---
 <Layout site={SITE} titel={titel}
-  beskrivning={`Alla ${n} lekplatser i ${k.namn}${sarskilda.length ? ` – bland annat med ${sarskilda.slice(0, 3).map(([u]) => UTRUSTNING[u].toLowerCase()).join(", ")}` : ""}.${tema.length ? ` ✓ ${tema.length} temalekplatser` : ""} ✓ Närmaste lekplats ✓ Vägbeskrivning.`.slice(0, 158)}
+  beskrivning={besk(`Alla ${n} lekplatser i ${k.namn}${sarskilda.length ? ` – bland annat med ${sarskilda.slice(0, 3).map(([u]) => UTRUSTNING[u].toLowerCase()).join(", ")}` : ""}.${tema.length ? ` ✓ ${tema.length} temalekplatser` : ""} ✓ Närmaste lekplats ✓ Vägbeskrivning.`.slice(0, 158), `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}
   smulor={[{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Lekplatser i {k.namn}</h1>
   <p class="svar">
@@ -70,6 +72,9 @@ const titel = [tema.length > 0 && `Lekplatser i ${k.namn} – ${n} st med redska
     </>)}
     {utanNamn.length > 0 && <p class="kalla">Ytterligare {utanNamn.length} {utanNamn.length === 1 ? "lekplats saknar" : "lekplatser saknar"} namn och adress i källorna och visas därför inte i listan, men finns med i sökningen efter närmaste lekplats.</p>}
   </>}
+
+  <KommunTathet t={tt} kommun={k} ord={ORD} />
+
 
   {grannar.length > 0 && <>
     <h2>Lekplatser i närliggande kommuner</h2>

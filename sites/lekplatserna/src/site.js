@@ -84,3 +84,14 @@ export const SITE = {
   sidfotText: "Källor: kommunernas öppna data och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).",
   natverk: [],
 };
+
+// Parkeringar nära lekplatsen (samma OSM- och kommununderlag som parkeringar.nu). Bara läge och avgift behövs.
+const PFIL = resolve(process.cwd(), "../parkering-lek/data/parkeringar.json");
+export const PARKERINGAR = existsSync(PFIL)
+  ? JSON.parse(readFileSync(PFIL, "utf8")).filter((p) => p.lat != null).map((p) => ({
+      namn: p.namn, typ: p.typ, lat: p.lat, lon: p.lon,
+      gratis: p.extra?.avgift === false || p.extra?.taxa_per_timme === 0,
+      timpris: p.extra?.taxa_per_timme > 0 ? p.extra.taxa_per_timme : null,
+      platser: p.extra?.kapacitet ?? null,
+    }))
+  : [];

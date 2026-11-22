@@ -1,29 +1,71 @@
 ---
-// Länssida: alla kommuner i länet med antal enheter.
+// Länssida: alla kommuner i länet med antal enheter, täthet per invånare och söndagsöppet.
 import Layout from "../Layout.astro";
 import Annons from "../Annons.astro";
 import Faq from "../Faq.astro";
-import { faqLd } from "../seo.js";
+import { faqLd, besk } from "../seo.js";
+import { harOppettider, oppetHelg, invanarePer, talText, FOLK_SVERIGE, FOLKMANGD_AR } from "../katalog.js";
 
 const { site, kat, lan: l, ord, uppdaterad, kallaText } = Astro.props;
 const Plur = ord.plur[0].toUpperCase() + ord.plur.slice(1);
 const storst = [...l.kommuner].sort((a, b) => b.enheter.length - a.enheter.length);
+const enheter = l.kommuner.flatMap((k) => k.enheter);
+const medTider = enheter.filter(harOppettider);
+const visaTider = medTider.length >= enheter.length * 0.5;
+const sondag = visaTider ? enheter.filter((e) => oppetHelg(e, "sun") === true) : [];
+const allaN = kat.kommuner.reduce((s, x) => s + x.enheter.length, 0);
+const perLan = invanarePer(l.folk, l.antal), perRiket = invanarePer(FOLK_SVERIGE, allaN);
+const tathet = l.kommuner.filter((k) => k.folk).map((k) => ({ k, per: invanarePer(k.folk, k.enheter.length) })).sort((a, b) => a.per - b.per);
+const tatast = tathet[0], glesast = tathet.length > 2 ? tathet.at(-1) : null;
+const enhetText = (x) => (x === 1 ? `${ord.art} ${ord.sing}` : `${x} ${ord.plur}`);
+const lanRang = [...kat.lan].filter((x) => x.folk).sort((a, b) => b.antal / b.folk - a.antal / a.folk);
+const rang = lanRang.indexOf(l) + 1;
+
 const fragor = [
-  { fraga: `Hur många ${ord.plur} finns det i ${l.namn}?`, svar: `Det finns ${l.antal} ${l.antal === 1 ? ord.sing : ord.plur} i ${l.namn}, fördelade på ${l.kommuner.length} kommuner.` },
+  { fraga: `Hur många ${ord.plur} finns det i ${l.namn}?`, svar: `Det finns ${enhetText(l.antal)} i ${l.namn}, fördelade på ${l.kommuner.length} kommuner.` },
   { fraga: `Vilken kommun i ${l.namn} har flest ${ord.plur}?`, svar: `${storst[0].namn} har flest med ${storst[0].enheter.length} st${storst[1] ? `, följt av ${storst[1].namn} (${storst[1].enheter.length})` : ""}.` },
-];
+  perLan && perRiket && { fraga: `Hur många invånare går det på varje ${ord.sing} i ${l.namn}?`, svar: `I ${l.namn} går det ${ord.art} ${ord.sing} på ungefär ${talText(perLan)} invånare, jämfört med ${ord.art} på ${talText(perRiket)} i hela Sverige. Länet ligger på plats ${rang} av ${lanRang.length} län räknat per invånare.` },
+  tatast && glesast && { fraga: `Var i ${l.namn} finns flest ${ord.plur} per invånare?`, svar: `Tätast är ${tatast.k.namn} med ${ord.art} ${ord.sing} på ${talText(tatast.per)} invånare. Glesast är ${glesast.k.namn} med ${ord.art} på ${talText(glesast.per)}.` },
+  visaTider && { fraga: `Hur många ${ord.plur} i ${l.namn} har öppet på söndagar?`, svar: sondag.length ? `${sondag.length} av ${l.antal} har söndagsöppet enligt våra uppgifter.` : `Enligt våra uppgifter har inga ${ord.plur} i ${l.namn} öppet på söndagar.` },
+].filter(Boolean);
 const titel = [`${Plur} i ${l.namn} – alla ${l.antal} per kommun`, `${Plur} i ${l.namn} – ${l.antal} st`].find((t) => t.length <= 60) ?? `${Plur} i ${l.kortnamn}`;
+const beskrivning = besk(`Alla ${l.antal} ${ord.plur} i ${l.namn} sorterade per kommun.`, `✓ ${l.kommuner.length} kommuner`,
+  visaTider ? "✓ Öppettider" : "✓ Adresser", perLan && "✓ Antal per invånare", visaTider && sondag.length > 0 && "✓ Söndagsöppet", "Uppdateras varje natt.");
 ---
-<Layout site={site} titel={titel}
-  beskrivning={`Alla ${l.antal} ${ord.plur} i ${l.namn} sorterade per kommun. ✓ Adresser och öppettider ✓ ${l.kommuner.length} kommuner ✓ Uppdateras varje natt.`}
+<Layout site={site} titel={titel} beskrivning={beskrivning}
   smulor={[{ namn: "Start", href: "/" }, { namn: l.kortnamn, href: l.href }]} jsonld={[faqLd(fragor)]} uppdaterad={uppdaterad}>
   <h1>{Plur} i {l.namn}</h1>
-  <p class="svar">{l.namn} har <strong>{l.antal} {ord.plur}</strong> i {l.kommuner.length} kommuner. Flest finns i {storst[0].namn} ({storst[0].enheter.length} st).</p>
+  <p class="svar">{l.namn} har <strong>{enhetText(l.antal)}</strong> i {l.kommuner.length} kommuner. Flest finns i {storst[0].namn} ({storst[0].enheter.length} st).{perLan && <> Det blir {ord.art} på ungefär <strong>{talText(perLan)}</strong> invånare.</>}</p>
   <div class="tabell"><table>
-    <thead><tr><th>Kommun</th><th class="num">{Plur}</th></tr></thead>
-    <tbody>{l.kommuner.map((k) => <tr><td><a href={k.href}>{k.namn}</a></td><td class="num">{k.enheter.length}</td></tr>)}</tbody>
+    <thead><tr><th>Kommun</th><th class="num">{Plur.length > 12 ? "Antal" : Plur}</th>{perLan && <th class="num">Invånare per {ord.sing}</th>}{visaTider && <th class="num">Söndagsöppet</th>}</tr></thead>
+    <tbody>{l.kommuner.map((k) => <tr>
+      <td><a href={k.href}>{k.namn}</a></td>
+      <td class="num">{k.enheter.length}</td>
+      {perLan && <td class="num">{k.folk ? talText(invanarePer(k.folk, k.enheter.length)) : "–"}</td>}
+      {visaTider && <td class="num">{k.enheter.filter((e) => oppetHelg(e, "sun") === true).length}</td>}
+    </tr>)}</tbody>
   </table></div>
+  {perLan && <p class="kalla">Invånare per {ord.sing} = kommunens folkmängd 31 december {FOLKMANGD_AR} (SCB) delat med antalet {ord.plur} i vår katalog.</p>}
+
+  {perLan && perRiket && <>
+    <h2>{Plur} per invånare i {l.namn}</h2>
+    <p>
+      I {l.namn} går det {ord.art} {ord.sing} på ungefär {talText(perLan)} invånare. I hela Sverige är siffran {talText(perRiket)}, så länet ligger {perLan < perRiket * 0.95 ? "tätare än" : perLan > perRiket * 1.05 ? "glesare än" : "ungefär som"} riket – plats {rang} av {lanRang.length} län.
+      {tatast && glesast && <> Inom länet är {tatast.k.namn} tätast ({ord.art} på {talText(tatast.per)}) och {glesast.k.namn} glesast ({ord.art} på {talText(glesast.per)}).</>}
+    </p>
+  </>}
+
   <Annons plats="lan-1" />
+
+  {sondag.length > 0 && <>
+    <h2>Söndagsöppna {ord.plur} i {l.namn}</h2>
+    <ul class="kolumner">{sondag.slice(0, 40).map((e) => <li>{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}, {e.kommun}</li>)}</ul>
+    {sondag.length > 40 && <p class="kalla">Visar 40 av {sondag.length}. Se kommunsidorna för alla.</p>}
+  </>}
+
+  <h2>Störst i {l.namn}</h2>
+  <div class="kort">{storst.slice(0, 6).map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
+
   <Faq fragor={fragor} />
   <p class="kalla">{kallaText}</p>
 </Layout>

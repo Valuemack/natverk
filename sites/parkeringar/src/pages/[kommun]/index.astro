@@ -4,13 +4,15 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import KommunTathet from "@natverk/core/katalog/KommunTathet.astro";
 import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { grannkommuner, rakna } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, TYP, krTim, arGratis } from "../../site.js";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { grannkommuner, rakna, kommunTathet } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, TYP, krTim, arGratis, ORD } from "../../site.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun: k } = Astro.props;
+const tt = kommunTathet(KAT, k, ORD);
 const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
 const alla = k.enheter;
 const n = alla.length;
@@ -43,7 +45,7 @@ const titel = [`Parkering i ${k.namn} – pris, gratis parkering och p-hus`, `Pa
 const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
 ---
 <Layout site={SITE} titel={titel}
-  beskrivning={`${n} parkeringar i ${k.namn}${medPris.length ? ` – från ${krTim(medPris[0].extra.taxa_per_timme)}` : ""}.${gratis.length ? ` ✓ ${gratis.length} gratis` : ""}${hus.length ? ` ✓ ${hus.length} p-hus och garage` : ""}${ladd.length ? " ✓ Laddplatser" : ""} ✓ Öppettider och antal platser.`}
+  beskrivning={besk(`${n} parkeringar i ${k.namn}${medPris.length ? ` – från ${krTim(medPris[0].extra.taxa_per_timme)}` : ""}.${gratis.length ? ` ✓ ${gratis.length} gratis` : ""}${hus.length ? ` ✓ ${hus.length} p-hus och garage` : ""}${ladd.length ? " ✓ Laddplatser" : ""} ✓ Öppettider och antal platser.`, `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}
   smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Parkering i {k.namn}</h1>
   <p class="svar">
@@ -82,6 +84,9 @@ const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, h
       <tbody>{operatorer.map(([o, c]) => <tr><td>{o}</td><td class="num">{c}</td></tr>)}</tbody>
     </table></div>
   </>}
+
+  <KommunTathet t={tt} kommun={k} ord={ORD} />
+
 
   {grannar.length > 0 && <>
     <h2>Parkering i närliggande kommuner</h2>

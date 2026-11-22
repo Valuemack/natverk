@@ -6,7 +6,7 @@ import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
 import { faqLd } from "@natverk/core/seo.js";
 import { narmaste, kmText, kartLank } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning, TYPNAMN, underlag } from "../../../site.js";
+import { SITE, KAT, UPPDATERAD, KALLA, UTRUSTNING, utrustning, TYPNAMN, underlag, PARKERINGAR } from "../../../site.js";
 
 export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
@@ -16,6 +16,13 @@ const kommun = KAT.kommuner.find((k) => k.slug === e.kommunSlug);
 const lan = KAT.lan.find((l) => l.slug === kommun.lanSlug);
 const u = utrustning(e);
 const nara = narmaste(e, KAT.enheter, 5, (y) => y.egenSida || utrustning(y).length > 0, 10);
+// Parkering inom 700 m och närmaste lekplats med populära redskap som den här saknar.
+const parkNara = narmaste(e, PARKERINGAR, 3, () => true, 0.7);
+const SOKT = ["linbana", "vattenlek", "studsmatta", "kompisgunga", "klättervägg", "hinderbana"];
+const annat = SOKT.filter((v) => !u.includes(v))
+  .map((v) => ({ v, n: narmaste(e, KAT.enheter, 1, (y) => y.egenSida && utrustning(y).includes(v), 15)[0] }))
+  .filter((x) => x.n);
+const temaIKommun = kommun.enheter.filter((y) => y.typ !== "lekplats").length;
 const plats = e.ort && e.ort !== e.kommun ? `${e.ort} i ${e.kommun}` : e.kommun;
 const typ = e.typ === "lekplats" ? "lekplatsen" : e.typ === "temalekplats" ? "temalekplatsen" : "naturlekplatsen";
 const Typ = e.typ[0].toUpperCase() + e.typ.slice(1);
@@ -35,11 +42,14 @@ const fakta = [
   x.senast_renoverad && { namn: "Senast renoverad", varde: String(x.senast_renoverad) },
   e.kedja && { namn: "Ansvarig", varde: e.kedja },
 ].filter(Boolean);
-const titel = [`${e.namn}, ${plats} – ${typ} och redskap`, `${e.namn} i ${e.kommun} – redskap och läge`, `${e.namn}, ${e.kommun} – redskap`, `${e.namn} – ${e.typ} i ${e.kommun}`].find((t) => t.length <= 60) ?? e.namn;
+// e.skilj (från katalogen) skiljer lekplatser som annars får samma namn och ort.
+const tn = e.skilj ? `${e.namn}, ${e.skilj}` : e.namn;
+const titel = [`${tn}, ${plats} – ${typ} och redskap`, `${tn} i ${e.kommun} – redskap och läge`, `${tn}, ${e.kommun} – redskap`, `${tn} – ${e.typ} i ${e.kommun}`].find((t) => t.length <= 60) ?? tn;
 const fragor = [
   u.length > 0 && { fraga: `Vad finns det på ${e.namn}?`, svar: `${e.namn} har ${u.map((v) => UTRUSTNING[v].toLowerCase()).join(", ")} enligt ${x.officiell_kalla ? "kommunens" : "OpenStreetMaps"} uppgifter.` },
   { fraga: `Var ligger ${e.namn}?`, svar: `${e.namn} ligger ${e.gatuadress ? `vid ${e.gatuadress} ` : ""}i ${plats}, ${e.lan}.` },
   nara[0] && { fraga: `Vilken lekplats ligger närmast ${e.namn}?`, svar: `Närmast ligger ${nara[0].enhet.namn}, ${kmText(nara[0].km)} bort fågelvägen.` },
+  parkNara[0] && { fraga: `Var kan man parkera vid ${e.namn}?`, svar: `Närmaste parkering vi känner till är ${parkNara[0].enhet.namn ?? "en parkering"} cirka ${kmText(parkNara[0].km)} bort${parkNara[0].enhet.gratis ? ", och den är avgiftsfri" : parkNara[0].enhet.timpris ? `, ${String(parkNara[0].enhet.timpris).replace(".", ",")} kr i timmen` : ""}. Kontrollera alltid skyltningen på plats.` },
 ].filter(Boolean);
 const ld = { "@context": "https://schema.org", "@type": "Playground", name: e.namn, address: { "@type": "PostalAddress", streetAddress: e.gatuadress ?? undefined, addressLocality: e.ort ?? e.kommun, addressRegion: e.lan, addressCountry: "SE" }, geo: { "@type": "GeoCoordinates", latitude: e.lat, longitude: e.lon }, isAccessibleForFree: true };
 ---
@@ -63,12 +73,28 @@ const ld = { "@context": "https://schema.org", "@type": "Playground", name: e.na
 
   <h2>Fakta</h2>
   <dl class="fakta">{fakta.map((f) => <><dt>{f.namn}</dt><dd>{f.varde}</dd></>)}</dl>
+  <p>{e.namn} är {kommun.enheter.length === 1 ? "den enda lekplatsen" : `en av ${kommun.enheter.length} lekplatser`} i {kommun.namn} kommun{temaIKommun > 0 && `, där ${temaIKommun === 1 ? "en är tema- eller naturlekplats" : `${temaIKommun} är tema- eller naturlekplatser`}`}.{nara[0] && ` Närmaste andra lekplats är ${nara[0].enhet.namn}, ${kmText(nara[0].km)} bort.`}{x.officiell_kalla ? ` Uppgifterna kommer från ${e.kommun} kommuns register.` : " Uppgifterna kommer från OpenStreetMap, där redskap ibland saknas – titta gärna själv på plats."}</p>
 
   <Annons plats="enhet-1" />
 
   {nara.length > 0 && <>
     <h2>Lekplatser i närheten</h2>
-    <EnhetLista enheter={nara.map((n) => n.enhet)} />
+    <EnhetLista enheter={nara} />
+  </>}
+
+  {annat.length > 0 && <>
+    <h2>Närmaste lekplats med annat att göra</h2>
+    <p>Saknar {e.namn} något? Så här långt är det till närmaste lekplats med:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Redskap</th><th>Lekplats</th><th class="num">Avstånd</th></tr></thead>
+      <tbody>{annat.map(({ v, n }) => <tr><td>{UTRUSTNING[v]}</td><td><a href={n.enhet.href}>{n.enhet.namn}</a></td><td class="num">{kmText(n.km)}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  {parkNara.length > 0 && <>
+    <h2>Parkering nära {e.namn}</h2>
+    <ul>{parkNara.map(({ enhet: p, km }) => <li><strong>{p.namn ?? "Parkering"}</strong> – {kmText(km)} bort{p.gratis ? ", avgiftsfri" : p.timpris ? `, ${String(p.timpris).replace(".", ",")} kr/tim` : ""}{p.platser ? `, cirka ${p.platser} platser` : ""}</li>)}</ul>
+    <p class="kalla">Avstånd fågelvägen. Avgift och tidsgräns enligt kommunens och OpenStreetMaps uppgifter – skyltningen på plats gäller.</p>
   </>}
   <p><a href={kommun.href}>Alla {kommun.enheter.length} lekplatser i {kommun.namn} →</a></p>
 

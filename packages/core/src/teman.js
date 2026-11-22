@@ -68,6 +68,41 @@ export const TEMAN = {
     logga: svg(`<path d="M19 4.5a11.5 11.5 0 1 0 8.5 15.8A9.5 9.5 0 0 1 19 4.5z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M14.5 12v5.5l3.5 2.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`),
     favicon: { bg: "#14213d", fg: "#7ee0c3" },
   },
+  // Tand (tandläkarsajten): en tand med prislapp – prisjämförelse.
+  tand: {
+    logga: svg(`<path d="M9.5 5C6 5 4.5 8 5 11.5c.6 4 2 6.5 2.8 10.5.6 3 1.2 5 2.7 5 2 0 1.8-6.5 5.5-6.5s3.5 6.5 5.5 6.5c1.5 0 2.1-2 2.7-5 .8-4 2.2-6.5 2.8-10.5C27.5 8 26 5 22.5 5c-2.8 0-4 1.6-6.5 1.6S12.3 5 9.5 5z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/>`),
+    favicon: { bg: "#0e5c6b", fg: "#fff" },
+  },
+  // Ladd (laddstationer): en blixt i en kontakt.
+  ladd: {
+    logga: svg(`<rect x="7" y="3.5" width="14" height="25" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 8 11 16h4l-1.5 7L18 14.5h-4z" fill="currentColor"/><path d="M21 12h3a2 2 0 0 1 2 2v6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>`),
+    favicon: { bg: "#0b4f3c", fg: "#9be15d" },
+  },
+  // Friluft (vindskydd, grillplatser, naturreservat): vindskydd med eld.
+  friluft: {
+    logga: svg(`<path d="M3 26 14 6l15 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 6v20" stroke="currentColor" stroke-width="2.4"/><path d="M21.5 26c-2 0-3.2-1.4-3.2-3 0-2.2 2.2-3.2 2.6-5.5 1.6 1.2 3.8 3.3 3.8 5.5 0 1.6-1.2 3-3.2 3z" fill="currentColor"/>`),
+    favicon: { bg: "#3e4a24", fg: "#f0b44c" },
+  },
+  // Skydd (skyddsrum): egen neutral symbol – ett hus med skyddande båge, INTE civilförsvarets triangel.
+  skydd: {
+    logga: svg(`<path d="M4 15 16 5l12 10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M7.5 13v14h17V13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 27v-6a4 4 0 0 1 8 0v6" fill="none" stroke="currentColor" stroke-width="2.4"/>`),
+    favicon: { bg: "#33373d", fg: "#ffc83d" },
+  },
+  // Hjärta (hjärtstartare): hjärta med blixt – egen symbol, inte ILCOR-skylten.
+  hjarta: {
+    logga: svg(`<path d="M16 27.5S4 20.3 4 12.2A6.2 6.2 0 0 1 16 9a6.2 6.2 0 0 1 12 3.2c0 8.1-12 15.3-12 15.3z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 11.5 12.5 18h4l-1.5 5.5L19.5 17h-4z" fill="currentColor"/>`),
+    favicon: { bg: "#b3261e", fg: "#fff" },
+  },
+  // Vinter (snödjup och skidspår): snöflinga över ett spår.
+  vinter: {
+    logga: svg(`<path d="M16 3v17M8.6 7.5l14.8 8.5M23.4 7.5 8.6 16" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M3 25c4-2 8-2 13 0s9 2 13 0M3 29c4-2 8-2 13 0s9 2 13 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`),
+    favicon: { bg: "#1b3a5c", fg: "#cfe8ff" },
+  },
+  // Namnsdag: almanacksblad med en blomma.
+  namnsdag: {
+    logga: svg(`<rect x="5" y="6" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M5 11h22M11 3.5v5M21 3.5v5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="19" r="2" fill="currentColor"/><path d="M16 14.5a2.2 2.2 0 1 1 0 4.5 2.2 2.2 0 1 1 0-4.5zM11.7 19a2.2 2.2 0 1 1 4.3 0 2.2 2.2 0 1 1-4.3 0zM16 23.5a2.2 2.2 0 1 1 0-4.5 2.2 2.2 0 1 1 0 4.5zM20.3 19a2.2 2.2 0 1 1-4.3 0 2.2 2.2 0 1 1 4.3 0z" fill="none" stroke="currentColor" stroke-width="1.4"/>`),
+    favicon: { bg: "#7a2e5a", fg: "#fff" },
+  },
 };
 
 /** Favicon-SVG med temats symbol i vitt på färgad ruta. */

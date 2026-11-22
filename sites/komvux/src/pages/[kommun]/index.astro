@@ -4,12 +4,14 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { grannkommuner } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor, grupp } from "../../site.js";
+import KommunTathet from "@natverk/core/katalog/KommunTathet.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { grannkommuner, kommunTathet } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor, grupp, ORD } from "../../site.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun: k } = Astro.props;
+const tt = kommunTathet(KAT, k, ORD);
 const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
 const n = k.enheter.length;
 const har = (niva) => k.enheter.some((e) => e.extra?.nivaer?.includes(niva));
@@ -62,7 +64,7 @@ const fragor = [
 const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
 ---
 <Layout site={SITE} titel={titel ?? `Komvux i ${k.namn}`}
-  beskrivning={`Komvux och sfi i ${k.namn}: ${n} ${n === 1 ? "skolenhet" : "skolenheter"} med adress och utbildningar.${kv?.elever_gymnasial ? ` ✓ ${tal(kv.elever_gymnasial, 0)} elever på gymnasial nivå` : ""}${sf?.andel_godkanda_av_avslutade_eller_avbrutna != null ? ` ✓ ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna, 0)} % godkända i sfi` : ""} ✓ Så söker du.`}
+  beskrivning={besk(`Komvux och sfi i ${k.namn}: ${n} ${n === 1 ? "skolenhet" : "skolenheter"} med adress och utbildningar.${kv?.elever_gymnasial ? ` ✓ ${tal(kv.elever_gymnasial, 0)} elever på gymnasial nivå` : ""}${sf?.andel_godkanda_av_avslutade_eller_avbrutna != null ? ` ✓ ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna, 0)} % godkända i sfi` : ""} ✓ Så söker du.`, `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}
   smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Komvux i {k.namn}</h1>
   <p class="svar">
@@ -102,6 +104,9 @@ const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, h
       <tbody>{anordnare.map((a) => <tr><td>{a.anordnare}</td><td>{(a.nivaer ?? []).join(", ")}</td></tr>)}</tbody>
     </table></div>
   </>}
+
+  <KommunTathet t={tt} kommun={k} ord={ORD} />
+
 
   {grannar.length > 0 && <>
     <h2>Jämför med grannkommunerna</h2>

@@ -1,5 +1,9 @@
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
+import { FOLKMANGD, FOLKMANGD_AR } from "./folkmangd.js";
+
+export { FOLKMANGD_AR };
+export const FOLK_SVERIGE = Object.values(FOLKMANGD).reduce((a, b) => a + b, 0);
 
 // Gemensam logik för katalogsajter (apotek, vårdcentraler, bibliotek, förskolor, loppisar …).
 // Alla dataset följer samma schema:
@@ -153,7 +157,9 @@ export function byggKatalog(enheter, { harEgenSida = (e) => !!(e.gatuadress && (
     const med = k.enheter.filter((e) => e.lat != null);
     if (med.length) k.lat = med.reduce((s, e) => s + e.lat, 0) / med.length, k.lon = med.reduce((s, e) => s + e.lon, 0) / med.length;
     k.href = `/${k.slug}/`;
+    k.folk = FOLKMANGD[k.namn] ?? null;
   }
+  skiljLikaNamn([...kommuner.values()].flatMap((k) => k.enheter).filter((e) => e.egenSida));
   const lan = new Map();
   for (const k of kommuner.values()) {
     if (!k.lan) continue;
@@ -165,6 +171,7 @@ export function byggKatalog(enheter, { harEgenSida = (e) => !!(e.gatuadress && (
   for (const l of lan.values()) {
     l.kommuner.sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
     l.antal = l.kommuner.reduce((s, k) => s + k.enheter.length, 0);
+    l.folk = l.kommuner.every((k) => k.folk) ? l.kommuner.reduce((s, k) => s + k.folk, 0) : null;
     l.href = `/lan/${l.slug}/`;
   }
   return {
@@ -172,6 +179,67 @@ export function byggKatalog(enheter, { harEgenSida = (e) => !!(e.gatuadress && (
     kommuner: [...kommuner.values()].sort((a, b) => a.namn.localeCompare(b.namn, "sv")),
     lan: [...lan.values()].sort((a, b) => a.namn.localeCompare(b.namn, "sv")),
   };
+}
+
+/**
+ * Enheter med samma namn på samma ort (eller samma namn som redan innehåller orten) skulle få
+ * identiska titlar. De får `e.skilj`: gatuadress om den skiljer dem åt, annars kommun, annars ett löpnummer.
+ */
+/** Namn som är långa gatulistor ("A-gatan / B-vägen / C-gatan …") kortas i titlar till de två första. */
+export function titelNamn(namn) {
+  const delar = namn.split(/\s*\/\s*/);
+  return namn.length > 38 && delar.length > 2 ? `${delar.slice(0, 2).join(" / ")} m.fl.` : namn;
+}
+
+export function skiljLikaNamn(enheter) {
+  const grupper = new Map();
+  for (const e of enheter) {
+    e.titelNamn = titelNamn(e.namn);
+    const plats = (e.ort ?? e.kommun ?? "").toLowerCase();
+    const harOrt = plats && e.namn.toLowerCase().includes(plats);
+    // Samma nyckel som titelns början: "Namn, Ort" (eller bara namnet när det redan innehåller orten).
+    const nyckel = harOrt ? e.titelNamn.toLowerCase() : `${e.titelNamn.toLowerCase()}, ${plats}`;
+    if (!grupper.has(nyckel)) grupper.set(nyckel, []);
+    grupper.get(nyckel).push(e);
+  }
+  for (const g of grupper.values()) {
+    if (g.length < 2) continue;
+    const unik = (f) => g.every((e) => f(e)) && new Set(g.map((e) => f(e).toLowerCase())).size === g.length;
+    const adr = (e) => (e.gatuadress && !e.namn.toLowerCase().includes(e.gatuadress.toLowerCase()) ? e.gatuadress : "");
+    if (unik(adr)) for (const e of g) e.skilj = adr(e);
+    else if (unik((e) => e.kommun ?? "")) for (const e of g) e.skilj = `${e.kommun} kommun`;
+    else g.forEach((e, i) => { e.skilj = [adr(e), `nr ${i + 1}`].filter(Boolean).join(" "); });
+  }
+}
+
+/** Antal invånare per enhet, avrundat till "1 på 6 200". null om underlag saknas. */
+export function invanarePer(folk, antal) {
+  if (!folk || !antal) return null;
+  const v = folk / antal;
+  return v >= 10000 ? Math.round(v / 1000) * 1000 : v >= 1000 ? Math.round(v / 100) * 100 : Math.round(v / 10) * 10;
+}
+export const talText = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+/**
+ * Kommunens täthet (invånare per enhet mot län och riket, plats bland alla kommuner) och de närmaste
+ * enheterna utanför kommunen när den har få egna. Används av KatalogKommun och sajternas egna kommunsidor.
+ */
+export function kommunTathet(kat, k, ord, { maxEgna = 3, maxKm = 80 } = {}) {
+  const n = k.enheter.length;
+  const lan = kat.lan.find((l) => l.slug === k.lanSlug);
+  const per = invanarePer(k.folk, n);
+  const perRiket = invanarePer(FOLK_SVERIGE, kat.kommuner.reduce((s, x) => s + x.enheter.length, 0));
+  const perLan = lan && invanarePer(lan.folk, lan.antal);
+  const rangordnade = kat.kommuner.filter((x) => x.folk).sort((a, b) => b.enheter.length / b.folk - a.enheter.length / a.folk);
+  const plats = rangordnade.indexOf(k) + 1;
+  const text = per && perRiket ? `${n === 1
+    ? `I ${k.namn} finns ${ord.art} ${ord.sing} på ${talText(k.folk)} invånare.`
+    : `I ${k.namn} går det ${talText(n)} ${ord.plur} på ${talText(k.folk)} invånare – ungefär ${ord.art} på ${talText(per)} invånare.`} I hela landet är det ${ord.art} på ${talText(perRiket)}${perLan ? ` och i ${lan.namn} ${ord.art} på ${talText(perLan)}` : ""}.` : null;
+  const utanfor = k.lat != null && n <= maxEgna
+    ? kat.enheter.filter((e) => e.kommun !== k.namn && e.lat != null).map((e) => ({ enhet: e, km: avstandKm(k, e) }))
+        .filter((x) => x.km <= maxKm).sort((a, b) => a.km - b.km).slice(0, 5)
+    : [];
+  return { text, plats, antal: rangordnade.length, utanfor, n };
 }
 
 /** Grannkommuner: närmaste kommuner (via medelpunkt) som inte är kommunen själv. */
@@ -228,9 +296,17 @@ export function veckoSammanfattning(oppettider) {
 }
 
 /** Kompakt lista för klientens "Hitta närmaste" (/narmaste.json). */
-export const narmasteJson = (kat) => JSON.stringify(kat.enheter.filter((e) => e.lat != null).map((e) => ({
-  namn: e.namn, href: e.href, lat: +e.lat.toFixed(5), lon: +e.lon.toFixed(5), adress: adressRad(e),
-})));
+// `f`: id:n för sajtens filter (Sokverktyg) som enheten uppfyller. `t`: öppettider för "öppet nu" i webbläsaren.
+// `r`: en kort extra rad (t.ex. "Vattenkvalitet: utmärkt"). Fält utan värde utelämnas för att hålla filen liten.
+export const narmasteJson = (kat, { filter = [], rad = () => null } = {}) => JSON.stringify(kat.enheter.filter((e) => e.lat != null).map((e) => {
+  const f = filter.filter((x) => x.test && x.test(e)).map((x) => x.id);
+  const t = harOppettider(e) ? Object.fromEntries(DAGAR.filter((d) => e.oppettider[d] != null).map((d) => [d, e.oppettider[d]])) : null;
+  const r = rad(e);
+  return {
+    namn: e.namn, href: e.href, lat: +e.lat.toFixed(5), lon: +e.lon.toFixed(5), adress: adressRad(e) || e.ort || e.kommun,
+    ...(f.length && { f }), ...(t && { t }), ...(r && { r }),
+  };
+}));
 
 /**
  * Läser en datafil (relativt sajtmappen, eller env DATAFIL) och bygger katalogen.

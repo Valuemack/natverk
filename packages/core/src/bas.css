@@ -190,6 +190,34 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .tema-jour { --farg: #0f6b5a; --bakgrund: #f4f6fa; --radie: 8px;
   --topp-bg: #14213d; --topp-text: #fff; --topp-kant: 4px solid #7ee0c3; --logga-farg: #7ee0c3; --list-bg: #0d1630; }
 .tema-jour .svar { background: #e8f6f1; border-left-color: #0f6b5a; }
+/* Tand: klinisk petrol, vitt sidhuvud. */
+.tema-tand { --farg: #0e6a7b; --bakgrund: #f4f8f9; --radie: 14px;
+  --topp-bg: #fff; --topp-kant: 4px solid #0e6a7b; --logga-farg: #0e6a7b; --list-bg: #0a4955; }
+.tema-tand .svar { background: #e7f4f6; border-left-color: #0e6a7b; }
+/* Ladd: mörkgrönt med limegrön accent. */
+.tema-ladd { --farg: #0d6b4f; --bakgrund: #f3f7f4; --radie: 8px;
+  --topp-bg: #0b4f3c; --topp-text: #fff; --topp-kant: 4px solid #9be15d; --logga-farg: #9be15d; --list-bg: #073528; }
+.tema-ladd .svar { background: #ecf7e6; border-left-color: #5aa52a; }
+/* Friluft: mossgrönt och glödorange, serif-rubriker. */
+.tema-friluft { --farg: #4b5d23; --bakgrund: #f7f6f0; --radie: 6px; --rubrik-font: var(--serif);
+  --topp-bg: #3e4a24; --topp-text: #fff; --topp-kant: 4px solid #f0b44c; --logga-farg: #f0b44c; --list-bg: #2a3318; }
+.tema-friluft .svar { background: #f3efe0; border-left-color: #c98a24; }
+/* Skydd: grafit med signalgul – neutral beredskapston, ingen myndighetsprofil. */
+.tema-skydd { --farg: #3d4450; --bakgrund: #f5f5f3; --radie: 2px;
+  --topp-bg: #33373d; --topp-text: #fff; --topp-kant: 4px solid #ffc83d; --logga-farg: #ffc83d; --list-bg: #22252a; }
+.tema-skydd .svar { background: #fff8e0; border-left-color: #e0a800; }
+/* Hjärta: rött sidhuvud, vit text. */
+.tema-hjarta { --farg: #a3231b; --bakgrund: #fbf6f5; --radie: 10px;
+  --topp-bg: #b3261e; --topp-text: #fff; --topp-kant: 0; --logga-farg: #fff; --list-bg: #7d1a14; }
+.tema-hjarta .svar { background: #fdecea; border-left-color: #b3261e; }
+/* Vinter: nattblått med isblå accent. */
+.tema-vinter { --farg: #1f5f99; --bakgrund: #f3f7fb; --radie: 10px;
+  --topp-bg: #1b3a5c; --topp-text: #fff; --topp-kant: 4px solid #cfe8ff; --logga-farg: #cfe8ff; --list-bg: #10253c; }
+.tema-vinter .svar { background: #eaf3fc; border-left-color: #5a9bd5; }
+/* Namnsdag: plommon och varmt papper, serif. */
+.tema-namnsdag { --farg: #7a2e5a; --bakgrund: #fbf7f4; --radie: 4px; --rubrik-font: var(--serif);
+  --topp-bg: #fff; --topp-kant: 5px solid #7a2e5a; --logga-farg: #7a2e5a; --list-bg: #561f3f; }
+.tema-namnsdag .svar { background: #f7eef3; border-left-color: #7a2e5a; }
 .tidsrutor { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .6rem; margin: 1rem 0; padding: 0; list-style: none; }
 .tidsrutor li { background: #14213d; color: #fff; border-radius: var(--radie); padding: .7rem .8rem; }
 .tidsrutor a { color: inherit; text-decoration: none; display: block; }
@@ -226,7 +254,28 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .tema-prisskylt .svar { background: var(--yta); }
   .akut { background: var(--yta); }
   .berakning input, .berakning select { background: #1d1c21; color: inherit; border-color: #3a3940; }
-  .tema-kalender, .tema-apotek, .tema-loppis, .tema-natur, .tema-vuxen, .tema-sim { --topp-bg: var(--yta); }
+  .tema-kalender, .tema-apotek, .tema-loppis, .tema-natur, .tema-vuxen, .tema-sim, .tema-tand, .tema-namnsdag { --topp-bg: var(--yta); }
   [class^="tema-"] .svar { background: var(--yta); }
   .tema-vard h1 { color: inherit; }
 }
+
+/* Startsidans sökverktyg (katalog/Sokverktyg.astro) och nyckeltal. */
+.sokverktyg { background: var(--yta); border: 1px solid var(--linje); border-top: 4px solid var(--farg); border-radius: var(--radie); padding: 1rem 1.1rem .6rem; margin: 1.2rem 0; }
+.sokverktyg h2 { margin: 0 0 .7rem; font-size: 1.2rem; }
+.sv-sok label { display: block; font-size: .9rem; font-weight: 600; margin-bottom: .25rem; }
+.sv-rad { display: flex; gap: .5rem; }
+.sv-rad input { flex: 1; min-width: 0; font: inherit; padding: .5rem .7rem; border: 1px solid var(--linje); border-radius: 8px; background: var(--bakgrund); color: var(--text); }
+.sv-rad input:focus { outline: 2px solid var(--farg); outline-offset: 1px; }
+.sv-filter { border: 0; padding: 0; margin: .8rem 0 .4rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+.sv-filter legend { font-size: .9rem; font-weight: 600; margin-bottom: .35rem; padding: 0; }
+.sv-filter label { display: inline-flex; align-items: center; gap: .35rem; font-size: .92rem; padding: .3rem .75rem; border: 1px solid var(--linje); border-radius: 99px; cursor: pointer; background: var(--bakgrund); user-select: none; }
+.sv-filter label:has(input:checked) { border-color: var(--farg); background: color-mix(in srgb, var(--farg) 12%, var(--yta)); color: var(--farg); font-weight: 600; }
+.sv-filter input { accent-color: var(--farg); margin: 0; }
+.sv-plats { margin-top: .5rem; }
+.sokverktyg .enheter { margin-top: .4rem; }
+.sokverktyg .enheter .oppet-nu { margin-top: .25rem; }
+.siffror { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; margin: 1rem 0 1.4rem; }
+.siffror > * { display: flex; flex-direction: column; background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie); padding: .7rem .9rem; text-decoration: none; color: var(--text); }
+.siffror > a:hover { border-color: var(--farg); }
+.siffror strong { font-family: var(--rubrik-font); font-size: 1.45rem; line-height: 1.2; color: var(--farg); font-variant-numeric: tabular-nums; }
+.siffror span { font-size: .85rem; color: var(--dampad); }

@@ -4,12 +4,14 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { grannkommuner, rakna } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor } from "../../site.js";
+import KommunTathet from "@natverk/core/katalog/KommunTathet.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { grannkommuner, rakna, kommunTathet } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor, ORD } from "../../site.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun: k } = Astro.props;
+const tt = kommunTathet(KAT, k, ORD);
 const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
 const n = k.enheter.length;
 const kommunala = k.enheter.filter((e) => e.typ === "kommunal förskola").length;
@@ -47,7 +49,7 @@ const fragor = [
 const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
 ---
 <Layout site={SITE} titel={titel ?? `Förskolor i ${k.namn}`}
-  beskrivning={`Alla ${n} förskolor i ${k.namn} – ${kommunala} kommunala och ${fristaende} fristående.${s?.barn_per_grupp != null ? ` ✓ ${tal(s.barn_per_grupp)} barn per grupp` : ""}${s?.andel_forskollarexamen != null ? ` ✓ ${tal(s.andel_forskollarexamen, 0)} % förskollärare` : ""} ✓ Jämför med riket.`}
+  beskrivning={besk(`Alla ${n} förskolor i ${k.namn} – ${kommunala} kommunala och ${fristaende} fristående.${s?.barn_per_grupp != null ? ` ✓ ${tal(s.barn_per_grupp)} barn per grupp` : ""}${s?.andel_forskollarexamen != null ? ` ✓ ${tal(s.andel_forskollarexamen, 0)} % förskollärare` : ""} ✓ Jämför med riket.`, `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}
   smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Förskolor i {k.namn}</h1>
   <p class="svar">
@@ -76,6 +78,9 @@ const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, h
       <tbody>{huvudman.map(([h, c]) => <tr><td>{h}</td><td class="num">{c}</td></tr>)}</tbody>
     </table></div>
   </>}
+
+  <KommunTathet t={tt} kommun={k} ord={ORD} />
+
 
   {grannar.length > 0 && <>
     <h2>Jämför med grannkommunerna</h2>

@@ -1,0 +1,17 @@
+---
+// Två sektioner för kommunsidor: antal per invånare (SCB) och närmaste enheter utanför kommunen.
+// `t` = resultatet av kommunTathet(kat, kommun, ord).
+import EnhetLista from "./EnhetLista.astro";
+import { FOLKMANGD_AR } from "../katalog.js";
+const { t, kommun: k, ord } = Astro.props;
+---
+{t.text && <>
+  <h2>Så många {ord.plur} finns det per invånare i {k.namn}</h2>
+  <p>{t.text} Räknat per invånare hamnar {k.namn} på plats <strong>{t.plats}</strong> av {t.antal} kommuner{t.plats <= t.antal / 4 ? " – bland de tätaste i landet" : t.plats > t.antal * 3 / 4 ? " – bland de glesaste i landet" : ""}.</p>
+  <p class="kalla">Folkmängd 31 december {FOLKMANGD_AR} enligt SCB.</p>
+</>}
+{t.utanfor.length > 0 && <>
+  <h2>Närmaste {ord.plur} utanför {k.namn}</h2>
+  <p>{t.n === 1 ? `${k.namn} har bara ${ord.art} ${ord.sing}` : `${k.namn} har ${t.n} ${ord.plur}`}. Det här är de närmaste i grannkommunerna, räknat fågelvägen från kommunens mitt.</p>
+  <EnhetLista enheter={t.utanfor} visaKommun />
+</>}

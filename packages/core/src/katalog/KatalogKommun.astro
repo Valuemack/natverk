@@ -4,10 +4,11 @@
 import Layout from "../Layout.astro";
 import Annons from "../Annons.astro";
 import Faq from "../Faq.astro";
-import { faqLd } from "../seo.js";
+import { faqLd, besk } from "../seo.js";
 import EnhetLista from "./EnhetLista.astro";
 import OppetNuSkript from "./OppetNuSkript.astro";
-import { harOppettider, oppetHelg, sentOppet, grannkommuner, rakna } from "../katalog.js";
+import { harOppettider, oppetHelg, sentOppet, grannkommuner, rakna, kmText, dagText, DAGAR, kommunTathet } from "../katalog.js";
+import KommunTathet from "./KommunTathet.astro";
 
 const { site, kat, kommun: k, ord, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider" } = Astro.props;
 const Plur = ord.plur[0].toUpperCase() + ord.plur.slice(1);
@@ -28,7 +29,19 @@ const antalText = (x) => (x === 1 ? `1 ${ord.sing}` : `${x} ${ord.plur}`);
 
 const titelKandidater = [`${Plur} i ${k.namn} – ${n} st med ${titelOrd}`, `${Plur} i ${k.namn} – ${n} st`];
 const titel = titelKandidater.find((t) => t.length <= 60) ?? titelKandidater.at(-1);
-const beskrivning = `${n === 1 ? `${ord.art === "ett" ? "Det" : "Den"} enda` : `Alla ${n}`} ${n === 1 ? ord.sing : ord.plur} i ${k.namn} med ${visaTider ? "adress och öppettider" : titelOrd}.${visaTider ? " ✓ Öppet nu" : ""}${visaTider && sondag.length ? " ✓ Söndagsöppet" : ""} ✓ Närmaste ${ord.sing} i grannkommunerna.`;
+const beskrivning = besk(
+  `${n === 1 ? `${ord.art === "ett" ? "Det" : "Den"} enda` : `Alla ${n}`} ${n === 1 ? ord.sing : ord.plur} i ${k.namn} med ${visaTider ? "adress och öppettider" : titelOrd}.`,
+  visaTider && "✓ Öppet nu", visaTider && sondag.length > 0 && "✓ Söndagsöppet",
+  `✓ Närmaste ${ord.sing} i grannkommunerna.`, lan && `${k.namn} kommun, ${lan.namn}.`, "Uppdateras varje natt.");
+
+// Täthet per invånare (SCB) och närmaste enheter utanför kommunen – gemensamt med sajternas egna kommunsidor.
+const tt = kommunTathet(kat, k, ord);
+const { text: tathetText, plats, antal: antalKommuner, utanfor } = tt;
+
+// Kompakt öppettidstabell (vardag, lördag, söndag) när kommunen har tider och inte är för stor.
+const visaTidtabell = visaTider && medTider.length <= 40;
+const vardag = (e) => { const t = DAGAR.slice(0, 5).map((d) => dagText(e.oppettider?.[d])); return t.every((x) => x === t[0]) ? t[0] : `${t[0]}*`; };
+const varierar = visaTidtabell && medTider.some((e) => vardag(e).endsWith("*"));
 
 const lista = (arr) => arr.slice(0, 5).map((e) => e.namn).join(", ") + (arr.length > 5 ? ` och ${arr.length - 5} till` : "");
 const fragor = [
@@ -36,6 +49,8 @@ const fragor = [
   visaTider && { fraga: `Vilka ${ord.plur} har öppet på söndagar i ${k.namn}?`, svar: sondag.length ? `${sondag.length === 1 ? en : sondag.length} har söndagsöppet: ${lista(sondag)}.` : `Enligt våra uppgifter har ${ingen} ${ord.sing} i ${k.namn} öppet på söndagar.${grannar[0] ? ` Prova ${grannar[0].namn}.` : ""}` },
   visaTider && kvall.length > 0 && { fraga: `Vilka ${ord.plur} har öppet sent i ${k.namn}?`, svar: `${lista(kvall)} har öppet till klockan 20 eller senare någon vardag.` },
   kedjor.length > 1 && { fraga: `Vilka kedjor finns i ${k.namn}?`, svar: kedjor.map(([namn, c]) => `${namn} (${c})`).join(", ") + "." },
+  tathetText && { fraga: `Hur många invånare går det på varje ${ord.sing} i ${k.namn}?`, svar: `${tathetText} Det placerar ${k.namn} på plats ${plats} av ${antalKommuner} kommuner räknat per invånare.` },
+  utanfor[0] && { fraga: `${ord.art === "ett" ? "Vilket" : "Vilken"} ${ord.sing} utanför ${k.namn} ligger närmast?`, svar: `${utanfor[0].enhet.namn} i ${utanfor[0].enhet.kommun} ligger cirka ${kmText(utanfor[0].km)} fågelvägen från kommunens mitt.` },
   ...extraFragor,
 ].filter(Boolean);
 const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
@@ -66,6 +81,17 @@ const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, h
     <h2>Söndagsöppet i {k.namn}</h2>
     <ul>{sondag.map((e) => <li><a href={e.href}>{e.namn}</a>{e.ort && e.ort !== k.namn && `, ${e.ort}`}</li>)}</ul>
   </>}
+
+  {visaTidtabell && <>
+    <h2>Öppettider för {ord.plur} i {k.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>{Plur.length > 14 ? "Namn" : Plur}</th><th>Vardagar</th><th>Lördag</th><th>Söndag</th></tr></thead>
+      <tbody>{medTider.map((e) => <tr><td>{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</td><td>{vardag(e)}</td><td>{dagText(e.oppettider.sat)}</td><td>{dagText(e.oppettider.sun)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">{varierar && "* Tiderna skiljer sig mellan vardagarna – se respektive sida. "}Tiderna kan avvika vid helgdagar.</p>
+  </>}
+
+  <KommunTathet t={tt} kommun={k} ord={ord} />
 
   {kedjor.length > 1 && <>
     <h2>Kedjor i {k.namn}</h2>

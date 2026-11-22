@@ -1,0 +1,98 @@
+---
+// Startsidans verktyg: sök kommun/ort, välj sajtens egna filter och visa de närmaste med
+// "öppet nu" räknat i webbläsaren. Data hämtas från /narmaste.json först när den behövs.
+// Positionen lämnar aldrig webbläsaren.
+//   filter:  [{ id, namn }]   – sajtens egna filter (testerna ligger i narmaste.json.js)
+//   oppetNu: true             – visa filtret "Öppet nu" (kräver öppettider i datan)
+//   siffror: [{ varde, text, href? }] – nyckeltal under verktyget
+const { ord, kat, filter = [], oppetNu = false, siffror = [], rubrik } = Astro.props;
+const kommuner = kat.kommuner.map((k) => [k.namn, k.href]);
+---
+<section class="sokverktyg" aria-labelledby="sv-rubrik">
+  <h2 id="sv-rubrik">{rubrik ?? `Sök bland alla ${ord.plur}`}</h2>
+  <form class="sv-sok" id="sv-form" role="search">
+    <label for="sv-text">Kommun, ort eller adress</label>
+    <div class="sv-rad">
+      <input id="sv-text" type="search" list="sv-kommuner" autocomplete="off" placeholder="t.ex. Västerås" />
+      <button class="knapp" type="submit">Sök</button>
+    </div>
+    <datalist id="sv-kommuner">{kommuner.map(([n]) => <option value={n} />)}</datalist>
+  </form>
+  {(filter.length > 0 || oppetNu) && (
+    <fieldset class="sv-filter">
+      <legend>Visa bara</legend>
+      {oppetNu && <label><input type="checkbox" value="oppet" /> Öppet nu</label>}
+      {filter.map((f) => <label><input type="checkbox" value={f.id} /> {f.namn}</label>)}
+    </fieldset>
+  )}
+  <button class="knapp sv-plats" type="button" id="sv-plats" hidden>📍 Närmaste {ord.sing} från där jag är</button>
+  <p class="kalla" id="sv-status" aria-live="polite"></p>
+  <ul class="enheter" id="sv-lista"></ul>
+</section>
+{siffror.length > 0 && (
+  <div class="siffror">
+    {siffror.map((s) => s.href
+      ? <a href={s.href}><strong>{s.varde}</strong><span>{s.text}</span></a>
+      : <div><strong>{s.varde}</strong><span>{s.text}</span></div>)}
+  </div>
+)}
+<script is:inline define:vars={{ kommuner, plur: ord.plur, sing: ord.sing }}>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const form = $("sv-form"), text = $("sv-text"), knapp = $("sv-plats"), status = $("sv-status"), lista = $("sv-lista");
+  const val = () => [...document.querySelectorAll(".sv-filter input:checked")].map((x) => x.value);
+  const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b[0] - a[0]) * r / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin((b[1] - a[1]) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+  const kmText = (k) => k < 1 ? `${Math.round(k * 100) * 10} m` : `${k.toFixed(k < 10 ? 1 : 0).replace(".", ",")} km`;
+  // Öppet nu (svensk tid) – samma regler som OppetNuSkript.
+  const D = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  const dag = D.indexOf(p.weekday.toLowerCase().slice(0, 3)), min = +p.hour * 60 + +p.minute;
+  const iv = (v) => v == null ? null : /^stängt$/i.test(v) ? [] : String(v).split(/\s*,\s*/).map((d) => { const [a, b] = d.split(/\s*[-–]\s*/).map((t) => { const m = /^(\d{1,2})[:.](\d{2})$/.exec(t || ""); return m ? +m[1] * 60 + +m[2] : NaN; }); return [a, b <= a ? b + 1440 : b]; }).filter(([a, b]) => !isNaN(a) && !isNaN(b));
+  const oppet = (t) => { if (!t) return null; const i = iv(t[D[dag]]), g = iv(t[D[(dag + 6) % 7]]); if (i === null) return null; return i.some(([a, b]) => min >= a && min < b) || (g || []).some(([, b]) => b > 1440 && min < b - 1440); };
+  let data = null, punkt = null, punktText = "";
+  const hamta = async () => data ??= await (await fetch("/narmaste.json")).json();
+  const visa = () => {
+    if (!data || !punkt) return;
+    const f = val();
+    const urval = data.filter((e) => f.every((id) => id === "oppet" ? oppet(e.t) === true : (e.f || []).includes(id)));
+    const topp = urval.map((e) => ({ ...e, km: km(punkt, [e.lat, e.lon]) })).sort((a, b) => a.km - b.km).slice(0, 8);
+    lista.replaceChildren(...topp.map((e) => {
+      const li = document.createElement("li"), a = document.createElement("a"), d = document.createElement("span");
+      d.className = "avst"; d.textContent = kmText(e.km);
+      a.href = e.href; a.textContent = e.namn; a.className = "namn";
+      li.append(d, a);
+      for (const t of [e.adress, e.r]) if (t) { const s = document.createElement("span"); s.className = "rad"; s.textContent = t; li.append(s); }
+      const o = oppet(e.t);
+      if (o !== null) { const s = document.createElement("span"); s.className = `oppet-nu ${o ? "ja" : "nej"}`; s.textContent = o ? "Öppet nu" : "Stängt nu"; li.append(s); }
+      return li;
+    }));
+    status.textContent = topp.length ? `${punktText} Avstånd fågelvägen.` : `Inga ${plur} matchar filtren nära ${punktText ? "platsen" : "dig"}.`;
+  };
+  for (const c of document.querySelectorAll(".sv-filter input")) c.addEventListener("change", visa);
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const q = text.value.trim().toLowerCase();
+    if (!q) return;
+    const k = kommuner.find(([n]) => n.toLowerCase() === q) ?? (kommuner.filter(([n]) => n.toLowerCase().startsWith(q)).length === 1 ? kommuner.find(([n]) => n.toLowerCase().startsWith(q)) : null);
+    if (k) { location.href = k[1]; return; }
+    status.textContent = "Söker …";
+    try {
+      const traff = (await hamta()).filter((e) => `${e.adress} ${e.namn}`.toLowerCase().includes(q));
+      if (!traff.length) { status.textContent = `Hittade ingen kommun, ort eller adress som matchar "${text.value}".`; lista.replaceChildren(); return; }
+      punkt = [traff.reduce((s, e) => s + e.lat, 0) / traff.length, traff.reduce((s, e) => s + e.lon, 0) / traff.length];
+      punktText = `Närmast "${text.value}".`;
+      visa();
+    } catch { status.textContent = "Kunde inte hämta listan. Försök igen."; }
+  });
+  if ("geolocation" in navigator) {
+    knapp.hidden = false;
+    knapp.addEventListener("click", () => {
+      status.textContent = "Hämtar din position …";
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        try { await hamta(); punkt = [pos.coords.latitude, pos.coords.longitude]; punktText = "Närmast din position."; visa(); }
+        catch { status.textContent = "Kunde inte hämta listan. Försök igen."; }
+      }, () => { status.textContent = "Du behöver tillåta platsåtkomst – eller sök på en kommun eller ort ovan."; }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+    });
+  }
+})();
+</script>

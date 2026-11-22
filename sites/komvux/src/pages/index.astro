@@ -2,7 +2,8 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import HittaNarmaste from "@natverk/core/katalog/HittaNarmaste.astro";
+import Sokverktyg from "@natverk/core/katalog/Sokverktyg.astro";
+import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA, RIKET, grupp } from "../site.js";
 
@@ -25,7 +26,7 @@ const fragor = [
   jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Hitta komvux i din kommun</h1>
   <p class="svar">Här finns <strong>{n} skolenheter</strong> för vuxenutbildning i {KAT.kommuner.length} kommuner: {antal("komvux")} för komvux, {antal("sfi")} renodlade sfi-skolor och {antal("anpassad")} för anpassad utbildning. Välj din kommun för att se skolor, anordnare och hur kommunen står sig mot riket.</p>
-  <HittaNarmaste ord={ORD} />
+  <Sokverktyg ord={ORD} kat={KAT} {...VERKTYG} />
 
   <h2>Flest skolenheter</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>Komvux i {k.namn}</strong><small>{k.enheter.length} skolenheter</small></a>)}</div>

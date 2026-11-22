@@ -2,7 +2,8 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import HittaNarmaste from "@natverk/core/katalog/HittaNarmaste.astro";
+import Sokverktyg from "@natverk/core/katalog/Sokverktyg.astro";
+import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
@@ -21,7 +22,7 @@ const fragor = [
   jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Hitta vårdcentral nära dig</h1>
   <p class="svar">Här finns <strong>{n} {ORD.plur}</strong> i {KAT.kommuner.length} kommuner med adress{KAT.enheter.some(harOppettider) && " och öppettider"}.{sondag > 0 && <> <strong>{sondag}</strong> har öppet på söndagar.</>}</p>
-  <HittaNarmaste ord={ORD} />
+  <Sokverktyg ord={ORD} kat={KAT} {...VERKTYG} />
 
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>

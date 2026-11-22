@@ -4,12 +4,12 @@
 import Layout from "../Layout.astro";
 import Annons from "../Annons.astro";
 import Faq from "../Faq.astro";
-import { faqLd } from "../seo.js";
+import { faqLd, besk } from "../seo.js";
 import Oppettider from "./Oppettider.astro";
 import OppetNu from "./OppetNu.astro";
 import EnhetLista from "./EnhetLista.astro";
 import OppetNuSkript from "./OppetNuSkript.astro";
-import { enhetLd, veckoSammanfattning, narmaste, kmText, telLank, kartLank, adressRad, tolkaIntervall } from "../katalog.js";
+import { enhetLd, veckoSammanfattning, narmaste, kmText, telLank, kartLank, adressRad, tolkaIntervall, titelNamn as kortTitelNamn, invanarePer, talText } from "../katalog.js";
 
 const { site, kat, enhet: e, ord, schemaTyp, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider" } = Astro.props;
 const kommun = kat.kommuner.find((k) => k.slug === e.kommunSlug);
@@ -20,18 +20,34 @@ const ovriga = kommun.enheter.filter((x) => x !== e && !nara.some((n) => n.enhet
 const plats = e.ort ?? e.kommun;
 const harOrt = plats && e.namn.toLowerCase().includes(plats.toLowerCase());
 const slutTitel = vs ? `${titelOrd.replace(" och ", ", ")} och adress` : "adress och telefon";
-const titelKandidater = [
-  `${e.namn}${harOrt ? "" : `, ${plats}`} – ${slutTitel}`,
-  `${e.namn}${harOrt ? "" : `, ${plats}`} – ${vs ? titelOrd : "adress"}`,
-  `${e.namn} – ${vs ? titelOrd : "adress"}`,
+// e.skilj sätts av katalogen när flera enheter annars skulle få samma titel.
+const titelNamn = e.titelNamn ?? kortTitelNamn(e.namn);
+const titelKandidater = e.skilj ? [
+  `${titelNamn}, ${e.skilj}${harOrt ? "" : `, ${plats}`} – ${slutTitel}`,
+  `${titelNamn}, ${e.skilj}${harOrt ? "" : `, ${plats}`} – ${vs ? titelOrd : "adress"}`,
+  `${titelNamn}, ${e.skilj} – ${vs ? titelOrd : "adress"}`,
+  `${titelNamn}, ${e.skilj}`,
+] : [
+  `${titelNamn}${harOrt ? "" : `, ${plats}`} – ${slutTitel}`,
+  `${titelNamn}${harOrt ? "" : `, ${plats}`} – ${vs ? titelOrd : "adress"}`,
+  `${titelNamn} – ${vs ? titelOrd : "adress"}`,
+  `${titelNamn}${harOrt ? "" : `, ${plats}`}`,
 ];
 const titel = titelKandidater.find((t) => t.length <= 60) ?? titelKandidater.at(-1);
-const beskrivning = [
-  `${e.namn}${e.gatuadress ? ` på ${e.gatuadress}` : ""}${plats ? ` i ${plats}` : ""}.`,
+const beskrivning = besk(
+  `${e.namn}${e.gatuadress ? ` på ${e.gatuadress}` : ""}${plats && !harOrt ? ` i ${plats}` : ""}${e.kommun && plats && plats !== e.kommun ? ` (${e.kommun} kommun)` : ""}${lan ? `, ${lan.namn}` : ""}.`,
   vs && `✓ Öppet ${vs}`,
   e.telefon && "✓ Telefon",
   nara.length && `✓ Närmaste ${ord.plur}`,
-].filter(Boolean).join(" ").slice(0, 158);
+  "✓ Vägbeskrivning och karta",
+  `✓ Alla ${ord.plur} i ${kommun.namn}`,
+  "Uppdateras varje natt.",
+);
+
+// Läget i kommunen: hur många det finns, hur många invånare per enhet och avståndet till närmaste andra.
+const iKommunen = kommun.enheter.length;
+const perInv = invanarePer(kommun.folk, iKommunen);
+const lageText = `${e.namn} är ${iKommunen === 1 ? `${ord.art === "ett" ? "det enda" : "den enda"} ${ord.sing}` : `${ord.art === "ett" ? "ett" : "en"} av ${iKommunen} ${ord.plur}`} i ${kommun.namn} kommun${perInv ? `, där det går ${ord.art} ${ord.sing} på ungefär ${talText(perInv)} invånare` : ""}.${nara[0] ? ` Närmaste andra ${ord.sing} är ${nara[0].enhet.namn}, ${kmText(nara[0].km)} bort fågelvägen.` : ""}`;
 
 const sondag = tolkaIntervall(e.oppettider?.sun);
 const fragor = [
@@ -74,6 +90,7 @@ const smulor = [
   <Annons plats="enhet-1" />
 
   <h2>Adress och kontakt</h2>
+  <p>{lageText}</p>
   <dl class="fakta">
     {e.gatuadress && <><dt>Adress</dt><dd>{e.gatuadress}</dd></>}
     {(e.postnummer || e.ort) && <><dt>Postadress</dt><dd>{[e.postnummer, e.ort].filter(Boolean).join(" ")}</dd></>}
