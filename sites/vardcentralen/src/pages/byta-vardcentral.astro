@@ -1,0 +1,57 @@
+---
+// Guide: byta vårdcentral och se vilken vårdcentral man tillhör – med siffror per region ur katalogen.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { talText } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const E = KAT.enheter;
+const privat = (e) => e.extra?.huvudman === "privat";
+const dropin = (e) => e.extra?.dropin === true;
+const lista = (e) => e.extra?.listning !== false;
+const regioner = KAT.lan.map((l) => {
+  const v = E.filter((e) => e.lan === l.namn);
+  return { l, n: v.length, privat: v.filter(privat).length, dropin: v.filter(dropin).length, listning: v.filter(lista).length };
+}).filter((r) => r.n).sort((a, b) => b.n - a.n);
+const pct = (a, b) => (b ? `${Math.round((100 * a) / b)} %` : "–");
+const totPriv = E.filter(privat).length;
+
+const fragor = [
+  { fraga: "Hur vet jag vilken vårdcentral jag tillhör?", svar: "Logga in på 1177.se med BankID eller Freja eID och gå till inkorgen eller tjänsten för listning – där står vilken vårdcentral du är listad på. Du kan också ringa din region eller närmaste vårdcentral och fråga. Har du aldrig valt själv är du oftast listad på en vårdcentral nära din folkbokföringsadress." },
+  { fraga: "Hur byter jag vårdcentral?", svar: "Enklast är att logga in på 1177.se och välja Byt vårdcentral eller Listning. Välj den nya vårdcentralen och bekräfta. Du kan också lämna en blankett på den vårdcentral du vill byta till. Bytet gäller oftast från samma dag eller inom några dagar, och du behöver inte säga upp den gamla." },
+  { fraga: "Får jag välja vårdcentral i en annan region?", svar: "Ja. Enligt patientlagen får du välja vårdcentral i hela landet. Hur listningen går till och om du betalar en annan patientavgift avgörs av regionen där vårdcentralen ligger." },
+  { fraga: "Hur ofta får man byta vårdcentral?", svar: "Det bestämmer varje region. Många regioner tillåter byte när som helst, medan vissa begränsar antalet byten per år. Kontrollera reglerna i din region på 1177.se." },
+  { fraga: "Är privata vårdcentraler dyrare?", svar: `Nej. Privata vårdcentraler som ingår i regionens vårdval har samma patientavgift och högkostnadsskydd som regionens egna. Av ${talText(E.length)} vårdcentraler i Sverige drivs ${pct(totPriv, E.length)} privat.` },
+  { fraga: "Vad ska jag tänka på när jag väljer vårdcentral?", svar: "Avstånd, öppettider, om det finns drop-in och om det går att få digitala besök. Det kan också vara en fördel att välja en vårdcentral med barnavårdscentral (BVC) om du har små barn." },
+];
+---
+<Layout site={SITE} titel="Byta vårdcentral – så gör du och vilken du tillhör"
+  beskrivning={besk("Så byter du vårdcentral på 1177 och ser vilken vårdcentral du är listad på.", "✓ Steg för steg", "✓ Välj i hela landet", `✓ ${talText(E.length)} vårdcentraler per region`)}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Byta vårdcentral", href: "/byta-vardcentral/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Byta vårdcentral – och se vilken du tillhör</h1>
+  <p class="svar">Du väljer själv vårdcentral, i hela landet. Byt enklast genom att <strong>logga in på 1177.se</strong> och välja <strong>Byt vårdcentral</strong>. Där ser du också vilken vårdcentral du är listad på i dag.</p>
+
+  <h2>Så byter du vårdcentral</h2>
+  <ol>
+    <li><strong>Hitta en vårdcentral</strong> – sök på adress eller ort på <a href="/">startsidan</a> och jämför öppettider, drop-in och avstånd.</li>
+    <li><strong>Logga in på 1177.se</strong> med BankID eller Freja eID.</li>
+    <li><strong>Välj Byt vårdcentral</strong> (ibland kallat Listning eller Välj vårdcentral) och sök upp den nya.</li>
+    <li><strong>Bekräfta.</strong> Du behöver inte säga upp den gamla, och dina journaler finns kvar.</li>
+  </ol>
+  <p>Har du inte BankID kan du lämna en blankett för listning på den vårdcentral du vill byta till.</p>
+
+  <h2>Vilken vårdcentral tillhör jag?</h2>
+  <p>Logga in på 1177.se – din listning visas under tjänsten för listning eller Byt vårdcentral. Har du aldrig valt själv har regionen oftast listat dig på en vårdcentral nära din folkbokföringsadress. Du kan också ringa din region eller närmaste vårdcentral.</p>
+
+  <h2>Vårdcentraler per region</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Region</th><th class="num">Vårdcentraler</th><th class="num">Privata</th><th class="num">Drop-in</th></tr></thead>
+    <tbody>{regioner.map((r) => <tr><td><a href={r.l.href}>{r.l.namn.replace(/ län$/, "")}</a></td><td class="num">{r.n}</td><td class="num">{pct(r.privat, r.n)}</td><td class="num">{r.dropin}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Drop-in = vårdcentralen har angett drop-in-tider. Se också <a href="/drop-in/">alla vårdcentraler med drop-in</a>.</p>
+
+  <p class="kalla">Akut sjuk? Ring 112. För sjukvårdsrådgivning dygnet runt, ring 1177. Sidan är en guide och ersätter inte regionens egen information.</p>
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+</Layout>
