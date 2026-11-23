@@ -42,7 +42,7 @@ export const SITE = {
   beskrivning: "Alla vårdcentraler och hälsocentraler i Sverige med adress, telefon och öppettider – hitta din närmaste vårdcentral. Uppdateras varje natt.",
   organisation: "vårdcentralen.nu",
   farg: "#1f5fa8",
-  meny: [{"namn":"Drop-in","href":"/drop-in/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Byta vårdcentral","href":"/byta-vardcentral/"},{"namn":"Drop-in","href":"/drop-in/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om vårdcentralen.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

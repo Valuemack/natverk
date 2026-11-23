@@ -2,7 +2,7 @@
 // Guide: receptfria läkemedel utanför apotek (lag 2009:730). Fakta om regler, inga råd om behandling.
 import Layout from "@natverk/core/Layout.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import { SITE, UPPDATERAD } from "../../site.js";
 
 const fragor = [
@@ -11,7 +11,7 @@ const fragor = [
   { fraga: "Vad är skillnaden mot att köpa på apotek?", svar: "På apoteket finns farmaceuter som kan ge råd om läkemedel, och sortimentet är större. Vissa receptfria läkemedel och förpackningsstorlekar säljs bara på apotek." },
 ];
 ---
-<Layout site={SITE} titel="Receptfria läkemedel i matbutik och på bensinstation – så gäller reglerna"
+<Layout site={SITE} titel="Receptfria läkemedel i matbutik och på mack – reglerna"
   beskrivning="Kan du köpa läkemedel när apoteket har stängt? Så fungerar receptfria läkemedel i butik: vilka butiker som får sälja, 18-årsgräns och skillnaden mot apotek."
   smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Receptfria läkemedel i butik", href: "/guider/receptfria-lakemedel-i-butik/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Receptfria läkemedel i butik</h1>

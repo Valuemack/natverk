@@ -9,12 +9,18 @@ import Oppettider from "./Oppettider.astro";
 import OppetNu from "./OppetNu.astro";
 import EnhetLista from "./EnhetLista.astro";
 import OppetNuSkript from "./OppetNuSkript.astro";
-import { enhetLd, veckoSammanfattning, narmaste, kmText, telLank, kartLank, adressRad, tolkaIntervall, titelNamn as kortTitelNamn, invanarePer, talText } from "../katalog.js";
+import { enhetLd, veckoSammanfattning, narmaste, kmText, telLank, kartLank, adressRad, tolkaIntervall, titelNamn as kortTitelNamn, invanarePer, talText, DAGAR, dagText } from "../katalog.js";
+import { helgTider, specialLd, helgFraga } from "../helgtider.js";
 
-const { site, kat, enhet: e, ord, schemaTyp, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider" } = Astro.props;
+const { site, kat, enhet: e, ord, schemaTyp, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider", helgdagar = false, kedjaHref = null } = Astro.props;
+const kedjaLank = e.kedja && kedjaHref ? kedjaHref(e) : null;
 const kommun = kat.kommuner.find((k) => k.slug === e.kommunSlug);
 const lan = kat.lan.find((l) => l.slug === kommun.lanSlug);
 const vs = veckoSammanfattning(e.oppettider);
+// Helgdagstider (jul, nyår m.m.) de närmaste veckorna – bara publicerade uppgifter, inget gissas.
+const htRa = helgdagar && uppdaterad ? helgTider(e, uppdaterad) : null;
+const ht = htRa && (vs || htRa.harData) ? htRa : null;
+const forstaOrd = ht && e.oppettider ? (() => { const v = e.oppettider[DAGAR[(new Date(ht.rader[0].iso).getUTCDay() + 6) % 7]]; return v != null ? dagText(v) : null; })() : null;
 const nara = narmaste(e, kat.enheter, 5);
 const ovriga = kommun.enheter.filter((x) => x !== e && !nara.some((n) => n.enhet === x));
 const plats = e.ort ?? e.kommun;
@@ -37,6 +43,7 @@ const titel = titelKandidater.find((t) => t.length <= 60) ?? titelKandidater.at(
 const beskrivning = besk(
   `${e.namn}${e.gatuadress ? ` på ${e.gatuadress}` : ""}${plats && !harOrt ? ` i ${plats}` : ""}${e.kommun && plats && plats !== e.kommun ? ` (${e.kommun} kommun)` : ""}${lan ? `, ${lan.namn}` : ""}.`,
   vs && `✓ Öppet ${vs}`,
+  ht?.harData && (ht.jul ? "✓ Tider i jul och nyår" : "✓ Helgdagstider"),
   e.telefon && "✓ Telefon",
   nara.length && `✓ Närmaste ${ord.plur}`,
   "✓ Vägbeskrivning och karta",
@@ -52,6 +59,7 @@ const lageText = `${e.namn} är ${iKommunen === 1 ? `${ord.art === "ett" ? "det 
 const sondag = tolkaIntervall(e.oppettider?.sun);
 const fragor = [
   vs && { fraga: `Vilka öppettider har ${e.namn}?`, svar: `${e.namn} har öppet ${vs}. Tiderna kan avvika vid helgdagar.` },
+  ht && helgFraga(e, ht, forstaOrd),
   sondag && { fraga: `Har ${e.namn} öppet på söndagar?`, svar: sondag.length ? `Ja, ${e.namn} har öppet på söndagar (${veckoSammanfattning({ sun: e.oppettider.sun }).replace(/^sön /, "")}).` : `Nej, ${e.namn} har stängt på söndagar.` },
   e.gatuadress && { fraga: `Var ligger ${e.namn}?`, svar: `${e.namn} ligger på ${adressRad(e)} i ${e.kommun} kommun${e.lan ? `, ${e.lan}` : ""}.` },
   e.telefon && { fraga: `Vilket telefonnummer har ${e.namn}?`, svar: e.telefon_typ === "kundservice" ? `${e.namn} nås via ${e.kedja ?? "kedjans"} kundtjänst på ${e.telefon}.` : `Telefonnumret till ${e.namn} är ${e.telefon}.` },
@@ -67,7 +75,7 @@ const smulor = [
 ];
 ---
 <Layout site={site} titel={titel} beskrivning={beskrivning} smulor={smulor}
-  jsonld={[enhetLd(e, site, schemaTyp), ...(fragor.length ? [faqLd(fragor)] : [])]} uppdaterad={uppdaterad}>
+  jsonld={[{ ...enhetLd(e, site, schemaTyp), ...(specialLd(ht) && { specialOpeningHoursSpecification: specialLd(ht) }) }, ...(fragor.length ? [faqLd(fragor)] : [])]} uppdaterad={uppdaterad}>
   <h1>{e.namn}</h1>
   <p class="svar">
     {e.gatuadress ? <>{e.namn} ligger på <strong>{adressRad(e)}</strong>{e.kommun && e.kommun !== e.ort && <> i {e.kommun} kommun</>}.</> : <>{e.namn} ligger i <strong>{plats}</strong>{e.kommun && e.kommun !== plats && <> i {e.kommun} kommun</>}.</>}
@@ -87,6 +95,20 @@ const smulor = [
     <p class="kalla">Tiderna kan avvika vid helgdagar och lov.</p>
   </>}
 
+  {ht && <>
+    <h2 id="helgdagar">{ht.rubrik}</h2>
+    <div class="tabell helgtider"><table>
+      <thead><tr><th>Dag</th><th>Datum</th><th>Öppettider</th></tr></thead>
+      <tbody>{ht.rader.map((r) => (
+        <tr><th scope="row">{r.namn}</th><td>{r.veckodag} {r.datumText}</td>
+          <td>{r.text ? <strong>{r.text}</strong> : <span class="ej-publ">Ej publicerat än</span>}</td></tr>
+      ))}</tbody>
+    </table></div>
+    <p class="kalla">{ht.harData
+      ? <>Tiderna kommer från {e.kedja ?? "verksamheten"} och kontrolleras varje natt. Dagar utan uppgift har inte publicerats än.</>
+      : <>{e.namn} har inte publicerat särskilda tider för helgdagarna än. Ordinarie tider gäller inte alltid på helgdagar och helgaftnar – kontrollera med {e.namn}{e.telefon ? <> på <a href={telLank(e.telefon)}>{e.telefon}</a></> : ""}{e.webb ? <> eller på <a href={e.webb} rel="nofollow noopener" target="_blank">webbplatsen</a></> : ""}. Vi uppdaterar sidan varje natt.</>}</p>
+  </>}
+
   <Annons plats="enhet-1" />
 
   <h2>Adress och kontakt</h2>
@@ -98,7 +120,7 @@ const smulor = [
     {lan && <><dt>Län</dt><dd><a href={lan.href}>{lan.namn}</a></dd></>}
     {e.telefon && <><dt>{e.telefon_typ === "kundservice" ? "Kundtjänst" : "Telefon"}</dt><dd><a href={telLank(e.telefon)}>{e.telefon}</a>{e.telefon_typ === "kundservice" && e.kedja && <> ({e.kedja})</>}</dd></>}
     {e.webb && <><dt>Webbplats</dt><dd><a href={e.webb} rel="nofollow noopener" target="_blank">{e.webb.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}</a></dd></>}
-    {e.kedja && <><dt>Drivs av</dt><dd>{e.kedja}</dd></>}
+    {e.kedja && <><dt>Drivs av</dt><dd>{kedjaLank ? <a href={kedjaLank}>{e.kedja} – alla butiker och öppettider</a> : e.kedja}</dd></>}
     {e.typ && <><dt>Typ</dt><dd>{e.typ[0].toUpperCase() + e.typ.slice(1)}</dd></>}
     {(e.fakta ?? []).map((f) => <><dt>{f.namn}</dt>{f.varde?.__html ? <dd set:html={f.varde.__html} /> : <dd>{f.varde}</dd>}</>)}
     <slot name="fakta" />

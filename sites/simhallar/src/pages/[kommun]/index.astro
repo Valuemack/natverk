@@ -4,5 +4,9 @@ import { SITE, KAT, ORD, UPPDATERAD, KALLA, TITEL_ORD } from "../../site.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun } = Astro.props;
+// Många söker "badhus" + ort; i små kommuner med en enda anläggning namnges den i titeln.
+const kommunTitlar = (k, n) => n === 1
+  ? [`Badhus i ${k.namn} – ${k.enheter[0].namn}, öppettider och priser`, `Badhus i ${k.namn} – ${k.enheter[0].namn}, öppettider`, `Badhus och simhall i ${k.namn} – öppettider och priser`]
+  : [`Simhallar och badhus i ${k.namn} – ${n} st, öppettider`, `Simhallar och badhus i ${k.namn} – ${n} st`];
 ---
-<KatalogKommun site={SITE} kat={KAT} kommun={kommun} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<KatalogKommun site={SITE} kat={KAT} kommun={kommun} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} kommunTitlar={kommunTitlar} />

@@ -1,5 +1,6 @@
 import { lang, isoVecka } from "@natverk/core/datum.js";
 import { helgdagarAr, nastaHelgdag, klamdagarAr } from "../lib/helgdagar.js";
+import { arbetsdagarDetalj, GRUPPER } from "../lib/ledighet.js";
 import { SITE, IDAG, AR } from "../site.js";
 
 export function GET() {
@@ -15,6 +16,8 @@ export function GET() {
     `- [Röda dagar ${AR}](${SITE.url}/${AR}/)`,
     `- [Röda dagar ${AR + 1}](${SITE.url}/${AR + 1}/)`,
     `- [Klämdagar ${AR + 1}](${SITE.url}/klamdagar/${AR + 1}/)`,
+    `- [Arbetsdagar ${AR + 1}](${SITE.url}/arbetsdagar/${AR + 1}/): ${arbetsdagarDetalj(AR + 1).totalt.arbetsdagar} arbetsdagar`,
+    ...GRUPPER.map((g) => `- [${g.namn} ${AR + 1}](${SITE.url}/${g.slug}/${AR + 1}/)`),
     `- [Vilken vecka är det?](${SITE.url}/vecka/)`,
     `- [Flaggdagar ${AR + 1}](${SITE.url}/flaggdagar/${AR + 1}/)`,
     `- [Alla helgdagar](${SITE.url}/helgdagar/)`,

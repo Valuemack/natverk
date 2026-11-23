@@ -38,7 +38,7 @@ export const SITE = {
   beskrivning: "Alla folkbibliotek i Sverige med adress, telefon och öppettider – se vilka bibliotek som har öppet nu och på helger. Uppdateras varje natt.",
   organisation: "biblioteken.nu",
   farg: "#7a3e9d",
-  meny: [{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Stadsbibliotek","href":"/stadsbibliotek/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om biblioteken.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

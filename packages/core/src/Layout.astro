@@ -2,12 +2,14 @@
 // Gemensam layout för alla nätverkssajter: <head> med all SEO, header, brödsmulor,
 // innehåll och footer. Varje sajt skickar in sin site-konfiguration.
 import "./bas.css";
-import { abs, breadcrumbLd } from "./seo.js";
+import { abs, breadcrumbLd, kortaBesk } from "./seo.js";
 import { TEMAN } from "./teman.js";
 
-const { site, titel, beskrivning, sokvag = Astro.url.pathname, smulor = [], jsonld = [],
+const { site, titel: titelRa, beskrivning: beskrivningRa, sokvag = Astro.url.pathname, smulor = [], jsonld = [],
   uppdaterad, noindex = false, ogTyp = "website" } = Astro.props;
 const canonical = abs(site, sokvag);
+const beskrivning = kortaBesk(beskrivningRa);
+const titel = String(titelRa ?? "").replace(/\u00ad/g, "");
 const tema = site.tema ?? "kalender";
 const logga = TEMAN[tema]?.logga ?? "";
 const allaLd = [...(smulor.length > 1 ? [breadcrumbLd(site, smulor)] : []), ...jsonld];

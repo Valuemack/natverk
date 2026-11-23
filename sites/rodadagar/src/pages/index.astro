@@ -7,7 +7,8 @@ import { lang, kort, veckodag, versal, isoVecka } from "@natverk/core/datum.js";
 import HelgTabell from "../components/HelgTabell.astro";
 import { helgdagarAr, rodaDagarAr, klamdagarAr, nastaHelgdag } from "../lib/helgdagar.js";
 import { omDagar, st } from "../lib/text.js";
-import { SITE, IDAG, AR, AR_LISTA, UPPDATERAD } from "../site.js";
+import { GRUPPER, gruppHuvud } from "../lib/ledighet.js";
+import { SITE, IDAG, AR, AR_LISTA, HELG_AR, UPPDATERAD } from "../site.js";
 
 const nastaRod = nastaHelgdag(IDAG, "rod");
 const nastaLedig = nastaHelgdag(IDAG);
@@ -40,8 +41,16 @@ const fragor = [
   <Annons plats="start-1" />
 
   <h2>Röda dagar {AR + 1}</h2>
-  <HelgTabell dagar={nastaAr} idag={IDAG} />
+  <HelgTabell dagar={nastaAr} idag={IDAG} helgAr={HELG_AR} />
   <p>{AR + 1} finns det {st(klamNasta.length, "klämdag", "klämdagar")}. <a href={`/${AR + 1}/`}>Se klämdagar, långhelger och arbetsdagar {AR + 1} →</a></p>
+
+  <h2>Helgerna {AR + 1}</h2>
+  <div class="kort">
+    {GRUPPER.map((g) => { const d = gruppHuvud(g, AR + 1).datum; return (
+      <a href={`/${g.slug}/${AR + 1}/`}><strong>{g.namn} {AR + 1}</strong><small>{versal(veckodag(d))} {kort(d)}</small></a>
+    ); })}
+  </div>
+  <p><a href={`/arbetsdagar/${AR + 1}/`}>Arbetsdagar {AR + 1} per månad →</a> · <a href={`/klamdagar/${AR + 1}/`}>Klämdagar {AR + 1} →</a> · <a href={`/vecka/${AR + 1}/`}>Veckonummer {AR + 1} →</a></p>
 
   <h2>Hitta rätt datum</h2>
   <div class="kort">
@@ -50,6 +59,7 @@ const fragor = [
     <a href="/kristi-himmelsfardsdag/"><strong>Kristi himmelsfärd</strong><small>Och klämdagen efter</small></a>
     <a href="/julafton/"><strong>Julafton</strong><small>Veckodag år för år</small></a>
     <a href="/klamdagar/"><strong>Klämdagar</strong><small>Ta ledigt smart</small></a>
+    <a href="/arbetsdagar/"><strong>Arbetsdagar</strong><small>Per månad och år</small></a>
     <a href="/vecka/"><strong>Vecka {vecka}</strong><small>Vilken vecka är det?</small></a>
   </div>
 

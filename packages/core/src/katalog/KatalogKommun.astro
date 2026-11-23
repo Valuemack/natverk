@@ -10,7 +10,7 @@ import OppetNuSkript from "./OppetNuSkript.astro";
 import { harOppettider, oppetHelg, sentOppet, grannkommuner, rakna, kmText, dagText, DAGAR, kommunTathet } from "../katalog.js";
 import KommunTathet from "./KommunTathet.astro";
 
-const { site, kat, kommun: k, ord, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider" } = Astro.props;
+const { site, kat, kommun: k, ord, uppdaterad, kallaText, extraFragor = [], titelOrd = "öppettider", kommunTitlar = null } = Astro.props;
 const Plur = ord.plur[0].toUpperCase() + ord.plur.slice(1);
 const lan = kat.lan.find((l) => l.slug === k.lanSlug);
 const n = k.enheter.length;
@@ -27,7 +27,7 @@ const ingen = ord.art === "ett" ? "inget" : "ingen";
 const en = ord.art === "ett" ? "Ett" : "En";
 const antalText = (x) => (x === 1 ? `1 ${ord.sing}` : `${x} ${ord.plur}`);
 
-const titelKandidater = [`${Plur} i ${k.namn} – ${n} st med ${titelOrd}`, `${Plur} i ${k.namn} – ${n} st`];
+const titelKandidater = [...(kommunTitlar ? kommunTitlar(k, n) : []), `${Plur} i ${k.namn} – ${n} st med ${titelOrd}`, `${Plur} i ${k.namn} – ${n} st`];
 const titel = titelKandidater.find((t) => t.length <= 60) ?? titelKandidater.at(-1);
 const beskrivning = besk(
   `${n === 1 ? `${ord.art === "ett" ? "Det" : "Den"} enda` : `Alla ${n}`} ${n === 1 ? ord.sing : ord.plur} i ${k.namn} med ${visaTider ? "adress och öppettider" : titelOrd}.`,

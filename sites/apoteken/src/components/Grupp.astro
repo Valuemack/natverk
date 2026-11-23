@@ -1,0 +1,49 @@
+---
+// Gemensam mall för samlingssidor: apotek i en butikstyp eller i en kedja, per län.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd, besk, valjTitel } from "@natverk/core/seo.js";
+import { helgTider } from "@natverk/core/helgtider.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+import { nyckeltal, stangerDag, kl, BUTIKER, KEDJOR } from "../grupper.js";
+import { DAGAR } from "@natverk/core/katalog.js";
+
+const { namn, rubrik, enheter, href, typ, titelKandidater, introText } = Astro.props;
+const n = enheter.length;
+const t = nyckeltal(enheter);
+const perLan = KAT.lan.map((l) => ({ lan: l, enheter: enheter.filter((e) => e.lan === l.namn).sort((a, b) => a.kommun.localeCompare(b.kommun, "sv") || a.namn.localeCompare(b.namn, "sv")) })).filter((x) => x.enheter.length);
+const senastKl = t.senast ? Math.max(...DAGAR.map((d) => stangerDag(t.senast, d) ?? 0)) : null;
+// Julafton m.fl.: hur många i gruppen har publicerat tider
+const ht = enheter.map((e) => ({ e, h: helgTider(e, UPPDATERAD) })).filter((x) => x.h);
+const forstaHelg = ht[0]?.h.rader[0];
+const medHelgtid = forstaHelg ? ht.filter((x) => x.h.rader[0].tid) : [];
+const oppnaHelg = medHelgtid.filter((x) => x.h.rader[0].iv?.length);
+const andra = (typ === "butik" ? BUTIKER : KEDJOR).filter((g) => g.href !== href);
+
+const fragor = [
+  { fraga: `Vilka öppettider har apoteken ${typ === "butik" ? `på ${namn}` : `hos ${namn}`}?`, svar: `Öppettiderna skiljer sig mellan apoteken. ${t.lordag.length} av ${t.medTider.length} har öppet på lördagar och ${t.sondag.length} på söndagar.${t.senast ? ` Längst öppet har ${t.senast.namn}, till ${kl(senastKl)}.` : ""} Se varje apotek nedan för exakta tider.` },
+  { fraga: `Har apoteken ${typ === "butik" ? `på ${namn}` : `hos ${namn}`} öppet på söndagar?`, svar: t.sondag.length ? `Ja, ${t.sondag.length} av ${n} apotek har öppet på söndagar, till exempel ${t.sondag.slice(0, 3).map((e) => e.namn).join(", ")}.` : `Nej, enligt våra uppgifter har inget av apoteken öppet på söndagar.` },
+  t.sent.length > 0 && { fraga: `Vilka apotek har öppet sent?`, svar: `${t.sent.length} av apoteken har öppet till klockan 21 eller senare på vardagar, bland annat ${t.sent.slice(0, 3).map((e) => e.namn).join(", ")}.` },
+  forstaHelg && { fraga: `Har apoteken öppet på ${forstaHelg.namn.toLowerCase()}?`, svar: medHelgtid.length ? `${medHelgtid.length} av ${n} apotek har publicerat tider för ${forstaHelg.namn.toLowerCase()} (${forstaHelg.veckodag} ${forstaHelg.datumText}), och ${oppnaHelg.length} av dem har öppet. Övriga har inte publicerat tider än – vi uppdaterar varje natt.` : `Inget av apoteken har publicerat särskilda tider för ${forstaHelg.namn.toLowerCase()} (${forstaHelg.veckodag} ${forstaHelg.datumText}) än. Tiderna brukar avvika från de ordinarie – vi uppdaterar varje natt.` },
+  { fraga: `Hur många ${typ === "butik" ? `apotek finns på ${namn}` : `apotek har ${namn}`}?`, svar: `Vi listar ${n} apotek i ${t.kommuner} kommuner och ${perLan.length} län.` },
+].filter(Boolean);
+const titel = valjTitel(titelKandidater);
+const beskrivning = besk(introText ?? `${n} apotek ${typ === "butik" ? `på ${namn}` : `från ${namn}`} i ${t.kommuner} kommuner med adress och öppettider.`, t.sondag.length === n ? "✓ Alla har söndagsöppet" : t.sondag.length > 0 && `✓ ${t.sondag.length} söndagsöppna`, "✓ Öppet nu", forstaHelg && "✓ Jul och nyår", "✓ Per län");
+---
+<Layout site={SITE} titel={titel} beskrivning={beskrivning}
+  smulor={[{ namn: "Start", href: "/" }, { namn: rubrik, href }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{rubrik} – öppettider</h1>
+  <p class="svar">Det finns <strong>{n} apotek</strong> {typ === "butik" ? <>på {namn}</> : <>från {namn}</>} i {t.kommuner} kommuner. <strong>{t.sondag.length}</strong> har öppet på söndagar och <strong>{t.lordag.length}</strong> på lördagar{t.senast && <>. Längst öppet har {t.senast.namn} (till {kl(senastKl)})</>}.</p>
+  {forstaHelg && <p>Inför <strong>{forstaHelg.namn.toLowerCase()}</strong> ({forstaHelg.veckodag} {forstaHelg.datumText}) har {medHelgtid.length} av apoteken publicerat sina tider{medHelgtid.length ? <> – {oppnaHelg.length} har öppet</> : ""}. Tiderna står på varje apoteks sida.</p>}
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  {perLan.map((x) => <><h2 id={x.lan.slug}>{rubrik} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  {andra.length > 0 && <>
+    <h2>{typ === "butik" ? "Apotek i andra butiker" : "Andra apotekskedjor"}</h2>
+    <div class="kort">{andra.map((g) => <a href={g.href}><strong>{g.rubrik}</strong><small>{g.enheter.length} apotek</small></a>)}</div>
+  </>}
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Sajten är oberoende och inte ansluten till {namn}.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

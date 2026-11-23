@@ -5,7 +5,7 @@ import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
 import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import { slug, rakna, oppetHelg } from "@natverk/core/katalog.js";
 import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
 
@@ -14,17 +14,19 @@ export function getStaticPaths() {
     .map(([kedja]) => ({ params: { kedja: slug(kedja) }, props: { kedja } }));
 }
 const { kedja } = Astro.props;
+const kortKedja = kedja.replace(/\s+second hand$/i, "");
 const butiker = KAT.enheter.filter((e) => e.kedja === kedja);
 const perLan = KAT.lan.map((l) => ({ lan: l, enheter: butiker.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
 const storst = rakna(butiker, (e) => e.kommun).slice(0, 3);
 const sondag = butiker.filter((e) => oppetHelg(e, "sun") === true).length;
 const lordag = butiker.filter((e) => oppetHelg(e, "sat") === true).length;
 const fragor = [
+  { fraga: `Vilka öppettider har ${kortKedja}?`, svar: `Öppettiderna skiljer sig mellan butikerna. ${lordag} av ${butiker.length} har öppet på lördagar och ${sondag} på söndagar. Se din butik nedan – tiderna uppdateras varje natt.` },
   { fraga: `Hur många butiker har ${kedja}?`, svar: `Vi listar ${butiker.length} butiker från ${kedja} i ${perLan.length} län. Flest finns i ${storst.map(([k, n]) => `${k} (${n})`).join(", ")}.` },
   { fraga: `Har ${kedja} öppet på helger?`, svar: `${lordag} av ${kedja}s butiker har öppet på lördagar och ${sondag} på söndagar enligt våra uppgifter. Se varje butik för exakta tider.` },
 ];
 ---
-<Layout site={SITE} titel={`${kedja} – alla ${butiker.length} butiker med öppettider`}
+<Layout site={SITE} titel={valjTitel(`${kortKedja} öppettider – alla ${butiker.length} butiker i Sverige`, `${kortKedja} öppettider – ${butiker.length} butiker`)}
   beskrivning={`Alla ${butiker.length} ${kedja}-butiker i Sverige med adress och öppettider, sorterade per län. ✓ Öppet nu ✓ Lördagsöppet ✓ Uppdateras varje natt.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: kedja, href: `/kedja/${slug(kedja)}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>{kedja} – butiker och öppettider</h1>

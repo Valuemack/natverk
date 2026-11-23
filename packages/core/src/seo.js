@@ -17,6 +17,26 @@ export function besk(huvud, ...fyll) {
   return t;
 }
 
+/**
+ * Säkerställ att en meta-beskrivning ryms (Google visar ~155–160 tecken).
+ * Tar först bort ✓-punkter bakifrån, sedan klipper vid meningsslut, sist vid ordgräns.
+ */
+export function kortaBesk(text, max = 160) {
+  let t = String(text ?? "").replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  while (t.length > max && /\s✓ [^✓]*$/.test(t)) t = t.replace(/\s✓ [^✓]*$/, "").trim();
+  if (t.length <= max) return t;
+  const slut = t.slice(0, max).lastIndexOf(". ");
+  if (slut >= 100) return t.slice(0, slut + 1);
+  return t.slice(0, max - 2).replace(/\s+\S*$/, "") + " …";
+}
+
+/** Första titeln som ryms (Google visar ~60 tecken); annars den kortaste. */
+export function valjTitel(...kandidater) {
+  const k = kandidater.flat().filter(Boolean);
+  return k.find((t) => t.length <= 60) ?? [...k].sort((a, b) => a.length - b.length)[0];
+}
+
 export const websiteLd = (site) => ({
   "@context": "https://schema.org",
   "@type": "WebSite",

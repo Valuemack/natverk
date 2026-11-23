@@ -36,7 +36,7 @@ const fragor = [
   ...sarskilda.slice(0, 2).map(([u, l]) => ({ fraga: `Vilka lekplatser i ${k.namn} har ${UTRUSTNING[u].toLowerCase()}?`, svar: `${l.length} ${l.length === 1 ? "lekplats" : "lekplatser"} i ${k.namn} har ${UTRUSTNING[u].toLowerCase()} enligt våra uppgifter, bland annat ${l.slice(0, 3).map((e) => e.namn).join(", ")}.` })),
   tillg.length > 0 && { fraga: `Finns det tillgänglighetsanpassade lekplatser i ${k.namn}?`, svar: `${tillg.length} lekplatser i ${k.namn} är tillgänglighetsanpassade enligt kommunen, till exempel ${tillg.slice(0, 3).map((e) => e.namn).join(", ")}.` },
 ].filter(Boolean);
-const titel = [tema.length > 0 && `Lekplatser i ${k.namn} – ${n} st med redskap och teman`, redskap.length > 2 && `Lekplatser i ${k.namn} – ${n} st och deras redskap`, `Lekplatser i ${k.namn} – ${n} st`].filter(Boolean).find((t) => t.length <= 60) ?? `Lekplatser i ${k.namn}`;
+const titel = [tema.length > 0 && `Lekplatser i ${k.namn} – ${n} st med redskap och teman`, redskap.length > 2 && `Lekplatser i ${k.namn} – ${n} st och deras redskap`, `Lekplatser i ${k.namn} – ${n} st, karta och närmaste lekpark`, `Lekplatser i ${k.namn} – ${n} st`].filter(Boolean).find((t) => t.length <= 60) ?? `Lekplatser i ${k.namn}`;
 ---
 <Layout site={SITE} titel={titel}
   beskrivning={besk(`Alla ${n} lekplatser i ${k.namn}${sarskilda.length ? ` – bland annat med ${sarskilda.slice(0, 3).map(([u]) => UTRUSTNING[u].toLowerCase()).join(", ")}` : ""}.${tema.length ? ` ✓ ${tema.length} temalekplatser` : ""} ✓ Närmaste lekplats ✓ Vägbeskrivning.`.slice(0, 158), `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}

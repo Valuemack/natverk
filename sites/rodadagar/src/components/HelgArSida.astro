@@ -1,0 +1,136 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { lang, kort, veckodag, isoVecka, versal, iso, arHelg, dagarMellan } from "@natverk/core/datum.js";
+import HelgTabell from "./HelgTabell.astro";
+import { helgdagBySlug, klamdagarAr } from "../lib/helgdagar.js";
+import { gruppDagar, gruppHuvud, ledigPeriod, semestertips } from "../lib/ledighet.js";
+import { lista, period, tipsText, st, smaNamn } from "../lib/text.js";
+import { SITE, IDAG, HELG_AR, UPPDATERAD } from "../site.js";
+
+const { g, ar } = Astro.props;
+const dagar = gruppDagar(g, ar);
+const huvud = gruppHuvud(g, ar);
+const H = huvud.datum;
+const v = isoVecka(H).vecka;
+const fras = g.namn.startsWith("Kristi") ? g.namn : g.namn.toLowerCase();
+const ovriga = dagar.filter((d) => d.id !== huvud.id);
+const fast = ["trettondedag-jul", "forsta-maj", "nationaldagen", "julafton", "nyarsafton"].includes(g.slug);
+const vardagar = dagar.filter((d) => !arHelg(d.datum));
+
+// Sammanhängande ledighet runt helgens dagar (utan semester)
+const perioder = [...new Map(dagar.map((d) => ledigPeriod(d.datum)).filter(Boolean).map((p) => [iso(p.fran), p])).values()];
+const langst = perioder.reduce((b, p) => (!b || p.dagar > b.dagar ? p : b), null);
+const tips = semestertips(dagar);
+const inom = (k) => dagar.some((d) => d.datum >= k.ledigFran && d.datum <= k.ledigTill);
+const klam = [...klamdagarAr(ar), ...(g.nastaAr ? klamdagarAr(ar + 1) : [])].filter(inom);
+
+const rader = HELG_AR.map((y) => {
+  const d = gruppHuvud(g, y).datum;
+  const lp = gruppDagar(g, y).map((x) => ledigPeriod(x.datum)).filter(Boolean);
+  return { y, d, ledigt: Math.max(0, ...lp.map((p) => p.dagar)) };
+});
+const forraD = gruppHuvud(g, ar - 1).datum;
+const skillnad = dagarMellan(plusAr(forraD), H);
+function plusAr(d) { return new Date(Date.UTC(ar, d.getUTCMonth(), d.getUTCDate())); }
+
+const titlar = {
+  "trettondedag-jul": `Trettondedag jul ${ar} – 6 januari på en ${veckodag(H)}`,
+  pask: `Påsk ${ar} – datum för påskhelgen och lediga dagar`,
+  "forsta-maj": `Första maj ${ar} – en ${veckodag(H)}, röd dag och ledighet`,
+  "kristi-himmelsfardsdag": `Kristi himmelsfärd ${ar} – datum, klämdag och ledighet`,
+  pingst: `Pingst ${ar} – när är pingstdagen ${ar}?`,
+  nationaldagen: `Nationaldagen ${ar} – 6 juni infaller på en ${veckodag(H)}`,
+  midsommar: `Midsommar ${ar} – midsommarafton ${kort(H)} och ledighet`,
+  "alla-helgons-dag": `Alla helgons dag ${ar} – lördag ${kort(H)}, datum och fakta`,
+  julafton: `Jul ${ar} – julafton, juldagen och annandag jul`,
+  nyarsafton: `Nyårsafton ${ar} och nyårsdagen ${ar + 1} – veckodag`,
+};
+
+const ovrigaText = ovriga.length
+  ? ` ${versal(lista(ovriga.map((d, i) => `${smaNamn(d.namn)}${i === 0 ? " är" : ""} ${veckodag(d.datum)} ${kort(d.datum)}${d.datum.getUTCFullYear() !== ar ? " " + d.datum.getUTCFullYear() : ""}`)))}.`
+  : "";
+const ledigText = langst
+  ? langst.dagar >= 3 ? `Ledigheten blir ${langst.dagar} dagar i rad, ${period(langst.fran, langst.till)}.`
+    : vardagar.length ? (langst.dagar === 1 ? `${versal(veckodag(langst.fran))} ${kort(langst.fran)} är ledig, men dagarna runt omkring är vanliga arbetsdagar.` : `Det blir ${langst.dagar} lediga dagar i rad utan semester.`) : `Eftersom dagen infaller på en ${veckodag(H)} ger den ingen extra ledig vardag.`
+  : "";
+const rodText = (d) => d.typ === "rod"
+  ? `Ja. ${d.namn} är en allmän helgdag (röd dag) enligt lag (1989:253). ${d.datum.getUTCFullYear()} infaller den ${lang(d.datum)}${arHelg(d.datum) ? ", på en helg, så den ger ingen extra ledig vardag" : ", en vardag som blir ledig"}.`
+  : `Nej. ${d.namn} är ingen allmän helgdag enligt lag (1989:253). ${d.id === "paskafton" ? "Den infaller alltid på en lördag" : "Den jämställs med söndag i semesterlagen, och de flesta är lediga"}. ${d.datum.getUTCFullYear()} infaller den ${lang(d.datum)}.`;
+
+const fragor = [
+  { fraga: `När är ${fras} ${ar}?`, svar: `${huvud.namn} ${ar} infaller ${lang(H)}, vecka ${v}.${ovrigaText}` },
+  ...dagar.map((d) => ({ fraga: `Är ${smaNamn(d.namn)} ${d.datum.getUTCFullYear()} en röd dag?`, svar: rodText(d) })),
+  { fraga: `Hur många dagar ledigt blir ${fras} ${ar}?`,
+    svar: `${ledigText || "Ingen extra ledighet."}${tips.map((t) => " " + tipsText(t)).join("")}` },
+];
+const beskrivning = besk(
+  `${huvud.namn} ${ar} infaller ${lang(H)} (vecka ${v}).`,
+  ledigText,
+  tips.length ? `Ta ${st(tips[0].semesterdagar, "semesterdag", "semesterdagar")} och bli ledig ${tips[0].dagar} dagar i rad.` : null,
+  "Datum, veckodag och ledighet år för år.",
+);
+const lankAr = HELG_AR.filter((y) => y !== ar);
+---
+<Layout site={SITE} titel={titlar[g.slug]} beskrivning={beskrivning}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" },
+    { namn: helgdagBySlug(g.slug).namn, href: `/${g.slug}/` }, { namn: `${g.namn} ${ar}`, href: `/${g.slug}/${ar}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>{g.namn} {ar}</h1>
+  <p class="svar">{huvud.namn} {ar} infaller <strong>{lang(H)}</strong> (vecka {v}).{ovrigaText} {ledigText}</p>
+  <div class="lank-rad">{HELG_AR.map((y) => <a href={`/${g.slug}/${y}/`} aria-current={y === ar ? "page" : undefined}>{g.namn} {y}</a>)}</div>
+
+  <h2>Datum för {fras} {ar}</h2>
+  <HelgTabell dagar={dagar} idag={IDAG} ledig visaAr={!!g.nastaAr} />
+  {dagar.some((d) => d.typ === "afton") && <p>* Helgafton: ingen röd dag enligt lag, men ledig för de flesta.</p>}
+
+  <h2>Ledighet {fras} {ar}</h2>
+  {perioder.length > 0 && (
+    <p>{perioder.map((p) => <>Utan semester är du ledig <strong>{p.dagar} {p.dagar === 1 ? "dag" : "dagar"}</strong> ({p.dagar === 1 ? `${veckodag(p.fran)} ${kort(p.fran)}` : period(p.fran, p.till)}). </>)}
+      {dagar.some((d) => d.typ === "afton" && !arHelg(d.datum)) && "Helgaftnar räknas som lediga."}</p>
+  )}
+  {klam.length > 0 && (
+    <p>{klam.length === 1 ? "Klämdag" : "Klämdagar"}: {lista(klam.map((k) => `${veckodag(k.datum)} ${kort(k.datum)}`))}.
+      Tar du ledigt {klam.length === 1 ? "den dagen" : "en av dem"} blir du ledig {Math.max(...klam.map((k) => k.ledigaDagar))} dagar i rad.</p>
+  )}
+  {tips.length ? (
+    <>
+      <p>Semestertips räknade ur kalendern {ar}:</p>
+      <ul>{tips.map((t) => <li>{tipsText(t)}</li>)}</ul>
+    </>
+  ) : <p>{vardagar.length ? `Det finns inget sätt att förlänga ${fras} ${ar} med få semesterdagar utöver vanliga helgen.` : `${versal(fras)} ${ar} infaller helt på en helg, så det finns inga lediga vardagar att bygga en längre ledighet kring.`}</p>}
+
+  <Annons plats="helgar-1" />
+
+  <h2>Om {fras}</h2>
+  <p>{g.om}</p>
+  {!fast && (
+    <p>{huvud.namn} {ar} infaller {skillnad === 0 ? "på samma datum" : `${Math.abs(skillnad)} dagar ${skillnad < 0 ? "tidigare" : "senare"} i kalendern`} än {ar - 1} ({kort(forraD)} {ar - 1}).</p>
+  )}
+
+  <h2>{g.namn} år för år</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>{huvud.namn}</th><th>Veckodag</th><th class="num">Vecka</th><th class="num">Lediga dagar i rad</th></tr></thead>
+    <tbody>{rader.map(({ y, d, ledigt }) => (
+      <tr class:list={{ markerad: y === ar }}>
+        <td><a href={`/${g.slug}/${y}/`}>{g.namn} {y}</a></td><td>{kort(d)}</td><td>{versal(veckodag(d))}</td>
+        <td class="num">{isoVecka(d).vecka}</td><td class="num">{ledigt}</td>
+      </tr>
+    ))}</tbody>
+  </table></div>
+
+  <h2>Mer om {ar}</h2>
+  <div class="kort">
+    <a href={`/${ar}/`}><strong>Röda dagar {ar}</strong><small>Alla helgdagar och aftnar</small></a>
+    <a href={`/klamdagar/${ar}/`}><strong>Klämdagar {ar}</strong><small>Ta ledigt smart</small></a>
+    <a href={`/arbetsdagar/${ar}/`}><strong>Arbetsdagar {ar}</strong><small>Per månad och totalt</small></a>
+    <a href={`/vecka/${ar}/`}><strong>Veckonummer {ar}</strong><small>Vecka {v}: {fras}</small></a>
+    <a href={`/${g.slug}/`}><strong>{helgdagBySlug(g.slug).namn}</strong><small>Nästa gång och alla år</small></a>
+    {lankAr.includes(ar + 1) && <a href={`/${g.slug}/${ar + 1}/`}><strong>{g.namn} {ar + 1}</strong><small>Nästa år</small></a>}
+  </div>
+
+  <Annons plats="helgar-2" />
+  <Faq fragor={fragor} />
+</Layout>

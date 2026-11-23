@@ -7,6 +7,7 @@ import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { KEDJOR, BUTIKER } from "../grupper.js";
 
 const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
 const n = KAT.enheter.length;
@@ -20,9 +21,12 @@ const fragor = [
 <Layout site={SITE} titel="Apotek nära dig – öppettider för alla apotek i Sverige"
   beskrivning={`Hitta ${ORD.plur} nära dig – alla ${n} i Sverige med adress och öppettider. ✓ Öppet nu ✓ Närmaste ${ORD.sing} ✓ Uppdateras varje natt.`}
   jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>Hitta apotek nära dig</h1>
+  <h1>Apotek nära dig – öppettider och öppet nu</h1>
   <p class="svar">Här finns <strong>{n} {ORD.plur}</strong> i {KAT.kommuner.length} kommuner med adress{KAT.enheter.some(harOppettider) && " och öppettider"}.{sondag > 0 && <> <strong>{sondag}</strong> har öppet på söndagar.</>}</p>
   <Sokverktyg ord={ORD} kat={KAT} {...VERKTYG} />
+
+  <h2>Apotek per kedja och butik</h2>
+  <div class="kort">{[...KEDJOR, ...BUTIKER].map((g) => <a href={g.href}><strong>{g.typ === "butik" || BUTIKER.includes(g) ? g.rubrik : `${g.namn} öppettider`}</strong><small>{g.enheter.length} apotek</small></a>)}</div>
 
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>

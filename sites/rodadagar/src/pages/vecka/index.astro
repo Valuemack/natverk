@@ -16,7 +16,7 @@ const fragor = [
 ];
 ---
 <Layout site={SITE} titel={`Vilken vecka är det? Idag är det vecka ${vecka} (${ar})`}
-  beskrivning={`Idag är det vecka ${vecka}. ✓ Veckonummer idag ✓ Måndag–söndag för veckan ✓ Alla veckor ${ar} med datum.`}
+  beskrivning={`Idag är det vecka ${vecka}. ✓ Veckonummer idag ✓ Måndag–söndag för veckan ✓ Alla veckor ${ar} med datum ✓ Enligt ISO 8601, som används i Sverige.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Vilken vecka är det?</h1>
   <p class="svar" id="vecka-svar" data-idag={IDAG.toISOString().slice(0, 10)}>Idag, {lang(IDAG)}, är det <strong>vecka {vecka}</strong>.</p>

@@ -6,4 +6,4 @@ export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
 const { enhet } = Astro.props;
 ---
-<KatalogEnhet site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<KatalogEnhet helgdagar site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />

@@ -1,0 +1,96 @@
+---
+// Maxtaxa-kalkylator: räkna ut förskole- och fritidshemsavgiften efter maxtaxan.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import { SITE, KAT, UPPDATERAD } from "../site.js";
+import { AKTUELL as M, NASTA_AR, NASTA_PUBLICERAD, maxAvgift, avgift } from "../maxtaxa.js";
+
+const kr = (n) => `${n.toLocaleString("sv-SE")} kr`;
+const pr = (x) => `${(x * 100).toLocaleString("sv-SE")} %`;
+const tak = M.takEfterAvdrag + M.fribelopp;
+const ex = 40000;
+const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 8);
+const fragor = [
+  { fraga: "Vad är maxtaxan för förskola?", svar: `Maxtaxan ${M.rubrik} är ${kr(maxAvgift(M, "forskola", 1))} i månaden för första barnet, ${kr(maxAvgift(M, "forskola", 2))} för andra och ${kr(maxAvgift(M, "forskola", 3))} för tredje barnet. Från fjärde barnet är förskolan avgiftsfri.` },
+  { fraga: `Vad blir maxtaxan ${NASTA_AR}?`, svar: NASTA_PUBLICERAD ? `Se tabellen för ${NASTA_AR} ovan.` : `Skolverket fastställer inkomsttaket för ${NASTA_AR} senast den 1 december ${NASTA_AR - 1}. Inkomsttaket räknas upp varje år, så de högsta avgifterna blir troligen något högre än i dag. Vi uppdaterar kalkylatorn så fort siffrorna är publicerade.` },
+  { fraga: "Hur räknas förskoleavgiften ut?", svar: `Avgiften är en procentsats av hushållets samlade inkomst före skatt per månad. Sedan 1 juli 2026 dras först ett fribelopp på ${kr(M.fribelopp)} av. Exempel: ${kr(ex)} i månaden ger (${ex.toLocaleString("sv-SE")} − ${M.fribelopp.toLocaleString("sv-SE")}) × 3 % = ${kr(avgift(M, ex, "forskola", 1))} för första barnet.` },
+  { fraga: "Vilket barn räknas som första barn?", svar: "Det yngsta barnet räknas alltid som barn 1, oavsett om det går i förskola eller fritidshem. Det äldre barnet får då den lägre procentsatsen." },
+  { fraga: "Vad är inkomsttaket?", svar: `Inkomsttaket ${M.rubrik} är ${kr(M.takEfterAvdrag)} i månaden efter fribeloppet (${kr(tak)} före). Har hushållet högre inkomst betalar ni ändå högst maxtaxan.` },
+  { fraga: "Får kommunen ta lägre avgift än maxtaxan?", svar: "Ja. Maxtaxan är ett tak. Kommunen får ta lägre avgifter, och flera har egna trappor för låga inkomster. Kontrollera alltid din kommuns taxa." },
+  { fraga: "Är allmän förskola gratis?", svar: "Från hösten det år barnet fyller tre år har barnet rätt till allmän förskola 525 timmar per år utan avgift. Går barnet mer tid räknar kommunen ofta ned avgiften – hur mycket bestämmer kommunen." },
+];
+---
+<Layout site={SITE} titel={`Maxtaxa förskola ${NASTA_AR} – räkna ut avgiften`}
+  beskrivning={`Räkna ut förskoleavgiften efter maxtaxan: högst ${kr(maxAvgift(M, "forskola", 1))}/mån för första barnet ${M.rubrik}, med fribelopp ${kr(M.fribelopp)}. ✓ Fritidshem ✓ Syskon ✓ ${NASTA_AR} när det kommer.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Maxtaxa", href: "/maxtaxa/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Maxtaxa för förskola och fritidshem</h1>
+  <p class="svar">Maxtaxan {M.rubrik} är <strong>{kr(maxAvgift(M, "forskola", 1))} i månaden</strong> för första barnet i förskolan. Avgiften är {pr(M.forskola[0])} av hushållets inkomst före skatt, efter ett fribelopp på {kr(M.fribelopp)}, och den räknas på högst {kr(M.takEfterAvdrag)}.
+    {!NASTA_PUBLICERAD && <> Skolverket fastställer {NASTA_AR} års inkomsttak senast den 1 december {NASTA_AR - 1} – vi lägger in det direkt.</>}</p>
+
+  <section class="sokverktyg" id="kalkylator" data-fribelopp={M.fribelopp} data-tak={M.takEfterAvdrag} data-forskola={M.forskola.join(",")} data-fritidshem={M.fritidshem.join(",")}>
+    <h2>Räkna ut din avgift</h2>
+    <form class="sv-form" onsubmit="return false">
+      <label>Hushållets inkomst före skatt per månad (kr)
+        <input type="number" inputmode="numeric" min="0" step="500" name="inkomst" value="40000" />
+      </label>
+      <fieldset class="mt-barn">
+        <legend>Barnen, yngsta först</legend>
+        {[1, 2, 3, 4].map((n) => (
+          <label>Barn {n}
+            <select name={`barn${n}`}>
+              <option value="">Inget barn</option>
+              <option value="forskola" selected={n === 1}>Förskola</option>
+              <option value="fritidshem">Fritidshem</option>
+            </select>
+          </label>
+        ))}
+      </fieldset>
+    </form>
+    <div class="mt-resultat" aria-live="polite"><p>Fyll i inkomsten ovan.</p></div>
+    <p class="kalla">Beräkningen följer maxtaxan {M.rubrik}. Din kommun kan ta lägre avgift – kontrollera kommunens taxa.</p>
+  </section>
+
+  <h2>Maxtaxan {M.rubrik}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Förskola</th><th class="num">Fritidshem</th></tr></thead>
+    <tbody>{[1, 2, 3].map((n) => (
+      <tr><th scope="row">Barn {n}</th><td class="num">{pr(M.forskola[n - 1])} · högst {kr(maxAvgift(M, "forskola", n))}</td><td class="num">{pr(M.fritidshem[n - 1])} · högst {kr(maxAvgift(M, "fritidshem", n))}</td></tr>
+    ))}
+      <tr><th scope="row">Barn 4 och fler</th><td class="num">0 kr</td><td class="num">0 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Procent av hushållets inkomst före skatt efter fribelopp {kr(M.fribelopp)}. Inkomsttak {kr(M.takEfterAvdrag)} efter fribeloppet. Det yngsta barnet räknas som barn 1.</p>
+
+  <h2>Så fungerar maxtaxan</h2>
+  <p>Alla skattepliktiga inkomster i hushållet läggs ihop och räknas per månad. Med hushåll menas den som bor ihop med barnet – ensamstående, gifta eller sambor. Från 1 juli 2026 dras ett fribelopp på {kr(M.fribelopp)} av innan avgiften räknas ut, vilket sänker avgiften för alla hushåll och gör den avgiftsfri för den som tjänar högst {kr(M.fribelopp)} i månaden.</p>
+  <p>Kommunerna är inte tvungna att använda maxtaxan, men nästan alla gör det eftersom de då får statsbidrag. Avgiften tas oftast ut tolv månader om året, även under sommaren.</p>
+
+  <h2>Förskolor i de största kommunerna</h2>
+  <div class="kort">{storst.map((k) => <a href={k.href}><strong>Förskolor i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källor: förordningen om statsbidrag för maxtaxa, regeringens beslut om fribelopp (januari 2026) och kommunernas avgiftstabeller. Uppgifterna är inte personlig rådgivning – din kommun beslutar om den faktiska avgiften.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("kalkylator"); if (!s) return;
+      const fri = +s.dataset.fribelopp, tak = +s.dataset.tak;
+      const p = { forskola: s.dataset.forskola.split(",").map(Number), fritidshem: s.dataset.fritidshem.split(",").map(Number) };
+      const f = s.querySelector("form"), ut = s.querySelector(".mt-resultat");
+      const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
+      const namn = { forskola: "förskola", fritidshem: "fritidshem" };
+      const rakna = () => {
+        const ink = Math.max(0, +f.inkomst.value || 0);
+        const grund = Math.min(Math.max(0, ink - fri), tak);
+        const barn = [1, 2, 3, 4].map((n) => f[`barn${n}`].value).filter(Boolean);
+        if (!barn.length) { ut.innerHTML = "<p>Välj minst ett barn.</p>"; return; }
+        let sum = 0;
+        const rader = barn.map((typ, i) => { const a = i < 3 ? Math.round(grund * p[typ][i]) : 0; sum += a; return `<tr><th scope="row">Barn ${i + 1} (${namn[typ]})</th><td class="num">${kr(a)}</td></tr>`; });
+        ut.innerHTML = `<div class="tabell"><table><tbody>${rader.join("")}<tr><th scope="row">Totalt per månad</th><td class="num"><strong>${kr(sum)}</strong></td></tr><tr><th scope="row">Per år (12 mån)</th><td class="num">${kr(sum * 12)}</td></tr></tbody></table></div>`
+          + (ink > tak + fri ? `<p class="kalla">Inkomsten är över taket, så ni betalar maxtaxan.</p>` : "");
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Layout>

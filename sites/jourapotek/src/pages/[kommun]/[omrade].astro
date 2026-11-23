@@ -3,7 +3,7 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import ApotekLista from "../../components/ApotekLista.astro";
 import OppetNuJour from "../../components/OppetNuJour.astro";
 import { veckoSammanfattning } from "@natverk/core/katalog.js";
@@ -45,7 +45,7 @@ const fragor = [
   { fraga: `Hur många apotek finns det ${po}?`, svar: `Det finns ${st(o.apotek.length, "apotek", "apotek")} ${po} i ${k.namn}: ${lista(o.apotek.map((a) => a.namn))}.` },
 ].filter(Boolean);
 ---
-<Layout site={SITE} titel={`Apotek ${o.namn} – öppet till ${klSlut(vSen)}, söndag och helgdagar`}
+<Layout site={SITE} titel={valjTitel(`Apotek ${o.namn} – öppet till ${klSlut(vSen)}, söndag och helgdagar`, `Apotek ${o.namn} – öppet till ${klSlut(vSen)} och söndag`, `Apotek ${o.namn} – öppet till ${klSlut(vSen)}`)}
   beskrivning={`Apotek ${po} (${o.platser}): ${sist.namn} har öppet till ${klSlut(vSen)}. ✓ ${o.apotek.length} apotek ✓ Söndagsöppet (${son.length}) ✓ Öppet nu ✓ Helgdagar.`}
   smulor={[{ namn: "Jourapotek", href: "/" }, { namn: k.namn, href: `/${k.slug}/` }, { namn: o.namn, href: `/${k.slug}/${o.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Apotek {po}</h1>

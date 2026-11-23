@@ -1,0 +1,17 @@
+---
+// Hubb: parkering vid Sveriges flygplatser.
+import Layout from "@natverk/core/Layout.astro";
+import { besk } from "@natverk/core/seo.js";
+import { SITE, UPPDATERAD, KALLA } from "../../site.js";
+import { FLYG } from "../../flyg.js";
+const n = FLYG.reduce((s, f) => s + f.enheter.length, 0);
+---
+<Layout site={SITE} titel="Flygplatsparkering – Arlanda, Landvetter, Bromma med flera"
+  beskrivning={besk(`${n} parkeringar vid ${FLYG.length} svenska flygplatser: korttid, långtid och parkeringshus på karta.`, "✓ Arlanda", "✓ Landvetter", "✓ Bromma", "✓ Malmö")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Flygplatsparkering", href: "/flygplatsparkering/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Parkering vid flygplatser</h1>
+  <p class="svar">Här finns <strong>{n} parkeringar</strong> vid {FLYG.length} svenska flygplatser. Välj flygplats för att se korttid, långtid och parkeringshus.</p>
+  <div class="kort">{FLYG.map((f) => <a href={f.href}><strong>Parkering {f.namn}</strong><small>{f.enheter.length} parkeringar</small></a>)}</div>
+  <p>Reser du längre än en dag är långtidsparkering med förbokning nästan alltid billigast. Korttidsparkeringen ligger närmast terminalen och passar när du hämtar eller lämnar någon.</p>
+  <p class="kalla">{KALLA}</p>
+</Layout>

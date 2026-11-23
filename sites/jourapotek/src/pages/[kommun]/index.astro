@@ -3,7 +3,7 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import ApotekLista from "../../components/ApotekLista.astro";
 import OppetNuJour from "../../components/OppetNuJour.astro";
 import {
@@ -60,8 +60,8 @@ const fragor = [
 ].filter(Boolean);
 
 const titel = vSen >= 21 * 60
-  ? `Jourapotek ${k.namn} – öppet till ${klSlut(vSen)}, söndag och helgdagar`
-  : `Jourapotek ${k.namn} – apotek öppet sent, söndag och helgdagar`;
+  ? valjTitel(`Jourapotek ${k.namn} – öppet till ${klSlut(vSen)}, söndag och helgdagar`, `Jourapotek ${k.namn} – öppet till ${klSlut(vSen)} och söndag`, `Jourapotek ${k.namn} – öppet till ${klSlut(vSen)}`)
+  : valjTitel(`Jourapotek ${k.namn} – apotek öppet nu, sent och söndag`, `Jourapotek ${k.namn} – öppet nu och söndag`, `Jourapotek ${k.namn}`);
 ---
 <Layout site={SITE} titel={titel}
   beskrivning={`Jourapotek i ${k.namn}: ${vardagSist ? `${vardagSist.namn} har öppet till ${klSlut(vSen)}` : `${k.apotek.length} apotek`}. ✓ Öppet nu ✓ Söndagsöppet (${son.length}) ✓ Helgdagar ✓ Närmaste alternativ. Uppdateras varje natt.`}

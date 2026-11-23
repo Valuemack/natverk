@@ -279,3 +279,5 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .siffror > a:hover { border-color: var(--farg); }
 .siffror strong { font-family: var(--rubrik-font); font-size: 1.45rem; line-height: 1.2; color: var(--farg); font-variant-numeric: tabular-nums; }
 .siffror span { font-size: .85rem; color: var(--dampad); }
+
+.ej-publ { color: var(--dampad, #666); font-style: italic; }

@@ -28,7 +28,7 @@ const fragor = [
   lp?.priser?.bensin95 && { fraga: `Vad kostar bensinen hos ${kedja} idag?`, svar: `${gen(kedja)} listpris för företagskunder är ${kr(lp.priser.bensin95.pris)} per liter för 95${lp.priser.diesel ? ` och ${kr(lp.priser.diesel.pris)} för diesel` : ""} (inkl. moms). Priset vid pumpen sätts lokalt och kan skilja sig.` },
 ].filter(Boolean);
 ---
-<Layout site={SITE} titel={[`${kedja} – alla ${st.length} stationer med öppettider`, `${kedja} – ${st.length} stationer`].find((t) => t.length <= 60)}
+<Layout site={SITE} titel={[`${kedja} öppettider – alla ${st.length} stationer i Sverige`, `${kedja} öppettider – ${st.length} stationer`, `${kedja} – ${st.length} stationer`].find((t) => t.length <= 60)}
   beskrivning={`Alla ${st.length} ${kedja}-stationer i Sverige med adress, öppettider och drivmedel, sorterade per län.${dygnet ? ` ✓ ${dygnet} med tankning dygnet runt` : ""} ✓ Uppdateras varje natt.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Kedjor", href: "/kedja/" }, { namn: kedja, href: `/kedja/${slug(kedja)}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>{kedja} – stationer och öppettider</h1>

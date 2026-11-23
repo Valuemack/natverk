@@ -1,9 +1,12 @@
 ---
 import KatalogEnhet from "@natverk/core/katalog/KatalogEnhet.astro";
+import { rakna, slug } from "@natverk/core/katalog.js";
 import { SITE, KAT, ORD, SCHEMA_TYP, UPPDATERAD, KALLA, TITEL_ORD } from "../../../site.js";
 
 export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
 const { enhet } = Astro.props;
+const medSida = new Set(rakna(KAT.enheter, (e) => e.kedja).filter(([, n]) => n >= 5).map(([k]) => k));
+const kedjaHref = (e) => (medSida.has(e.kedja) ? `/kedja/${slug(e.kedja)}/` : null);
 ---
-<KatalogEnhet site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<KatalogEnhet helgdagar kedjaHref={kedjaHref} site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />

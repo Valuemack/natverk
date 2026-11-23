@@ -44,6 +44,7 @@ export function timpris(taxa, kalla) {
 }
 export const arGratis =(e) => e.extra?.avgift === false || e.extra?.taxa_per_timme === 0;
 
+import { flygplatsFor } from "./flygplatser.js";
 export const KAT = laddaKatalog("../parkering-lek/data/parkeringar.json", {
   harEgenSida: (e) => !!(e.extra?.taxa || e.oppettider || (e.gatuadress && e.extra?.kapacitet)),
   forbered: (e) => {
@@ -69,7 +70,7 @@ export const KAT = laddaKatalog("../parkering-lek/data/parkeringar.json", {
         x.hojdbegransning && { namn: "Höjdbegränsning", varde: `${String(x.hojdbegransning).replace(".", ",")} m` },
         x.zonkod && { namn: "Zonkod (för betalning i app)", varde: x.zonkod },
         x.taxezon_kommun?.namn && { namn: "Gatuparkering i närheten", varde: `${x.taxezon_kommun.namn}${x.taxezon_kommun.taxa ? `, ${x.taxezon_kommun.taxa}` : ""}` },
-        x.flygplats && { namn: "Flygplats", varde: x.flygplats },
+        flygplatsFor(e) && { namn: "Flygplats", varde: flygplatsFor(e) },
       ].filter(Boolean),
     };
   },
@@ -86,7 +87,7 @@ export const SITE = {
   beskrivning: "Parkeringar i hela Sverige med pris per timme, öppettider, antal platser och laddplatser – parkeringshus, garage, pendlarparkeringar och gratis parkering. Uppdateras varje natt.",
   organisation: "parkeringar.nu",
   farg: "#1659a8",
-  meny: [{"namn":"Parkeringshus","href":"/parkeringshus/"},{"namn":"Gratis parkering","href":"/gratis-parkering/"},{"namn":"Pendlarparkering","href":"/pendlarparkering/"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Parkeringshus","href":"/parkeringshus/"},{"namn":"Gratis parkering","href":"/gratis-parkering/"},{"namn":"Pendlarparkering","href":"/pendlarparkering/"},{"namn":"Flygplats","href":"/flygplatsparkering/"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om parkeringar.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

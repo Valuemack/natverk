@@ -3,7 +3,7 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import ApotekLista from "../../components/ApotekLista.astro";
 import OppetNuJour from "../../components/OppetNuJour.astro";
 import { SITE, UPPDATERAD, LAN, HELGDAGAR, senastVardag, oppetDag, efterStangning, helgStatus, klSlut, st, lista, dagText, datumText , fras } from "../../site.js";
@@ -28,7 +28,7 @@ const fragor = [
   { fraga: `Vilka apotek har öppet på söndag i ${l.namn}?`, svar: son.length ? `${st(son.length, "apotek", "apotek")} i ${l.namn} har öppet på söndagar, längst ${son[0].namn} i ${son[0].kommun} till ${klSlut(son[0].stanger.sun)}.` : `Inget apotek i ${l.namn} har öppet på söndagar.` },
 ];
 ---
-<Layout site={SITE} titel={`Jourapotek ${l.kortnamn} – apotek öppet sent och söndag i ${l.namn}`}
+<Layout site={SITE} titel={valjTitel(`Jourapotek ${l.kortnamn} – apotek öppet sent och söndag i ${l.namn}`, `Jourapotek ${l.kortnamn} – apotek öppet sent och söndag`, `Jourapotek ${l.kortnamn} – öppet sent och söndag`)}
   beskrivning={`Jourapotek i ${l.namn}: ${sent.length} apotek öppna till 21 eller senare, ${son.length} söndagsöppna. ✓ Per kommun ✓ ${h.namn} ✓ Öppet nu.`}
   smulor={[{ namn: "Jourapotek", href: "/" }, { namn: "Kommuner", href: "/kommuner/" }, { namn: l.namn, href: `/lan/${l.slug}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Jourapotek i {l.namn}</h1>

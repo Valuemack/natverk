@@ -1,21 +1,25 @@
 ---
-import { lang, kort, veckodag, isoVecka, iso, versal } from "@natverk/core/datum.js";
-const { dagar, idag, visaAr = false } = Astro.props;
+import { lang, kort, veckodag, isoVecka, iso, versal, arHelg } from "@natverk/core/datum.js";
+import { helgArHref } from "../lib/ledighet.js";
+// ledig: visa kolumnen "Ledig vardag"; helgAr: länka till helgsidan för året (/pask/2027/) när den finns.
+const { dagar, idag, visaAr = false, ledig = false, helgAr = null } = Astro.props;
 const nastaIso = dagar.find((d) => d.datum >= idag) ? iso(dagar.find((d) => d.datum >= idag).datum) : null;
+const href = (d) => (helgAr && helgArHref(d.slug, d.datum.getUTCFullYear(), helgAr)) || `/${d.slug}/`;
 ---
 <div class="tabell">
   <table>
-    <thead><tr><th>Helgdag</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th></tr></thead>
+    <thead><tr><th>Helgdag</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th>{ledig && <th>Ledig vardag</th>}</tr></thead>
     <tbody>
       {dagar.map((d) => (
         <tr class:list={{ markerad: iso(d.datum) === nastaIso }}>
           <td>
-            <a href={`/${d.slug}/`}>{d.namn}</a>
+            <a href={href(d)}>{d.namn}</a>
             {d.typ === "rod" ? <span class="etikett rod">Röd dag</span> : <span class="etikett">Helgafton</span>}
           </td>
           <td>{visaAr ? kort(d.datum) + " " + d.datum.getUTCFullYear() : kort(d.datum)}</td>
           <td>{versal(veckodag(d.datum))}</td>
           <td class="num">{isoVecka(d.datum).vecka}</td>
+          {ledig && <td>{arHelg(d.datum) ? "Nej, infaller på helg" : d.typ === "rod" ? "Ja" : "Ja, för de flesta*"}</td>}
         </tr>
       ))}
     </tbody>

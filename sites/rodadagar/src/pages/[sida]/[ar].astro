@@ -1,0 +1,12 @@
+---
+// En helg ett visst år: /pask/2027/, /midsommar/2027/, /kristi-himmelsfardsdag/2027/ …
+import HelgArSida from "../../components/HelgArSida.astro";
+import { GRUPPER } from "../../lib/ledighet.js";
+import { HELG_AR } from "../../site.js";
+
+export function getStaticPaths() {
+  return GRUPPER.flatMap((g) => HELG_AR.map((ar) => ({ params: { sida: g.slug, ar: String(ar) }, props: { g, ar } })));
+}
+const { g, ar } = Astro.props;
+---
+<HelgArSida g={g} ar={ar} />

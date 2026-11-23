@@ -3,7 +3,8 @@ import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import { kort, veckodag, versal } from "@natverk/core/datum.js";
 import { HELGDAGAR, nastaForekomst } from "../../lib/helgdagar.js";
-import { SITE, IDAG, UPPDATERAD } from "../../site.js";
+import { GRUPPER, gruppHuvud } from "../../lib/ledighet.js";
+import { SITE, IDAG, HELG_AR, UPPDATERAD } from "../../site.js";
 
 const rader = HELGDAGAR.map((h) => ({ h, d: nastaForekomst(h, IDAG) }));
 ---
@@ -20,6 +21,14 @@ const rader = HELGDAGAR.map((h) => ({ h, d: nastaForekomst(h, IDAG) }));
         <td>{versal(veckodag(d))} {kort(d)} {d.getUTCFullYear()}</td>
         <td>{h.regel.split(". ")[0]}.</td>
       </tr>
+    ))}</tbody>
+  </table></div>
+  <h2>Helgerna år för år</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Helg</th>{HELG_AR.map((y) => <th>{y}</th>)}</tr></thead>
+    <tbody>{GRUPPER.map((g) => (
+      <tr><td><a href={`/${g.slug}/`}>{g.namn}</a></td>
+        {HELG_AR.map((y) => <td><a href={`/${g.slug}/${y}/`}>{kort(gruppHuvud(g, y).datum)}</a></td>)}</tr>
     ))}</tbody>
   </table></div>
   <Annons plats="helgdagar-1" />

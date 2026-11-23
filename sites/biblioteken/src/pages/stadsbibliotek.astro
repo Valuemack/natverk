@@ -1,0 +1,59 @@
+---
+// Samlingssida: kommunernas huvudbibliotek (stadsbiblioteket) med öppettider – svar på "stadsbiblioteket öppettider".
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { DAGAR, dagText, tolkaIntervall, oppetHelg } from "@natverk/core/katalog.js";
+import { helgTider } from "@natverk/core/helgtider.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+
+const huvud = KAT.enheter.filter((e) => e.typ === "huvudbibliotek" || /stadsbibliotek/i.test(e.namn))
+  .sort((a, b) => a.kommun.localeCompare(b.kommun, "sv"));
+const vardag = (e) => {
+  const v = DAGAR.slice(0, 5).map((d) => e.oppettider?.[d]).filter((x) => x != null);
+  if (!v.length) return "–";
+  return new Set(v).size === 1 ? dagText(v[0]) : "varierar";
+};
+const stanger = (e) => Math.max(0, ...DAGAR.flatMap((d) => (tolkaIntervall(e.oppettider?.[d]) ?? []).map(([, b]) => b)));
+const medTider = huvud.filter((e) => DAGAR.some((d) => tolkaIntervall(e.oppettider?.[d]) !== null));
+const sondag = medTider.filter((e) => oppetHelg(e, "sun") === true);
+const lordag = medTider.filter((e) => oppetHelg(e, "sat") === true);
+const sent = [...medTider].sort((a, b) => stanger(b) - stanger(a));
+const stora = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping", "Örebro", "Västerås", "Helsingborg", "Norrköping", "Jönköping", "Umeå", "Lund"]
+  .map((k) => huvud.find((e) => e.kommun === k)).filter(Boolean);
+const ht = helgTider(huvud[0] ?? {}, UPPDATERAD);
+const forstaHelg = ht?.rader[0];
+const kl = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, "0")}.${String(m % 60).padStart(2, "0")}`.replace(/\.00$/, "");
+
+const fragor = [
+  { fraga: "Vilka öppettider har stadsbiblioteket?", svar: `Det beror på kommunen. ${lordag.length} av ${medTider.length} huvudbibliotek har öppet på lördagar och ${sondag.length} på söndagar. Längst öppet har ${sent[0]?.namn} i ${sent[0]?.kommun} (till ${kl(stanger(sent[0]))}). Sök upp din kommun i tabellen.` },
+  { fraga: "Vad är skillnaden på stadsbibliotek och huvudbibliotek?", svar: "Varje kommun har ett huvudbibliotek, som i större orter ofta kallas stadsbiblioteket. Därifrån styrs kommunens filialer och bokbussar, och det har oftast längst öppettider och störst utbud." },
+  { fraga: "Har stadsbiblioteket öppet på söndagar?", svar: sondag.length ? `${sondag.length} huvudbibliotek har söndagsöppet, bland andra ${sondag.slice(0, 4).map((e) => `${e.namn} (${e.kommun})`).join(", ")}.` : "Enligt våra uppgifter har inget huvudbibliotek öppet på söndagar." },
+  forstaHelg && { fraga: `Har biblioteken öppet på ${forstaHelg.namn.toLowerCase()}?`, svar: `${forstaHelg.namn} är en ${forstaHelg.veckodag} (${forstaHelg.datumText}). Många bibliotek har stängt eller kortare tider på helgdagar och helgaftnar, och tiderna publiceras ofta först i december. Kontrollera ditt bibliotek – sidan för varje bibliotek uppdateras varje natt.` },
+  { fraga: "Vad är meröppet bibliotek?", svar: "Meröppet betyder att du kan gå in i biblioteket med lånekort och pinkod även när personalen inte är där, ofta tidigt på morgonen och sent på kvällen. Du behöver oftast registrera dig för meröppet hos biblioteket först." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Stadsbiblioteket öppettider – alla ${huvud.length} huvudbibliotek`}
+  beskrivning={besk(`Öppettider för stadsbiblioteket och huvudbiblioteket i alla ${huvud.length} kommuner. ${sondag.length} har söndagsöppet.`, "✓ Öppet nu", "✓ Lördag och söndag", "✓ Jul och nyår", "✓ Uppdateras varje natt")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Stadsbibliotek", href: "/stadsbibliotek/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Stadsbiblioteket – öppettider i alla kommuner</h1>
+  <p class="svar">Varje kommun har ett huvudbibliotek – i större orter kallat <strong>stadsbiblioteket</strong>. Av {medTider.length} med kända tider har <strong>{lordag.length}</strong> öppet på lördagar och <strong>{sondag.length}</strong> på söndagar. Längst öppet har {sent[0]?.namn} (till {kl(stanger(sent[0]))}).</p>
+
+  <h2>Stadsbiblioteken i de största städerna</h2>
+  <div class="kort">{stora.map((e) => <a href={e.href}><strong>{e.namn}</strong><small>Vardag {vardag(e)}{oppetHelg(e, "sun") === true ? " · söndagsöppet" : ""}</small></a>)}</div>
+
+  <h2>Alla huvudbibliotek</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Bibliotek</th><th>Mån–fre</th><th>Lör</th><th>Sön</th></tr></thead>
+    <tbody>{huvud.map((e) => (
+      <tr><td>{e.kommun}</td><td><a href={e.href}>{e.namn}</a></td><td>{vardag(e)}</td>
+        <td>{e.oppettider?.sat != null ? dagText(e.oppettider.sat) : "–"}</td><td>{e.oppettider?.sun != null ? dagText(e.oppettider.sun) : "–"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">"Varierar" betyder att tiderna skiljer sig mellan vardagarna – se bibliotekets sida. Tiderna kan avvika vid helgdagar och lov.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA}</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

@@ -18,11 +18,12 @@ const fragor = [
 ].filter(Boolean);
 ---
 <Layout site={SITE} titel="Förskolor i Sverige – hitta förskola i din kommun"
-  beskrivning={`Hitta ${ORD.plur} nära dig – alla ${n} i Sverige med adress och öppettider. ✓ Öppet nu ✓ Närmaste ${ORD.sing} ✓ Uppdateras varje natt.`}
+  beskrivning={`Alla ${n} förskolor i Sverige – kommunala och fristående, med inriktning och barngrupper per kommun. ✓ Räkna ut maxtaxan ✓ Jämför kommuner ✓ Närmaste förskola.`}
   jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Hitta förskola i din kommun</h1>
   <p class="svar">Här finns <strong>{n} {ORD.plur}</strong> i {KAT.kommuner.length} kommuner med adress{KAT.enheter.some(harOppettider) && " och öppettider"}.{sondag > 0 && <> <strong>{sondag}</strong> har öppet på söndagar.</>}</p>
   <Sokverktyg ord={ORD} kat={KAT} {...VERKTYG} />
+  <p><a class="knapp" href="/maxtaxa/">Räkna ut avgiften med maxtaxan →</a> <a class="knapp sekundar" href="/jamfor/">Jämför barngrupper i kommunerna</a></p>
 
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>

@@ -2,8 +2,11 @@ import { idagStockholm, iso } from "@natverk/core/datum.js";
 
 export const IDAG = idagStockholm();
 export const AR = IDAG.getUTCFullYear();
-/** År som får egna sidor: två bakåt, sex framåt. */
-export const AR_LISTA = Array.from({ length: 9 }, (_, i) => AR - 2 + i);
+/** År som får egna sidor: från 2024 (så att publicerade sidor aldrig försvinner) till sex år framåt. */
+export const FORSTA_AR = 2024;
+export const AR_LISTA = Array.from({ length: AR + 6 - FORSTA_AR + 1 }, (_, i) => FORSTA_AR + i);
+/** År som får egna helgsidor (/pask/2027/): från 2025 till fyra år framåt. */
+export const HELG_AR = Array.from({ length: AR + 4 - 2025 + 1 }, (_, i) => 2025 + i);
 /** År som visas i datumtabeller på helgdagssidor. */
 export const TABELL_AR = Array.from({ length: 10 }, (_, i) => AR - 1 + i);
 export const UPPDATERAD = iso(IDAG);
@@ -23,6 +26,7 @@ export const SITE = {
     { namn: `Röda dagar ${AR}`, href: `/${AR}/` },
     { namn: `${AR + 1}`, href: `/${AR + 1}/` },
     { namn: "Klämdagar", href: "/klamdagar/" },
+    { namn: "Arbetsdagar", href: "/arbetsdagar/" },
     { namn: "Vecka", href: "/vecka/" },
     { namn: "Flaggdagar", href: "/flaggdagar/" },
     { namn: "Alla helgdagar", href: "/helgdagar/" },

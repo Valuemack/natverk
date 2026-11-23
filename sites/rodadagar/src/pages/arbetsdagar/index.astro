@@ -1,0 +1,36 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { MANADER, versal } from "@natverk/core/datum.js";
+import { arbetsdagarDetalj } from "../../lib/ledighet.js";
+import { SITE, IDAG, AR, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+const rader = AR_LISTA.map((y) => ({ y, t: arbetsdagarDetalj(y).totalt }));
+const iAr = arbetsdagarDetalj(AR);
+const nasta = arbetsdagarDetalj(AR + 1).totalt;
+const manad = IDAG.getUTCMonth();
+const fragor = [
+  { fraga: `Hur många arbetsdagar är det ${AR + 1}?`, svar: `${AR + 1} har ${nasta.arbetsdagar} arbetsdagar (${nasta.inklAftnar} om midsommarafton, julafton och nyårsafton räknas som arbetsdagar).` },
+  { fraga: `Hur många arbetsdagar är det i ${MANADER[manad]} ${AR}?`, svar: `${versal(MANADER[manad])} ${AR} har ${iAr.manader[manad].arbetsdagar} arbetsdagar.` },
+  { fraga: "Hur räknas arbetsdagar?", svar: "Arbetsdagar är vardagar måndag–fredag som inte är röda dagar. Midsommarafton, julafton och nyårsafton är inga röda dagar enligt lag, men jämställs med söndag i semesterlagen och räknas oftast som lediga. Vi redovisar båda räknesätten." },
+];
+---
+<Layout site={SITE} titel={`Arbetsdagar ${AR} och ${AR + 1} – per månad och år`}
+  beskrivning={besk(`${AR + 1} har ${nasta.arbetsdagar} arbetsdagar och ${AR} har ${iAr.totalt.arbetsdagar}.`, "Se arbetsdagar och arbetstimmar per månad och kvartal för alla år, räknat exakt ur de svenska helgdagarna.")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Arbetsdagar", href: "/arbetsdagar/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Arbetsdagar i Sverige</h1>
+  <p class="svar">{AR} har <strong>{iAr.totalt.arbetsdagar} arbetsdagar</strong> och {AR + 1} har <strong>{nasta.arbetsdagar}</strong>.
+    {versal(MANADER[manad])} {AR} har {iAr.manader[manad].arbetsdagar} arbetsdagar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Arbetsdagar</th><th class="num">Timmar (8 h/dag)</th><th class="num">Aftnar som arbetsdag</th><th class="num">Röda dagar på vardag</th></tr></thead>
+    <tbody>{rader.map(({ y, t }) => (
+      <tr class:list={{ markerad: y === AR }}><td><a href={`/arbetsdagar/${y}/`}>Arbetsdagar {y}</a></td><td class="num">{t.arbetsdagar}</td>
+        <td class="num">{t.arbetsdagar * 8}</td><td class="num">{t.inklAftnar}</td><td class="num">{t.roda}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Antalet arbetsdagar varierar mellan åren eftersom röda dagar ibland hamnar på en lördag eller söndag. Då ger de ingen ledig vardag.</p>
+  <Annons plats="arbetsdagar-hub" />
+  <Faq fragor={fragor} />
+</Layout>

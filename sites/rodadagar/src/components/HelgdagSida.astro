@@ -2,11 +2,12 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, besk } from "@natverk/core/seo.js";
 import { lang, kort, veckodag, isoVecka, versal, iso } from "@natverk/core/datum.js";
 import { HELGDAGAR, nastaForekomst } from "../lib/helgdagar.js";
 import { fras, omDagar } from "../lib/text.js";
-import { SITE, IDAG, TABELL_AR, UPPDATERAD } from "../site.js";
+import { helgArHref, gruppBySlug } from "../lib/ledighet.js";
+import { SITE, IDAG, TABELL_AR, HELG_AR, AR_LISTA, UPPDATERAD } from "../site.js";
 
 const { h } = Astro.props;
 const nasta = nastaForekomst(h, IDAG);
@@ -17,6 +18,9 @@ const efter = h.berakna(Y + 1);
 const relaterade = HELGDAGAR.filter((x) => x.id !== h.id).map((x) => ({ x, d: nastaForekomst(x, IDAG) }))
   .sort((a, b) => a.d - b.d).slice(0, 6);
 const rod = h.typ === "rod";
+const arHref = (y) => helgArHref(h.slug, y, HELG_AR);
+const lankText = (href) => { const [, slug, y] = href.split("/"); return `${gruppBySlug(slug).namn} ${y}`; };
+const helgLankar = HELG_AR.map((y) => ({ y, href: arHref(y) })).filter((x) => x.href);
 
 const fragor = [
   { fraga: `När är ${f} ${Y}?`, svar: `${h.namn} ${Y} infaller ${lang(nasta)}, vecka ${isoVecka(nasta).vecka}.` },
@@ -28,21 +32,24 @@ const fragor = [
 ];
 ---
 <Layout site={SITE} titel={`När är ${f} ${Y}? Datum ${TABELL_AR[0]}–${TABELL_AR.at(-1)}`}
-  beskrivning={`${h.namn} ${Y} infaller ${lang(nasta)}. ✓ Datum och veckodag för ${f} ${TABELL_AR[0]}–${TABELL_AR.at(-1)} ✓ ${rod ? "Röd dag" : "Helgafton"} ✓ Så räknas datumet ut.`}
+  beskrivning={besk(`${h.namn} ${Y} infaller ${lang(nasta)}. ✓ Datum och veckodag för ${f} ${TABELL_AR[0]}–${TABELL_AR.at(-1)} ✓ ${rod ? "Röd dag" : "Helgafton"} ✓ Så räknas datumet ut`, `✓ ${h.namn} ${Y + 1}: ${kort(efter)}.`)}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Helgdagar", href: "/helgdagar/" }, { namn: h.namn, href: `/${h.slug}/` }]}
   jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>När är {f} {Y}?</h1>
   <p class="svar">{h.namn} {Y} infaller <strong>{lang(nasta)}</strong> (vecka {isoVecka(nasta).vecka}) – {omDagar(IDAG, nasta)}.</p>
   <p>{h.regel} {rod ? `${h.namn} är en röd dag.` : ""}</p>
+  {arHref(Y) && <p><a href={arHref(Y)}>Ledighet, semestertips och alla dagar runt {f} {Y} →</a></p>}
+  {helgLankar.length > 0 && <div class="lank-rad">{helgLankar.map(({ y, href }) => <a href={href}>{lankText(href)}</a>)}</div>}
 
   <Annons plats="helgdag-1" />
 
   <h2>{h.namn} {TABELL_AR[0]}–{TABELL_AR.at(-1)}</h2>
   <div class="tabell"><table>
-    <thead><tr><th>År</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th></tr></thead>
+    <thead><tr><th>År</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th><th>Mer om året</th></tr></thead>
     <tbody>{rad.map(({ y, d }) => (
       <tr class:list={{ markerad: iso(d) === iso(nasta) }}>
-        <td><a href={`/${y}/`}>{y}</a></td><td>{kort(d)}</td><td>{versal(veckodag(d))}</td><td class="num">{isoVecka(d).vecka}</td>
+        <td>{AR_LISTA.includes(y) ? <a href={`/${y}/`}>{y}</a> : y}</td><td>{kort(d)}</td><td>{versal(veckodag(d))}</td><td class="num">{isoVecka(d).vecka}</td>
+        <td>{arHref(y) ? <a href={arHref(y)}>{lankText(arHref(y))}</a> : AR_LISTA.includes(y) ? <a href={`/${y}/`}>Röda dagar {y}</a> : "–"}</td>
       </tr>
     ))}</tbody>
   </table></div>

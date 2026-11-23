@@ -73,7 +73,7 @@ export function helgdagarAr(y) {
 export const rodaDagarAr = (y) => helgdagarAr(y).filter((h) => h.typ === "rod");
 
 /** Mängd med ISO-datum som är lediga (lördag/söndag räknas separat). */
-function ledigaHelgdagar(y) {
+export function ledigaHelgdagar(y) {
   const s = new Map();
   for (const yy of [y - 1, y, y + 1]) for (const h of helgdagarAr(yy)) s.set(iso(h.datum), h);
   return s;

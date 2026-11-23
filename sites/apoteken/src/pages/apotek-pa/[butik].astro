@@ -1,0 +1,10 @@
+---
+// Apotek inne i en butikstyp: "Apotek på ICA Maxi" m.fl.
+import Grupp from "../../components/Grupp.astro";
+import { BUTIKER } from "../../grupper.js";
+export const getStaticPaths = () => BUTIKER.map((b) => ({ params: { butik: b.slug }, props: { b } }));
+const { b } = Astro.props;
+const n = b.enheter.length;
+---
+<Grupp typ="butik" namn={b.namn} rubrik={b.rubrik} href={b.href} enheter={b.enheter}
+  titelKandidater={[`${b.rubrik} – öppettider för alla ${n} apotek`, `${b.rubrik} – öppettider (${n} st)`, `${b.rubrik} – öppettider`]} />

@@ -2,25 +2,30 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
+import { faqLd, besk } from "@natverk/core/seo.js";
 import { kort, veckodag, versal, isoVecka } from "@natverk/core/datum.js";
 import { klamdagarAr } from "../../lib/helgdagar.js";
-import { lista, st } from "../../lib/text.js";
+import { lista, st, tipsText, period, gruppLista } from "../../lib/text.js";
+import { semestertipsAr, bastaTips } from "../../lib/ledighet.js";
 import { SITE, AR_LISTA, UPPDATERAD } from "../../site.js";
 
 export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
 const { ar } = Astro.props;
 const klam = klamdagarAr(ar);
 const max = Math.max(0, ...klam.map((k) => k.ledigaDagar));
+const tips = semestertipsAr(ar);
+const basta = bastaTips(tips, 5);
+const langst = tips.reduce((b, t) => (t.semesterdagar <= 5 && (!b || t.dagar > b.dagar) ? t : b), null);
 const fragor = [
   { fraga: `Vilka klämdagar finns det ${ar}?`,
     svar: klam.length ? `${ar} finns det ${st(klam.length, "klämdag", "klämdagar")}: ${lista(klam.map((k) => `${veckodag(k.datum)} ${kort(k.datum)}`))}.` : `${ar} finns det inga klämdagar.` },
   { fraga: "Vad är en klämdag?", svar: "En klämdag är en vardag som ligger mellan en röd dag (eller helgafton) och en helg. Tar man ledigt den dagen får man en lång sammanhängande ledighet." },
+  ...(langst ? [{ fraga: `Hur blir man ledig längst med få semesterdagar ${ar}?`, svar: `${gruppLista(langst.grupper)}: ${tipsText(langst)}` }] : []),
   { fraga: "Är klämdagar lediga?", svar: "Nej, klämdagar är vanliga arbetsdagar enligt lag. Vissa kollektivavtal och arbetsgivare ger ändå ledigt eller kortare arbetstid – kontrollera med din arbetsgivare." },
 ];
 ---
-<Layout site={SITE} titel={`Klämdagar ${ar} – ta ledigt 1 dag, få upp till ${max} dagar ledigt`}
-  beskrivning={`Alla klämdagar ${ar} i Sverige. ✓ ${st(klam.length, "klämdag", "klämdagar")} ✓ Se hur många dagar i rad du blir ledig ✓ Datum, veckodag och vecka.`}
+<Layout site={SITE} titel={klam.length ? `Klämdagar ${ar} – ta ledigt 1 dag, få upp till ${max} dagar ledigt` : `Klämdagar ${ar} – inga klämdagar, men smarta semestertips`}
+  beskrivning={besk(`Alla klämdagar ${ar} i Sverige: ${st(klam.length, "klämdag", "klämdagar")}${klam.length ? ` (${lista(klam.map((k) => kort(k.datum)))})` : ""}.`, langst ? `Bästa semestertipset: ta ${langst.semesterdagar} dagar och bli ledig ${langst.dagar} i rad.` : null, "Med datum, vecka och alla semestertips.")}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Klämdagar", href: "/klamdagar/" }, { namn: `${ar}`, href: `/klamdagar/${ar}/` }]}
   jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Klämdagar {ar}</h1>
@@ -37,7 +42,19 @@ const fragor = [
       ))}</tbody>
     </table></div>
   )}
-  <p><a href={`/${ar}/`}>Alla röda dagar {ar} →</a></p>
+  {klam.length === 0 && <p>Inga vardagar {ar} hamnar mellan en helgdag och en helg. Det betyder inte att det saknas smarta ledigheter: se semestertipsen nedan.</p>}
+
+  <h2>Semestertips {ar}</h2>
+  <p>Klämdagar är bara en sorts lönsam ledighet. Här är alla tillfällen {ar} då några få semesterdagar binder ihop helgdagar och helger, räknat ur kalendern. Helgaftnar räknas som lediga.</p>
+  {basta.length > 0 && <ul>{basta.map((t) => <li><strong>{gruppLista(t.grupper)}:</strong> {tipsText(t)}</li>)}</ul>}
+  <div class="tabell"><table>
+    <thead><tr><th>Helg</th><th class="num">Semesterdagar</th><th>Ledig period</th><th class="num">Lediga dagar</th><th class="num">Dagar per semesterdag</th></tr></thead>
+    <tbody>{tips.map((t) => (
+      <tr><td>{gruppLista(t.grupper)}</td><td class="num">{t.semesterdagar}</td><td>{period(t.fran, t.till)}</td>
+        <td class="num">{t.dagar}</td><td class="num">{(t.dagar / t.semesterdagar).toFixed(1).replace(".", ",")}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p><a href={`/${ar}/`}>Alla röda dagar {ar} →</a> · <a href={`/arbetsdagar/${ar}/`}>Arbetsdagar {ar} →</a></p>
   <Annons plats="klam-1" />
   <Faq fragor={fragor} />
 </Layout>

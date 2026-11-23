@@ -1,0 +1,10 @@
+---
+// En sida per apotekskedja: "Kronans Apotek öppettider" m.fl.
+import Grupp from "../../components/Grupp.astro";
+import { KEDJOR } from "../../grupper.js";
+export const getStaticPaths = () => KEDJOR.map((k) => ({ params: { kedja: k.slug }, props: { k } }));
+const { k } = Astro.props;
+const n = k.enheter.length;
+---
+<Grupp typ="kedja" namn={k.namn} rubrik={k.namn} href={k.href} enheter={k.enheter}
+  titelKandidater={[`${k.namn} öppettider – alla ${n} apotek i Sverige`, `${k.namn} öppettider – ${n} apotek`, `${k.namn} öppettider`]} />

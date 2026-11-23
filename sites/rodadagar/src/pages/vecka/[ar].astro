@@ -1,7 +1,9 @@
 ---
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
-import { kort, mandagIVecka, plusDagar, veckorIAr, iso, isoVecka } from "@natverk/core/datum.js";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { kort, lang, mandagIVecka, plusDagar, veckorIAr, iso, isoVecka } from "@natverk/core/datum.js";
 import { helgdagarAr } from "../../lib/helgdagar.js";
 import { SITE, IDAG, AR_LISTA, UPPDATERAD } from "../../site.js";
 
@@ -13,11 +15,22 @@ for (const y of [ar - 1, ar, ar + 1]) for (const h of helgdagarAr(y)) {
   const v = isoVecka(h.datum); if (v.ar === ar) helg.set(v.vecka, [...(helg.get(v.vecka) || []), h]);
 }
 const idagV = isoVecka(IDAG);
+const hd = (id) => helgdagarAr(ar).find((h) => h.id === id);
+const vk = (id) => isoVecka(hd(id).datum);
+const vkText = (id) => { const x = vk(id); return x.ar === ar ? `vecka ${x.vecka}` : `vecka ${x.vecka} ${x.ar}`; };
+const jan1 = isoVecka(new Date(Date.UTC(ar, 0, 1)));
+const fragor = [
+  { fraga: `Hur många veckor har ${ar}?`, svar: `${ar} har ${antal} veckor enligt ISO 8601, som används i Sverige. Ett år har 53 veckor när det börjar på en torsdag, eller på en onsdag under skottår.` },
+  { fraga: `När börjar vecka 1 ${ar}?`, svar: `Vecka 1 ${ar} börjar ${lang(mandagIVecka(ar, 1))}. Vecka 1 är den vecka som innehåller årets första torsdag.${jan1.ar !== ar ? ` Den 1 januari ${ar} tillhör därför vecka ${jan1.vecka} ${jan1.ar}.` : ""}` },
+  { fraga: `Vilken vecka är påsk ${ar}?`, svar: `Påskdagen ${ar} (${kort(hd("paskdagen").datum)}) infaller ${vkText("paskdagen")}. Långfredagen ${kort(hd("langfredagen").datum)} är ${vkText("langfredagen")} och annandag påsk ${kort(hd("annandag-pask").datum)} ${vkText("annandag-pask")}.` },
+  { fraga: `Vilken vecka är midsommar ${ar}?`, svar: `Midsommarafton ${ar} (${kort(hd("midsommarafton").datum)}) infaller ${vkText("midsommarafton")}.` },
+  { fraga: `Vilken vecka är julafton ${ar}?`, svar: `Julafton ${ar} (${lang(hd("julafton").datum)}) infaller ${vkText("julafton")}.` },
+];
 const veckor = Array.from({ length: antal }, (_, i) => { const m = mandagIVecka(ar, i + 1); return { v: i + 1, m, s: plusDagar(m, 6) }; });
 ---
 <Layout site={SITE} titel={`Veckonummer ${ar} – alla ${antal} veckor med datum`}
-  beskrivning={`Alla veckonummer ${ar} med datum för måndag och söndag. ✓ ${antal} veckor ✓ Helgdagar markerade ✓ Enligt ISO 8601.`}
-  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }, { namn: `${ar}`, href: `/vecka/${ar}/` }]} uppdaterad={UPPDATERAD}>
+  beskrivning={besk(`Alla veckonummer ${ar} med datum för måndag och söndag: ${antal} veckor enligt ISO 8601.`, `Vecka 1 börjar ${kort(mandagIVecka(ar, 1))} ${mandagIVecka(ar, 1).getUTCFullYear()}.`, "Helgdagar markerade per vecka.")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }, { namn: `${ar}`, href: `/vecka/${ar}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Veckonummer {ar}</h1>
   <p class="svar">{ar} har <strong>{antal} veckor</strong>. Vecka 1 börjar måndag {kort(veckor[0].m)} {veckor[0].m.getUTCFullYear()} och vecka {antal} slutar söndag {kort(veckor.at(-1).s)} {veckor.at(-1).s.getUTCFullYear()}.</p>
   <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/vecka/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
@@ -30,5 +43,8 @@ const veckor = Array.from({ length: antal }, (_, i) => { const m = mandagIVecka(
       </tr>
     ))}</tbody>
   </table></div>
+  <p>Veckonumren följer ISO 8601: veckan börjar på måndag och vecka 1 är den vecka som innehåller årets första torsdag (alltså den vecka där 4 januari ligger).</p>
+  <p><a href={`/${ar}/`}>Röda dagar {ar} →</a> · <a href={`/arbetsdagar/${ar}/`}>Arbetsdagar {ar} →</a></p>
   <Annons plats="vecka-ar" />
+  <Faq fragor={fragor} />
 </Layout>

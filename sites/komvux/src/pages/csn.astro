@@ -1,0 +1,99 @@
+---
+// CSN-kalkylator för komvux: studiemedel 2027 per vecka, fyra veckor och termin.
+// Källa: CSN (csn.se, sidan om högre bidrag uppdaterad 2026-11-23) och CSN:s pressmeddelande 2026-09-25.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { SITE, KAT, UPPDATERAD } from "../site.js";
+
+// Heltid, kronor per vecka.
+const AR = 2027;
+const CSN = {
+  vanligt: { bidrag: 1037, lan: 2384 },
+  hogre: { bidrag: 2294, lan: 1127 },
+  // Tilläggsbidrag för barn, kr per fyra veckor (heltid): 1 barn, 2 barn, +260 per ytterligare barn.
+  barn: [0, 784, 1284], barnExtra: 260,
+  fribeloppHalvar: 115451,
+};
+const FORRA = { ar: 2026, vanligt: { bidrag: 1030, lan: 2368 } };
+const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
+const tot = CSN.vanligt.bidrag + CSN.vanligt.lan;
+const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 8);
+
+const fragor = [
+  { fraga: `Hur mycket CSN får man på komvux ${AR}?`, svar: `På heltid (20 poäng per vecka) får du ${kr(tot)} i veckan ${AR}: ${kr(CSN.vanligt.bidrag)} i bidrag och ${kr(CSN.vanligt.lan)} i lån. För fyra veckor blir det ${kr(tot * 4)}. Läser du på halvfart får du hälften.` },
+  { fraga: "Vad är högre bidraget?", svar: `Högre bidrag ger samma summa men en större del bidrag: ${kr(CSN.hogre.bidrag)} i bidrag och ${kr(CSN.hogre.lan)} i lån per vecka ${AR}. Det kan gälla dig som läser på grundskole- eller gymnasienivå på komvux och är minst 25 år och saknar treårigt gymnasium, eller är 20–24 år, inskriven på Arbetsförmedlingen och saknar slutbetyg. CSN prövar det automatiskt när du ansöker.` },
+  { fraga: "Hur många poäng är heltid på komvux?", svar: "Heltid på komvux är 20 poäng per vecka. 15 poäng är 75 procent och 10 poäng är halvtid. Du får studiemedel från 50 procents studietakt." },
+  { fraga: "Hur mycket får jag tjäna när jag studerar med CSN?", svar: `Fribeloppet ${AR} är ${kr(CSN.fribeloppHalvar)} per kalenderhalvår vid 20 veckors heltidsstudier, ungefär 19 200 kr i månaden. Tjänar du mer minskas studiemedlet.` },
+  { fraga: "Får man extra CSN om man har barn?", svar: `Ja, tilläggsbidrag: ${kr(CSN.barn[1])} per fyra veckor för ett barn och ${kr(CSN.barn[2])} för två barn på heltid ${AR}, plus ${kr(CSN.barnExtra)} för varje ytterligare barn. Det är ett bidrag som inte ska betalas tillbaka.` },
+  { fraga: "Måste jag ta lånet?", svar: "Nej. Du kan välja att bara ta bidraget, eller ta en mindre del av lånet. Lånet betalas tillbaka med ränta efter studierna." },
+];
+---
+<Layout site={SITE} titel={`CSN för komvux ${AR} – räkna ut studiemedlet`}
+  beskrivning={besk(`Räkna ut CSN på komvux ${AR}: ${kr(tot)} i veckan på heltid, varav ${kr(CSN.vanligt.bidrag)} bidrag.`, "✓ Högre bidrag", "✓ Halvtid och 75 %", "✓ Barntillägg", "✓ Per termin")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "CSN för komvux", href: "/csn/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>CSN för komvux {AR}</h1>
+  <p class="svar">På heltid på komvux (20 poäng per vecka) får du <strong>{kr(tot)} i veckan</strong> {AR}: {kr(CSN.vanligt.bidrag)} i bidrag och {kr(CSN.vanligt.lan)} i lån. Med <strong>högre bidrag</strong> blir {kr(CSN.hogre.bidrag)} bidrag och bara {kr(CSN.hogre.lan)} lån.</p>
+
+  <section class="sokverktyg" id="kalkylator" data-csn={JSON.stringify(CSN)}>
+    <h2>Räkna ut ditt studiemedel</h2>
+    <form class="sv-form" onsubmit="return false">
+      <label>Studietakt
+        <select name="takt"><option value="1">Heltid – 20 poäng/vecka</option><option value="0.75">75 % – 15 poäng/vecka</option><option value="0.5">Halvtid – 10 poäng/vecka</option></select>
+      </label>
+      <label>Antal veckor <input type="number" name="veckor" min="1" max="52" value="20" /></label>
+      <label>Bidragsnivå
+        <select name="niva"><option value="vanligt">Vanligt bidrag</option><option value="hogre">Högre bidrag (om du uppfyller villkoren)</option></select>
+      </label>
+      <label>Barn under 18 år <select name="barn"><option value="0">Inga</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+      <label><input type="checkbox" name="lan" checked /> Ta lånet</label>
+    </form>
+    <div class="mt-resultat" aria-live="polite"></div>
+    <p class="kalla">Beloppen gäller {AR} enligt CSN. CSN beslutar om ditt studiemedel – kalkylatorn är en uppskattning.</p>
+  </section>
+
+  <h2>Studiemedel {AR} jämfört med {FORRA.ar}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Heltid per vecka</th><th class="num">{FORRA.ar}</th><th class="num">{AR}</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Bidrag</th><td class="num">{kr(FORRA.vanligt.bidrag)}</td><td class="num">{kr(CSN.vanligt.bidrag)}</td></tr>
+      <tr><th scope="row">Lån</th><td class="num">{kr(FORRA.vanligt.lan)}</td><td class="num">{kr(CSN.vanligt.lan)}</td></tr>
+      <tr><th scope="row">Totalt</th><td class="num">{kr(FORRA.vanligt.bidrag + FORRA.vanligt.lan)}</td><td class="num"><strong>{kr(tot)}</strong></td></tr>
+      <tr><th scope="row">Högre bidrag (bidragsdel)</th><td class="num">–</td><td class="num">{kr(CSN.hogre.bidrag)}</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Vem kan få högre bidrag?</h2>
+  <ul>
+    <li><strong>25 år eller äldre:</strong> studier på grundskolenivå, eller på gymnasienivå om du saknar treårigt gymnasium eller motsvarande.</li>
+    <li><strong>20–24 år:</strong> du saknar slutbetyg från grundskolan eller gymnasiet, är inskriven på Arbetsförmedlingen och deltar i Jobbgarantin för ungdomar eller Jobb- och utvecklingsgarantin när du börjar.</li>
+    <li>Du kan inte få högre bidrag om du har haft studiehjälp eller studiemedel med vanligt bidrag de senaste sex månaderna, eller har minst 120 högskolepoäng.</li>
+    <li>Pengarna till högre bidrag är begränsade varje år och kan ta slut för nya ansökningar.</li>
+  </ul>
+
+  <h2>Komvux i de största kommunerna</h2>
+  <div class="kort">{storst.map((k) => <a href={k.href}><strong>Komvux i {k.namn}</strong><small>{k.enheter.length} skolor</small></a>)}</div>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källa: CSN – belopp för studiemedel och högre bidrag {AR} (csn.se) och CSN:s pressmeddelande 25 september 2026. Uppgifterna är inte personlig rådgivning.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("kalkylator"); if (!s) return;
+      const C = JSON.parse(s.dataset.csn), f = s.querySelector("form"), ut = s.querySelector(".mt-resultat");
+      const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
+      const rakna = () => {
+        const takt = +f.takt.value, v = Math.max(1, Math.min(52, +f.veckor.value || 1)), n = C[f.niva.value], b = +f.barn.value;
+        const bidrag = n.bidrag * takt, lan = f.lan.checked ? n.lan * takt : 0;
+        const barn4 = b === 0 ? 0 : b === 1 ? C.barn[1] : C.barn[2] + (b - 2) * C.barnExtra;
+        const barnV = (barn4 / 4) * takt;
+        const vecka = bidrag + lan + barnV;
+        const rad = (t, x) => `<tr><th scope="row">${t}</th><td class="num">${kr(x)}</td><td class="num">${kr(x * 4)}</td><td class="num">${kr(x * v)}</td></tr>`;
+        ut.innerHTML = `<div class="tabell"><table><thead><tr><th></th><th class="num">Per vecka</th><th class="num">4 veckor</th><th class="num">${v} veckor</th></tr></thead><tbody>`
+          + rad("Bidrag", bidrag) + (lan ? rad("Lån", lan) : "") + (barnV ? rad("Tilläggsbidrag barn", barnV) : "")
+          + `<tr><th scope="row">Totalt</th><td class="num"><strong>${kr(vecka)}</strong></td><td class="num"><strong>${kr(vecka * 4)}</strong></td><td class="num"><strong>${kr(vecka * v)}</strong></td></tr></tbody></table></div>`;
+      };
+      f.addEventListener("input", rakna); f.addEventListener("change", rakna); rakna();
+    })();
+  </script>
+</Layout>

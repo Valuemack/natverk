@@ -1,0 +1,90 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { kort, veckodag, MANADER, versal } from "@natverk/core/datum.js";
+import { arbetsdagarDetalj } from "../../lib/ledighet.js";
+import { lista, smaNamn } from "../../lib/text.js";
+import { SITE, AR_LISTA, UPPDATERAD } from "../../site.js";
+
+export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
+const { ar } = Astro.props;
+const a = arbetsdagarDetalj(ar);
+const T = a.totalt;
+const flest = a.manader.reduce((b, m, i) => (m.arbetsdagar > a.manader[b].arbetsdagar ? i : b), 0);
+const minst = a.manader.reduce((b, m, i) => (m.arbetsdagar < a.manader[b].arbetsdagar ? i : b), 0);
+const fore = AR_LISTA.includes(ar - 1) ? arbetsdagarDetalj(ar - 1).totalt.arbetsdagar : null;
+const dagNamn = (h) => `${smaNamn(h.namn)} (${veckodag(h.datum)} ${kort(h.datum)})`;
+const allaRoda = a.manader.flatMap((m) => m.rodaVardag);
+const allaAftnar = a.manader.flatMap((m) => m.aftnarVardag);
+
+const fragor = [
+  { fraga: `Hur många arbetsdagar är det ${ar}?`,
+    svar: `${ar} har ${T.arbetsdagar} arbetsdagar om midsommarafton, julafton och nyårsafton räknas som lediga, och ${T.inklAftnar} om aftnarna räknas som arbetsdagar. Året har ${T.vardagar} vardagar (måndag–fredag), varav ${T.roda} är röda dagar.` },
+  { fraga: `Hur många arbetstimmar är det ${ar}?`,
+    svar: `Med 8 timmar per arbetsdag (heltid, 40 timmar i veckan) blir det ${T.arbetsdagar * 8} arbetstimmar ${ar}, eller ${T.inklAftnar * 8} timmar om helgaftnarna räknas som arbetsdagar. Kollektivavtal kan ge kortare arbetstid.` },
+  { fraga: `Vilken månad har flest arbetsdagar ${ar}?`,
+    svar: `${versal(MANADER[flest])} har flest arbetsdagar ${ar} (${a.manader[flest].arbetsdagar}) och ${MANADER[minst]} minst (${a.manader[minst].arbetsdagar}).` },
+  { fraga: "Räknas julafton som arbetsdag?",
+    svar: "Enligt lag är julafton, midsommarafton och nyårsafton inte helgdagar, men i semesterlagen jämställs de med söndag och de flesta kollektivavtal ger ledigt. I lönekalkyler brukar de därför räknas som lediga. Tabellen visar båda räknesätten." },
+];
+const beskrivning = besk(
+  `${ar} har ${T.arbetsdagar} arbetsdagar i Sverige (${T.inklAftnar} om aftnarna räknas).`,
+  `Arbetsdagar och arbetstimmar per månad och kvartal, räknat exakt ur helgdagarna ${ar}.`,
+);
+const forra = AR_LISTA.includes(ar - 1) ? ar - 1 : null;
+const nasta = AR_LISTA.includes(ar + 1) ? ar + 1 : null;
+---
+<Layout site={SITE} titel={`Arbetsdagar ${ar} – ${T.arbetsdagar} dagar, per månad och kvartal`}
+  beskrivning={beskrivning}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Arbetsdagar", href: "/arbetsdagar/" }, { namn: `${ar}`, href: `/arbetsdagar/${ar}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Arbetsdagar {ar}</h1>
+  <p class="svar">{ar} har <strong>{T.arbetsdagar} arbetsdagar</strong> ({T.arbetsdagar * 8} arbetstimmar på heltid).
+    Räknar man midsommarafton, julafton och nyårsafton som arbetsdagar blir det <strong>{T.inklAftnar}</strong>.
+    {fore !== null && <> {T.arbetsdagar === fore ? `Det är lika många som ${ar - 1}.` : `Det är ${Math.abs(T.arbetsdagar - fore)} ${T.arbetsdagar > fore ? "fler" : "färre"} än ${ar - 1} (${fore}).`}</>}</p>
+  <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/arbetsdagar/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
+
+  <h2>Arbetsdagar per månad {ar}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Vardagar</th><th class="num">Röda dagar på vardag</th><th class="num">Aftnar på vardag</th>
+      <th class="num">Arbetsdagar</th><th class="num">Timmar (8 h/dag)</th><th class="num">Aftnar som arbetsdag</th></tr></thead>
+    <tbody>
+      {a.manader.map((m, i) => (
+        <tr><td>{versal(MANADER[i])}</td><td class="num">{m.vardagar}</td><td class="num">{m.rodaVardag.length}</td>
+          <td class="num">{m.aftnarVardag.length}</td><td class="num"><strong>{m.arbetsdagar}</strong></td>
+          <td class="num">{m.arbetsdagar * 8}</td><td class="num">{m.inklAftnar}</td></tr>
+      ))}
+      <tr class="markerad"><td>Hela {ar}</td><td class="num">{T.vardagar}</td><td class="num">{T.roda}</td><td class="num">{T.aftnar}</td>
+        <td class="num"><strong>{T.arbetsdagar}</strong></td><td class="num">{T.arbetsdagar * 8}</td><td class="num">{T.inklAftnar}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Arbetsdagar = vardagar (måndag–fredag) minus röda dagar och helgaftnar som infaller på en vardag. Timmarna gäller heltid med 8 timmar per dag.</p>
+
+  <h2>Arbetsdagar per kvartal {ar}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kvartal</th><th class="num">Kalenderdagar</th><th class="num">Arbetsdagar</th><th class="num">Timmar (8 h/dag)</th></tr></thead>
+    <tbody>{a.kvartal.map((q, i) => (
+      <tr><td>Kvartal {i + 1} ({MANADER[i * 3]}–{MANADER[i * 3 + 2]})</td><td class="num">{q.kalenderdagar}</td>
+        <td class="num">{q.arbetsdagar}</td><td class="num">{q.arbetsdagar * 8}</td></tr>
+    ))}</tbody>
+  </table></div>
+
+  <Annons plats="arbetsdagar-1" />
+
+  <h2>Lediga vardagar {ar}</h2>
+  <p>{allaRoda.length ? <>Röda dagar som infaller på en vardag {ar}: {lista(allaRoda.map(dagNamn))}.</> : <>Inga röda dagar infaller på en vardag {ar}.</>}</p>
+  <p>{allaAftnar.length ? <>Helgaftnar på en vardag: {lista(allaAftnar.map(dagNamn))}. De är inga röda dagar enligt lag, men jämställs med söndag i semesterlagen.</> : <>Inga helgaftnar infaller på en vardag {ar}.</>}</p>
+
+  <h2>Mer om {ar}</h2>
+  <div class="kort">
+    <a href={`/${ar}/`}><strong>Röda dagar {ar}</strong><small>Alla helgdagar och aftnar</small></a>
+    <a href={`/klamdagar/${ar}/`}><strong>Klämdagar {ar}</strong><small>Ta ledigt smart</small></a>
+    <a href={`/vecka/${ar}/`}><strong>Veckonummer {ar}</strong><small>Alla veckor med datum</small></a>
+    {forra && <a href={`/arbetsdagar/${forra}/`}><strong>Arbetsdagar {forra}</strong><small>Föregående år</small></a>}
+    {nasta && <a href={`/arbetsdagar/${nasta}/`}><strong>Arbetsdagar {nasta}</strong><small>Nästa år</small></a>}
+  </div>
+
+  <Faq fragor={fragor} />
+</Layout>
