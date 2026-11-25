@@ -1,0 +1,188 @@
+---
+// Meritvärde och meritpoäng: kalkylator för högskolans jämförelsetal (betygsvärde × gymnasiepoäng, antagning.se)
+// och för gymnasieantagningens meritvärde (16 bästa + moderna språk, gymnasieförordningen 7 kap. 4 §). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import KalkStil from "../components/KalkStil.astro";
+import { SITE } from "../site.js";
+import { tal, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const BETYG = { A: 20, B: 17.5, C: 15, D: 12.5, E: 10, F: 0 };
+const GRUND = ["Bild", "Biologi", "Engelska", "Fysik", "Geografi", "Hem- och konsumentkunskap", "Historia", "Idrott och hälsa", "Kemi", "Matematik", "Musik", "Religionskunskap", "Samhällskunskap", "Slöjd", "Svenska eller svenska som andraspråk", "Teknik"];
+// Räkneexempel för jämförelsetal: fem ämnen.
+const EX = [["Svenska", 300, "B"], ["Engelska", 200, "A"], ["Matematik", 100, "C"], ["Historia", 50, "D"], ["Vård och omsorg", 1000, "C"]];
+const exPoang = EX.reduce((a, [, p]) => a + p, 0);
+const exSumma = EX.reduce((a, [, p, b]) => a + p * BETYG[b], 0);
+const exJmf = exSumma / exPoang;
+
+const avsnitt = [
+  { id: "skillnad", rubrik: "Meritvärde, jämförelsetal och meritpoäng" },
+  { id: "kalkylator", rubrik: "Räkna ut meritvärdet till högskolan" },
+  { id: "rakna", rubrik: "Så räknas jämförelsetalet" },
+  { id: "hoja", rubrik: "Så mycket höjer ett bättre betyg" },
+  { id: "meritpoang", rubrik: "Meritpoäng – vilka kurser och ämnen ger poäng?" },
+  { id: "komvux", rubrik: "Höja meritvärdet på komvux – BI och BII" },
+  { id: "gymnasiet", rubrik: "Meritvärde till gymnasiet – räkna ut från grundskolan" },
+  { id: "tips", rubrik: "Vanliga misstag när man räknar meritvärde" },
+];
+
+const fragor = [
+  { fraga: "Hur räknar man ut meritvärdet?", svar: "Multiplicera betygsvärdet i varje ämne eller kurs (A = 20, B = 17,5, C = 15, D = 12,5, E = 10, F = 0) med antalet gymnasiepoäng. Lägg ihop och dela med det totala antalet poäng. Då får du jämförelsetalet, högst 20,00. Lägg sedan till dina meritpoäng." },
+  { fraga: "Vad är högsta meritvärde till högskolan?", svar: "Högsta jämförelsetal är 20,00 och du kan få högst 2,5 meritpoäng. Det högsta meritvärdet är alltså 22,5." },
+  { fraga: "Vilka kurser ger meritpoäng?", svar: "Meritpoäng ges för vissa kurser eller nivåer i moderna språk, engelska och matematik, till exempel engelska 7 eller engelska nivå 3 som ger 1,0. Kurser som krävs för behörighet till utbildningen ger inte meritpoäng, och kurser från folkhögskola ger aldrig meritpoäng." },
+  { fraga: "Vad är meritvärdet till gymnasiet?", svar: "Till gymnasiet är meritvärdet summan av betygsvärdena för dina 16 bästa betyg från grundskolan. Har du läst moderna språk som språkval kan även det betyget räknas, och då är högsta meritvärdet 340. Utan moderna språk är maxvärdet 320." },
+  { fraga: "Kan man höja sitt meritvärde på komvux?", svar: "Ja. Du kan läsa om en kurs eller ett ämne för att få ett högre betyg, läsa kurser som ger meritpoäng eller göra en prövning. Med kompletteringar söker du i kompletteringsgruppen BII, men du prövas också i BI med dina ursprungliga betyg." },
+  { fraga: "Räknas gymnasiearbetet in i meritvärdet?", svar: "Nej. Gymnasiearbetet räknas inte in i jämförelsetalet enligt antagning.se, varken med kursbetyg eller med ämnesbetyg." },
+  { fraga: "Vad är skillnaden mellan meritvärde och meritpoäng?", svar: "Meritpoäng är en del av meritvärdet. Meritvärdet till högskolan är jämförelsetalet från dina betyg, högst 20,00, plus meritpoängen, högst 2,5. Meritpoäng får du för vissa kurser i moderna språk, engelska och matematik." },
+  { fraga: "Hur många meritpoäng ger engelska 7?", svar: "Engelska 7 ger 1,0 meritpoäng, och med ämnesbetyg ger engelska nivå 3 lika mycket. Det gäller inte om utbildningen du söker kräver kursen för behörighet." },
+];
+---
+<Guide site={SITE} titel="Räkna ut meritvärde – kalkylator för högskola och gymnasiet"
+  beskrivning="Räkna ut ditt meritvärde: jämförelsetal och meritpoäng till högskolan (max 22,5) och meritvärdet från grundskolan till gymnasiet (max 340). Med kalkylator."
+  h1="Räkna ut meritvärde och meritpoäng"
+  svar="Meritvärdet till högskolan är ditt <strong>jämförelsetal</strong> (högst 20,00) plus dina <strong>meritpoäng</strong> (högst 2,5), alltså <strong>högst 22,5</strong>. Jämförelsetalet är snittet av dina betyg viktat med gymnasiepoängen, där A = 20 och E = 10. Till gymnasiet räknas i stället summan av dina 16 bästa betyg från grundskolan, högst 340 med moderna språk."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Meritvärde", href: "/meritvarde/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Högskolebehörighet via komvux", href: "/hogskolebehorighet/", text: "Examen och särskild behörighet" },
+    { namn: "Komvux eller folkhögskola", href: "/komvux-eller-folkhogskola/", text: "Betyg eller studieomdöme" },
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Rätt, urval och terminer" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Läs upp betyg vid sidan av jobbet" },
+  ]}
+  kallor={[
+    { namn: "Antagning.se – Räkna ut ditt meritvärde i Gy25", url: "https://www.antagning.se/sv/betyg-och-behorighet/amnesbetyg-pa-gymnasieniva-gy25/rakna-ut-ditt-meritvarde-i-gy25/", text: "betygsvärden, beräkning och maxvärden", datum: "2026-11-25" },
+    { namn: "Antagning.se – Meritpoäng i Gy25", url: "https://www.antagning.se/sv/betyg-och-behorighet/amnesbetyg-pa-gymnasieniva-gy25/meritpoang-i-gy25/", text: "meritpoäng för ämnesbetyg", datum: "2026-11-25" },
+    { namn: "Antagning.se – Meritpoäng (kursbetyg)", url: "https://www.antagning.se/sv/betyg-och-behorighet/gymnasieskolan/gymnasieexamen-2014-och-framat/meritpoang/", text: "meritpoäng för kursbetyg", datum: "2026-11-25" },
+    { namn: "Antagning.se – Så här räknas betygen", url: "https://www.antagning.se/sv/betyg-och-behorighet/gymnasieskolan/gymnasieexamen-2014-och-framat/sa-har-raknas-betygen/", text: "vilka betyg som räknas med", datum: "2026-11-25" },
+    { namn: "UHR – Betygskomplettering", url: "https://www.uhr.se/link/776d8079693b47729554a58d61dd878d.aspx", text: "urvalsgrupperna BI och BII", datum: "2026-11-25" },
+    { namn: "Gymnasieförordningen (2010:2039), 7 kap. 4 §", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/gymnasieforordning-20102039_sfs-2010-2039/", text: "meritvärde vid antagning till gymnasieskolan", datum: "2026-11-25" },
+    K.gy25,
+  ]}>
+
+  <h2 id="skillnad">Meritvärde, jämförelsetal och meritpoäng</h2>
+  <p>Ordet meritvärde används för två olika saker, och det är lätt att blanda ihop dem:</p>
+  <ul>
+    <li><strong>Meritvärde till högskolan</strong> räknas på gymnasiebetyg, även betyg från komvux. Det består av ett jämförelsetal på högst 20,00 plus upp till 2,5 meritpoäng. Högsta möjliga meritvärde är 22,5.</li>
+    <li><strong>Meritvärde till gymnasiet</strong> räknas på slutbetyget från grundskolan. Det är summan av de 16 bästa betygen, plus moderna språk om du har läst det som språkval. Högsta möjliga meritvärde är 340.</li>
+  </ul>
+  <p>Båda bygger på samma betygsvärden: A = 20, B = 17,5, C = 15, D = 12,5, E = 10 och F = 0. Sidan har en kalkylator för varje.</p>
+
+  <h2 id="kalkylator">Räkna ut meritvärdet till högskolan</h2>
+  <p>Fyll i varje kurs eller ämne med antal gymnasiepoäng och betyg. Ta inte med gymnasiearbetet. Välj sedan hur många meritpoäng du har.</p>
+  <section class="sokverktyg kalk" id="hs-kalk" data-betyg={JSON.stringify(BETYG)}>
+    <form class="sv-form" onsubmit="return false">
+      <div class="hs-rader"></div>
+      <p><button type="button" class="knapp sekundar" data-ny>+ Lägg till kurs eller ämne</button></p>
+      <label>Meritpoäng
+        <select name="merit">{[0, 0.5, 1, 1.5, 2, 2.5].map((m) => <option value={m}>{tal(m)}</option>)}</select>
+      </label>
+    </form>
+    <div class="mt-resultat" aria-live="polite"></div>
+    <p class="kalla">Uppskattning. Det är antagning.se som räknar ditt meritvärde vid ansökan.</p>
+  </section>
+
+  <h2 id="rakna">Så räknas jämförelsetalet</h2>
+  <p>Jämförelsetalet är ett viktat snitt av dina betyg. Ett ämne med många poäng väger alltså tyngre än ett med få. Så här räknar antagning.se:</p>
+  <ol>
+    <li>Ta betygsvärdet för varje ämne eller kurs och multiplicera med antalet gymnasiepoäng.</li>
+    <li>Lägg ihop alla produkter.</li>
+    <li>Dela summan med det totala antalet gymnasiepoäng.</li>
+  </ol>
+  <p>Med ämnesbetyg (Gy25) gäller betyget för alla poäng i ämnet, även de lägre nivåerna. Ett fullständigt gymnasieprogram ger 2 400 poäng att dela med. Summan av betygsvärdena hamnar då mellan 21 500 och 48 000.</p>
+  <h3>Räkneexempel</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Ämne</th><th class="num">Poäng</th><th class="num">Betyg</th><th class="num">Poäng × värde</th></tr></thead>
+    <tbody>{EX.map(([n, p, b]) => <tr><td>{n}</td><td class="num">{p}</td><td class="num">{b} ({tal(BETYG[b])})</td><td class="num">{tal(p * BETYG[b], 0)}</td></tr>)}
+      <tr><th scope="row">Summa</th><td class="num">{tal(exPoang, 0)}</td><td></td><td class="num">{tal(exSumma, 0)}</td></tr></tbody>
+  </table></div>
+  <p>Jämförelsetalet blir {tal(exSumma, 0)} / {tal(exPoang, 0)} = <strong>{exJmf.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>. Med 1,0 meritpoäng blir meritvärdet {(exJmf + 1).toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}. Exemplet visar varför ett stort yrkesämne påverkar mycket: betyget C på 1 000 poäng drar ner snittet mer än A i engelska drar upp det.</p>
+
+  <h2 id="hoja">Så mycket höjer ett bättre betyg</h2>
+  <p>Vill du läsa upp ett betyg på komvux lönar det sig att räkna på vilket ämne som ger mest. Ett betygssteg är 2,5 i betygsvärde. Hur mycket det höjer jämförelsetalet beror på hur många poäng ämnet har i förhållande till hela examen. Tabellen visar höjningen för ett fullständigt program på 2 400 poäng:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ämnets omfattning</th><th class="num">Ett steg, t.ex. C till B</th><th class="num">Två steg, t.ex. C till A</th><th class="num">Från E till A</th></tr></thead>
+    <tbody>{[50, 100, 200, 300].map((p) => <tr><td>{p} poäng</td><td class="num">+{(2.5 * p / 2400).toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td class="num">+{(5 * p / 2400).toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td class="num">+{(10 * p / 2400).toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>)}</tbody>
+  </table></div>
+  <p>Att höja ett ämne på 100 poäng från C till A ger alltså bara 0,21. En meritpoängskurs, som engelska 7 eller engelska nivå 3, ger 1,0 direkt, om den inte krävs för behörighet till utbildningen. Meritpoängen är därför ofta det snabbaste sättet att höja meritvärdet, medan ett stort ämne med lågt betyg kan vara värt att läsa om. Tänk på att du med kompletteringar söker i BII.</p>
+
+  <h2 id="meritpoang">Meritpoäng – vilka kurser och ämnen ger poäng?</h2>
+  <p>Meritpoäng läggs ovanpå jämförelsetalet. Du kan få högst 2,5. Kravet är godkänt betyg, och en kurs eller nivå som krävs för behörighet till den utbildning du söker ger inte meritpoäng.</p>
+  <h3>Med kursbetyg</h3>
+  <ul>
+    <li><strong>Moderna språk</strong>, högst 1,5: moderna språk 3 ger 0,5, moderna språk 4 ger 1,0 och moderna språk 5 ger 0,5. Ett annat språk på lägst nivå 2 kan ge 0,5 till.</li>
+    <li><strong>Engelska 7</strong> ger 1,0.</li>
+    <li><strong>Matematik</strong>, högst 1,5: matematik 2, 3 och 4 ger 0,5 vardera, matematik 5 ger 1,0 och matematik specialisering ger 0,5.</li>
+  </ul>
+  <h3>Med ämnesbetyg (Gy25)</h3>
+  <ul>
+    <li><strong>Engelska nivå 3</strong> ger 1,0.</li>
+    <li><strong>Matematik</strong>, högst 1,5: matematik nivå 2 (2a, 2b eller 2c) ger 0,5, matematik fortsättning nivå 2 ger 1,0, matematik fördjupning nivå 1 ger 1,0 och matematik specialisering B och C ger 0,5 vardera.</li>
+    <li><strong>Moderna språk</strong>, högst 1,5, i upp till två språk.</li>
+  </ul>
+  <p>Kurser från folkhögskola, basår och utländska gymnasiekurser ger inga meritpoäng.</p>
+
+  <h2 id="komvux">Höja meritvärdet på komvux – BI och BII</h2>
+  <p>På komvux kan du höja ditt meritvärde efter gymnasiet. Du kan läsa om ett ämne för ett bättre betyg, läsa ämnen som ger meritpoäng eller göra en <strong>prövning</strong>, där du visar dina kunskaper utan att gå hela kursen. Alla som bor i Sverige har enligt skollagen rätt att pröva i ämnen på gymnasial nivå, även om de redan har betyg. Läser du på komvux efter 1 juli 2025 får du ämnesbetyg enligt Gy25.</p>
+  <p>Kompletterade betyg påverkar vilken <strong>urvalsgrupp</strong> du tävlar i:</p>
+  <ul>
+    <li><strong>BI</strong> – dina betyg från gymnasiet utan kompletteringar.</li>
+    <li><strong>BII</strong> – dina betyg med kompletteringar. Behörighetskompletteringar prövas bara här.</li>
+  </ul>
+  <p>Kompletterar du för att höja meritvärdet prövas du i både BI och BII, med olika meritvärden. Du förlorar alltså inget på att komplettera. Det finns ett undantag: har du en svensk yrkesexamen eller utländska betyg och kompletterar för grundläggande behörighet på komvux räknas kompletteringarna i BI.</p>
+
+  <h2 id="gymnasiet">Meritvärde till gymnasiet – räkna ut från grundskolan</h2>
+  <p>När du söker till gymnasiet, eller till gymnasieskolan som vuxen, räknas meritvärdet enligt gymnasieförordningen som summan av betygsvärdena för dina <strong>16 bästa betyg</strong>. Har du läst moderna språk som språkval får även det betyget räknas, och då kan du nå 340. Utan moderna språk är maxvärdet 320.</p>
+  <section class="sokverktyg kalk" id="gr-kalk" data-betyg={JSON.stringify(BETYG)}>
+    <form class="sv-form" onsubmit="return false">
+      {GRUND.map((a, i) => <label>{a}<select name={`a${i}`}>{["A", "B", "C", "D", "E", "F"].map((b) => <option value={b} selected={b === "C"}>{b}</option>)}</select></label>)}
+      <label>Moderna språk (språkval)<select name="ms"><option value="">Har inte läst</option>{["A", "B", "C", "D", "E", "F"].map((b) => <option value={b}>{b}</option>)}</select></label>
+    </form>
+    <div class="mt-resultat" aria-live="polite"></div>
+  </section>
+
+  <h2 id="tips">Vanliga misstag när man räknar meritvärde</h2>
+  <ul>
+    <li><strong>Att ta ett vanligt snitt.</strong> Till högskolan måste betygen viktas med gymnasiepoängen, annars blir resultatet fel.</li>
+    <li><strong>Att räkna meritpoäng för en kurs som krävs.</strong> Kräver utbildningen matematik 3c ger den kursen inga meritpoäng för just den utbildningen.</li>
+    <li><strong>Att räkna med gymnasiearbetet.</strong> Det ingår inte i jämförelsetalet.</li>
+    <li><strong>Att hoppa över ett F.</strong> F har betygsvärdet 0 och drar ner snittet om ämnet räknas med. Läs om ämnet eller gör en prövning.</li>
+    <li><strong>Att glömma urvalsgruppen.</strong> Med kompletteringar jämförs du med andra i BII, och gränserna kan skilja sig från BI.</li>
+  </ul>
+  <p>Vill du läsa upp betyg eller bli behörig? Läs om <a href="/hogskolebehorighet/">högskolebehörighet via komvux</a> och hur du <a href="/ansoka/">ansöker till komvux</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const fmt = (n) => n.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const hs = document.getElementById("hs-kalk");
+      if (hs) {
+        const B = JSON.parse(hs.dataset.betyg), rader = hs.querySelector(".hs-rader"), f = hs.querySelector("form"), ut = hs.querySelector(".mt-resultat");
+        const opt = Object.keys(B).map((b) => `<option value="${b}"${b === "C" ? " selected" : ""}>${b}</option>`).join("");
+        const ny = (namn = "", p = 100) => {
+          const d = document.createElement("div"); d.className = "hs-rad";
+          d.innerHTML = `<label>Kurs eller ämne <input name="n" value="${namn}" placeholder="t.ex. Matematik"></label><label>Poäng <input type="number" name="p" min="0" max="3000" step="50" value="${p}"></label><label>Betyg <select name="b">${opt}</select></label>`;
+          rader.appendChild(d);
+        };
+        [["Svenska", 300], ["Engelska", 200], ["Matematik", 100]].forEach(([n, p]) => ny(n, p));
+        hs.querySelector("[data-ny]").addEventListener("click", () => { ny(); rakna(); });
+        const rakna = () => {
+          let p = 0, s = 0;
+          rader.querySelectorAll(".hs-rad").forEach((r) => { const x = +r.querySelector("[name=p]").value || 0; p += x; s += x * B[r.querySelector("[name=b]").value]; });
+          const j = p ? s / p : 0, m = +f.merit.value;
+          ut.innerHTML = p ? `<div class="tabell"><table><tbody><tr><th scope="row">Poäng totalt</th><td class="num">${p.toLocaleString("sv-SE")}</td></tr><tr><th scope="row">Jämförelsetal</th><td class="num">${fmt(j)}</td></tr><tr><th scope="row">Meritpoäng</th><td class="num">${fmt(m)}</td></tr><tr><th scope="row">Meritvärde</th><td class="num"><strong>${fmt(j + m)}</strong> av 22,50</td></tr></tbody></table></div>` : "<p>Fyll i minst en kurs med poäng.</p>";
+        };
+        f.addEventListener("input", rakna); f.addEventListener("change", rakna); rakna();
+      }
+      const gr = document.getElementById("gr-kalk");
+      if (gr) {
+        const B = JSON.parse(gr.dataset.betyg), f = gr.querySelector("form"), ut = gr.querySelector(".mt-resultat");
+        const rakna = () => {
+          const v = [...f.querySelectorAll("select:not([name=ms])")].map((s) => B[s.value]).sort((a, b) => b - a).slice(0, 16);
+          const bas = v.reduce((a, b) => a + b, 0), ms = f.ms.value ? B[f.ms.value] : null;
+          const tot = bas + (ms ?? 0), max = ms == null ? 320 : 340;
+          ut.innerHTML = `<p>Ditt meritvärde: <strong>${tot.toLocaleString("sv-SE")}</strong> av ${max}${ms != null ? ` (16 bästa betyg ${bas.toLocaleString("sv-SE")} + moderna språk ${ms.toLocaleString("sv-SE")})` : ""}.</p>`;
+        };
+        f.addEventListener("change", rakna); rakna();
+      }
+    })();
+  </script>
+  <KalkStil />
+</Guide>

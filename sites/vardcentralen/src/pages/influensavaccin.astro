@@ -1,0 +1,113 @@
+---
+// Lång guide: influensavaccin säsongen 2026/2027. Egen data: vårdcentraler per län med e-tjänst för
+// vaccination och med influensavaccination omnämnd i sitt kontaktkort på 1177 (scripts/07).
+// Fakta granskade mot Folkhälsomyndigheten och 1177 2026-11-25. Ingen medicinsk rådgivning.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, lanRader, tal, pct } from "../lib/guide.js";
+
+const rader = lanRader((lan) => {
+  const k = G.kort[lan] ?? {};
+  return { kort: k.kort ?? 0, eVacc: k.vaccinBoka ?? 0, flu: k.influensaText ?? 0 };
+}).sort((a, b) => b.eVacc - a.eVacc || b.flu - a.flu);
+const sum = (f) => rader.reduce((s, r) => s + r[f], 0);
+const totKort = sum("kort"), totE = sum("eVacc"), totFlu = sum("flu");
+const flestE = [...rader].filter((r) => r.kort >= 10).sort((a, b) => b.eVacc / b.kort - a.eVacc / a.kort).slice(0, 3);
+
+const avsnitt = [
+  { id: "start", rubrik: "När startar influensavaccinationen 2026?" },
+  { id: "vem", rubrik: "Vem rekommenderas vaccin mot influensa?" },
+  { id: "gratis", rubrik: "Vad kostar influensavaccinet?" },
+  { id: "var", rubrik: "Var får du influensavaccin?" },
+  { id: "lan", rubrik: "Vårdcentraler med vaccination på 1177 – per län" },
+  { id: "barn", rubrik: "Barn och influensavaccin" },
+  { id: "covid", rubrik: "Covid-19 och influensa samtidigt" },
+];
+
+const fragor = [
+  { fraga: "När börjar influensavaccinationen 2026?", svar: "Folkhälsomyndigheten anger att vaccinationen mot influensa och covid-19 startade den 2 november 2026. Datumet kan skilja sig mellan regioner, och personal inom vård och omsorg rekommenderas att vaccinera sig under december 2026." },
+  { fraga: "Är influensavaccinet gratis?", svar: "Ja för dig som tillhör en riskgrupp. Enligt Folkhälsomyndigheten erbjuder alla regioner gratis vaccination till gravida, personer som är 65 år eller äldre och övriga riskgrupper. Tillhör du inte en riskgrupp får du oftast betala själv." },
+  { fraga: "Vilka tillhör riskgrupperna för influensa?", svar: "Personer som är 65 år eller äldre, gravida efter vecka 12 och vuxna och barn med vissa sjukdomar, till exempel hjärt-kärlsjukdom (utom enbart högt blodtryck), KOL, svår astma, diabetes, lever- eller njursvikt och nedsatt immunförsvar." },
+  { fraga: "Var kan jag vaccinera mig mot influensa?", svar: "Oftast på vårdcentraler, hälsocentraler eller vaccinationsmottagningar. Det är regionen som bestämmer när och var vaccinationen görs. Se din region på 1177.se." },
+  { fraga: "Kan jag ta influensa- och covidvaccin samtidigt?", svar: "I de flesta fall ja. Enligt Folkhälsomyndigheten går influensavaccinet att kombinera med andra vacciner, till exempel mot covid-19. Säg till om du vill ha båda vid samma tillfälle." },
+  { fraga: "Kan barn få influensavaccin som nässpray?", svar: "Ja. Folkhälsomyndigheten anger att barn 2–17 år kan få vaccinet som nässpray. Barn med kraftigt nedsatt immunförsvar eller svår astma får spruta i stället, enligt 1177." },
+  { fraga: "Kan jag vaccinera mig om jag inte är i riskgrupp?", svar: "Ja, du kan vaccinera dig en gång per år, men regionen subventionerar inte kostnaden. Fråga en vaccinationsmottagning om pris och tider." },
+];
+
+const titel = "Influensavaccin 2026 – gratis för vem och var du får det";
+const beskrivning = `Influensavaccin 2026: start 2 november, vilka riskgrupper som får gratis vaccin, nässpray för barn och var du vaccinerar dig – plus vårdcentraler med vaccination per län.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Influensavaccin 2026"
+  svar={`Vaccinationen mot influensa säsongen 2026/2027 startade <strong>2 november 2026</strong>. Den är <strong>gratis</strong> för dig som är 65 år eller äldre, gravid efter vecka 12 eller tillhör en medicinsk riskgrupp. Andra kan vaccinera sig men betalar oftast själva. Vaccinationen görs främst på <strong>vårdcentraler och vaccinationsmottagningar</strong> – regionen bestämmer var.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Influensavaccin 2026", href: "/influensavaccin/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "TBE-vaccin", href: "/tbe-vaccin/", text: "Doser, kostnad och riskområden" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Adress, telefon och öppettider" },
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Utan tidsbokning" },
+    { namn: "BVC – barnavårdscentralen", href: "/bvc/", text: "Barnvaccinationsprogrammet" },
+    { namn: "Barnmorskemottagning (MVC)", href: "/barnmorskemottagning/", text: "För dig som är gravid" },
+  ]}
+  kallor={[
+    { namn: "Folkhälsomyndigheten – Vaccination mot influensa", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/vaccinationer/vaccinationer-a-o/vaccination-mot-influensa/", text: "riskgrupper, kostnad, nässpray och var vaccinationen görs", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – Nu startar vaccinationerna mot influensa och covid-19", url: "https://www.folkhalsomyndigheten.se/nyheter-och-press/nyhetsarkiv/2026/november/nu-startar-vaccinationerna-mot-influensa-och-covid-19/", text: "start 2 november 2026", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – Vaccination mot covid-19", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/vaccinationer/vaccinationer-a-o/vaccination-mot-covid-19/", text: "vilka som rekommenderas vaccin mot covid-19", datum: "2026-11-25" },
+    { namn: "1177 – Vaccination mot influensa", url: "https://www.1177.se/undersokning-behandling/vaccinationer/vaccination-mot-influensa/", text: "kostnad, nässpray och hushållskontakter", datum: "2026-11-25" },
+    { namn: "1177 Hitta vård – vårdcentralernas kontaktkort", url: "https://www.1177.se/hitta-vard/", text: `${tal(totKort)} kontaktkort genomgångna av redaktionen`, datum: G.hamtat.vardtyper },
+  ]}>
+
+  <h2 id="start">När startar influensavaccinationen 2026?</h2>
+  <p>Folkhälsomyndigheten meddelade att vaccinationen mot influensa och covid-19 inför vintersäsongen 2026/2027 startade den <strong>2 november 2026</strong>. Regionerna kan ha egna startdatum och ordning mellan grupperna, så kontrollera vad som gäller där du bor. Personal inom vård och omsorg som arbetar nära personer med ökad risk rekommenderas att vaccinera sig under december 2026.</p>
+  <p>Rekommendationerna gäller säsong för säsong, och vaccinet tas inför varje vinter. Folkhälsomyndigheten anger att man kan vaccinera sig en gång per år.</p>
+
+  <h2 id="vem">Vem rekommenderas vaccin mot influensa?</h2>
+  <p>Folkhälsomyndigheten rekommenderar vaccination till dem som löper störst risk att bli allvarligt sjuka. Det är:</p>
+  <ul>
+    <li><strong>alla som är 65 år eller äldre</strong></li>
+    <li><strong>gravida efter graviditetsvecka 12</strong> – gravida med ytterligare riskfaktor kan vaccineras tidigare</li>
+    <li><strong>vuxna och barn med vissa sjukdomar</strong>, till exempel hjärt-kärlsjukdom (utom enbart högt blodtryck), KOL, svår astma, diabetes, lever- eller njursvikt, nedsatt immunförsvar och tillstånd som försämrar lungfunktionen</li>
+    <li><strong>barn från sex månaders ålder</strong> som har ökad risk</li>
+    <li><strong>hushållskontakter</strong> till personer med kraftigt nedsatt immunförsvar</li>
+    <li><strong>personal inom vård och omsorg</strong> som arbetar nära personer med ökad risk</li>
+  </ul>
+  <p>Är du osäker på om din sjukdom räknas till riskgrupperna, fråga din vårdcentral eller den läkare som behandlar dig. Det är vården som bedömer, inte en lista på nätet.</p>
+
+  <h2 id="gratis">Vad kostar influensavaccinet?</h2>
+  <p>Enligt Folkhälsomyndigheten erbjuder <strong>alla regioner gratis influensavaccination</strong> till gravida, personer som är 65 år eller äldre och övriga riskgrupper. 1177 uttrycker det som att vaccinationen inte kostar något om du rekommenderas vaccin på grund av ökad risk.</p>
+  <p>För <strong>hushållskontakter</strong> skriver 1177 att du kan behöva betala, så fråga din region vad som gäller. Tillhör du inte någon av grupperna kan du ändå vaccinera dig en gång per år, men regionerna subventionerar då inte kostnaden. Priset bestäms av mottagningen, och vi anger inga belopp eftersom de skiljer sig åt.</p>
+  <p>Vaccinationer räknas oftast inte in i <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet</a>, enligt 1177. Ett frikort gör alltså inte vaccinet gratis för den som betalar själv.</p>
+
+  <h2 id="var">Var får du influensavaccin?</h2>
+  <p>Folkhälsomyndigheten skriver att vaccinationen oftast görs på vårdcentraler, hälsocentraler eller vaccinationsmottagningar, och att det är regionen som bestämmer när och var. I praktiken kan det se olika ut:</p>
+  <ul>
+    <li>Vissa regioner har <strong>tidsbokning</strong> via 1177.se, där du loggar in och väljer tid och mottagning.</li>
+    <li>Andra har <strong>drop-in</strong> på vårdcentraler eller i särskilda vaccinationslokaler vissa dagar.</li>
+    <li>Den som inte tillhör en riskgrupp kan vända sig till en vaccinationsmottagning som tar betalt.</li>
+  </ul>
+  <p>Många mottagningar ber dig fylla i en hälsodeklaration före besöket. I vårdcentralernas kontaktkort på 1177 finns e-tjänster som heter just "hälsodeklaration inför vaccination", så att du kan göra det hemma.</p>
+
+  <h2 id="lan">Vårdcentraler med vaccination på 1177 – per län</h2>
+  <p>Vi har gått igenom {tal(totKort)} vårdcentralers kontaktkort på 1177 och räknat hur många som har en e-tjänst för vaccination (till exempel att boka tid eller fylla i hälsodeklaration) och hur många som nämner influensavaccination i sin aktuella information. Sammanlagt har {tal(totE)} vårdcentraler, {pct(totE, totKort)} procent, en e-tjänst för vaccination, och {tal(totFlu)} skriver om influensa i sin information. {flestE.length > 0 && <>Störst andel med e-tjänst har {flestE.map((r) => r.kortnamn).join(", ").replace(/, ([^,]*)$/, " och $1")}.</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Vårdcentraler</th><th class="num">E-tjänst för vaccination</th><th class="num">Andel</th><th class="num">Nämner influensa</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.kort}</td><td class="num">{r.eVacc}</td><td class="num">{pct(r.eVacc, r.kort)} %</td><td class="num">{r.flu}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: vårdcentralernas kontaktkort på 1177 Hitta vård, hämtade {G.hamtat.vardtyper}, sammanställning vårdcentralen.nu. En låg siffra betyder inte att vårdcentralerna inte vaccinerar – i flera regioner sköts vaccinationen centralt, till exempel via en gemensam bokningssida eller särskilda vaccinationsmottagningar.</p>
+  <p>Hitta din vårdcentral på <a href="/">startsidan</a> och se dess telefonnummer och länk till kontaktkortet på 1177. Där står det oftast hur du bokar vaccination just där.</p>
+
+  <h2 id="barn">Barn och influensavaccin</h2>
+  <p>Barn rekommenderas influensavaccin om de har en sjukdom som ger ökad risk, från sex månaders ålder. Folkhälsomyndigheten anger att barn 2–17 år kan få vaccinet som <strong>nässpray</strong>. Enligt 1177 får barn med kraftigt nedsatt immunförsvar eller svår astma spruta i stället.</p>
+  <p>Friska barn ingår inte i rekommendationen. Influensavaccinet ingår inte heller i det vanliga barnvaccinationsprogrammet som ges på <a href="/bvc/">BVC</a>. Har ditt barn en kronisk sjukdom, fråga den mottagning som behandlar barnet om vaccin.</p>
+
+  <h2 id="covid">Covid-19 och influensa samtidigt</h2>
+  <p>Enligt Folkhälsomyndigheten går influensavaccinet i de flesta fall att kombinera med andra vacciner, till exempel mot covid-19. 1177 skriver att du kan säga till om du vill bli vaccinerad mot flera sjukdomar vid samma tillfälle.</p>
+  <p>Rekommendationen för covid-19 omfattar färre grupper än för influensa. Folkhälsomyndigheten rekommenderar vaccin mot covid-19 till:</p>
+  <ul>
+    <li>alla som är 75 år eller äldre</li>
+    <li>personer från 65 år som har omsorgsinsatser i hemmet eller bor på särskilt boende</li>
+    <li>personer 50–74 år med vissa underliggande sjukdomar</li>
+    <li>personer 18–49 år med nedsatt immunförsvar</li>
+  </ul>
+  <p>Andra med svår grundsjukdom kan rekommenderas vaccin efter bedömning av läkare. Barn under 18 år rekommenderas bara vaccin mot covid-19 vid ökad risk och efter läkarbedömning.</p>
+  <p>Blir du sjuk under säsongen och behöver råd, ring 1177. Ring 112 vid livshotande tillstånd.</p>
+</Guide>

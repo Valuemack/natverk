@@ -1,0 +1,136 @@
+---
+// Lång guide: kompisgunga och tillgängliga lekplatser. Antal, andelar och tillgänglighet räknas ur sajtens lekplatsdata;
+// regler från Boverket (PBL-kunskapsbanken) och Konsumentverket, Malmös gungor från malmo.se. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, UTRUSTNING, utrustning } from "../site.js";
+import { har, E, MED_REDSKAP, tal, procent, kommun, rakna, lanEnheter } from "../lib/guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const kg = E.filter(har("kompisgunga"));
+const kgKommuner = new Set(kg.map((e) => e.kommun)).size;
+const perLan = KAT.lan.map((l) => { const en = lanEnheter(l); return { l, kg: en.filter(har("kompisgunga")).length, red: en.filter((e) => utrustning(e).length).length }; })
+  .filter((x) => x.kg > 0).sort((a, b) => b.kg - a.kg);
+const topKommuner = rakna(kg, (e) => e.kommun).slice(0, 10).map(([namn, n]) => ({ k: kommun(namn), n, ex: kg.filter((e) => e.kommun === namn && e.egenSida).slice(0, 2) }));
+const redskapRank = Object.keys(UTRUSTNING).map((u) => [u, MED_REDSKAP.filter(har(u)).length]).sort((a, b) => b[1] - a[1]);
+const plats = redskapRank.findIndex(([u]) => u === "kompisgunga") + 1;
+const topRedskap = redskapRank.slice(0, Math.max(8, plats));
+
+const T = E.filter((e) => e.extra?.tillganglighet);
+const tA = T.filter((e) => e.extra.tillganglighet === "tillgänglighetsanpassad").length;
+const tD = T.filter((e) => e.extra.tillganglighet === "delvis tillgänglighetsanpassad").length;
+const tE = T.filter((e) => e.extra.tillganglighet === "ej tillgänglighetsanpassad").length;
+const tKommuner = rakna(T, (e) => e.kommun).filter(([, n]) => n >= 10).map(([namn, n]) => ({ k: kommun(namn), n, a: T.filter((e) => e.kommun === namn && e.extra.tillganglighet === "tillgänglighetsanpassad").length }));
+const kgT = kg.filter((e) => e.extra?.tillganglighet);
+const kgTA = kgT.filter((e) => e.extra.tillganglighet === "tillgänglighetsanpassad").length;
+const rull = E.filter((e) => e.extra?.wheelchair);
+const rullJa = rull.filter((e) => e.extra.wheelchair === "yes").length;
+const sthlm = kg.filter((e) => e.kommun === "Stockholm");
+const gbg = kg.filter((e) => e.kommun === "Göteborg");
+const STAD = ["Stockholm", "Göteborg", "Malmö", "Uppsala"].map((namn) => ({ k: kommun(namn), alla: kg.filter((e) => e.kommun === namn) })).filter((x) => x.k && x.alla.length);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en kompisgunga?" },
+  { id: "lan", rubrik: "Var finns kompisgungor? Län för län" },
+  { id: "kommuner", rubrik: "Kommunerna med flest kompisgungor" },
+  { id: "stader", rubrik: "Kompisgungor i Stockholm, Göteborg, Malmö och Uppsala" },
+  { id: "vanlig", rubrik: "Hur vanlig är kompisgungan?" },
+  { id: "tillganglig", rubrik: "Vad är en tillgänglig lekplats?" },
+  { id: "andel", rubrik: "Hur många lekplatser är tillgänglighetsanpassade?" },
+  { id: "hitta", rubrik: "Så hittar du en tillgänglig lekplats" },
+  { id: "sakerhet", rubrik: "Säkerhet och ansvar för gungorna" },
+];
+
+const fragor = [
+  { fraga: "Vad är en kompisgunga?", svar: "En kompisgunga är en stor gunga med en rund sits av nät, rep eller väv som hänger i flera kedjor. Flera barn kan sitta eller ligga i den samtidigt. Den kallas också fågelbogunga, korggunga eller nätgunga." },
+  { fraga: "Hur många lekplatser har kompisgunga?", svar: `Vi känner till ${kg.length} lekplatser med kompisgunga i ${kgKommuner} kommuner. Det är ${procent(kg.length, MED_REDSKAP.length)} av de lekplatser där vi vet vilka redskap som finns. Det verkliga antalet är högre, eftersom redskapen inte är registrerade för alla lekplatser.` },
+  { fraga: "Var finns kompisgungor i Stockholm och Göteborg?", svar: `I Stockholm känner vi till ${sthlm.length} lekplatser med kompisgunga och i Göteborg ${gbg.length}. Se listan över alla lekplatser med kompisgunga, sorterad per län.` },
+  { fraga: "Är en kompisgunga tillgänglig för barn med funktionsnedsättning?", svar: "Den kan vara det. Många barn som inte kan sitta i en vanlig gunga kan ligga i en kompisgunga, och en vuxen kan gunga med. Om gungan går att nå beror på underlaget runt den. Sand och grus är svårt med rullstol, medan gummiasfalt eller plattor går bättre." },
+  { fraga: "Måste alla lekplatser vara tillgänglighetsanpassade?", svar: "Nya lekplatser på allmän plats ska enligt Boverkets föreskrifter kunna användas av barn och föräldrar med nedsatt rörelse- eller orienteringsförmåga. Samtliga lekredskap behöver dock inte vara tillgängliga. Äldre lekplatser bedöms mot de krav som gällde när de byggdes." },
+  { fraga: "Vem ansvarar för att gungorna på en lekplats är säkra?", svar: "Ägaren av lekplatsen, oftast kommunen eller fastighetsägaren, till exempel en bostadsrättsförening. Ser du en trasig gunga på en kommunal lekplats gör du en felanmälan till kommunen." },
+];
+---
+<Guide site={SITE} titel={`Kompisgunga – ${kg.length} lekplatser och tillgänglig lek`}
+  beskrivning={`Kompisgunga, även kallad fågelbogunga: ${kg.length} lekplatser i ${kgKommuner} kommuner, län för län. Plus vad en tillgänglig lekplats är och vad Boverkets regler säger.`}
+  h1="Kompisgunga och tillgängliga lekplatser"
+  svar={`En kompisgunga, eller fågelbogunga, är en stor rund gunga där <strong>flera barn kan ligga eller sitta samtidigt</strong>. Den passar också många barn som inte kan sitta i en vanlig gunga. Vi känner till <strong>${kg.length} lekplatser med kompisgunga</strong> i ${kgKommuner} kommuner, flest i ${topKommuner[0].k.namn} (${topKommuner[0].n}) och ${topKommuner[1].k.namn} (${topKommuner[1].n}).`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Kompisgunga", href: "/kompisgunga/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Alla lekplatser med kompisgunga", href: "/lekplatser-med-kompisgunga/", text: `${kg.length} lekplatser per län` },
+    { namn: "Tillgänglighetsanpassade lekplatser", href: "/tillgangliga-lekplatser/", text: `${tA} lekplatser enligt kommunerna` },
+    { namn: "Temalekplatser", href: "/temalekplatser/", text: "Ofta med kompisgunga och toalett" },
+    { namn: "Barnkalas på lekplats", href: "/barnkalas/", text: "Platser, lekar och regler" },
+  ]}
+  kallor={[
+    { namn: "Boverket – Krav på lekplatser (PBL kunskapsbanken)", url: "https://www.boverket.se/sv/PBL-kunskapsbanken/lov--byggande/tillsyn/exempel-pa-tillsynsomraden/lekplatser/krav-pa-lekplatser/", text: "säkerhet, tillgänglighet, underhåll och ansvar", datum: "2026-11-25" },
+    { namn: "Konsumentverket – Säkerhetskrav på lekplatser", url: "https://www.konsumentverket.se/produktsakerhet-foretag/sakerhetskrav-lekplatser/", text: "fastighetsägarens ansvar och standarderna SS-EN 1176 och EN 1177", datum: "2026-11-25" },
+    { namn: "Stockholms stad – Vasaparkens parklek", url: "https://parker.stockholm/hitta-lekplatser-parklekar-plaskdammar/parklek/vasaparkens-parklek/", text: "parklekar har fritidsledare på plats under öppettiderna", datum: "2026-11-25" },
+    { namn: "Malmö stad – Temalekplatser", url: "https://malmo.se/Uppleva-och-gora/For-familjer-barn-och-unga/Temalekplatser.html", text: "vilka temalekplatser som har fågelbogunga och tillgänglig gunga", datum: "2026-11-25" },
+    { namn: "Lekplatsdata: kommunernas öppna data och OpenStreetMap", url: "https://www.openstreetmap.org/copyright", text: "redskap och tillgänglighet per lekplats (© OpenStreetMap-bidragsgivare, ODbL)", datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="vad">Vad är en kompisgunga?</h2>
+  <p>En kompisgunga är en stor gunga med en rund sits av nät, flätat rep eller kraftig väv. Den hänger i flera kedjor eller rep från en ställning och kan gunga åt alla håll, inte bara fram och tillbaka. Namnet kommer av att flera barn får plats samtidigt. Kommuner och tillverkare använder också namnen <strong>fågelbogunga</strong>, korggunga, nätgunga och boet.</p>
+  <p>Gungan är populär av flera skäl. Barn i olika åldrar kan gunga tillsammans, ett litet barn kan ligga ner med en vuxen bredvid och den som har svårt att hålla balansen sitter tryggare än i en vanlig gungsits. Därför finns kompisgungan ofta med när kommuner bygger om lekplatser för att bli mer tillgängliga.</p>
+  <h3>Kompisgunga eller tillgänglig gunga?</h3>
+  <p>Det är inte samma sak. Malmö stad anger för sina 24 temalekplatser två olika redskap: <em>fågelbogunga</em> finns på 14 av dem och <em>tillgänglig gunga</em> på 7. En tillgänglig gunga kan vara en gungsits med rygg och sele eller en gunga där en rullstol kan rullas upp. Behöver ditt barn en sådan, kontrollera vad just den lekplatsen har.</p>
+
+  <h2 id="lan">Var finns kompisgungor? Län för län</h2>
+  <p>Tabellen visar hur många lekplatser med kompisgunga vi känner till i varje län, och hur många lekplatser i länet där vi vet vilka redskap som finns. Siffrorna speglar till stor del vilka kommuner som publicerar öppna data om sina lekplatser.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Med kompisgunga</th><th class="num">Med kända redskap</th><th class="num">Andel</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{x.kg}</td><td class="num">{tal(x.red)}</td><td class="num">{Math.round((100 * x.kg) / x.red)} %</td></tr>)}</tbody>
+  </table></div>
+  <p>Hela listan med namn, ort och övriga redskap finns på sidan <a href="/lekplatser-med-kompisgunga/">lekplatser med kompisgunga</a>.</p>
+
+  <h2 id="kommuner">Kommunerna med flest kompisgungor</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Antal</th><th>Exempel</th></tr></thead>
+    <tbody>{topKommuner.map((t) => <tr><td><a href={t.k.href}>{t.k.namn}</a></td><td class="num">{t.n}</td><td>{t.ex.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a></>)}</td></tr>)}</tbody>
+  </table></div>
+  <p>{topKommuner[0].k.namn} och {topKommuner[1].k.namn} ligger i topp eftersom kommunerna redovisar redskapen för varje lekplats i sina öppna data. I många större kommuner finns säkert fler kompisgungor än vi kan räkna.</p>
+
+  <h2 id="stader">Kompisgungor i Stockholm, Göteborg, Malmö och Uppsala</h2>
+  <p>Många som söker efter en kompisgunga bor i en storstad. Här är de lekplatser med kompisgunga som har en egen sida hos oss, med redskap, underlag och parkering i närheten:</p>
+  <ul>{STAD.map((x) => <li><strong><a href={x.k.href}>{x.k.namn}</a></strong> ({x.alla.length} med kompisgunga): {x.alla.filter((e) => e.egenSida).slice(0, 8).map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a></>)}{x.alla.filter((e) => e.egenSida).length === 0 && "se kommunsidan"}.</li>)}</ul>
+  <p>I Stockholm ligger flera av kompisgungorna på parklekar, alltså lekplatser där fritidsledare finns på plats under öppettiderna. I Malmö har dessutom 14 av stadens temalekplatser fågelbogunga enligt staden. De är inte märkta som temalekplatser i vår data, och Malmö har troligen fler kompisgungor än de {kg.filter((e) => e.kommun === "Malmö").length} vi känner till.</p>
+
+  <h2 id="vanlig">Hur vanlig är kompisgungan?</h2>
+  <p>Bland de {tal(MED_REDSKAP.length)} lekplatser där vi vet vilka redskap som finns är kompisgungan det {["vanligaste", "näst vanligaste", "tredje", "fjärde", "femte", "sjätte", "sjunde", "åttonde", "nionde", "tionde"][plats - 1] ?? `${plats}:e`}{plats > 2 ? " vanligaste" : ""} redskapet. Vanliga gungor finns på tre av fyra lekplatser, kompisgungan på ungefär var sjätte.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Redskap</th><th class="num">Lekplatser</th><th class="num">Andel</th></tr></thead>
+    <tbody>{topRedskap.map(([u, n]) => <tr><td>{u === "kompisgunga" ? <strong>{UTRUSTNING[u]}</strong> : UTRUSTNING[u]}</td><td class="num">{tal(n)}</td><td class="num">{Math.round((100 * n) / MED_REDSKAP.length)} %</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="tillganglig">Vad är en tillgänglig lekplats?</h2>
+  <p>Enligt Boverket ställer plan- och bygglagen krav på att lekplatser ska vara tillgängliga och användbara för personer med nedsatt rörelse- eller orienteringsförmåga. Kraven gäller både lekplatser på tomter, till exempel vid bostadshus och förskolor, och i parker och på andra allmänna platser.</p>
+  <ul>
+    <li><strong>Man ska kunna ta sig dit.</strong> Gångvägarna till en lekplats på en tomt ska vara jämna och fasta, och lutningen får vara högst 1:12.</li>
+    <li><strong>Lekplatsen ska kunna användas.</strong> Nya lekplatser på allmän plats ska kunna användas av barn och föräldrar med nedsatt rörelse- eller orienteringsförmåga.</li>
+    <li><strong>Alla redskap behöver inte vara tillgängliga.</strong> Boverket skriver uttryckligen att samtliga lekredskap inte behöver vara det.</li>
+  </ul>
+  <p>Det finns ingen europastandard för tillgänglighet på lekplatser. Den europeiska standardiseringsorganisationen CEN antog 2012 en teknisk rapport, <em>Lekredskap tillgängliga för alla barn</em>, som vägledning. Huvudbudskapet är att lekplatsen ska välkomna alla barn och ha redskap som passar olika förmågor. Rapporten tar också upp parkering, gångstråk och sittplatser.</p>
+  <p>Kraven gäller när en lekplats byggs eller ändras. En äldre lekplats bedöms mot de krav som gällde när den anlades, så många lekplatser är byggda innan dagens regler fanns.</p>
+
+  <h2 id="andel">Hur många lekplatser är tillgänglighetsanpassade?</h2>
+  <p>För {tal(T.length)} lekplatser har kommunen själv bedömt tillgängligheten. Av dem är <strong>{tA} tillgänglighetsanpassade</strong> ({procent(tA, T.length)}), {tD} delvis anpassade och {tE} inte anpassade. Bland lekplatser med kompisgunga och en bedömning är {kgTA} av {kgT.length} anpassade.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Bedömda</th><th class="num">Anpassade</th></tr></thead>
+    <tbody>{tKommuner.map((t) => <tr><td><a href={t.k.href}>{t.k.namn}</a></td><td class="num">{t.n}</td><td class="num">{t.a}</td></tr>)}</tbody>
+  </table></div>
+  <p>Kommunerna bedömer på olika sätt, så siffrorna går inte att jämföra rakt av. I OpenStreetMap har dessutom {rull.length} lekplatser en uppgift om rullstol, varav {rullJa} är markerade som tillgängliga.</p>
+
+  <h2 id="hitta">Så hittar du en tillgänglig lekplats</h2>
+  <ol>
+    <li><strong>Börja med kommunens karta.</strong> Många kommuner anger på sina lekplatssidor om en lekplats är anpassad. Vi samlar de uppgifterna på sidan <a href="/tillgangliga-lekplatser/">tillgängliga lekplatser</a>.</li>
+    <li><strong>Titta på underlaget.</strong> På lekplatsens sida hos oss står underlaget när det är känt. Gummiasfalt, plattor och konstgräs går oftast att rulla på. Sand, grus och flis är svåra med rullstol eller rollator.</li>
+    <li><strong>Kontrollera redskapen.</strong> Leta efter kompisgunga, sandlåda eller sandbord i bordshöjd, karusell i marknivå och ramper upp till lekställningen.</li>
+    <li><strong>Tänk på resten av besöket.</strong> Parkering nära entrén, sittplatser och toalett avgör ofta om ett besök fungerar.</li>
+  </ol>
+
+  <h2 id="sakerhet">Säkerhet och ansvar för gungorna</h2>
+  <p>Ägaren av lekplatsen ansvarar för säkerheten. Oftast är det kommunen eller en fastighetsägare som en bostadsrättsförening eller ett bostadsbolag. Enligt Konsumentverket ska barn skyddas från risker de inte själva kan förutse. Lekredskapen ska vara säkra enligt EU:s förordning om allmän produktsäkerhet, och standarderna SS-EN 1176 för lekredskap och EN 1177 för stötdämpande underlag visar hur kraven kan uppfyllas.</p>
+  <p>Boverket påpekar att underlaget under gungor och klätterställningar ska vara stötdämpande, och att lekplatsen ska underhållas så att risken för olyckor begränsas. Trasiga, rötangripna eller sönderrostade redskap är aldrig acceptabla, oavsett hur gammal lekplatsen är. Ser du en trasig kedja eller ett slitet nät i en kompisgunga, gör en felanmälan till kommunen eller fastighetsägaren.</p>
+  <h3>Kompisgunga hemma i trädgården</h3>
+  <p>Kompisgungor säljs också för trädgården, och många som söker på ordet vill köpa en. Reglerna ovan gäller lekplatser, men samma tankesätt fungerar hemma. Eftersom en kompisgunga svänger åt alla håll behöver den mer fritt utrymme runt sig än en vanlig gunga, och inget får finnas i vägen åt sidorna. Gräs eller ett stötdämpande underlag är bättre än sten eller betong. Följ tillverkarens anvisningar om montering, ålder och största tillåtna belastning, och kontrollera rep, kedjor och fästen regelbundet, särskilt efter vintern.</p>
+</Guide>

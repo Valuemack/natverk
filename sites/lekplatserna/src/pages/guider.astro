@@ -1,0 +1,13 @@
+---
+// Hubbsida för de långa guiderna.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../site.js";
+import { GUIDER } from "../lib/guider.js";
+---
+<Layout site={SITE} titel="Guider om lekplatser, barnkalas och utflykter med barn"
+  beskrivning="Guider från lekplatserna.nu: barnkalas på lekplats, kompisgunga och tillgänglig lek, plaskdammar, temalekplatser och vad man kan göra med barn."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]}>
+  <h1>Guider</h1>
+  <p class="ingress">Längre guider som bygger på vår egen lekplatsdata, med siffror per kommun och län och källor från kommuner och myndigheter.</p>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+</Layout>

@@ -70,6 +70,8 @@ const titel = pagar ? `Pollenprognos ${r.namn} idag – björk, gräs och fler` 
     <ul class="kolumner">{nara.map((k) => <li>{k.namn} <small>({k.km} km)</small></li>)}</ul>
   </>}
 
+  <p>Har du besvär? Läs om <a href="/pollenallergi/">symtom på pollenallergi och när du ska söka vård</a>, om <a href="/korsallergi/">korsallergi</a> och om <a href="/allergimedicin/">receptfri allergimedicin</a>.</p>
+
   <h2>Andra orter</h2>
   <ul class="kolumner">{REGIONER.filter((x) => x !== r).map((x) => <li><a href={`/${x.slug}/`}>{x.namn}</a></li>)}</ul>
 

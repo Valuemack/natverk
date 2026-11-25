@@ -4,6 +4,7 @@ import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import Prognos from "../components/Prognos.astro";
+import { GUIDER } from "../lib/guider-lista.js";
 import { SITE, UPPDATERAD, KALLA, REGIONER, TYPER, SVERIGE, prognosFor, aktuell, SASONG_PAGAR, kalenderFor, mmdd, nivaText, datumText } from "../site.js";
 
 const riks = SVERIGE ? prognosFor(SVERIGE) : null;
@@ -50,6 +51,9 @@ const fragor = [
 
   <h2>Pollenslag</h2>
   <div class="kort">{TYPER.map((t) => <a href={`/pollen/${t.slug}/`}><strong>{t.namn}</strong><small>Prognos och säsong</small></a>)}</div>
+
+  <h2>Guider om pollen och allergi</h2>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
 
   <Annons plats="start-2" />
   <Faq fragor={fragor} />

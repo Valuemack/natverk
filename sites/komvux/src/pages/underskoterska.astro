@@ -1,0 +1,170 @@
+---
+// Undersköterska via komvux: yrkespaketet (Skolverket), kraven för bevis om skyddad yrkestitel (Socialstyrelsen)
+// och en egen kalkylator för studietid och studiemedel (20 verksamhetspoäng per heltidsvecka, CSN 2027). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import KalkStil from "../components/KalkStil.astro";
+import { SITE } from "../site.js";
+import { tal, kr, CSN, CSN_AR, CSN_VECKA, POANG_PER_VECKA, veckor, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const PAKET = 1500;
+const VARD = [
+  { namn: "Undersköterska", p: 1500 },
+  { namn: "Undersköterska, påbyggnad från vårdbiträde", p: 700 },
+  { namn: "Vårdbiträde", p: 800 },
+  { namn: "Personal inom funktionshinderområdet", p: 1500 },
+];
+const TAKT = [{ t: 1, namn: "Heltid (100 %)" }, { t: 0.75, namn: "75 %" }, { t: 0.5, namn: "Halvtid (50 %)" }];
+const v100 = veckor(PAKET);
+
+const avsnitt = [
+  { id: "vagen", rubrik: "Så blir du undersköterska via komvux" },
+  { id: "yrkespaket", rubrik: "Yrkespaketet undersköterska – 1 500 poäng" },
+  { id: "tid", rubrik: "Hur lång tid tar undersköterskeutbildningen?" },
+  { id: "kalkylator", rubrik: "Räkna ut din studietid och ditt studiemedel" },
+  { id: "validering", rubrik: "Validering om du redan arbetar i vården" },
+  { id: "titel", rubrik: "Skyddad yrkestitel – krav för bevis" },
+  { id: "bevis", rubrik: "Så ansöker du om bevis hos Socialstyrelsen" },
+  { id: "ansoka", rubrik: "Ansöka till undersköterskeutbildning på komvux" },
+];
+
+const fragor = [
+  { fraga: "Hur lång är undersköterskeutbildningen på komvux?", svar: `Yrkespaketet undersköterska omfattar ${tal(PAKET, 0)} gymnasiepoäng. Heltid på komvux är ${POANG_PER_VECKA} poäng i veckan, så utbildningen motsvarar ${v100} veckors heltidsstudier, knappt två år. Har du redan läst vissa kurser eller validerar din erfarenhet blir den kortare.` },
+  { fraga: "Vad krävs för att få kalla sig undersköterska?", svar: "Sedan 1 juli 2023 är undersköterska en skyddad yrkestitel. Du behöver ett bevis från Socialstyrelsen. Har du börjat utbildningen efter 1 juli 2023 krävs godkänt i minst 1 350 gymnasiepoäng inom vård och omsorg, 100 poäng svenska eller svenska som andraspråk och 50 poäng samhällskunskap." },
+  { fraga: "Vad kostar beviset för undersköterska?", svar: "Ansökan om bevis kostar 360 kronor. Du ansöker i Socialstyrelsens e-tjänst med BankID och betalar med kort eller Swish. Får du avslag och söker igen betalar du en ny avgift." },
+  { fraga: "Kostar undersköterskeutbildningen på komvux något?", svar: "Nej. Komvux är avgiftsfritt enligt skollagen, och du ska få läroböcker och lärverktyg utan kostnad. Du kan söka studiemedel från CSN för att klara ekonomin under studierna." },
+  { fraga: "Hur mycket CSN får man under undersköterskeutbildningen?", svar: `På heltid ${CSN_AR} får du ${kr(CSN_VECKA)} i veckan, varav ${kr(CSN.vanligt.bidrag)} bidrag. Under ${v100} veckor blir det ${kr(CSN_VECKA * v100)}, varav ${kr(CSN.vanligt.bidrag * v100)} bidrag som inte ska betalas tillbaka.` },
+  { fraga: "Jag jobbar redan som undersköterska. Behöver jag bevis?", svar: "Hade du en tillsvidareanställning som undersköterska den 1 juli 2023 får du använda titeln utan bevis till och med 30 juni 2033. För att fortsätta utan avbrott behöver du ha ett bevis senast 1 juli 2033." },
+  { fraga: "Kan man bli undersköterska om man har gått vårdbiträdesutbildning?", svar: "Ja. Det finns ett yrkespaket för påbyggnad från vårdbiträde till undersköterska på 700 gymnasiepoäng, vilket motsvarar 35 veckor på heltid." },
+  { fraga: "Räknas svenska som andraspråk för beviset?", svar: "Ja. Socialstyrelsen godtar betyg i svenska eller svenska som andraspråk på gymnasienivå. Har du börjat utbildningen efter 1 juli 2023 krävs minst 100 gymnasiepoäng." },
+];
+---
+<Guide site={SITE} titel="Undersköterska på komvux – utbildning, tid och bevis"
+  beskrivning={`Bli undersköterska via komvux: yrkespaketet på 1 500 poäng (${v100} veckor heltid), krav för Socialstyrelsens bevis, CSN ${CSN_AR} och kalkylator för studietiden.`}
+  h1="Undersköterskeutbildning på komvux"
+  svar={`Du blir undersköterska genom att läsa <strong>yrkespaketet undersköterska</strong> på komvux, ${tal(PAKET, 0)} gymnasiepoäng. Det motsvarar <strong>${v100} veckor på heltid</strong>, knappt två år. Utbildningen är avgiftsfri. Sedan 1 juli 2023 är undersköterska en skyddad yrkestitel, och du ansöker om bevis hos Socialstyrelsen för 360 kronor.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Undersköterska", href: "/underskoterska/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Yrkesvux – alla yrkespaket", href: "/yrkesvux/", text: "Poäng och studietid för varje yrke" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Kalkylator för studiemedel 2027" },
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Rätt, urval och terminer" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Distans per kommun" },
+    { namn: "Sfi", href: "/sfi/", text: "Svenska för invandrare" },
+  ]}
+  kallor={[
+    { namn: "Socialstyrelsen – Information om skyddad yrkestitel för undersköterska", url: "https://legitimation.socialstyrelsen.se/skyddad-yrkestitel-for-underskoterska/information-om-skyddad-yrkestitel/", text: "krav för bevis och övergångsregler", datum: "2026-11-25" },
+    { namn: "Socialstyrelsen – Utbildad i Sverige", url: "https://legitimation.socialstyrelsen.se/skyddad-yrkestitel-for-underskoterska/utbildad-i-sverige/", text: "ansökan, avgift och handläggning", datum: "2026-11-25" },
+    { ...K.yrkespaket, text: "yrkespaketen inom vård och omsorg och deras poäng" },
+    { ...K.forordningen, text: "20 verksamhetspoäng per heltidsvecka (2 kap. 1 §) och urvalsordning (3 kap. 7 §)" },
+    { ...K.skollagen, text: "sammanhållen yrkesutbildning med arbetsplatsförlagt lärande (20 kap. 6 a §) och avgiftsfrihet (7 §)" },
+    { ...K.csn, text: "studiemedel 2027" },
+  ]}>
+
+  <h2 id="vagen">Så blir du undersköterska via komvux</h2>
+  <p>För vuxna finns undersköterskeutbildningen på komvux. Kommunerna erbjuder den som ett <strong>yrkespaket</strong>, en sammanhållen yrkesutbildning med ämnen inom vård och omsorg och praktik på en arbetsplats. Praktiken kallas arbetsplatsförlagt lärande, APL. Flera kommuner kan också erbjuda utbildningen tillsammans inom <a href="/yrkesvux/">regionalt yrkesvux</a>.</p>
+  <p>Vägen ser i korthet ut så här:</p>
+  <ol>
+    <li>Sök utbildningen hos din hemkommun.</li>
+    <li>Läs yrkespaketet undersköterska på heltid eller deltid, med praktik på en arbetsplats.</li>
+    <li>Se till att du också har godkänt i svenska eller svenska som andraspråk och samhällskunskap, om det inte redan ingår.</li>
+    <li>Ansök om bevis om rätt att använda yrkestiteln undersköterska hos Socialstyrelsen.</li>
+  </ol>
+
+  <h2 id="yrkespaket">Yrkespaketet undersköterska – 1 500 poäng</h2>
+  <p>Sedan 1 juli 2025 används nya yrkespaket som bygger på ämnen i stället för kurser, enligt reformen Gy25. Skolverkets yrkespaket inom vård och omsorg har följande omfattning. Tabellen visar också hur många veckor paketet motsvarar på heltid, räknat med förordningens 20 poäng per vecka.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Yrkespaket</th><th class="num">Gymnasiepoäng</th><th class="num">Veckor heltid</th><th class="num">Veckor halvtid</th></tr></thead>
+    <tbody>{VARD.map((x) => <tr><td>{x.namn}</td><td class="num">{tal(x.p, 0)}</td><td class="num">{veckor(x.p)}</td><td class="num">{veckor(x.p, 0.5)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Den som har börjat ett äldre, kursbaserat yrkespaket före 1 juli 2025 får läsa klart det. Möjligheten att läsa kurser i ett yrkespaket upphör helt 30 juni 2030.</p>
+
+  <h2 id="tid">Hur lång tid tar undersköterskeutbildningen?</h2>
+  <p>På komvux motsvarar 20 verksamhetspoäng en veckas heltidsstudier, och en verksamhetspoäng är en gymnasiepoäng. Yrkespaketet på {tal(PAKET, 0)} poäng tar därför:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Studietakt</th><th class="num">Poäng per vecka</th><th class="num">Veckor</th><th class="num">Ungefär</th></tr></thead>
+    <tbody>{TAKT.map((x) => <tr><td>{x.namn}</td><td class="num">{POANG_PER_VECKA * x.t}</td><td class="num">{veckor(PAKET, x.t)}</td><td class="num">{tal(veckor(PAKET, x.t) / 20, 1)} terminer</td></tr>)}</tbody>
+  </table></div>
+  <p>En termin räknas här som 20 veckor. Tiden blir kortare om du redan har betyg i några av ämnena, eller om du har arbetat inom vården och kan <strong>validera</strong> dina kunskaper. Kommunen ska erbjuda validering om du behöver det, och resultatet kan ge betyg genom prövning. Tiden blir längre om du först behöver läsa svenska.</p>
+
+  <h2 id="kalkylator">Räkna ut din studietid och ditt studiemedel</h2>
+  <section class="sokverktyg kalk" id="usk-kalk" data-csn={JSON.stringify({ ...CSN, ppv: POANG_PER_VECKA })}>
+    <form class="sv-form" onsubmit="return false">
+      <label>Yrkespaket
+        <select name="paket">{VARD.map((x) => <option value={x.p}>{x.namn} – {tal(x.p, 0)} p</option>)}</select>
+      </label>
+      <label>Poäng du redan har eller validerar <input type="number" name="klara" min="0" max="1500" step="50" value="0" /></label>
+      <label>Studietakt
+        <select name="takt"><option value="1">Heltid – 20 poäng/vecka</option><option value="0.75">75 % – 15 poäng/vecka</option><option value="0.5">Halvtid – 10 poäng/vecka</option></select>
+      </label>
+      <label>Bidragsnivå
+        <select name="niva"><option value="vanligt">Vanligt bidrag</option><option value="hogre">Högre bidrag (om du uppfyller villkoren)</option></select>
+      </label>
+    </form>
+    <div class="mt-resultat" aria-live="polite"></div>
+    <p class="kalla">Uppskattning med CSN:s belopp för {CSN_AR}. Kommunen bestämmer din studieplan och CSN beslutar om studiemedlet.</p>
+  </section>
+
+  <h3>Studiemedel för hela utbildningen</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Studietakt</th><th class="num">Veckor</th><th class="num">Bidrag</th><th class="num">Totalt med lån</th></tr></thead>
+    <tbody>{TAKT.map((x) => { const v = veckor(PAKET, x.t); return <tr><td>{x.namn}</td><td class="num">{v}</td><td class="num">{kr(CSN.vanligt.bidrag * x.t * v)}</td><td class="num">{kr(CSN_VECKA * x.t * v)}</td></tr>; })}</tbody>
+  </table></div>
+  <p>Totalbeloppet blir ungefär detsamma oavsett takt, eftersom du får mindre per vecka men under fler veckor. Halvtid gör det däremot lättare att arbeta samtidigt, och CSN:s fribelopp är högre när du läser på deltid.</p>
+
+  <h2 id="validering">Validering om du redan arbetar i vården</h2>
+  <p>Har du arbetat inom vården eller omsorgen utan utbildning kan du ha kunskaper som räknas. Enligt skollagen ska kommunen erbjuda <strong>validering</strong> om du behöver det. Validering är en strukturerad bedömning av vad du redan kan, oavsett hur du har lärt dig det. Resultatet kan ge betyg genom prövning, och då behöver du inte läsa de delarna igen.</p>
+  <p>Hemkommunen ska också erbjuda en inledande kartläggning till den som vill få sina kunskaper kartlagda. Fråga efter validering när du söker, eftersom det kan korta utbildningen. Använd fältet "Poäng du redan har eller validerar" i kalkylatorn ovan för att se hur mycket.</p>
+  <h3>Från vårdbiträde till undersköterska</h3>
+  <p>Har du redan ett yrkespaket som vårdbiträde, 800 poäng, finns en påbyggnad till undersköterska på 700 poäng. Det motsvarar 35 veckor på heltid. Tillsammans blir de 1 500 poäng, lika mycket som hela undersköterskepaketet.</p>
+
+  <h2 id="titel">Skyddad yrkestitel – krav för bevis</h2>
+  <p>Från och med <strong>1 juli 2023</strong> är undersköterska en skyddad yrkestitel. Det betyder att du behöver ett bevis från Socialstyrelsen för att få kalla dig undersköterska i arbetet. Kraven beror på när du började din utbildning:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Du började utbildningen</th><th class="num">Vård och omsorg</th><th class="num">Svenska/SvA</th><th class="num">Samhällskunskap</th></tr></thead>
+    <tbody>
+      <tr><td>Efter 1 juli 2023</td><td class="num">1 350 p</td><td class="num">100 p</td><td class="num">50 p</td></tr>
+      <tr><td>1994 till 1 juli 2023</td><td class="num">1 240 p</td><td class="num">80 p</td><td class="num">krävs inte</td></tr>
+    </tbody>
+  </table></div>
+  <p>Poängen ska vara godkända gymnasiepoäng med inriktning mot vård och omsorg. Komvuxarbete med den inriktningen räknas också. Svenska eller svenska som andraspråk ska vara på gymnasienivå.</p>
+  <h3>Övergångsregel för dig som redan arbetar</h3>
+  <p>Hade du en tillsvidareanställning som undersköterska den 1 juli 2023 får du fortsätta använda titeln utan bevis till och med <strong>30 juni 2033</strong>. Vill du använda titeln utan avbrott behöver beviset vara utfärdat senast 1 juli 2033. Saknar du poäng kan du komplettera på komvux, till exempel svenska eller samhällskunskap, utan att läsa om hela utbildningen.</p>
+
+  <h2 id="bevis">Så ansöker du om bevis hos Socialstyrelsen</h2>
+  <ol>
+    <li>Logga in i Socialstyrelsens e-tjänst med BankID.</li>
+    <li>Ladda upp betygen från vård- och omsorgsutbildningen, betyget i svenska eller svenska som andraspråk och, om du började efter 1 juli 2023, betyget i samhällskunskap.</li>
+    <li>Betala avgiften på <strong>360 kronor</strong> med kort eller Swish.</li>
+    <li>Vänta på beslut. Socialstyrelsen anger en handläggningstid på ungefär tre till fyra veckor, längre om ansökan behöver kompletteras.</li>
+    <li>Ladda ner beviset från e-tjänsten inom 90 dagar.</li>
+  </ol>
+  <p>Får du avslag och ansöker igen betalar du en ny avgift. Är du utbildad utomlands gäller andra regler, som finns på Socialstyrelsens webbplats.</p>
+
+  <h2 id="ansoka">Ansöka till undersköterskeutbildning på komvux</h2>
+  <p>Du söker till komvux hos <strong>kommunen där du bor</strong>, oftast i kommunens e-tjänst för vuxenutbildning. Erbjuder inte din kommun utbildningen kan du ha rätt att läsa den i en kommun inom samma samverkansområde. När det finns fler sökande än platser gör kommunen ett urval i den ordning som förordningen om vuxenutbildning anger. Först kommer den som vill slutföra sin studieplan, sedan den som saknar gymnasieexamen, den som är eller riskerar att bli arbetslös, den som behöver utbildningen i sitt nuvarande yrke och sist den som behöver den för ett planerat yrkesval.</p>
+  <h3>Vidare efter undersköterska</h3>
+  <p>Vill du senare läsa till exempel till sjuksköterska behöver du grundläggande behörighet till högskolan. Med en yrkesexamen från komvux och godkänt i svenska 2 och 3 och engelska 6 får du den. Sjuksköterskeutbildningen kräver dessutom särskild behörighet, som du också kan läsa in på komvux. Läs mer om <a href="/hogskolebehorighet/">högskolebehörighet via komvux</a>.</p>
+  <p>Fråga kommunen vilka förkunskaper som krävs, särskilt i svenska. Läser du sfi ska kommunen enligt skollagen verka för att sfi kan kombineras med annan utbildning, till exempel en yrkesutbildning. Läs mer om hela ansökan på sidan <a href="/ansoka/">ansöka till komvux</a>, och om studiemedlet på <a href="/csn/">CSN för komvux</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("usk-kalk"); if (!s) return;
+      const C = JSON.parse(s.dataset.csn), f = s.querySelector("form"), ut = s.querySelector(".mt-resultat");
+      const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
+      const rakna = () => {
+        const p = +f.paket.value, klara = Math.max(0, Math.min(p, +f.klara.value || 0)), takt = +f.takt.value, n = C[f.niva.value];
+        const kvar = p - klara, v = Math.ceil(kvar / (C.ppv * takt));
+        const bidrag = n.bidrag * takt * v, lan = n.lan * takt * v;
+        ut.innerHTML = `<div class="tabell"><table><tbody>`
+          + `<tr><th scope="row">Poäng kvar att läsa</th><td class="num">${kvar.toLocaleString("sv-SE")}</td></tr>`
+          + `<tr><th scope="row">Veckor</th><td class="num"><strong>${v}</strong> (cirka ${(v / 20).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} terminer)</td></tr>`
+          + `<tr><th scope="row">Bidrag från CSN</th><td class="num">${kr(bidrag)}</td></tr>`
+          + `<tr><th scope="row">Lån från CSN</th><td class="num">${kr(lan)}</td></tr>`
+          + `<tr><th scope="row">Totalt studiemedel</th><td class="num"><strong>${kr(bidrag + lan)}</strong></td></tr>`
+          + `</tbody></table></div>`;
+      };
+      f.addEventListener("input", rakna); f.addEventListener("change", rakna); rakna();
+    })();
+  </script>
+  <KalkStil />
+</Guide>

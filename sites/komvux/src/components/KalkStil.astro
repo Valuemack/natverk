@@ -1,0 +1,13 @@
+---
+// Gemensam stil för kalkylatorerna på guidesidorna (formulär i rutnät). Global eftersom raderna skapas med skript.
+---
+<style is:global>
+  .kalk form { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .6rem 1rem; margin: 0 0 .8rem; }
+  .kalk form > p, .kalk .hs-rader { grid-column: 1 / -1; margin: 0; }
+  .kalk label { display: flex; flex-direction: column; gap: .2rem; font-size: .95rem; }
+  .kalk label.rad { flex-direction: row; align-items: center; gap: .4rem; }
+  .kalk input:not([type=checkbox]), .kalk select { font: inherit; padding: .35rem .5rem; border: 1px solid var(--linje); border-radius: 6px; background: var(--bg, #fff); color: inherit; min-width: 0; }
+  .kalk .hs-rader { display: grid; gap: .5rem; }
+  .kalk .hs-rad { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: .6rem; }
+  @media (max-width: 520px) { .kalk .hs-rad { grid-template-columns: 1fr 1fr; } .kalk .hs-rad label:first-child { grid-column: 1 / -1; } }
+</style>

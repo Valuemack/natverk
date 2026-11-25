@@ -16,6 +16,14 @@ const fragor = [
   { fraga: `Hur många ${ORD.plur} finns det i Sverige?`, svar: `Vi listar ${n} ${ORD.plur} i ${KAT.kommuner.length} kommuner. Listan uppdateras varje natt.` },
   storst[0] && { fraga: `Vilken kommun har flest ${ORD.plur}?`, svar: `${storst[0].namn} har flest med ${storst[0].enheter.length} st, följt av ${storst.slice(1, 3).map((k) => `${k.namn} (${k.enheter.length})`).join(" och ")}.` },
 ].filter(Boolean);
+const GUIDER = [
+  { href: "/akut-narakut-jourcentral/", namn: "Akuten, närakut eller jourcentral", text: "Vart du ska vända dig" },
+  { href: "/byta-vardcentral/", namn: "Byta vårdcentral", text: "Lista dig där du vill" },
+  { href: "/hogkostnadsskydd-frikort/", namn: "Högkostnadsskydd och frikort", text: "Med kalkylator" },
+  { href: "/vardgaranti/", namn: "Vårdgaranti", text: "0–3–90–90 och väntetider" },
+  { href: "/bvc/", namn: "BVC", text: "Besök och vaccinationer" },
+  { href: "/influensavaccin/", namn: "Influensavaccin 2026", text: "Gratis för vem?" },
+];
 ---
 <Layout site={SITE} titel="Vårdcentral nära dig – alla vårdcentraler i Sverige"
   beskrivning={`Hitta ${ORD.plur} nära dig – alla ${n} i Sverige med adress och öppettider. ✓ Öppet nu ✓ Närmaste ${ORD.sing} ✓ Uppdateras varje natt.`}
@@ -26,6 +34,10 @@ const fragor = [
 
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
+
+  <h2 id="guider">Guider om vården</h2>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+  <p><a href="/guider/">Alla guider →</a></p>
 
   <Annons plats="start-1" />
 

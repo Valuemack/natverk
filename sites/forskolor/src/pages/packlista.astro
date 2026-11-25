@@ -1,0 +1,123 @@
+---
+// Guide: packlista för förskolan – utskrivbar checklista per årstid, säkerhet för kläder och sol.
+// Fakta: Konsumentverket (Barnkläder, granskad 2026-08-17; Barnsäkerhet), Strålsäkerhetsmyndigheten (solråd för barn),
+// Skolverket (Avgifter: blöjor och måltider ingår). Själva listan är praktiska förslag, inte regler. Granskad 2026-11-25.
+// Kortare än 1 500 ord med avsikt – ämnet bär inte mer utan utfyllnad.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { relaterade } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+// [rubrik, id, säsong ("alla" | "vinter" | "sommar" | "host"), saker]
+const LISTA = [
+  { grupp: "Varje dag", sasong: "alla", saker: ["Ombyteskläder: body eller underkläder, strumpor, byxor, tröja", "Inneskor eller halksockor", "Mjukisdjur, napp eller annat som tröstar, om barnet använder det", "Vattenflaska, om förskolan vill det"] },
+  { grupp: "Utekläder höst och vår", sasong: "host", saker: ["Regnställ", "Gummistövlar", "Fleece eller tunn overall under regnställ", "Tunn mössa och vantar", "Extra strumpor"] },
+  { grupp: "Utekläder vinter", sasong: "vinter", saker: ["Vinteroverall eller täckbyxor och jacka", "Varma vinterskor eller vinterstövlar", "Mössa som täcker öronen, gärna utan knytband", "Vantar, gärna två par", "Halskrage (tubhalsduk) i stället för halsduk", "Ylle- eller fleeceunderställ"] },
+  { grupp: "Utekläder sommar", sasong: "sommar", saker: ["Solhatt eller keps med nackskydd", "Tunna, täckande kläder med långa ärmar", "Sandaler eller lätta skor som sitter fast", "Solkräm, om förskolan ber om det", "Badkläder och handduk, om förskolan har vattenlek"] },
+  { grupp: "Vila och sömn", sasong: "alla", saker: ["Sovkläder eller filt, om förskolan vill det", "Napp eller sovdjur", "Mjuk kudde eller snuttefilt, om barnet är van vid det"] },
+  { grupp: "Märkning och ordning", sasong: "alla", saker: ["Namnlappar eller märkpenna i alla kläder", "Påse för blöta kläder", "Kontrollera ombytet i facket varje vecka"] },
+];
+
+const avsnitt = [
+  { id: "checklista", rubrik: "Utskrivbar checklista" },
+  { id: "ingar", rubrik: "Det här behöver du inte packa" },
+  { id: "sakerhet", rubrik: "Säkra kläder: snoddar, huvor och smådelar" },
+  { id: "sol", rubrik: "Sol och värme" },
+  { id: "vinter", rubrik: "Kyla, mörker och reflexer" },
+  { id: "marka", rubrik: "Märk kläderna" },
+];
+
+const fragor = [
+  { fraga: "Vad ska man packa till förskolan?", svar: "Ombyteskläder, inneskor och utekläder efter väder är grunden. Lägg till tröstsaker om barnet använder dem och märk allt med namn. Fråga alltid förskolan, eftersom de kan ha egna önskemål om till exempel solkräm eller sovkläder." },
+  { fraga: "Måste man ta med blöjor till förskolan?", svar: "Normalt inte. Enligt en dom från Kammarrätten i Stockholm 2019, som Skolverket hänvisar till, ska blöjor ingå i förskoleavgiften. Domen står fast men är inte prejudicerande, så fråga din förskola om de ändå ber dig ta med blöjor." },
+  { fraga: "Måste man ta med matsäck?", svar: "Nej. Enligt förarbetena till lagen ska måltider alltid ingå i förskoleavgiften." },
+  { fraga: "Får barnet ha halsduk på förskolan?", svar: "Långa snoddar och dragband bör undvikas i kläder till små barn, och i huvud- och halsområdet får de inte finnas i kläder upp till storlek 134. En halskrage kan vara ett alternativ till halsduk eftersom den inte har några lösa ändar." },
+  { fraga: "Ska barnet ha cykelhjälm på förskolan?", svar: "Barn ska ha hjälm när de cyklar, men Konsumentverket råder att lära barnet att ta av hjälmen vid lek, eftersom den kan fastna. Välj en hjälm med grönt spänne till barn upp till sju år." },
+  { fraga: "Vilken solkräm ska förskolebarn ha?", svar: "Skugga, kläder och solhatt är det bästa skyddet. Solkräm är ett komplement på hud som inte täcks. Strålsäkerhetsmyndigheten rekommenderar minst SPF 30 och vattenfast solkräm. Barn under ett år bör inte vara i direkt sol alls." },
+];
+
+const titel = "Packlista för förskolan – checklista per årstid";
+const beskrivning = "Packlista för förskolan att skriva ut: ombyteskläder, utekläder för vinter, sommar och regn, vad du inte behöver ta med och hur kläderna blir säkra.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Packlista för förskolan"
+  svar={`Till förskolan behöver barnet <strong>ombyteskläder, inneskor och utekläder efter väder</strong>, plus napp eller gosedjur om barnet använder det. Märk allt med namn. Mat ska ingå i avgiften, och enligt en kammarrättsdom även blöjor. Undvik snoddar och dragband vid huvud och hals, och välj huvor som lossnar lätt. Fråga också förskolan om deras egna önskemål.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Packlista", href: "/packlista/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={relaterade("/inskolning/", "/maxtaxa/", "/forskoleplats/", "/allman-forskola/")}
+  kallor={[
+    { namn: "Konsumentverket – Barnkläder", url: "https://www.konsumentverket.se/sakerhet-varor-tjanster/barnklader-konsument/", text: "snoddar, dragband, huvor och smådelar (granskad 17 augusti 2026)", datum: "2026-11-25" },
+    { namn: "Konsumentverket – Barnsäkerhet", url: "https://www.konsumentverket.se/sakerhet-varor-tjanster/barnsakerhet-sa-har-kan-du-barnsakra/", text: "cykelhjälm, reflexer och solskydd", datum: "2026-11-25" },
+    { namn: "Strålsäkerhetsmyndigheten – Särskilda solråd för barn", url: "https://www.stralsakerhetsmyndigheten.se/omraden/sol-och-solarier/rad-och-rekommendationer/sarskilda-solrad-for-barn/", text: "skugga, kläder och solkräm för barn", datum: "2026-11-25" },
+    { namn: "Skolverket – Avgifter", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/avgifter", text: "måltider ingår och kammarrättens dom om blöjor", datum: "2026-11-25" },
+  ]}>
+
+  <section class="sokverktyg" id="checklista">
+    <h2>Utskrivbar checklista</h2>
+    <p>Välj årstid, bocka av det du har packat och skriv ut listan. Det här är förslag – förskolan kan ha egna önskemål.</p>
+    <form class="pl-val" onsubmit="return false">
+      <label>Årstid
+        <select name="sasong">
+          <option value="host">Höst och vår</option>
+          <option value="vinter">Vinter</option>
+          <option value="sommar">Sommar</option>
+          <option value="alla-sasong">Visa allt</option>
+        </select>
+      </label>
+    </form>
+    {LISTA.map((g) => (
+      <fieldset class="pl-grupp" data-sasong={g.sasong}>
+        <legend>{g.grupp}</legend>
+        {g.saker.map((s) => <label class="pl-rad"><input type="checkbox" /> {s}</label>)}
+      </fieldset>
+    ))}
+    <p class="knappar"><button type="button" class="knapp pl-skriv">Skriv ut listan</button> <button type="button" class="knapp pl-rensa">Avmarkera alla</button></p>
+  </section>
+
+  <h2 id="ingar">Det här behöver du inte packa</h2>
+  <ul>
+    <li><strong>Blöjor:</strong> enligt en dom från Kammarrätten i Stockholm 2019 ska blöjor ingå i avgiften. Högsta förvaltningsdomstolen gav inte prövningstillstånd, så domen står fast i det målet. Skolverket påpekar att domen inte är prejudicerande och att praxis kan variera. Reglerna om avgifter gäller både kommunala och fristående förskolor.</li>
+    <li><strong>Mat och mellanmål:</strong> enligt förarbetena ska måltider alltid ingå i avgiften.</li>
+    <li><strong>Leksaker:</strong> förskolor kan ha egna regler för om barnen får ta med leksaker hemifrån. Fråga vad som gäller.</li>
+  </ul>
+  <p>Mer om vad avgiften omfattar finns på sidan om <a href="/maxtaxa/#vad-ingar">maxtaxa</a>.</p>
+
+  <h2 id="sakerhet">Säkra kläder: snoddar, huvor och smådelar</h2>
+  <p>Konsumentverket har tre råd för barnkläder:</p>
+  <ul>
+    <li><strong>Inga snoddar vid huvud och hals:</strong> i kläder till barn upp till och med sex år, storlek upp till och med 134, får det inte finnas snoddar och dragband i huvud- och halsområdet. Barn har fastnat med dragband i klätterställningar, rutschkanor och trädgrenar.</li>
+    <li><strong>Huvor som lossnar:</strong> välj kläder utan huva eller med huva som lossnar lätt. Det finns ingen EU-standard för det, så kontrollera själv, särskilt vid köp från utländska webbutiker.</li>
+    <li><strong>Smådelar:</strong> kläder för barn upp till tre år ska vara gjorda så att smådelar inte kan lossna. Kontrollera pärlor, rosetter, knappar och delar från dragkedjan.</li>
+  </ul>
+  <p>Samma tänk gäller halsdukar och mössor med långa knytband. En halskrage och en mössa utan långa band fastnar inte på samma sätt. Ska barnet cykla till förskolan, lär barnet att ta av cykelhjälmen när det leker. Konsumentverket rekommenderar en hjälm med grönt spänne till barn upp till sju år, eftersom spännet löser ut om barnet fastnar.</p>
+
+  <h2 id="sol">Sol och värme</h2>
+  <p>Strålsäkerhetsmyndigheten och Konsumentverket ger samma grundråd: skugga, kläder och solhatt är det bästa skyddet. Solkräm är ett komplement för de delar som inte täcks.</p>
+  <ul>
+    <li>Barn under ett år bör inte vara i direkt sol alls.</li>
+    <li>Kläder, hatt och solglasögon är det bästa skyddet.</li>
+    <li>Solkräm ska ha minst SPF 30, vara vattenfast och inte vara det enda skyddet.</li>
+  </ul>
+  <p>Fråga förskolan om de vill att du smörjer barnet hemma, skickar med egen solkräm eller om de har en gemensam.</p>
+
+  <h2 id="vinter">Kyla, mörker och reflexer</h2>
+  <p>På vintern är det lager på lager som gäller: underställ, mellanlager och overall eller täckbyxor. Två par vantar gör att barnet har torra vantar efter lunch. Konsumentverket påminner om att reflexer gör stor skillnad i mörker, att alla ytterkläder behöver reflexer och att reflexväst är det bästa alternativet för barn. Gamla och repiga reflexer syns sämre, så byt ut dem.</p>
+
+  <h2 id="marka">Märk kläderna</h2>
+  <p>På en förskola finns många likadana overaller och stövlar. Märk allt med barnets namn, gärna med namnlappar som tål tvätt eller en textilpenna. Kontrollera ombytet i barnets fack varje vecka och fyll på när något har gått åt. Saknas något, fråga personalen.</p>
+  <p>Börjar barnet på förskolan snart? Läs också om <a href="/inskolning/">inskolning</a> och vad du kan fråga förskolan innan start.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("checklista"); if (!s) return;
+      const val = s.querySelector("select[name=sasong]");
+      const visa = () => s.querySelectorAll(".pl-grupp").forEach((g) => {
+        const ss = g.dataset.sasong; g.hidden = !(ss === "alla" || val.value === "alla-sasong" || ss === val.value);
+      });
+      const m = new Date().getMonth();
+      val.value = m >= 10 || m <= 2 ? "vinter" : m >= 5 && m <= 7 ? "sommar" : "host";
+      val.addEventListener("input", visa); visa();
+      s.querySelector(".pl-skriv").addEventListener("click", () => window.print());
+      s.querySelector(".pl-rensa").addEventListener("click", () => s.querySelectorAll("input[type=checkbox]").forEach((c) => (c.checked = false)));
+    })();
+  </script>
+</Guide>

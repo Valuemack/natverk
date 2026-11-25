@@ -1,0 +1,135 @@
+---
+// Lång guide: gräspollen – säsong, topp och halter per ort, gräsarterna och allergin.
+// Egen data: säsong, toppdatum, dagar med höga halter och år för år ur pollenkalendern (NRM:s uppmätta dygnsvärden).
+// Fakta: NRM (Pollenrapporten, Liten pollenskola, Halter och risker), 1177, Astma- och Allergiförbundet. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import TypBlock from "../components/TypBlock.astro";
+import { SITE, KALLA, KALENDER_AR } from "../site.js";
+import { PUBLICERAD, TYP_UPPDATERAD, AR_TEXT, rader, typ, ytterlagen, medianDag, mmdd, tal, dagarMellan, doy } from "../lib/guide.js";
+
+const { typ: t } = Astro.props;
+const rad = rader(t);
+const g = t.gransvarden;
+const { forst, sist } = ytterlagen(rad);
+const start = medianDag(rad.map((x) => x.k.typisk_start)), topp = medianDag(rad.map((x) => x.k.typisk_topp)), slut = medianDag(rad.map((x) => x.k.typiskt_slut));
+// Toppdagar per ort och år: hur stor andel låg från midsommar till tre veckor efter (NRM:s "kring midsommar och tre veckor framåt").
+const alla = rad.flatMap((x) => x.k.ar.map((a) => a.topp_datum.slice(5)));
+const iFonster = alla.filter((d) => doy(d) >= doy("06-15") && doy(d) <= doy("07-15")).length;
+const andel = Math.round((iFonster / alla.length) * 100);
+const perAr = KALENDER_AR.map((ar) => {
+  const a = rad.map((x) => x.k.ar.find((y) => y.ar === ar)).filter(Boolean);
+  return { ar, summa: a.reduce((s, y) => s + y.summa, 0), hoga: a.reduce((s, y) => s + y.dagar_over_mattlig, 0), topp: medianDag(a.map((y) => y.topp_datum.slice(5))) };
+});
+const bjRad = rader(typ("bjork"));
+const bjSumma = KALENDER_AR.map((ar) => bjRad.reduce((s, x) => s + (x.k.ar.find((y) => y.ar === ar)?.summa ?? 0), 0));
+const flestHoga = [...rad].sort((a, b) => b.k.dagar_over_mattlig_snitt - a.k.dagar_over_mattlig_snitt).slice(0, 4);
+const minstHoga = [...rad].sort((a, b) => a.k.dagar_over_mattlig_snitt - b.k.dagar_over_mattlig_snitt)[0];
+const sodra = rad.slice(0, 8), norra = rad.slice(-6);
+const snitt = (l) => Math.round(l.reduce((s, x) => s + x.k.dagar_over_mattlig_snitt, 0) / l.length);
+
+const avsnitt = [
+  { id: "sasong", rubrik: "När är gräspollensäsongen?" },
+  { id: "midsommar", rubrik: "Därför är midsommar värst" },
+  { id: "arter", rubrik: "Gräsarterna bakom pollenet" },
+  { id: "vader", rubrik: "Värme och väder" },
+  { id: "halter", rubrik: "Gränsvärden och dagar med höga halter" },
+  { id: "ar", rubrik: "Gräspollen år för år" },
+  { id: "allergi", rubrik: "Gräspollenallergi" },
+  { id: "vardag", rubrik: "Gräsmattan, korsallergi och vardagen" },
+];
+
+const fragor = [
+  { fraga: "När börjar gräspollensäsongen?", svar: `Gräspollensäsongen börjar i början av juni på de flesta orter. Under ${AR_TEXT} låg den typiska starten mellan ${mmdd(forst.k.typisk_start)} (${forst.r.namn}) och ${mmdd(sist.k.typisk_start)} (${sist.r.namn}). Enstaka tidiga arter som vårbrodd och ängskavle kan ge pollen redan i maj.` },
+  { fraga: "När är gräspollen som värst?", svar: `Kring midsommar och veckorna efter. Naturhistoriska riksmuseet anger midsommar och tre veckor framåt som den mest intensiva perioden. Av alla toppdagar som uppmättes ${AR_TEXT} låg ${andel} procent mellan 15 juni och 15 juli.` },
+  { fraga: "När slutar gräspollensäsongen?", svar: `Säsongen är i stort sett över i augusti. Den typiska slutpunkten var runt ${mmdd(slut)} i mitten av landet. Enligt Naturhistoriska riksmuseet kan gräspollen finnas i luften ända in i oktober.` },
+  { fraga: "Vad räknas som höga halter av gräspollen?", svar: `För gräs räknar Naturhistoriska riksmuseet upp till ${g.lag} korn/m³ som låga halter, ${g.lag + 1}–${g.mattlig} som måttliga, ${g.mattlig + 1}–${g.hog} som höga och över ${g.hog} som mycket höga. Gränserna är lägre än för björk.` },
+  { fraga: "Vilka gräs ger mest allergi?", svar: "Naturhistoriska riksmuseet skriver att gräspollen är mycket lika varandra och att alla anses allergena. Timotej producerar mycket pollen och används ofta i allergitest." },
+  { fraga: "Kan man få allergivaccination mot gräspollen?", svar: "Ja. Enligt 1177 finns allergen immunterapi mot gräspollen både som sprutor och som tabletter. Den ges till den som har svår allergi och inte blir hjälpt av vanliga läkemedel." },
+];
+---
+<Guide site={SITE} titel="Gräspollen – säsong, topp och halter på 23 orter"
+  beskrivning={`Gräspollen finns i luften från juni till augusti och är värst kring midsommar. Se säsong, topp och dagar med höga halter på 23 orter ${AR_TEXT}.`}
+  h1="Gräspollen"
+  svar={`<strong>Gräspollen</strong> finns i luften från början av juni till augusti, med topp runt <strong>${mmdd(topp)}</strong>. Värst är det kring midsommar och tre veckor framåt. Gräs ger allergi hos många och har lägre gränsvärden än björk: över ${g.mattlig} pollenkorn per kubikmeter räknas som höga halter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Gräspollen", href: "/pollen/gras/" }]}
+  publicerad={PUBLICERAD} uppdaterad={TYP_UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Björkpollen", href: "/pollen/bjork/", text: "Vårens stora pollensäsong" },
+    { namn: "Gråbo", href: "/pollen/grabo/", text: "Tar över när gräset ebbar ut" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Allergimedicin utan recept", href: "/allergimedicin/", text: "Typerna av receptfria läkemedel" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "Alla pollenslag på 23 orter" },
+  ]}
+  kallor={[
+    { namn: "Naturhistoriska riksmuseet – Gräs", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/gras", text: "arter, säsong och den intensivaste perioden", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: gräs", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-gras", text: "gräsarternas blomning, värme och spridning, timotej", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Halter och risker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/halter-och-risker", text: "gränsvärden för gräs", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "säsong, symtom och råd om gräsmattor", datum: "2026-11-25" },
+    { namn: "1177 – Allergen immunterapi", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/behandlingar-med-lakemedel/allergen-immunterapi/", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Pollenallergi", url: "https://astmaoallergiforbundet.se/allergi/pollenallergi/", text: "tips om gräsklippning", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Matallergi", url: "https://astmaoallergiforbundet.se/allergi/matallergi/", text: "livsmedel som kan korsreagera med gräs", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <TypBlock typ={t} visa="idag" id="idag" ord="Gräspollen" />
+
+  <h2 id="sasong">När är gräspollensäsongen?</h2>
+  <p>Gräset tar över när björken är klar. Enligt uppmätta halter {AR_TEXT} börjar gräspollensäsongen runt <strong>{mmdd(start)}</strong> i mitten av landet, toppar runt <strong>{mmdd(topp)}</strong> och är i stort sett över runt <strong>{mmdd(slut)}</strong>. Det ger en säsong på ungefär {dagarMellan(start, slut)} dagar, längre än för björk och gråbo.</p>
+  <p>Till skillnad från björken börjar gräset nästan samtidigt i hela landet. Tidigast kom säsongen i {forst.r.namn} (runt {mmdd(forst.k.typisk_start)}), senast i {sist.r.namn} (runt {mmdd(sist.k.typisk_start)}). Det är toppen och halterna som skiljer mer. 1177 skriver att gräspollen kommer från slutet av maj i söder och toppar i slutet av juni. Naturhistoriska riksmuseet anger att gräspollen vanligtvis finns i luften från maj till oktober.</p>
+  <TypBlock typ={t} visa="sasong" rubrik={false} />
+
+  <Annons plats="typ-1" />
+
+  <h2 id="midsommar">Därför är midsommar värst</h2>
+  <p>Naturhistoriska riksmuseet beskriver tiden kring midsommar och tre veckor framåt som gräspollensäsongens mest intensiva. Då kan höga eller till och med mycket höga halter kan förekomma under kortare perioder.</p>
+  <p>Mätningarna bekräftar det. Av alla dagar då en ort hade sin högsta gräspollenhalt under året ({alla.length} toppar under {AR_TEXT}) låg <strong>{andel} procent mellan 15 juni och 15 juli</strong>. Toppen kom i mitten av landet {perAr.map((x, i) => <>{i > 0 && (i === perAr.length - 1 ? " och " : ", ")}runt {mmdd(x.topp)} {x.ar}</>)}. Den som planerar semester, friluftsliv eller ett midsommarfirande på landet kan alltså räkna med att det är högsäsong för gräspollen.</p>
+
+  <h2 id="arter">Gräsarterna bakom pollenet</h2>
+  <p>Gräspollen kommer inte från en art utan från många. Naturhistoriska riksmuseet anger att det finns över hundra vilda gräsarter i Sverige, varav ett fyrtiotal är vanliga. Alla är vindpollinerade. Pollenkornen är mycket lika varandra, och alla anses allergena. Därför redovisas de som ett enda pollenslag.</p>
+  <p>Arterna blommar i tur och ordning, vilket förklarar den långa säsongen:</p>
+  <ul>
+    <li><strong>Vårbrodd</strong> inleder ofta säsongen.</li>
+    <li><strong>Ängskavle</strong> blommar från mitten av maj och producerar mycket pollen, men pollenet sprids dåligt i kall luft.</li>
+    <li><strong>Hundäxing</strong> följer strax efter.</li>
+    <li><strong>Timotej</strong> är en stor pollenproducent och används ofta i allergitester.</li>
+    <li><strong>Blåtåtel och vass</strong> blommar i augusti. Deras betydelse för allergi är enligt museet oklar.</li>
+  </ul>
+  <p>Även odlad råg sprider pollen, särskilt i torrt och soligt väder.</p>
+
+  <h2 id="vader">Värme och väder</h2>
+  <p>Naturhistoriska riksmuseet skriver att ju varmare det är, desto fler gräsarter kommer igång med blomningen. Värmen ökar också omblandningen av luften, så att pollenet förs upp och sprids längre från sin ursprungsplats. I kall luft sprids däremot till exempel ängskavlens pollen dåligt.</p>
+  <p>Prognoserna från museet väger in väderprognosen, eftersom vindriktning, temperatur och nederbörd spelar stor roll. Under säsongen visar prognosen för din ort hur halterna väntas utvecklas de närmaste dagarna.</p>
+
+  <h2 id="halter">Gränsvärden och dagar med höga halter</h2>
+  <p>För gräs gäller lägre gränsvärden än för träd. Naturhistoriska riksmuseet förklarar att trädpollen lättare fångas av vinden och transporteras längre. För gräs räknas över {g.mattlig} pollenkorn per kubikmeter luft som höga halter, medan gränsen för björk är {typ("bjork")?.gransvarden?.mattlig}.</p>
+  <p>Flest dagar med höga halter hade {flestHoga.map((x, i) => <>{i > 0 && (i === flestHoga.length - 1 ? " och " : ", ")}{x.r.namn} ({x.k.dagar_over_mattlig_snitt})</>)} dagar per år i snitt. Färst hade {minstHoga.r.namn} ({minstHoga.k.dagar_over_mattlig_snitt}). De åtta sydligaste orterna hade i snitt {snitt(sodra)} dagar med höga halter per år, de sex nordligaste {snitt(norra)}.</p>
+  <TypBlock typ={t} visa="grans" rubrik={false} />
+
+  <h2 id="ar">Gräspollen år för år</h2>
+  <p>Gräset är förvånansvärt jämnt från år till år. Björken kan ge flera gånger mer pollen ett år än ett annat, men gräset håller ungefär samma nivå. Tabellen visar summan av alla dygnsvärden på orterna och antalet dagar med höga halter.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Summa gräs, alla orter</th><th class="num">Dagar med höga halter, alla orter</th><th>Typisk topp</th><th class="num">Summa björk, jämförelse</th></tr></thead>
+    <tbody>{perAr.map((x, i) => <tr><td>{x.ar}</td><td class="num">{tal(x.summa)}</td><td class="num">{x.hoga}</td><td>{mmdd(x.topp)}</td><td class="num">{tal(bjSumma[i])}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Summan av uppmätta dygnsvärden (korn/m³) under säsongen, för alla orter tillsammans. Typisk topp = medianen av orternas toppdag. Bearbetning av uppmätta halter från Naturhistoriska riksmuseet.</p>
+
+  <h2 id="allergi">Gräspollenallergi</h2>
+  <p>Gräs, björk och gråbo är enligt Naturhistoriska riksmuseet Sveriges tre stora pollenallergen. 1177 skriver att de flesta med pollenallergi reagerar på björk eller gräs. Besvären är snuva, nästäppa, nysningar, klåda i näsan, kliande och rinnande ögon och trötthet. Rethosta och andnöd kan förekomma, särskilt vid ansträngning, och en del får astmasymtom de dagar då det är mycket pollen i luften.</p>
+  <p>Vid svår gräspollenallergi som inte blir bättre av vanliga läkemedel kan vården erbjuda allergivaccination. Enligt 1177 finns den mot gräspollen både som sprutor och som tabletter, och behandlingen börjar ungefär fyra månader före säsongen.</p>
+  <div class="akut"><p><strong>Svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning, eller en akutmottagning om det är stängt. Vid akuta andningsbesvär, ring <strong>112</strong>. För sjukvårdsrådgivning, ring <strong>1177</strong>.</p></div>
+  <p>Mer om symtom och när du ska söka vård finns i guiden om <a href="/pollenallergi/">pollenallergi</a>, och om receptfria läkemedel i guiden om <a href="/allergimedicin/">allergimedicin</a>.</p>
+
+  <h2 id="vardag">Gräsmattan, korsallergi och vardagen</h2>
+  <p>Gräs växer i parker, på idrottsplatser, längs vägar och i trädgårdar, så gräspollen går inte att undvika helt. 1177 och Astma- och Allergiförbundet ger några råd:</p>
+  <ul>
+    <li>Undvik att vistas på nyklippta gräsmattor.</li>
+    <li>Klipp gärna gräset när det är daggvått, om du måste klippa själv.</li>
+    <li>Vädra på natten eller tidigt på morgonen och håll fönstren stängda under dagen.</li>
+    <li>Gå ut tidigt på morgonen om du vill träna utomhus.</li>
+    <li>Torka tvätten inomhus och byt kläder när du har varit ute.</li>
+  </ul>
+  <h3>Korsallergi vid gräsallergi</h3>
+  <p>Korsallergi mot mat är ovanligare vid gräsallergi än vid björkallergi, enligt 1177. Astma- och Allergiförbundet nämner vete och andra sädesslag, tomat, ärta, melon, jordnöt och sojaböna. Naturhistoriska riksmuseet skriver att den som reagerar på timotej i ett allergitest med största sannolikhet också korsreagerar på flera andra vanliga gräs. Mer finns i guiden om <a href="/korsallergi/">korsallergi</a>.</p>
+  <p class="kalla">{KALLA}</p>
+</Guide>

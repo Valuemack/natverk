@@ -1,0 +1,107 @@
+---
+// Lång guide: provtagning och blodprov på vårdcentralen. Egen data: 1177 Hitta vård, vårdtypen Provtagning
+// (scripts/06), vårdcentraler med drop-in för provtagning ur katalogen (uppdateras varje natt) och
+// e-tjänster för provtagning i kontaktkorten (scripts/07). Fakta granskade mot 1177 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { veckoSammanfattning } from "@natverk/core/katalog.js";
+import { SITE, KAT } from "../site.js";
+import { G, V, PUBLICERAD, lanRader, tal, vardtyp, vardtypLan, KALLA_1177_VARDTYP } from "../lib/guide.js";
+
+const TYP = "Provtagning";
+const T = vardtyp(TYP);
+const dpProv = KAT.enheter.filter((e) => e.extra?.dropin_endast_provtagning === true);
+const rader = lanRader((lan) => ({
+  prov: vardtypLan(TYP, lan),
+  dp: dpProv.filter((e) => e.lan === lan).length,
+  boka: G.kort[lan]?.provBoka ?? 0,
+})).sort((a, b) => b.dp - a.dp || b.prov - a.prov);
+const perKommun = [...dpProv.reduce((m, e) => m.set(e.kommun, (m.get(e.kommun) ?? 0) + 1), new Map())]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "sv")).slice(0, 15);
+const kommunHref = Object.fromEntries(KAT.kommuner.map((k) => [k.namn, k.href]));
+// Tidigaste öppningstid för drop-in-provtagning en vardag (måndag).
+const start = (e) => { const t = e.extra?.dropin_tider?.mon; const m = /^(\d\d):(\d\d)/.exec(t ?? ""); return m ? +m[1] * 60 + +m[2] : null; };
+const tidiga = dpProv.filter((e) => start(e) != null && start(e) <= 7 * 60 + 30).length;
+const exempel = dpProv.filter((e) => e.extra?.dropin_tider).slice(0, 1).map((e) => ({ e, tid: veckoSammanfattning(e.extra.dropin_tider) }))[0];
+const totBoka = rader.reduce((s, r) => s + r.boka, 0);
+
+const avsnitt = [
+  { id: "remiss", rubrik: "Behöver du remiss för att ta blodprov?" },
+  { id: "drop-in", rubrik: "Drop-in eller bokad tid?" },
+  { id: "lan", rubrik: "Provtagning per län – våra siffror" },
+  { id: "infor", rubrik: "Inför provtagningen: fasta och förberedelser" },
+  { id: "sa-gar-det-till", rubrik: "Så går ett blodprov till" },
+  { id: "svar", rubrik: "Provsvar – när och var?" },
+  { id: "kostnad", rubrik: "Vad kostar provtagning?" },
+];
+
+const fragor = [
+  { fraga: "Kan jag gå och ta blodprov utan remiss?", svar: "Oftast behöver provet vara beställt av en läkare eller annan vårdpersonal. Enligt 1177 får du provsvaret av den läkare som har beställt provet, och har du en remiss kan du lämna provet på vilken vårdcentral som helst." },
+  { fraga: "Har vårdcentralen drop-in för blodprov?", svar: `Många har det. I vår katalog har ${dpProv.length} vårdcentraler drop-in enbart för provtagning, och fler har drop-in för både besök och prover. Tiderna ser du på varje vårdcentrals sida.` },
+  { fraga: "Måste man fasta innan blodprov?", svar: "Bara för vissa prover. 1177 skriver att du för vissa prov behöver fasta, oftast i tio timmar. Den som beställt provet talar om ifall du ska fasta." },
+  { fraga: "Hur får jag mitt provsvar?", svar: "Provsvaret får du av den läkare som beställt provet. I många regioner kan du också läsa provsvar i din journal på 1177.se, men det kan dröja och skiljer sig mellan regioner och mottagningar." },
+  { fraga: "Kan jag ta blodprov när jag är förkyld?", svar: "Enligt 1177 bör du oftast inte lämna prov om du är förkyld, har feber eller ont i halsen. Hör av dig till mottagningen och boka om." },
+  { fraga: "Var tas blodprov?", svar: "Oftast i ett blodkärl i armvecket eller på handryggen, ibland som ett stick i fingret. Vissa prover tas från en artär, och då gör en läkare eller specialistutbildad sjuksköterska det." },
+];
+
+const titel = "Provtagning och blodprov på vårdcentralen – drop-in och svar";
+const beskrivning = `Blodprov på vårdcentralen: remiss, drop-in, fasta och provsvar. ${dpProv.length} vårdcentraler har drop-in för provtagning – se siffrorna per län och kommun.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Provtagning och blodprov på vårdcentralen"
+  svar={`Blodprov tas oftast på vårdcentralen efter att en läkare eller sjuksköterska har <strong>beställt provet</strong>. Med en remiss kan du lämna provet på <strong>vilken vårdcentral som helst</strong>. ${tal(dpProv.length)} vårdcentraler har <strong>drop-in för provtagning</strong>. För vissa prover behöver du fasta, oftast i tio timmar. Svaret får du av den som beställt provet.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Provtagning", href: "/provtagning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Alla drop-in-tider per län" },
+    { namn: "Distriktssköterska", href: "/distriktsskoterska/", text: "Sjuksköterskemottagningen" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Öppet nu och närmaste vårdcentral" },
+    { namn: "Barnmorskemottagning (MVC)", href: "/barnmorskemottagning/", text: "Cellprov och graviditetsprover" },
+  ]}
+  kallor={[
+    { namn: "1177 – Att lämna blodprov", url: "https://www.1177.se/undersokning-behandling/undersokningar-och-provtagning/provtagning-och-matningar/blodprov/att-lamna-blodprov/", text: "remiss, fasta, förberedelser och provsvar", datum: "2026-11-25" },
+    { namn: "1177 – Läsa din journal via nätet", url: "https://www.1177.se/om-1177/nar-du-loggar-in-pa-1177.se/det-har-kan-du-gora-nar-du-loggat-in/las-din-journal/las-din-journal-via-natet/", text: "när provsvar syns i journalen", datum: "2026-11-25" },
+    { namn: "1177 – Sök vård på rätt mottagning", url: "https://www.1177.se/sa-fungerar-varden/att-valja-vardmottagning/sok-vard-pa-ratt-mottagning/", text: "provtagning ingår i vårdcentralens uppdrag", datum: "2026-11-25" },
+    { namn: "1177 – Högkostnadsskydd för öppenvård", url: "https://www.1177.se/sa-fungerar-varden/kostnader-och-ersattningar/hogkostnadsskydd-for-oppenvard/", text: "1 450 kr per tolv månader", datum: "2026-11-25" },
+    KALLA_1177_VARDTYP(TYP),
+    { namn: "vårdcentralen.nu – katalogen", url: "/drop-in/", text: "drop-in-tider för provtagning, uppdateras varje natt" },
+  ]}>
+
+  <h2 id="remiss">Behöver du remiss för att ta blodprov?</h2>
+  <p>Provtagning är en av de vanligaste sakerna som görs på en vårdcentral, och 1177 räknar provtagning till det vårdcentralen hjälper till med. Oftast är provet beställt av en läkare eller sjuksköterska, antingen på vårdcentralen eller på en specialistmottagning. Beställningen kallas ofta remiss.</p>
+  <p>Enligt 1177 kan du lämna provet på <strong>vilken vårdcentral som helst</strong> om du har en remiss från en läkare. Det gör det möjligt att ta provet nära jobbet eller på en vårdcentral med drop-in, även om du är listad någon annanstans. Provsvaret går sedan till den som beställt provet, och det är den läkaren som ger dig besked.</p>
+
+  <h2 id="drop-in">Drop-in eller bokad tid?</h2>
+  <p>Många vårdcentraler har särskilda tider då du kan komma utan bokad tid för att lämna prover. I vår katalog, som uppdateras varje natt från 1177, har <strong>{tal(dpProv.length)} vårdcentraler drop-in enbart för provtagning</strong>. {tidiga > 0 && <>{tidiga} av dem öppnar drop-in-provtagningen klockan halv åtta eller tidigare på måndagar, vilket passar den som vill ta provet före jobbet.</>} Dessutom har en del vårdcentraler drop-in för både besök och provtagning, och de finns på sidan om <a href="/drop-in/">vårdcentraler med drop-in</a>.</p>
+  {exempel && <p>Ett exempel: <a href={exempel.e.href}>{exempel.e.namn}</a> i {exempel.e.kommun} har drop-in för provtagning {exempel.tid}. Tiderna för varje vårdcentral ser du på dess sida här på sajten.</p>}
+  <p>Andra vårdcentraler tar bara prover på bokad tid. I vårdcentralernas kontaktkort på 1177 har {totBoka} vårdcentraler en e-tjänst för att boka eller hantera tider för provtagning. Kommer du på drop-in, kontrollera först att provet inte kräver fasta eller en bokad tid.</p>
+
+  <h2 id="lan">Provtagning per län – våra siffror</h2>
+  <p>Tabellen visar tre olika mått per län: hur många mottagningar som är registrerade med vårdtypen provtagning på 1177, hur många vårdcentraler som har drop-in enbart för provtagning i vår katalog, och hur många som har en e-tjänst för provtagning. Regionerna registrerar provtagning på olika sätt. Ett lågt antal i ett län betyder därför inte nödvändigtvis att det är svårare att ta prover där, utan kan bero på hur regionen har registrerat sina mottagningar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Provtagning på 1177</th><th class="num">Drop-in för provtagning</th><th class="num">E-tjänst för provtagning</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.prov}</td><td class="num">{r.dp}</td><td class="num">{r.boka}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källor: 1177 Hitta vård, vårdtypen Provtagning ({T.antal} mottagningar, hämtad {V.hamtad.slice(0, 10)}); vårdcentralen.nu:s katalog (drop-in för provtagning); vårdcentralernas kontaktkort på 1177 ({G.hamtat.vardtyper}).</p>
+  <h3>Kommuner med flest vårdcentraler med drop-in för provtagning</h3>
+  <p>{perKommun.map(([k, n], i) => <>{i > 0 && ", "}{kommunHref[k] ? <a href={kommunHref[k]}>{k}</a> : k} ({n})</>)}.</p>
+
+  <h2 id="infor">Inför provtagningen: fasta och förberedelser</h2>
+  <p>De flesta blodprover kräver inga förberedelser. 1177 skriver att du för vissa prover behöver <strong>fasta</strong>, oftast i tio timmar innan. Den som beställer provet ska tala om ifall du behöver fasta, och det står ofta i kallelsen eller i meddelandet från vårdcentralen. Fråga om du är osäker.</p>
+  <p>Berätta för den som tar provet om du tar läkemedel och om du lätt får blåmärken eller blöder mycket. Enligt 1177 bör du oftast inte lämna prov om du är förkyld, har feber eller ont i halsen. Boka i så fall om tiden eller vänta tills du är frisk.</p>
+
+  <h2 id="sa-gar-det-till">Så går ett blodprov till</h2>
+  <p>Enligt 1177 tas blodprov på tre sätt:</p>
+  <ul>
+    <li><strong>Stick i fingret</strong> (kapillärt prov), för mindre mängder blod.</li>
+    <li><strong>Från en ven</strong>, oftast i armvecket eller på handryggen. Det är det vanligaste.</li>
+    <li><strong>Från en artär</strong>, i handleden eller ljumsken. Det görs av en läkare eller specialistutbildad sjuksköterska och är ovanligt på vårdcentralen.</li>
+  </ul>
+  <p>Är du rädd för sprutor eller brukar må dåligt av blodprov, säg det till personalen innan provet tas.</p>
+
+  <h2 id="svar">Provsvar – när och var?</h2>
+  <p>Enligt 1177 får du provsvaret av den läkare som har beställt blodprovet. Hur och när du får svaret skiljer sig mellan mottagningar och prover, så fråga när du lämnar provet.</p>
+  <p>Många kan också läsa sina provsvar i journalen på 1177.se. Det går från 16 års ålder. 1177 påpekar att det inte är säkert att du kan läsa uppgifterna direkt efter besöket – det kan dröja, och vad som visas skiljer sig mellan regioner och mottagningar. Läkaren som beställt provet ger dig besked om vad svaret betyder.</p>
+  <p>Har du inte fått svar inom den tid som du blev lovad, kontakta mottagningen som beställde provet.</p>
+
+  <h2 id="kostnad">Vad kostar provtagning?</h2>
+  <p>Vad provtagning kostar bestäms av regionen. Avgifter för öppen vård räknas in i <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet</a> på högst 1 450 kronor under tolv månader. Prover för hälsoundersökningar och intyg räknas enligt 1177 oftast inte in. Se din regions patientavgifter på 1177.se.</p>
+</Guide>

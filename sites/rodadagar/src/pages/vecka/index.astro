@@ -28,7 +28,7 @@ const fragor = [
       <tr class:list={{ markerad: v.vecka === vecka && v.ar === ar }}><td class="num">{v.vecka}</td><td>{kort(m)} {m.getUTCFullYear()}</td><td>{kort(plusDagar(m, 6))} {plusDagar(m, 6).getUTCFullYear()}</td></tr>
     ))}</tbody>
   </table></div>
-  <p><a href={`/vecka/${ar}/`}>Alla veckonummer {ar} →</a> · <a href={`/vecka/${ar + 1}/`}>Veckonummer {ar + 1} →</a></p>
+  <p><a href={`/vecka/${ar}/`}>Kalender {ar} med veckonummer →</a> · <a href={`/vecka/${ar + 1}/`}>Kalender {ar + 1} med veckonummer →</a></p>
   <Annons plats="vecka-1" />
   <Faq fragor={fragor} />
   <script slot="skript" is:inline>

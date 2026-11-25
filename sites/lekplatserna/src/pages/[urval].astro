@@ -10,7 +10,9 @@ import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
 import { URVAL } from "../urval.js";
 
 export function getStaticPaths() {
-  return Object.entries(URVAL).filter(([, u]) => KAT.enheter.filter(u.filter).length >= 5).map(([urval]) => ({ params: { urval } }));
+  // Urval med egen lång guidesida (samma URL) byggs av sin egen fil: temalekplatser.astro, lekplatser-med-vattenlek.astro.
+  const EGNA = ["temalekplatser", "lekplatser-med-vattenlek"];
+  return Object.entries(URVAL).filter(([s, u]) => !EGNA.includes(s) && KAT.enheter.filter(u.filter).length >= 5).map(([urval]) => ({ params: { urval } }));
 }
 const { urval } = Astro.params;
 const u = URVAL[urval];
@@ -28,6 +30,7 @@ const andra = Object.entries(URVAL).filter(([s]) => s !== urval);
   smulor={[{ namn: "Start", href: "/" }, { namn: u.namn, href: `/${urval}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>{u.h1}</h1>
   <p class="svar">{u.intro(st.length, perLan.length)}</p>
+  {u.guide && <p>Läs mer: <a href={u.guide.href}>{u.guide.namn}</a>.</p>}
   <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
   <Annons plats="urval-1" />
   {perLan.map((x) => <><h2 id={x.lan.slug}>{u.namn} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}

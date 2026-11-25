@@ -1,0 +1,141 @@
+---
+// Lång guide: korsallergi mellan pollen och mat (och mellan pollenslag). Bara information, inga personliga råd.
+// Fakta: 1177 (pollenallergi, matallergi), Astma- och Allergiförbundet (matallergi, pollenallergi, anafylaxi),
+// Naturhistoriska riksmuseet (pollenslagen). Granskad 2026-11-25.
+// Egen data: när björk- och gråbosäsongen pågår per ort (pollenkalendern, NRM:s uppmätta dygnsvärden).
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KALLA, kalenderFor } from "../site.js";
+import { PUBLICERAD, AR_TEXT, SODER_NORR, typ, mmdd, dagarMellan } from "../lib/guide.js";
+
+const bjork = typ("bjork"), grabo = typ("grabo"), hassel = typ("hassel"), al = typ("al");
+const rader = SODER_NORR.map((r) => ({ r, b: kalenderFor(r, bjork), g: kalenderFor(r, grabo), h: kalenderFor(r, hassel), a: kalenderFor(r, al) })).filter((x) => x.b);
+// Hur många dagar trädpollen (hassel, al, björk) sammanlagt brukar finnas i luften: från första start till björkens slut.
+const tradDagar = (x) => {
+  const forst = [x.h?.typisk_start, x.a?.typisk_start, x.b.typisk_start].filter(Boolean).sort()[0];
+  return dagarMellan(forst, x.b.typiskt_slut);
+};
+const langst = [...rader].sort((a, b) => tradDagar(b) - tradDagar(a))[0], kortast = [...rader].sort((a, b) => tradDagar(a) - tradDagar(b))[0];
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är korsallergi?" },
+  { id: "bjork", rubrik: "Korsallergi vid björkpollenallergi" },
+  { id: "grabo", rubrik: "Korsallergi vid gråboallergi" },
+  { id: "gras", rubrik: "Gräspollen, ambrosia och mat" },
+  { id: "pollen", rubrik: "När pollen korsreagerar med andra pollen" },
+  { id: "symtom", rubrik: "Symtom: när det kliar i munnen" },
+  { id: "sasong", rubrik: "Därför blir besvären tydligare under pollensäsongen" },
+  { id: "allvarligt", rubrik: "När är korsallergi allvarligt?" },
+  { id: "utredning", rubrik: "Utredning av korsallergi" },
+];
+
+const fragor = [
+  { fraga: "Vad är korsallergi?", svar: "Korsallergi betyder att kroppen reagerar på ämnen i till exempel mat som liknar det man är allergisk mot i pollen. Den som är allergisk mot björkpollen kan därför få besvär av vissa frukter, nötter och grönsaker." },
+  { fraga: "Vilka frukter ger korsallergi vid björkallergi?", svar: "1177 nämner äpplen, päron och stenfrukter som körsbär, plommon, persika och aprikos, liksom mandel, hasselnötter, jordnötter, soja och råa morötter. Astma- och Allergiförbundet nämner också bland annat kiwi, selleri, rå potatis, paranöt och valnöt." },
+  { fraga: "Varför kliar det i munnen när jag äter äpple?", svar: "Hos den som är allergisk mot björkpollen kan proteiner i färska äpplen likna proteinet i björkpollen. Det kan ge klåda och svullnadskänsla i mun, läppar och svalg, så kallat oralt allergisyndrom. Besvären är ofta lindriga och kommer snabbt." },
+  { fraga: "Tål man tillagad frukt vid korsallergi?", svar: "Enligt 1177 förstörs ofta de ämnen som kroppen reagerar på när maten värms upp. Det gäller däremot inte nötter. Astma- och Allergiförbundet skriver att många med oralt allergisyndrom därför kan äta äppelpaj men inte färska äpplen." },
+  { fraga: "Är korsallergi farligt?", svar: "Korsallergi mellan pollen och mat ger sällan allvarliga reaktioner, enligt 1177, eftersom ämnena ofta bryts ned snabbt i magen. Ring ändå 112 direkt vid svårt att andas, svullnad i tunga eller svalg som påverkar andningen, eller om personen blir matt och yr." },
+  { fraga: "Varför blir korsallergin värre på våren?", svar: "1177 skriver att besvären blir tydligare under pollensäsongen, eftersom kroppen då är extra känslig. För björkallergiker är det i april och maj i södra Sverige och i maj och juni i norr." },
+  { fraga: "Kan man få korsallergi av gräspollen?", svar: "Det är ovanligt, enligt 1177. Astma- och Allergiförbundet nämner vete och andra sädesslag, tomat, ärta, melon, jordnöt och sojaböna som livsmedel som kan korsreagera med gräs." },
+  { fraga: "Hur testar man korsallergi?", svar: "Oftast räcker det att beskriva besvären för en läkare. Ibland görs en allergiutredning med pricktest eller blodprov. 1177 skriver att man ska rådgöra med vården innan man utesluter ett livsmedel." },
+];
+---
+<Guide site={SITE} titel="Korsallergi – mat som kan ge besvär vid pollenallergi"
+  beskrivning="Korsallergi gör att björk-, gråbo- eller gräsallergiker kan reagera på frukt, nötter och kryddor. Se listorna, symtomen och när en reaktion är allvarlig."
+  h1="Korsallergi mellan pollen och mat"
+  svar="<strong>Korsallergi</strong> betyder att kroppen reagerar på ämnen i mat som liknar dem i pollen. Vid <strong>björkpollenallergi</strong> gäller det oftast äpplen, päron, stenfrukter, nötter och råa morötter. Vid gråboallergi gäller det främst kryddor och selleri. Besvären är ofta klåda i munnen och blir tydligare under pollensäsongen. Ring 112 om det blir svårt att andas."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Korsallergi", href: "/korsallergi/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Björkpollen", href: "/pollen/bjork/", text: "När björksäsongen börjar på din ort" },
+    { namn: "Gråbo", href: "/pollen/grabo/", text: "Växten och pollensäsongen" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Hasselpollen och alpollen", href: "/pollen/hassel/", text: "Vårens första pollen" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "Alla pollenslag på 23 orter" },
+  ]}
+  kallor={[
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "korsallergi, livsmedel per pollenslag och uppvärmning", datum: "2026-11-25" },
+    { namn: "1177 – Matallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/matallergi/", text: "när du ska ringa 112, anafylaxi och utredning", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Matallergi", url: "https://astmaoallergiforbundet.se/allergi/matallergi/", text: "oralt allergisyndrom och livsmedel som korsreagerar med björk, gräs och gråbo", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Pollenallergi", url: "https://astmaoallergiforbundet.se/allergi/pollenallergi/", text: "symtom vid korsallergi och utredning", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Anafylaxi", url: "https://astmaoallergiforbundet.se/allergi/anafylaxi/", text: "så agerar du vid anafylaxi", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Allergiframkallande pollen", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen", text: "hassel, al och björk; gräsarterna; gråbo och ambrosia", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <h2 id="vad">Vad är korsallergi?</h2>
+  <p>Den som har pollenallergi reagerar på vissa proteiner i pollenet. Liknande proteiner finns också i en del frukter, grönsaker, nötter och kryddor. När kroppen inte skiljer dem åt reagerar den även på maten. Det kallas korsallergi. 1177 förklarar det som att kroppen reagerar på ämnen som liknar det du är allergisk mot i pollen.</p>
+  <p>Korsallergi är vanligt. Astma- och Allergiförbundet uppskattar att 20–70 procent av alla med pollenallergi får symtom av färska frukter, grönsaker, nötter eller vissa kryddor. Vilka livsmedel det gäller beror på vilket pollen man är allergisk mot. Listorna nedan visar vad källorna nämner. De säger inte vad en viss person tål.</p>
+  <p>Källorna skiljer sig något. 1177 har kortare listor och beskriver korsallergi vid gräs och gråbo som ovanlig. Astma- och Allergiförbundet listar fler livsmedel. Vi redovisar båda.</p>
+
+  <h2 id="bjork">Korsallergi vid björkpollenallergi</h2>
+  <p>Listorna över livsmedel är längst för björk. 1177 skriver att de flesta med pollenallergi reagerar på björk eller gräs.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Grupp</th><th>1177</th><th>Astma- och Allergiförbundet</th></tr></thead>
+    <tbody>
+      <tr><td>Frukt</td><td>Äpple, päron</td><td>Äpple, päron, kiwi</td></tr>
+      <tr><td>Stenfrukter</td><td>Körsbär, plommon, persika, aprikos, mandel</td><td>Persika, körsbär, plommon, aprikos, mandel</td></tr>
+      <tr><td>Nötter</td><td>Till exempel hasselnöt</td><td>Hasselnöt, paranöt, valnöt</td></tr>
+      <tr><td>Baljväxter</td><td>Jordnöt, soja</td><td>Jordnöt, sojaböna</td></tr>
+      <tr><td>Grönsaker</td><td>Råa morötter</td><td>Morot, rå potatis, selleri</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Livsmedlen som 1177 och Astma- och Allergiförbundet nämner vid björkpollenallergi.</p>
+  <p>1177 skriver att man ska rådgöra med vården innan man utesluter ett livsmedel ur kosten.</p>
+
+  <h2 id="grabo">Korsallergi vid gråboallergi</h2>
+  <p><a href="/pollen/grabo/">Gråbo</a> blommar i juli och augusti. Enligt 1177 är det ovanligt att gråboallergiker får besvär av mat, men när det händer gäller det främst kryddor och grönsaker.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Källa</th><th>Livsmedel som nämns vid gråboallergi</th></tr></thead>
+    <tbody>
+      <tr><td>1177</td><td>Persilja, koriander, curry, kamomill, selleri, morötter, paprika och brödkryddor som anis, fänkål och kummin</td></tr>
+      <tr><td>Astma- och Allergiförbundet</td><td>Selleri, morot, persilja, fänkål, paprika, vitlök, tomat, honung, senap, kamomill, curry, kummin, koriander, anis, mango, melon, solrosfrö och andra korgblommiga växter</td></tr>
+    </tbody>
+  </table></div>
+  <p>Selleri, morot och persilja finns med både hos björk och gråbo i förbundets listor.</p>
+
+  <h2 id="gras">Gräspollen, ambrosia och mat</h2>
+  <p>Gräspollen ger mer sällan korsallergi mot mat. 1177 skriver att det är ovanligt och nämner inga livsmedel. Astma- och Allergiförbundet listar <strong>vete och andra sädesslag, tomat, ärta, melon, jordnöt och sojaböna</strong>.</p>
+  <p>För <a href="/pollen/malortsambrosia/">malörtsambrosia</a> nämner varken 1177 eller förbundet några livsmedel. Naturhistoriska riksmuseet skriver däremot att ambrosia och gråbo korsreagerar med varandra.</p>
+
+  <h2 id="pollen">När pollen korsreagerar med andra pollen</h2>
+  <p>Korsallergi finns också mellan olika pollenslag. Då kan säsongen bli längre än man räknat med. Naturhistoriska riksmuseet beskriver flera sådana samband:</p>
+  <ul>
+    <li><strong>Hassel och al:</strong> många björkallergiker är också känsliga för hasselpollen, och alpollen ger besvär hos en del björkallergiker. Hassel och al blommar flera veckor före björken.</li>
+    <li><strong>Gräsarterna:</strong> det finns många gräsarter, och deras pollen är mycket lika varandra. Den som testats positivt för timotej korsreagerar med största sannolikhet på flera andra vanliga gräs.</li>
+    <li><strong>Gråbo och ambrosia:</strong> de två korsreagerar, så ambrosia kan förlänga gråboallergikerns säsong in i september.</li>
+  </ul>
+  <p>För en björkallergiker kan säsongen alltså börja redan när hasseln blommar. Tabellen längre ned visar hur lång den sammanlagda trädpollensäsongen brukar vara på varje ort.</p>
+
+  <h2 id="symtom">Symtom: när det kliar i munnen</h2>
+  <p>Den vanligaste formen av korsallergi kallas <strong>oralt allergisyndrom</strong>. Astma- och Allergiförbundet beskriver det som klåda och svullnadskänsla i eller runt munnen, i halsen och på läpparna. Symtomen kommer ofta snabbt efter att man ätit, är ofta ganska lindriga och kan pågå i timmar. Mer sällan förekommer magont, illamående, diarré, kräkningar, eksem, nästäppa, snuva och astma.</p>
+  <h3>Tillagad mat och nötter</h3>
+  <p>De ämnen som ger korsallergi är ofta känsliga för värme. 1177 skriver att de ofta förstörs när maten värms upp, och förbundet ger exemplet att många kan äta äppelpaj men inte ett färskt äpple. Det gäller däremot <strong>inte nötter</strong>, enligt 1177. Uppvärmning förstör alltså inte de ämnen i nötter som kroppen reagerar på.</p>
+
+  <h2 id="sasong">Därför blir besvären tydligare under pollensäsongen</h2>
+  <p>1177 skriver att korsallergin ofta blir tydligare under pollensäsongen, eftersom kroppen då är extra känslig. Förbundet ger exemplet att ett färskt äpple kan ge symtom särskilt under pollensäsong. Därför är det användbart att veta när säsongen brukar pågå där du bor. Tabellen visar björk- och gråbosäsongen per ort, räknat från uppmätta halter {AR_TEXT}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>Björk</th><th>Björk topp</th><th>Gråbo</th><th class="num">Trädpollen totalt*</th></tr></thead>
+    <tbody>{rader.map((x) => <tr><td><a href={`/${x.r.slug}/#kalender`}>{x.r.namn}</a></td><td>{mmdd(x.b.typisk_start, false)}–{mmdd(x.b.typiskt_slut, false)}</td><td>{mmdd(x.b.typisk_topp, false)}</td><td>{x.g ? `${mmdd(x.g.typisk_start, false)}–${mmdd(x.g.typiskt_slut, false)}` : "–"}</td><td class="num">{tradDagar(x)} dagar</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">* Från att hassel, al eller björk börjar till att björksäsongen slutar. Typiska datum (median {AR_TEXT}), dagarna mellan 5 och 95 procent av årets pollenmängd. Orterna står från söder till norr.</p>
+  <p>Längst trädpollensäsong har {langst.r.namn} med {tradDagar(langst)} dagar, kortast {kortast.r.namn} med {tradDagar(kortast)} dagar. Säsongen för fler pollenslag finns i <a href="/pollenkalender/">pollenkalendern</a>.</p>
+
+  <h2 id="allvarligt">När är korsallergi allvarligt?</h2>
+  <p>Korsallergi mellan pollen och mat ger sällan allvarliga allergiska reaktioner, enligt 1177. Förklaringen är att ämnena ofta bryts ned snabbt i magen och tarmarna. Allvarliga reaktioner kan ändå förekomma vid matallergi. 1177 skriver att jordnötter och hasselnötter hör till de livsmedel som oftast orsakar anafylaxi, en allvarlig reaktion som kommer snabbt och kan vara livshotande.</p>
+  <div class="akut">
+    <p><strong>Ring 112 genast</strong> om något av följande stämmer, enligt 1177:</p>
+    <ul>
+      <li>Du har svårt att andas.</li>
+      <li>Tungan och svalget kliar eller svullnar och påverkar andningen.</li>
+      <li>Du får snabbt stark klåda i handflatorna, på fotsulorna och i hårbotten.</li>
+      <li>Du blir matt och yr och det känns som att du ska svimma.</li>
+      <li>Någon i din närhet är inte kontaktbar som vanligt.</li>
+    </ul>
+    <p>Astma- och Allergiförbundet skriver att den som har en adrenalinpenna ska använda den omedelbart vid anafylaxi. Ring <strong>1177</strong> för sjukvårdsrådgivning vid lindrigare besvär.</p>
+  </div>
+
+  <h2 id="utredning">Utredning av korsallergi</h2>
+  <p>Oftast räcker det att beskriva besvären för en läkare för att få diagnosen. Ibland behövs en allergiutredning. Den görs på vårdcentral eller barnläkarmottagning, med blodprov eller pricktest. Båda visar om du har allergiantikroppar mot ett visst ämne och ger enligt 1177 lika säkra resultat.</p>
+  <p>Innan du utesluter livsmedel ska du enligt 1177 rådgöra med vården. Mer om utredning, allergitest och allergivaccination finns i guiden om <a href="/pollenallergi/#utredning">pollenallergi</a>.</p>
+  <p class="kalla">{KALLA}</p>
+</Guide>

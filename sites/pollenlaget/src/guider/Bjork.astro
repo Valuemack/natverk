@@ -1,0 +1,121 @@
+---
+// Lång guide: björkpollen – när säsongen börjar och slutar per ort, stora och små björkår, halter och allergi.
+// Egen data: säsong per ort, skillnad söder–norr, tidiga mars-starter och årssummor ur pollenkalendern (NRM:s uppmätta dygnsvärden).
+// Fakta: NRM (Pollenrapporten, Liten pollenskola, Halter och risker), 1177, Astma- och Allergiförbundet. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import TypBlock from "../components/TypBlock.astro";
+import { SITE, KALLA, KALENDER_AR } from "../site.js";
+import { PUBLICERAD, TYP_UPPDATERAD, AR_TEXT, rader, ytterlagen, medianDag, mmdd, tal, dagarMellan, arSumma } from "../lib/guide.js";
+
+const { typ: t } = Astro.props;
+const rad = rader(t);
+const g = t.gransvarden;
+const { forst, sist } = ytterlagen(rad);
+const start = medianDag(rad.map((x) => x.k.typisk_start)), topp = medianDag(rad.map((x) => x.k.typisk_topp)), slut = medianDag(rad.map((x) => x.k.typiskt_slut));
+const langd = (k) => dagarMellan(k.typisk_start, k.typiskt_slut);
+const medLangd = medianDag(rad.map((x) => String(langd(x.k)).padStart(3, "0")));
+// Orter utan Malmö (där tidiga mars-pollen drar ned medianen) för en rättvisare jämförelse söder–norr.
+const sodraFast = rad.find((x) => x.r.slug === "hassleholm") ?? rad[1];
+const perAr = KALENDER_AR.map((ar) => ({ ar, summa: rad.reduce((s, x) => s + (arSumma(x.k, ar) ?? 0), 0) }));
+const storst = [...perAr].sort((a, b) => b.summa - a.summa)[0], minst = [...perAr].sort((a, b) => a.summa - b.summa)[0];
+const ggr = Math.round((storst.summa / minst.summa) * 10) / 10;
+// Säsongsstarter i mars: pollen som kommit med vinden innan de svenska björkarna blommar.
+const mars = rad.flatMap((x) => x.k.ar.filter((a) => a.start.slice(5) < "04-01").map((a) => ({ r: x.r, a })));
+const perDag = Object.entries(Object.groupBy(mars, (x) => x.a.start)).map(([d, l]) => ({ d, orter: l.map((x) => x.r.namn) }));
+const sammaDag = perDag.filter((x) => x.orter.length > 1).sort((a, b) => b.orter.length - a.orter.length)[0];
+const variation = rad.map((x) => { const s = x.k.ar.map((a) => a.summa); return { ...x, kvot: s.length === KALENDER_AR.length && Math.min(...s) >= 500 ? Math.max(...s) / Math.min(...s) : null }; }).filter((x) => x.kvot);
+const stabilast = [...variation].sort((a, b) => a.kvot - b.kvot)[0], ostabilast = [...variation].sort((a, b) => b.kvot - a.kvot)[0];
+const STAD = ["stockholm", "goteborg", "malmo", "uppsala", "umea", "jonkoping"].map((s) => rad.find((x) => x.r.slug === s)).filter(Boolean);
+
+const avsnitt = [
+  { id: "sasong", rubrik: "När börjar björkpollensäsongen?" },
+  { id: "norrut", rubrik: "Säsongen vandrar norrut" },
+  { id: "mars", rubrik: "Björkpollen i mars: med vinden från kontinenten" },
+  { id: "ar", rubrik: "Stora och små björkår" },
+  { id: "halter", rubrik: "Vad betyder halterna av björkpollen?" },
+  { id: "tradet", rubrik: "Så blommar björken" },
+  { id: "allergi", rubrik: "Björkpollenallergi" },
+  { id: "korsallergi", rubrik: "Björk, hassel, al och korsallergi" },
+];
+
+const fragor = [
+  { fraga: "När börjar björkpollensäsongen?", svar: `I södra Sverige brukar björkpollensäsongen börja i mitten av april och i norra Sverige i maj. Under ${AR_TEXT} låg den typiska starten mellan ${mmdd(sodraFast.k.typisk_start)} i ${sodraFast.r.namn} och ${mmdd(sist.k.typisk_start)} i ${sist.r.namn}.` },
+  { fraga: "När slutar björkpollen?", svar: `Säsongen är kort. På de flesta orter är den över efter ungefär ${+medLangd} dagar, i mitten av landet runt ${mmdd(slut)}. Längst norrut, som i Kiruna och Storuman, brukar säsongen pågå in i juni.` },
+  STAD.length && { fraga: "När kommer björkpollen i Stockholm, Göteborg och Malmö?", svar: `Typisk start (median ${AR_TEXT}): ${STAD.map((x) => `${x.r.namn} ${mmdd(x.k.typisk_start)}`).join(", ")}. Typisk topp: ${STAD.map((x) => `${x.r.namn} ${mmdd(x.k.typisk_topp)}`).join(", ")}.` },
+  { fraga: "Vad räknas som höga halter av björkpollen?", svar: `Naturhistoriska riksmuseet räknar ${g.lag + 1}–${g.mattlig} pollenkorn per kubikmeter luft som måttliga halter, ${g.mattlig + 1}–${g.hog} som höga och över ${g.hog} som mycket höga.` },
+  { fraga: "Varför är det mer björkpollen vissa år?", svar: `Björken anlägger sina hängen året innan, och många träd blommar olika mycket från år till år. Vädret under blomningen spelar också in. ${storst.ar} gav ${tal(ggr)} gånger så mycket björkpollen som ${minst.ar}, räknat över alla mätorter.` },
+  { fraga: "Finns det björkar som inte ger pollen?", svar: "Naturhistoriska riksmuseet nämner ornäsbjörk som allergivänlig, eftersom den saknar hanblommor och därför inte sprider pollen." },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Björkpollen – när säsongen börjar och slutar på 23 orter"
+  beskrivning={`Björkpollen kommer i april i söder och i maj i norr. Se när säsongen börjar, toppar och slutar på 23 orter, hur mycket årsmängden varierar och vad halterna betyder.`}
+  h1="Björkpollen"
+  svar={`<strong>Björkpollen</strong> är det pollen som ger flest besvär i Sverige. Säsongen börjar i <strong>mitten av april i söder</strong> och i <strong>maj i norr</strong>, och den är kort men intensiv: ofta bara ${+medLangd} dagar på en ort. Över ${g.mattlig} pollenkorn per kubikmeter luft räknas som höga halter. Mängden kan skilja mer än dubbelt mellan åren.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Björkpollen", href: "/pollen/bjork/" }]}
+  publicerad={PUBLICERAD} uppdaterad={TYP_UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Hasselpollen och alpollen", href: "/pollen/hassel/", text: "Vårens första pollen, före björken" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "Äpple, nötter och stenfrukter" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Allergimedicin utan recept", href: "/allergimedicin/", text: "Typerna av receptfria läkemedel" },
+    { namn: "Gräspollen", href: "/pollen/gras/", text: "Säsongen som tar vid efter björken" },
+  ]}
+  kallor={[
+    { namn: "Naturhistoriska riksmuseet – Björk", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/bjork", text: "arter, blomning i söder och norr, pollen från Centraleuropa och extremår", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: björk", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-bjork", text: "hängen, pollenmängd, variation mellan åren och ornäsbjörk", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Halter och risker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/halter-och-risker", text: "gränsvärden för björk", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Hassel och al", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/hassel", text: "björkallergiker och hassel- och alpollen", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "björksäsongen, symtom, korsallergi och när du ska söka vård", datum: "2026-11-25" },
+    { namn: "1177 – Allergen immunterapi", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/behandlingar-med-lakemedel/allergen-immunterapi/", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <TypBlock typ={t} visa="idag" id="idag" ord="Björkpollen" />
+
+  <h2 id="sasong">När börjar björkpollensäsongen?</h2>
+  <p>Enligt uppmätta halter {AR_TEXT} börjar björkpollensäsongen i mitten av landet runt <strong>{mmdd(start)}</strong>, toppar runt <strong>{mmdd(topp)}</strong> och slutar runt <strong>{mmdd(slut)}</strong>. På en enskild ort varar säsongen oftast bara runt {+medLangd} dagar. Det gör björken till ett kort men intensivt pollenslag.</p>
+  <p>Säsongen räknas här från dagen då 5 procent av årets björkpollen har uppmätts till dagen då 95 procent har det. Tabellen visar typiska datum per ort, från söder till norr, och hur många dagar per år halterna i snitt var höga.</p>
+  <TypBlock typ={t} visa="sasong" rubrik={false} />
+
+  <Annons plats="typ-1" />
+
+  <h2 id="norrut">Säsongen vandrar norrut</h2>
+  <p>Björken blommar ungefär samtidigt som lövsprickningen, och den följer våren norrut. Naturhistoriska riksmuseet skriver att björken i sydligaste Sverige blommar under andra halvan av april och i de nordligaste städerna kring månadsskiftet juni–juli. 1177 anger att björkpollen kommer i början av april i södra Sverige och två till tre veckor senare i norr.</p>
+  <p>I mätningarna var den typiska starten i {sodraFast.r.namn} {mmdd(sodraFast.k.typisk_start)} och i {sist.r.namn} {mmdd(sist.k.typisk_start)}, {dagarMellan(sodraFast.k.typisk_start, sist.k.typisk_start)} dagar senare. Mellan Stockholm och Umeå skilde det ungefär {dagarMellan(rad.find((x) => x.r.slug === "stockholm")?.k.typisk_start, rad.find((x) => x.r.slug === "umea")?.k.typisk_start)} dagar.</p>
+  <p>Det betyder att den som reser norrut i maj kan få en andra björksäsong. Flera norrländska orter, som Umeå och Piteå, hade lika många eller fler dagar med höga halter som orterna i söder.</p>
+
+  <h2 id="mars">Björkpollen i mars: med vinden från kontinenten</h2>
+  <p>Ibland mäts björkpollen långt innan de svenska björkarna har börjat blomma. Naturhistoriska riksmuseet skriver att björkpollen kan finnas i luften redan i mars, med vindar från Centraleuropa. Det syns i mätningarna. Under {AR_TEXT} började säsongen i mars på {mars.length} {mars.length === 1 ? "ort" : "orter"}: {mars.map((x, i) => <>{i > 0 && ", "}{x.r.namn} ({mmdd(x.a.start.slice(5))} {x.a.ar})</>)}.</p>
+  {sammaDag && <p>Den {mmdd(sammaDag.d.slice(5))} {sammaDag.d.slice(0, 4)} började säsongen samma dag i {sammaDag.orter.slice(0, -1).join(", ")} och {sammaDag.orter.at(-1)}. Det stämmer med museets beskrivning av pollen som kommer med vinden. Det förklarar också varför {rad[0].r.namn} har en tidigare typisk start än orterna strax norr om.</p>}
+
+  <h2 id="ar">Stora och små björkår</h2>
+  <p>Björken ger inte lika mycket pollen varje år. Naturhistoriska riksmuseet skriver att många träd har ett cykliskt beteende och sällan anlägger samma mängd blommor varje år. Hanhängena bildas redan året innan, och mängden hängen ger en första fingervisning om nästa säsong. Ett bakslag med kyla, regn eller snö under blomningen kan också förstöra blommorna.</p>
+  <p>Summan av alla dygnsvärden på mätorterna var {perAr.map((x, i) => <>{i > 0 && (i === perAr.length - 1 ? " och " : ", ")}{tal(x.summa)} år {x.ar}</>)}. Det största året gav alltså {tal(ggr)} gånger så mycket björkpollen som det minsta. Variationen var störst i {ostabilast.r.namn}, där det största året gav {Math.round(ostabilast.kvot)} gånger mer än det minsta, och minst i {stabilast.r.namn} ({tal(Math.round(stabilast.kvot * 10) / 10)} gånger). Jämförelsen gäller orter med mätningar alla tre åren och minst 500 pollenkorn varje år. Därför är {rad[0].r.namn} undantaget, där summan {KALENDER_AR[0]} bara var {tal(arSumma(rad[0].k, KALENDER_AR[0]))}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th>{KALENDER_AR.map((a) => <th class="num">{a}</th>)}</tr></thead>
+    <tbody>{rad.map(({ r, k }) => <tr><td><a href={`/${r.slug}/`}>{r.namn}</a></td>{KALENDER_AR.map((a) => <td class="num">{tal(arSumma(k, a))}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Summan av uppmätta dygnsvärden (korn/m³) under björksäsongen. Orterna står från söder till norr. Bearbetning av uppmätta halter från Naturhistoriska riksmuseet.</p>
+
+  <h2 id="halter">Vad betyder halterna av björkpollen?</h2>
+  <p>Halterna anges som antal pollenkorn per kubikmeter luft och dygn. För björk och andra träd använder Naturhistoriska riksmuseet högre gränser än för gräs och örter, eftersom trädpollen lättare följer med vinden: upp till {g.lag} korn är låga halter, {g.lag + 1}–{g.mattlig} måttliga, {g.mattlig + 1}–{g.hog} höga och över {g.hog} mycket höga.</p>
+  <p>Under toppdagarna blir halterna ofta mycket höga. Det högsta dygnsvärdet under {AR_TEXT} uppmättes i {[...rad].sort((a, b) => b.k.hogsta_dygnsvarde - a.k.hogsta_dygnsvarde)[0].r.namn}, med {tal([...rad].sort((a, b) => b.k.hogsta_dygnsvarde - a.k.hogsta_dygnsvarde)[0].k.hogsta_dygnsvarde)} korn/m³. Museet nämner 1993 och 1998 som extremår.</p>
+  <TypBlock typ={t} visa="grans" rubrik={false} />
+
+  <h2 id="tradet">Så blommar björken</h2>
+  <p>I Sverige finns tre björkarter: vårtbjörk, glasbjörk och dvärgbjörk. Vårtbjörk och glasbjörk finns i så gott som hela landet och i alla typer av terräng, medan dvärgbjörken främst växer i fjällen och på myrar. Björken har både han- och honblommor på samma träd. Det är hanblommorna, de långa hängena, som sprider pollen. Ett enda hänge innehåller enligt Naturhistoriska riksmuseet flera miljoner pollenkorn.</p>
+  <h3>Allergivänlig björk</h3>
+  <p>Naturhistoriska riksmuseet beskriver ornäsbjörk (Dalecarlica) som allergivänlig, eftersom den saknar hanblommor och därför inte sprider pollen.</p>
+
+  <h2 id="allergi">Björkpollenallergi</h2>
+  <p>Naturhistoriska riksmuseet kallar björken allergikernas värsta gissel. 1177 skriver att de flesta med pollenallergi reagerar på björk och gräs. Besvären är rinnsnuva, nästäppa, nysningar, klåda i näsan, röda och kliande ögon och trötthet. En del får rethosta, andnöd eller astmasymtom de dagar då halterna är höga.</p>
+  <p>Vid svår björkpollenallergi som inte blir bättre av vanliga läkemedel kan vården erbjuda allergivaccination. Enligt 1177 finns den mot björkpollen som tabletter, och mot pollen från lövträd som sprutor. Behandlingen börjar ungefär fyra månader före säsongen, alltså under vintern.</p>
+  <div class="akut"><p><strong>Svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning, eller en akutmottagning om det är stängt. Vid akuta andningsbesvär, ring <strong>112</strong>. För sjukvårdsrådgivning, ring <strong>1177</strong>.</p></div>
+  <p>Mer finns i guiderna om <a href="/pollenallergi/">pollenallergi</a> och <a href="/allergimedicin/">allergimedicin utan recept</a>.</p>
+
+  <h2 id="korsallergi">Björk, hassel, al och korsallergi</h2>
+  <p>Hassel och al blommar flera veckor före björken. Naturhistoriska riksmuseet skriver att många björkallergiker också är känsliga för hasselpollen, och att alpollen ger besvär hos en del björkallergiker. För dem börjar säsongen alltså redan i februari eller mars. Se guiden om <a href="/pollen/hassel/">hasselpollen och alpollen</a>.</p>
+  <p>Björkpollenallergi ger också ofta korsallergi mot mat. 1177 nämner äpplen, päron, stenfrukter som körsbär, plommon och persika, mandel, nötter, jordnötter, soja och råa morötter. Besvären är oftast klåda i munnen och blir tydligare under björksäsongen. Läs mer i guiden om <a href="/korsallergi/">korsallergi</a>.</p>
+  <p class="kalla">{KALLA}</p>
+</Guide>

@@ -32,6 +32,8 @@ const dagSerie = DAGAR.filter((x) => x.snitt[k] != null).map((x) => ({ x: x.datu
 const stationer = STATIONER.filter((s) => s.drivmedel?.[k] === true);
 const perLan = Object.entries(stationer.reduce((m, s) => ((m[s.lan ?? "Okänt län"] = (m[s.lan ?? "Okänt län"] ?? 0) + 1), m), {})).sort((x, y) => y[1] - x[1]);
 const drivmedelSlugBensinstationer = { e85: "e85", hvo100: "hvo100", biogas: "fordonsgas" }[k];
+const GUIDER = { bensin95: { href: "/guider/95-eller-98/", namn: "Bensin 95 eller 98 – vad är skillnaden?" }, bensin98: { href: "/guider/95-eller-98/", namn: "Bensin 95 eller 98 – vad är skillnaden?" }, diesel: { href: "/guider/reduktionsplikt/", namn: "Reduktionsplikten – så fungerar den" }, e85: { href: "/guider/hvo100-e85-fordonsgas/", namn: "HVO100, E85 och fordonsgas – priser och skillnader" }, hvo100: { href: "/guider/hvo100-e85-fordonsgas/", namn: "HVO100, E85 och fordonsgas – priser och skillnader" }, biogas: { href: "/guider/hvo100-e85-fordonsgas/", namn: "HVO100, E85 och fordonsgas – priser och skillnader" } };
+const guide = GUIDER[k];
 const ovriga = DRIVMEDEL.filter((x) => x.nyckel !== k && idagPris(x.nyckel) != null);
 
 // Jämförelser som är meningsfulla för respektive drivmedel.
@@ -85,6 +87,7 @@ const fragor = [
   <h2>Om {d.liten}</h2>
   <p><strong>{text.ingress}</strong></p>
   {text.stycken.map((s) => <p>{s}</p>)}
+  {guide && <p>Läs mer: <a href={guide.href}>{guide.namn}</a>.</p>}
 
   {skatt && <>
     <h2>Skatten på {d.liten}</h2>

@@ -1,0 +1,123 @@
+---
+// Lång guide: läroplanen för förskolan, Lpfö 18 (reviderad 2025). Antal mål och riktlinjer har räknats av redaktionen
+// ur Skolverkets gällande text 2026-11-25. Fakta: Skolverket (läroplanen, guide till ändringarna), skollagen 8 kap. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { relaterade } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+// Räknat ur Skolverkets text (gäller från 2025-08-01): punkter per avsnitt och ansvarig.
+const DELAR = [
+  { nr: "2.1", namn: "Normer och värden", mal: 5, fl: 4, al: 7, rektor: 0 },
+  { nr: "2.2", namn: "Omsorg, utveckling och lärande", mal: 25, fl: 9, al: 9, rektor: 0 },
+  { nr: "2.3", namn: "Barns delaktighet och inflytande", mal: 3, fl: 1, al: 5, rektor: 0 },
+  { nr: "2.4", namn: "Förskola och hem", mal: 0, fl: 2, al: 4, rektor: 0 },
+  { nr: "2.5", namn: "Övergång och samverkan", mal: 0, fl: 2, al: 1, rektor: 0 },
+  { nr: "2.6", namn: "Uppföljning, utvärdering och utveckling", mal: 0, fl: 5, al: 4, rektor: 0 },
+  { nr: "2.7", namn: "Förskollärares ansvar i undervisningen", mal: 0, fl: 5, al: 0, rektor: 0 },
+  { nr: "2.8", namn: "Rektorns ansvar", mal: 0, fl: 0, al: 0, rektor: 15 },
+];
+const sum = (f) => DELAR.reduce((a, d) => a + d[f], 0);
+const S = { mal: sum("mal"), fl: sum("fl"), al: sum("al"), rektor: sum("rektor") };
+const andel22 = Math.round((25 / S.mal) * 100);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är Lpfö 18?" },
+  { id: "andringar-2025", rubrik: "Ändringarna i läroplanen 2025" },
+  { id: "uppbyggnad", rubrik: "Så är läroplanen uppbyggd" },
+  { id: "siffror", rubrik: "Läroplanens mål och riktlinjer i siffror" },
+  { id: "undervisning", rubrik: "Vad är undervisning i förskolan?" },
+  { id: "malen", rubrik: "Målen gäller förskolan – inte barnet" },
+  { id: "hem", rubrik: "Vad läroplanen säger om föräldrarna" },
+  { id: "fragor-till-forskolan", rubrik: "Frågor att ställa till förskolan" },
+];
+
+const fragor = [
+  { fraga: "Vad står Lpfö 18 för?", svar: "Lpfö 18 är förkortningen för Läroplan för förskolan. Den nuvarande versionen är reviderad 2025 och är det styrdokument som alla förskolor, kommunala som fristående, ska följa." },
+  { fraga: "Vad ändrades i Lpfö 18 år 2025?", svar: "Ändringarna gäller från 1 juli 2025. Förskolans lärverktyg ska främst vara analoga, och det finns inget krav på att digitala verktyg ska användas. Högläsning, språkutveckling, lek och fysisk aktivitet betonas mer, och förskollärare och rektor får ett tydligare ansvar för att utbildningen vilar på vetenskaplig grund." },
+  { fraga: "Får förskolan använda surfplattor?", svar: "Enligt den reviderade läroplanen bör barn under två år bara använda analoga lärverktyg. För äldre barn bör andra lärverktyg än analoga användas med stor restriktivitet. Det finns inte längre något krav på digitala lärverktyg i förskolan." },
+  { fraga: `Hur många mål finns i förskolans läroplan?`, svar: `Vi har räknat ${S.mal} mål i läroplanens kapitel 2, där varje mål börjar med att förskolan ska ge varje barn förutsättningar att utveckla något. ${andel22} procent av dem finns i avsnitt 2.2 om omsorg, utveckling och lärande.` },
+  { fraga: "Får barn betyg i förskolan?", svar: "Nej. Läroplanens mål anger vad förskolan ska ge barnen förutsättningar att utveckla. De är inte krav som varje barn ska uppnå. Förskolan ska däremot följa, dokumentera och analysera varje barns utveckling och lärande för att utvärdera sin egen verksamhet." },
+  { fraga: "Gäller läroplanen i pedagogisk omsorg?", svar: "Nej, det finns ingen läroplan för pedagogisk omsorg. Enligt Skolverket ska förskolans läroplan ändå vara vägledande för all pedagogisk omsorg." },
+  { fraga: "Var hittar jag läroplanen för förskolan?", svar: "Hela Lpfö 18 finns att läsa och ladda ner gratis på Skolverkets webbplats. Där finns också ett jämförelsedokument som visar ändringarna från 2025." },
+];
+
+const titel = "Lpfö 18 – läroplanen för förskolan och ändringarna 2025";
+const beskrivning = "Läroplanen för förskolan, Lpfö 18, förklarad: hur den är uppbyggd, vad som ändrades 2025, vad undervisning betyder och hur många mål läroplanen har.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Lpfö 18 – läroplanen för förskolan"
+  svar={`<strong>Lpfö 18</strong> är läroplanen för förskolan. Den gäller alla förskolor och består av två kapitel: förskolans värdegrund och uppdrag, och mål och riktlinjer. Läroplanen reviderades 2025. Sedan dess ska lärverktygen främst vara analoga, och högläsning, lek och rörelse har fått större plats. Målen anger vad förskolan ska ge barnen, inte vad varje barn ska klara.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Lpfö 18", href: "/lpfo-18/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    ...relaterade("/forskollarare/", "/inskolning/", "/forskoleklass/", "/pedagogisk-omsorg/"),
+    { namn: "Jämför kommuner", href: "/jamfor/", text: "Barngrupper och förskollärare per kommun" },
+  ]}
+  kallor={[
+    { namn: "Skolverket – Läroplan för förskolan Lpfö 18", url: "https://www.skolverket.se/undervisning/forskolan/laroplan-lpfo-18-for-forskolan", text: "gällande version, kapitel 1 och 2", datum: "2026-11-25" },
+    { namn: "Skolverket – Guide till ändringar i förskolans läroplan", url: "https://www.skolverket.se/undervisning/forskolan/guide-till-andringar-i-forskolans-laroplan", text: "ändringarna som gäller från 1 juli 2025", datum: "2026-11-25" },
+    { namn: "Skolverket – Pedagogisk omsorg", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/pedagogisk-omsorg", text: "läroplanen som vägledning för pedagogisk omsorg", datum: "2026-11-25" },
+    { namn: "Skollag (2010:800), 8 kap. 2 och 11 §§", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/skollag-2010800_sfs-2010-800/", text: "förskolans syfte och utvecklingssamtal", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vad">Vad är Lpfö 18?</h2>
+  <p>Läroplanen för förskolan, Lpfö 18, är det styrdokument som beskriver vad förskolan ska göra och vilka värden den ska stå för. Förskolan är en del av skolväsendet, och läroplanen gäller i alla förskolor oavsett om huvudmannen är en kommun, ett företag eller ett föräldrakooperativ.</p>
+  <p>Läroplanen bygger på skollagen. Där står att förskolan ska stimulera barns utveckling och lärande och erbjuda en trygg omsorg, och att omsorg, utveckling och lärande ska bilda en helhet (8 kap. 2 §). Läroplanen fyller i hur det ska gå till. Den hänvisar också till barnkonventionen: utbildningen ska utgå från barnets bästa, och barnen har rätt till delaktighet och inflytande.</p>
+  <p>Läroplanen är gratis och finns att läsa i sin helhet hos Skolverket. Den är skriven för personalen, men den är värd att läsa även som förälder.</p>
+
+  <h2 id="andringar-2025">Ändringarna i läroplanen 2025</h2>
+  <p>Regeringen beslutade om ändringar i förskolans läroplan som <strong>gäller från 1 juli 2025</strong>. Skolverket sammanfattar dem så här:</p>
+  <ul>
+    <li><strong>Analoga lärverktyg först.</strong> Det finns inget krav på att digitala lärverktyg ska användas i förskolan. För barn under två år bör bara analoga lärverktyg användas, och för äldre barn bör andra verktyg användas med stor restriktivitet.</li>
+    <li><strong>Högläsning och språk.</strong> Förskollärare får ett tydligare ansvar för att främja högläsning och språkutveckling. Barnen ska få lyssna till högläsning och samtala om texter och bilder.</li>
+    <li><strong>Lek och rörelse.</strong> Lek och rörelse ska ha en central plats, och barnen ska kunna delta i varierade fysiska aktiviteter återkommande under dagen.</li>
+    <li><strong>Vetenskaplig grund.</strong> Förskollärare och rektor får ett tydligare ansvar för att undervisningen vilar på vetenskaplig grund och beprövad erfarenhet.</li>
+    <li><strong>Arbetslaget.</strong> Hela arbetslagets roll i det språkutvecklande och hälsofrämjande arbetet förstärks.</li>
+  </ul>
+  <p>Skolverket har ett jämförelsedokument som visar exakt vilka formuleringar som ändrats jämfört med den tidigare versionen.</p>
+
+  <h2 id="uppbyggnad">Så är läroplanen uppbyggd</h2>
+  <h3>Kapitel 1: Förskolans värdegrund och uppdrag</h3>
+  <p>Det första kapitlet beskriver de grundläggande värdena, som människolivets okränkbarhet, alla människors lika värde och jämställdhet. Det tar upp förståelse och medmänsklighet, saklighet och allsidighet och en likvärdig utbildning. Undervisningen ska vara icke-konfessionell. Därefter beskrivs förskolans uppdrag under rubrikerna helhetssyn, lek och rörelse, språk, kommunikation och skapande, hållbar utveckling samt hälsa och välbefinnande, omsorg, utveckling och lärande och varje förskolas utveckling.</p>
+  <h3>Kapitel 2: Mål och riktlinjer</h3>
+  <p>Det andra kapitlet har åtta avsnitt. Varje avsnitt kan innehålla <strong>mål</strong>, alltså vad förskolan ska ge varje barn förutsättningar att utveckla, och <strong>riktlinjer</strong> som anger vem som ansvarar för vad: förskollärare, arbetslaget eller rektorn.</p>
+
+  <h2 id="siffror">Läroplanens mål och riktlinjer i siffror</h2>
+  <p>Vi har räknat punkterna i Skolverkets gällande text. Tabellen visar hur ansvaret är fördelat.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Avsnitt</th><th class="num">Mål</th><th class="num">Förskollärare</th><th class="num">Arbetslaget</th><th class="num">Rektor</th></tr></thead>
+    <tbody>{DELAR.map((d) => <tr><td>{d.nr} {d.namn}</td><td class="num">{d.mal || "–"}</td><td class="num">{d.fl || "–"}</td><td class="num">{d.al || "–"}</td><td class="num">{d.rektor || "–"}</td></tr>)}
+      <tr><th scope="row">Totalt</th><td class="num"><strong>{S.mal}</strong></td><td class="num"><strong>{S.fl}</strong></td><td class="num"><strong>{S.al}</strong></td><td class="num"><strong>{S.rektor}</strong></td></tr></tbody>
+  </table></div>
+  <p>Av de {S.mal} målen finns {andel22} procent i avsnitt 2.2 om omsorg, utveckling och lärande. Där samsas mål om identitet och trygghet med mål om språk, matematik, naturvetenskap och teknik. Avsnitten om föräldrarna, övergångar och uppföljning har inga mål alls, bara riktlinjer för personalen. Rektorn har {S.rektor} egna punkter, bland annat att varje barn tillsammans med vårdnadshavare får en god introduktion i förskolan.</p>
+
+  <h2 id="undervisning">Vad är undervisning i förskolan?</h2>
+  <p>Ordet undervisning kan låta skolmässigt, men i förskolan betyder det något bredare. Enligt läroplanen ingår undervisning i utbildningen, och den ska utgå från ett innehåll som är <strong>planerat eller uppstår spontant</strong>, eftersom barns lärande sker hela tiden. En sångstund, en fråga vid matbordet eller ett bygge i sandlådan kan alltså vara undervisning när en vuxen medvetet tar tillvara den.</p>
+  <p>Förskollärare ansvarar för det pedagogiska innehållet och leder de målstyrda processerna (avsnitt 2.7). Andra i arbetslaget, till exempel barnskötare, medverkar i undervisningen. Läs mer om rollerna på sidan om <a href="/forskollarare/">förskollärare och barnskötare</a>.</p>
+  <p>Leken har en särställning. Läroplanen säger att det för barn är leken i sig som är viktig och att leken är grunden för utveckling, lärande och välbefinnande. Barnen ska både få leka lekar de själva tar initiativ till och lekar som någon i arbetslaget introducerar.</p>
+
+  <h2 id="malen">Målen gäller förskolan – inte barnet</h2>
+  <p>Alla mål i läroplanen inleds på samma sätt: förskolan ska ge varje barn <strong>förutsättningar att utveckla</strong> något. Det betyder att målen beskriver vad verksamheten ska erbjuda, inte en nivå som varje barn ska nå. Det finns inga betyg och inga kunskapskrav för barnen.</p>
+  <p>Förskolan ska ändå följa barnens utveckling. Enligt avsnitt 2.6 ska varje barns utveckling och lärande kontinuerligt och systematiskt följas, dokumenteras och analyseras. Syftet är att förskolan ska kunna utvärdera och förbättra sin egen verksamhet. All utvärdering ska utgå från ett tydligt barnperspektiv.</p>
+
+  <h2 id="hem">Vad läroplanen säger om föräldrarna</h2>
+  <p>Avsnitt 2.4, Förskola och hem, säger att förskolan ska samarbeta nära och förtroendefullt med hemmen. Arbetslaget ska bland annat:</p>
+  <ul>
+    <li>utveckla en tillitsfull relation mellan förskolan och hemmen,</li>
+    <li>vara tydliga med mål och innehåll så att föräldrarna kan ha inflytande,</li>
+    <li>föra fortlöpande samtal om barnets trivsel, utveckling och lärande samt genomföra utvecklingssamtal.</li>
+  </ul>
+  <p>Enligt skollagen (8 kap. 11 §) ska personalen och vårdnadshavarna genomföra ett utvecklingssamtal minst en gång varje år, och förskolläraren har det övergripande ansvaret för det. Läroplanen säger också att vårdnadshavare ska få möjlighet att vara delaktiga i utvärderingen av utbildningen.</p>
+
+  <h2 id="fragor-till-forskolan">Frågor att ställa till förskolan</h2>
+  <p>Läroplanen ger dig som förälder ett bra underlag för samtal med förskolan, till exempel vid inskolningen eller utvecklingssamtalet:</p>
+  <ul>
+    <li>Hur arbetar ni med högläsning och språk i vardagen?</li>
+    <li>Hur får barnen röra sig och vara ute under dagen?</li>
+    <li>Vilka lärverktyg använder ni, och används några digitala?</li>
+    <li>Hur får barnen inflytande över vad ni gör?</li>
+    <li>Hur följer ni upp vad mitt barn lär sig, och hur får jag ta del av det?</li>
+    <li>Hur förbereder ni barnen inför förskoleklassen?</li>
+  </ul>
+  <p>Hur förskolorna lyckas skiljer sig åt. Ett sätt att jämföra förutsättningarna är andelen förskollärare och barngruppernas storlek i din kommun, som du hittar i <a href="/jamfor/">jämförelsen av alla kommuner</a>.</p>
+</Guide>

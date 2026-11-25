@@ -14,5 +14,5 @@
   "startH1": "Badplatser och badstränder i Sverige",
   "kallaText": "Källa: Havs- och vattenmyndigheten (HaV), öppna data om badplatser och badvatten. Provtagning görs av kommunerna under badsäsongen.",
   "harEgenSida": "(e) => !!(e.extra?.antal_prov || e.extra?.beskrivning || e.extra?.sammanfattning)",
-  "meny": [{ "namn": "Bästa vattenkvalitet", "href": "/basta-vattenkvalitet/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
+  "meny": [{ "namn": "Bästa vattenkvalitet", "href": "/basta-vattenkvalitet/" }, { "namn": "Guider", "href": "/guider/" }, { "namn": "Alla län", "href": "/#lan" }, { "namn": "Om", "href": "/om/" }]
 }

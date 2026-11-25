@@ -1,0 +1,152 @@
+---
+// Lång guide: högkostnadsskydd och frikort (öppen vård + läkemedel). Egen nytta: två kalkylatorer och en
+// uträkning av hur taken följer prisbasbeloppet (HSL 17 kap. 6 §, lag 2002:160 5 §). Belopp per region
+// anges inte – de är inte verifierade. Fakta granskade mot 1177 och riksdagen.se 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { PUBLICERAD, tal } from "../lib/guide.js";
+
+const TAK_VARD = 1450;   // 1177, högkostnadsskydd för öppenvård (uppdaterad 2026-01-01)
+const TAK_LKM = 3800;    // 1177, läkemedel på recept – kostnader (uppdaterad 2026-07-01)
+const avrunda = (x) => Math.floor(x / 50) * 50;
+// Vilket prisbasbelopp ger vilket tak? (0,025 resp. 0,06463 prisbasbelopp, avrundat nedåt till 50-tal kronor.)
+const PBB = [58000, 59000, 60000, 61000, 62000, 63000];
+const tabell = PBB.map((p) => ({ p, vard: avrunda(0.025 * p), lkm: avrunda(0.06463 * p) }));
+// Läkemedelstrappan enligt 5 § lag (2002:160), i kronor räknat på 3 800 kr.
+const steg = [0.52632, 0.94383, 1.39482, 1.87282].map((f) => Math.round(f * TAK_LKM));
+
+const avsnitt = [
+  { id: "vard", rubrik: "Högkostnadsskydd för vård: 1 450 kronor" },
+  { id: "rakna", rubrik: "Räkna ut när du får frikort" },
+  { id: "ingar", rubrik: "Vad räknas in – och vad räknas inte in?" },
+  { id: "frikort", rubrik: "Så får du frikort och så gäller det" },
+  { id: "lakemedel", rubrik: "Högkostnadsskydd för läkemedel: 3 800 kronor" },
+  { id: "barn", rubrik: "Barn, unga och personer över 85 år" },
+  { id: "2027", rubrik: "Högkostnadsskydd 2027 – så räknas beloppet fram" },
+  { id: "region", rubrik: "Avgifter i din region" },
+];
+
+const fragor = [
+  { fraga: "Hur mycket är högkostnadsskyddet för sjukvård?", svar: `Enligt 1177 betalar du högst ${tal(TAK_VARD)} kronor i patientavgifter för öppen vård under en period på tolv månader. Perioden börjar vid ditt första besök. En region kan ha ett lägre tak.` },
+  { fraga: "Hur mycket är högkostnadsskyddet 2027?", svar: `Taket är enligt lag 0,025 prisbasbelopp avrundat nedåt till närmaste femtiotal kronor. Det blir ${tal(TAK_VARD)} kronor om prisbasbeloppet för 2027 är under 60 000 kronor och 1 500 kronor om det är 60 000–61 999 kronor. Kontrollera beloppet på 1177.se när året börjar.` },
+  { fraga: "Gäller frikortet i hela Sverige?", svar: "Ja. Enligt 1177 gäller frikortet i alla regioner. Har du ett elektroniskt frikort kan en annan region be dig visa en papperskopia." },
+  { fraga: "Vad ingår inte i högkostnadsskyddet?", svar: "Enligt 1177 räknas oftast inte vaccinationer, intyg, hälsoundersökningar, uteblivna besök och journalkopior in. Inte heller dagavgifter vid sjukhusvård eller expeditionsavgifter." },
+  { fraga: "Hänger högkostnadsskyddet för vård och läkemedel ihop?", svar: `Nej, det är två separata skydd. För öppen vård är taket ${tal(TAK_VARD)} kronor och för receptbelagda läkemedel i högkostnadsskyddet ${tal(TAK_LKM)} kronor, båda under tolv månader.` },
+  { fraga: "Hur ser jag hur mycket jag har betalat?", svar: "För läkemedel ser du din nivå i E-hälsomyndighetens tjänst Läkemedelskollen. För vårdbesök sparar du kvittona eller frågar din region hur den registrerar avgifterna." },
+  { fraga: "Betalar personer över 85 år för vård?", svar: "Nej. Enligt hälso- och sjukvårdslagen får regionen inte ta ut vårdavgifter för öppen vård av personer som är 85 år eller äldre." },
+];
+
+const titel = "Högkostnadsskydd och frikort 2027 – belopp och kalkylator";
+const beskrivning = `Högkostnadsskydd: högst ${tal(TAK_VARD)} kr för vård och ${tal(TAK_LKM)} kr för läkemedel på tolv månader. Räkna ut när du får frikort och se vad som gäller 2027.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Högkostnadsskydd och frikort"
+  svar={`Du betalar högst <strong>${tal(TAK_VARD)} kronor</strong> i patientavgifter för öppen vård under tolv månader, räknat från första besöket. Sedan får du <strong>frikort</strong> som gäller i hela landet resten av perioden. För läkemedel på recept finns ett separat högkostnadsskydd på <strong>${tal(TAK_LKM)} kronor</strong>. Beloppen följer prisbasbeloppet och kan ändras vid årsskiftet.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Förnya recept", href: "/fornya-recept/", text: "Så förnyar du på 1177" },
+    { namn: "Akuten, närakut eller jourcentral", href: "/akut-narakut-jourcentral/", text: "Vart du ska vända dig" },
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Lista dig där du vill" },
+    { namn: "Sjukintyg och läkarintyg", href: "/sjukintyg-lakarintyg/", text: "Vad intyg kostar och när du behöver dem" },
+  ]}
+  kallor={[
+    { namn: "1177 – Högkostnadsskydd för öppenvård", url: "https://www.1177.se/sa-fungerar-varden/kostnader-och-ersattningar/hogkostnadsskydd-for-oppenvard/", text: "1 450 kr, tolvmånadersperiod, frikort och vad som inte räknas in", datum: "2026-11-25" },
+    { namn: "1177 – Läkemedel på recept, kostnader", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/att-fa-recept-och-att-kopa-lakemedel/lakemedel-pa-recept--kostnader/", text: "3 800 kr, rabattrappan och barn under 18 år", datum: "2026-11-25" },
+    { namn: "Hälso- och sjukvårdslag (2017:30), 17 kap.", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/halso-och-sjukvardslag-201730_sfs-2017-30/", text: "0,025 prisbasbelopp, 85 år och äldre, syskon under 18 år", datum: "2026-11-25" },
+    { namn: "Lag (2002:160) om läkemedelsförmåner m.m., 5 §", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2002160-om-lakemedelsformaner-mm_sfs-2002-160/", text: "kostnadstak 0,06463 prisbasbelopp och trappstegen", datum: "2026-11-25" },
+    { namn: "E-hälsomyndigheten – Läkemedelskollen", url: "https://www.ehalsomyndigheten.se/privatperson/lakemedelskollen/", text: "se din nivå i högkostnadsskyddet för läkemedel", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vard">Högkostnadsskydd för vård: 1 450 kronor</h2>
+  <p>Högkostnadsskyddet gör att du aldrig betalar mer än ett visst belopp för vårdbesök under en tolvmånadersperiod. Enligt 1177 är taket <strong>{tal(TAK_VARD)} kronor</strong>. Perioden börjar den dag du gör ditt första besök som kostar något och pågår i tolv månader. När du har betalat {tal(TAK_VARD)} kronor får du frikort, och resten av perioden betalar du ingen patientavgift för besök som omfattas.</p>
+  <p>Taket är nationellt och regleras i hälso- och sjukvårdslagen, 17 kapitlet 6 §. Där står att avgifterna under ett år inte får överstiga 0,025 prisbasbelopp, avrundat nedåt till närmaste femtiotal kronor, eller det lägre belopp som regionen bestämt. Ingen region får alltså ha ett högre tak, men en region får ha ett lägre.</p>
+  <p>Skyddet gäller öppen vård, till exempel besök på vårdcentral, närakut, akutmottagning och specialistmottagning, oavsett om mottagningen drivs av regionen eller är privat och ingår i vårdvalet.</p>
+
+  <h2 id="rakna">Räkna ut när du får frikort</h2>
+  <p>Fyll i vad ett besök kostar i din region och hur många besök du räknar med under tolv månader. Kalkylatorn visar när du når taket och hur mycket du sparar. Avgiften per besök hittar du på 1177.se när du har valt din region, eller på kvittot från ett tidigare besök.</p>
+  <form class="berakning" id="frikort" onsubmit="return false">
+    <label>Avgift per besök (kr)<input type="number" id="fk-avg" min="0" step="10" value="200" inputmode="numeric" /></label>
+    <label>Antal besök på tolv månader<input type="number" id="fk-ant" min="0" max="100" value="10" inputmode="numeric" /></label>
+    <label>Tak i din region (kr)<input type="number" id="fk-tak" min="0" max={TAK_VARD} step="50" value={TAK_VARD} inputmode="numeric" /></label>
+    <output id="fk-ut" aria-live="polite"></output>
+  </form>
+  <p class="kalla">Exemplet 200 kr är bara ett räkneexempel, inte en verklig avgift. Avgifter som inte räknas in i skyddet ska inte vara med.</p>
+
+  <h2 id="ingar">Vad räknas in – och vad räknas inte in?</h2>
+  <p>Lagen räknar upp vad som ingår: patientavgifter för öppen vård, avgifter för vissa förbrukningsartiklar som regionen tar betalt för, och avgifter för viss tandvård enligt 8 a § tandvårdslagen. Enligt 1177 räknas detta oftast <strong>inte</strong> in:</p>
+  <ul>
+    <li>vaccinationer, till exempel <a href="/tbe-vaccin/">TBE-vaccin</a> eller resevaccin</li>
+    <li>intyg och hälsoundersökningar, till exempel <a href="/sjukintyg-lakarintyg/">läkarintyg för körkort</a></li>
+    <li>avgifter för uteblivna besök som du inte avbokat</li>
+    <li>kopior av journalen</li>
+    <li>dagavgifter när du ligger inlagd på sjukhus</li>
+    <li>expeditionsavgifter</li>
+  </ul>
+  <p>Ordet "oftast" är viktigt. Regionerna bestämmer själva över delar av avgiftssystemet, så kontrollera vad som gäller där du bor. Kommunens hemsjukvård har ett eget tak per månad i samma kapitel i lagen och räknas inte in i regionens tak.</p>
+
+  <h2 id="frikort">Så får du frikort och så gäller det</h2>
+  <p>När du har betalat upp till taket får du frikort. Hur det går till skiljer sig mellan regionerna: på en del håll är frikortet elektroniskt, på andra behöver du samla kvitton. Spara därför kvittona från dina besök tills du vet hur din region gör, och fråga mottagningen om du är osäker. Har du besökt mottagningar i flera regioner under perioden är kvittona extra viktiga.</p>
+  <p>Enligt 1177 gäller frikortet i alla regioner, inte bara där du bor. Har du ett elektroniskt frikort kan en mottagning i en annan region be om en papperskopia, så det kan vara bra att ha en sådan med dig när du söker vård på annan ort. Frikortet gäller till och med sista dagen i tolvmånadersperioden. Därefter börjar en ny period vid nästa besök.</p>
+
+  <h2 id="lakemedel">Högkostnadsskydd för läkemedel: 3 800 kronor</h2>
+  <p>Läkemedel på recept har ett eget högkostnadsskydd, som regleras i lagen om läkemedelsförmåner. Enligt 1177 betalar du som mest <strong>{tal(TAK_LKM)} kronor</strong> under tolv månader räknat från första köpet. Skyddet är en trappa: först betalar du hela kostnaden, sedan sjunker din andel stegvis.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Läkemedlens totala kostnad</th><th>Din andel</th><th class="num">Du har betalat totalt</th></tr></thead>
+    <tbody>
+      <tr><td>0 – {tal(steg[0])} kr</td><td>Hela kostnaden</td><td class="num">upp till {tal(steg[0])} kr</td></tr>
+      <tr><td>{tal(steg[0])} – {tal(steg[1])} kr</td><td>75 % (25 % rabatt)</td><td class="num">upp till 3 190 kr</td></tr>
+      <tr><td>{tal(steg[1])} – {tal(steg[2])} kr</td><td>25 % (75 % rabatt)</td><td class="num">upp till 3 618 kr</td></tr>
+      <tr><td>{tal(steg[2])} – {tal(steg[3])} kr</td><td>10 % (90 % rabatt)</td><td class="num">upp till {tal(TAK_LKM)} kr</td></tr>
+      <tr><td>Över {tal(steg[3])} kr</td><td>Inget – frikort</td><td class="num">{tal(TAK_LKM)} kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Gränserna i första kolumnen är räknade ur lagens andelar av taket (0,52632, 0,94383, 1,39482 och 1,87282 gånger {tal(TAK_LKM)} kr). Beloppen i sista kolumnen enligt 1177.</p>
+  <form class="berakning" id="lkm" onsubmit="return false">
+    <label>Läkemedlens kostnad hittills i perioden (kr)<input type="number" id="lkm-kost" min="0" step="100" value="2500" inputmode="numeric" /></label>
+    <output id="lkm-ut" aria-live="polite"></output>
+  </form>
+  <p>Hur långt du har kommit i trappan ser du i E-hälsomyndighetens tjänst Läkemedelskollen, som kräver e-legitimation och att du är minst 18 år.</p>
+
+  <h2 id="barn">Barn, unga och personer över 85 år</h2>
+  <p><strong>Barn under 18 år</strong> i samma familj delar på ett högkostnadsskydd. Hälso- och sjukvårdslagen säger att syskon under 18 år med samma vårdnadshavare får gemensam avgiftsbefrielse när deras avgifter tillsammans når taket. Om och hur mycket barn betalar för vårdbesök bestämmer regionen. För <strong>läkemedel</strong> i högkostnadsskyddet betalar barn och unga under 18 år ingenting, enligt 1177.</p>
+  <p><strong>Personer som fyllt 85 år</strong> betalar inga vårdavgifter alls i öppen vård. Det står i 17 kapitlet 3 § hälso- och sjukvårdslagen och gäller i alla regioner. Undantaget gäller också förbrukningsartiklar som omfattas av skyddet.</p>
+
+  <h2 id="2027">Högkostnadsskydd 2027 – så räknas beloppet fram</h2>
+  <p>Båda taken är kopplade till prisbasbeloppet, som regeringen fastställer inför varje år. Taket för vård är 0,025 prisbasbelopp och taket för läkemedel 0,06463 prisbasbelopp, båda avrundade nedåt till närmaste femtiotal kronor. Det betyder att taket bara ändras när prisbasbeloppet passerar vissa gränser. Tabellen visar vår uträkning:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Prisbasbelopp</th><th class="num">Tak för vård</th><th class="num">Tak för läkemedel</th></tr></thead>
+    <tbody>{tabell.map((t) => <tr><td class="num">{tal(t.p)} kr</td><td class="num">{tal(t.vard)} kr</td><td class="num">{tal(t.lkm)} kr</td></tr>)}</tbody>
+  </table></div>
+  <p>Dagens tak på {tal(TAK_VARD)} kronor för vård gäller så länge prisbasbeloppet ligger mellan 58 000 och 59 999 kronor. Först när det når 60 000 kronor höjs taket till 1 500 kronor. Läkemedelstaket rör sig i mindre steg. Prisbasbeloppet för 2027 har vi ännu inte kunnat bekräfta i en officiell källa, så vi anger inget eget belopp för 2027. Vi uppdaterar sidan när 1177 publicerar beloppen.</p>
+
+  <h2 id="region">Avgifter i din region</h2>
+  <p>Vad ett enskilt besök kostar bestäms av varje region. Avgiften kan skilja sig mellan olika slags besök och mottagningar. Vi visar inga belopp per region här, eftersom vi inte har kunnat kontrollera dem mot en aktuell officiell sammanställning. Rätt avgift för dig hittar du på 1177.se när du har valt region, under kostnader och patientavgifter.</p>
+  <p>Ett vårdbesök kostar lika mycket på en privat vårdcentral som ingår i regionens vårdval som på regionens egen. Väljer du en vårdcentral i en annan region är det den regionens avgifter som gäller. Läs mer om att <a href="/byta-vardcentral/">byta vårdcentral</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const kr = (n) => Math.round(n).toLocaleString("sv-SE") + " kr";
+      const $ = (id) => document.getElementById(id);
+      const fk = () => {
+        const avg = Math.max(0, +$("fk-avg").value || 0), ant = Math.max(0, Math.floor(+$("fk-ant").value || 0)), tak = Math.max(0, +$("fk-tak").value || 0);
+        if (!avg || !ant) { $("fk-ut").textContent = "Fyll i avgift och antal besök."; return; }
+        const utan = avg * ant, med = Math.min(utan, tak);
+        const besok = Math.ceil(tak / avg);
+        $("fk-ut").innerHTML = utan <= tak
+          ? `Du betalar <strong>${kr(utan)}</strong> och når inte taket. Du får frikort efter ungefär ${besok} besök.`
+          : `Du når taket vid besök <strong>${besok}</strong>. Du betalar <strong>${kr(med)}</strong> i stället för ${kr(utan)} – du sparar ${kr(utan - med)}.`;
+      };
+      const T = 3800, S = [0.52632, 0.94383, 1.39482, 1.87282].map((f) => f * T), A = [1, 0.75, 0.25, 0.1];
+      const lkm = () => {
+        const k = Math.max(0, +$("lkm-kost").value || 0);
+        let betalt = 0, fore = 0;
+        for (let i = 0; i < 4; i++) { const del = Math.max(0, Math.min(k, S[i]) - fore); betalt += del * A[i]; fore = S[i]; if (k <= S[i]) break; }
+        betalt = Math.min(betalt, T);
+        $("lkm-ut").innerHTML = k >= S[3] ? `Du har nått frikort och betalar <strong>${kr(T)}</strong> totalt.` : `Av ${kr(k)} betalar du ungefär <strong>${kr(betalt)}</strong>. Kvar till frikort: ${kr(T - betalt)}.`;
+      };
+      ["fk-avg", "fk-ant", "fk-tak"].forEach((id) => $(id).addEventListener("input", fk));
+      $("lkm-kost").addEventListener("input", lkm);
+      fk(); lkm();
+    })();
+  </script>
+</Guide>

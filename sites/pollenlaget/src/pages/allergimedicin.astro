@@ -1,0 +1,144 @@
+---
+// Lång guide: vilka typer av receptfria läkemedel mot pollenallergi som finns. Bara information – inga råd, inga doser.
+// Fakta: 1177 (läkemedel vid allergiska besvär i näsan och ögonen, pollenallergi, allergen immunterapi) och
+// Läkemedelsverket (receptfri handel utanför apotek, Läkemedelsupplysningen, biverkningsrapporter). Granskad 2026-11-25.
+// Egen data: hur länge allergipollen finns i luften per ort (pollenkalendern, NRM:s uppmätta dygnsvärden).
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KALLA } from "../site.js";
+import { PUBLICERAD, AR_TEXT, SODER_NORR, typ, doy, mmdd, median } from "../lib/guide.js";
+import { kalenderFor } from "../site.js";
+
+// De fem pollenslag som 1177 tar upp som allergiframkallande: hassel, al, björk, gräs och gråbo.
+const ALLERGI = ["hassel", "al", "bjork", "gras", "grabo"].map(typ).filter(Boolean);
+const bjork = typ("bjork"), gras = typ("gras");
+const perOrt = SODER_NORR.map((r) => {
+  const k = ALLERGI.map((t) => kalenderFor(r, t)).filter(Boolean);
+  if (k.length < 3) return null;
+  // Antal dagar per år då minst ett av pollenslagen är inne i sin typiska säsong (union av intervallen).
+  const dagar = new Set();
+  for (const x of k) for (let d = doy(x.typisk_start); d <= doy(x.typiskt_slut); d++) dagar.add(d);
+  const forst = k.map((x) => x.typisk_start).sort()[0], sist = k.map((x) => x.typiskt_slut).sort().at(-1);
+  const hoga = (kalenderFor(r, bjork)?.dagar_over_mattlig_snitt ?? 0) + (kalenderFor(r, gras)?.dagar_over_mattlig_snitt ?? 0);
+  return { r, forst, sist, veckor: Math.round(dagar.size / 7), hoga };
+}).filter(Boolean);
+const langst = [...perOrt].sort((a, b) => b.veckor - a.veckor)[0], kortast = [...perOrt].sort((a, b) => a.veckor - b.veckor)[0];
+const medVeckor = median(perOrt.map((x) => x.veckor));
+const flestHoga = [...perOrt].sort((a, b) => b.hoga - a.hoga)[0];
+
+const avsnitt = [
+  { id: "typer", rubrik: "Vilka typer av receptfri allergimedicin finns?" },
+  { id: "antihistamin", rubrik: "Antihistamin: allergitabletter, flytande och nässpray" },
+  { id: "kortison", rubrik: "Nässpray med kortison" },
+  { id: "ogondroppar", rubrik: "Ögondroppar mot allergi" },
+  { id: "avsvallande", rubrik: "Avsvällande nässpray och koksaltlösning" },
+  { id: "kopa", rubrik: "Var säljs receptfri allergimedicin?" },
+  { id: "barn-gravid", rubrik: "Barn, graviditet och amning" },
+  { id: "sasong", rubrik: "Hur länge varar pollensäsongen där du bor?" },
+  { id: "racker-inte", rubrik: "När receptfria läkemedel inte räcker" },
+];
+
+const fragor = [
+  { fraga: "Vad är antihistamin?", svar: "Antihistamin är en grupp läkemedel som förebygger allergiska besvär genom att hindra kroppens immunförsvar från att sätta i gång en allergisk reaktion. Det finns som tabletter, i flytande form, som nässpray och som ögondroppar. Många antihistaminer går att köpa utan recept." },
+  { fraga: "Vilka allergitabletter finns utan recept?", svar: "Receptfria allergitabletter innehåller antihistamin. Exempel på verksamma ämnen som 1177 nämner är cetirizin, loratadin och desloratadin. Samma ämne säljs ofta under flera produktnamn. På fass.se kan du söka på det verksamma ämnet och se vilka produkter som finns." },
+  { fraga: "Vilken är den bästa allergitabletten?", svar: "Det finns ingen tablett som är bäst för alla. 1177 skriver att den som blir trött av sin tablett kan prova en annan, och att apoteket kan hjälpa till att välja. Vid nästäppa brukar nässpray med kortison hjälpa bättre än tabletter, enligt 1177." },
+  { fraga: "Hur snabbt verkar nässpray med kortison?", svar: "Nässpray med kortison kan ta några dagar innan den ger full effekt, enligt 1177. Den dämpar svullnaden i näsan och brukar hjälpa bättre än antihistamin vid nästäppa." },
+  { fraga: "Vilka ögondroppar finns mot allergi?", svar: "Det finns två huvudtyper: ögondroppar med antihistamin, som enligt 1177 snabbt lindrar klåda och svullnad, och ögondroppar med kromoner (natriumkromoglikat eller kromoglicin), som förebygger besvär. Vissa ögondroppar innehåller konserveringsmedel som kan missfärga mjuka kontaktlinser." },
+  { fraga: "Kan man köpa allergimedicin i mataffären?", svar: "Ja, vissa receptfria läkemedel får säljas i till exempel dagligvaruhandeln. Läkemedelsverket beslutar vilka läkemedel och förpackningsstorlekar som får säljas utanför apotek, och butiken måste ha anmält försäljningen. Läkemedelsverket har en söktjänst över anmälda försäljningsställen." },
+  { fraga: "Blir man trött av allergitabletter?", svar: "En del blir trötta, men 1177 skriver att det är ovanligt. Den som blir trött kan prova ett annat läkemedel. Tröttheten kan också bero på själva allergin." },
+  { fraga: "Finns det allergimedicin för barn?", svar: "Ja. Enligt 1177 finns receptfria allergiläkemedel även för barn, och de vanligaste antihistaminerna finns i flytande form. Från vilken ålder ett läkemedel kan användas står på förpackningen. Kontakta en vårdcentral om ett barns besvär inte blir bättre." },
+];
+---
+<Guide site={SITE} titel="Allergimedicin utan recept – tabletter, nässpray, droppar"
+  beskrivning="Vilka receptfria läkemedel mot pollenallergi finns? Antihistamin, kortisonnässpray och ögondroppar förklarade, var de säljs och när du ska kontakta vården."
+  h1="Allergimedicin utan recept"
+  svar="Receptfri allergimedicin mot pollen finns i tre huvudtyper: <strong>antihistamin</strong> (tabletter, flytande, nässpray och ögondroppar), <strong>nässpray med kortison</strong> och <strong>ögondroppar med kromoner</strong>. Enligt 1177 hjälper antihistamin mot klåda och rinnsnuva, medan kortison brukar hjälpa bättre mot nästäppa. Apoteket kan hjälpa dig att välja."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Allergimedicin", href: "/allergimedicin/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "När säsongen börjar på 23 orter" },
+    { namn: "Björkpollen", href: "/pollen/bjork/", text: "Säsongen som ger flest besvär" },
+    { namn: "Gräspollen", href: "/pollen/gras/", text: "Sommarens långa säsong" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "När maten kliar i munnen" },
+  ]}
+  kallor={[
+    { namn: "1177 – Läkemedel vid allergiska besvär i näsan och ögonen", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/lakemedel-utifran-diagnos/lakemedel-vid-allergiska-besvar-i-nasan-och-ogonen/", text: "läkemedelstyper, verkningssätt, biverkningar, barn, graviditet och när du ska söka vård (uppdaterad 2025-06-18)", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "när läkemedel kan behövas inför säsongen och när du ska kontakta vården", datum: "2026-11-25" },
+    { namn: "1177 – Allergen immunterapi", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/behandlingar-med-lakemedel/allergen-immunterapi/", text: "allergivaccination med sprutor eller tabletter", datum: "2026-11-25" },
+    { namn: "Läkemedelsverket – Receptfria läkemedel som får säljas på andra ställen än apotek", url: "https://www.lakemedelsverket.se/sv/handel-med-lakemedel/receptfri-handel-utanfor-apotek/receptfria-lakemedel-som-far-saljas", text: "vem som beslutar vad som får säljas utanför apotek", datum: "2026-11-25" },
+    { namn: "Läkemedelsverket – Att sälja receptfria läkemedel", url: "https://www.lakemedelsverket.se/sv/handel-med-lakemedel/receptfri-handel-utanfor-apotek/att-salja-receptfria-lakemedel", text: "anmälan, egenkontroll och kommunens kontroll", datum: "2026-11-25" },
+    { namn: "Läkemedelsverket – Läkemedelsupplysningen", url: "https://www.lakemedelsverket.se/sv/lakemedelsupplysning", text: "upplysningstjänst för allmänna frågor om läkemedel", datum: "2026-11-25" },
+    { namn: "Läkemedelsverket – Rapportera misstänkta biverkningar", url: "https://www.lakemedelsverket.se/sv/rapportera-biverkningar", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <div class="akut"><p><strong>Den här sidan beskriver vilka typer av läkemedel som finns. Den ersätter inte råd från vården eller apoteket.</strong> Läs alltid bipacksedeln. Ring <strong>1177</strong> för sjukvårdsrådgivning. Vid svåra andningsbesvär eller tecken på en allvarlig allergisk reaktion, ring <strong>112</strong>.</p></div>
+
+  <h2 id="typer">Vilka typer av receptfri allergimedicin finns?</h2>
+  <p>Läkemedel mot pollenallergi i näsa och ögon delas in i några få grupper. Inom varje grupp finns flera produkter med olika verksamma ämnen, och samma ämne säljs ofta under olika namn. 1177 skriver att det är vanligt att behöva mer än ett läkemedel, och att många går att köpa utan recept. Tabellen sammanfattar vad 1177 beskriver.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ</th><th>Form</th><th>Används enligt 1177 vid</th><th>Exempel på verksamma ämnen</th></tr></thead>
+    <tbody>
+      <tr><td>Antihistamin</td><td>Tablett, flytande</td><td>Klåda och rinnsnuva i näsan, kliande eller svullna ögon</td><td>Cetirizin, loratadin, desloratadin</td></tr>
+      <tr><td>Antihistamin</td><td>Nässpray</td><td>Klåda och rinnsnuva i näsan</td><td>Levokabastin</td></tr>
+      <tr><td>Antihistamin</td><td>Ögondroppar</td><td>Kliande eller svullna ögon</td><td>Levokabastin</td></tr>
+      <tr><td>Kortison</td><td>Nässpray</td><td>Nästäppa</td><td>Mometason, flutikason, budesonid</td></tr>
+      <tr><td>Kombination</td><td>Nässpray</td><td>Besvär i näsan</td><td>Azelastin och flutikason</td></tr>
+      <tr><td>Kromoner</td><td>Ögondroppar</td><td>Förebygger besvär i ögonen</td><td>Natriumkromoglikat, kromoglicin</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Ämnena är de som 1177 nämner. Fler finns. Sök på det verksamma ämnet på fass.se för att se produktnamn och bipacksedlar. Alla förpackningar är inte receptfria.</p>
+
+  <h2 id="antihistamin">Antihistamin: allergitabletter, flytande och nässpray</h2>
+  <p>Antihistamin är den grupp som finns i flest former. Enligt 1177 <strong>förebygger</strong> antihistaminer allergiska besvär genom att hindra kroppens immunförsvar från att sätta i gång en reaktion. Därför beskriver 1177 att läkemedlen kan tas förebyggande, till exempel inför pollensäsongen.</p>
+  <p>Det som säljs som "allergitabletter" är antihistamin. Läkemedlen finns också i flytande form, som enligt 1177 kan användas även för yngre barn, och som nässpray och ögondroppar. Enligt 1177 kan tabletter och flytande antihistamin användas både vid besvär i näsan och vid kliande eller svullna ögon. Nässpray används för näsan och ögondroppar för ögonen.</p>
+  <h3>Biverkningar</h3>
+  <p>1177 skriver att några blir trötta av antihistamin, men att det är ovanligt. Den som blir trött kan prova ett annat läkemedel. Tröttheten kan också bero på allergin i sig.</p>
+
+  <h2 id="kortison">Nässpray med kortison</h2>
+  <p>Kortison i nässprej verkar på ett annat sätt än antihistamin. Det dämpar svullnaden i näsans slemhinna. 1177 skriver att kortison brukar hjälpa bättre än antihistamin <strong>om du har nästäppa</strong>. Det finns nässprej med bara kortison och kombinationsprejer med både kortison och antihistamin.</p>
+  <p>Kortisonsprej verkar inte direkt. Enligt 1177 kan det ta några dagar innan den ger full effekt.</p>
+  <h3>Biverkningar</h3>
+  <p>Efter en tids användning kan kortisonsprej irritera näsan och ge näsblod. 1177 beskriver att man kan förebygga det genom att spreja åt sidan i näsborren, bort från mellanväggen mellan näsborrarna.</p>
+
+  <h2 id="ogondroppar">Ögondroppar mot allergi</h2>
+  <p>Röda, kliande och rinnande ögon är ett av de vanligaste symtomen vid pollenallergi. Det finns två typer av receptfria ögondroppar:</p>
+  <ul>
+    <li><strong>Ögondroppar med antihistamin</strong> lindrar klåda och svullnad. 1177 skriver att läkemedlet gör att du snabbt känner dig bättre.</li>
+    <li><strong>Ögondroppar med kromoner</strong>, till exempel natriumkromoglikat, förebygger besvär. Hur de verkar är enligt 1177 inte helt klarlagt.</li>
+  </ul>
+  <p>Ögondropparna kan först göra ögonen mer irriterade, men det går över. Vissa innehåller konserveringsmedel som kan missfärga mjuka kontaktlinser. Bipacksedeln talar om vad som gäller för linser.</p>
+
+  <h2 id="avsvallande">Avsvällande nässpray och koksaltlösning</h2>
+  <p>Avsvällande nässprej säljs receptfritt mot nästäppa vid förkylning. Den är inte ett allergiläkemedel. På sin sida om läkemedel vid allergi skriver 1177 att man ska undvika receptfria avsvällande sprejer. Först kan man känna sig bättre, men läkemedlen förvärrar symtomen om de används mer än tio dagar i följd.</p>
+  <p>1177 nämner också två saker utan läkemedel som kan lindra besvär i näsan: att skölja näsan med koksaltlösning och att använda mjukgörande nässprej med sesamolja om näsan är torr och irriterad. Koksaltlösning och sköljare finns på apotek. Astma- och Allergiförbundet tar också upp nässköljning för att få bort pollen som fastnat i näsan.</p>
+
+  <h2 id="kopa">Var säljs receptfri allergimedicin?</h2>
+  <p>Receptfria allergiläkemedel säljs på apotek, både i butik och på nätet. Vissa receptfria läkemedel får också säljas på andra ställen, till exempel i dagligvaruhandeln eller via e-handel. Det är <strong>Läkemedelsverket</strong> som beslutar vilka läkemedel och vilka förpackningsstorlekar som får säljas receptfritt, och om de får säljas utanför apotek. Ett läkemedel kan ha vissa förpackningar som är receptfria och andra som kräver recept.</p>
+  <p>En butik som vill sälja receptfria läkemedel måste anmäla det till Läkemedelsverket och ha ett egenkontrollprogram. Kommunen kontrollerar butikerna. Läkemedlen ska vara godkända i Sverige och ha svensk märkning.</p>
+  <p>På apoteket finns farmaceuter, och 1177 hänvisar dit den som behöver hjälp att välja. För allmänna frågor om läkemedel kan du också ringa <strong>Läkemedelsupplysningen</strong> på 0771-46 70 10 helgfria vardagar. Det är en del av Läkemedelsverket, och farmaceuterna där svarar på allmänna frågor men gör inga individuella bedömningar.</p>
+
+  <h2 id="barn-gravid">Barn, graviditet och amning</h2>
+  <h3>Barn</h3>
+  <p>Det finns receptfria allergiläkemedel även för barn. 1177 skriver att de vanligaste antihistaminerna finns i flytande form och kan användas även för yngre barn. Från vilken ålder ett visst läkemedel kan användas varierar och står på förpackningen. Fråga en läkare eller på apoteket om du är osäker. Kontakta en vårdcentral om ett barns besvär inte blir bättre med receptfria läkemedel, och även när ett litet barn får pollenbesvär.</p>
+  <h3>Graviditet och amning</h3>
+  <p>Under graviditet blir många täppta i näsan utan att det beror på allergi, eftersom slemhinnorna svullnar. 1177 rekommenderar att den som inte haft allergi tidigare pratar med barnmorskan eller en läkare. 1177 har också en genomgång av vilka verksamma ämnen i receptfria nässprejer, ögondroppar och tabletter som kan användas av gravida och ammande, trots att bipacksedeln ofta avråder. Läs den på <a href="https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/lakemedel-utifran-diagnos/lakemedel-vid-allergiska-besvar-i-nasan-och-ogonen/" rel="noopener">1177.se</a> och rådgör med barnmorska, läkare eller apotek.</p>
+
+  <h2 id="sasong">Hur länge varar pollensäsongen där du bor?</h2>
+  <p>1177 skriver att man kan behöva ta läkemedel förebyggande inför pollensäsongen. På sidan om pollenallergi skriver 1177 att man kan börja en till två veckor innan säsongen och fortsätta hela säsongen. Hur lång säsongen är skiljer sig mycket mellan orterna. Tabellen visar, för varje mätort, när de fem allergiframkallande pollenslagen som 1177 nämner (hassel, al, björk, gräs och gråbo) brukar börja och sluta.</p>
+  <p>Medianorten har något av de fem pollenslagen i luften under ungefär {medVeckor} veckor per år. Längst säsong har {langst.r.namn} med {langst.veckor} veckor, kortast {kortast.r.namn} med {kortast.veckor} veckor. Flest dagar med höga halter av björk eller gräs hade {flestHoga.r.namn}, i snitt {Math.round(flestHoga.hoga)} dagar per år.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>Första pollen brukar komma</th><th>Sista brukar ta slut</th><th class="num">Veckor med allergipollen</th><th class="num">Dagar med höga halter, björk + gräs</th></tr></thead>
+    <tbody>{perOrt.map((x) => <tr><td><a href={`/${x.r.slug}/#kalender`}>{x.r.namn}</a></td><td>{mmdd(x.forst, false)}</td><td>{mmdd(x.sist, false)}</td><td class="num">{x.veckor}</td><td class="num">{Math.round(x.hoga)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Typisk säsong (median {AR_TEXT}) för hassel, al, björk, gräs och gråbo, räknad från uppmätta halter. "Veckor med allergipollen" är antalet veckor då minst ett av de fem pollenslagen är inne i sin säsong. Orterna står från söder till norr.</p>
+  <p>Den som bara reagerar på björk har en betydligt kortare säsong än tabellen visar. Varje pollenslag finns i <a href="/pollenkalender/">pollenkalendern</a>.</p>
+
+  <h2 id="racker-inte">När receptfria läkemedel inte räcker</h2>
+  <p>Enligt 1177 kan besvären bero på en förkylning i stället för allergi, läkemedlet kan användas fel, eller så behövs ett annat eller ytterligare läkemedel.</p>
+  <p><strong>Kontakta en vårdcentral</strong> om receptfria läkemedel inte hjälper, om du får nya besvär som svårt att andas, hosta eller pip i luftrören, eller om du har astma och tror att behandlingen behöver ändras. Har du svårt att andas ska du genast kontakta en vårdcentral eller jouröppen mottagning, och vid akuta andningsbesvär ringa 112. Ring 1177 om du vill ha hjälp att bedöma symtomen.</p>
+  <h3>Allergivaccination</h3>
+  <p>Vid svår pollenallergi som inte blir bättre av vanliga läkemedel kan vården erbjuda allergen immunterapi, även kallad allergivaccination. Enligt 1177 ges den som sprutor eller som tabletter. Tabletter finns mot björkpollen och gräspollen. Behandlingen börjar ungefär fyra månader före pollensäsongen och pågår i flera år. Den ges via vården och går inte att köpa receptfritt. Läs mer i guiden om <a href="/pollenallergi/#utredning">pollenallergi</a>.</p>
+  <p>Misstänkta biverkningar, även av receptfria läkemedel, kan du själv rapportera till Läkemedelsverket.</p>
+  <p class="kalla">{KALLA}</p>
+</Guide>

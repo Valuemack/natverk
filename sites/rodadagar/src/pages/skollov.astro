@@ -1,0 +1,148 @@
+---
+// Skollov 2026/2027 i de tolv största kommunerna (/skollov/). Datum från kommunernas egna sidor (src/lib/skollov.js),
+// regler från skolförordningen (2011:185). Lovlängder och veckor räknas fram. Publicerad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { datum, plusDagar, kort, veckodag, versal, mandagIVecka, dagarMellan, isoVecka } from "@natverk/core/datum.js";
+import { paskdagen, helgdagarAr } from "../lib/helgdagar.js";
+import { lista } from "../lib/text.js";
+import { KOMMUNER, HAMTAD, SKOLFORORDNINGEN } from "../lib/skollov.js";
+import { SITE } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const d = (y, mmdd) => { const [m, dd] = mmdd.split("-").map(Number); return datum(y, m, dd); };
+const fmtD = (x) => `${veckodag(x)} ${kort(x)}`;
+const spann = (y, v) => { const m = mandagIVecka(y, v), f = plusDagar(m, 4); return m.getUTCMonth() === f.getUTCMonth() ? `${m.getUTCDate()}–${kort(f)}` : `${kort(m)}–${kort(f)}`; };
+
+const ORD = ["noll", "en", "två", "tre", "fyra", "fem", "sex", "sju", "åtta", "nio", "tio", "elva", "tolv"];
+const sportVeckor = [7, 8, 9, 10].map((v) => ({ v, k: KOMMUNER.filter((k) => k.sportlov27 === v).map((k) => k.namn) })).filter((g) => g.k.length);
+const p15 = KOMMUNER.filter((k) => k.pasklov28 === 15).map((k) => k.namn);
+const p16 = KOMMUNER.filter((k) => k.pasklov28 === 16).map((k) => k.namn);
+const vt28 = KOMMUNER.filter((k) => k.vtSlut28).map((k) => ({ namn: k.namn, d: d(2028, k.vtSlut28) })).sort((a, b) => a.d - b.d);
+const saknas28 = KOMMUNER.filter((k) => !k.vtSlut28);
+const beslut28 = KOMMUNER.filter((k) => k.sportlov28);
+const pask27 = paskdagen(2027), pask28 = paskdagen(2028);
+const pask12 = KOMMUNER.filter((k) => k.pasklov27 === 12).map((k) => k.namn);
+const pask13 = KOMMUNER.filter((k) => k.pasklov27 === 13).map((k) => k.namn);
+const kristi27 = helgdagarAr(2027).find((h) => h.id === "kristi-himmelsfardsdag").datum;
+const allaHelgon = (y) => helgdagarAr(y).find((h) => h.id === "alla-helgons-dag").datum;
+
+// Sommarlovets längd där både sista skoldag och skolstart är publicerade.
+const sommar = KOMMUNER.map((k) => {
+  const slut = d(2027, k.vtSlut27), start = k.htStart27 ? d(2027, k.htStart27) : null;
+  return { ...k, slut, start, dagar: start ? dagarMellan(slut, start) - 1 : null };
+});
+const medLangd = sommar.filter((s) => s.dagar);
+const langst = medLangd.reduce((a, b) => (b.dagar > a.dagar ? b : a));
+const kortast = medLangd.reduce((a, b) => (b.dagar < a.dagar ? b : a));
+const sistaTidigast = sommar.reduce((a, b) => (b.slut < a.slut ? b : a));
+
+const jul = KOMMUNER.map((k) => ({ ...k, slut: d(2026, k.htSlut26), start: k.vtStart27 ? d(2027, k.vtStart27) : null }));
+const jul18 = jul.filter((j) => j.slut.getUTCDate() === 18).map((j) => j.namn);
+const jul22 = jul.filter((j) => j.slut.getUTCDate() === 22).map((j) => j.namn);
+
+const avsnitt = [
+  { id: "sportlov", rubrik: "Sportlov 2027: vecka 7, 8, 9 eller 10" },
+  { id: "pasklov", rubrik: "Påsklov 2027" },
+  { id: "kristi", rubrik: "Lovdag efter Kristi himmelsfärd" },
+  { id: "sommarlov", rubrik: "Sommarlov 2027 och skolstart i augusti" },
+  { id: "hostlov", rubrik: "Höstlov 2027: vecka 44" },
+  { id: "jullov", rubrik: "Jullov 2026/2027" },
+  { id: "nasta-lasar", rubrik: "Läsåret 2027/2028: det som redan är bestämt" },
+  { id: "regler", rubrik: "Vem bestämmer när skolan har lov?" },
+  { id: "din-kommun", rubrik: "Så hittar du lovet i din kommun" },
+];
+
+const fragor = [
+  { fraga: "När är sportlovet 2027?", svar: `Det beror på kommunen. Av de tolv största kommunerna har ${lista(sportVeckor.map((g) => `${ORD[g.k.length]} vecka ${g.v}`))}. Stockholm har sportlov vecka 9 (1–5 mars), Göteborg vecka 7 och Malmö vecka 8.` },
+  { fraga: "När är påsklovet 2027?", svar: `Påskdagen 2027 infaller tidigt, den 28 mars. ${versal(ORD[pask13.length])} av de tolv största kommunerna har påsklov vecka 13, efter påsk. ${lista(pask12)} har påsklov vecka 12, före påsk.` },
+  { fraga: "Vilken vecka är höstlovet?", svar: "I alla tolv kommuner vi har kontrollerat ligger höstlovet, eller läslovet, vecka 44: 26–30 oktober 2026 och 1–5 november 2027 där det är publicerat." },
+  { fraga: "När slutar skolan 2027?", svar: `Vårterminen 2027 slutar mellan ${kort(sistaTidigast.slut)} och 11 juni i de största kommunerna. Stockholm, Malmö och Lund slutar fredag 11 juni.` },
+  { fraga: "När börjar skolan efter sommarlovet 2027?", svar: "Skolstarten hösten 2027 ligger mellan 16 och 23 augusti i de kommuner som har publicerat datumet. Stockholm börjar 17 augusti och Malmö 18 augusti." },
+  { fraga: "Är sportlovet samma vecka i hela länet?", svar: "Inte nödvändigtvis. Varje kommun beslutar själv om sina lov, även om grannkommuner ofta samordnar sig. Det finns ingen officiell lista över sportlov per län, så kontrollera alltid med din egen kommun." },
+  { fraga: "Hur många lovdagar har ett läsår?", svar: "Enligt skolförordningen ska läsåret ha minst 178 skoldagar och minst 12 lovdagar. Utöver det får skolan lägga ut högst fem studiedagar för personalen." },
+];
+
+const titel = "Sportlov och påsklov 2027 – lovveckor i 12 kommuner";
+const beskrivning = "Sportlov, påsklov, höstlov, jullov och sommarlov 2026/2027 för Stockholm, Göteborg, Malmö och nio andra stora kommuner – med datum från kommunernas egna sidor.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Sportlov, påsklov och sommarlov 2027"
+  svar={`Skolloven bestäms av varje kommun. I de tolv största kommunerna ligger <strong>sportlovet 2027 vecka 7–10</strong> (Stockholm vecka 9, Göteborg vecka 7, Malmö vecka 8), <strong>påsklovet vecka 12 eller 13</strong> och <strong>höstlovet vecka 44</strong>. Sista skoldag före sommarlovet är 9–11 juni 2027.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Skollov 2027", href: "/skollov/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={HAMTAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Kalender 2027", href: "/vecka/2027/", text: "Hela året med veckonummer" },
+    { namn: "Påsk 2027", href: "/pask/2027/", text: "Påskhelgen och ledigheten" },
+    { namn: "Kristi himmelsfärd 2027", href: "/kristi-himmelsfardsdag/2027/", text: "Helgdagen och klämdagen" },
+    { namn: "Röda dagar 2027", href: "/2027/", text: "Alla helgdagar och klämdagar" },
+    { namn: "Jul 2026", href: "/julafton/2026/", text: "Julledigheten dag för dag" },
+  ]}
+  kallor={[
+    ...KOMMUNER.map((k) => ({ namn: `${k.namn}${k.underlag ? " – beslutsunderlag om läsårstider 2026/2027" : " – läsårstider och lov"}`, url: k.url, datum: HAMTAD })),
+    { namn: "Göteborgs stad – tjänsteutlåtande om läsårstider 2026/2027", url: "https://www4.goteborg.se/prod/intraservice/namndhandlingar/samrumportal.nsf/27E222BA3B3D2538C1258CEB004EF9A6/$File/10.%20TU%20Lasarstider%202026%202027.pdf", text: "Göteborgsregionens rekommendation om gemensamt läslov och påsklov", datum: HAMTAD },
+    { namn: "Norrköpings kommun – delegationsbeslut UN 2026/1882-1", url: "https://diariet.norrkoping.se/api/files/2343791/2343791_2_1.PDF", text: "läsårstider framtagna i regionalt nätverk i Östergötland", datum: HAMTAD },
+    { namn: "Skolförordning (2011:185), 3 kap. 2–3 §§", url: SKOLFORORDNINGEN, text: "skoldagar, lovdagar och att huvudmannen beslutar terminstiderna", datum: HAMTAD },
+  ]}>
+
+  <p>Datumen gäller kommunala grundskolor läsåret 2026/2027 och är hämtade från varje kommuns egen webbplats den {kort(datum(2026, 11, 25))} 2026. Fristående skolor kan ha andra lov. Bor du i en annan kommun, se <a href="#din-kommun">hur du hittar ditt lov</a>.</p>
+
+  <h2 id="sportlov">Sportlov 2027: vecka 7, 8, 9 eller 10</h2>
+  <p>Sportlovet sprids ut över fyra veckor i februari och mars. Bland de tolv största kommunerna har {lista(sportVeckor.map((g, i) => `${ORD[g.k.length]} ${i === 0 ? "sportlov " : ""}vecka ${g.v} (${spann(2027, g.v)})`))}. Vecka 8 är alltså vanligast, men inte ens de största kommunerna är lediga samma vecka.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Vecka 2027</th><th>Datum 2027</th><th class="num">Vecka 2028</th></tr></thead>
+    <tbody>{KOMMUNER.map((k) => <tr><td>{k.namn}</td><td class="num">{k.sportlov27}</td><td>{k.sportDatum27 ?? "anges ej"}</td><td class="num">{k.sportlov28 ?? "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Kommunerna i samma region väljer ofta samma vecka, men det finns ingen officiell indelning per län. Listor som delar in Sverige i sportlovsveckor efter län bygger på hur det brukar vara, inte på något beslut. För 2028 har {ORD[beslut28.length]} av kommunerna redan bestämt sig, och {beslut28.every((k) => k.sportlov28 === k.sportlov27) ? "alla har valt samma vecka som 2027" : "de flesta har valt samma vecka som 2027"}.</p>
+
+  <h2 id="pasklov">Påsklov 2027</h2>
+  <p>Påsklovet följer påsken, som flyttar sig mellan 22 mars och 25 april. År 2027 infaller påskdagen tidigt, <strong>{kort(pask27)}</strong>. Långfredagen är {kort(plusDagar(pask27, -2))} och annandag påsk {kort(plusDagar(pask27, 1))}. Kommunerna har därför valt olika lösningar:</p>
+  <ul>
+    <li><strong>Vecka 13, efter påsk:</strong> {lista(pask13)}. Lovet blir då annandag påsk plus resten av veckan.</li>
+    <li><strong>Vecka 12, före påsk:</strong> {lista(pask12)}. Lovet slutar med långfredagen och påskhelgen.</li>
+  </ul>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Vecka</th><th>Datum 2027</th></tr></thead>
+    <tbody>{KOMMUNER.map((k) => <tr><td>{k.namn}</td><td class="num">{k.pasklov27}</td><td>{k.paskDatum27 ?? "anges ej"}</td></tr>)}</tbody>
+  </table></div>
+  <p>År 2028 är påskdagen {kort(pask28)}, nästan tre veckor senare. De kommuner som redan har beslutat lägger då påsklovet vecka 15 eller 16.</p>
+
+  <h2 id="kristi">Lovdag efter Kristi himmelsfärd</h2>
+  <p>Kristi himmelsfärdsdag 2027 är {fmtD(kristi27)}. Alla tolv kommuner har lov fredagen efter, <strong>{fmtD(plusDagar(kristi27, 1))}</strong>, så eleverna blir lediga fyra dagar i rad. Det är samma klämdag som många vuxna tar ledigt. Uppsala har dessutom lov fredag 30 april, dagen före första maj. Se <a href="/kristi-himmelsfardsdag/2027/">Kristi himmelsfärd 2027</a>.</p>
+
+  <h2 id="sommarlov">Sommarlov 2027 och skolstart i augusti</h2>
+  <p>Enligt skolförordningen ska läsåret sluta i juni och börja i augusti. Vårterminen 2027 slutar mellan {kort(sistaTidigast.slut)} och 11 juni i kommunerna nedan, och de flesta slutar torsdag 10 juni. Sommarlovet räknas här som kalenderdagarna mellan sista skoldag och första skoldag.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Sista skoldag</th><th>Skolstart ht 2027</th><th class="num">Sommarlov</th></tr></thead>
+    <tbody>{sommar.map((s) => <tr><td>{s.namn}</td><td>{fmtD(s.slut)}</td><td>{s.start ? fmtD(s.start) : s.htNot ?? "ej publicerad"}</td><td class="num">{s.dagar ? `${s.dagar} dagar` : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Längst sommarlov av de kommuner som publicerat skolstarten har {langst.namn}, {langst.dagar} dagar, och kortast {lista(medLangd.filter((s) => s.dagar === kortast.dagar).map((s) => s.namn))} med {kortast.dagar} dagar. Skillnaden beror mest på när höstterminen börjar. Skolstarten ligger i vecka {isoVecka(datum(2027, 8, 16)).vecka}–{isoVecka(datum(2027, 8, 23)).vecka}.</p>
+
+  <h2 id="hostlov">Höstlov 2027: vecka 44</h2>
+  <p>Höstlovet är det lov som skiljer minst mellan kommunerna. Alla tolv hade höstlov vecka 44 år 2026, 26–30 oktober. Göteborg, Malmö, Västerås och Umeå kallar det <strong>läslov</strong>. Av de kommuner som redan har publicerat läsåret 2027/2028 har alla höstlov vecka 44 igen, <strong>{spann(2027, 44)} 2027</strong>.</p>
+  <p>Båda åren slutar höstlovet dagen före alla helgons dag: {kort(allaHelgon(2026))} 2026 och {kort(allaHelgon(2027))} 2027. Lovveckan följs alltså direkt av allhelgonahelgen.</p>
+
+  <h2 id="jullov">Jullov 2026/2027</h2>
+  <p>Höstterminen 2026 slutar fredag 18 december i {lista(jul18)} och tisdag 22 december i {lista(jul22)}. Vårterminen börjar mellan 7 och 13 januari 2027, och den vanligaste starten är måndag 11 januari.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Sista dag ht 2026</th><th>Första dag vt 2027</th></tr></thead>
+    <tbody>{jul.map((j) => <tr><td>{j.namn}</td><td>{fmtD(j.slut)}</td><td>{j.start ? fmtD(j.start) : j.vtNot}</td></tr>)}</tbody>
+  </table></div>
+  <p>Trettondedag jul den 6 januari 2027 är en onsdag och röd dag. Där skolan börjar torsdag 7 januari blir det alltså två skoldagar innan den första hela veckan.</p>
+
+  <h2 id="nasta-lasar">Läsåret 2027/2028: det som redan är bestämt</h2>
+  <p>De flesta av kommunerna har redan publicerat nästa läsår. Höstlovet ligger vecka 44, och de som har bestämt sportlovet 2028 har valt samma vecka som 2027. Påsken infaller senare 2028, och då lägger de flesta lovet före påsk: {lista(p15)} har påsklov vecka 15 (10–13 april, därefter långfredag), före påskdagen {kort(pask28)}, medan {lista(p16)} har lov vecka 16 (18–21 april), efter påsk.</p>
+  <p>Vårterminen 2028 slutar mellan {kort(vt28[0].d)} och {kort(vt28.at(-1).d)}: {lista(vt28.map((k) => `${k.namn} ${veckodag(k.d)} ${kort(k.d)}`))}.{saknas28.length > 0 && ` ${lista(saknas28.map((k) => k.namn))} hade inte publicerat datumet när vi kontrollerade.`}</p>
+
+  <h2 id="regler">Vem bestämmer när skolan har lov?</h2>
+  <p>Regeringen sätter ramarna i skolförordningen. Där står att läsåret ska ha minst 178 skoldagar och minst 12 lovdagar, och att skolan därutöver får lägga ut högst fem studiedagar för personalen. Läsåret ska börja i augusti och sluta i juni. Exakt vilka dagar terminerna börjar och slutar beslutar huvudmannen.</p>
+  <p>För kommunala skolor är huvudmannen kommunen, och beslutet fattas oftast av utbildnings- eller grundskolenämnden eller av förvaltningen. Fristående skolor bestämmer själva. Ofta samordnar sig kommuner i samma region. Göteborgsregionen rekommenderar sina medlemskommuner att ha gemensamt läslov och påsklov, och i Östergötland tas läsårstiderna fram i ett regionalt nätverk. Därför är det vanligt att grannkommuner har samma lov, men det är ingen regel.</p>
+  <h3>Studiedagar är inte lovdagar</h3>
+  <p>På studiedagar har eleverna ledigt men personalen arbetar. Flera kommuner lägger studiedagar i anslutning till loven, till exempel i början av januari. Fritidshemmet kan vara öppet eller stängt de dagarna, så läs kommunens egen information.</p>
+
+  <h2 id="din-kommun">Så hittar du lovet i din kommun</h2>
+  <p>Sverige har 290 kommuner, och vi visar bara de tolv största. Sök på din kommuns webbplats efter <strong>läsårstider</strong> eller <strong>lov och läsårstider</strong>. Kommunerna publicerar oftast datumen flera år i förväg. Går ditt barn i en fristående skola gäller skolans egna tider. För planering av resor och ledighet:</p>
+  <ul>
+    <li>Kontrollera både lovet och studiedagarna runt det.</li>
+    <li>Jämför med de <a href="/2027/">röda dagarna 2027</a>. Ett påsklov vecka 13 får annandag påsk på köpet.</li>
+    <li>Använd <a href="/vecka/2027/">kalendern med veckonummer</a> för att se vilka datum en lovvecka motsvarar.</li>
+  </ul>
+</Guide>

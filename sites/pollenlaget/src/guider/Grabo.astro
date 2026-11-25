@@ -1,0 +1,145 @@
+---
+// Lång guide: gråbo (Artemisia vulgaris) – växten, pollensäsongen per ort och allergin.
+// Egen data: säsong, halter och år för år ur pollenkalendern (NRM:s uppmätta dygnsvärden 2024–2026).
+// Fakta: NRM (Pollenrapporten), 1177, Astma- och Allergiförbundet, svenska Wikipedia. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import TypBlock from "../components/TypBlock.astro";
+import { SITE, KALLA, REGIONER, KALENDER_AR, kalenderFor, kommunerNara } from "../site.js";
+import { PUBLICERAD, TYP_UPPDATERAD, AR_TEXT, rader, typ, ytterlagen, medianDag, median, mmdd, tal, dagarMellan, arSumma } from "../lib/guide.js";
+
+const { typ: t } = Astro.props;
+const rad = rader(t);
+const { forst, sist } = ytterlagen(rad);
+const start = medianDag(rad.map((x) => x.k.typisk_start)), topp = medianDag(rad.map((x) => x.k.typisk_topp)), slut = medianDag(rad.map((x) => x.k.typiskt_slut));
+const langd = dagarMellan(start, slut);
+const g = t.gransvarden;
+// Dagar per år med minst måttliga halter (över gränsen för låga, 10 korn/m³), snitt över åren.
+const overLag = (k) => Math.round((k.ar.reduce((s, a) => s + a.dagar_over_lag, 0) / k.ar.length) * 10) / 10;
+const hogaTotalt = rad.reduce((s, x) => s + x.k.ar.reduce((t2, a) => t2 + a.dagar_over_mattlig, 0), 0);
+const arMedHoga = KALENDER_AR.filter((ar) => rad.some((x) => (x.k.ar.find((a) => a.ar === ar)?.dagar_over_mattlig ?? 0) > 0));
+const flestMattliga = [...rad].sort((a, b) => overLag(b.k) - overLag(a.k)).slice(0, 3);
+const hogstVarde = [...rad].sort((a, b) => b.k.hogsta_dygnsvarde - a.k.hogsta_dygnsvarde)[0];
+const sodra = rad.slice(0, 7), norra = rad.slice(-7);
+const snittSumma = (lista) => Math.round(median(lista.map((x) => median(x.k.ar.map((a) => a.summa)))));
+// Ambrosia tar vid när gråbon slutar.
+const amb = typ("malortsambrosia");
+const ambStart = amb ? medianDag(rader(amb).map((x) => x.k.typisk_start)) : null;
+const bjY = ytterlagen(rader(typ("bjork")));
+const bjSkillnad = dagarMellan(bjY.forst.k.typisk_start, bjY.sist.k.typisk_start);
+// Orten Gråbo ligger i Lerums kommun: vilken mätort är närmast?
+const lerum = REGIONER.map((r) => ({ r, k: kommunerNara(r).find((x) => x.namn === "Lerum") })).find((x) => x.k);
+
+const avsnitt = [
+  { id: "vaxten", rubrik: "Så känner du igen gråbo" },
+  { id: "sasong", rubrik: "När blommar gråbo? Säsongen per ort" },
+  { id: "halter", rubrik: "Hur höga blir halterna av gråbopollen?" },
+  { id: "ar", rubrik: "Gråbo år för år" },
+  { id: "allergi", rubrik: "Gråboallergi och symtom" },
+  { id: "korsallergi", rubrik: "Gråbo och korsallergi mot mat" },
+  { id: "ambrosia", rubrik: "Gråbo eller ambrosia?" },
+  { id: "nara", rubrik: "Gråbo nära hemmet" },
+];
+
+const fragor = [
+  { fraga: "När blommar gråbo?", svar: `Gråbo blommar i slutet av sommaren. Enligt uppmätta halter ${AR_TEXT} börjar gråbopollensäsongen i mitten av landet runt ${mmdd(start)}, når sin topp runt ${mmdd(topp)} och är i stort sett över runt ${mmdd(slut)}. Naturhistoriska riksmuseet anger att blomningen är som mest i början av augusti.` },
+  { fraga: "Hur ser gråbo ut?", svar: "Gråbo är en flerårig ört som ofta blir 1–2 meter hög. Bladen är flikiga, mörkgröna på ovansidan och vitludna eller silvergrå på undersidan. Stjälken är ofta rödbrun. Blommorna är små och oansenliga och sitter i vippor i toppen." },
+  { fraga: "Är gråbopollen farligt?", svar: "Gråbopollen är ett av de tre stora pollenslagen som ger allergi i Sverige, tillsammans med björk och gräs. De flesta får besvär som snuva, nysningar och kliande ögon. Den som får svårt att andas ska söka vård direkt, och vid akuta andningsbesvär ringa 112." },
+  { fraga: "Vilken mat kan ge korsallergi vid gråboallergi?", svar: "1177 nämner bland annat selleri, morot, paprika, persilja, koriander, curry, kamomill, anis, fänkål och kummin. Enligt 1177 är det ovanligt att få besvär av mat vid gråboallergi." },
+  { fraga: "Är gråbo och ambrosia samma sak?", svar: "Nej. Båda tillhör korgblommiga växter och liknar varandra, men gråbo (Artemisia vulgaris) är ett vanligt svenskt ogräs medan malörtsambrosia (Ambrosia artemisiifolia) kommer från Nordamerika och är ovanlig i Sverige. Ambrosian blommar senare, från slutet av augusti." },
+  { fraga: "Var växer gråbo?", svar: "Gråbo växer på kväverik och störd mark: vägkanter, byggarbetsplatser, jordhögar, banvallar, gårdsplaner och havsstränder. Den finns i nästan hela landet." },
+  lerum && { fraga: "Var hittar jag pollenprognos för orten Gråbo?", svar: `Orten Gråbo ligger i Lerums kommun. Närmaste mätstation är ${lerum.r.namn}, så prognosen för ${lerum.r.namn} ger den bästa bilden av pollenläget i Gråbo.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Gråbo – pollensäsong på 23 orter, allergi och växten"
+  beskrivning={`Gråbo blommar i juli–september. Se när gråbopollen kommer på 23 orter, hur höga halterna blir, hur du känner igen växten och vilken mat som kan ge korsallergi.`}
+  h1="Gråbo – växten och pollensäsongen"
+  svar={`<strong>Gråbo</strong> (Artemisia vulgaris) är ett vanligt ogräs längs vägkanter och på byggtomter. Pollenet är ett av de tre stora allergipollenen i Sverige, tillsammans med björk och gräs. Gråbopollen finns i luften från <strong>mitten av juli till början av september</strong>, med topp runt ${mmdd(topp)}. Halterna är högst i södra Sverige.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Gråbopollen", href: "/pollen/grabo/" }]}
+  publicerad={PUBLICERAD} uppdaterad={TYP_UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Malörtsambrosia", href: "/pollen/malortsambrosia/", text: "Gråbons sena släkting som blommar i september" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "Mat som kan ge besvär vid pollenallergi" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "När alla pollenslag brukar komma" },
+    lerum && { namn: `Pollenprognos ${lerum.r.namn}`, href: `/${lerum.r.slug}/`, text: "Närmaste mätort för Gråbo i Lerums kommun" },
+  ].filter(Boolean)}
+  kallor={[
+    { namn: "Naturhistoriska riksmuseet – Gråbo", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/grabo", text: "växtplatser, blomningstid och halter i norr och söder", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: gråbo", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-grabo", text: "pollenproduktion, lokal spridning och rådet om lekplatser och skolor", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Halter och risker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/halter-och-risker", text: "gränsvärden för gråbo", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "säsong, symtom, korsallergi och när du ska söka vård", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Matallergi", url: "https://astmaoallergiforbundet.se/allergi/matallergi/", text: "livsmedel som kan korsreagera med gråbo", datum: "2026-11-25" },
+    { namn: "Wikipedia – Gråbo", url: "https://sv.wikipedia.org/wiki/Gr%C3%A5bo", text: "botanik, höjd och utbredning", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  {lerum && <p>Söker du orten Gråbo i Lerums kommun? Närmaste mätstation är <a href={`/${lerum.r.slug}/`}>{lerum.r.namn}</a>, ungefär {lerum.k.km} km från kommunens mitt. Där finns pollenprognosen som gäller för Gråbo.</p>}
+
+  <TypBlock typ={t} visa="idag" id="idag" ord="Gråbopollen" />
+
+  <h2 id="vaxten">Så känner du igen gråbo</h2>
+  <p>Gråbo är en flerårig, ofta storvuxen ört i familjen korgblommiga växter. Den blir enligt Wikipedia oftast 1–2 meter hög. Det säkraste kännetecknet är bladen. De är dubbelt parflikiga, mörkgröna och kala på ovansidan men <strong>vitludna och silvergrå på undersidan</strong>. Det är därifrån namnet kommer. Stjälken är kantig, hård och ofta rödbrun.</p>
+  <p>Blommorna är små, gråaktiga korgar i täta vippor i toppen av plantan. De är oansenliga och saknar färgglada kronblad. Gråbo pollineras med vinden, och Naturhistoriska riksmuseet beskriver pollenproduktionen som stor.</p>
+  <h3>Var växer den?</h3>
+  <p>Gråbo trivs på kväverik och störd mark. Naturhistoriska riksmuseet nämner vägkanter, byggarbetsplatser, jordhögar, lagårdsbackar och havsstränder. Den är vanlig i nästan hela landet. Den som bor nära en byggarbetsplats eller en bred vägren kan alltså ha gråbo alldeles i närheten.</p>
+
+  <h2 id="sasong">När blommar gråbo? Säsongen per ort</h2>
+  <p>Gråbo är sommarens sista stora pollenslag och blommar medan gräset börjar ebba ut. Enligt våra beräkningar på uppmätta halter {AR_TEXT} börjar säsongen i mitten av landet runt <strong>{mmdd(start)}</strong> och toppar runt <strong>{mmdd(topp)}</strong>. Den är i stort sett över runt <strong>{mmdd(slut)}</strong>, vilket ger en säsong på ungefär {langd} dagar. 1177 skriver att en del får besvär ända in i september.</p>
+  <p>Gråbo skiljer sig från björk och gräs på en viktig punkt. Säsongen börjar nästan samtidigt i hela landet. Tidigast kom den i {forst.r.namn} (runt {mmdd(forst.k.typisk_start)}) och senast i {sist.r.namn} (runt {mmdd(sist.k.typisk_start)}). Skillnaden mellan första och sista ort är {dagarMellan(forst.k.typisk_start, sist.k.typisk_start)} dagar. För björk är motsvarande skillnad {bjSkillnad} dagar, eftersom björken följer våren norrut.</p>
+  <TypBlock typ={t} visa="sasong" rubrik={false} />
+
+  <Annons plats="typ-1" />
+
+  <h2 id="halter">Hur höga blir halterna av gråbopollen?</h2>
+  <p>För gräs och örter som gråbo använder Naturhistoriska riksmuseet lägre gränsvärden än för träd. Upp till {g.lag} pollenkorn per kubikmeter luft räknas som låga halter, {g.lag + 1}–{g.mattlig} som måttliga, {g.mattlig + 1}–{g.hog} som höga och över {g.hog} som mycket höga. Museet förklarar skillnaden med att trädpollen lättare följer med vinden och sprids längre.</p>
+  <p>Vid mätstationerna är gråbohalterna oftast låga till måttliga. Under {AR_TEXT} uppmättes höga halter, över {g.mattlig} korn/m³, bara {hogaTotalt} {hogaTotalt === 1 ? "gång" : "gånger"} sammanlagt på de {rad.length} orterna. Det högsta dygnsvärdet var {hogstVarde.k.hogsta_dygnsvarde} korn/m³ i {hogstVarde.r.namn}. Flest dagar med minst måttliga halter hade {flestMattliga.map((x, i) => <>{i > 0 && (i === flestMattliga.length - 1 ? " och " : ", ")}{x.r.namn} ({tal(overLag(x.k))} dagar per år)</>)}.</p>
+  <p>Siffrorna från mätstationerna säger dock inte allt. Enligt Naturhistoriska riksmuseet sprids gråbopollen mest i närheten av plantan, och halterna kan lokalt bli mycket höga. Mätfällorna sitter på tak, ungefär 10–15 meter upp, och ska ge en bild av ett större område. Den som går förbi ett stort gråbobestånd i augusti kan alltså utsättas för betydligt mer pollen än prognosen visar.</p>
+  <TypBlock typ={t} visa="grans" rubrik={false} />
+
+  <h2 id="ar">Gråbo år för år</h2>
+  <p>Tabellen visar årets samlade pollenmängd (summan av dygnsvärdena under säsongen) för de sju sydligaste och de sju nordligaste mätorterna. Mängden varierar mindre mellan åren än för björk, men skillnaden mellan söder och norr är tydlig. I söder var medianen ungefär {tal(snittSumma(sodra))} pollenkorn per säsong, i norr ungefär {tal(snittSumma(norra))}. Naturhistoriska riksmuseet skriver att halterna i norr mestadels är låga, medan södra Sverige så gott som varje säsong får höga halter någon gång. I mätningarna {AR_TEXT} nådde gråbon höga halter på minst en station under {arMedHoga.length} av {KALENDER_AR.length} år ({arMedHoga.join(" och ") || "inget år"}).</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th>{KALENDER_AR.map((a) => <th class="num">{a}</th>)}</tr></thead>
+    <tbody>{[...sodra, ...norra].map(({ r, k }) => <tr><td><a href={`/${r.slug}/`}>{r.namn}</a></td>{KALENDER_AR.map((a) => <td class="num">{tal(arSumma(k, a))}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Summan av uppmätta dygnsvärden (korn/m³) mellan säsongens början och slut. Orterna står från söder till norr. Alla orter finns i <a href="/pollenkalender/">pollenkalendern</a>.</p>
+
+  <h2 id="allergi">Gråboallergi och symtom</h2>
+  <p>Naturhistoriska riksmuseet räknar gråbo till Sveriges tre stora pollenallergen, tillsammans med gräs och björk. 1177 skriver att de flesta med pollenallergi reagerar på björk och gräs, men att även gråbo kan ge allergi.</p>
+  <p>Besvären är desamma som vid annan pollenallergi: rinnsnuva, nästäppa, nysningar, klåda i näsan, röda och kliande ögon och trötthet. Besvären kan likna en förkylning. Enligt 1177 får man dock oftast inte ont i halsen av pollenallergi, besvären varierar från dag till dag och de varar längre än en förkylning.</p>
+  <div class="akut"><p><strong>Svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning. Är det stängt, sök vård på en akutmottagning. Vid akuta andningsbesvär eller tecken på allvarlig allergisk reaktion, ring <strong>112</strong>. För råd om dina symtom, ring <strong>1177</strong>.</p></div>
+  <p>Mer om symtom, utredning och när du ska söka vård finns i guiden om <a href="/pollenallergi/">pollenallergi</a>. Vilka typer av receptfria läkemedel som finns beskrivs i guiden om <a href="/allergimedicin/">allergimedicin</a>.</p>
+
+  <h2 id="korsallergi">Gråbo och korsallergi mot mat</h2>
+  <p>Korsallergi innebär att kroppen reagerar på ämnen i mat som liknar ämnen i pollenet. Vid gråboallergi gäller korsreaktionerna främst kryddor och grönsaker. Enligt 1177 är det ovanligt att gråboallergiker får besvär av mat. Astma- och Allergiförbundet listar fler livsmedel än 1177.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Källa</th><th>Livsmedel som nämns vid gråboallergi</th></tr></thead>
+    <tbody>
+      <tr><td>1177</td><td>Selleri, morot, paprika, persilja, koriander, curry, kamomill och brödkryddor som anis, fänkål och kummin</td></tr>
+      <tr><td>Astma- och Allergiförbundet</td><td>Selleri, morot, persilja, fänkål, paprika, vitlök, tomat, honung, senap, kamomill, kryddor (curry, kummin, koriander, anis), mango, melon, solrosfrö och andra korgblommiga växter</td></tr>
+    </tbody>
+  </table></div>
+  <p>Typiska besvär är klåda och svullnadskänsla i munnen och på läpparna strax efter maten. Läs mer i guiden om <a href="/korsallergi/">korsallergi</a>, som också tar upp när en reaktion är allvarlig.</p>
+
+  <h2 id="ambrosia">Gråbo eller ambrosia?</h2>
+  <p>Malörtsambrosia (Ambrosia artemisiifolia) är gråbons nordamerikanska släkting. Namnet artemisiifolia betyder ungefär "med blad som malört", och växterna kan likna varandra. Det finns ändå viktiga skillnader:</p>
+  <ul>
+    <li><strong>Livslängd:</strong> gråbo är flerårig, ambrosia är ettårig.</li>
+    <li><strong>Förekomst:</strong> gråbo är vanlig i hela landet. Ambrosia är enligt Naturhistoriska riksmuseet ovanlig och oftast tillfällig i Sverige.</li>
+    <li><strong>Blomning:</strong> gråbon blommar i juli och augusti. Ambrosian börjar i Sverige först i månadsskiftet augusti–september{ambStart && <>, och i mätningarna kom ambrosiapollen i snitt runt {mmdd(ambStart)}</>}.</li>
+    <li><strong>Allergi:</strong> ambrosiapollen räknas till de mest allergiframkallande av alla pollen. Gråbo och ambrosia korsreagerar, så den som är allergisk mot gråbo kan också reagera på ambrosia.</li>
+  </ul>
+  <p>För gråboallergiker kan säsongen alltså förlängas in i september om det finns ambrosiapollen i luften. Mer finns i guiden om <a href="/pollen/malortsambrosia/">malörtsambrosia</a>.</p>
+
+  <h2 id="nara">Gråbo nära hemmet</h2>
+  <p>Eftersom gråbopollen mest sprids i växtens närhet spelar den lokala miljön stor roll. Naturhistoriska riksmuseet rekommenderar att man håller efter gråbo i närheten av lekplatser och skolor. Det gäller särskilt platser där barn med allergi vistas mycket under augusti.</p>
+  <p>Den som är allergisk kan också titta på prognosen för närmaste mätort under säsongen. 1177 och Astma- och Allergiförbundet ger några råd för att minska kontakten med pollen:</p>
+  <ul>
+    <li>Ha fönster och dörrar stängda under dagen och vädra på natten, tidigt på morgonen eller efter regn.</li>
+    <li>Torka tvätt och sängkläder inomhus under säsongen.</li>
+    <li>Byt kläder och skölj håret när du varit ute länge.</li>
+    <li>Följ pollenprognosen, så att du vet när halterna stiger.</li>
+  </ul>
+  <p class="kalla">{KALLA}</p>
+</Guide>

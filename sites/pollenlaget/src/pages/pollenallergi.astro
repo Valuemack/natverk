@@ -1,0 +1,182 @@
+---
+// Lång guide: pollenallergi – symtom, när du ska söka vård, vilket pollen som är i luften och vad vården kan göra.
+// Bara information, inga personliga råd. Fakta: 1177 (pollenallergi, allergiutredning, allergen immunterapi, matallergi),
+// Astma- och Allergiförbundet, Naturhistoriska riksmuseet, Wikipedia (allergisk rinit). Granskad 2026-11-25.
+// Egen nytta: verktyget "Vilket pollen är i luften?" och tabellen per landsdel, ur pollenkalendern (NRM:s uppmätta dygnsvärden).
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KALLA, kalenderFor } from "../site.js";
+import { PUBLICERAD, AR_TEXT, SODER_NORR, typ, doy, mmdd } from "../lib/guide.js";
+
+// De allergiframkallande pollenslagen: 1177:s fem (hassel, al, björk, gräs, gråbo) plus malörtsambrosia (NRM).
+const SLAG = ["hassel", "al", "bjork", "gras", "grabo", "malortsambrosia"].map(typ).filter(Boolean);
+const NAMN = { hassel: "Hassel", al: "Al", bjork: "Björk", gras: "Gräs", grabo: "Gråbo", malortsambrosia: "Ambrosia" };
+const data = SODER_NORR.map((r) => ({
+  o: r.namn, s: r.slug,
+  p: SLAG.map((t) => { const k = kalenderFor(r, t); return k && { n: NAMN[t.slug], u: t.slug, a: doy(k.typisk_start), t: doy(k.typisk_topp), b: doy(k.typiskt_slut), as: mmdd(k.typisk_start), ts: mmdd(k.typisk_topp), bs: mmdd(k.typiskt_slut), h: k.dagar_over_mattlig_snitt }; }).filter(Boolean),
+}));
+const VISA = ["malmo", "stockholm", "umea", "kiruna"].map((s) => SODER_NORR.find((r) => r.slug === s)).filter(Boolean);
+
+const avsnitt = [
+  { id: "symtom", rubrik: "Symtom på pollenallergi" },
+  { id: "forkylning", rubrik: "Pollenallergi eller förkylning?" },
+  { id: "soka-vard", rubrik: "När ska du söka vård?" },
+  { id: "vilket-pollen", rubrik: "Vilket pollen reagerar du på?" },
+  { id: "barn", rubrik: "Pollenallergi hos barn" },
+  { id: "astma", rubrik: "Pollenallergi och astma" },
+  { id: "utredning", rubrik: "Allergitest och allergivaccination" },
+  { id: "minska", rubrik: "Minska kontakten med pollen" },
+  { id: "behandling", rubrik: "Receptfria läkemedel – en översikt" },
+];
+
+const fragor = [
+  { fraga: "Vilka är symtomen på pollenallergi?", svar: "De vanligaste symtomen är vattnig snuva, nästäppa, mycket nysningar, klåda i näsan, röda och kliande ögon som rinner, och trötthet. En del får också rethosta eller andnöd, särskilt vid ansträngning." },
+  { fraga: "Hur skiljer man pollenallergi från förkylning?", svar: "Enligt 1177 får man oftast inte ont i halsen av pollenallergi. Besvären varierar från dag till dag och varar längre än en förkylning. Besvär som kommer tillbaka under pollensäsongen år efter år kan jämföras med pollenkalendern för din ort." },
+  { fraga: "När ska man söka vård för pollenallergi?", svar: "Kontakta en vårdcentral om receptfria läkemedel inte hjälper, om ett litet barn har pollenbesvär, om du har astmasymtom med hosta eller svårt att andas, eller om du har besvär hela året. Har du svårt att andas ska du genast kontakta vården, och vid akuta andningsbesvär ringa 112." },
+  { fraga: "Är hösnuva samma sak som pollenallergi?", svar: "Ja, i vardagligt tal. Hösnuva är ett äldre namn på säsongsbunden allergisk snuva (allergisk rinit), som oftast orsakas av pollen." },
+  { fraga: "När får barn pollenallergi?", svar: "Enligt 1177 börjar besvären ofta vid fem till sex års ålder, men de kan komma senare. Kontakta en vårdcentral om ett litet barn har pollenbesvär." },
+  { fraga: "Hur testar man pollenallergi?", svar: "Oftast räcker det att beskriva besvären för en läkare. Behövs en allergiutredning görs ett pricktest på underarmen eller ett blodprov. Båda visar om du har allergiantikroppar mot ett visst ämne och ger enligt 1177 lika säkra resultat." },
+  { fraga: "Kan pollenallergi ge astma?", svar: "Under pollensäsongen kan astmasymtom uppstå, särskilt de dagar då det är mycket pollen i luften. Den som får hosta eller svårt att andas ska kontakta en vårdcentral." },
+  { fraga: "Hur vanligt är pollenallergi?", svar: "Mycket vanligt. 1177 skriver att ungefär en fjärdedel av befolkningen får pollenbesvär under vår och sommar. Astma- och Allergiförbundet anger att var tredje svensk drabbas." },
+];
+---
+<Guide site={SITE} titel="Pollenallergi – symtom och när du ska söka vård"
+  beskrivning="Pollenallergi ger snuva, nysningar och kliande ögon. Se symtomen, hur du skiljer allergi från förkylning, när du ska söka vård och vilket pollen som är i luften."
+  h1="Pollenallergi – symtom och när du ska söka vård"
+  svar="Pollenallergi ger <strong>rinnsnuva, nästäppa, nysningar, klåda i näsan och röda, kliande ögon</strong>, ofta också trötthet. Ungefär var fjärde person i Sverige får besvär, oftast av björk eller gräs. Kontakta en vårdcentral om receptfria läkemedel inte hjälper. Har du svårt att andas ska du genast söka vård, och vid akuta besvär ringa 112."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Pollenallergi", href: "/pollenallergi/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Allergimedicin utan recept", href: "/allergimedicin/", text: "Antihistamin, kortisonnässpray och ögondroppar" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "När frukt och nötter kliar i munnen" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "När varje pollenslag brukar komma" },
+    { namn: "Björkpollen", href: "/pollen/bjork/", text: "Säsongen som ger flest besvär" },
+    { namn: "Gräspollen", href: "/pollen/gras/", text: "Sommarens långa säsong" },
+  ]}
+  kallor={[
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "symtom, säsonger, när du ska söka vård, egenvård och barn (uppdaterad 2026-03-19)", datum: "2026-11-25" },
+    { namn: "1177 – Allergiutredning", url: "https://www.1177.se/undersokning-behandling/undersokningar-och-provtagning/kroppsundersokningar/allergiutredning/", text: "pricktest och blodprov", datum: "2026-11-25" },
+    { namn: "1177 – Allergen immunterapi", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/behandlingar-med-lakemedel/allergen-immunterapi/", text: "vem som kan få allergivaccination och hur den går till", datum: "2026-11-25" },
+    { namn: "1177 – Läkemedel vid allergiska besvär i näsan och ögonen", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/lakemedel-utifran-diagnos/lakemedel-vid-allergiska-besvar-i-nasan-och-ogonen/", datum: "2026-11-25" },
+    { namn: "1177 – Matallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/matallergi/", text: "när du ska ringa 112 vid allvarlig allergisk reaktion", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Pollenallergi", url: "https://astmaoallergiforbundet.se/allergi/pollenallergi/", text: "förekomst och tips för att minska kontakten med pollen", datum: "2026-11-25" },
+    { namn: "Astma- och Allergiförbundet – Astma", url: "https://astmaoallergiforbundet.se/astma/", text: "allergisk astma och utredning", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Tips till allergiker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/tips-till-allergiker", datum: "2026-11-25" },
+    { namn: "Wikipedia – Allergisk rinit", url: "https://sv.wikipedia.org/wiki/Allergisk_rinit", text: "hösnuva som namn på säsongsbunden allergisk snuva", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <h2 id="symtom">Symtom på pollenallergi</h2>
+  <p>Pollenallergi innebär att kroppens immunförsvar reagerar överkänsligt på pollen från träd, gräs eller örter. Besvären kommer när växten blommar och pollenet finns i luften. Det vanliga namnet hösnuva syftar på samma sak: säsongsbunden allergisk snuva. Enligt 1177 är det här de vanligaste symtomen:</p>
+  <ul>
+    <li><strong>Näsan:</strong> vattnig snuva, nästäppa, mycket nysningar och klåda.</li>
+    <li><strong>Ögonen:</strong> röda, kliande och rinnande ögon.</li>
+    <li><strong>Hela kroppen:</strong> trötthet.</li>
+    <li><strong>Luftvägarna:</strong> rethosta och andnöd, ofta värre vid ansträngning. Det kan bero på astma.</li>
+  </ul>
+  <p>Pollenallergi är vanlig. 1177 skriver att ungefär en fjärdedel av befolkningen får pollenbesvär under vår och sommar, och Astma- och Allergiförbundet att var tredje svensk drabbas. Allergin är ofta ärftlig, men behöver inte vara det. För en del minskar besvären med åldern.</p>
+
+  <h2 id="forkylning">Pollenallergi eller förkylning?</h2>
+  <p>Snuva och nysningar kan lika gärna vara en förkylning. 1177 beskriver några skillnader som kan hjälpa dig att skilja dem åt:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Pollenallergi</th><th>Förkylning</th></tr></thead>
+    <tbody>
+      <tr><td>Ont i halsen</td><td>Oftast inte</td><td>Vanligt</td></tr>
+      <tr><td>Förlopp</td><td>Varierar från dag till dag, beroende på pollenhalterna</td><td>Går över</td></tr>
+      <tr><td>Hur länge</td><td>Hela säsongen, ofta flera veckor</td><td>Kortare tid</td></tr>
+      <tr><td>När</td><td>Under pollensäsongen, ofta samma tid varje år</td><td>När som helst på året</td></tr>
+    </tbody>
+  </table></div>
+  <p>Besvär som kommer tillbaka ungefär samma tid varje år kan jämföras med när pollenslagen brukar blomma på din ort. 1177 föreslår att du antecknar dina besvär i en kalender tillsammans med pollenhalterna, så att du ser vilket pollen du reagerar på. Verktyget längre ned på sidan visar vilka pollen som brukar finnas i luften på din ort ett visst datum.</p>
+
+  <h2 id="soka-vard">När ska du söka vård?</h2>
+  <p>De allra flesta med pollenallergi behöver inte söka vård, eftersom receptfria läkemedel oftast räcker enligt 1177. <strong>Kontakta en vårdcentral</strong> om något av följande stämmer:</p>
+  <ul>
+    <li>Receptfria läkemedel hjälper inte.</li>
+    <li>Ett litet barn har pollenbesvär.</li>
+    <li>Du har astmasymtom, som hosta eller svårt att andas.</li>
+    <li>Du har allergibesvär under hela året.</li>
+  </ul>
+  <p>Om det är helg kan du vänta till en vardag, så länge du inte har svårt att andas.</p>
+  <div class="akut">
+    <p><strong>Har du svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning. Om det är stängt, sök vård på en akutmottagning.</p>
+    <p><strong>Ring 112</strong> vid akuta andningsbesvär eller om tungan och svalget svullnar, om du blir matt och yr och känner att du ska svimma, eller om någon i din närhet inte är kontaktbar som vanligt. Enligt 1177 är det tecken på en allvarlig allergisk reaktion.</p>
+    <p>Ring <strong>1177</strong> om du vill ha sjukvårdsrådgivning och hjälp att bedöma dina symtom.</p>
+  </div>
+
+  <h2 id="vilket-pollen">Vilket pollen reagerar du på?</h2>
+  <p>1177 skriver att de flesta reagerar på björkpollen och gräspollen, och att även gråbo kan ge allergi. Hassel och al blommar tidigare på våren. Många björkallergiker reagerar också på dem, enligt Naturhistoriska riksmuseet. Gran och tall ger mycket pollen men är enligt 1177 inte allergiframkallande.</p>
+  <p>När pollenslagen kommer beror mycket på var i landet du bor. Tabellen visar den typiska säsongen på fyra orter från söder till norr, räknat från uppmätta halter {AR_TEXT}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Pollen</th>{VISA.map((r) => <th><a href={`/${r.slug}/#kalender`}>{r.namn}</a></th>)}</tr></thead>
+    <tbody>{SLAG.map((t) => <tr><td><a href={`/pollen/${t.slug}/`}>{NAMN[t.slug]}</a></td>{VISA.map((r) => { const k = kalenderFor(r, t); return <td>{k ? `${mmdd(k.typisk_start, false)}–${mmdd(k.typiskt_slut, false)}` : "–"}</td>; })}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Typisk säsong (median {AR_TEXT}): dagarna mellan 5 och 95 procent av årets pollenmängd. Bearbetning av uppmätta halter från Naturhistoriska riksmuseet.</p>
+  <h3>Vilket pollen är i luften?</h3>
+  <p>Välj ort och datum, till exempel en dag då du hade besvär. Verktyget visar vilka allergiframkallande pollen som brukar finnas i luften då, enligt mätningarna {AR_TEXT}. Det ersätter inte ett allergitest men kan ge en ledtråd.</p>
+  <form class="berakning" id="pollenval" onsubmit="return false">
+    <label>Ort<select id="pv-ort">{data.map((d) => <option value={d.s} selected={d.s === "stockholm"}>{d.o}</option>)}</select></label>
+    <label>Datum<input type="date" id="pv-datum" /></label>
+    <output id="pv-svar" for="pv-ort pv-datum" aria-live="polite"><noscript>Verktyget kräver JavaScript. Se tabellen ovan eller <a href="/pollenkalender/">pollenkalendern</a>.</noscript></output>
+  </form>
+
+  <h2 id="barn">Pollenallergi hos barn</h2>
+  <p>Enligt 1177 börjar pollenbesvären ofta vid fem till sex års ålder, men de kan också komma senare. Ett litet barn med pollenbesvär är ett skäl att kontakta vårdcentralen. Det gäller också om ett äldre barns besvär inte blir bättre av receptfria läkemedel.</p>
+  <p>Det finns receptfria allergiläkemedel för barn. 1177 skriver att de vanligaste antihistaminerna finns i flytande form och kan användas även för yngre barn. Från vilken ålder ett läkemedel kan användas står på förpackningen. Fråga en läkare eller på apoteket om du är osäker. Vid en allergiutredning får en förälder eller annan närstående följa med.</p>
+
+  <h2 id="astma">Pollenallergi och astma</h2>
+  <p>1177 skriver att astmasymtom ibland kan uppstå under pollensäsongen. Det är vanligast de dagar då det är mycket pollen i luften och när man är utomhus. Astma- och Allergiförbundet beskriver att många med allergisk astma blir sämre under pollensäsongen. Typiska tecken på astma är hosta, särskilt på natten eller vid ansträngning, pipande eller väsande andning och andfåddhet.</p>
+  <p>Den som har astmasymtom ska kontakta en vårdcentral för att få rätt behandling. Har du redan astma och tror att behandlingen behöver ändras inför eller under säsongen, ska du också kontakta vårdcentralen. Följ pollenprognosen för din ort, så att du vet när halterna stiger.</p>
+
+  <h2 id="utredning">Allergitest och allergivaccination</h2>
+  <h3>Allergiutredning</h3>
+  <p>Oftast räcker det att beskriva besvären för en läkare för att få diagnosen pollenallergi. Ibland behövs en allergiutredning, som kan göras på de flesta vårdcentraler och barnläkarmottagningar. Det finns två sätt att testa, och enligt 1177 ger de lika säkra resultat:</p>
+  <ul>
+    <li><strong>Pricktest:</strong> en droppe med det ämne som testas läggs på underarmen och huden rispas lätt. Svaret syns efter ungefär femton minuter.</li>
+    <li><strong>Blodprov:</strong> visar om du har allergiantikroppar mot ett visst ämne. Svaret kan ta några veckor.</li>
+  </ul>
+  <p>Ett positivt test betyder inte alltid att du får besvär. Inför ett pricktest kan du behöva göra uppehåll med allergiläkemedel, enligt vårdens instruktioner.</p>
+  <h3>Allergivaccination</h3>
+  <p>Vid svår allergi som inte blir bättre av vanliga läkemedel kan vården erbjuda allergen immunterapi, även kallad allergivaccination. Enligt 1177 finns sprutor mot bland annat gräspollen och pollen från lövträd, och tabletter mot björkpollen och gräspollen. Behandlingen börjar ungefär fyra månader före pollensäsongen. Sprutbehandling pågår i tre till fem år och tablettbehandling i tre år. De flesta blir bättre efter ett års behandling, skriver 1177. Behandlingen kan inte ges vid svår astma, svår allergi mot flera ämnen eller nedsatt immunförsvar, och den påbörjas inte under graviditet.</p>
+
+  <h2 id="minska">Minska kontakten med pollen</h2>
+  <p>Naturhistoriska riksmuseet skriver att det första en pollenallergiker bör tänka på är att inte i onödan utsätta sig för pollen. 1177 och Astma- och Allergiförbundet ger några konkreta råd:</p>
+  <ul>
+    <li>Vädra sovrummet på natten eller tidigt på morgonen, när halterna är låga, och håll fönstren stängda under dagen.</li>
+    <li>Torka tvätt och sängkläder inomhus.</li>
+    <li>Byt kläder och skölj håret när du varit ute, och byt lakan ofta.</li>
+    <li>Undvik nyklippta gräsmattor.</li>
+    <li>Undvik husdjur som varit ute och fått pollen i pälsen.</li>
+    <li>Undvik rökning och rökiga miljöer. Tobaksrök förvärrar pollenallergi enligt 1177.</li>
+  </ul>
+  <p>Naturhistoriska riksmuseet lyfter också fram pollenprognosen som ett sätt att planera vardagen. Prognosen för 23 orter finns på <a href="/">startsidan</a> under säsongen.</p>
+
+  <h2 id="behandling">Receptfria läkemedel – en översikt</h2>
+  <p>Enligt 1177 kan man börja med receptfria allergitabletter, använda ögondroppar vid ögonbesvär och nässpray med kortison vid nästäppa. Vid svårare besvär kan flera läkemedel behövas samtidigt. 1177 skriver också att man kan börja en till två veckor före säsongen och fortsätta hela säsongen, eftersom det kan ta upp till två veckor innan läkemedlen fungerar helt. Vilka typer som finns, hur de skiljer sig och var de säljs beskrivs i guiden om <a href="/allergimedicin/">allergimedicin utan recept</a>. Fråga på apoteket om du behöver hjälp att välja.</p>
+  <p class="kalla">{KALLA}</p>
+<script is:inline slot="skript" type="application/json" id="pv-data" set:html={JSON.stringify(data)}></script>
+<script is:inline slot="skript">
+(() => {
+  const D = JSON.parse(document.getElementById("pv-data").textContent);
+  const ort = document.getElementById("pv-ort"), dat = document.getElementById("pv-datum"), ut = document.getElementById("pv-svar");
+  const M = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  const idag = new Date(); const pad = (n) => String(n).padStart(2, "0");
+  dat.value = `${idag.getFullYear()}-${pad(idag.getMonth() + 1)}-${pad(idag.getDate())}`;
+  const visa = () => {
+    const o = D.find((x) => x.s === ort.value); if (!o || !dat.value) return;
+    const [, m, d] = dat.value.split("-").map(Number); const dag = M[m - 1] + d;
+    const nu = o.p.filter((p) => dag >= p.a && dag <= p.b);
+    const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+    if (!nu.length) {
+      const nasta = [...o.p].sort((a, b) => ((a.a - dag + 365) % 365) - ((b.a - dag + 365) % 365))[0];
+      ut.innerHTML = `Inga av de vanligaste allergipollenen brukar finnas i luften i ${esc(o.o)} den dagen.` + (nasta ? ` Nästa som brukar komma är <a href="/pollen/${nasta.u}/">${esc(nasta.n.toLowerCase())}</a>, runt ${esc(nasta.as)}.` : "");
+      return;
+    }
+    ut.innerHTML = `I ${esc(o.o)} brukar det här finnas i luften:<ul>` + nu.map((p) => {
+      const lage = Math.abs(dag - p.t) <= 7 ? "<strong>nära toppen</strong>" : dag < p.t ? "säsongen har börjat" : "säsongen är på väg att ta slut";
+      return `<li><a href="/pollen/${p.u}/">${esc(p.n)}</a> – ${lage} (säsong ${esc(p.as)}–${esc(p.bs)}, topp runt ${esc(p.ts)})</li>`;
+    }).join("") + "</ul>";
+  };
+  ort.addEventListener("change", visa); dat.addEventListener("change", visa); visa();
+})();
+</script>
+</Guide>

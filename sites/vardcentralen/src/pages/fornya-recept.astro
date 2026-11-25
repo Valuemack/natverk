@@ -1,0 +1,109 @@
+---
+// Lång guide: förnya recept. Egen data: hur många vårdcentraler per län som har e-tjänsten Förnya recept
+// i sitt kontaktkort på 1177 (scripts/07), och vilka slags förnyelser som erbjuds.
+// Fakta granskade mot 1177 och E-hälsomyndigheten 2026-11-25. Ingen medicinsk rådgivning.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, lanRader, tal, pct } from "../lib/guide.js";
+
+const rader = lanRader((lan) => {
+  const k = G.kort[lan] ?? {};
+  return { kort: k.kort ?? 0, recept: k.recept ?? 0 };
+}).map((r) => ({ ...r, andel: pct(r.recept, r.kort) })).sort((a, b) => b.andel - a.andel || b.kort - a.kort);
+const totKort = rader.reduce((s, r) => s + r.kort, 0), totRecept = rader.reduce((s, r) => s + r.recept, 0);
+const lagst = [...rader].filter((r) => r.kort >= 10).sort((a, b) => a.andel - b.andel)[0];
+const RT = G.receptTyper;
+
+const steg = [
+  { namn: "Logga in på 1177.se", text: "Logga in med e-legitimation, till exempel BankID eller Freja eID." },
+  { namn: "Välj Förnya recept", text: "Välj Förnya recept under läkemedelstjänsterna." },
+  { namn: "Välj mottagning", text: "Välj den mottagning som skrev ut läkemedlet, oftast din vårdcentral." },
+  { namn: "Fyll i och skicka", text: "Fyll i vilket läkemedel det gäller och skicka förfrågan." },
+  { namn: "Vänta på svar", text: "Du får ett meddelande när receptet är förnyat, eller om mottagningen vill att du bokar ett besök." },
+  { namn: "Hämta ut på apoteket", text: "Det förnyade receptet kan du hämta ut på valfritt apotek." },
+];
+
+const avsnitt = [
+  { id: "sa-gor-du", rubrik: "Så förnyar du recept på 1177" },
+  { id: "e-tjanst", rubrik: "Har din vårdcentral e-tjänsten? Siffror per län" },
+  { id: "utan", rubrik: "Förnya recept utan 1177" },
+  { id: "tid", rubrik: "Hur lång tid tar det – och när ska du höra av dig?" },
+  { id: "giltighet", rubrik: "Hur länge gäller ett recept?" },
+  { id: "kostnad", rubrik: "Kostar det att förnya recept?" },
+  { id: "se-recept", rubrik: "Se dina recept i Läkemedelskollen" },
+  { id: "besok", rubrik: "När måste du boka ett besök?" },
+];
+
+const fragor = [
+  { fraga: "Hur förnyar jag ett recept på 1177?", svar: "Logga in på 1177.se, välj Förnya recept, välj mottagning, fyll i formuläret och skicka. Du får ett meddelande när receptet är förnyat och kan hämta ut läkemedlet på valfritt apotek." },
+  { fraga: "Kan jag förnya recept genom att ringa 1177?", svar: "Nej. Enligt 1177 går det inte att förnya recept genom att ringa 1177. Har du inte e-legitimation, eller har mottagningen inte e-tjänsten, kontaktar du mottagningen direkt, till exempel per telefon." },
+  { fraga: "Hur länge gäller ett recept?", svar: "Enligt 1177 gäller ett recept oftast i ett år, men det kan vara kortare. Ett recept kan gälla för flera uttag under giltighetstiden." },
+  { fraga: "Kostar det att förnya ett recept?", svar: "Det kan göra det. Enligt 1177 beror det på var du bor och vilken mottagning du kontaktar. Fråga din vårdcentral eller se din regions avgifter på 1177.se." },
+  { fraga: "Hur lång tid tar det att förnya ett recept?", svar: "Det finns ingen fast tid. Ibland behöver läkaren göra en bedömning först. Skicka därför förfrågan i god tid innan läkemedlet tar slut." },
+  { fraga: "Var ser jag mina recept?", svar: "I E-hälsomyndighetens tjänst Läkemedelskollen ser du dina aktuella recept, hur länge de gäller och utgångna recept. Du loggar in med e-legitimation och måste vara minst 18 år." },
+  { fraga: "Varför måste jag boka tid för att förnya mitt recept?", svar: "Enligt 1177 behöver läkaren ibland göra en bedömning innan receptet kan förnyas. Det står i så fall i mottagningens svar att du ska boka en tid." },
+];
+
+const titel = "Förnya recept – så gör du på 1177 (steg för steg)";
+const beskrivning = `Förnya recept på 1177 steg för steg, utan e-legitimation, hur länge ett recept gäller och vad det kostar. Plus vilka vårdcentraler som har e-tjänsten, per län.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Förnya recept"
+  svar={`Du förnyar ett recept genom att <strong>logga in på 1177.se</strong>, välja <strong>Förnya recept</strong> och skicka en förfrågan till mottagningen som skrev ut läkemedlet. Du får besked när receptet är förnyat och hämtar ut på valfritt apotek. Ett recept gäller <strong>oftast i ett år</strong>. ${pct(totRecept, totKort)} procent av vårdcentralerna har e-tjänsten.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Förnya recept", href: "/fornya-recept/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  steg={{ namn: "Förnya recept på 1177", beskrivning: "Så skickar du en förfrågan om att förnya ett recept via 1177.se.", steg }}
+  relaterat={[
+    { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/", text: "Högst 3 800 kr för läkemedel" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Telefon och länk till 1177" },
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Om du vill byta mottagning" },
+    { namn: "Akuten, närakut eller jourcentral", href: "/akut-narakut-jourcentral/", text: "Om det inte kan vänta" },
+  ]}
+  kallor={[
+    { namn: "1177 – Förnya recept på nätet", url: "https://www.1177.se/om-1177/nar-du-loggar-in-pa-1177.se/det-har-kan-du-gora-nar-du-loggat-in/fornya-recept-och-hall-koll-pa-dina-lakemedel/fornya-recept-pa-natet/", text: "så går det till, kostnad och telefon", datum: "2026-11-25" },
+    { namn: "1177 – Varför måste jag boka tid för att förnya recept?", url: "https://www.1177.se/fragor--svar/e-tjanster/fragor-om-recept/varfor-maste-jag-boka-tid-for-att-fornya-recept/", text: "när läkaren behöver göra en bedömning", datum: "2026-11-25" },
+    { namn: "1177 – När du får ett recept", url: "https://www.1177.se/undersokning-behandling/behandling-med-lakemedel/att-fa-recept-och-att-kopa-lakemedel/nar-du-far-ett-recept/", text: "giltighetstid och uttag", datum: "2026-11-25" },
+    { namn: "E-hälsomyndigheten – Läkemedelskollen", url: "https://www.ehalsomyndigheten.se/privatperson/lakemedelskollen/", text: "se recept och utgångna recept", datum: "2026-11-25" },
+    { namn: "E-hälsomyndigheten – Vid driftstörningar i recepttjänsten", url: "https://www.ehalsomyndigheten.se/privatperson/vid-eventuella-driftstorningar-i-recepttjansten/", text: "råd om att ha läkemedel hemma", datum: "2026-11-25" },
+    { namn: "1177 Hitta vård – vårdcentralernas kontaktkort", url: "https://www.1177.se/hitta-vard/", text: `e-tjänster i ${tal(totKort)} kontaktkort, sammanställda av redaktionen`, datum: G.hamtat.vardtyper },
+  ]}>
+
+  <h2 id="sa-gor-du">Så förnyar du recept på 1177</h2>
+  <p>Det vanligaste sättet att förnya ett recept är via e-tjänsten <strong>Förnya recept</strong> på 1177.se. Du skickar då en förfrågan till den mottagning som skrev ut läkemedlet, och mottagningen tar ställning till om receptet kan förnyas. Så här går det till enligt 1177:</p>
+  <ol>{steg.map((s) => <li><strong>{s.namn}.</strong> {s.text}</li>)}</ol>
+  <p>Förfrågan går till mottagningen, inte till 1177. Det är alltså din vårdcentral eller specialistmottagning som bedömer den. Har du flera läkemedel från olika mottagningar skickar du en förfrågan till varje mottagning.</p>
+  <h3>Förnya mer än läkemedel</h3>
+  <p>Många vårdcentraler har särskilda e-tjänster för annat än vanliga läkemedel. I kontaktkorten på 1177 har {tal(RT.hjalpmedel)} vårdcentraler en e-tjänst för att förnya hjälpmedel, {RT.preventivmedel} för preventivmedel, {RT.glutenfritt} för glutenfria produkter och {RT.nutrition} för nutritionsprodukter.</p>
+
+  <h2 id="e-tjanst">Har din vårdcentral e-tjänsten? Siffror per län</h2>
+  <p>Vi har gått igenom {tal(totKort)} vårdcentralers kontaktkort på 1177 och räknat hur många som har en e-tjänst för att förnya recept. I hela landet är det {tal(totRecept)} vårdcentraler, eller {pct(totRecept, totKort)} procent. {lagst && <>Lägst andel har {lagst.kortnamn} med {lagst.andel} procent.</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Vårdcentraler</th><th class="num">Med e-tjänst Förnya recept</th><th class="num">Andel</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.kort}</td><td class="num">{r.recept}</td><td class="num">{r.andel} %</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: vårdcentralernas kontaktkort på 1177 Hitta vård, hämtade {G.hamtat.vardtyper}. Sammanställning vårdcentralen.nu. En vårdcentral utan e-tjänsten i sitt kort kan ändå ta emot förfrågan via en annan e-tjänst, till exempel ett meddelande, eller via en regional app.</p>
+  <p>Vill du se vilka e-tjänster din egen vårdcentral har, hitta den på <a href="/">startsidan</a> och följ länken till kontaktkortet på 1177.</p>
+
+  <h2 id="utan">Förnya recept utan 1177</h2>
+  <p>Alla mottagningar förnyar inte recept via 1177.se, och du kan inte förnya recept genom att ringa 1177. Har din mottagning inte e-tjänsten, eller saknar du e-legitimation, kontaktar du mottagningen på annat sätt, till exempel per telefon. E-hälsomyndigheten uttrycker det som att du måste gå till 1177.se eller kontakta din mottagning för att förnya ett recept.</p>
+  <p>Telefonnumret hittar du på vårdcentralens sida här på sajten eller i kontaktkortet på 1177. Fråga när du ringer hur mottagningen vill att du gör nästa gång, så vet du om du kan använda en e-tjänst eller ska ringa igen.</p>
+
+  <h2 id="tid">Hur lång tid tar det – och när ska du höra av dig?</h2>
+  <p>1177 anger ingen fast handläggningstid, och den kan variera mellan mottagningar och perioder. Ibland måste läkaren göra en bedömning innan receptet kan förnyas, och det kan ta längre tid. Därför är det klokt att skicka förfrågan i god tid, innan läkemedlet tar slut, i stället för samma dag som den sista tabletten.</p>
+  <p>E-hälsomyndigheten ger ett råd som också passar här: har du läkemedel som du tar regelbundet bör du ha så mycket hemma att det räcker i en månad. Då har du marginal om förnyelsen dröjer eller om det blir en driftstörning i apotekens system.</p>
+  <p>Har du ett läkemedel som du inte kan vara utan och receptet har gått ut, kontakta mottagningen direkt. Är den stängd och det inte kan vänta, ring 1177 för råd om vart du kan vända dig.</p>
+
+  <h2 id="giltighet">Hur länge gäller ett recept?</h2>
+  <p>Enligt 1177 gäller ett recept <strong>oftast i ett år</strong>, men det kan också gälla kortare tid. Under giltighetstiden kan receptet räcka till flera uttag. Läkemedel som ingår i högkostnadsskyddet får du hämta ut nästa gång först när två tredjedelar av den beräknade tiden för förra uttaget har gått.</p>
+  <p>Recepten finns sparade elektroniskt, så du behöver inget papper med dig till apoteket. Du kan hämta ut på vilket apotek du vill.</p>
+
+  <h2 id="kostnad">Kostar det att förnya recept?</h2>
+  <p>Det kan kosta. Enligt 1177 beror det på var du bor och vilken mottagning du kontaktar om du behöver betala för att förnya ett recept. Vi anger inga belopp, eftersom de bestäms av regionen. Själva läkemedlet betalar du på apoteket, och där gäller <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet för läkemedel</a> på högst 3 800 kronor under tolv månader. Barn och unga under 18 år betalar inget för läkemedel inom högkostnadsskyddet.</p>
+
+  <h2 id="se-recept">Se dina recept i Läkemedelskollen</h2>
+  <p>E-hälsomyndighetens tjänst <strong>Läkemedelskollen</strong> visar dina aktuella recept, hur länge de gäller och var du ligger i högkostnadsskyddet. Där ser du också dina barns recept och kan hantera fullmakter. Du loggar in med e-legitimation och måste vara minst 18 år.</p>
+  <p>Utgångna recept visas också. Som standard ser du recept som gått ut de senaste tre månaderna, men du kan välja att se det senaste året eller alla recept från de senaste fem åren. Det är ett bra sätt att se vilka läkemedel du behöver be om att få förnyade.</p>
+
+  <h2 id="besok">När måste du boka ett besök?</h2>
+  <p>Ibland räcker det inte med en förfrågan. 1177 skriver att läkaren ibland behöver göra en bedömning innan receptet kan förnyas, och då står det i mottagningens svar att du ska boka en tid. Se det som en del av vården, inte som ett avslag.</p>
+  <p>Har du flera läkemedel som du tar länge kan du vid ett besök fråga om recepten kan samordnas, så att de inte går ut vid olika tider. I Läkemedelskollen ser du när varje recept slutar gälla.</p>
+</Guide>

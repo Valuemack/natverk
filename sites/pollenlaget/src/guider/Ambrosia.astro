@@ -1,0 +1,120 @@
+---
+// Lång guide: malörtsambrosia (Ambrosia artemisiifolia) – växten, pollensäsongen och allergin.
+// Egen data: säsong per ort och toppen hösten 2024 ur pollenkalendern (NRM:s uppmätta dygnsvärden 2024–2026).
+// Fakta: NRM (Pollenrapporten, Liten pollenskola), svenska och engelska Wikipedia, 1177. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import TypBlock from "../components/TypBlock.astro";
+import { SITE, KALLA, KALENDER_AR } from "../site.js";
+import { PUBLICERAD, TYP_UPPDATERAD, AR_TEXT, rader, typ, medianDag, mmdd, tal } from "../lib/guide.js";
+
+const { typ: t } = Astro.props;
+const rad = rader(t);
+const g = t.gransvarden;
+const start = medianDag(rad.map((x) => x.k.typisk_start)), topp = medianDag(rad.map((x) => x.k.typisk_topp)), slut = medianDag(rad.map((x) => x.k.typiskt_slut));
+// Summor och dagar per år över alla orter.
+const perAr = KALENDER_AR.map((ar) => {
+  const a = rad.map((x) => x.k.ar.find((y) => y.ar === ar)).filter(Boolean);
+  return { ar, orter: a.length, summa: a.reduce((s, y) => s + y.summa, 0), hoga: a.reduce((s, y) => s + y.dagar_over_mattlig, 0), mattliga: a.reduce((s, y) => s + y.dagar_over_lag, 0) };
+});
+const storAr = [...perAr].sort((a, b) => b.summa - a.summa)[0];
+const toppar = rad.map(({ r, k }) => ({ r, a: k.ar.find((y) => y.ar === storAr.ar) })).filter((x) => x.a && x.a.topp_varde > 0);
+// Hur många orter hade sin högsta dag samma vecka?
+const toppDatum = medianDag(toppar.map((x) => x.a.topp_datum.slice(5)));
+const samma = toppar.filter((x) => Math.abs(new Date(x.a.topp_datum) - new Date(`${storAr.ar}-${toppDatum}`)) <= 2 * 864e5);
+const nordligast = [...samma].sort((a, b) => b.r.lat - a.r.lat)[0], sydligast = [...samma].sort((a, b) => a.r.lat - b.r.lat)[0];
+const hogst = [...toppar].sort((a, b) => b.a.topp_varde - a.a.topp_varde)[0];
+const grabo = typ("grabo");
+const graboSlut = grabo ? medianDag(rader(grabo).map((x) => x.k.typiskt_slut)) : null;
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är ambrosia?" },
+  { id: "utseende", rubrik: "Så ser ambrosia ut" },
+  { id: "sasong", rubrik: "När kommer ambrosiapollen?" },
+  { id: "vinden", rubrik: `Pollen med vinden: hösten ${storAr.ar}` },
+  { id: "halter", rubrik: "Halter och gränsvärden" },
+  { id: "allergi", rubrik: "Ambrosiaallergi" },
+  { id: "sprids", rubrik: "Hur ambrosia kommer till Sverige" },
+  { id: "framtid", rubrik: "Kan ambrosian etablera sig i Sverige?" },
+];
+
+const fragor = [
+  { fraga: "Vad är ambrosia?", svar: "Ambrosia, eller malörtsambrosia (Ambrosia artemisiifolia), är en ettårig ört från Nordamerika. Pollenet räknas till de mest allergiframkallande av alla pollenslag. I Sverige är växten ovanlig och oftast tillfällig." },
+  { fraga: "När blommar ambrosia i Sverige?", svar: `Ambrosian börjar blomma i Sverige i månadsskiftet augusti–september. I mätningarna ${AR_TEXT} kom ambrosiapollen i snitt runt ${mmdd(start)} och försvann runt ${mmdd(slut)}. Naturhistoriska riksmuseet fångar pollen från slutet av augusti och en bra bit in på hösten.` },
+  { fraga: "Hur ser ambrosia ut?", svar: "Malörtsambrosia blir från 20 centimeter till nästan 2 meter hög. Bladen är flikiga och liknar malörtens. Hanblommorna sitter högst upp och honblommorna i bladvecken under." },
+  { fraga: "Varför är ambrosia farlig för allergiker?", svar: "Pollenet anses vara bland de starkast allergiframkallande av alla pollenslag. En enda planta kan enligt Wikipedia producera flera miljarder pollenkorn. Den blommar dessutom efter de andra pollenslagen och förlänger säsongen för många allergiker." },
+  { fraga: "Hur kommer ambrosia till Sverige?", svar: "Fröna kommer främst med import av solrosfrö och fågelfrö, enligt Naturhistoriska riksmuseet. Därför kan plantor dyka upp under fågelbord och i trädgårdar. Pollen kan också föras hit med vinden från Central- och Sydeuropa." },
+  { fraga: "Är ambrosia och gråbo samma sak?", svar: "Nej, men de är släkt och korsreagerar. Gråbo är flerårig och vanlig i hela landet och blommar i juli–augusti. Ambrosia är ettårig, ovanlig i Sverige och blommar från slutet av augusti." },
+];
+---
+<Guide site={SITE} titel="Ambrosia – pollen, allergi och hur växten ser ut"
+  beskrivning="Ambrosia (malörtsambrosia) har ett av de mest allergiframkallande pollenen. Se hur växten ser ut, när ambrosiapollen kommer på 23 orter och hur den sprids."
+  h1="Ambrosia (malörtsambrosia)"
+  svar={`<strong>Ambrosia</strong>, eller malörtsambrosia, är en ettårig ört från Nordamerika vars pollen räknas till de <strong>mest allergiframkallande</strong> av alla. I Sverige är växten ovanlig. Den blommar från <strong>månadsskiftet augusti–september</strong>, efter gråbon. Det mesta ambrosiapollen som mäts här har förts med vinden från Central- och Sydeuropa.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Ambrosiapollen", href: "/pollen/malortsambrosia/" }]}
+  publicerad={PUBLICERAD} uppdaterad={TYP_UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Gråbo", href: "/pollen/grabo/", text: "Ambrosians släkting som blommar före den" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "När pollen och mat korsreagerar" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "Hela säsongen på 23 orter" },
+  ]}
+  kallor={[
+    { namn: "Naturhistoriska riksmuseet – Malörtsambrosia", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/malortsambrosia", text: "ursprung, förekomst, blomning och allergenicitet", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: malörtsambrosia", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-malortsambrosia", text: "utseende, kortdagsväxt, spridning med fågelfrö och pollentransport från kontinenten", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Halter och risker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/halter-och-risker", text: "gränsvärden", datum: "2026-11-25" },
+    { namn: "Wikipedia – Malörtsambrosia", url: "https://sv.wikipedia.org/wiki/Mal%C3%B6rtsambrosia", text: "pollenproduktion, spridning och risken för etablering", datum: "2026-11-25" },
+    { namn: "Wikipedia (engelska) – Ambrosia artemisiifolia", url: "https://en.wikipedia.org/wiki/Ambrosia_artemisiifolia", text: "bladens form", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "symtom och när du ska söka vård", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <TypBlock typ={t} visa="idag" id="idag" ord="Ambrosiapollen" />
+
+  <h2 id="vad">Vad är ambrosia?</h2>
+  <p>Malörtsambrosia (<em>Ambrosia artemisiifolia</em>) är en ettårig ört i familjen korgblommiga växter. Den kommer från Nordamerika, där den är mycket vanlig. Enligt Wikipedia är allergi mot ambrosiapollen vanlig både i Nordamerika och i Centraleuropa, där växten har spridit sig. Naturhistoriska riksmuseet nämner Ungern och Rumänien som länder där den är ett vanligt ogräs i solrosodlingar.</p>
+  <p>I Sverige är ambrosia fortfarande ovanlig. Naturhistoriska riksmuseet skriver att den växer i samma miljöer som gråbo, främst i södra Sverige, men att den är ovanlig och oftast tillfällig. Den är ändå ett av de pollenslag som museet mäter och gör prognoser för.</p>
+
+  <h2 id="utseende">Så ser ambrosia ut</h2>
+  <p>Ambrosian kan bli från 20 centimeter till nästan 2 meter hög, enligt Naturhistoriska riksmuseet. Den är ofta kraftigt förgrenad. Bladen är parflikiga och mjukt håriga, och artnamnet artemisiifolia syftar på att de liknar bladen hos malört, som tillhör samma släkte som gråbo.</p>
+  <p>Blommorna är små. Hanblommorna, som släpper pollenet, sitter högst upp på plantan. Honblommorna sitter i bladvecken längre ned. Själva pollenkornet är ungefär 20 mikrometer stort och har små taggar på ytan.</p>
+  <h3>Skillnader mot gråbo</h3>
+  <p>Gråbo är flerårig, ambrosia ettårig. Naturhistoriska riksmuseet pekar på gråbons blad, som är mörkgröna ovanpå och vitludna och silverfärgade på undersidan, och på den hårda, ofta rödbruna stjälken. Gråbon är dessutom vanlig i hela landet, medan ambrosia är sällsynt. Se guiden om <a href="/pollen/grabo/">gråbo</a> för fler kännetecken.</p>
+
+  <h2 id="sasong">När kommer ambrosiapollen?</h2>
+  <p>Ambrosian blommar senare än nästan alla andra allergiframkallande växter. Den är en kortdagsväxt och behöver enligt Naturhistoriska riksmuseet ungefär 8–9 timmars mörker per dygn för att börja blomma. Därför startar blomningen i Sverige först i månadsskiftet augusti–september, när gråbon{graboSlut && <> (som brukar vara över runt {mmdd(graboSlut)})</>} har blommat klart.</p>
+  <p>I mätningarna {AR_TEXT} kom ambrosiapollen i snitt runt <strong>{mmdd(start)}</strong>, toppade runt <strong>{mmdd(topp)}</strong> och var borta runt <strong>{mmdd(slut)}</strong>. Säsongen syns på alla orter, även i Norrland. Tabellen visar typiska datum per ort.</p>
+  <TypBlock typ={t} visa="sasong" rubrik={false} />
+
+  <Annons plats="typ-1" />
+
+  <h2 id="vinden">Pollen med vinden: hösten {storAr.ar}</h2>
+  <p>Naturhistoriska riksmuseet skriver att merparten av det ambrosiapollen som mäts i Sverige i augusti och september har förts hit med vinden från Central- och Sydeuropa. Det syns tydligt i mätningarna. {storAr.ar} var det överlägset största ambrosiaåret under perioden. Summan av alla dygnsvärden på orterna var {tal(storAr.summa)} pollenkorn, mot {perAr.filter((x) => x !== storAr).map((x, i) => <>{i > 0 && " och "}{tal(x.summa)} år {x.ar}</>)}.</p>
+  <p>Hösten {storAr.ar} hade {samma.length} av {toppar.length} orter sin högsta ambrosiadag inom två dagar från {mmdd(toppDatum)}, från {sydligast.r.namn} i söder till {nordligast.r.namn} i norr. Att pollen dyker upp samma dagar över hela landet, även långt norr om där växten brukar hittas, stämmer med museets beskrivning att pollenet förs hit med vinden. Högst dygnsvärde hade {hogst.r.namn} med {hogst.a.topp_varde} korn/m³.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Orter med ambrosiapollen</th><th class="num">Summa, alla orter</th><th class="num">Dagar med minst måttliga halter*</th><th class="num">Dagar med höga halter*</th></tr></thead>
+    <tbody>{perAr.map((x) => <tr><td>{x.ar}</td><td class="num">{x.orter}</td><td class="num">{tal(x.summa)}</td><td class="num">{x.mattliga}</td><td class="num">{x.hoga}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">* Summa av dagar över alla orter: minst måttliga = över {g.lag} korn/m³, höga = över {g.mattlig} korn/m³. Bearbetning av uppmätta halter från Naturhistoriska riksmuseet.</p>
+  <p>Enligt museet är det i slutet av september och i oktober mer sannolikt att pollenet kommer från lokala plantor.</p>
+
+  <h2 id="halter">Halter och gränsvärden</h2>
+  <p>För ambrosia gäller samma gränsvärden som för gräs och gråbo: upp till {g.lag} pollenkorn per kubikmeter luft är låga halter, {g.lag + 1}–{g.mattlig} måttliga, {g.mattlig + 1}–{g.hog} höga och över {g.hog} mycket höga. Naturhistoriska riksmuseet skriver att det sällan registreras mer än enstaka ambrosiapollen vid de svenska mätstationerna. De flesta år stämmer det med mätningarna ovan.</p>
+  <p>Nära en blommande planta kan halterna däremot bli mycket höga lokalt. Mätfällorna sitter ungefär 10–15 meter upp och kan missa pollen som sprids nära marken. En enstaka ambrosiaplanta under fågelbordet syns alltså sällan i mätningarna, men kan spela roll för den som är allergisk och vistas intill den.</p>
+  <TypBlock typ={t} visa="grans" rubrik={false} />
+
+  <h2 id="allergi">Ambrosiaallergi</h2>
+  <p>Naturhistoriska riksmuseet skriver att ambrosiapollen anses vara bland de starkast allergiframkallande av alla pollenslag. Enligt Wikipedia kan pollenet ge andningsbesvär och astma, och växten kan ge eksem vid direkt hudkontakt. Ambrosia och gråbo korsreagerar, så den som är allergisk mot gråbo kan också reagera på ambrosia.</p>
+  <p>Eftersom ambrosian blommar när de andra pollenslagen är över kan den förlänga säsongen in i september. Besvären är desamma som vid annan pollenallergi: snuva, nästäppa, nysningar och kliande ögon. Den som får besvär i september utan att vara förkyld kan jämföra med när ambrosiapollen mättes på närmaste ort.</p>
+  <div class="akut"><p><strong>Svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning, eller en akutmottagning om det är stängt. Vid akuta andningsbesvär, ring <strong>112</strong>. För råd om symtom, ring <strong>1177</strong>.</p></div>
+  <p>Läs mer i guiderna om <a href="/pollenallergi/">pollenallergi</a> och <a href="/korsallergi/">korsallergi</a>.</p>
+
+  <h2 id="sprids">Hur ambrosia kommer till Sverige</h2>
+  <p>Ambrosians frön kommer främst till Sverige med <strong>import av solrosfrö och fågelfrö</strong>, enligt Naturhistoriska riksmuseet. Fröna följer med som förorening i fröblandningarna. Wikipedia beskriver att plantor dyker upp varje sommar i trädgårdar och på upplag för trädgårdsavfall. Enligt Wikipedia kom arten till Europa och Sverige från början tillsammans med amerikansk rödklöver.</p>
+  <p>Pollen kan också resa långt på egen hand. Enligt Wikipedia kan en enda planta producera flera miljarder pollenkorn under en säsong, och pollenet kan spridas hundratals kilometer med vinden. Det förklarar varför ambrosiapollen mäts på orter som Umeå och Kiruna.</p>
+
+  <h2 id="framtid">Kan ambrosian etablera sig i Sverige?</h2>
+  <p>Hittills har ambrosian inte etablerat sig i Sverige. Enligt Wikipedia beror det på att den blommar först när nätterna blivit tillräckligt långa, alltså sent på säsongen. Naturhistoriska riksmuseet skriver att milda och långa höstar ändå kan göra att fröna i vissa områden hinner mogna och sprida sig.</p>
+  <p>Wikipedia återger också forskning från SLU 2016 om att det i norra Tyskland finns populationer som är anpassade till tidigare blomning. Enligt forskarna innebär det en reell risk att arten etablerar sig här.</p>
+  <p class="kalla">{KALLA}</p>
+</Guide>

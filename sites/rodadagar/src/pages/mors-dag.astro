@@ -1,0 +1,137 @@
+---
+// Pilotsida för långa guider: Mors dag. Datum, veckor och pingstkrockar räknas fram; fakta från Nordiska museet,
+// svenska Wikipedia och svensk författning (källor längst ned). Granskad 2026-11-24.
+import Guide from "@natverk/core/Guide.astro";
+import { datum, plusDagar, iso, kort, veckodag, versal, isoVecka, dagarMellan, MANADER } from "@natverk/core/datum.js";
+import { paskdagen } from "../lib/helgdagar.js";
+import { SITE, IDAG, AR, UPPDATERAD } from "../site.js";
+
+const PUBLICERAD = "2026-11-24";
+// Sista söndagen i maj: 31 maj bakåt till söndag.
+const morsDag = (y) => { const d = datum(y, 5, 31); return plusDagar(d, -d.getUTCDay()); };
+const nteSondag = (y, m, n) => { const d = datum(y, m, 1); return plusDagar(d, ((7 - d.getUTCDay()) % 7) + 7 * (n - 1)); };
+const pingst = (y) => plusDagar(paskdagen(y), 49);
+
+const nasta = morsDag(AR) >= IDAG ? morsDag(AR) : morsDag(AR + 1);
+const nastaAr = nasta.getUTCFullYear();
+const kvar = dagarMellan(IDAG, nasta);
+const AREN = Array.from({ length: 9 }, (_, i) => AR - 1 + i);
+const rader = AREN.map((y) => ({ y, d: morsDag(y), v: isoVecka(morsDag(y)).vecka, pingst: iso(pingst(y)) === iso(morsDag(y)) }));
+const pingstAr = Array.from({ length: 50 }, (_, i) => AR + i).filter((y) => iso(pingst(y)) === iso(morsDag(y)));
+const tidigast = rader.reduce((a, b) => (b.d.getUTCDate() < a.d.getUTCDate() ? b : a));
+const fmt = (d) => `${veckodag(d)} ${kort(d)} ${d.getUTCFullYear()}`;
+
+// Länder där regeln är bekräftad i minst en primär text (Wikipedia-tabellen och/eller Nordiska museet).
+const LANDER = [
+  { land: "Sverige", regel: "sista söndagen i maj", d: (y) => morsDag(y) },
+  { land: "Finland", regel: "andra söndagen i maj (sedan 1927)", d: (y) => nteSondag(y, 5, 2) },
+  { land: "Danmark", regel: "andra söndagen i maj", d: (y) => nteSondag(y, 5, 2) },
+  { land: "Norge", regel: "andra söndagen i februari", d: (y) => nteSondag(y, 2, 2) },
+  { land: "USA", regel: "andra söndagen i maj", d: (y) => nteSondag(y, 5, 2) },
+  { land: "Storbritannien och Irland", regel: "Mothering Sunday – fjärde söndagen i fastan, tre veckor före påskdagen", d: (y) => plusDagar(paskdagen(y), -21) },
+];
+
+const avsnitt = [
+  { id: "datum", rubrik: `När är mors dag ${nastaAr}?` },
+  { id: "regel", rubrik: "Varför sista söndagen i maj?" },
+  { id: "rod-dag", rubrik: "Är mors dag en röd dag eller flaggdag?" },
+  { id: "pingst", rubrik: "När mors dag och pingst sammanfaller" },
+  { id: "lander", rubrik: "Mors dag i andra länder" },
+  { id: "historia", rubrik: "Mors dags historia" },
+  { id: "traditioner", rubrik: "Så firas mors dag i Sverige" },
+  { id: "planera", rubrik: "Planera mors dag" },
+];
+
+const fragor = [
+  { fraga: `Vilket datum är mors dag ${nastaAr}?`, svar: `Mors dag ${nastaAr} infaller ${fmt(nasta)}, vecka ${isoVecka(nasta).vecka}. Mors dag firas alltid den sista söndagen i maj i Sverige.` },
+  { fraga: "Är mors dag alltid sista söndagen i maj?", svar: "Ja. I Sverige har mors dag firats den sista söndagen i maj ända sedan det första firandet 1919. Datumet varierar därför mellan 25 och 31 maj." },
+  { fraga: "Är mors dag en röd dag?", svar: "Nej. Mors dag finns inte med i lagen (1989:253) om allmänna helgdagar och är ingen röd dag. Eftersom den alltid infaller på en söndag är de flesta ändå lediga." },
+  { fraga: "Är mors dag en flaggdag?", svar: "Nej, mors dag är ingen allmän flaggdag i Sverige enligt förordningen (1982:270) om allmänna flaggdagar. Många flaggar ändå, och det står var och en fritt att hissa flaggan." },
+  { fraga: "När är mors dag i USA och Finland?", svar: `Både i USA och Finland firas mors dag den andra söndagen i maj, i ${nastaAr} alltså ${fmt(nteSondag(nastaAr, 5, 2))}. Det är två eller tre veckor före den svenska mors dag.` },
+  { fraga: "Vem började fira mors dag i Sverige?", svar: "Författaren Cecilia Bååth-Holmberg tog initiativet till det första firandet i Sverige 1919, efter amerikansk förebild." },
+  { fraga: "När är fars dag?", svar: `Fars dag firas den andra söndagen i november i Sverige, i ${nastaAr} ${fmt(nteSondag(nastaAr, 11, 2))}.` },
+];
+
+const titel = `Mors dag ${nastaAr} – datum ${kort(nasta)} och allt om dagen`;
+const beskrivning = `Mors dag ${nastaAr} är ${fmt(nasta)}. Alltid sista söndagen i maj. Datum för ${AREN[0]}–${AREN.at(-1)}, mors dag i andra länder, historien och traditionerna.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1={`Mors dag ${nastaAr}`}
+  svar={`Mors dag ${nastaAr} infaller <strong>${fmt(nasta)}</strong> (vecka ${isoVecka(nasta).vecka}), om ${kvar} ${kvar === 1 ? "dag" : "dagar"}. I Sverige firas mors dag alltid den <strong>sista söndagen i maj</strong>. Dagen är varken röd dag eller flaggdag, men eftersom den är en söndag är de flesta lediga.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Alla helgdagar", href: "/helgdagar/" }, { namn: "Mors dag", href: "/mors-dag/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-24" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: `Röda dagar ${nastaAr}`, href: `/${nastaAr}/`, text: "Alla helgdagar och klämdagar" },
+    { namn: "Flaggdagar", href: "/flaggdagar/", text: "Dagarna då flaggan hissas på allmänna byggnader" },
+    { namn: `Pingst ${nastaAr}`, href: `/pingst/${nastaAr}/`, text: "Pingstdagen och ledigheten" },
+    { namn: "Vecka idag", href: "/vecka/", text: "Veckonummer och kalender" },
+  ]}
+  kallor={[
+    { namn: "Nordiska museet – Mors dag", url: "https://www.nordiskamuseet.se/aretsdagar/mors-dag", text: "historik, första firandet 1919 och råden från 1920", datum: "2026-11-24" },
+    { namn: "Wikipedia – Mors dag", url: "https://sv.wikipedia.org/wiki/Mors_dag", text: "datum i olika länder och den amerikanska bakgrunden", datum: "2026-11-24" },
+    { namn: "Lag (1989:253) om allmänna helgdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/" },
+    { namn: "Förordning (1982:270) om allmänna flaggdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982270-om-allmanna-flaggdagar_sfs-1982-270/" },
+  ]}>
+
+  <h2 id="datum">När är mors dag {nastaAr}?</h2>
+  <p>Mors dag {nastaAr} är <strong>{fmt(nasta)}</strong>. Det är vecka {isoVecka(nasta).vecka}, och dagen är alltid en söndag. Eftersom regeln är "sista söndagen i maj" kan mors dag aldrig infalla tidigare än den 25 maj eller senare än den 31 maj. Tabellen visar datumet för de närmaste åren. Sidan räknas om varje dag, så nedräkningen stämmer alltid.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Datum</th><th class="num">Vecka</th><th>Anmärkning</th></tr></thead>
+    <tbody>{rader.map((r) => (
+      <tr><td>{r.y}</td><td>{versal(veckodag(r.d))} {kort(r.d)}</td><td class="num">{r.v}</td>
+        <td>{r.pingst ? "Samma dag som pingstdagen" : r.d < IDAG ? "Har varit" : iso(r.d) === iso(nasta) ? `Nästa mors dag – om ${kvar} dagar` : ""}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Av åren i tabellen infaller mors dag tidigast {kort(tidigast.d)} ({tidigast.y}). Ett år med 31 maj som sista söndag ger den senaste möjliga mors dag, och det inträffar ungefär vart sjunde år.</p>
+
+  <h2 id="regel">Varför sista söndagen i maj?</h2>
+  <p>När mors dag firades för första gången i Sverige 1919 bestämdes att dagen skulle ligga sist i maj. Enligt Nordiska museet har datumet legat fast sedan dess. Valet skiljer Sverige från de flesta andra länder. I USA, där dagen uppstod, och i grannländerna Finland och Danmark firas mors dag redan den andra söndagen i maj.</p>
+  <p>En söndag passar ett firande i hemmet. De flesta är lediga, barn och vuxna kan samlas, och dagen kan börja med frukost i lugn och ro. Den sena placeringen i maj gör också att mors dag ofta hamnar mitt i försommaren, när syrenerna blommar och det finns blommor att plocka. Det har bidragit till att blommor blivit den vanligaste gåvan.</p>
+  <h3>Mors dag kan inte flyttas</h3>
+  <p>Eftersom mors dag inte regleras i någon lag finns det inget beslut om att flytta den när den krockar med en annan högtid. Den ligger på sista söndagen i maj även de år då pingstdagen eller en långhelg infaller samma helg.</p>
+
+  <h2 id="rod-dag">Är mors dag en röd dag eller flaggdag?</h2>
+  <p><strong>Mors dag är ingen röd dag.</strong> De allmänna helgdagarna i Sverige räknas upp i lagen (1989:253) om allmänna helgdagar, och mors dag finns inte med. I praktiken spelar det liten roll, eftersom dagen alltid infaller på en söndag, och söndagar behandlas som helgdagar i de flesta kollektivavtal och i semesterlagen.</p>
+  <p><strong>Mors dag är inte heller en allmän flaggdag.</strong> Flaggdagarna bestäms i förordningen (1982:270) om allmänna flaggdagar. Där finns bland annat nationaldagen, midsommardagen och kungafamiljens födelsedagar, men inte mors dag. Det betyder att myndigheter inte flaggar. Privatpersoner får däremot hissa flaggan vilken dag de vill, och redan i rådet från 1920 ingick att flagga hemma på mors dag. I Finland är mors dag däremot officiell flaggdag sedan 1947.</p>
+  <p>Butiker, restauranger och kollektivtrafik följer vanliga söndagstider. Blomsterhandlar, konditorier och restauranger har ofta mycket att göra helgen före och på mors dag, så det lönar sig att vara ute i god tid.</p>
+
+  <h2 id="pingst">När mors dag och pingst sammanfaller</h2>
+  <p>Pingstdagen infaller 49 dagar efter påskdagen och kan därför hamna mellan 10 maj och 13 juni. Ibland blir det samma söndag som mors dag. Då firas båda samma dag. Det är bra att veta om man planerar en resa eller bjuder släkten, eftersom många redan har andra planer den helgen.</p>
+  {pingstAr.length > 0
+    ? <p>Under de kommande 50 åren infaller mors dag och pingstdagen samma dag {pingstAr.length} {pingstAr.length === 1 ? "gång" : "gånger"}: <strong>{pingstAr.join(", ")}</strong>.</p>
+    : <p>Under de kommande 50 åren infaller mors dag och pingstdagen aldrig samma dag.</p>}
+  <p>Kristi himmelsfärdsdag ligger tio dagar före pingst och kan ge en långhelg några veckor före mors dag. Se <a href={`/${nastaAr}/`}>röda dagar {nastaAr}</a> för hela kalendern.</p>
+
+  <h2 id="lander">Mors dag i andra länder</h2>
+  <p>Mors dag firas i större delen av världen, men datumet skiljer sig. Har du familj eller vänner utomlands är det lätt att missa deras dag. Tabellen visar regeln och datumet {nastaAr} för de länder där vi har kontrollerat regeln mot källorna.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th>Regel</th><th>Datum {nastaAr}</th></tr></thead>
+    <tbody>{LANDER.map((l) => <tr><td>{l.land}</td><td>{l.regel}</td><td>{versal(veckodag(l.d(nastaAr)))} {kort(l.d(nastaAr))}</td></tr>)}</tbody>
+  </table></div>
+  <p>Den brittiska Mothering Sunday är egentligen en äldre kyrklig tradition. Under fastan besökte man sin "moderkyrka" och sin familj, och dagen följer påsken. Därför kan den infalla redan i mars. Norge har valt den andra söndagen i februari. Det gör den norska mors dag till en av de tidigaste i världen.</p>
+
+  <h2 id="historia">Mors dags historia</h2>
+  <p>Den moderna mors dag kommer från USA. Amerikanskan Anna Jarvis började 1905 arbeta för en dag till mödrarnas ära, efter att hennes egen mor dött. Det första större firandet hölls vid en gudstjänst i Grafton i West Virginia i maj 1908. Kampanjen spreds snabbt, och 1914 skrev president Woodrow Wilson under beslutet som gjorde den andra söndagen i maj till nationell mors dag i USA.</p>
+  <p>Till Sverige kom idén några år senare. Författaren <strong>Cecilia Bååth-Holmberg</strong> tog initiativet, och 1919 firades mors dag för första gången här. Året därpå gav en kommitté för mors dag ut en skrift med råd om hur dagen skulle firas. Enligt Wikipedia dröjde det ändå flera decennier innan mors dag blev allmänt firad. Från 1950-talet blev presenter och restaurangbesök allt vanligare.</p>
+  <p>Dagen har också fått kritik. Nordiska museet påpekar att dagen i dag är starkt kommersiell, och att vissa menar att den befäster traditionella familjeroller. Andra ser den som ett enkelt och uppskattat sätt att visa tacksamhet.</p>
+
+  <h2 id="traditioner">Så firas mors dag i Sverige</h2>
+  <p>Mors dag har aldrig haft fasta ritualer som midsommar eller jul, men vissa inslag går igen. Rådet från 1920, som Nordiska museet återger, låter förvånansvärt modernt:</p>
+  <ul>
+    <li><strong>Flagga hemma</strong> för att markera dagen.</li>
+    <li><strong>Sång på morgonen</strong> – barnen väcker mamma med en sång.</li>
+    <li><strong>Kaffe och bröd innan hon stigit upp</strong> – föregångaren till dagens frukost på sängen.</li>
+    <li><strong>Blommor och en liten gåva</strong>, gärna något barnen gjort själva.</li>
+    <li><strong>Ledigt från hushållsarbetet</strong> hela dagen.</li>
+    <li><strong>Brev eller kort</strong> från barn som bor på annat håll.</li>
+  </ul>
+  <p>I dag är blommor och kort fortfarande det vanligaste. Många bjuder också på middag hemma eller på restaurang, och tårta är populärt till kaffet. För mor- och farmödrar har mors dag blivit en anledning för hela familjen att samlas. Den som inte kan ses ringer eller skickar en hälsning.</p>
+
+  <h2 id="planera">Planera mors dag</h2>
+  <p>Eftersom mors dag ligger i slutet av maj krockar den ofta med studentfiranden, skolavslutningar och försommarens bröllop. Några tips för att få dagen att fungera:</p>
+  <h3>Boka tidigt</h3>
+  <p>Restauranger med brunch eller lunch på mors dag blir ofta fullbokade. Boka några veckor i förväg, särskilt om mors dag sammanfaller med pingst eller med studenthelgen.</p>
+  <h3>Beställ blommor i förväg</h3>
+  <p>Blomsterbud har mycket att göra helgen före mors dag. Den som vill skicka blommor till någon på annan ort bör beställa i god tid och kontrollera att butiken levererar på söndagar.</p>
+  <h3>Kom ihåg grannländerna</h3>
+  <p>Har du en mamma i Finland, Danmark eller USA infaller hennes mors dag två till tre veckor tidigare än den svenska, den andra söndagen i maj. I Norge firas den redan i februari.</p>
+</Guide>

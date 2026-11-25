@@ -5,5 +5,7 @@ import { SITE, KAT, ORD, SCHEMA_TYP, UPPDATERAD, KALLA, TITEL_ORD } from "../../
 export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
 const { enhet } = Astro.props;
+// Lova bara "priser" i titeln när badet faktiskt har entrépriser i datan.
+const harPris = enhet.extra?.priser && Object.values(enhet.extra.priser).some((v) => v != null);
 ---
-<KatalogEnhet helgdagar site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<KatalogEnhet helgdagar site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={harPris ? TITEL_ORD : "öppettider"} />

@@ -1,0 +1,145 @@
+---
+// Lång guide: kallbad, kallbadhus och vinterbad. Listorna bygger på kommunernas egna beskrivningar i HaV:s
+// badplatsregister; vattentemperaturen på HaV:s prognos (Copernicus) och kommunernas mätningar.
+// Hälsofakta från Hjärt-Lungfonden och 1177. Inga råd om enskildas hälsa. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, ALLA_PROV, text, giltigTemp, median, medel, grad, tal } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const t = (e) => text(e);
+const harKallbadhus = (e) => /kallbadhus|kallis\b/i.test(`${e.namn} ${t(e)}`) && !/i nära anslutning till .*kallbadhuset|nära.{0,40}kallbadhus|kallbadhus, busstation/i.test(t(e)) || /^kallbadhuset|kallbadhus$/i.test(e.namn);
+const kallbadhus = E.filter(harKallbadhus);
+const narKallbadhus = E.filter((e) => !harKallbadhus(e) && /kallbadhus/i.test(t(e)));
+const vinter = E.filter((e) => /vinterbad/i.test(t(e)));
+const bastu = E.filter((e) => /bastu/i.test(t(e)) && !/ingen bastu/i.test(t(e)) && !kallbadhus.includes(e));
+const egenskaper = (e) => [
+  /bastu/i.test(t(e)) && !/ingen bastu/i.test(t(e)) && "bastu",
+  /naken|naturist/i.test(t(e)) && "nakenbad",
+  /vinterbad/i.test(t(e)) && "vinterbad",
+  /medlem|dagsbiljett|entré/i.test(t(e)) && "entré/medlemskap",
+].filter(Boolean).join(", ") || "–";
+
+// Vattnet nu: HaV:s prognos för kustbad (Copernicus).
+const progn = E.filter((e) => e.extra?.vattentemp?.prognos?.varden?.length);
+const hamtad = progn.map((e) => e.extra.vattentemp.prognos.hamtad).sort().at(-1) ?? null;
+const pMedel = (e) => medel(e.extra.vattentemp.prognos.varden.map((x) => x.grader));
+const prognLan = LAN.map((l) => { const v = progn.filter((e) => e.lan === l.namn).map(pMedel); return { l, n: v.length, medel: medel(v), min: v.length ? Math.min(...v) : null }; }).filter((r) => r.n);
+const kallbadNu = kallbadhus.filter((e) => e.extra?.vattentemp?.prognos?.varden?.length).map((e) => ({ e, g: pMedel(e) }));
+const fmtDatum = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+// Tidig och sen säsong ur mätningarna.
+const T = ALLA_PROV.filter((p) => giltigTemp(p.vattentemp));
+const maj = T.filter((p) => p.datum.slice(5, 7) === "05").map((p) => p.vattentemp);
+const majHav = T.filter((p) => p.datum.slice(5, 7) === "05" && p.e.extra?.vattentyp === "Hav").map((p) => p.vattentemp);
+const UPPDATERAD = hamtad && hamtad > PUBLICERAD ? hamtad : PUBLICERAD;
+
+const avsnitt = [
+  { id: "vad", rubrik: "Kallbad, vinterbad och isbad – vad är skillnaden?" },
+  { id: "kallbadhus", rubrik: "Kallbadhus i Sverige" },
+  { id: "vinterbad", rubrik: "Badplatser för vinterbad och bastu" },
+  { id: "temperatur", rubrik: "Så kallt är vattnet nu" },
+  { id: "koldchock", rubrik: "Köldchocken – vad som händer i kroppen" },
+  { id: "rad", rubrik: "Råd för säkrare kallbad" },
+  { id: "isvak", rubrik: "Isbad i vak" },
+  { id: "om-nagot-hander", rubrik: "Om något händer" },
+];
+
+const fragor = [
+  { fraga: "Var finns kallbadhus i Sverige?", svar: `I Havs- och vattenmyndighetens register finns ${kallbadhus.length} badplatser där kommunen beskriver ett kallbadhus, nästan alla vid havet och nästan hälften i Skåne, till exempel i Helsingborg, Malmö, Landskrona och Höganäs.` },
+  { fraga: "Hur länge ska man vara i vid vinterbad?", svar: "Hjärt-Lungfonden återger forskarnas råd att bada kortvarigt, högst en minut. Köldchocken är som starkast under de första 30 sekunderna." },
+  { fraga: "Är kallbad farligt?", svar: "För friska personer bedömer forskarna i en studie som Hjärt-Lungfonden refererar risken för allvarliga hjärtrytmrubbningar som låg vid korta dopp utan att doppa huvudet. Kylan ger ändå en kraftig reaktion i kroppen. Bada alltid tillsammans med andra, och rådgör med vården om du har en hjärtsjukdom." },
+  { fraga: "Ska man doppa huvudet vid isbad?", svar: "Hjärt-Lungfonden råder dig att undvika att doppa huvudet om du inte är van. När ansiktet kommer under vattnet aktiveras dykreflexen samtidigt som köldchocken, och det kan öka risken för hjärtrytmrubbningar." },
+  { fraga: "Hur kallt är havet på vintern?", svar: hamtad ? `Enligt HaV:s prognos ${fmtDatum(hamtad)} höll kustvattnet i genomsnitt mellan ${grad(Math.min(...prognLan.map((r) => r.medel)))} och ${grad(Math.max(...prognLan.map((r) => r.medel)))} i de olika länen. Längst i norr närmar sig vattnet noll grader.` : "Kustvattnet ligger under vintern oftast mellan några få och tio grader, kallast i norr." },
+  { fraga: "Vad gör man om någon blir nedkyld efter ett bad?", svar: "Ta personen inomhus eller i skydd från vinden och byt till torra kläder. 1177 avråder från att skynda på uppvärmningen med varmt vatten. Om personen har varit nära att drunkna ska du ringa 112." },
+];
+
+const titel = `Kallbad och vinterbad – kallbadhus och säkra råd`;
+const beskrivning = `${kallbadhus.length} kallbadhus och ${vinter.length} vinterbad i HaV:s register, vattnets temperatur just nu och råd om köldchock, isvak och kallbad från Hjärt-Lungfonden och 1177.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Kallbad, kallbadhus och vinterbad"
+  svar={`Kallbad är populärt året runt, men kylan ger en <strong>köldchock</strong> som är starkast de första 30 sekunderna. Forskarnas råd, som Hjärt-Lungfonden återger: bada kort (högst en minut), doppa inte huvudet om du inte är van och <strong>bada alltid tillsammans med andra</strong>. I HaV:s register finns ${kallbadhus.length} kallbadhus och ${vinter.length} badplatser öppna för vinterbad.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Kallbad", href: "/kallbad/" }]}
+  publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Vattnets temperatur per län och månad" },
+    { namn: "Badsäkerhet", href: "/badsakerhet/", text: "Drunkning, badvakter och första hjälpen" },
+    { namn: "Nakenbad", href: "/nakenbad/", text: "Nakenbad och naturiststränder" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten" },
+  ]}
+  kallor={[
+    { namn: "Hjärt-Lungfonden – Vinterbad och hjärtrytmrubbningar", url: "https://www.hjart-lungfonden.se/sjukdomar/hjartsjukdomar/plotsligt-hjartstopp/mer-lasning/vinterbad-hjartrytmrubbningar/", text: "köldchock, dykreflex, studien från Umeå och råden", datum: "2026-11-25" },
+    { namn: "1177 – Drunkningsolyckor", url: "https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/drunkningsolyckor/", text: "första hjälpen och nedkylning", datum: "2026-11-25" },
+    { namn: "1177 – Köldskador", url: "https://www.1177.se/olyckor--skador/brannskador-och-koldskador/koldskador/", text: "uppvärmning efter kyla", datum: "2026-11-25" },
+    { namn: "1177 – Vattensäkerhet för barn och vuxna", url: "https://www.1177.se/barn--gravid/att-ta-hand-om-barn/barnsakerhet/vattensakerhet-for-barn-och-vuxna/", text: "sjukdomar som ökar risken vid bad", datum: "2026-11-25" },
+    { namn: "Myndigheten för civilt försvar – Vattensäkerhet", url: "https://www.mcf.se/sv/amnesomraden/skydd-mot-olyckor-och-farliga-amnen/stod-till-kommunal-raddningstjanst/brandskydd-och-forebyggande/vattensakerhet/", text: "eget ansvar på isen", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "kommunernas beskrivningar, mätningar och prognos för kustbad", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vad">Kallbad, vinterbad och isbad – vad är skillnaden?</h2>
+  <p>Orden används lite om vartannat, men brukar betyda ungefär så här:</p>
+  <ul>
+    <li><strong>Kallbad</strong> är ett dopp i kallt vatten, oftast i havet eller en sjö. Ordet används också om att bada i ett kallbadhus, året runt.</li>
+    <li><strong>Kallbadhus</strong> är en byggnad på pålar ute i vattnet eller vid strandkanten, ofta med bastu, omklädningsrum och trappor ner i havet. Flera har separata avdelningar för damer och herrar.</li>
+    <li><strong>Vinterbad</strong> är bad under den kalla årstiden, från en brygga, en trappa eller en strand.</li>
+    <li><strong>Isbad</strong> är bad i en vak som sågats eller huggits upp i isen.</li>
+  </ul>
+  <p>Gemensamt är att vattnet är så kallt att kroppen reagerar kraftigt. Därför behöver kallbad göras med eftertanke.</p>
+
+  <h2 id="kallbadhus">Kallbadhus i Sverige</h2>
+  <p>Det finns ingen officiell förteckning över kallbadhus. Vi har gått igenom kommunernas beskrivningar av alla {tal(E.length)} badplatser i HaV:s register och hittat <strong>{kallbadhus.length} badplatser med kallbadhus</strong>. Öppettider och priser varierar och ändras, så kontrollera alltid med kallbadhuset innan du åker.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Badplats</th><th>Kommun</th><th>Vatten</th><th>Enligt kommunen</th></tr></thead>
+    <tbody>{kallbadhus.map((e) => <tr><td><a href={e.href}>{e.namn}</a></td><td>{e.kommun}</td><td>{e.extra?.vattentyp ?? "–"}</td><td>{egenskaper(e)}</td></tr>)}</tbody>
+  </table></div>
+  {narKallbadhus.length > 0 && <p>Dessutom nämner kommunen ett kallbadhus i närheten av {narKallbadhus.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a> ({e.kommun})</>)}.</p>}
+  <p>Nästan alla ligger vid havet, och Skåne har flest. Det finns också kallbadhus vid insjöar. Hedemora kallbadhus vid sjön Hönsan invigdes enligt kommunen 1931. Flera kallbadhus, som Kallis och Pålsjöbaden i Helsingborg och kallbadhuset vid Sibbarp i Malmö, har nakenbad i separata avdelningar. Saltholmens kallbadhus i Göteborg drivs av en ideell förening och kräver medlemskort eller dagsbiljett.</p>
+
+  <h2 id="vinterbad">Badplatser för vinterbad och bastu</h2>
+  <p>Utöver kallbadhusen skriver kommunerna uttryckligen att {vinter.length} badplatser är öppna för eller anpassade till vinterbad:</p>
+  <ul class="kolumner">{vinter.map((e) => <li><a href={e.href}>{e.namn}</a> ({e.kommun})</li>)}</ul>
+  <p>Lysekil sticker ut med flera badplatser som kommunen anger är öppna för vinterbad. I Lidköping finns en trappa för vinterbad vid strandpromenaden och i Stenungsund ett vindskydd för vinterbadare vid Getskär. På andra håll är det badplatsens bryggor och trappor som gör vinterbad möjligt, även om de inte är byggda för det.</p>
+  <p>{bastu.length} badplatser utan kallbadhus har bastu i närheten enligt kommunen, till exempel {bastu.slice(0, 6).map((e) => `${e.namn} (${e.kommun})`).join(", ")}. Vissa är bara öppna sommartid eller måste bokas.</p>
+
+  <h2 id="temperatur">Så kallt är vattnet nu</h2>
+  {hamtad && prognLan.length > 0 ? <>
+    <p>HaV publicerar en prognos för vattentemperaturen vid {tal(progn.length)} kustbad, beräknad med den europeiska havsmodellen Copernicus. Så här såg den ut {fmtDatum(hamtad)}:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Län</th><th class="num">Kustbad</th><th class="num">Medel</th><th class="num">Kallast</th></tr></thead>
+      <tbody>{prognLan.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{grad(r.medel)}</td><td class="num">{grad(r.min)}</td></tr>)}</tbody>
+    </table></div>
+    {kallbadNu.length > 0 && <p>Vid kallbadhusen vid kusten var prognosen samma dag {kallbadNu.map((x, i) => <>{i > 0 && ", "}{x.e.namn} ({x.e.kommun}) {grad(x.g)}</>)}.</p>}
+  </> : <p>HaV:s prognos för kustbaden saknas just nu. Se badplatsens egen sida för den senaste mätningen.</p>}
+  <p>Som jämförelse höll vattnet i maj, när kommunerna tar sina första prover inför badsäsongen, en median på {grad(median(maj))}, och vid havsbaden {grad(median(majHav))}. Mer om sommarens temperaturer finns i guiden om <a href="/badtemperatur/">badtemperatur</a>.</p>
+
+  <h2 id="koldchock">Köldchocken – vad som händer i kroppen</h2>
+  <p>När du kliver ner i kallt vatten reagerar kroppen direkt. Hjärt-Lungfonden beskriver köldchocken så här: andningen blir snabb, blodkärlen dras samman, och puls och blodtryck stiger hastigt. Reaktionen är som starkast under de första 30 sekunderna.</p>
+  <p>Kommer ansiktet under vattnet sätts också dykreflexen igång. Den gör tvärtom och sänker pulsen. När båda reflexerna aktiveras samtidigt kan risken för allvarliga hjärtrytmrubbningar öka.</p>
+  <p>Hjärt-Lungfonden refererar en studie från Umeå där 54 friska elever i årskurs nio fick doppa ansiktet i 10-gradigt vatten. Tjugo av dem badade också kort, som längst en minut, i en isvak med 2-gradigt vatten. Ofarliga extraslag var vanliga vid båda. Ansiktsdoppen gav tydligare rytmstörningar än helkroppsbadet. Forskarna bedömer risken för allvarliga rytmrubbningar som låg vid mycket korta dopp, förutsatt att man är frisk och inte doppar huvudet.</p>
+
+  <h2 id="rad">Råd för säkrare kallbad</h2>
+  <p>Forskarna bakom studien ger sex råd, som Hjärt-Lungfonden återger:</p>
+  <ol>
+    <li>Ha gärna skor eller tofflor på dig.</li>
+    <li>Fokusera på andningen och ta några djupa, lugna andetag.</li>
+    <li>Bada kortvarigt, högst en minut.</li>
+    <li>Undvik att doppa huvudet om du inte är van.</li>
+    <li>Var försiktig när du kliver i och ur badet.</li>
+    <li>Bada alltid tillsammans med andra.</li>
+  </ol>
+  <p>Det sista rådet är extra viktigt. Den som får en kraftig reaktion i vattnet kan behöva hjälp snabbt. 1177 påpekar att bland annat hjärtsjukdomar, epilepsi och diabetes kan öka risken vid bad och att den som har en sådan sjukdom helst ska bada i sällskap. Har du en hjärtsjukdom eller är osäker, prata med din vårdcentral innan du börjar kallbada. Den här guiden ger allmän information och ersätter inte råd från vården.</p>
+  <p>Halka är en annan risk. Bryggor, trappor och klippor blir isiga på vintern. Det är ett skäl till skorna och till att ta det lugnt både på väg i och upp.</p>
+
+  <h2 id="isvak">Isbad i vak</h2>
+  <p>Isbad kräver mer förberedelse än ett dopp från en brygga. I studien från Umeå höll vattnet i isvaken 2 grader, och du måste kunna ta dig upp ur en öppning i isen. Myndigheten för civilt försvar påpekar att ett stort ansvar för säkerheten på isen ligger på den enskilde.</p>
+  <ul>
+    <li>Bada aldrig ensam i en vak, och ha någon på isen eller stranden som kan hjälpa till.</li>
+    <li>Se till att det finns en stege, ett räcke eller något att hålla i för att ta sig upp.</li>
+    <li>Gå inte ut på isen om du inte vet att den bär, och följ föreningens eller arrangörens anvisningar om du badar i en ordnad vak.</li>
+  </ul>
+  <p>Ett tryggare sätt att prova är att bada tillsammans med vana vinterbadare, till exempel i en förening eller vid ett kallbadhus, i stället för att göra det på egen hand.</p>
+
+  <h2 id="om-nagot-hander">Om något händer</h2>
+  <p>Om någon får problem i vattnet: ropa på hjälp och ring <strong>112</strong>. 1177 skriver att den som har varit nära att drunkna ofta snabbt blir nedkyld och alltid behöver bedömas på sjukhus, även om personen verkar må bra. Andas personen inte ska du börja med hjärt-lungräddning och ge fem inblåsningar så fort som möjligt.</p>
+  <p>Den som fryser efter ett kallbad ska in i värmen eller i skydd från vinden och byta till torra kläder. 1177 råder dig att inte skynda på uppvärmningen med varmt vatten eller heta föremål. För rådgivning om symtom efteråt kan du ringa 1177.</p>
+</Guide>

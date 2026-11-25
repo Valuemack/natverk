@@ -1,0 +1,13 @@
+---
+// Hubbsida för de långa guiderna.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../../site.js";
+import { GUIDER } from "../../lib/guider.js";
+---
+<Layout site={SITE} titel="Guider om bad – vattenkvalitet, temperatur och säkerhet"
+  beskrivning="Guider om bad i Sverige: badtemperatur, bästa stränderna, algblomning, maneter, kallbad, hundbad, nakenbad, badsäkerhet och hur du läser vattenproverna."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad="2026-11-25">
+  <h1>Guider om bad</h1>
+  <p class="svar">Fördjupande guider som bygger på Havs- och vattenmyndighetens öppna data om Sveriges badplatser och på fakta från bland annat HaV, SMHI och 1177.</p>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+</Layout>

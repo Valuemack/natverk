@@ -1,0 +1,115 @@
+---
+// Lång guide på /pollen/hassel/: hasselpollen och alpollen – vårens första pollen. Täcker även al (de blommar samtidigt);
+// den korta sidan /pollen/al/ finns kvar och länkar hit.
+// Egen data: säsong per ort, jämförelse hassel–al och år för år ur pollenkalendern (NRM:s uppmätta dygnsvärden).
+// Fakta: NRM (Pollenrapporten, Liten pollenskola, Halter och risker), 1177. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import TypBlock from "../components/TypBlock.astro";
+import { SITE, KALLA, KALENDER_AR, kalenderFor } from "../site.js";
+import { PUBLICERAD, TYP_UPPDATERAD, AR_TEXT, SODER_NORR, typ, rader, medianDag, median, mmdd, tal, arSumma, dagarMellan } from "../lib/guide.js";
+
+const { typ: t } = Astro.props;
+const al = typ("al"), bjork = typ("bjork");
+const g = t.gransvarden;
+const jmf = SODER_NORR.map((r) => ({ r, h: kalenderFor(r, t), a: kalenderFor(r, al), b: kalenderFor(r, bjork) })).filter((x) => x.h && x.a);
+const sum = (k) => median(k.ar.map((y) => y.summa));
+const hStart = medianDag(jmf.map((x) => x.h.typisk_start)), aStart = medianDag(jmf.map((x) => x.a.typisk_start));
+const hTopp = medianDag(jmf.map((x) => x.h.typisk_topp)), aTopp = medianDag(jmf.map((x) => x.a.typisk_topp));
+const kvot = Math.round(median(jmf.map((x) => sum(x.a) / Math.max(1, sum(x.h)))));
+const hogaHassel = jmf.reduce((s, x) => s + x.h.ar.reduce((t2, y) => t2 + y.dagar_over_mattlig, 0), 0);
+const hogaAl = jmf.reduce((s, x) => s + x.a.ar.reduce((t2, y) => t2 + y.dagar_over_mattlig, 0), 0);
+const alHogst = [...jmf].sort((a, b) => b.a.hogsta_dygnsvarde - a.a.hogsta_dygnsvarde)[0];
+const forsprang = median(jmf.filter((x) => x.b).map((x) => dagarMellan(medianDag([x.h.typisk_start, x.a.typisk_start].sort().slice(0, 1)), x.b.typisk_start)));
+// Tidigaste säsongsstart något år (milda vintrar).
+const tidigast = jmf.flatMap((x) => [...x.h.ar.map((y) => ({ r: x.r, n: "hassel", d: y.start })), ...x.a.ar.map((y) => ({ r: x.r, n: "al", d: y.start }))]).sort((a, b) => a.d.slice(5).localeCompare(b.d.slice(5)))[0];
+const perAr = KALENDER_AR.map((ar) => ({ ar, h: jmf.reduce((s, x) => s + (arSumma(x.h, ar) ?? 0), 0), a: jmf.reduce((s, x) => s + (arSumma(x.a, ar) ?? 0), 0) }));
+
+const avsnitt = [
+  { id: "forst", rubrik: "Vårens första pollen" },
+  { id: "sasong", rubrik: "När kommer hassel och al?" },
+  { id: "skillnad", rubrik: "Al ger mycket mer pollen än hassel" },
+  { id: "ar", rubrik: "Hassel och al år för år" },
+  { id: "vader", rubrik: "Milda vintrar och köldknäppar" },
+  { id: "arter", rubrik: "Klibbal och gråal" },
+  { id: "kanna", rubrik: "Så känner du igen hassel och al" },
+  { id: "allergi", rubrik: "Hassel, al och björkallergi" },
+];
+
+const fragor = [
+  { fraga: "När börjar hasselpollen?", svar: `Hasseln blommar normalt mellan februari och april. Under ${AR_TEXT} började hasselpollensäsongen i mitten av landet runt ${mmdd(hStart)}. Milda vintrar kan enstaka buskar blomma redan i november eller december, enligt Naturhistoriska riksmuseet.` },
+  { fraga: "När kommer alpollen?", svar: `Alpollen kommer ungefär samtidigt som hasselpollen eller strax efter, med typisk start runt ${mmdd(aStart)} och topp runt ${mmdd(aTopp)}. Blomningen är normalt över i mitten av maj.` },
+  { fraga: "Vilket ger mest besvär, hassel eller al?", svar: `I mätningarna ger al betydligt högre halter. Alpollen var i snitt ungefär ${kvot} gånger så många som hasselpollen per säsong, och höga halter av al uppmättes ${hogaAl} gånger ${AR_TEXT} mot ${hogaHassel} för hassel. Naturhistoriska riksmuseet skriver att höga halter av hasselpollen sällan förekommer mer än lokalt.` },
+  { fraga: "Reagerar björkallergiker på hassel och al?", svar: "Ofta. Naturhistoriska riksmuseet skriver att många björkallergiker också är känsliga för hasselpollen och att alpollen ger besvär hos en del björkallergiker." },
+  { fraga: "Hur skiljer man gråal från klibbal?", svar: "Klibbalens kottar sitter på skaft och barken är mörk och skrovlig. Gråalens kottar och knoppar sitter direkt mot kvisten, och barken är slät och silvergrå." },
+  { fraga: "Vad räknas som höga halter av hassel- och alpollen?", svar: `Samma gränser som för björk: ${g.lag + 1}–${g.mattlig} pollenkorn per kubikmeter luft är måttliga halter, ${g.mattlig + 1}–${g.hog} höga och över ${g.hog} mycket höga.` },
+];
+---
+<Guide site={SITE} titel="Hasselpollen och alpollen – vårens första pollen"
+  beskrivning={`Hassel och al blommar i februari–april, flera veckor före björken. Se när hassel- och alpollen kommer på 23 orter, vilket som ger högst halter och hur du känner igen dem.`}
+  h1="Hasselpollen och alpollen"
+  svar={`<strong>Hassel och al</strong> är vårens första pollen. I södra och mellersta Sverige börjar säsongen oftast i <strong>slutet av februari eller i mars</strong>, flera veckor före björken. Al ger betydligt högre halter än hassel. Många björkallergiker reagerar också på hassel och al, så för dem börjar pollensäsongen redan då.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Hasselpollen", href: "/pollen/hassel/" }]}
+  publicerad={PUBLICERAD} uppdaterad={TYP_UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Alpollen idag", href: "/pollen/al/", text: "Dagens prognos och säsong för al" },
+    { namn: "Björkpollen", href: "/pollen/bjork/", text: "Säsongen som kommer efter" },
+    { namn: "Korsallergi", href: "/korsallergi/", text: "Pollen och mat som korsreagerar" },
+    { namn: "Pollenallergi", href: "/pollenallergi/", text: "Symtom och när du ska söka vård" },
+    { namn: "Pollenkalender", href: "/pollenkalender/", text: "Alla pollenslag på 23 orter" },
+  ]}
+  kallor={[
+    { namn: "Naturhistoriska riksmuseet – Hassel", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/hassel", text: "blomning, växtplatser och halter", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Al", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/allergiframkallande-pollen/al", text: "klibbal och gråal, blomning och variation mellan åren", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: hassel", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-hassel", text: "hängen, temperatur och tidig blomning", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Liten pollenskola: al", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/liten-pollenskola/liten-pollenskola-al", text: "utbredning, kännetecken och pollen från Centraleuropa", datum: "2026-11-25" },
+    { namn: "Naturhistoriska riksmuseet – Halter och risker", url: "https://www.nrm.se/natur--och-miljoovervakning/pollenovervakning/pollenrapporten/halter-och-risker", text: "gränsvärden för träd", datum: "2026-11-25" },
+    { namn: "1177 – Pollenallergi", url: "https://www.1177.se/sjukdomar--besvar/allergier-och-overkanslighet/pollenallergi/", text: "säsonger och när du ska söka vård", datum: "2026-11-25" },
+    { namn: `Pollenkalendern på pollenläget.se (${AR_TEXT})`, url: "/pollenkalender/", text: "egen bearbetning av uppmätta dygnsvärden från Naturhistoriska riksmuseet, CC BY-SA 4.0" },
+  ]}>
+
+  <TypBlock typ={t} visa="idag" id="idag" ord="Hasselpollen" />
+  <TypBlock typ={al} visa="idag" id="idag-al" ord="Alpollen" />
+
+  <h2 id="forst">Vårens första pollen</h2>
+  <p>Säsongens första pollenprognoser från Naturhistoriska riksmuseet brukar gälla hassel och al. De inleder säsongen flera veckor före björken. I mätningarna {AR_TEXT} kom det första hassel- eller alpollenet i snitt {forsprang} dagar före björksäsongen på samma ort.</p>
+  <p>1177 skriver att hasselpollen kommer från slutet av februari och alpollen från mitten av mars. Det stämmer med mätningarna för södra och mellersta Sverige. Hasseln är en buske som främst växer i lövskogslundar i södra Sverige, men också i örtrik granskog i Svealand och längs södra Norrlands kust. Al finns i hela landet.</p>
+
+  <h2 id="sasong">När kommer hassel och al?</h2>
+  <p>Typiskt börjar hasselpollensäsongen runt <strong>{mmdd(hStart)}</strong> och toppar runt {mmdd(hTopp)}. Alpollensäsongen börjar runt <strong>{mmdd(aStart)}</strong> och toppar runt {mmdd(aTopp)}. Värdena är medianer över de {jmf.length} mätorterna {AR_TEXT}. Längre norrut kommer båda senare, och i Norrland är hasselpollen sällsynt eftersom hasseln främst växer längre söderut. Tabellen visar hasselns säsong per ort. Alens finns på sidan <a href="/pollen/al/">alpollen</a>.</p>
+  <TypBlock typ={t} visa="sasong" rubrik={false} />
+
+  <Annons plats="typ-1" />
+
+  <h2 id="skillnad">Al ger mycket mer pollen än hassel</h2>
+  <p>Hassel och al räknas ofta ihop, men mätningarna visar en stor skillnad. På en typisk ort var alpollenet ungefär <strong>{kvot} gånger så många</strong> som hasselpollenet under en säsong. Höga halter, över {g.mattlig} korn/m³, uppmättes {hogaAl} gånger för al under {AR_TEXT} men bara {hogaHassel} {hogaHassel === 1 ? "gång" : "gånger"} för hassel. Det högsta dygnsvärdet för al var {tal(alHogst.a.hogsta_dygnsvarde)} korn/m³ i {alHogst.r.namn}.</p>
+  <p>Det stämmer med Naturhistoriska riksmuseets beskrivning: höga halter av hasselpollen förekommer sällan mer än lokalt, medan al vissa år kan ge mycket höga halter.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>Hassel börjar</th><th>Al börjar</th><th class="num">Hassel, korn per säsong</th><th class="num">Al, korn per säsong</th><th class="num">Dagar med höga halter, al</th></tr></thead>
+    <tbody>{jmf.map((x) => <tr><td><a href={`/${x.r.slug}/#kalender`}>{x.r.namn}</a></td><td>{mmdd(x.h.typisk_start, false)}</td><td>{mmdd(x.a.typisk_start, false)}</td><td class="num">{tal(sum(x.h))}</td><td class="num">{tal(sum(x.a))}</td><td class="num">{x.a.dagar_over_mattlig_snitt}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Typiska datum och säsongssumma (median {AR_TEXT}). Dagar med höga halter = snitt per år med dygnsvärden över {g.mattlig} korn/m³. Orterna står från söder till norr. Bearbetning av uppmätta halter från Naturhistoriska riksmuseet.</p>
+
+  <h2 id="ar">Hassel och al år för år</h2>
+  <p>Alens pollenmängd varierar kraftigt från år till år, skriver Naturhistoriska riksmuseet. Summan av alla dygnsvärden på orterna var för al {perAr.map((x, i) => <>{i > 0 && (i === perAr.length - 1 ? " och " : ", ")}{tal(x.a)} år {x.ar}</>)}. För hassel var den {perAr.map((x, i) => <>{i > 0 && (i === perAr.length - 1 ? " och " : ", ")}{tal(x.h)} år {x.ar}</>)}. Variationen syns ännu tydligare på enskilda orter, där ett år kan ge flera gånger mer än ett annat.</p>
+
+  <h2 id="vader">Milda vintrar och köldknäppar</h2>
+  <p>Hassel och al är känsliga för temperaturen. Enligt Naturhistoriska riksmuseet behöver hasselns hängen ungefär två plusgrader för att släppa pollen. Under milda vintrar kan enstaka hasselbuskar blomma redan i november eller december, och gråal kan börja blomma i januari eller februari i södra Sverige. Den tidigaste säsongsstarten i mätningarna {AR_TEXT} var {tidigast.n} i {tidigast.r.namn} den {mmdd(tidigast.d.slice(5))} {tidigast.d.slice(0, 4)}.</p>
+  <p>Kommer en plötslig köldknäpp pausar både hassel och al blomningen och fortsätter när det blir varmare igen. Därför kan säsongen bli utdragen. Alpollen kan också komma med milda sydvindar från Centraleuropa, även när de svenska alarna fortfarande har hårda hängen.</p>
+
+  <h2 id="arter">Klibbal och gråal</h2>
+  <p>I Sverige finns två vanliga alarter. <strong>Klibbal</strong> är en sydlig art som är bunden till vatten och växer längs stränder. Den trivs bäst söder om Dalälven men finns ända upp till Bottenviken. Den blommar normalt i mars eller april. <strong>Gråal</strong> klarar torrare mark och växer ofta som inslag i barrblandskog. Den är främst en nordlig art, vanligast norr om Dalälven, och kan blomma ända uppe i nordligaste Norrland. I söder kan den börja blomma redan i januari eller februari milda vintrar. Blomningen är normalt över i mitten av maj.</p>
+
+  <h2 id="kanna">Så känner du igen hassel och al</h2>
+  <h3>Hassel</h3>
+  <p>Hasselns hanhängen syns på buskarna hela vintern. När de mognar blir de långa och gulaktiga och släpper pollen. Honblommorna är små och har röda märken. Hasselnötterna mognar i september och oktober.</p>
+  <h3>Al</h3>
+  <p>De två alarterna skiljs enklast åt på kottarna och barken. Hos klibbal sitter kottarna på skaft och barken är mörk och skrovlig. Hos gråal sitter kottarna och knopparna direkt mot kvisten, och barken är slät och silvergrå.</p>
+
+  <h2 id="allergi">Hassel, al och björkallergi</h2>
+  <p>Naturhistoriska riksmuseet skriver att många björkallergiker också är känsliga för hasselpollen, och att alpollen ger besvär hos en del björkallergiker. För den som är allergisk mot björk börjar pollensäsongen därför ofta flera veckor innan björken blommar. Besvären är desamma: snuva, nästäppa, nysningar och kliande ögon.</p>
+  <div class="akut"><p><strong>Svårt att andas?</strong> Kontakta genast en vårdcentral eller jouröppen mottagning, eller en akutmottagning om det är stängt. Vid akuta andningsbesvär, ring <strong>112</strong>. För sjukvårdsrådgivning, ring <strong>1177</strong>.</p></div>
+  <p>Mer om symtom och när du ska söka vård finns i guiden om <a href="/pollenallergi/">pollenallergi</a>. Om björksäsongen kan du läsa i guiden om <a href="/pollen/bjork/">björkpollen</a>, och om mat som kan ge besvär i guiden om <a href="/korsallergi/">korsallergi</a>.</p>
+  <TypBlock typ={t} visa="grans" id="grans" rubrik="Gränsvärden för hassel och al" />
+  <p class="kalla">{KALLA}</p>
+</Guide>

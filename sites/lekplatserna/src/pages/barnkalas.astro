@@ -1,0 +1,134 @@
+---
+// Lång guide: barnkalas på lekplats. Platser och grillplatser räknas ur sajtens lekplatsdata;
+// regler från Polisen och Naturvårdsverket, säkerhet från 1177, Malmös temalekplatser från malmo.se. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT } from "../site.js";
+import { har, E, MED_REDSKAP, tal, isTema, kommun, rakna } from "../lib/guider.js";
+import { utrustning } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const STADER = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg", "Norrköping", "Lund", "Umeå", "Borås"];
+const kalasRedskap = (e) => ["linbana", "studsmatta", "hoppkudde", "vattenlek"].some((u) => har(u)(e));
+const stader = STADER.map(kommun).filter(Boolean).map((k) => ({
+  k, n: k.enheter.length, red: k.enheter.filter((e) => utrustning(e).length).length,
+  kalas: k.enheter.filter(kalasRedskap).length, tema: k.enheter.filter(isTema).length,
+}));
+const grill = E.filter(har("grillplats"));
+const grillKommuner = rakna(grill, (e) => e.kommun).map(([namn, n]) => ({ k: kommun(namn), n, ex: grill.filter((e) => e.kommun === namn && e.egenSida).slice(0, 3) }));
+const kalasAlla = E.filter(kalasRedskap).length;
+const toaletter = E.filter((e) => e.extra?.toalett === true).length;
+
+const avsnitt = [
+  { id: "lekplats", rubrik: "Barnkalas på lekplats – för- och nackdelar" },
+  { id: "stader", rubrik: "Lekplatser för kalas i de största städerna" },
+  { id: "grill", rubrik: "Lekplatser med grillplats" },
+  { id: "tillstand", rubrik: "Behöver man tillstånd för kalas i parken?" },
+  { id: "planera", rubrik: "Planera barnkalaset steg för steg" },
+  { id: "lekar", rubrik: "Kalaslekar som fungerar utomhus" },
+  { id: "alder", rubrik: "Kalas efter ålder" },
+  { id: "regn", rubrik: "Om det regnar: inomhusalternativ" },
+  { id: "sakerhet", rubrik: "Säkerhet och allergier" },
+];
+
+const steg = {
+  namn: "Så planerar du ett barnkalas på lekplats",
+  beskrivning: "Från datum och inbjudan till städning, för ett kalas utomhus på en lekplats.",
+  steg: [
+    { namn: "Välj datum och reservplan", text: "Bestäm dag och tid och bestäm direkt vad som gäller vid regn: flytta inomhus, skjuta upp eller genomföra ändå." },
+    { namn: "Välj lekplats", text: "Välj en lekplats med plats för många barn, gärna med bänkar, toalett i närheten och redskap som passar åldern." },
+    { namn: "Skicka inbjudan", text: "Skicka inbjudan två till tre veckor innan med plats, tid, vad barnen ska ha på sig och en fråga om allergier." },
+    { namn: "Förbered mat och lekar", text: "Planera mat som tål att stå ute och två eller tre lekar. Packa filtar, soppåsar och våtservetter." },
+    { namn: "Genomför och städa", text: "Kom i god tid och ta med allt skräp hem eller släng det i parkens soptunnor när kalaset är slut." },
+  ],
+};
+
+const fragor = [
+  { fraga: "Får man ha barnkalas på en lekplats?", svar: "Ja. En kommunal lekplats är öppen för alla, och ett vanligt barnkalas behöver inget tillstånd. Enligt Polisen krävs inte tillstånd när en offentlig plats bara används tillfälligt, i obetydlig omfattning och utan att inkräkta på någon annans tillstånd. Man kan inte boka en lekplats för sig själv." },
+  { fraga: "Behöver man tillstånd för att ställa upp tält eller bord i parken?", svar: "Det kan behövas. Polisen nämner uppställning av bord, tält, scen eller liknande som exempel där tillstånd oftast krävs inom detaljplanelagt område. Ett par filtar och en medhavd korg räknas normalt inte dit. Fråga kommunen eller Polisen om du är osäker." },
+  { fraga: "Får man grilla på lekplatsen?", svar: "Använd i första hand en fast grillplats. Naturvårdsverket råder att grilla på fast grillplats eller på grus eller sand. Vid eldningsförbud kan grillning på fasta grillplatser ibland vara tillåten, men vid skärpt förbud är det ofta förbjudet överallt. Länsstyrelsen eller kommunen beslutar." },
+  { fraga: "Var kan man ha barnkalas i Stockholm, Göteborg eller Malmö?", svar: `Utomhus fungerar stora lekplatser och temalekplatser bäst. Vi listar ${tal(kommun("Stockholm")?.enheter.length ?? 0)} lekplatser i Stockholm, ${tal(kommun("Göteborg")?.enheter.length ?? 0)} i Göteborg och ${tal(kommun("Malmö")?.enheter.length ?? 0)} i Malmö. Inomhus finns lekland, simhallar och kommunala lokaler att hyra.` },
+  { fraga: "Hur länge ska ett barnkalas vara?", svar: "Det finns ingen regel. För förskolebarn räcker ofta ett par timmar med lek, mat och tårta. Äldre barn orkar längre, särskilt om kalaset har en aktivitet som skattjakt eller tipspromenad." },
+  { fraga: "Vad gör man på ett barnkalas utomhus?", svar: "Klassiska kalaslekar utomhus är skattjakt, tipspromenad, säckhoppning, ägg- och skedlopp, dragkamp och kurragömma. På lekplatsen leker barnen dessutom gärna fritt på redskapen mellan lekarna." },
+  { fraga: "Vad gör man med barnkalaset om det regnar?", svar: "Bestäm en reservplan redan i inbjudan. Vanliga alternativ är att flytta kalaset hem, till ett lekland, en simhall eller en hyrd lokal, eller att skjuta upp det en dag. Med regnkläder går ett kort kalas ofta att genomföra ändå." },
+];
+---
+<Guide site={SITE} titel="Barnkalas – platser, lekar och tips för kalaset ute"
+  beskrivning={`Barnkalas på lekplats: ${grill.length} lekplatser med grillplats, kalasplatser i ${stader.length} städer, lekar, regler för grill och tillstånd och vad du gör om det regnar.`}
+  h1="Barnkalas på lekplats"
+  svar={`Ett barnkalas på en lekplats är gratis och behöver <strong>inget tillstånd</strong> så länge platsen bara används tillfälligt och i liten omfattning. Välj en lekplats med plats för många barn, bänkar och gärna toalett i närheten. Vi hittar <strong>${grill.length} lekplatser med grillplats</strong> i vår data. Bestäm en reservplan för regn redan i inbjudan.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Barnkalas", href: "/barnkalas/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor} steg={steg}
+  relaterat={[
+    { namn: "Temalekplatser", href: "/temalekplatser/", text: "Lekplatser byggda kring ett tema" },
+    { namn: "Lekplatser med linbana", href: "/lekplatser-med-linbana/", text: "Populärt bland kalasbarn" },
+    { namn: "Lekplatser med studsmatta", href: "/lekplatser-med-studsmatta/", text: "Nedgrävda studsmattor och hoppkuddar" },
+    { namn: "Vad göra med barn", href: "/vad-gora-med-barn/", text: "Utflykter och regnväderstips" },
+    { namn: "Plaskdammar och vattenlek", href: "/lekplatser-med-vattenlek/", text: "För sommarkalas" },
+  ]}
+  kallor={[
+    { namn: "Polisen – Använda offentlig plats", url: "https://polisen.se/tjanster-tillstand/tillstand-ansok/offentlig-plats/", text: "när tillstånd krävs och undantaget för tillfälligt bruk", datum: "2026-11-25" },
+    { namn: "Naturvårdsverket – Eldning", url: "https://www.naturvardsverket.se/amnesomraden/allemansratten/sa-gor-vi-allemansratt/eldning/", text: "grillning, eldningsförbud och vem som beslutar", datum: "2026-11-25" },
+    { namn: "1177 – När någon sätter i halsen", url: "https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/nar-nagon-satter-i-halsen/", text: "första hjälpen och rådet att plocka undan små föremål", datum: "2026-11-25" },
+    { namn: "Malmö stad – Temalekplatser", url: "https://malmo.se/Uppleva-och-gora/For-familjer-barn-och-unga/Temalekplatser.html", text: "24 temalekplatser, varav 10 med offentlig toalett", datum: "2026-11-25" },
+    { namn: "Lekplatsdata: kommunernas öppna data och OpenStreetMap", url: "https://www.openstreetmap.org/copyright", text: "antal lekplatser, redskap och grillplatser (© OpenStreetMap-bidragsgivare, ODbL)", datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="lekplats">Barnkalas på lekplats – för- och nackdelar</h2>
+  <p>Ett kalas utomhus har flera fördelar. En lekplats kostar ingenting, rymmer en hel klass och barnen har redan saker att göra när de kommer. Hemma slipper du städa före och efter, och ingen behöver trängas i ett vardagsrum.</p>
+  <p>Nackdelarna är tre. Vädret går inte att styra, lekplatsen är öppen för alla så andra familjer kommer att vara där, och toalett saknas ofta. Av {tal(E.length)} lekplatser i vår data har kommunen angett toalett för bara {toaletter}, så räkna med att leta upp närmaste offentliga toalett, café eller bibliotek i förväg. Malmö är ett undantag: enligt Malmö stad har 10 av stadens 24 temalekplatser offentlig toalett.</p>
+  <h3>Välj plats och tid</h3>
+  <p>Välj gärna en större lekplats. Kommunerna kallar dem ofta stadsdelslekplatser, utflyktslekplatser eller temalekplatser. De har fler redskap, mer yta och ofta bänkar och bord.</p>
+  <p>Tänk också på tiden. En solig lördag är de populäraste lekplatserna ofta fulla, medan en vardagseftermiddag eller en söndag tidigt på dagen brukar vara lugnare. Gå gärna dit en gång innan kalaset och se var ni kan sitta, var skuggan hamnar på eftermiddagen och hur långt det är till närmaste toalett och parkering. Har lekplatsen en egen sida hos oss ser du redskapen och närliggande parkeringar där.</p>
+
+  <h2 id="stader">Lekplatser för kalas i de största städerna</h2>
+  <p>Tabellen visar hur många lekplatser vi känner till i städerna där flest söker efter barnkalas. Kolumnen <em>Kalasredskap</em> räknar lekplatser med linbana, studsmatta, hoppkudde eller vattenlek, alltså redskap som många barn kan turas om på. Klicka på staden för att se alla lekplatser.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Lekplatser</th><th class="num">Med kända redskap</th><th class="num">Kalasredskap</th><th class="num">Tema/natur</th></tr></thead>
+    <tbody>{stader.map((s) => <tr><td><a href={s.k.href}>{s.k.namn}</a></td><td class="num">{tal(s.n)}</td><td class="num">{s.red}</td><td class="num">{s.kalas}</td><td class="num">{s.tema}</td></tr>)}</tbody>
+  </table></div>
+  <p>Redskapen är kända för {tal(MED_REDSKAP.length)} av {tal(E.length)} lekplatser i landet, främst där kommunen publicerar öppna data. En nolla betyder därför ofta att uppgiften saknas, inte att redskapet saknas. I hela landet har {kalasAlla} lekplatser minst ett av kalasredskapen.</p>
+
+  <h2 id="grill">Lekplatser med grillplats</h2>
+  <p>Korv eller hamburgare på grillen gör kalaset enkelt. {grill.length} lekplatser i vår data har en grillplats i direkt anslutning:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Med grillplats</th><th>Exempel</th></tr></thead>
+    <tbody>{grillKommuner.map((g) => <tr><td>{g.k ? <a href={g.k.href}>{g.k.namn}</a> : ""}</td><td class="num">{g.n}</td><td>{g.ex.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a></>)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Naturvårdsverket råder att använda en fast grillplats eller grilla på grus eller sand. Kolla alltid om det är eldningsförbud. Det beslutar länsstyrelsen eller kommunen, och det är ditt eget ansvar att ta reda på vad som gäller. Vid vanligt eldningsförbud kan grillning på fasta grillplatser vara tillåten, men vid skärpt förbud är det ofta förbjudet att grilla oavsett plats. Ta med vatten att släcka med och låt aldrig grillen stå utan tillsyn när barnen springer runt.</p>
+
+  <h2 id="tillstand">Behöver man tillstånd för kalas i parken?</h2>
+  <p><strong>Nej, i de flesta fall inte.</strong> Ett barnkalas med inbjudna gäster är ingen offentlig tillställning. Polisen skriver att man inte behöver tillstånd om en offentlig plats bara används tillfälligt och i obetydlig omfattning, utan att inkräkta på någon annans tillstånd.</p>
+  <p>Det ändras om du ställer upp saker. Uppställning av bord, tält, scen eller liknande är exempel där tillstånd oftast krävs, i alla fall inom detaljplanelagt område. Polisen tar då en avgift för handläggningen. Hoppborgar och partytält hör alltså till det du bör fråga kommunen om först. Filtar, en kylväska och några kalasflaggor är inga problem.</p>
+  <p>Kom också ihåg att lekplatsen är allas. Du kan inte stänga av den eller kräva att andra barn går därifrån, och kalasbarnen ska dela redskapen med andra.</p>
+
+  <h2 id="planera">Planera barnkalaset steg för steg</h2>
+  <ol>{steg.steg.map((s) => <li><strong>{s.namn}.</strong> {s.text}</li>)}</ol>
+  <h3>Packlista för kalas utomhus</h3>
+  <p>Filtar eller liggunderlag, kylväska, servetter, våtservetter, soppåsar, plåster, solskydd eller regnkläder beroende på väder, tändstickor om ni ska grilla, en högtalare med låg volym och något att markera er plats med, till exempel ballonger. Ta med extra dricka, eftersom dricksvatten sällan finns på lekplatsen.</p>
+  <h3>Mat som klarar sig ute</h3>
+  <p>Välj mat som går att äta med händerna och inte blir dålig av att stå framme en stund: smörgåsar, frukt, bullar, muffins och korv. Tårta med grädde håller sämre en varm dag. Ställ den i kylväskan tills det är dags.</p>
+
+  <h2 id="lekar">Kalaslekar som fungerar utomhus</h2>
+  <p>På en lekplats leker barnen gärna fritt, så planera bara två eller tre ledda lekar. Bra kalaslekar utomhus:</p>
+  <ul>
+    <li><strong>Skattjakt</strong> med ledtrådar som leder runt lekplatsen. Skatten kan vara godispåsarna.</li>
+    <li><strong>Tipspromenad</strong> med frågor om kalasbarnet, passar från ungefär sex år.</li>
+    <li><strong>Säckhoppning och ägg- och skedlopp</strong> på gräsmattan intill.</li>
+    <li><strong>Under hökens vingar</strong> och <strong>kurragömma</strong>, som inte kräver någon utrustning alls.</li>
+    <li><strong>Dragkamp</strong> för äldre barn, med ett rep och en markerad mittlinje.</li>
+  </ul>
+
+  <h2 id="alder">Kalas efter ålder</h2>
+  <h3>1–3 år</h3>
+  <p>Små barn leker mest bredvid varandra. Välj en inhägnad lekplats med sandlåda och småbarnsgungor, och räkna med att föräldrarna stannar. Ett kort kalas på förmiddagen passar ofta bäst.</p>
+  <h3>4–6 år</h3>
+  <p>Nu fungerar enkla regellekar och tema. En temalekplats med till exempel piratskepp eller borg ger leken en ram utan att du behöver förbereda så mycket.</p>
+  <h3>7–12 år</h3>
+  <p>Äldre barn vill ha fart och utmaning. Lekplatser med linbana, klättervägg, hinderbana eller studsmatta passar, liksom en tipspromenad eller en skattjakt med svårare ledtrådar.</p>
+
+  <h2 id="regn">Om det regnar: inomhusalternativ</h2>
+  <p>Skriv i inbjudan vad som gäller vid regn, så slipper du ringa runt samma morgon. Vanliga reservplaner är att flytta kalaset hem, till ett lekland, en simhall eller en lokal som kommunen, en förening eller ett bostadsområde hyr ut. Lekland och badhus kräver oftast bokning i förväg, så kontrollera villkoren innan du skickar inbjudan. Vi listar inte lekland på lekplatserna.nu, eftersom vi saknar säker data om dem.</p>
+
+  <h2 id="sakerhet">Säkerhet och allergier</h2>
+  <p>Fråga om allergier i inbjudan och märk upp maten. Vid kalas med små barn: plocka undan små föremål som kan fastna i halsen, ett råd som 1177 ger. Sätter någon i halsen och inte kan andas, ring 112. För frågor om allergier och sjukdom, ring 1177 Vårdguiden.</p>
+</Guide>

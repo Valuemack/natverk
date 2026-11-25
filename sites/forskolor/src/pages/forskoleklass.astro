@@ -1,0 +1,160 @@
+---
+// Lång guide: förskoleklass och fritidshem, inklusive övergången till tioårig grundskola hösten 2028.
+// Fakta: skollagen 7 kap. 10 §, 14 kap. 5–8 och 12 §§, övergångsbestämmelser lag 2025:729; Skolverket (tioårig grundskola,
+// statistiknyheter 2026-03-25 och 2026-04-01, Statsbidrag för maxtaxa 2027). Årstabellen räknas fram. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { relaterade } from "../guider.js";
+import { gallerVid, maxAvgift, MAXTAXA } from "../maxtaxa.js";
+
+const PUBLICERAD = "2026-11-25";
+const TIOARIG = 2028; // första hösten med tioårig grundskola
+const M27 = MAXTAXA.find((m) => m.ar === 2027);
+const kr = (n) => `${n.toLocaleString("sv-SE")} kr`;
+
+// Skolstart per födelseår. Skolplikten inträder höstterminen det år barnet fyller sex (7 kap. 10 §).
+const skolstart = (y) => {
+  const sex = y + 6;
+  if (sex >= TIOARIG) return { forsta: `Årskurs 1 ht ${sex}`, not: "Tioårig grundskola" };
+  if (sex === TIOARIG - 1) return { forsta: `Förskoleklass ht ${sex}`, not: `Börjar direkt i årskurs 2 ht ${TIOARIG}` };
+  return { forsta: `Förskoleklass ht ${sex}`, not: `Byter till nästa årskursnummer ht ${TIOARIG}` };
+};
+const AR = Array.from({ length: 8 }, (_, i) => 2019 + i);
+const rader = AR.map((y) => ({ y, ...skolstart(y), oppen: y + 10, slut: y + 13 }));
+
+const avsnitt = [
+  { id: "forskoleklass", rubrik: "Vad är förskoleklass?" },
+  { id: "tioarig", rubrik: "Förskoleklassen försvinner hösten 2028" },
+  { id: "skolstart", rubrik: "När börjar mitt barn skolan?" },
+  { id: "tidigare-senare", rubrik: "Börja tidigare eller skjuta upp skolstarten" },
+  { id: "fritidshem", rubrik: "Vem har rätt till fritidshem?" },
+  { id: "fritids-avgift", rubrik: "Vad kostar fritids?" },
+  { id: "statistik", rubrik: "Förskoleklass och fritidshem i siffror" },
+  { id: "overgang", rubrik: "Övergången från förskolan" },
+];
+
+const fragor = [
+  { fraga: "Vilken ålder börjar man förskoleklass?", svar: "Skolplikten börjar höstterminen det kalenderår barnet fyller sex år, och det är då de flesta börjar förskoleklass. Läsåret 2025/26 fyllde 99 procent av eleverna i förskoleklass sex år under året." },
+  { fraga: "Är förskoleklass obligatorisk?", svar: "Ja. Sedan höstterminen 2018 är förskoleklassen en obligatorisk skolform. Från hösten 2028 ersätts den av en ny årskurs 1 i den tioåriga grundskolan." },
+  { fraga: "När försvinner förskoleklassen?", svar: `Förskoleklassen upphör som skolform när grundskolan blir tioårig hösten ${TIOARIG}. Barn födda 2022 blir de första som börjar direkt i årskurs 1. Barn som går i förskoleklass läsåret 2027/28 börjar sedan direkt i årskurs 2.` },
+  { fraga: "Hur länge får man gå på fritids?", svar: "Fritidshem ska erbjudas till och med vårterminen det år eleven fyller 13 år. Från höstterminen det år eleven fyller 10 får kommunen erbjuda öppen fritidsverksamhet i stället." },
+  { fraga: "Har alla barn rätt till fritids?", svar: "Barnet har rätt till fritidshem i den omfattning som behövs med hänsyn till föräldrarnas arbete eller studier, eller om barnet har ett eget behov på grund av familjens situation. Barn som behöver särskilt stöd ska också erbjudas fritidshem." },
+  { fraga: "Vad kostar fritids?", svar: `De flesta kommuner följer maxtaxan. År 2027 är avgiften högst 2 procent av hushållets inkomst för det första barnet, men högst ${kr(maxAvgift(M27, "fritidshem", 1))} i månaden. För andra och tredje barnet är det högst ${kr(maxAvgift(M27, "fritidshem", 2))}.` },
+  { fraga: "Är fritids öppet på loven?", svar: "Ja. Fritidshemmet ska erbjudas den del av dagen då eleverna inte är i skolan och under lov. Det behöver inte vara öppet på kvällar, nätter, helger eller i samband med större helger." },
+];
+
+const titel = "Förskoleklass och fritidshem – skolstart, fritids och 2028";
+const beskrivning = "När barnet börjar förskoleklass eller årskurs 1, vad som händer när grundskolan blir tioårig 2028, vem som har rätt till fritids och vad det kostar.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Förskoleklass och fritidshem"
+  svar={`Barn börjar <strong>förskoleklass</strong> höstterminen det år de fyller sex, och förskoleklassen är obligatorisk. Från <strong>hösten 2028</strong> blir grundskolan tioårig: förskoleklassen upphör och barn födda 2022 börjar direkt i årskurs 1. <strong>Fritidshem</strong> erbjuds före och efter skolan till och med vårterminen det år barnet fyller 13, om föräldrarna arbetar eller studerar.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Förskoleklass och fritidshem", href: "/forskoleklass/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    ...relaterade("/maxtaxa/", "/allman-forskola/", "/lpfo-18/", "/pedagogisk-omsorg/", "/forskollarare/"),
+  ]}
+  kallor={[
+    { namn: "Skollag (2010:800), 7 kap. 10 § och 14 kap.", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/skollag-2010800_sfs-2010-800/", text: "skolplikt, fritidshem och övergångsbestämmelserna till lag 2025:729", datum: "2026-11-25" },
+    { namn: "Skolverket – Tioårig grundskola", url: "https://www.skolverket.se/styrning-och-ansvar/en-skola-i-forandring/tioarig-grundskola", text: "införande hösten 2028, barn födda 2022 och nya årskursbeteckningar", datum: "2026-11-25" },
+    { namn: "Skolverket – Antalet elever i förskoleklass fortsätter att minska", url: "https://www.skolverket.se/statistik-och-utvarderingar/statistik-om-forskola-och-skola/fler-statistiknyheter/statistik/2026-03-25-antalet-elever-i-forskoleklass-fortsatter-att-minska", text: "statistik läsåret 2025/26", datum: "2026-11-25" },
+    { namn: "Skolverket – Elever och personal i fritidshemmet läsåret 2025/26", url: "https://www.skolverket.se/statistik-och-utvarderingar/statistik-om-forskola-och-skola/fler-statistiknyheter/statistik/2026-04-01-elever-och-personal-i-fritidshemmet-lasaret-2025-26", text: "elever, avdelningar och personal", datum: "2026-11-25" },
+    { namn: "Skolverket – Statsbidrag för maxtaxa 2027", url: "https://www.skolverket.se/styrning-och-ansvar/statsbidrag/hitta-statsbidrag/statsbidrag-for-maxtaxa-2027", text: "högsta avgifter i fritidshemmet 2027", datum: "2026-11-25" },
+    { namn: "Skolverket – Förskoleklass och fritidshem", url: "https://www.skolverket.se/undervisning/forskoleklass-och-fritidshem", text: "läroplanens delar för förskoleklass och fritidshem", datum: "2026-11-25" },
+    { namn: "Läroplan för förskolan (Lpfö 18), avsnitt 2.5", url: "https://www.skolverket.se/undervisning/forskolan/laroplan-lpfo-18-for-forskolan", text: "övergång och samverkan", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="forskoleklass">Vad är förskoleklass?</h2>
+  <p>Förskoleklassen är det första året i skolan, mellan förskolan och årskurs 1. Den har varit en <strong>obligatorisk skolform sedan höstterminen 2018</strong>. Skolplikten inträder höstterminen det kalenderår då barnet fyller sex år (skollagen 7 kap. 10 §). Det spelar alltså ingen roll om barnet fyller år i januari eller december.</p>
+  <p>Undervisningen i förskoleklassen styrs av läroplanen för grundskolan, Lgr22. Skolverket anger att förskoleklassen följer läroplanens två första delar och den tredje delen, som är skriven särskilt för förskoleklassen. Barnen lär sig genom lek och skapande, men med en tydligare skolstruktur än i förskolan.</p>
+  <p>Hur och när du väljer skola bestämmer hemkommunen, så håll koll på kommunens webbplats under året innan barnet fyller sex. Förskoleklass finns både i kommunala och fristående skolor.</p>
+
+  <h2 id="tioarig">Förskoleklassen försvinner hösten 2028</h2>
+  <p>Från <strong>hösten 2028 blir grundskolan tioårig</strong>. Riksdagen har beslutat ändringen i skollagen (lag 2025:729), och Skolverket beskriver hur den genomförs. Förskoleklassen upphör som egen skolform och ersätts av en ny årskurs 1. Lågstadiet blir fyraårigt.</p>
+  <ul>
+    <li><strong>Barn födda 2022</strong> blir de första som börjar i årskurs 1 i stället för i förskoleklass.</li>
+    <li><strong>Barn som går i förskoleklass läsåret 2027/28</strong> (födda 2021) börjar direkt i årskurs 2 hösten 2028, enligt övergångsbestämmelserna.</li>
+    <li><strong>Äldre elever</strong> byter årskursnummer. Den som skulle ha börjat årskurs 4 hösten 2028 börjar i stället i årskurs 5. Ingen hoppar över något år, och grundskolan slutar vid samma ålder som i dag.</li>
+  </ul>
+  <p>Skolverket skriver att mycket blir sig likt för sexåringarna. De ska fortfarande lära sig genom lek, rörelse och skapande, men undervisningen blir mer strukturerad och likvärdig över landet, med fokus på att läsa, skriva och räkna.</p>
+
+  <h2 id="skolstart">När börjar mitt barn skolan?</h2>
+  <p>Tabellen räknar fram det första skolåret, när kommunen får erbjuda öppen fritidsverksamhet i stället för fritids och sista terminen med rätt till fritidshem, per födelseår. Den bygger på skollagen och övergångsreglerna för den tioåriga grundskolan.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Född</th><th>Första skolåret</th><th>Hösten 2028</th><th class="num">Öppen fritids möjlig från</th><th class="num">Fritids t.o.m.</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td>{r.y}</td><td>{r.forsta}</td><td>{r.not}</td><td class="num">ht {r.oppen}</td><td class="num">vt {r.slut}</td></tr>)}</tbody>
+  </table></div>
+  <section class="sokverktyg" id="skolstart-rakna">
+    <h3>Räkna för ditt barn</h3>
+    <form class="berakning" onsubmit="return false">
+      <label>Barnets födelseår <input type="number" name="ar" min="2014" max="2030" value="2022" inputmode="numeric" /></label>
+      <output aria-live="polite"></output>
+    </form>
+  </section>
+
+  <h2 id="tidigare-senare">Börja tidigare eller skjuta upp skolstarten</h2>
+  <p>Enligt Skolverket går det att tidigarelägga eller senarelägga skolstarten ett år. Läsåret 2025/26 fyllde 0,3 procent av eleverna i förskoleklass fem år och 0,6 procent sju år under året.</p>
+  <ul>
+    <li><strong>Skjuta upp:</strong> om det finns särskilda skäl får barnet börja fullgöra skolplikten först höstterminen det år det fyller sju (7 kap. 10 §). Det är hemkommunen som prövar frågan, efter begäran från vårdnadshavarna. Ett barn med uppskjuten skolplikt ska erbjudas förskola i stället.</li>
+    <li><strong>Börja tidigare:</strong> vårdnadshavarna kan begära att barnet börjar ett år tidigare. Bland barnen som började förskoleklass året de fyllde fem var 60 procent flickor.</li>
+  </ul>
+  <p>Kontakta kommunen i god tid före ansökningsperioden om du funderar på något av alternativen.</p>
+
+  <h2 id="fritidshem">Vem har rätt till fritidshem?</h2>
+  <p>Fritidshemmet kompletterar skolan och ska erbjuda en meningsfull fritid och rekreation, men också stimulera elevernas utveckling och lärande. Enligt skollagen 14 kap. ska eleven erbjudas fritidshem:</p>
+  <ul>
+    <li>i den omfattning som behövs med hänsyn till <strong>föräldrarnas förvärvsarbete eller studier</strong> (5 §),</li>
+    <li>om eleven har ett eget behov på grund av familjens situation (5 §),</li>
+    <li>om eleven behöver särskilt stöd i form av fritidshem (6 §).</li>
+  </ul>
+  <p>Rätten gäller <strong>till och med vårterminen det år eleven fyller 13</strong>. Från höstterminen det år eleven fyller 10 får kommunen i stället erbjuda öppen fritidsverksamhet, där barnen inte är inskrivna på samma sätt (7 §). Fritidshemmet ska vara öppet före och efter skoldagen och under lov, men behöver inte hålla öppet kvällar, nätter, helger eller vid större helger (8 §). För omsorg på obekväm tid, se <a href="/pedagogisk-omsorg/">pedagogisk omsorg och nattis</a>.</p>
+
+  <h2 id="fritids-avgift">Vad kostar fritids?</h2>
+  <p>Kommunen får ta ut avgift för fritidshem, och avgiften ska vara skälig (14 kap. 12 §). Alla kommuner tillämpar maxtaxan. För fritidshem är taket lägre än för förskola:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Andel av inkomsten</th><th class="num">Högst per månad 2027</th></tr></thead>
+    <tbody>{[1, 2, 3].map((n) => <tr><th scope="row">Barn {n}</th><td class="num">{M27.fritidshem[n - 1] * 100} %</td><td class="num">{kr(maxAvgift(M27, "fritidshem", n))}</td></tr>)}
+      <tr><th scope="row">Barn 4 och fler</th><td class="num">0 %</td><td class="num">0 kr</td></tr></tbody>
+  </table></div>
+  <p>Det yngsta barnet i hushållet räknas som barn 1, oavsett om det går i förskola eller fritids. Har du ett barn i förskolan och ett på fritids betalar du alltså förskoleavgiften för det yngre barnet och den lägre fritidsavgiften för det äldre. Räkna ut din avgift med <a href="/maxtaxa/">maxtaxekalkylatorn</a>.</p>
+
+  <h2 id="statistik">Förskoleklass och fritidshem i siffror</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Läsåret 2025/26</th><th class="num">Värde</th></tr></thead>
+    <tbody>
+      <tr><td>Elever i förskoleklass</td><td class="num">knappt 116 000</td></tr>
+      <tr><td>Skolenheter med förskoleklass</td><td class="num">3 478</td></tr>
+      <tr><td>Elever i förskoleklass med annat modersmål än svenska</td><td class="num">25 %</td></tr>
+      <tr><td>Elever i fritidshem</td><td class="num">knappt 497 000</td></tr>
+      <tr><td>Andel av alla barn 6–12 år som går på fritids</td><td class="num">58 %</td></tr>
+      <tr><td>Elever per fritidshemsavdelning, snitt</td><td class="num">35</td></tr>
+      <tr><td>Lärare i fritidshem med legitimation och behörighet</td><td class="num">50 %</td></tr>
+    </tbody>
+  </table></div>
+  <p>Antalet elever i förskoleklass har minskat tre år i rad, i takt med att det föds färre barn. I fritidshem är avdelningarna i snitt något större hos enskilda huvudmän (37 elever) än hos kommunala (35), men den vanligaste storleken är 20–29 elever för båda.</p>
+
+  <h2 id="overgang">Övergången från förskolan</h2>
+  <p>Enligt läroplanen för förskolan, avsnitt 2.5, ska förskolan samverka med förskoleklassen, skolan och fritidshemmet. Inför övergången ska de utbyta kunskaper och information om innehållet i utbildningen, och barn i behov av särskilt stöd ska uppmärksammas särskilt. Arbetslaget ska förbereda både barnen och vårdnadshavarna.</p>
+  <p>Så kan du förbereda ditt barn:</p>
+  <ul>
+    <li>Gå förbi skolan och skolgården några gånger under våren.</li>
+    <li>Fråga förskolan om de besöker skolan med barngruppen.</li>
+    <li>Ansök om fritidsplats samtidigt som du väljer skola, så att platsen finns från första dagen.</li>
+    <li>Berätta för förskolan om sådant skolan behöver veta, till exempel allergier eller behov av stöd.</li>
+  </ul>
+
+  <script is:inline slot="skript">
+    (() => {
+      const f = document.querySelector("#skolstart-rakna form"); if (!f) return;
+      const ut = f.querySelector("output");
+      const rakna = () => {
+        const y = Math.round(+f.ar.value);
+        if (!y || y < 2010 || y > 2035) { ut.textContent = "Ange ett födelseår."; return; }
+        const sex = y + 6;
+        let start = sex >= 2028 ? `årskurs 1 hösten ${sex}` : `förskoleklass hösten ${sex}`;
+        if (sex === 2027) start += ", och sedan direkt årskurs 2 hösten 2028";
+        ut.innerHTML = `Ett barn fött ${y} börjar <strong>${start}</strong>. Allmän förskola från hösten ${y + 3}. Öppen fritids kan erbjudas från hösten ${y + 10}, och rätten till fritidshem gäller till och med våren ${y + 13}.`;
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Guide>

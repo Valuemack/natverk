@@ -1,0 +1,16 @@
+---
+// Hubb för de långa guiderna (listan finns i src/guider.js). Publicerad 2026-11-25.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../../site.js";
+import { GUIDER } from "../../guider.js";
+---
+<Layout site={SITE} titel="Guider om förskolan – plats, avgift, läroplan och personal"
+  beskrivning="Guider om förskolan: ansöka om plats, maxtaxa 2027, allmän förskola, inskolning, läroplanen Lpfö 18, förskollärare och skillnaden kommunal–fristående."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad="2026-11-25">
+  <h1>Guider om förskolan</h1>
+  <p class="svar">Här finns guider om det föräldrar oftast undrar över: hur du får förskoleplats, vad det kostar, hur inskolningen går till och vad läroplanen säger. Fakta är kontrollerade mot skollagen, Skolverket och andra myndigheter, med källor på varje sida.</p>
+  <ul class="enheter">
+    {GUIDER.map((g) => <li><a class="namn" href={g.href}>{g.namn}</a><span class="rad">{g.text}</span></li>)}
+  </ul>
+  <p>Vill du jämföra kommunerna? Se <a href="/jamfor/">barngrupper och förskollärare i alla kommuner</a>.</p>
+</Layout>

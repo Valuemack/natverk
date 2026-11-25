@@ -1,0 +1,170 @@
+---
+// Lång guide: badvattenkvalitet – så läser du provsvaren. Gränsvärden, klassning och provtagningsregler från
+// HaV:s vägledning kring EU-bad (rapport 2025:7) och badvattenförordningen. Egen data: alla provsvar och
+// klassningar i HaV:s öppna data. Kalkylatorn bedömer ett enskilt prov enligt HaV:s tabell 4. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, ALLA_PROV, PROV_AR, KLASS_AR, klassAr, tal, pct } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const nyast = KLASS_AR[0];
+const ar0 = PROV_AR[0], ar1 = PROV_AR.at(-1);
+const BED = ["Tjänligt", "Tjänligt m. Anm.", "Otjänligt"];
+const P = ALLA_PROV.filter((p) => BED.includes(p.bedomning));
+const arRader = PROV_AR.map((y) => { const v = P.filter((p) => p.datum.startsWith(`${y}`)); return { y, n: v.length, b: BED.map((b) => v.filter((p) => p.bedomning === b).length) }; });
+const otj = P.filter((p) => p.bedomning === "Otjänligt");
+const otjEcoli = otj.filter((p) => p.ecoli_bedomning === "Otjänligt").length;
+const otjEntero = otj.filter((p) => p.enterokocker_bedomning === "Otjänligt").length;
+const otjBada = otj.filter((p) => p.ecoli_bedomning === "Otjänligt" && p.enterokocker_bedomning === "Otjänligt").length;
+const kallor = E.filter((e) => e.extra?.fororeningskallor?.length);
+const kalla = (re) => kallor.filter((e) => e.extra.fororeningskallor.some((k) => re.test(k))).length;
+const KALLOR = [["avlopp eller reningsverk", /avlopp|reningsverk|bräddning/i], ["dagvatten och diken", /dagvatten|dike/i], ["fåglar", /fåg/i], ["båtar och hamnar", /båt|hamn/i], ["hundar", /hund/i], ["jordbruk och andra djur", /jordbruk|djur|bete/i]].map(([namn, re]) => ({ namn, n: kalla(re) })).sort((a, b) => b.n - a.n);
+const mindreAn = ALLA_PROV.filter((p) => p.ecoli_operator === "<" || p.enterokocker_operator === "<").length;
+
+// Klassningen senaste året.
+const norm = (k) => (k ?? "").replace("Tillfredställande", "Tillfredsställande");
+const KLASSER = ["Utmärkt kvalitet", "Bra kvalitet", "Tillfredsställande kvalitet", "Dålig kvalitet", "Ej klassificerad", "Ny badplats", "Otillräckligt provtagen"];
+const klassAntal = KLASSER.map((k) => ({ k, n: E.filter((e) => norm(klassAr(e, nyast)) === k).length }));
+const klassade = klassAntal.slice(0, 4).reduce((a, b) => a + b.n, 0);
+const lanRader = LAN.map((l) => {
+  const v = E.filter((e) => e.lan === l.namn).map((e) => norm(klassAr(e, nyast)));
+  const kl = v.filter((k) => /utmärkt|bra|tillfreds|dålig/i.test(k));
+  return { l, kl: kl.length, utm: kl.filter((k) => /utmärkt/i.test(k)).length, dalig: kl.filter((k) => /dålig/i.test(k)).length };
+}).filter((r) => r.kl >= 10).sort((a, b) => b.utm / b.kl - a.utm / a.kl);
+
+const SASONG = [
+  { period: "21 juni–20 augusti", lan: "Blekinge, Skåne, Halland och Västra Götaland", prov: 4 },
+  { period: "21 juni–15 augusti", lan: "Stockholm, Uppsala, Södermanland, Östergötland, Jönköping, Kronoberg, Kalmar, Gotland, Värmland, Örebro, Västmanland, Dalarna och Gävleborg", prov: 3 },
+  { period: "15 juli–15 augusti", lan: "Västernorrland, Jämtland, Västerbotten och Norrbotten", prov: 3 },
+];
+
+const avsnitt = [
+  { id: "provsvar", rubrik: "Tjänligt, med anmärkning eller otjänligt" },
+  { id: "kalkylator", rubrik: "Bedöm ett provsvar själv" },
+  { id: "bakterier", rubrik: "E. coli och intestinala enterokocker" },
+  { id: "statistik", rubrik: `Så ofta är vattnet otjänligt – ${ar0}–${ar1}` },
+  { id: "klassning", rubrik: "Klassningen: utmärkt, bra, tillfredsställande eller dålig" },
+  { id: "lan", rubrik: `Vattenkvalitet per län ${nyast}` },
+  { id: "provtagning", rubrik: "Hur ofta tas proverna?" },
+  { id: "avradan", rubrik: "När kommunen avråder från bad" },
+];
+
+const fragor = [
+  { fraga: "Vad betyder tjänligt med anmärkning?", svar: "Att bakteriehalten i provet är något förhöjd, men inte så hög att kommunen behöver avråda från bad. Kommunen bör följa upp varför halten är förhöjd och ta ett nytt prov snarast." },
+  { fraga: "När är badvattnet otjänligt?", svar: "När E. coli överstiger 1 000 eller intestinala enterokocker överstiger 300 per 100 ml. Det tyder på en fekal förorening, och kommunen ska då informera och varna allmänheten, oftast genom att avråda från bad." },
+  { fraga: "Var kan jag kolla vattenkvaliteten på en badplats?", svar: "Varje badplats sida här visar de senaste provsvaren, klassningen och om kommunen avråder från bad. Uppgifterna kommer från Havs- och vattenmyndighetens öppna data, som kommunerna rapporterar till." },
+  { fraga: "Hur klassas badvattnet?", svar: "EU-baden klassas varje år som utmärkt, bra, tillfredsställande eller dålig kvalitet. Klassningen bygger på provsvaren för E. coli och intestinala enterokocker från den senaste och de tre föregående badsäsongerna." },
+  { fraga: "Hur ofta tas vattenprover på badplatser?", svar: "Vid EU-bad minst tre eller fyra gånger per säsong beroende på län, inklusive ett försäsongsprov, och med högst 30 dagar mellan proverna. Kommunen får ta fler prover." },
+  { fraga: "Ingår algblomning i vattenkvaliteten?", svar: "Nej. Klassningen och provsvaret gäller bara bakterierna E. coli och intestinala enterokocker. Algblomning bedöms separat, och kommunen kan avråda från bad även när bakterieproverna är bra." },
+  { fraga: "Vad betyder < före siffran i provsvaret?", svar: "Ett mindre än-tecken betyder att halten var lägre än det angivna värdet, oftast den lägsta nivå som analysen kan mäta. Det är ett bra resultat." },
+];
+
+const titel = `Badvattenkvalitet – så läser du provsvaren`;
+const beskrivning = `Vad betyder tjänligt, tjänligt med anmärkning och otjänligt? Gränsvärden för E. coli och enterokocker, kalkylator, klassningen och statistik över ${tal(P.length)} prov.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Badvattenkvalitet: så läser du provsvaren"
+  svar={`Ett vattenprov är <strong>tjänligt</strong> när både E. coli och intestinala enterokocker ligger på högst 100 per 100 ml. Över det blir det <strong>tjänligt med anmärkning</strong>, och vid över 1 000 E. coli eller över 300 enterokocker <strong>otjänligt</strong>. ${pct(otj.length, P.length, 1)} av ${tal(P.length)} prov ${ar0}–${ar1} var otjänliga. Klassningen utmärkt–dålig bygger på fyra somrars prover.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bäst vattenkvalitet", href: "/basta-vattenkvalitet/", text: `Alla badplatser med utmärkt kvalitet` },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten tre år i rad" },
+    { namn: "Algblomning", href: "/algblomning/", text: "Det som inte syns i provsvaret" },
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Temperaturen vid provtagningen" },
+  ]}
+  kallor={[
+    { namn: "HaV – Vägledning kring EU-bad (rapport 2025:7)", url: "https://www.havochvatten.se/data-kartor-och-rapporter/rapporter-och-andra-publikationer/publikationer/2025-06-12-vagledning-kring-eu-bad.html", text: "gränsvärden (tabell 4), klassning, provtagning, omprov och skyltning", datum: "2026-11-25" },
+    { namn: "HaV – Fakta om badvatten", url: "https://www.havochvatten.se/badplatser-och-badvatten/fakta-om-badvatten.html", text: "EU-bad, badsäsong och avrådan", datum: "2026-11-25" },
+    { namn: "Badvattenförordning (2008:218)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/badvattenforordning-2008218_sfs-2008-218/", text: "kommunens ansvar, badvattenprofil och klassning", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "provsvar och klassningar", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="provsvar">Tjänligt, med anmärkning eller otjänligt</h2>
+  <p>Varje gång kommunen tar ett vattenprov vid en badplats får provet en av tre bedömningar. Den bygger på halten av två bakterier, <strong>E. coli</strong> och <strong>intestinala enterokocker</strong>, räknat i kolonibildande enheter (cfu) per 100 milliliter vatten. Havs- och vattenmyndigheten (HaV) använder dessa gränser:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bakterie</th><th class="num">Tjänligt</th><th class="num">Tjänligt med anmärkning</th><th class="num">Otjänligt</th></tr></thead>
+    <tbody>
+      <tr><td>E. coli</td><td class="num">högst 100</td><td class="num">101–1 000</td><td class="num">över 1 000</td></tr>
+      <tr><td>Intestinala enterokocker</td><td class="num">högst 100</td><td class="num">101–300</td><td class="num">över 300</td></tr>
+    </tbody>
+  </table></div>
+  <p>Den sämsta av de två bakterierna avgör. Har provet 50 E. coli men 400 enterokocker är det alltså otjänligt. Så här beskriver HaV bedömningarna:</p>
+  <ul>
+    <li><strong>Tjänligt:</strong> halterna är så låga att de inte tyder på en fekal förorening som kan innebära en hälsorisk.</li>
+    <li><strong>Tjänligt med anmärkning:</strong> halten är något förhöjd, men kommunen behöver inte avråda från bad. Kommunen bör bevaka utvecklingen och ta ett omprov.</li>
+    <li><strong>Otjänligt:</strong> en eller båda bakterierna finns i höga halter, ett tecken på fekal förorening. Då är risken större att det även finns andra mikroorganismer som man kan bli sjuk av.</li>
+  </ul>
+  <p>Gränserna kommer från det äldre badvattendirektivet. Det nuvarande EU-direktivet saknar gränser för enskilda prov, och HaV använder därför de tidigare värdena tills nya riktlinjer finns.</p>
+
+  <h2 id="kalkylator">Bedöm ett provsvar själv</h2>
+  <p>Skriv in värdena från provsvaret, i cfu eller MPN per 100 ml. HaV likställer de två enheterna.</p>
+  <form id="prov-kalk" class="kalkylator" onsubmit="return false">
+    <label>E. coli per 100 ml <input id="ecoli" type="number" min="0" inputmode="numeric" value="10" /></label>
+    <label>Intestinala enterokocker per 100 ml <input id="entero" type="number" min="0" inputmode="numeric" value="10" /></label>
+    <p class="svar" id="prov-svar" aria-live="polite">Tjänligt.</p>
+  </form>
+  <p>Kalkylatorn gör samma bedömning som gäller för enskilda prov. Den säger ingenting om algblomning, som bedöms separat.</p>
+
+  <h2 id="bakterier">E. coli och intestinala enterokocker</h2>
+  <p>E. coli och intestinala enterokocker är <strong>indikatorbakterier</strong>. HaV beskriver höga halter som ett tecken på att det har skett en fekal förorening, alltså att avföring har kommit ut i vattnet. Då är risken större att vattnet också innehåller andra mikroorganismer som man kan bli sjuk av.</p>
+  <p>Var föroreningen kommer ifrån ska kommunen utreda i badplatsens badvattenprofil, en skriftlig redovisning med karta över möjliga föroreningskällor. För {kallor.length} badplatser finns källorna med i HaV:s öppna data. Vanligast är {KALLOR.slice(0, 4).map((k) => `${k.namn} (${k.n})`).join(", ")}.</p>
+  <p>I provsvaren här ser du ibland ett mindre än-tecken, till exempel &lt;10. Det betyder att halten var lägre än det angivna värdet, oftast den lägsta nivå som analysen kan mäta. {pct(mindreAn, ALLA_PROV.length)} av alla prov i datan har minst ett sådant värde.</p>
+  <p>Ett prov tar några dagar att analysera. HaV påpekar därför att bedömningen inte är någon garanti för att vattnet är bra just idag. Det finns i dag inga bestämmelser om realtidsanalys av badvatten.</p>
+
+  <h2 id="statistik">Så ofta är vattnet otjänligt – {ar0}–{ar1}</h2>
+  <p>Vi har gått igenom {tal(P.length)} bedömda prov från Sveriges badplatser:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Prov</th><th class="num">Tjänligt</th><th class="num">Med anmärkning</th><th class="num">Otjänligt</th></tr></thead>
+    <tbody>{arRader.map((r) => <tr><td>{r.y}</td><td class="num">{tal(r.n)}</td><td class="num">{pct(r.b[0], r.n, 1)}</td><td class="num">{pct(r.b[1], r.n, 1)}</td><td class="num">{pct(r.b[2], r.n, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Av de {tal(otj.length)} otjänliga proven berodde {pct(otjEcoli, otj.length)} på för mycket E. coli och {pct(otjEntero, otj.length)} på för mycket enterokocker. I {pct(otjBada, otj.length)} av fallen var båda för höga. Efter ett otjänligt prov bör kommunen enligt HaV ta ett kontrollprov inom tre dygn, så många otjänliga prov följs av ett nytt prov kort därefter.</p>
+
+  <h2 id="klassning">Klassningen: utmärkt, bra, tillfredsställande eller dålig</h2>
+  <p>Klassningen är något annat än provsvaret. Den är ett betyg för hela badplatsen och bygger enligt badvattenförordningen och HaV:s föreskrifter på provsvaren från den senaste och de tre föregående badsäsongerna. Gränserna för klasserna skiljer sig mellan kustvatten och inlandsvatten. Klassningen räknas ut efter säsongen och publiceras i slutet av februari, och den gäller sedan inför nästa sommar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Klassning {nyast}</th><th class="num">Badplatser</th></tr></thead>
+    <tbody>{klassAntal.map((k) => <tr><td>{k.k}</td><td class="num">{tal(k.n)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Av de {tal(klassade)} badplatser som fick en klassning var {pct(klassAntal[0].n, klassade)} utmärkta. "Ej klassificerad" gäller oftast badplatser som inte är EU-bad och därför inte provtas enligt kraven. "Otillräckligt provtagen" betyder att ett EU-bad har tagit för få prov under någon av säsongerna, och då tappar badplatsen sin klassning i minst fyra år. Algblomning, skräp och andra föroreningar ingår inte i klassningen.</p>
+
+  <h2 id="lan">Vattenkvalitet per län {nyast}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Klassade</th><th class="num">Utmärkt</th><th class="num">Andel utmärkt</th><th class="num">Dålig</th></tr></thead>
+    <tbody>{lanRader.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{r.kl}</td><td class="num">{r.utm}</td><td class="num">{pct(r.utm, r.kl)}</td><td class="num">{r.dalig}</td></tr>)}</tbody>
+  </table></div>
+  <p>Hela listan över badplatser med utmärkt kvalitet, län för län, finns på sidan <a href="/basta-vattenkvalitet/">badplatser med bäst vattenkvalitet</a>.</p>
+
+  <h2 id="provtagning">Hur ofta tas proverna?</h2>
+  <p>Badsäsongen och minsta antalet prov vid EU-bad skiljer sig mellan länen:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Badsäsong</th><th>Län</th><th class="num">Minst antal prov</th></tr></thead>
+    <tbody>{SASONG.map((s) => <tr><td>{s.period}</td><td>{s.lan}</td><td class="num">{s.prov}</td></tr>)}</tbody>
+  </table></div>
+  <p>I antalet ingår ett försäsongsprov, som HaV rekommenderar tas minst elva dygn före säsongsstart. Under säsongen får det inte gå mer än 30 dagar mellan proverna. Provet tas där flest badar, på 30 centimeters djup, och ska analyseras inom 24 timmar. Kommunen ska rapportera resultatet senast tio arbetsdagar efter provtagningen. Många kommuner tar fler prov än minimikravet, vilket ger en bättre bild av vattnet.</p>
+  <p>EU-bad är badplatser där kommunen räknar med fler än ungefär 200 badande per dag. Övriga badplatser omfattas inte av kraven, men HaV rekommenderar att de provtas på samma sätt.</p>
+
+  <h2 id="avradan">När kommunen avråder från bad</h2>
+  <p>Vid ett otjänligt prov ska kommunen genast informera på badplatsen och bör avråda från bad. Ett kontrollprov bör tas inom tre dygn. Visar det att föroreningen har upphört räknas den som kortvarig, och kommunen tar ett ersättningsprov inom sju dygn. Skylten kan tas ner så snart ett nytt prov är tjänligt eller tjänligt med anmärkning.</p>
+  <p>En badplats som klassats som dålig ska ha skylt om detta och avrådan från bad hela säsongen. Har den klassats som dålig fem år i rad ska den avregistreras som EU-bad, och kommunen ska då avråda permanent. Kommunen kan också avråda tillfälligt vid algblomning eller av andra skäl. Aktuella avrådanden visas på badplatsens sida här.</p>
+</Guide>
+<script is:inline slot="skript">
+(() => {
+  const e = document.getElementById("ecoli"), n = document.getElementById("entero"), s = document.getElementById("prov-svar");
+  if (!e || !n || !s) return;
+  const bed = (v, anm, otj) => (v > otj ? 2 : v > anm ? 1 : 0);
+  const TEXT = ["Tjänligt. Halterna är låga och tyder inte på någon fekal förorening.", "Tjänligt med anmärkning. Halten är något förhöjd, men kommunen behöver inte avråda från bad.", "Otjänligt. Höga bakteriehalter tyder på fekal förorening. Kommunen bör avråda från bad."];
+  const kor = () => {
+    const a = parseFloat(e.value), b = parseFloat(n.value);
+    if (isNaN(a) || isNaN(b) || a < 0 || b < 0) { s.textContent = "Fyll i båda värdena."; return; }
+    const ea = bed(a, 100, 1000), eb = bed(b, 100, 300), k = Math.max(ea, eb);
+    const orsak = k === 0 ? "" : ea === k && eb === k ? " Båda bakterierna avgör." : ea === k ? " Det är E. coli som avgör." : " Det är enterokockerna som avgör.";
+    s.textContent = TEXT[k] + orsak;
+  };
+  e.addEventListener("input", kor); n.addEventListener("input", kor); kor();
+})();
+</script>
+<style>
+  .kalkylator { display: grid; gap: .6rem; max-width: 26rem; margin: 1rem 0; }
+  .kalkylator label { display: grid; gap: .2rem; font-weight: 600; }
+  .kalkylator input { font: inherit; padding: .45rem .6rem; border: 1px solid #b8c4cc; border-radius: 6px; }
+</style>

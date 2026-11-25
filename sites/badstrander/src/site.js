@@ -33,7 +33,7 @@ export const SITE = {
   beskrivning: "Alla badplatser och badstränder i Sverige med vattenkvalitet, provsvar och badtemperatur – från Havs- och vattenmyndighetens öppna data. Uppdateras varje natt.",
   organisation: "badstränder.se",
   farg: "#0b6e99",
-  meny: [{"namn":"Bästa vattenkvalitet","href":"/basta-vattenkvalitet/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Bästa vattenkvalitet","href":"/basta-vattenkvalitet/"},{"namn":"Guider","href":"/guider/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om badstränder.se", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

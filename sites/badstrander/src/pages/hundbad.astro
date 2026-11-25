@@ -1,0 +1,118 @@
+---
+// Lång guide: hundbad och hundstränder. Listan bygger på kommunernas egna beskrivningar i HaV:s badplatsregister
+// (hundbad och hundförbud). Regler från ordningslagen, Naturvårdsverket och Jordbruksverket. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, text, tal, perLan } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const HUNDBAD = /hundbad|hundstrand|hundbadplats|badplats för hundar|hundar får bada|kopplade hundar är välkomna/i;
+const FORBUD = /hundförbud|förbud för hundar|hundar (är )?(förbjudna|inte tillåtna|ej tillåtna)|förbjudet att (bada|ta med|rasta) hund|hundar får (ej|inte)|inga hundar/i;
+const MAN = "januari|februari|mars|april|maj|juni|juli|augusti|september|oktober";
+const PER = new RegExp(`(\\d{1,2})\\s*(?:\\/\\s*(\\d{1,2})|(${MAN}))\\s*(?:-|–|till|och)\\s*(\\d{1,2})\\s*(?:\\/\\s*(\\d{1,2})|(${MAN}))`, "i");
+const MNR = Object.fromEntries(MAN.split("|").map((m, i) => [m, i + 1]));
+const MNAMN = ["", ...MAN.split("|")];
+
+const hundbad = E.filter((e) => HUNDBAD.test(text(e)));
+const hundbadLan = perLan(hundbad);
+const forbud = E.filter((e) => FORBUD.test(text(e)));
+// Förbudsperiod ur kommunens text, normaliserad till "1 juni–31 augusti".
+const period = (e) => {
+  const t = text(e), i = t.search(FORBUD), s = t.slice(Math.max(0, i - 100), i + 160), p = s.match(PER);
+  if (!p) return null;
+  const m1 = p[2] ? +p[2] : MNR[p[3].toLowerCase()], m2 = p[5] ? +p[5] : MNR[p[6].toLowerCase()];
+  return m1 && m2 ? `${+p[1]} ${MNAMN[m1]}–${+p[4]} ${MNAMN[m2]}` : null;
+};
+const perioder = Object.entries(forbud.reduce((m, e) => { const k = period(e) ?? "Ingen period angiven"; m[k] = (m[k] ?? 0) + 1; return m; }, {}))
+  .sort((a, b) => b[1] - a[1]);
+const forbudKommuner = Object.entries(forbud.reduce((m, e) => ((m[e.kommun] = (m[e.kommun] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const bada = (k) => hundbad.filter((e) => e.kommun === k);
+const STAD = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Helsingborg", "Kalmar"];
+
+const avsnitt = [
+  { id: "regler", rubrik: "Får hunden följa med till stranden?" },
+  { id: "lista", rubrik: `Hundbad i Sverige – ${hundbad.length} badplatser` },
+  { id: "forbud", rubrik: "Hundförbud på badplatser – vanliga perioder" },
+  { id: "uppsikt", rubrik: "1 mars–20 augusti: extra uppsikt i naturen" },
+  { id: "stader", rubrik: "Hundbad i Stockholm, Göteborg och Malmö" },
+  { id: "alger", rubrik: "Algblomning – den största risken för hunden" },
+  { id: "tips", rubrik: "Tänk på det här vid hundbad" },
+];
+
+const fragor = [
+  { fraga: "Får man bada med hund på en vanlig badplats?", svar: "Det beror på kommunen. Kommunen kan i sina lokala ordningsföreskrifter förbjuda hundar på badplatser, ofta under sommaren. Står det ingenting på skyltarna är hundar oftast tillåtna, men hunden ska alltid vara under uppsikt." },
+  { fraga: "Var finns hundbad?", svar: `I HaV:s register beskriver kommunerna ${hundbad.length} badplatser med hundbad eller en särskild hundstrand i närheten, flest i ${hundbadLan.sort((a, b) => b.enheter.length - a.enheter.length)[0].lan.namn}. Ofta ligger hundbadet i ena änden av en större strand.` },
+  { fraga: "När gäller hundförbud på badplatser?", svar: `Den vanligaste perioden i kommunernas beskrivningar är 1 juni–31 augusti. Andra kommuner har förbud från 1 eller 15 maj till 15 eller 30 september. Ledar- och assistanshundar är ofta undantagna.` },
+  { fraga: "Gäller koppeltvång på stranden?", svar: "Ordet koppeltvång finns inte i lagen. Mellan 1 mars och 20 augusti får hunden inte springa lös där det kan finnas vilda djur, enligt Jordbruksverket och Naturvårdsverket. På badplatser kan kommunen dessutom ha egna regler." },
+  { fraga: "Finns det hundbad i Stockholm?", svar: `Stockholms stad har enligt sina lokala ordningsföreskrifter hundförbud på de kommunala strandbaden 1 juni–31 augusti. I HaV:s register nämns hundbad i grannkommuner, till exempel ${[...bada("Huddinge"), ...bada("Upplands-Bro")].map((e) => `${e.namn} (${e.kommun})`).join(", ")}. Kontakta kommunen för fler platser.` },
+  { fraga: "Kan hunden bli sjuk av algblomning?", svar: "Ja. SMHI skriver att djur som dricker algbemängt vatten kan bli allvarligt sjuka och till och med dö. Låt inte hunden bada eller dricka när vattnet är grumligt och färgat, och kontakta veterinär direkt om den får symtom." },
+];
+
+const titel = `Hundbad – ${hundbad.length} hundstränder och regler för hundar`;
+const beskrivning = `${hundbad.length} hundbad och hundstränder i Sverige ur kommunernas egna uppgifter, när hundförbud gäller på badplatser, regler 1 mars–20 augusti och råd om alger.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Hundbad och hundstränder"
+  svar={`Det finns ingen nationell regel om hundar på badplatser. Det är <strong>kommunen</strong> som bestämmer i sina lokala ordningsföreskrifter, och många har <strong>hundförbud på stränderna 1 juni–31 augusti</strong>. I HaV:s register beskriver kommunerna ${hundbad.length} badplatser med hundbad eller en hundstrand i närheten. Algblomning är den största faran för hunden i vattnet.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Hundbad", href: "/hundbad/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Algblomning", href: "/algblomning/", text: "Så känner du igen blågröna alger" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten" },
+    { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/", text: "Så läser du provsvaren" },
+    { namn: "Alla län", href: "/#lan", text: "Hitta badplatser nära dig" },
+  ]}
+  kallor={[
+    { namn: "Ordningslag (1993:1617)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/ordningslag-19931617_sfs-1993-1617/", text: "1 kap. 2 § om badplatser och 3 kap. 8 § om lokala föreskrifter", datum: "2026-11-25" },
+    { namn: "Naturvårdsverket – Hundar i naturen", url: "https://www.naturvardsverket.se/amnesomraden/allemansratten/sa-gor-vi-allemansratt/hundar-i-naturen/", text: "extra uppsikt 1 mars–20 augusti, nationalparker", datum: "2026-11-25" },
+    { namn: "Jordbruksverket – Så sköter du din hund", url: "https://www.jordbruksverket.se/djur/hundar-katter-och-smadjur/hundar/sa-skoter-du-din-hund", text: "hundar får inte springa lösa 1 mars–20 augusti", datum: "2026-11-25" },
+    { namn: "HaV – Fakta om badvatten", url: "https://www.havochvatten.se/badplatser-och-badvatten/fakta-om-badvatten.html", text: "olika regler i olika kommuner, hund kopplad eller under strikt uppsikt", datum: "2026-11-25" },
+    { namn: "SMHI – Algblomning", url: "https://www.smhi.se/kunskapsbanken/oceanografi/alger/algblomning", text: "risker för husdjur", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "kommunernas beskrivningar av hundbad och hundförbud", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="regler">Får hunden följa med till stranden?</h2>
+  <p>Svaret skiljer sig från kommun till kommun. Det finns ingen lag som säger att hundar är förbjudna på badplatser, men kommunen får bestämma det. Ordningslagen ger kommunen rätt att jämställa badplatser med offentlig plats och att meddela lokala ordningsföreskrifter för att upprätthålla ordningen där. Det är i de föreskrifterna hundförbuden på stränderna finns.</p>
+  <p>Havs- och vattenmyndigheten (HaV) skriver i sina frågor och svar om badvatten att olika regler gäller i olika kommuner och att hundar ska vara kopplade eller under strikt uppsikt. Den säkra vägen är därför att titta efter skyltar vid badplatsen och att läsa kommunens ordningsföreskrifter. Många kommuner pekar också ut särskilda hundbad, där hunden är välkommen även när den vanliga stranden är stängd för hundar.</p>
+
+  <h2 id="lista">Hundbad i Sverige – {hundbad.length} badplatser</h2>
+  <p>Det finns ingen nationell förteckning över hundbad. Vi har därför gått igenom kommunernas beskrivningar av alla {tal(E.length)} badplatser i HaV:s register. Här är de {hundbad.length} där kommunen nämner hundbad, en hundbadplats eller en särskild strand för hundar. Ofta ligger hundbadet i ena änden av en större strand eller en bit bort.</p>
+  {hundbadLan.map((x) => <>
+    <h3>{x.lan.namn}</h3>
+    <ul class="kolumner">{x.enheter.map((e) => <li><a href={e.href}>{e.namn}</a> ({e.kommun})</li>)}</ul>
+  </>)}
+  <p>Listan är inte komplett. Många hundbad ligger vid sjöar eller vikar som inte är registrerade badplatser, och därför inte finns i HaV:s data. Hittar du inget nära dig, sök på kommunens webbplats efter "hundbad" eller "hundrastgård".</p>
+
+  <h2 id="forbud">Hundförbud på badplatser – vanliga perioder</h2>
+  <p>{forbud.length} badplatser i {forbudKommuner.length} kommuner har ett hundförbud inskrivet i kommunens beskrivning. Så här fördelar sig perioderna:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Förbudsperiod</th><th class="num">Badplatser</th></tr></thead>
+    <tbody>{perioder.map(([p, n]) => <tr><td>{p}</td><td class="num">{n}</td></tr>)}</tbody>
+  </table></div>
+  <p>1 juni–31 augusti dominerar, eftersom Stockholms stad har den perioden i sina allmänna lokala ordningsföreskrifter för samtliga strandbad. Ledar- och assistanshundar är där undantagna. Göteborg anger 1 maj–15 september för flera badplatser, och Region Gotland 1 maj–30 september för sina stränder, liksom Gävle för Centrumbadet. I Skellefteå är hundar förbjudna på Boviksbadet och Byske havsbad, men båda har en uppskyltad hundstrand alldeles intill.</p>
+  <p>De flesta kommuner skriver inte in reglerna i badplatsregistret. Att en badplats saknas i tabellen betyder alltså inte att hundar är tillåtna där.</p>
+
+  <h2 id="uppsikt">1 mars–20 augusti: extra uppsikt i naturen</h2>
+  <p>Utöver kommunens regler finns en nationell regel som gäller överallt i naturen. Enligt Jordbruksverket får hundar mellan den 1 mars och den 20 augusti inte springa lösa där det kan finnas vilda djur. Naturvårdsverket uttrycker det som att du måste ha extra uppsikt över hunden under den tiden.</p>
+  <p>Naturvårdsverket påpekar att ordet koppeltvång inte finns i lagstiftningen, även om det används i vardagligt tal. Regeln kommer från lagen om tillsyn över hundar och katter. I alla nationalparker ska hunden alltid vara kopplad, och i naturreservat varierar reglerna, så läs skylten vid entrén. Ligger badplatsen i ett naturreservat kan alltså reservatets regler gälla utöver kommunens.</p>
+
+  <h2 id="stader">Hundbad i Stockholm, Göteborg och Malmö</h2>
+  <p>I storstäderna är trycket på stränderna stort och reglerna ofta strängare. Så här ser det ut i HaV:s data:</p>
+  <ul>
+    {STAD.map((k) => { const b = bada(k), f = forbud.filter((e) => e.kommun === k).length; return <li><strong>{k}:</strong> {b.length ? <>hundbad vid {b.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a></>)}</> : "inget hundbad nämns i registret"}{f > 0 && `; hundförbud angivet vid ${f} badplatser`}.</li>; })}
+  </ul>
+  <p>Stockholms stad hänvisar inte till något hundbad i badplatsregistret, men i grannkommunerna nämns hundbad vid Gömmaren i Huddinge och vid Lillsjön och Hällkana i Upplands-Bro. I Göteborg finns flera hundförbud i registret men inget utpekat hundbad, så där är kommunens egen information det bästa stället att leta. Malmö har en badplats för hundar vid Ribersborg.</p>
+
+  <h2 id="alger">Algblomning – den största risken för hunden</h2>
+  <p>Hundar dricker gärna vattnet de badar i, och det gör dem sårbara för alggifter. SMHI skriver att husdjur löper störst risk och att djur som dricker algbemängt vatten kan bli allvarligt sjuka och till och med dö. 1177 konstaterar att hundar, katter och andra husdjur är särskilt känsliga och råder dig att hålla husdjur borta från stränderna när det blommar.</p>
+  <p>Algblomning syns som grumligt vatten i grönt, gulbrunt eller blågrönt, ibland med en hinna eller korn på ytan och en rand längs stranden. Låt inte hunden bada eller dricka då. Får hunden symtom efter ett bad ska den till veterinär så fort som möjligt. Läs mer i guiden om <a href="/algblomning/">algblomning</a>.</p>
+
+  <h2 id="tips">Tänk på det här vid hundbad</h2>
+  <ul>
+    <li><strong>Läs skyltarna.</strong> Förbud och utpekade hundbad skyltas oftast vid badplatsens entré.</li>
+    <li><strong>Håll uppsikt.</strong> Även på ett hundbad ska hunden vara under kontroll, och andra badgäster ska kunna känna sig trygga.</li>
+    <li><strong>Kolla vattnet.</strong> Titta efter algblomning och läs badplatsens senaste provsvar på dess sida här.</li>
+    <li><strong>Ta med dricksvatten</strong> till hunden, så att den har något annat att dricka än sjö- eller havsvattnet.</li>
+    <li><strong>Plocka upp efter hunden</strong>, särskilt nära vattnet där barn leker.</li>
+  </ul>
+  <p>Hundbaden finns för att både hundägare och andra badgäster ska kunna njuta av stranden. Den som följer reglerna bidrar till att kommunerna fortsätter att ordna platser för hundar.</p>
+</Guide>

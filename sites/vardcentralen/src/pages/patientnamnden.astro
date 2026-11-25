@@ -1,0 +1,124 @@
+---
+// Lång guide: patientnämnden – så klagar du på vården. Egen data: vårdcentraler per län som har en e-tjänst
+// för synpunkter och klagomål i sitt kontaktkort på 1177 (scripts/07). Fakta granskade mot lag (2017:372),
+// IVO, Löf och 1177 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, lanRader, tal, pct } from "../lib/guide.js";
+
+const rader = lanRader((lan) => {
+  const k = G.kort[lan] ?? {};
+  return { kort: k.kort ?? 0, klag: k.klagomal ?? 0 };
+}).map((r) => ({ ...r, andel: pct(r.klag, r.kort) })).sort((a, b) => b.andel - a.andel || b.kort - a.kort);
+const totKort = rader.reduce((s, r) => s + r.kort, 0), totKlag = rader.reduce((s, r) => s + r.klag, 0);
+const helt = rader.filter((r) => r.kort && r.andel === 100).map((r) => r.kortnamn);
+
+const steg = [
+  { namn: "Kontakta vårdgivaren", text: "Berätta för mottagningen vad som hände – muntligt, skriftligt eller via e-tjänsten för synpunkter och klagomål på 1177." },
+  { namn: "Vänta på svar", text: "Vårdgivaren ska svara så snart som möjligt. Enligt 1177 brukar svaret komma inom fyra veckor." },
+  { namn: "Kontakta patientnämnden", text: "Får du inget svar, eller är du inte nöjd, kan patientnämnden i din region hjälpa dig. Det kostar inget." },
+  { namn: "Anmäl till IVO vid allvarliga händelser", text: "Har du eller en närstående fått en allvarlig skada kan du klaga hos Inspektionen för vård och omsorg, som regel inom två år." },
+  { namn: "Anmäl vårdskada till Löf", text: "Vill du ha ersättning för en skada i vården anmäler du den till Löf, oftast inom tio år." },
+];
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad gör patientnämnden?" },
+  { id: "forst", rubrik: "Börja med att kontakta vårdgivaren" },
+  { id: "kontakta", rubrik: "Så kontaktar du patientnämnden" },
+  { id: "inte", rubrik: "Det här gör inte patientnämnden" },
+  { id: "ivo", rubrik: "IVO – när det har gått allvarligt fel" },
+  { id: "lof", rubrik: "Löf – ersättning vid vårdskada" },
+  { id: "lan", rubrik: "Kan du klaga digitalt? Vårdcentraler per län" },
+  { id: "byta", rubrik: "Byta vårdcentral i stället?" },
+];
+
+const fragor = [
+  { fraga: "Vad gör patientnämnden?", svar: "Patientnämnden hjälper patienter och närstående att föra fram klagomål till vården och att få svar. Den är fristående och opartisk, men gör inga egna medicinska bedömningar och tar inte ställning till om vården gjort rätt eller fel." },
+  { fraga: "Kostar det att kontakta patientnämnden?", svar: "Nej. Enligt 1177 kostar det inget att kontakta patientnämnden." },
+  { fraga: "Måste jag kontakta vårdcentralen innan jag vänder mig till patientnämnden?", svar: "Nej, det behöver du inte enligt 1177. Ofta är det ändå snabbast att börja hos vårdgivaren, som ska få chansen att svara. IVO kräver däremot att du först har framfört klagomålet till vårdgivaren." },
+  { fraga: "Hur länge har vården på sig att svara på ett klagomål?", svar: "Vårdgivaren ska svara så snart som möjligt. 1177 skriver att du vanligtvis ska få svar inom fyra veckor." },
+  { fraga: "Hur klagar jag på en vårdcentral?", svar: "Kontakta vårdcentralen direkt, muntligt eller skriftligt. Många vårdcentraler har en e-tjänst för synpunkter och klagomål på 1177. Är du inte nöjd med svaret kan du vända dig till patientnämnden i din region." },
+  { fraga: "Kan jag få ersättning genom patientnämnden?", svar: "Nej. Patientnämnden bedömer inte rätt till ersättning. Vill du ha ersättning för en vårdskada anmäler du den till Löf, regionernas försäkringsbolag." },
+  { fraga: "Hur lång tid har jag på mig att anmäla till IVO?", svar: "IVO utreder som regel inte händelser som ligger mer än två år tillbaka i tiden. Anmäl därför så snart du kan." },
+];
+
+const titel = "Patientnämnden – så klagar du på vården steg för steg";
+const beskrivning = `Patientnämnden hjälper dig att klaga på vården – gratis och opartiskt. Så går du till väga, när IVO och Löf tar vid, och vilka vårdcentraler som har klagomål som e-tjänst.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Patientnämnden – så klagar du på vården"
+  svar={`Är du missnöjd med vården, börja med att <strong>kontakta vårdgivaren</strong>, som ska svara så snart som möjligt. Får du inget bra svar hjälper <strong>patientnämnden</strong> i din region dig att föra fram klagomålet. Den är opartisk och <strong>kostar inget</strong>. Vid allvarliga händelser kan du klaga hos <strong>IVO</strong>, och vill du ha ersättning för en vårdskada anmäler du till <strong>Löf</strong>.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Patientnämnden", href: "/patientnamnden/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  steg={{ namn: "Klaga på vården", beskrivning: "Så går du till väga om du inte är nöjd med vården.", steg }}
+  relaterat={[
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Högst två byten per år" },
+    { namn: "Vårdgaranti och väntetider", href: "/vardgaranti/", text: "Om du får vänta för länge" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Kontaktuppgifter och länk till 1177" },
+    { namn: "Sjukintyg och läkarintyg", href: "/sjukintyg-lakarintyg/", text: "Intyg till Försäkringskassan" },
+  ]}
+  kallor={[
+    { namn: "Lag (2017:372) om stöd vid klagomål mot hälso- och sjukvården", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2017372-om-stod-vid-klagomal-mot-halso-och_sfs-2017-372/", text: "patientnämndens uppgifter", datum: "2026-11-25" },
+    { namn: "1177 – Om du inte är nöjd med vården", url: "https://www.1177.se/sa-fungerar-varden/om-du-inte-ar-nojd/om-du-inte-ar-nojd-med-varden/", text: "kostnadsfritt, svarstid och hur du går till väga", datum: "2026-11-25" },
+    { namn: "IVO – Om patientnämnden", url: "https://www.ivo.se/beratta-for-ivo/klagomal-halso-sjukvard/om-patientnamnden/", text: "fristående, opartisk, inga medicinska bedömningar", datum: "2026-11-25" },
+    { namn: "IVO – Klagomål på hälso- och sjukvård", url: "https://www.ivo.se/beratta-for-ivo/klagomal-halso-sjukvard/", text: "tvåårsgräns, handläggningstid och e-tjänst", datum: "2026-11-25" },
+    { namn: "Löf – Om försäkringen", url: "https://lof.se/patient/om-forsakringen", text: "anmälan av patientskada inom tio år", datum: "2026-11-25" },
+    { namn: "Löf – Vanliga frågor", url: "https://lof.se/patient/faq", text: "vad Löf och patientnämnden hanterar", datum: "2026-11-25" },
+    { namn: "1177 Hitta vård – vårdcentralernas kontaktkort", url: "https://www.1177.se/hitta-vard/", text: `e-tjänster i ${tal(totKort)} kontaktkort, sammanställda av redaktionen`, datum: G.hamtat.vardtyper },
+  ]}>
+
+  <h2 id="vad">Vad gör patientnämnden?</h2>
+  <p>Patientnämnden finns för att hjälpa dig som patient eller närstående när något i vården inte blivit som det borde. Enligt lagen (2017:372) om stöd vid klagomål mot hälso- och sjukvården ska varje region och kommun ha en eller flera patientnämnder. Nämndens huvuduppgift är att hjälpa patienter att föra fram klagomål till vårdgivaren och att få klagomålen besvarade.</p>
+  <p>Nämnden kan alltså hjälpa dig att få fram ditt klagomål till rätt vårdgivare och se till att du får ett svar. Den ska också berätta vilken myndighet du kan vända dig till om ärendet behöver gå vidare. Enligt IVO är patientnämnden fristående och opartisk, och den finns i alla regioner.</p>
+  <p>Nämnden har också en uppgift för vården i stort. Varje år ska den analysera de klagomål och synpunkter som kommit in, och den ska göra IVO uppmärksam på förhållanden som är viktiga för tillsynen. Ditt klagomål kan alltså bidra till att vården blir bättre för fler.</p>
+
+  <h2 id="forst">Börja med att kontakta vårdgivaren</h2>
+  <p>Den snabbaste vägen till ett svar är oftast att vända sig direkt till vårdcentralen eller mottagningen. Du kan prata med personalen, ringa eller skriva. Vårdgivaren ska svara så snart som möjligt, och enligt 1177 brukar svaret komma inom fyra veckor. Svaret ska innehålla en förklaring till vad som hänt.</p>
+  <p>Många vårdcentraler har en egen e-tjänst för synpunkter och klagomål på 1177. Vi har räknat hur många, per län, längre ner på sidan. Skriv kort och sakligt vad som hände, när det hände och vad du vill ha svar på. Spara en kopia.</p>
+  <p>Du behöver inte gå via vårdgivaren först för att få hjälp av patientnämnden, enligt 1177. Men IVO kräver att vårdgivaren har fått möjlighet att svara innan IVO tar upp ett klagomål.</p>
+
+  <h2 id="kontakta">Så kontaktar du patientnämnden</h2>
+  <p>Patientnämnden är organiserad per region, och kommunernas vård har egna nämnder. Kontaktuppgifterna hittar du på 1177.se när du har valt din region, eller genom att söka på patientnämnden och regionens namn. Där står också hur du helst ska ta kontakt.</p>
+  <ul>
+    <li><strong>Det kostar inget</strong> att kontakta patientnämnden.</li>
+    <li>Du kan klaga för egen del eller som närstående.</li>
+    <li>Ha gärna datum, mottagningens namn och eventuella svar från vårdgivaren till hands.</li>
+  </ul>
+  <p>Nämnden skickar vidare ditt klagomål till vårdgivaren och ser till att du får svar.</p>
+
+  <h2 id="inte">Det här gör inte patientnämnden</h2>
+  <p>Det är viktigt att veta vad patientnämnden inte kan göra, så att du vänder dig till rätt ställe från början. Enligt IVO och Löf gäller följande:</p>
+  <ul>
+    <li>Patientnämnden gör <strong>inga egna medicinska bedömningar</strong>.</li>
+    <li>Den tar <strong>inte ställning till om vårdgivaren gjort rätt eller fel</strong>.</li>
+    <li>Den bedömer <strong>inte rätt till ersättning</strong> – det gör Löf.</li>
+    <li>Den ger inte stöd vid klagomål mot estetisk verksamhet, till exempel skönhetsbehandlingar.</li>
+  </ul>
+  <p>Vill du ha en ny bedömning av din sjukdom är det vården du ska vända dig till. Patientlagen ger dig i vissa fall rätt till en ny medicinsk bedömning vid livshotande eller särskilt allvarlig sjukdom.</p>
+
+  <h2 id="ivo">IVO – när det har gått allvarligt fel</h2>
+  <p>Inspektionen för vård och omsorg, IVO, är den myndighet som har tillsyn över vården. Du kan klaga hos IVO om du eller en närstående har drabbats av en allvarlig händelse i vården. Det här gäller enligt IVO:</p>
+  <ul>
+    <li>Du ska först ha framfört klagomålet till vårdgivaren och gett den möjlighet att svara.</li>
+    <li>IVO utreder som regel inte händelser som ligger mer än <strong>två år</strong> tillbaka i tiden.</li>
+    <li>IVO utreder inte frågor om ekonomisk ersättning.</li>
+    <li>Besked om IVO ska utreda kommer inom ungefär en månad. Den genomsnittliga handläggningstiden för utredda klagomål anges till 23 månader.</li>
+    <li>Du anmäler i första hand via IVO:s e-tjänst.</li>
+  </ul>
+  <p>Tänk på att en anmälan till IVO har lågt sekretesskydd och enligt IVO kan lämnas ut till exempelvis media.</p>
+
+  <h2 id="lof">Löf – ersättning vid vårdskada</h2>
+  <p>Har du fått en skada i vården som hade kunnat undvikas kan du ha rätt till ersättning enligt patientskadelagen. Den hanteras av Löf, regionernas ömsesidiga försäkringsbolag. Du anmäler en egen skada via Löf:s e-tjänst. Enligt Löf leder ungefär 40 procent av anmälningarna till ersättning.</p>
+  <p>De flesta skador behöver anmälas <strong>inom tio år</strong> från den dag skadan orsakades. Löf hanterar inte klagomål om bemötande eller hur vården använder sina resurser – sådant hänvisar Löf till patientnämnden.</p>
+
+  <h2 id="lan">Kan du klaga digitalt? Vårdcentraler per län</h2>
+  <p>Vi har gått igenom {tal(totKort)} vårdcentralers kontaktkort på 1177 och räknat hur många som har en e-tjänst för synpunkter eller klagomål. I hela landet är det {tal(totKlag)} vårdcentraler, eller {pct(totKlag, totKort)} procent. {helt.length > 0 && <>I {helt.join(", ").replace(/, ([^,]*)$/, " och $1")} har alla vårdcentraler en sådan e-tjänst.</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Vårdcentraler</th><th class="num">E-tjänst för klagomål</th><th class="num">Andel</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.kort}</td><td class="num">{r.klag}</td><td class="num">{r.andel} %</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: vårdcentralernas kontaktkort på 1177 Hitta vård, hämtade {G.hamtat.vardtyper}. Sammanställning vårdcentralen.nu. Saknas e-tjänsten kan du ändå klaga per telefon, brev eller genom ett vanligt meddelande till mottagningen.</p>
+
+  <h2 id="byta">Byta vårdcentral i stället?</h2>
+  <p>Ibland är det rimligaste att byta vårdcentral, till exempel om förtroendet är förbrukat. Du får <a href="/byta-vardcentral/">byta vårdcentral</a> högst två gånger på ett år, och du kan välja i hela landet. Ett byte ersätter inte ett klagomål: vill du att det som hänt ska bli känt och åtgärdat är det fortfarande värt att framföra det till vårdgivaren eller patientnämnden.</p>
+  <p>Gäller det väntetider kan du också läsa om <a href="/vardgaranti/">vårdgarantin</a>, som ger dig rätt till kontakt samma dag och medicinsk bedömning inom tre dagar i primärvården.</p>
+</Guide>

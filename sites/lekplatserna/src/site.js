@@ -75,7 +75,7 @@ export const SITE = {
   beskrivning: "Lekplatser i alla Sveriges kommuner – temalekplatser, naturlekplatser och lekplatser med linbana, vattenlek och kompisgunga. Uppdateras varje natt.",
   organisation: "lekplatserna.nu",
   farg: "#2f6b2f",
-  meny: [{"namn":"Temalekplatser","href":"/temalekplatser/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Temalekplatser","href":"/temalekplatser/"},{"namn":"Guider","href":"/guider/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om lekplatserna.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

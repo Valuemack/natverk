@@ -1,0 +1,200 @@
+---
+// Lönedagar och bankdagar (/lonedag/). Två vanliga regler räknas fram ur sajtens helgdagslogik:
+// A) "senast den 25:e" → bankdagen före; B) statliga avtal (Uppsala universitet): lördag → fredag, söndag → måndag.
+// Fakta om bankdag, Försäkringskassan, CSN och Pensionsmyndigheten kontrollerade 2026-11-25. Publicerad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { datum, plusDagar, iso, kort, veckodag, versal, isoVecka, dagarMellan, arHelg, MANADER } from "@natverk/core/datum.js";
+import { helgdagarAr } from "../lib/helgdagar.js";
+import { lista, st } from "../lib/text.js";
+import { SITE, IDAG, AR } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const AREN = [AR, AR + 1];
+
+// Dagar som inte är bankdagar utöver lördag och söndag: röda dagar och helgaftnar.
+const ejBank = new Map();
+for (let y = AR - 1; y <= AR + 2; y++) for (const h of helgdagarAr(y)) ejBank.set(iso(h.datum), h);
+const bankdag = (d) => !arHelg(d) && !ejBank.has(iso(d));
+const bankdagFore = (d) => { while (!bankdag(d)) d = plusDagar(d, -1); return d; };
+// Regel A: senast den 25:e.
+const lonA = (y, m) => bankdagFore(datum(y, m, 25));
+// Regel B: lördag → fredag före, söndag → måndag efter, helgdag → "närmaste vardag" (räknas inte ut).
+const lonB = (y, m) => {
+  const d = datum(y, m, 25);
+  if (ejBank.has(iso(d))) return null;
+  if (d.getUTCDay() === 6) { const f = plusDagar(d, -1); return bankdag(f) ? f : null; }
+  if (d.getUTCDay() === 0) { const f = plusDagar(d, 1); return bankdag(f) ? f : null; }
+  return d;
+};
+const orsak = (d) => (ejBank.has(iso(d)) ? ejBank.get(iso(d)).namn.toLowerCase() : veckodag(d));
+
+const tabell = (y) => MANADER.map((namn, i) => {
+  const d25 = datum(y, i + 1, 25), a = lonA(y, i + 1), b = lonB(y, i + 1);
+  let bank = 0; for (let d = datum(y, i + 1, 1); d.getUTCMonth() === i; d = plusDagar(d, 1)) if (bankdag(d)) bank++;
+  return { namn, d25, a, b, flyttad: iso(a) !== iso(d25), skiljer: !b || iso(a) !== iso(b), bank };
+});
+const T = Object.fromEntries(AREN.map((y) => [y, tabell(y)]));
+
+const alla = AREN.flatMap((y) => T[y].map((r) => r.a));
+const nasta = alla.find((d) => d >= IDAG);
+const kvar = dagarMellan(IDAG, nasta);
+const fmt = (d) => `${veckodag(d)} ${kort(d)} ${d.getUTCFullYear()}`;
+const kv = (d) => `${veckodag(d)} ${kort(d)}`;
+
+// Avstånd mellan löner (regel A).
+const lonLista = [lonA(AR - 1, 12), ...alla];
+const glapp = lonLista.slice(1).map((d, i) => ({ fran: lonLista[i], till: d, dagar: dagarMellan(lonLista[i], d) }));
+const langst = glapp.reduce((a, b) => (b.dagar > a.dagar ? b : a));
+const kortast = glapp.reduce((a, b) => (b.dagar < a.dagar ? b : a));
+
+const decGlapp = dagarMellan(lonA(AR, 12), lonA(AR + 1, 1));
+const flyttadeNasta = T[AR + 1].filter((r) => r.flyttad);
+const sondagNasta = T[AR + 1].filter((r) => r.d25.getUTCDay() === 0 && !ejBank.has(iso(r.d25)));
+const decY = lonA(AR, 12) >= IDAG ? AR : AR + 1;
+const bankAr = (y) => T[y].reduce((s, r) => s + r.bank, 0);
+const aftnarVardag = (y) => helgdagarAr(y).filter((h) => h.typ === "afton" && !arHelg(h.datum));
+
+// Barnbidrag: senast den 20:e, lördag/söndag → fredag. Röd dag på vardag den 20:e räknas inte ut.
+const barnbidrag = MANADER.map((namn, i) => {
+  const d = datum(AR + 1, i + 1, 20);
+  if (ejBank.has(iso(d)) && !arHelg(d)) return { namn, d: null };
+  return { namn, d: d.getUTCDay() === 6 ? plusDagar(d, -1) : d.getUTCDay() === 0 ? plusDagar(d, -2) : d };
+});
+const bbFlyttade = barnbidrag.filter((b) => b.d && b.d.getUTCDate() !== 20);
+
+const ejBankJson = JSON.stringify([...ejBank.entries()].map(([k, h]) => [k, h.namn]));
+
+const avsnitt = [
+  { id: "nasta", rubrik: "När kommer nästa lön?" },
+  { id: `lonedagar-${AR}`, rubrik: `Lönedagar ${AR}` },
+  { id: `lonedagar-${AR + 1}`, rubrik: `Lönedagar ${AR + 1}` },
+  { id: "regeln", rubrik: "Före eller efter? Så flyttas lönen" },
+  { id: "bankdagar", rubrik: `Bankdagar ${AR} och ${AR + 1}` },
+  { id: "december", rubrik: "Lönen i december och det långa glappet" },
+  { id: "raknare", rubrik: "Räkna ut din lönedag" },
+  { id: "andra", rubrik: "Barnbidrag, pension och studiemedel" },
+];
+
+const fragor = [
+  { fraga: "När kommer lönen?", svar: `Många får lön den 25:e varje månad. Infaller den 25:e på en helg eller röd dag kommer lönen i många avtal bankdagen före, men i statliga avtal kommer den måndagen efter om den 25:e är en söndag. Nästa lönedag är ${fmt(nasta)}.` },
+  { fraga: `När kommer lönen i december ${decY}?`, svar: `Den 25 december är juldagen och julafton är ingen bankdag. Har du lön senast den 25:e kommer decemberlönen ${fmt(lonA(decY, 12))}.` },
+  { fraga: "Vad är en bankdag?", svar: "Enligt lagen om betaltjänster är en bankdag en dag då banken har öppet för att genomföra betalningar. I praktiken är det måndag till fredag utom röda dagar, midsommarafton, julafton och nyårsafton." },
+  { fraga: "Kommer lönen på fredagen om den 25:e är en lördag?", svar: "Ja, både i avtal med lön senast den 25:e och i statliga avtal kommer lönen fredagen före när den 25:e är en lördag." },
+  { fraga: "Kommer lönen före eller efter om den 25:e är en söndag?", svar: "Det beror på avtalet. Står det senast den 25:e kommer lönen fredagen före. I statliga avtal kommer lönen i stället måndagen efter. Fråga din arbetsgivare eller löneavdelning om du är osäker." },
+  { fraga: `Hur många bankdagar är det ${AR + 1}?`, svar: `${AR + 1} har ${bankAr(AR + 1)} bankdagar, alltså vardagar som varken är röda dagar eller helgaftnar.` },
+  { fraga: "När kommer barnbidraget?", svar: "Försäkringskassan betalar ut barnbidraget senast den 20:e varje månad. Är den 20:e en lördag eller söndag kommer pengarna på fredagen." },
+];
+
+const titel = `Lönedagar ${AR} och ${AR + 1} – när kommer lönen?`;
+const beskrivning = `När kommer lönen? Alla lönedagar ${AR} och ${AR + 1} när lönen kommer den 25:e eller bankdagen före, bankdagar per månad och en räknare för andra lönedatum.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1={`När kommer lönen? Lönedagar ${AR} och ${AR + 1}`}
+  svar={`Nästa lönedag för den som har lön senast den 25:e är <strong>${fmt(nasta)}</strong>${kvar > 0 ? `, om ${st(kvar, "dag", "dagar")}` : ", alltså idag"}. Många har lön den <strong>25:e varje månad</strong>. Är den 25:e en helg eller röd dag kommer lönen i många avtal <strong>bankdagen före</strong>. Statliga avtal betalar måndagen efter när den 25:e är en söndag.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Arbetsdagar", href: "/arbetsdagar/" }, { namn: "Lönedagar", href: "/lonedag/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: `Arbetsdagar ${AR + 1}`, href: `/arbetsdagar/${AR + 1}/`, text: "Arbetsdagar och timmar per månad" },
+    { namn: `Röda dagar ${AR + 1}`, href: `/${AR + 1}/`, text: "Alla helgdagar och aftnar" },
+    { namn: `Kalender ${AR + 1}`, href: `/vecka/${AR + 1}/`, text: "Hela året med veckonummer" },
+    { namn: `Jul ${AR}`, href: `/julafton/${AR}/`, text: "Julafton, juldagen och ledigheten" },
+  ]}
+  kallor={[
+    { namn: "Lag (2010:751) om betaltjänster, 1 kap. 4 §", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2010751-om-betaltjanster_sfs-2010-751/", text: "definitionen av bankdag", datum: "2026-11-25" },
+    { namn: "Lag (1930:173) om beräkning av lagstadgad tid", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1930173-om-berakning-av-lagstadgad-tid_sfs-1930-173/", text: "frister som infaller på helg eller afton flyttas till nästa vardag", datum: "2026-11-25" },
+    { namn: "Lag (1989:253) om allmänna helgdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/", text: "vilka dagar som är röda dagar" },
+    { namn: "Uppsala universitet – Löneutbetalning", url: "https://www.uu.se/medarbetare/anstallning/lon/loneutbetalning", text: "exempel på lönedag och helgregel enligt statliga kollektivavtal", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Utbetalningsdatum", url: "https://www.forsakringskassan.se/privatperson/utbetalningsdatum-och-handlaggningstider", text: "barnbidrag, föräldrapenning och bostadsbidrag", datum: "2026-11-25" },
+    { namn: "Pensionsmyndigheten – När betalas din pension ut?", url: "https://www.pensionsmyndigheten.se/for-pensionarer/nar-far-jag-mina-utbetalningar/nar-betalas-din-pension-ut", text: "utbetalning den 18:e eller 19:e beroende på födelsedag", datum: "2026-11-25" },
+    { namn: "CSN – Datum för utbetalningar", url: "https://csn.se/vantar-pa-beslut-eller-pengar/datum-for-utbetalningar.html", text: "studiemedel i förskott den 25:e", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="nasta">När kommer nästa lön?</h2>
+  <p>Nästa lönedag är <strong>{fmt(nasta)}</strong> (vecka {isoVecka(nasta).vecka}) om du har lön senast den 25:e.
+    {iso(nasta) !== iso(datum(nasta.getUTCFullYear(), nasta.getUTCMonth() + 1, 25)) && <> Den 25:e är den gången en {orsak(datum(nasta.getUTCFullYear(), nasta.getUTCMonth() + 1, 25))}, så lönen kommer tidigare.</>}
+    {" "}Exakt när på dagen pengarna syns beror på arbetsgivarens och din egen bank. Vilken regel som gäller för dig står i kollektivavtalet eller anställningsavtalet.</p>
+  <p class="svar" id="bankdag-idag" data-ej={ejBankJson}>Idag, {fmt(IDAG)}, är det {bankdag(IDAG) ? <strong>en bankdag</strong> : <strong>ingen bankdag</strong>}.</p>
+
+  {AREN.map((y) => (
+    <>
+      <h2 id={`lonedagar-${y}`}>Lönedagar {y}</h2>
+      {y === AR
+        ? <p>Kolumnen <em>senast den 25:e</em> visar lönen flyttad till bankdagen före. Kolumnen <em>statligt</em> följer regeln i statliga avtal: lördag ger fredag, söndag ger måndag. Fetstil betyder att lönen inte kommer den 25:e.</p>
+        : <p>{y} flyttas lönen i {st(flyttadeNasta.length, "månad", "månader")} när den ska komma senast den 25:e: {lista(flyttadeNasta.map((r) => `${r.namn} (${kort(r.a)})`))}.{sondagNasta.length > 0 && <> I statliga avtal kommer lönen i stället efter helgen i {lista(sondagNasta.map((r) => r.namn))}.</>}</p>}
+      <div class="tabell"><table>
+        <thead><tr><th>Månad</th><th>Den 25:e är</th><th>Senast den 25:e</th><th>Statligt</th></tr></thead>
+        <tbody>{T[y].map((r) => (
+          <tr class:list={{ markerad: iso(r.a) === iso(nasta) }}>
+            <td>{versal(r.namn)}</td><td>{versal(orsak(r.d25))}</td>
+            <td>{r.flyttad ? <strong>{kv(r.a)}</strong> : kv(r.a)}</td>
+            <td>{r.b ? (iso(r.b) !== iso(r.d25) ? <strong>{kv(r.b)}</strong> : kv(r.b)) : "närmaste vardag"}</td>
+          </tr>
+        ))}</tbody>
+      </table></div>
+    </>
+  ))}
+
+  <h2 id="regeln">Före eller efter? Så flyttas lönen</h2>
+  <p>Lönedagen bestäms i kollektivavtalet eller i ditt anställningsavtal, och den 25:e är ett vanligt datum. Vad som händer när den 25:e inte är en bankdag avgörs också av avtalet, och där finns två vanliga varianter.</p>
+  <h3>Senast den 25:e: bankdagen före</h3>
+  <p>Står det att lönen ska betalas <strong>senast</strong> den 25:e får den inte komma senare. Då betalas den bankdagen före: fredagen när den 25:e är en lördag eller söndag, och den sista bankdagen före en röd dag eller helgafton. Den regeln används i tabellerna och i räknaren nedan.</p>
+  <h3>Statliga avtal: måndagen efter en söndag</h3>
+  <p>Statliga arbetsgivare följer de centrala kollektivavtalen. Uppsala universitet beskriver regeln så här: lön den 25:e, fredagen före om den 25:e är en lördag, <strong>måndagen efter om den 25:e är en söndag</strong> och närmaste vardag om den 25:e är en helgdag. Med den regeln kan lönen alltså komma en dag senare än för den som har lön senast den 25:e.</p>
+
+  <h2 id="bankdagar">Bankdagar {AR} och {AR + 1}</h2>
+  <p>Lagen om betaltjänster definierar en bankdag som en dag då banken har öppet för att genomföra betalningar. I praktiken är det vardagar som inte är röda dagar, och inte heller midsommarafton, julafton eller nyårsafton. Försäkringskassan betalade till exempel ut det som skulle ha kommit 25 december 2025 redan den 23 december, trots att julafton var en onsdag. {AR + 1} infaller {lista(aftnarVardag(AR + 1).map((h) => `${h.namn.toLowerCase()} på en ${veckodag(h.datum)}`))}, så de dagarna är vardagar men inte bankdagar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th>{AREN.map((y) => <th class="num">{y}</th>)}</tr></thead>
+    <tbody>
+      {MANADER.map((namn, i) => <tr><td>{versal(namn)}</td>{AREN.map((y) => <td class="num">{T[y][i].bank}</td>)}</tr>)}
+      <tr class="markerad"><td>Hela året</td>{AREN.map((y) => <td class="num">{bankAr(y)}</td>)}</tr>
+    </tbody>
+  </table></div>
+  <p>Antalet bankdagar är detsamma som antalet <a href={`/arbetsdagar/${AR + 1}/`}>arbetsdagar</a> när helgaftnarna räknas som lediga.</p>
+
+  <h2 id="december">Lönen i december och det långa glappet</h2>
+  <p>December är den månad då lönen alltid kommer tidigt. Den 25 december är juldagen och den 24:e julafton, så med lön senast den 25:e kommer decemberlönen {kv(lonA(AR, 12))} {AR} och {kv(lonA(AR + 1, 12))} {AR + 1}.</p>
+  <p>Eftersom decemberlönen kommer tidigt blir det långt till januarilönen. Från decemberlönen {AR} till januarilönen {AR + 1} är det <strong>{decGlapp} dagar</strong>. Under perioden i tabellerna är det längsta avståndet mellan två löner {langst.dagar} dagar, vilket inträffar {st(glapp.filter((g) => g.dagar === langst.dagar).length, "gång", "gånger")}: {lista(glapp.filter((g) => g.dagar === langst.dagar).map((g) => `${kort(g.fran)} ${g.fran.getUTCFullYear()}–${kort(g.till)} ${g.till.getUTCFullYear()}`))}. Det kortaste är {kortast.dagar} dagar, från {kort(kortast.fran)} till {fmt(kortast.till)}. Det är bra att känna till om räkningar förfaller kring nyår.</p>
+
+  <h2 id="raknare">Räkna ut din lönedag</h2>
+  <p>Alla får inte lön den 25:e. Välj din lönedag och året, så visas när pengarna kommer varje månad om lönen flyttas till bankdagen före när dagen inte är en bankdag.</p>
+  <form id="lon-form" class="sokverktyg">
+    <label>Lönedag <input type="number" id="lon-dag" min="1" max="31" value="25" /></label>
+    <label>År <select id="lon-ar">{AREN.map((y) => <option value={y}>{y}</option>)}</select></label>
+  </form>
+  <div class="tabell"><table><thead><tr><th>Månad</th><th>Lönen kommer</th></tr></thead><tbody id="lon-ut"></tbody></table></div>
+
+  <h2 id="andra">Barnbidrag, pension och studiemedel</h2>
+  <p>Flera utbetalningar från myndigheter har fasta datum som också flyttas när de hamnar på en helg:</p>
+  <ul>
+    <li><strong>Barnbidrag</strong> kommer senast den 20:e varje månad. Är den 20:e en lördag eller söndag kommer pengarna på fredagen. {AR + 1} gäller det {lista(bbFlyttade.map((b) => `${b.namn} (${kort(b.d)})`))}.</li>
+    <li><strong>Föräldrapenning, tillfällig föräldrapenning och underhållsstöd</strong> från Försäkringskassan betalas ut den 25:e, och <strong>bostadsbidrag</strong> den 27:e.</li>
+    <li><strong>Pension</strong> från Pensionsmyndigheten betalas ut den 18:e eller 19:e, beroende på vilken dag i månaden du är född. Infaller dagen på en lördag kommer pengarna fredagen före och på en söndag måndagen efter.</li>
+    <li><strong>Studiemedel</strong> från CSN betalas ut i förskott den 25:e varje månad. Den första utbetalningen för terminen kan komma tidigare.</li>
+  </ul>
+  <p>Kontrollera alltid datumen hos myndigheten, eftersom reglerna för röda dagar skiljer sig mellan olika ersättningar.</p>
+
+  <script is:inline slot="skript">
+    (function () {
+      var el = document.getElementById("bankdag-idag"); if (!el) return;
+      var ej = new Map(JSON.parse(el.dataset.ej));
+      var M = ["januari","februari","mars","april","maj","juni","juli","augusti","september","oktober","november","december"];
+      var V = ["söndag","måndag","tisdag","onsdag","torsdag","fredag","lördag"];
+      var isoD = function (d) { return d.toISOString().slice(0, 10); };
+      var bank = function (d) { var w = d.getUTCDay(); return w !== 0 && w !== 6 && !ej.has(isoD(d)); };
+      var n = new Date(), idag = new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()));
+      el.innerHTML = "Idag, " + V[idag.getUTCDay()] + " " + idag.getUTCDate() + " " + M[idag.getUTCMonth()] + " " + idag.getUTCFullYear() + ", är det <strong>" + (bank(idag) ? "en bankdag" : "ingen bankdag") + "</strong>" + (ej.has(isoD(idag)) ? " (" + ej.get(isoD(idag)).toLowerCase() + ")" : "") + ".";
+      var dag = document.getElementById("lon-dag"), ar = document.getElementById("lon-ar"), ut = document.getElementById("lon-ut");
+      function rakna() {
+        var D = Math.max(1, Math.min(31, parseInt(dag.value, 10) || 25)), Y = parseInt(ar.value, 10), h = "";
+        for (var m = 0; m < 12; m++) {
+          var sista = new Date(Date.UTC(Y, m + 1, 0)).getUTCDate(), d = new Date(Date.UTC(Y, m, Math.min(D, sista))), mal = isoD(d);
+          while (!bank(d)) d = new Date(d.getTime() - 864e5);
+          var t = V[d.getUTCDay()] + " " + d.getUTCDate() + " " + M[d.getUTCMonth()];
+          h += "<tr><td>" + M[m].charAt(0).toUpperCase() + M[m].slice(1) + "</td><td>" + (isoD(d) !== mal ? "<strong>" + t + "</strong>" : t) + "</td></tr>";
+        }
+        ut.innerHTML = h;
+      }
+      dag.addEventListener("input", rakna); ar.addEventListener("change", rakna); rakna();
+    })();
+  </script>
+</Guide>

@@ -1,0 +1,125 @@
+---
+// Lång guide: BVC – barnavårdscentralen. Egen data: 1177 Hitta vård, vårdtypen Barnavårdscentral, per län
+// och kommun (scripts/06). Fakta granskade mot 1177 och Rikshandboken i barnhälsovård 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { V, PUBLICERAD, lanRader, tal, invPer, vardtyp, vardtypLan, toppKommuner, KALLA_1177_VARDTYP } from "../lib/guide.js";
+
+const TYP = "Barnavårdscentral";
+const T = vardtyp(TYP);
+const rader = lanRader((lan) => ({ n: vardtypLan(TYP, lan) })).sort((a, b) => b.n - a.n);
+const folkTot = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const topp = toppKommuner(TYP, 15);
+const andelVc = Math.round((100 * T.antal) / rader.reduce((s, r) => s + r.vc, 0));
+
+// Rikshandboken i barnhälsovård – hälsobesök i basprogrammet (hämtad 2026-11-25).
+const BESOK = ["0–6 dagar", "1–3 veckor", "4 veckor", "6 veckor", "8 veckor", "3 månader", "4 månader", "5 månader", "6 månader", "8 månader", "10 månader", "12 månader", "18 månader", "2,5 år", "3 år", "4 år", "5 år"];
+// Barnvaccinationsprogrammet enligt Rikshandboken (godkänd 2025-12-12). Endast de vaccinationer som ges på BVC.
+const VACC = [
+  ["6 veckor", "Rotavirus (dos 1)"],
+  ["3 månader", "Difteri, stelkramp, kikhosta, polio, Hib, hepatit B och pneumokocker (dos 1), rotavirus (dos 2)"],
+  ["5 månader", "Samma som vid 3 månader (dos 2), rotavirus (dos 3)"],
+  ["12 månader", "Difteri, stelkramp, kikhosta, polio, Hib, hepatit B och pneumokocker (dos 3)"],
+  ["18 månader", "Mässling, påssjuka och röda hund (MPR, dos 1)"],
+  ["5 år", "Difteri, stelkramp, kikhosta och polio (dos 4)"],
+];
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är BVC?" },
+  { id: "besok", rubrik: "BVC-besöken från födseln till fem år" },
+  { id: "hembesok", rubrik: "Hembesök" },
+  { id: "vaccin", rubrik: "Vaccinationer på BVC" },
+  { id: "kontroller", rubrik: "Syn, hörsel, tillväxt och utveckling" },
+  { id: "lan", rubrik: "BVC per län och kommun" },
+  { id: "valja", rubrik: "Välja och byta BVC" },
+];
+
+const fragor = [
+  { fraga: "Vad är BVC?", svar: "BVC står för barnavårdscentral. Där följer en sjuksköterska, ofta distriktssköterska eller barnsjuksköterska, barnets hälsa och utveckling från att barnet är nyfött tills det börjar i förskoleklass. BVC ger också vaccinationerna i barnvaccinationsprogrammet." },
+  { fraga: "Kostar BVC något?", svar: "Nej. Enligt 1177 betalar du ingenting när ni besöker BVC." },
+  { fraga: "Hur många gånger går man till BVC?", svar: `Rikshandboken i barnhälsovård räknar med ${BESOK.length} hälsobesök i basprogrammet, från första veckan till fem år. Enligt 1177 blir det minst 13 besök det första året.` },
+  { fraga: "Kan man byta BVC?", svar: "Ja. Enligt 1177 kan du välja BVC och byta till en annan utan att ange något skäl. I vissa regioner gör du valet via 1177.se." },
+  { fraga: "När kommer BVC på hembesök?", svar: "Det första besöket görs oftast hemma, ungefär en till två veckor efter att ni kommit hem från BB. Besöket vid åtta månader görs också ofta hemma, men alla regioner har inte infört det." },
+  { fraga: "Vilka vaccinationer får barnet på BVC?", svar: "Rotavirus från sex veckor, sexvalent vaccin (bland annat kikhosta och hepatit B) och pneumokocker vid 3, 5 och 12 månader, MPR vid 18 månader och en påfyllnad vid fem år. Senare doser ges i skolan." },
+  { fraga: "Hur många BVC finns det i Sverige?", svar: `1177 Hitta vård listar ${tal(T.antal)} mottagningar under vårdtypen barnavårdscentral (november 2026). Många av dem ligger på en vårdcentral.` },
+];
+
+const titel = `BVC – besök, vaccin och ${tal(T.antal)} barnavårdscentraler`;
+const beskrivning = `BVC följer barnet från födseln till förskoleklass. ${BESOK.length} hälsobesök, vaccinationsschemat, hembesök och hur du väljer BVC – med ${tal(T.antal)} BVC per län och kommun.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="BVC – barnavårdscentralen"
+  svar={`På <strong>BVC</strong> följer en sjuksköterska barnets hälsa och utveckling från födseln tills barnet börjar i förskoleklass. Basprogrammet har <strong>${BESOK.length} hälsobesök</strong>, och barnet får vaccinationerna i barnvaccinationsprogrammet. Besöken är <strong>gratis</strong>, och du får välja och byta BVC. 1177 listar ${tal(T.antal)} barnavårdscentraler i Sverige.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "BVC", href: "/bvc/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Barnmorskemottagning (MVC)", href: "/barnmorskemottagning/", text: "Under graviditeten" },
+    { namn: "Influensavaccin 2026", href: "/influensavaccin/", text: "För barn i riskgrupp från sex månader" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Många BVC ligger på en vårdcentral" },
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Så fungerar listningen" },
+  ]}
+  kallor={[
+    { namn: "1177 – Besök på barnavårdscentralen, BVC", url: "https://www.1177.se/barn--gravid/vard-och-stod-for-barn/besok-pa-barnavardscentralen-bvc/", text: "ålder, antal besök, hembesök, kostnad och val av BVC", datum: "2026-11-25" },
+    { namn: "Rikshandboken i barnhälsovård – Hälsobesök", url: "https://www.rikshandboken-bhv.se/halsobesok/", text: "basprogrammets hälsobesök", datum: "2026-11-25" },
+    { namn: "Rikshandboken i barnhälsovård – Barnvaccinationsprogrammet", url: "https://www.rikshandboken-bhv.se/vaccination/vaccinationer-pa-bvc/barnvaccinationsprogrammet/", text: "vaccinationsschema och hepatit B", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – Vaccination mot influensa", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/vaccinationer/vaccinationer-a-o/vaccination-mot-influensa/", text: "barn i riskgrupp från sex månader, nässpray 2–17 år", datum: "2026-11-25" },
+    KALLA_1177_VARDTYP(TYP),
+  ]}>
+
+  <h2 id="vad">Vad är BVC?</h2>
+  <p>BVC, barnavårdscentralen, är barnhälsovårdens mottagning för alla barn i Sverige. 1177 beskriver det som att BVC följer barnet från att det är nyfött tills det börjar i förskoleklass. Där träffar ni en distriktssköterska eller en barnsjuksköterska. Vid fyra veckor, sex månader, ett år och tre år är besöket ett teambesök där ni också träffar en läkare. BVC ger stöd och råd om bland annat amning, mat, sömn och relationen med barnet, och de flesta BVC har grupper för nyblivna föräldrar.</p>
+  <p>BVC är förebyggande. Det betyder att ni går dit även när barnet är friskt, för att vården ska kunna upptäcka problem tidigt och för att barnet ska få sina vaccinationer. När barnet har en infektion ska ni enligt 1177 inte gå till BVC, utan kontakta vårdcentralen eller ringa 1177 för rådgivning. Ring 112 om det är livshotande.</p>
+  <p><strong>Det kostar ingenting.</strong> Enligt 1177 betalar du inget för besöken på BVC.</p>
+
+  <h2 id="besok">BVC-besöken från födseln till fem år</h2>
+  <p>Innehållet i barnhälsovården styrs av ett nationellt basprogram som beskrivs i Rikshandboken i barnhälsovård. Programmet har {BESOK.length} hälsobesök. Flest besök blir det under det första året, då barnet växer och utvecklas snabbast. Enligt 1177 blir det minst 13 besök under barnets första år.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Besök</th><th>Barnets ålder</th><th class="num">Besök</th><th>Barnets ålder</th></tr></thead>
+    <tbody>{Array.from({ length: Math.ceil(BESOK.length / 2) }, (_, i) => (
+      <tr><td class="num">{i + 1}</td><td>{BESOK[i]}</td><td class="num">{BESOK[i + Math.ceil(BESOK.length / 2)] ? i + 1 + Math.ceil(BESOK.length / 2) : ""}</td><td>{BESOK[i + Math.ceil(BESOK.length / 2)] ?? ""}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Rikshandboken i barnhälsovård, basprogrammets hälsobesök. Regionerna kan lägga till extra besök vid behov.</p>
+  <p>Barnet mäts och vägs, och vikt, längd och huvudomfång förs in i tillväxtkurvor. Enligt 1177 beror antalet besök också på vad ni vill och behöver, så familjer som behöver mer stöd kan få fler besök än i basprogrammet.</p>
+
+  <h2 id="hembesok">Hembesök</h2>
+  <p>Det första mötet med BVC sker oftast hemma. Enligt 1177 kommer en sjuksköterska hem till er ungefär en till två veckor efter att ni kommit hem. Besöket vid åtta månader görs också ofta hemma, men 1177 påpekar att några regioner ännu inte har infört det. Hur hembesöken går till kan alltså skilja sig mellan regioner, så fråga din BVC vad som gäller där ni bor.</p>
+
+  <h2 id="vaccin">Vaccinationer på BVC</h2>
+  <p>Barn i Sverige erbjuds vaccinationer enligt det nationella barnvaccinationsprogrammet. Alla barn ska erbjudas vaccinationerna. De första ges på BVC och de senare i skolan. Tabellen visar de vaccinationer som ges på BVC enligt Rikshandboken.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ålder</th><th>Vaccination</th></tr></thead>
+    <tbody>{VACC.map(([a, v]) => <tr><td>{a}</td><td>{v}</td></tr>)}</tbody>
+  </table></div>
+  <p>Därefter ges MPR dos 2 i årskurs 1–2, HPV i årskurs 5 och en påfyllnad mot difteri, stelkramp och kikhosta i årskurs 8–9, i skolan. Sedan 2016 erbjuder alla regioner kostnadsfri vaccination mot hepatit B till alla spädbarn, enligt Rikshandboken.</p>
+  <p>Barn som tillhör en medicinsk riskgrupp rekommenderas också vaccin mot influensa från sex månaders ålder. Folkhälsomyndigheten anger att barn 2–17 år kan få vaccinet som nässpray. Läs mer om <a href="/influensavaccin/">influensavaccin 2026</a>.</p>
+
+  <h2 id="kontroller">Syn, hörsel, tillväxt och utveckling</h2>
+  <p>Utöver vaccinationerna följer BVC barnets tillväxt, språk, motorik och sociala utveckling. Enligt 1177 ingår bland annat:</p>
+  <ul>
+    <li><strong>hörselkontroll</strong> vid åtta månader och fyra år</li>
+    <li><strong>synundersökning</strong> vid fyra år</li>
+    <li><strong>kontroll av ögonen</strong> regelbundet från nyfödd</li>
+    <li><strong>vägning och mätning</strong> av vikt, längd och huvudomfång</li>
+    <li><strong>teambesök med läkare</strong> vid fyra veckor, sex månader, ett år och tre år</li>
+  </ul>
+  <p>Är du orolig för något mellan besöken kan du ringa din BVC. Är barnet sjukt, kontakta vårdcentralen eller ring 1177. Ring 112 om det är livshotande.</p>
+
+  <h2 id="lan">BVC per län och kommun</h2>
+  <p>1177 Hitta vård listar {tal(T.antal)} mottagningar som barnavårdscentral. Vi har placerat dem i kommuner med SCB:s kommungränser. I hela landet blir det i snitt {invPer(folkTot, T.antal - T.utanKommun)} invånare per BVC. Antalet motsvarar ungefär {andelVc} procent av antalet vårdcentraler i vår katalog, vilket speglar att många BVC ligger på en vårdcentral medan andra är egna mottagningar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">BVC</th><th class="num">Invånare per BVC</th><th class="num">Vårdcentraler</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{invPer(r.folk, r.n)}</td><td class="num">{r.vc}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: 1177 Hitta vård, vårdtypen Barnavårdscentral, hämtad {V.hamtad.slice(0, 10)}. {T.utanKommun} mottagningar saknar koordinater och ingår inte i länsfördelningen. Invånare per BVC räknas på hela befolkningen, inte bara barn.</p>
+  <h3>Kommuner med flest BVC</h3>
+  <p>{topp.map((x, i) => <>{i > 0 && ", "}<a href={x.k.href}>{x.k.namn}</a> ({x.antal})</>)}.</p>
+
+  <h2 id="valja">Välja och byta BVC</h2>
+  <p>Enligt 1177 kan du välja BVC och byta till en annan utan att ange något skäl. I vissa regioner gör du valet genom att logga in på 1177.se, i andra kontaktar du den BVC du vill gå till. Eftersom det blir många besök under de första åren kan det vara praktiskt med en BVC nära hemmet.</p>
+  <ol>
+    <li>Sök på <strong>barnavårdscentral</strong> och din ort på 1177 Hitta vård, eller sök efter vårdcentralen i ditt område på <a href="/">startsidan</a>.</li>
+    <li>Kontrollera om BVC:n har e-tjänster för att boka om tider eller skicka meddelanden.</li>
+    <li>Kontakta BVC:n eller välj den på 1177.se, beroende på hur din region gör.</li>
+  </ol>
+  <p>Under graviditeten är det <a href="/barnmorskemottagning/">barnmorskemottagningen</a> som följer dig. BVC tar över när barnet är fött.</p>
+</Guide>

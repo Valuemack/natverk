@@ -1,0 +1,136 @@
+---
+// Lång guide: Sveriges bästa stränder och sandstränder. Urvalet görs med mätbara kriterier ur HaV:s öppna data
+// (klassning tre år i rad, EU-bad, kommunens egen beskrivning). Inga egna omdömen. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, KLASS_AR, klassAr, text, tal, pct, perLan } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const TRE = KLASS_AR.slice(0, 3); // de tre senaste klassningsåren, nyast först
+const [nyast, , aldst] = TRE;
+const utmTre = (e) => TRE.every((y) => /utmärkt/i.test(klassAr(e, y) ?? ""));
+const sand = (e) => /sandstrand/i.test(text(e));
+const hav = (e) => e.extra?.vattentyp === "Hav";
+const kort = (k) => (k ?? "–").replace(/ kvalitet$/i, "").replace("Tillfredställande", "Tillfredsställande");
+
+const alla = E.filter(sand);
+const basta = E.filter((e) => sand(e) && utmTre(e) && e.extra?.eu_badplats);
+const lanRader = LAN.map((l) => {
+  const b = basta.filter((e) => e.lan === l.namn);
+  return { l, sand: alla.filter((e) => e.lan === l.namn).length, basta: b.length, hav: b.filter(hav).length, ex: [...b].sort((x, y) => +hav(y) - +hav(x)).slice(0, 3) };
+}).filter((r) => r.sand);
+const flest = [...lanRader].sort((a, b) => b.basta - a.basta);
+
+// Längsta sandstränderna enligt kommunernas egna uppgifter ("ca 2 km lång sandstrand").
+const LANGD = /(?:drygt |knappt |ca |cirka |ungefär )?(\d+(?:[,.]\d+)?)\s*(?:km|kilometer)\s*lång/i;
+const sedda = new Set();
+const langa = E.map((e) => {
+  const mening = text(e).split(/(?<=\.)\s/).find((m) => LANGD.test(m) && /strand/i.test(m) && !/sjön är|grusväg|bräckvattensjö|bukt som|sträcka av|meter djup/i.test(m));
+  if (!mening) return null;
+  const km = parseFloat(mening.match(LANGD)[1].replace(",", "."));
+  return { e, km, mening: mening.trim() };
+}).filter((x) => x && x.km >= 1 && x.km <= 10)
+  .sort((a, b) => b.km - a.km || a.e.namn.localeCompare(b.e.namn, "sv"))
+  .filter((x) => { const k = `${x.e.kommun}|${x.mening}`; if (sedda.has(k)) return false; sedda.add(k); return true; });
+
+// Storstäderna.
+const STAD = ["Stockholm", "Göteborg", "Malmö"].map((k) => ({ k, lista: alla.filter((e) => e.kommun === k).sort((a, b) => +utmTre(b) - +utmTre(a) || a.namn.localeCompare(b.namn, "sv")) }));
+
+const langgrund = alla.filter((e) => /långgrund/i.test(text(e)));
+const langgrundBast = langgrund.filter(utmTre);
+const tillg = alla.filter((e) => /tillgänglighetsanpass|handikappanpass|rullstol|ramp/i.test(text(e)));
+const dyner = alla.filter((e) => /sanddyn/i.test(text(e)));
+const avradda = E.filter((e) => e.extra?.avradan?.length && sand(e));
+
+const avsnitt = [
+  { id: "kriterier", rubrik: "Så har vi valt ut stränderna" },
+  { id: "lan", rubrik: "Bästa sandstränderna per län" },
+  { id: "langsta", rubrik: "Sveriges längsta sandstränder" },
+  { id: "storstad", rubrik: "Stränder i Stockholm, Göteborg och Malmö" },
+  { id: "hav-sjo", rubrik: "Havsbad eller sjöbad?" },
+  { id: "barn", rubrik: "Långgrunda stränder för barnfamiljer" },
+  { id: "kolla", rubrik: "Kolla vattnet innan du åker" },
+];
+
+const fragor = [
+  { fraga: "Vilka är de bästa stränderna i Sverige?", svar: `Det finns ingen officiell rankning. Vi har valt ut ${basta.length} sandstränder som är EU-bad och har haft utmärkt vattenkvalitet varje år ${aldst}–${nyast}. Flest finns i ${flest[0].l.namn} (${flest[0].basta}), ${flest[1].l.namn} (${flest[1].basta}) och ${flest[2].l.namn} (${flest[2].basta}).` },
+  { fraga: "Var finns Sveriges längsta sandstrand?", svar: `Bland stränderna i HaV:s register anger kommunerna de längsta sträckorna i Halland och Skåne. Tylösand ingår enligt Halmstads kommun i en drygt 4 km lång sandstrand, och Östra stranden i Halmstad är knappt 4 km. Motala beskriver Varamobaden som Nordens längsta insjöstrand, 3 km.` },
+  { fraga: "Hur många sandstränder finns det i Sverige?", svar: `${tal(alla.length)} av de ${tal(E.length)} badplatserna i HaV:s register beskrivs av kommunen som sandstrand. ${tal(alla.filter(hav).length)} av dem är havsbad.` },
+  { fraga: "Vilka stränder i Stockholm har bäst vatten?", svar: `Av Stockholms stads sandstränder har ${STAD[0].lista.filter(utmTre).map((e) => e.namn).join("; ")} haft utmärkt kvalitet alla tre senaste åren.` },
+  { fraga: "Vad är en EU-badplats?", svar: "Ett EU-bad är en badplats där kommunen räknar med fler än ungefär 200 badande per dag under badsäsongen. Där är kommunen skyldig att ta vattenprov enligt ett fast schema och att klassa vattnet varje år." },
+  { fraga: "Finns det sandstränder vid sjöar?", svar: `Ja, ${tal(alla.filter((e) => !hav(e)).length)} av sandstränderna ligger vid sjöar och vattendrag. I Värmland, Dalarna, Kronoberg och Jönköpings län är nästan alla de utvalda sandstränderna sjöbad.` },
+];
+
+const titel = `Sveriges bästa stränder – ${basta.length} sandstränder med toppvatten`;
+const beskrivning = `${basta.length} sandstränder i Sverige med utmärkt vatten ${aldst}–${nyast}, per län. Längsta stränderna, bästa i Stockholm, Göteborg och Malmö och långgrunda stränder för barn.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Sveriges bästa stränder"
+  svar={`Vi har gått igenom alla ${tal(E.length)} badplatser i Havs- och vattenmyndighetens register. <strong>${basta.length} sandstränder</strong> är välbesökta EU-bad och har haft <strong>utmärkt vattenkvalitet varje år ${aldst}–${nyast}</strong>. Flest finns i ${flest[0].l.namn}, ${flest[1].l.namn} och ${flest[2].l.namn}. Längst är stränderna i Halland och Skåne, där flera är 2–4 km.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bästa stränderna", href: "/basta-strander/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bäst vattenkvalitet", href: "/basta-vattenkvalitet/", text: "Alla badplatser med utmärkt vatten" },
+    { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/", text: "Så läser du provsvaren" },
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Så varmt är vattnet i sjö och hav" },
+    { namn: "Hundbad", href: "/hundbad/", text: "Stränder där hunden får bada" },
+    { namn: "Badsäkerhet", href: "/badsakerhet/", text: "Flaggor, badvakter och barn vid vatten" },
+  ]}
+  kallor={[
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "badplatsregister, klassningar och kommunernas beskrivningar", datum: "2026-11-25" },
+    { namn: "HaV – Fakta om badvatten", url: "https://www.havochvatten.se/badplatser-och-badvatten/fakta-om-badvatten.html", text: "EU-bad, 200 badande per dag och klassning", datum: "2026-11-25" },
+    { namn: "HaV – Vägledning kring EU-bad (rapport 2025:7)", url: "https://www.havochvatten.se/data-kartor-och-rapporter/rapporter-och-andra-publikationer/publikationer/2025-06-12-vagledning-kring-eu-bad.html", text: "hur klassningen görs och publiceras", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="kriterier">Så har vi valt ut stränderna</h2>
+  <p>Listor över "Sveriges bästa stränder" bygger ofta på någons tycke. Vi gör tvärtom och använder bara sådant som går att mäta och kontrollera. Underlaget är Havs- och vattenmyndighetens (HaV) register över {tal(E.length)} badplatser, där kommunerna rapporterar provsvar och beskriver sina stränder. En strand kommer med på listan om den uppfyller tre krav:</p>
+  <ol>
+    <li><strong>Sandstrand.</strong> Kommunen beskriver själv badplatsen som en sandstrand.</li>
+    <li><strong>EU-bad.</strong> Badplatsen är registrerad som EU-bad. Det betyder att kommunen räknar med fler än ungefär 200 badande per dag och provtar vattnet enligt ett fast schema.</li>
+    <li><strong>Utmärkt vatten tre år i rad.</strong> Badplatsen har fått klassningen utmärkt kvalitet varje år {aldst}, {TRE[1]} och {nyast}. Varje klassning bygger på de fyra senaste somrarnas prover, så kravet täcker i praktiken sex badsäsonger.</li>
+  </ol>
+  <p>Resultatet blir <strong>{basta.length} stränder</strong>, varav {basta.filter(hav).length} havsbad och {basta.length - basta.filter(hav).length} sjöbad. Vi värderar inte utsikt, sandens färg eller stämning. Det får du bedöma själv, men du vet åtminstone att vattnet håller måttet.</p>
+
+  <h2 id="lan">Bästa sandstränderna per län</h2>
+  <p>Kolumnen "Sandstränder" visar alla badplatser i länet som kommunen beskriver som sandstrand. "Utvalda" är de som klarar alla tre kraven ovan. Exemplen visar havsbad först.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Sandstränder</th><th class="num">Utvalda</th><th class="num">Varav hav</th><th>Exempel</th></tr></thead>
+    <tbody>{lanRader.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{r.sand}</td><td class="num">{r.basta}</td><td class="num">{r.hav}</td>
+      <td>{r.ex.length ? r.ex.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a></>) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>{flest[0].l.namn} och {flest[1].l.namn} toppar listan, och det är ingen slump. Där finns långa sandkuster och många välbesökta stränder som provtas regelbundet. Att ett län har få utvalda stränder betyder inte att vattnet är dåligt. Många mindre badplatser är inte EU-bad och får därför ingen klassning alls, även om vattnet kan vara utmärkt.</p>
+
+  <h2 id="langsta">Sveriges längsta sandstränder</h2>
+  <p>Vissa kommuner anger hur lång stranden är. Tabellen visar de stränder i registret där kommunens egen beskrivning nämner en sandstrand på minst en kilometer, med senaste klassningen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Strand</th><th>Kommun</th><th class="num">Längd</th><th>Klassning {nyast}</th></tr></thead>
+    <tbody>{langa.map((x) => <tr><td><a href={x.e.href}>{x.e.namn}</a></td><td>{x.e.kommun}</td><td class="num">{String(x.km).replace(".", ",")} km</td><td>{kort(klassAr(x.e, nyast))}</td></tr>)}</tbody>
+  </table></div>
+  <p>Längden är kommunens uppgift och ofta avrundad. När en lång strand är uppdelad i flera badplatser, som Tylösand och Tylöbäck eller Apelviken 1 och 2, visas den gemensamma längden.</p>
+
+  <h2 id="storstad">Stränder i Stockholm, Göteborg och Malmö</h2>
+  <p>Många söker en strand nära stan. Här är alla badplatser i de tre storstadskommunerna som kommunen beskriver som sandstrand, med klassningen {nyast}. En stjärna (★) betyder utmärkt kvalitet alla tre senaste åren.</p>
+  {STAD.map((s) => <>
+    <h3>Stränder i {s.k}</h3>
+    <ul class="kolumner">{s.lista.map((e) => <li><a href={e.href}>{e.namn}</a> – {kort(klassAr(e, nyast))}{utmTre(e) && " ★"}</li>)}</ul>
+  </>)}
+  <p>I Stockholm ligger de flesta sandstränder vid Mälaren och sjöarna söder om stan. Göteborgs stränder ligger både vid havet i södra skärgården och vid insjöar som Stora Delsjön. Malmö har få men stora stränder längs Öresund. Ribersborg beskrivs av kommunen som en 2 km lång sandstrand mitt i stan, med kallbadhus och bryggor.</p>
+
+  <h2 id="hav-sjo">Havsbad eller sjöbad?</h2>
+  <p>Av alla {tal(alla.length)} sandstränder i registret är {tal(alla.filter(hav).length)} havsbad ({pct(alla.filter(hav).length, alla.length)}). Resten ligger vid sjöar och vattendrag. {dyner.length} sandstränder har sanddyner enligt kommunens beskrivning, nästan alla i Halland, Skåne, Gotland och Kalmar län.</p>
+  <p>Sjöstränderna har andra fördelar. Vattnet är oftast några grader varmare, det finns inga maneter och vågorna är små. I Värmland, Dalarna, Kronobergs och Jönköpings län är de utvalda stränderna så gott som alltid sjöbad. Se <a href="/badtemperatur/">badtemperatur</a> för hur stor skillnaden brukar vara.</p>
+
+  <h2 id="barn">Långgrunda stränder för barnfamiljer</h2>
+  <p>För små barn är det viktigaste ofta att vattnet är grunt långt ut. {langgrund.length} sandstränder beskrivs av kommunen som långgrunda, och {langgrundBast.length} av dem har haft utmärkt vatten alla tre åren. Några exempel:</p>
+  <ul class="kolumner">{langgrundBast.filter((e) => e.extra?.eu_badplats).slice(0, 18).map((e) => <li><a href={e.href}>{e.namn}</a> ({e.kommun})</li>)}</ul>
+  <p>{tillg.length} sandstränder nämner tillgänglighetsanpassning, till exempel ramp ner i vattnet eller tillgänglig brygga. Det underlättar också för den som kommer med barnvagn. Kom ihåg att långgrunt inte betyder ofarligt. Barn ska alltid ha en vuxen nära, se <a href="/badsakerhet/">badsäkerhet</a>.</p>
+
+  <h2 id="kolla">Kolla vattnet innan du åker</h2>
+  <p>Klassningen är ett betyg över flera år. Den säger hur vattnet brukar vara, inte hur det är idag. Därför är det klokt att titta på det senaste provsvaret innan du åker. På varje strands egen sida här visas de senaste proverna, temperaturen och om kommunen avråder från bad.</p>
+  <ul>
+    <li><strong>Senaste provet otjänligt:</strong> kommunen avråder oftast från bad tills ett nytt prov visar bra värden, vanligen inom några dagar.</li>
+    <li><strong>Algblomning:</strong> grumligt, grönt eller gulbrunt vatten är ett skäl att avstå. Läs mer om <a href="/algblomning/">algblomning</a>.</li>
+    <li><strong>Avrådan hela säsongen:</strong> gäller stränder som fått klassningen dålig.</li>
+  </ul>
+  {avradda.length > 0 && <p>I HaV:s senaste data har {avradda.length} {avradda.length === 1 ? "sandstrand" : "sandstränder"} en avrådan från bad utan slutdatum: {avradda.map((e, i) => <>{i > 0 && "; "}<a href={e.href}>{e.namn}</a> ({e.kommun})</>)}. Se badplatsens sida för orsaken.</p>}
+  <p>Klassningen för förra sommaren publiceras i slutet av februari varje år. Listan här räknas om automatiskt när de nya klassningarna kommer.</p>
+</Guide>

@@ -1,0 +1,137 @@
+---
+// Fars dag (/fars-dag/), byggd som piloten mors-dag. Datum, veckor, avstånd till mors dag och alla helgons dag räknas fram;
+// fakta från Nordiska museet, SCB, svensk och engelsk Wikipedia, Store norske leksikon och svensk författning. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { datum, plusDagar, iso, kort, veckodag, versal, isoVecka, dagarMellan } from "@natverk/core/datum.js";
+import { paskdagen, helgdagarAr } from "../lib/helgdagar.js";
+import { lista } from "../lib/text.js";
+import { SITE, IDAG, AR } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const nteSondag = (y, m, n) => { const d = datum(y, m, 1); return plusDagar(d, ((7 - d.getUTCDay()) % 7) + 7 * (n - 1)); };
+const farsDag = (y) => nteSondag(y, 11, 2);
+const morsDag = (y) => { const d = datum(y, 5, 31); return plusDagar(d, -d.getUTCDay()); };
+const allaHelgon = (y) => helgdagarAr(y).find((h) => h.id === "alla-helgons-dag").datum;
+
+const nasta = farsDag(AR) >= IDAG ? farsDag(AR) : farsDag(AR + 1);
+const nastaAr = nasta.getUTCFullYear();
+const kvar = dagarMellan(IDAG, nasta);
+const AREN = Array.from({ length: 9 }, (_, i) => AR - 1 + i);
+const rader = AREN.map((y) => ({ y, d: farsDag(y), v: isoVecka(farsDag(y)).vecka }));
+const fmt = (d) => `${veckodag(d)} ${kort(d)} ${d.getUTCFullYear()}`;
+// Veckor och datum fars dag kan hamna på (räknat 2000–2099).
+const sekel = Array.from({ length: 100 }, (_, i) => 2000 + i).map(farsDag);
+const veckorMojliga = [...new Set(sekel.map((d) => isoVecka(d).vecka))].sort((a, b) => a - b);
+const v46 = Array.from({ length: 100 }, (_, i) => 2000 + i).filter((y) => isoVecka(farsDag(y)).vecka === 46);
+const nastaV46 = v46.find((y) => y >= nastaAr);
+const mellanMors = dagarMellan(morsDag(nastaAr), farsDag(nastaAr));
+const tidigast = rader.reduce((a, b) => (b.d.getUTCDate() < a.d.getUTCDate() ? b : a));
+const senast = rader.reduce((a, b) => (b.d.getUTCDate() > a.d.getUTCDate() ? b : a));
+
+// Länder där regeln är bekräftad i svensk och engelsk Wikipedia.
+const LANDER = [
+  { land: "Sverige, Finland, Norge, Island och Estland", regel: "andra söndagen i november", d: farsDag },
+  { land: "Danmark", regel: "5 juni, samma dag som grundlovsdagen", d: (y) => datum(y, 6, 5) },
+  { land: "USA, Storbritannien och Kanada", regel: "tredje söndagen i juni", d: (y) => nteSondag(y, 6, 3) },
+  { land: "Tyskland", regel: "Kristi himmelsfärdsdag (Vatertag)", d: (y) => plusDagar(paskdagen(y), 39) },
+  { land: "Australien och Nya Zeeland", regel: "första söndagen i september", d: (y) => nteSondag(y, 9, 1) },
+  { land: "Spanien, Italien och Portugal", regel: "19 mars, Josefs dag", d: (y) => datum(y, 3, 19) },
+];
+const varlden = LANDER.map((l) => ({ ...l, dt: l.d(nastaAr) })).sort((a, b) => a.dt - b.dt);
+
+const avsnitt = [
+  { id: "datum", rubrik: `När är fars dag ${nastaAr}?` },
+  { id: "regel", rubrik: "Varför andra söndagen i november?" },
+  { id: "rod-dag", rubrik: "Är fars dag en röd dag eller flaggdag?" },
+  { id: "lander", rubrik: "Fars dag i andra länder" },
+  { id: "historia", rubrik: "Fars dags historia" },
+  { id: "traditioner", rubrik: "Så firas fars dag i Sverige" },
+  { id: "planera", rubrik: "Planera fars dag" },
+];
+
+const fragor = [
+  { fraga: `Vilket datum är fars dag ${nastaAr}?`, svar: `Fars dag ${nastaAr} infaller ${fmt(nasta)}, vecka ${isoVecka(nasta).vecka}. I Sverige firas fars dag alltid den andra söndagen i november.` },
+  { fraga: "Är fars dag alltid andra söndagen i november?", svar: "Ja. Fars dag firas den andra söndagen i november i Sverige, och datumet varierar därför mellan 8 och 14 november. Samma regel gäller i Finland, Norge, Island och Estland." },
+  { fraga: "Är fars dag en röd dag?", svar: "Nej. Fars dag finns inte med i lagen (1989:253) om allmänna helgdagar. Eftersom dagen alltid är en söndag är de flesta ändå lediga." },
+  { fraga: "Är fars dag en flaggdag?", svar: "Fars dag är ingen allmän flaggdag i Sverige enligt förordningen (1982:270) om allmänna flaggdagar, men många flaggar ändå. I Finland är fars dag officiell flaggdag." },
+  { fraga: "När är fars dag i USA?", svar: `I USA, Storbritannien och Kanada firas fars dag den tredje söndagen i juni, ${nastaAr} alltså ${fmt(nteSondag(nastaAr, 6, 3))}.` },
+  { fraga: "När började man fira fars dag i Sverige?", svar: "Fars dag kom till Sverige 1931 och firades till en början i juni. Dagen flyttades senare till november, och firandet tog fart på 1950-talet." },
+  { fraga: "När är mors dag?", svar: `Mors dag firas den sista söndagen i maj i Sverige, ${nastaAr} den ${kort(morsDag(nastaAr))}.` },
+];
+
+const titel = `Fars dag ${nastaAr} – datum ${kort(nasta)} och allt om dagen`;
+const beskrivning = `Fars dag ${nastaAr} är ${fmt(nasta)}. Alltid andra söndagen i november. Datum för ${AREN[0]}–${AREN.at(-1)}, fars dag i andra länder, historien och hur dagen firas.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1={`Fars dag ${nastaAr}`}
+  svar={`Fars dag ${nastaAr} infaller <strong>${fmt(nasta)}</strong> (vecka ${isoVecka(nasta).vecka}), om ${kvar} ${kvar === 1 ? "dag" : "dagar"}. I Sverige firas fars dag alltid den <strong>andra söndagen i november</strong>. Dagen är varken röd dag eller allmän flaggdag, men eftersom den är en söndag är de flesta lediga.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Alla helgdagar", href: "/helgdagar/" }, { namn: "Fars dag", href: "/fars-dag/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Mors dag", href: "/mors-dag/", text: "Sista söndagen i maj" },
+    { namn: "Alla helgons dag", href: "/alla-helgons-dag/", text: "Helgen veckan före fars dag" },
+    { namn: "Flaggdagar", href: "/flaggdagar/", text: "Dagarna då flaggan hissas på allmänna byggnader" },
+    { namn: `Kalender ${nastaAr}`, href: `/vecka/${nastaAr}/`, text: "Hela året med veckonummer" },
+  ]}
+  kallor={[
+    { namn: "Nordiska museet – Fars dag", url: "https://www.nordiskamuseet.se/aretsdagar/fars-dag", text: "regeln, införandet 1931, köpmannakommittén 1949, gåvor och kritik", datum: "2026-11-25" },
+    { namn: "SCB – Fars dag-firande och pappor på femtiotalet", url: "https://www.scb.se/hitta-statistik/redaktionellt/fars-dagsfirande-och-pappor-pa-femtiotalet/", text: "firandet tog fart på 1950-talet, uppgifter om män födda 1925", datum: "2026-11-25" },
+    { namn: "Wikipedia – Fars dag", url: "https://sv.wikipedia.org/wiki/Fars_dag", text: "flytten från juni till november, datum i olika länder och flaggning i Finland", datum: "2026-11-25" },
+    { namn: "Wikipedia – Father's Day (United States)", url: "https://en.wikipedia.org/wiki/Father%27s_Day_(United_States)", text: "Spokane 1910, Johnson 1966 och Nixon 1972", datum: "2026-11-25" },
+    { namn: "SVT – Därför firar vi fars dag", url: "https://www.svt.se/nyheter/inrikes/darfor-firar-vi-fars-dag", text: "Nordiska museet om att dagen infördes på initiativ av handeln", datum: "2026-11-25" },
+    { namn: "Store norske leksikon – Flaggdag", url: "https://snl.no/flaggdag", text: "de officiella flaggdagarna i Norge", datum: "2026-11-25" },
+    { namn: "Lag (1989:253) om allmänna helgdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/" },
+    { namn: "Förordning (1982:270) om allmänna flaggdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982270-om-allmanna-flaggdagar_sfs-1982-270/" },
+  ]}>
+
+  <h2 id="datum">När är fars dag {nastaAr}?</h2>
+  <p>Fars dag {nastaAr} är <strong>{fmt(nasta)}</strong>, vecka {isoVecka(nasta).vecka}. Regeln är "andra söndagen i november", så fars dag kan aldrig infalla före den 8 november eller efter den 14 november. Tabellen visar datumet för de närmaste åren. Nedräkningen räknas om varje dag.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Datum</th><th class="num">Vecka</th><th>Mors dag samma år</th><th>Anmärkning</th></tr></thead>
+    <tbody>{rader.map((r) => (
+      <tr><td>{r.y}</td><td>{versal(veckodag(r.d))} {kort(r.d)}</td><td class="num">{r.v}</td><td>{kort(morsDag(r.y))}</td>
+        <td>{r.d < IDAG ? "Har varit" : iso(r.d) === iso(nasta) ? `Nästa fars dag – om ${kvar} dagar` : ""}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Av åren i tabellen infaller fars dag tidigast {kort(tidigast.d)} ({tidigast.y}) och senast {kort(senast.d)} ({senast.y}). Räknat över åren 2000–2099 hamnar fars dag alltid i vecka {lista(veckorMojliga.map(String))}. Vecka 46 blir det bara de skottår som börjar på en torsdag, då fars dag infaller den 14 november. Det händer {v46.length} gånger under perioden{nastaV46 ? `, nästa gång ${nastaV46}` : ""}.</p>
+
+  <h2 id="regel">Varför andra söndagen i november?</h2>
+  <p>När fars dag kom till Sverige 1931 firades den i juni, som i USA. Enligt svenska Wikipedia flyttades dagen senare till november för att ligga bättre i förhållande till mors dag, som firas sista söndagen i maj. {nastaAr} skiljer {mellanMors} dagar mellan mors dag och fars dag, alltså ungefär ett halvår. Ingen av källorna anger exakt vilket år flytten gjordes.</p>
+  <p>Sverige delar regeln med Finland, Norge, Island och Estland. Danmark är det nordiska undantaget och firar fars dag den 5 juni, samma dag som grundlovsdagen.</p>
+  <h3>Alltid åtta dagar efter alla helgons dag</h3>
+  <p>Alla helgons dag är lördagen mellan 31 oktober och 6 november. Söndagen efter är den första söndagen i november, och fars dag kommer en vecka senare. Därför infaller fars dag alltid åtta dagar efter alla helgons dag. {nastaAr} är alla helgons dag {kort(allaHelgon(nastaAr))} och fars dag {kort(nasta)}. Den som vill hälsa på familjen båda helgerna får alltså två helger i rad.</p>
+
+  <h2 id="rod-dag">Är fars dag en röd dag eller flaggdag?</h2>
+  <p><strong>Fars dag är ingen röd dag.</strong> De allmänna helgdagarna räknas upp i lagen (1989:253) om allmänna helgdagar, och fars dag finns inte med. Eftersom dagen alltid är en söndag spelar det liten roll för ledigheten. Butiker och kollektivtrafik har söndagstider.</p>
+  <p><strong>Fars dag är inte heller en allmän flaggdag</strong> enligt förordningen (1982:270) om allmänna flaggdagar. Myndigheter flaggar därför inte, men det är vanligt att privatpersoner hissar flaggan. I Finland är fars dag däremot officiell flaggdag. I Norge finns den inte bland de officiella flaggdagarna.</p>
+
+  <h2 id="lander">Fars dag i andra länder</h2>
+  <p>Fars dag firas i många länder, men på helt olika dagar. Tabellen visar de regler vi har kontrollerat, sorterade efter när dagen infaller {nastaAr}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th>Regel</th><th>Datum {nastaAr}</th></tr></thead>
+    <tbody>{varlden.map((l) => <tr><td>{l.land}</td><td>{l.regel}</td><td>{versal(veckodag(l.dt))} {kort(l.dt)}</td></tr>)}</tbody>
+  </table></div>
+  <p>I katolska länder som Spanien, Italien och Portugal är fars dag kopplad till Josef, Jesu jordiske far, och firas på Josefs dag den 19 mars. I Tyskland sammanfaller Vatertag med Kristi himmelsfärdsdag och flyttar sig därför med påsken. Har du en pappa i USA eller Storbritannien infaller hans dag i juni, nästan fem månader före den svenska.</p>
+
+  <h2 id="historia">Fars dags historia</h2>
+  <p>Idén kommer från USA. Sonora Smart Dodd föreslog 1909 en dag för fäderna, och det första firandet hölls i Spokane i delstaten Washington den 19 juni 1910. President Calvin Coolidge stödde idén 1924, och 1966 utfärdade Lyndon B. Johnson den första presidentproklamationen om fars dag den tredje söndagen i juni. Den 24 april 1972 skrev Richard Nixon under lagen som gjorde dagen permanent.</p>
+  <p>I Sverige diskuterades en fars dag redan i början av 1920-talet, enligt Nordiska museet. Dagen infördes 1931, och i en intervju med SVT har Nordiska museet beskrivit att det skedde på initiativ av handeln. År 1949 bildade nordiska köpmän en kommitté för att sprida kännedom om dagen. Enligt SCB tog firandet fart på 1950-talet. SCB har jämfört med hur det såg ut för män födda 1925: bland män i åldern 25–35 år hade nära 97 procent förvärvsarbete, och män fick sitt första barn vid i genomsnitt 28 års ålder.</p>
+  <p>Dagen har också fått kritik. Nordiska museet nämner att den anses kommersiell, att den kan utesluta barn som inte har en pappa och att det runt 1970 fanns krav på att avskaffa den.</p>
+
+  <h2 id="traditioner">Så firas fars dag i Sverige</h2>
+  <p>Enligt Nordiska museet firas fars dag ungefär som mors dag: med uppvaktning på morgonen, kanske blommor och en present. Firandet är framför allt privat inom familjen. Vanliga inslag är:</p>
+  <ul>
+    <li><strong>Kort</strong>, ofta gjorda av barnen i förskolan eller skolan.</li>
+    <li><strong>En present.</strong> Länge var slipsen den klassiska gåvan. Nordiska museet beskriver hur gåvorna sedan 1930-talet ofta kopplats till en traditionell mansroll.</li>
+    <li><strong>Lunch eller middag</strong> tillsammans, hemma eller ute. Wikipedia nämner farsdagsluncher.</li>
+    <li><strong>Flaggning</strong> hemma, även om dagen inte är allmän flaggdag.</li>
+  </ul>
+  <p>Utöver det privata firandet uppmärksammas dagen ibland med konserter och andra evenemang.</p>
+
+  <h2 id="planera">Planera fars dag</h2>
+  <h3>Räkna med helgen före</h3>
+  <p>Fars dag infaller i början av november, en vecka efter allhelgonahelgen. Restauranger med lunch eller brunch kan vara välbesökta, så boka i god tid om ni vill äta ute.</p>
+  <h3>Skicka i tid</h3>
+  <p>Ska ett kort eller paket komma fram före fars dag behöver det skickas i god tid, eftersom dagen alltid är en söndag. Kontrollera utdelningsdagarna hos det postbolag du använder.</p>
+  <h3>Kom ihåg utlandet</h3>
+  <p>I Danmark firas fars dag den 5 juni och i USA, Storbritannien och Kanada i juni. För den som har familj där kommer dagen alltså ungefär fem månader tidigare än den svenska. I Finland, Norge och Island är det samma dag som i Sverige.</p>
+</Guide>

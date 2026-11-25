@@ -25,6 +25,8 @@ const fragor = [
   <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
   <Annons plats="basta-1" />
   {perLan.map((x) => <><h2 id={x.lan.slug}>Utmärkt vattenkvalitet i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+  <h2 id="sa-laser-du">Så läser du vattenkvaliteten</h2>
+  <p>Klassningen utmärkt, bra, tillfredsställande eller dålig är ett betyg för badplatsen som bygger på provsvaren från de fyra senaste badsäsongerna. Den säger hur vattnet brukar vara, inte hur det är idag. Det enskilda provet bedöms som tjänligt, tjänligt med anmärkning eller otjänligt utifrån halten av E. coli och intestinala enterokocker. Läs mer, och bedöm ett provsvar själv, i guiden <a href="/badvattenkvalitet/">badvattenkvalitet – så läser du provsvaren</a>. Vill du ha sandstrand med toppvatten, se <a href="/basta-strander/">Sveriges bästa stränder</a>.</p>
   <Faq fragor={fragor} />
   <p class="kalla">{KALLA}</p>
 </Layout>

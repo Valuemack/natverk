@@ -1,0 +1,159 @@
+---
+// Lång guide: badtemperatur och havstemperatur. All statistik räknas ur HaV:s öppna data: temperaturen som
+// kommunerna noterar vid provtagningen (2023–) och HaV:s prognos för kustbad (Copernicus). Fakta om
+// uppvällning och havstemperatur från SMHI:s kunskapsbank. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, ALLA_PROV, PROV_AR, SENASTE_AR, giltigTemp, median, medel, grad, pct, tal, MANAD } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const T = ALLA_PROV.filter((p) => giltigTemp(p.vattentemp));
+const man = (p) => p.datum.slice(5, 7);
+const ar0 = PROV_AR[0], ar1 = PROV_AR.at(-1);
+
+// Sommarens temperatur per län (median av alla mätningar i månaden, alla år).
+const lanRader = LAN.map((l) => {
+  const v = (m) => T.filter((p) => p.e.lan === l.namn && man(p) === m).map((p) => p.vattentemp);
+  return { l, juni: median(v("06")), juli: median(v("07")), aug: median(v("08")), n: T.filter((p) => p.e.lan === l.namn).length };
+}).filter((r) => r.n >= 30);
+const varmastJuli = [...lanRader].filter((r) => r.juli != null).sort((a, b) => b.juli - a.juli);
+
+// Hav, sjö och vattendrag i juli.
+const typer = [["Hav", "Havsbad"], ["Sjö", "Sjöbad"], ["Vattendrag", "Bad i älvar och åar"]].map(([k, namn]) => {
+  const v = T.filter((p) => p.e.extra?.vattentyp === k && man(p) === "07").map((p) => p.vattentemp);
+  return { namn, n: v.length, median: median(v), medel: medel(v), over20: v.filter((t) => t >= 20).length };
+});
+const hav = typer[0], sjo = typer[1];
+
+// År för år: juli.
+const arRader = PROV_AR.map((y) => {
+  const v = T.filter((p) => p.datum.startsWith(`${y}-07`)).map((p) => p.vattentemp);
+  const max = T.filter((p) => p.datum.startsWith(`${y}`)).sort((a, b) => b.vattentemp - a.vattentemp)[0];
+  return { y, n: v.length, median: median(v), over20: v.filter((t) => t >= 20).length, max };
+});
+
+// Varmaste mätningarna senaste säsongen (en per badplats).
+const sett = new Set();
+const varmast = T.filter((p) => p.datum.startsWith(`${SENASTE_AR}`)).sort((a, b) => b.vattentemp - a.vattentemp)
+  .filter((p) => !sett.has(p.e.id) && sett.add(p.e.id)).slice(0, 10);
+
+// Månader över hela säsongen (alla år).
+const manRader = ["05", "06", "07", "08"].map((m) => { const v = T.filter((p) => man(p) === m).map((p) => p.vattentemp); return { m, n: v.length, median: median(v), over20: v.filter((t) => t >= 20).length }; });
+
+// HaV:s prognos för kustbad (Copernicus), per län.
+const progn = E.filter((e) => e.extra?.vattentemp?.prognos?.varden?.length);
+const hamtad = progn.map((e) => e.extra.vattentemp.prognos.hamtad).sort().at(-1) ?? null;
+const prognLan = LAN.map((l) => {
+  const v = progn.filter((e) => e.lan === l.namn).map((e) => medel(e.extra.vattentemp.prognos.varden.map((x) => x.grader)));
+  return { l, n: v.length, medel: medel(v), min: v.length ? Math.min(...v) : null, max: v.length ? Math.max(...v) : null };
+}).filter((r) => r.n);
+const fmtDatum = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const heltal = T.filter((p) => Number.isInteger(p.vattentemp)).length;
+const UPPDATERAD =hamtad && hamtad > PUBLICERAD ? hamtad : PUBLICERAD;
+
+const avsnitt = [
+  { id: "idag", rubrik: "Badtemperatur idag" },
+  { id: "lan", rubrik: "Badtemperatur per län i juni, juli och augusti" },
+  { id: "sjo-hav", rubrik: "Sjö eller hav – var är vattnet varmast?" },
+  { id: "manad", rubrik: "När är vattnet varmast?" },
+  { id: "varmast", rubrik: `De varmaste badplatserna ${SENASTE_AR}` },
+  { id: "uppvallning", rubrik: "Varför vattnet plötsligt blir kallt" },
+  { id: "ar", rubrik: "Badtemperaturen år för år" },
+  { id: "matning", rubrik: "Så mäts badtemperaturen" },
+];
+
+const fragor = [
+  { fraga: "Var hittar jag badtemperatur idag?", svar: "Under badsäsongen noterar kommunerna vattentemperaturen när de tar vattenprov, och värdet visas på varje badplats sida här. För kustbad finns dessutom en prognos från HaV som bygger på havsmodellen Copernicus. Vissa kommuner har egna digitala termometrar på stranden." },
+  { fraga: "Hur varmt är vattnet i juli?", svar: `Medianen för alla mätningar i juli ${ar0}–${ar1} är ${grad(median(T.filter((p) => man(p) === "07").map((p) => p.vattentemp)))}. Sjöarna är i regel ett par grader varmare än havet: ${grad(sjo.median)} mot ${grad(hav.median)}.` },
+  { fraga: "Var i Sverige är badvattnet varmast?", svar: `Mätt som median i juli ligger ${varmastJuli[0].l.namn} (${grad(varmastJuli[0].juli)}) och ${varmastJuli[1].l.namn} (${grad(varmastJuli[1].juli)}) i topp. Skillnaderna mellan länen är små; läget vid den enskilda badplatsen betyder mer.` },
+  { fraga: "Varför är havet kallt fast det är varmt i luften?", svar: "Oftast beror det på uppvällning. När det blåser från land trycks det varma ytvattnet ut och kallt vatten från djupet, 5–10 grader, kommer upp vid stranden. Enligt SMHI är det vanligast i Hanöbukten och runt Gotland och minst vanligt på västkusten." },
+  { fraga: "Vilken temperatur har Östersjön på sommaren?", svar: "SMHI anger att ytvattnet på sommaren håller runt 20 grader i söder och är svalare i norr. Den 22 augusti 2022 varierade ytvattnet från cirka 20 grader i söder till 14 grader i norr." },
+  { fraga: "När är vattnet som varmast?", svar: `I mätningarna är juli den varmaste månaden, med ${pct(manRader[2].over20, manRader[2].n)} av mätningarna på 20 grader eller mer. Augusti ligger nästan lika högt, medan juni ofta är en till två grader kallare.` },
+];
+
+const titel = `Badtemperatur – så varmt är vattnet i sjö och hav`;
+const beskrivning = `Badtemperatur per län ur ${tal(T.length)} mätningar ${ar0}–${ar1}. Var vattnet är varmast, sjö mot hav, varmaste badplatserna och varför havet plötsligt blir kallt.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Badtemperatur i Sverige"
+  svar={`På sommaren håller badvattnet i Sverige oftast <strong>17–20 grader</strong>. Medianen för alla mätningar i juli ${ar0}–${ar1} är <strong>${grad(median(T.filter((p) => man(p) === "07").map((p) => p.vattentemp)))}</strong>. Sjöarna är varmare än havet (${grad(sjo.median)} mot ${grad(hav.median)} i juli). Vid kusten kan uppvällning sänka temperaturen med flera grader på ett dygn.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Badtemperatur", href: "/badtemperatur/" }]}
+  publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Algblomning", href: "/algblomning/", text: "Varmt och stilla vatten ger blomning" },
+    { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/", text: "Så läser du provsvaren" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten" },
+    { namn: "Kallbad och vinterbad", href: "/kallbad/", text: "Kallbadhus och vinterbad i datan" },
+    { namn: "Alla län", href: "/#lan", text: "Hitta badplatser nära dig" },
+  ]}
+  kallor={[
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "vattentemperatur vid provtagning och prognos för kustbad", datum: "2026-11-25" },
+    { namn: "HaV – Vägledning kring EU-bad (rapport 2025:7)", url: "https://www.havochvatten.se/data-kartor-och-rapporter/rapporter-och-andra-publikationer/publikationer/2025-06-12-vagledning-kring-eu-bad.html", text: "provtagningsdjup och badsäsongens längd per län", datum: "2026-11-25" },
+    { namn: "SMHI – Temperatur i havet", url: "https://www.smhi.se/kunskapsbanken/oceanografi/haven-runt-sverige/temperatur-i-havet", text: "sommartemperatur i ytvattnet", datum: "2026-11-25" },
+    { namn: "SMHI – Uppvällning", url: "https://www.smhi.se/kunskapsbanken/oceanografi/haven-runt-sverige/uppvallning", text: "varför vattnet blir kallt vid frånlandsvind", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="idag">Badtemperatur idag</h2>
+  <p>Det finns ingen nationell termometer för alla badplatser. Badtemperaturen kommer från två håll. Under badsäsongen noterar kommunerna vattnets temperatur varje gång de tar vattenprov vid en badplats. Mellan proverna kan det gå flera veckor, så värdet är en ögonblicksbild. För kustbaden publicerar Havs- och vattenmyndigheten (HaV) också en <strong>prognos</strong> för vattentemperaturen, beräknad med den europeiska havsmodellen Copernicus.</p>
+  {prognLan.length > 0 && hamtad && <>
+    <p>Så här ser HaV:s prognos ut för {tal(progn.length)} kustbad, hämtad {fmtDatum(hamtad)}. Siffran är dygnets medelvärde vid badplatserna i länet.</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Län</th><th class="num">Kustbad</th><th class="num">Medel</th><th class="num">Kallast</th><th class="num">Varmast</th></tr></thead>
+      <tbody>{prognLan.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{grad(r.medel)}</td><td class="num">{grad(r.min)}</td><td class="num">{grad(r.max)}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+  <p>Den senaste uppmätta temperaturen och prognosen för en viss strand finns på badplatsens egen sida. Sök fram den från <a href="/">startsidan</a> eller via <a href="/#lan">länslistan</a>.</p>
+
+  <h2 id="lan">Badtemperatur per län i juni, juli och augusti</h2>
+  <p>Tabellen sammanfattar <strong>{tal(T.length)} temperaturmätningar</strong> som kommunerna rapporterat till HaV under badsäsongerna {ar0}–{ar1}. Vi visar medianen, alltså mittvärdet, eftersom enstaka extrema värden annars drar iväg. Län med färre än 30 mätningar är inte med.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Juni</th><th class="num">Juli</th><th class="num">Augusti</th><th class="num">Mätningar</th></tr></thead>
+    <tbody>{lanRader.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{grad(r.juni)}</td><td class="num">{grad(r.juli)}</td><td class="num">{grad(r.aug)}</td><td class="num">{tal(r.n)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Det som förvånar många är att skillnaden mellan söder och norr är liten. {varmastJuli[0].l.namn}, {varmastJuli[1].l.namn} och {varmastJuli[2].l.namn} har högst median i juli. En trolig förklaring är att de flesta mätningar görs vid sjöbad och grunda vikar, som värms upp fort av sommarsolen oavsett var i landet de ligger. Badsäsongen är dessutom kortare i norr. I Västernorrland, Jämtland, Västerbotten och Norrbotten pågår den officiellt från 15 juli till 15 augusti, alltså mitt i den varmaste perioden. I södra Sverige börjar den redan 21 juni.</p>
+
+  <h2 id="sjo-hav">Sjö eller hav – var är vattnet varmast?</h2>
+  <p>Vill du ha varmt vatten är sjön oftast ett säkrare kort än havet. Så här skiljer sig mätningarna i juli:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av bad</th><th class="num">Median juli</th><th class="num">Medel juli</th><th class="num">20 °C eller mer</th><th class="num">Mätningar</th></tr></thead>
+    <tbody>{typer.map((t) => <tr><td>{t.namn}</td><td class="num">{grad(t.median)}</td><td class="num">{grad(t.medel)}</td><td class="num">{pct(t.over20, t.n)}</td><td class="num">{tal(t.n)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Sjöar värms snabbt eftersom vattnet är grunt och stilla nära stranden. Havet har en mycket större vattenmassa, och vindar och strömmar blandar om ytvattnet med kallare vatten längre ner. SMHI påpekar att temperaturen inomskärs och längs grunda stränder oftast är högre än längre ut till havs. Där är omblandningen mindre och solen hinner värma botten. En långgrund sandstrand i en skyddad vik blir därför varmare än en klippa ut mot öppet hav.</p>
+
+  <h2 id="manad">När är vattnet varmast?</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Median</th><th class="num">20 °C eller mer</th><th class="num">Mätningar</th></tr></thead>
+    <tbody>{manRader.map((r) => <tr><td>{MANAD[r.m][0].toUpperCase() + MANAD[r.m].slice(1)}</td><td class="num">{grad(r.median)}</td><td class="num">{pct(r.over20, r.n)}</td><td class="num">{tal(r.n)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Juli och augusti är de bästa badmånaderna. I juni har vattnet ofta inte hunnit ikapp luften, och mätningarna i maj är mestadels de försäsongsprov som kommunerna tar innan säsongen börjar. Delar man upp mätningarna i tiodagarsperioder är både sjöar och hav som varmast under andra halvan av juli. Under augusti sjunker temperaturen sakta igen, men vattnet är fortfarande varmare än i juni. Den som vill bada i varmt vatten utan sommarlovets trängsel har alltså goda chanser även i mitten av augusti.</p>
+
+  <h2 id="varmast">De varmaste badplatserna {SENASTE_AR}</h2>
+  <p>De högsta temperaturer som kommunerna rapporterade säsongen {SENASTE_AR}, en rad per badplats:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Badplats</th><th>Kommun</th><th>Datum</th><th class="num">Temperatur</th></tr></thead>
+    <tbody>{varmast.map((p) => <tr><td><a href={p.e.href}>{p.e.namn}</a></td><td>{p.e.kommun}</td><td>{fmtDatum(p.datum)}</td><td class="num">{grad(p.vattentemp, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Toppvärdena kommer nästan alltid från små sjöar och grunda vikar under värmeböljor. Mätningen gäller en enda dag. Samma badplats kan visa flera grader lägre veckan efter.</p>
+
+  <h2 id="uppvallning">Varför vattnet plötsligt blir kallt</h2>
+  <p>Den som badar vid kusten har säkert varit med om det: igår var vattnet behagligt, idag är det iskallt. Fenomenet heter <strong>uppvällning</strong>. SMHI förklarar att det uppstår när det blåser från land. Vinden driver ut det varma ytvattnet, och kallt vatten från djupet strömmar upp vid kusten i stället. Det uppvällande vattnet håller enligt SMHI bara 5–10 grader.</p>
+  <p>Effekten kan bli stor. SMHI beskriver hur ihållande västliga vindar i augusti 2022 sänkte vattentemperaturen vid Ratan i Bottenviken med ungefär tio grader. Uppvällning är vanligast i Hanöbukten och runt Gotland och minst vanlig på västkusten. Tumregeln är enkel: vid pålandsvind blir vattnet varmt, vid frånlandsvind kallt.</p>
+  <h3>Tips om vattnet är kallt</h3>
+  <p>Byt sida. Blåser det från väster på ostkusten kan en strand på en ö eller en udde som vetter åt ett annat håll ha betydligt varmare vatten. Ett annat alternativ är att åka till en sjö i närheten, där uppvällning inte förekommer på samma sätt.</p>
+
+  <h2 id="ar">Badtemperaturen år för år</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Median juli</th><th class="num">20 °C eller mer</th><th>Varmaste mätning</th></tr></thead>
+    <tbody>{arRader.map((r) => <tr><td>{r.y}</td><td class="num">{grad(r.median)}</td><td class="num">{pct(r.over20, r.n)}</td><td>{r.max ? <>{grad(r.max.vattentemp, 0)}, <a href={r.max.e.href}>{r.max.e.namn}</a> ({r.max.e.kommun})</> : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Skillnaden mellan somrarna är mindre än man kanske tror när man ser på medianen. Det som skiljer en het sommar från en sval är framför allt hur många dagar vattnet håller över 20 grader och hur höga toppvärdena blir.</p>
+
+  <h2 id="matning">Så mäts badtemperaturen</h2>
+  <p>Temperaturerna i den här guiden är inte modellberäkningar utan noteringar från kommunernas provtagning. Enligt HaV:s vägledning ska provet tas där flest förväntas bada, på minst en meters vattendjup om det går och 30 centimeter under ytan. Kommunen rapporterar sedan resultatet till HaV:s webbplats Badplatsen, där det blir öppen data.</p>
+  <ul>
+    <li><strong>Fördel:</strong> värdena är uppmätta på riktigt, vid själva badplatsen.</li>
+    <li><strong>Nackdel:</strong> de flesta badplatser mäts bara tre till fem gånger per sommar, och några kommuner noterar inte temperaturen alls.</li>
+    <li><strong>Avrundning:</strong> {pct(heltal, T.length)} av mätningarna är angivna i hela grader. Därför hamnar medianerna ofta på jämna tal.</li>
+    <li><strong>Felvärden:</strong> värden på 0 grader eller lägre, och över 32 grader, är nästan alltid felinmatningar. Dem har vi räknat bort.</li>
+  </ul>
+  <p>Vill du veta vad vattnet håller just nu är en prognos eller en termometer på stranden bättre. Vill du veta vilket vatten som brukar vara varmt är de här mätningarna ett bra underlag. Utanför badsäsongen finns bara enstaka mätningar, för få för att räknas med i tabellerna.</p>
+</Guide>

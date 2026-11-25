@@ -1,0 +1,123 @@
+---
+// Lång guide: barnmorskemottagning (MVC). Egen data: 1177 Hitta vård, vårdtypen Barnmorskemottagning,
+// räknad per län och kommun (scripts/06). Fakta granskade mot 1177 och Folkhälsomyndigheten 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, V, PUBLICERAD, lanRader, tal, invPer, vardtyp, vardtypLan, toppKommuner, KALLA_1177_VARDTYP } from "../lib/guide.js";
+
+const TYP = "Barnmorskemottagning";
+const T = vardtyp(TYP);
+const rader = lanRader((lan) => ({ n: vardtypLan(TYP, lan) })).sort((a, b) => b.n - a.n);
+const folkTot = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const perInv = rader.filter((r) => r.n && r.folk).map((r) => ({ ...r, inv: r.folk / r.n })).sort((a, b) => a.inv - b.inv);
+const tatast = perInv[0], glesast = perInv.at(-1);
+const topp = toppKommuner(TYP, 12);
+const kortSumma = (k) => Object.values(G.kort).reduce((s, r) => s + (r[k] ?? 0), 0);
+const cellEt = kortSumma("cellprov"), prevEt = kortSumma("preventivmedel");
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad gör man på barnmorskemottagningen?" },
+  { id: "gravid", rubrik: "När du är gravid – kontakta MVC tidigt" },
+  { id: "besok", rubrik: "Hur många besök blir det?" },
+  { id: "cellprov", rubrik: "Cellprov och HPV-test" },
+  { id: "preventivmedel", rubrik: "Preventivmedel" },
+  { id: "lan", rubrik: "Barnmorskemottagningar per län" },
+  { id: "valja", rubrik: "Välja och hitta barnmorskemottagning" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan MVC och barnmorskemottagning?", svar: "Ingen. MVC står för mödravårdscentral, det äldre namnet. I dag heter det oftast barnmorskemottagning, och på 1177 ger båda sökorden samma lista med mottagningar." },
+  { fraga: "Kostar det att gå på barnmorskemottagningen när man är gravid?", svar: "Nej. Enligt 1177 är besöken på barnmorskemottagningen under graviditeten gratis. De är frivilliga, och du har rätt att gå på dem under arbetstid." },
+  { fraga: "När ska jag kontakta barnmorskemottagningen?", svar: "1177 skriver att det är bra att kontakta barnmorskemottagningen så snart du vet att du är gravid. Du får då information och en tid för ditt första besök." },
+  { fraga: "Hur många besök blir det på MVC?", svar: "Enligt 1177 brukar det bli mellan sex och tio besök, ungefär en gång i månaden fram till omkring vecka 30 och sedan tätare. Den som är gravid för första gången eller behöver mer stöd får ofta fler besök." },
+  { fraga: "Kostar cellprov?", svar: "Nej. Provet i screeningen för livmoderhalscancer kostar ingenting, enligt 1177. Du kallas från 23 till 70 år, antingen till barnmorska eller med ett självprov hemma." },
+  { fraga: "Kan jag välja barnmorskemottagning själv?", svar: "Ja. Enligt 1177 får du själv välja vilken mottagning du vill vända dig till för öppen vård, och barnmorskemottagning nämns uttryckligen." },
+  { fraga: "Hur många barnmorskemottagningar finns det?", svar: `1177 Hitta vård listar ${tal(T.antal)} mottagningar under vårdtypen barnmorskemottagning (november 2026). En del av dem är vårdcentraler som har barnmorska.` },
+];
+
+const titel = "Barnmorskemottagning (MVC) – besök, cellprov och kostnad";
+const beskrivning = `Barnmorskemottagning (MVC): vad du får hjälp med, när du ska höra av dig som gravid, cellprov och preventivmedel. ${tal(T.antal)} mottagningar per län och kommun.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Barnmorskemottagning (MVC)"
+  svar={`På barnmorskemottagningen, förr kallad <strong>MVC</strong>, följs graviditeten med kontroller som är <strong>gratis</strong>. Hit vänder du dig också för preventivmedel och cellprov. Hör av dig <strong>så snart du vet att du är gravid</strong>. 1177 listar <strong>${tal(T.antal)} barnmorskemottagningar</strong>, och du får själv välja vilken du går till.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Barnmorskemottagning", href: "/barnmorskemottagning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "BVC – barnavårdscentralen", href: "/bvc/", text: "Nästa steg när barnet är fött" },
+    { namn: "Ungdomsmottagning", href: "/ungdomsmottagning/", text: "För dig mellan 12–13 och 20–25 år" },
+    { namn: "Influensavaccin 2026", href: "/influensavaccin/", text: "Gratis för gravida efter vecka 12" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Alla vårdcentraler med öppettider" },
+  ]}
+  kallor={[
+    { namn: "1177 – Besök på barnmorskemottagningen", url: "https://www.1177.se/barn--gravid/graviditet/undersokningar-under-graviditeten/besok-pa-barnmorskemottagningen/", text: "antal besök, innehåll och att besöken är gratis", datum: "2026-11-25" },
+    { namn: "1177 – Lämna prov för att upptäcka HPV och cellförändringar", url: "https://www.1177.se/undersokning-behandling/undersokningar-och-provtagning/upptack-och-forebygg-cancer/lamna-prov-for-att-upptacka-hpv-och-cellforandringar-i-livmoderhalsen/", text: "åldrar, intervall, självprov och kostnad", datum: "2026-11-25" },
+    { namn: "1177 – Preventivmedel", url: "https://www.1177.se/liv--halsa/sexuell-halsa/skydd-mot-graviditet/preventivmedel--skydd-mot-graviditet/", text: "var du får preventivmedel och subvention för unga", datum: "2026-11-25" },
+    { namn: "1177 – Välja vårdmottagning", url: "https://www.1177.se/sa-fungerar-varden/att-valja-vardmottagning/valja-vardmottagning/", text: "rätten att välja mottagning", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – Vaccination mot influensa", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/vaccinationer/vaccinationer-a-o/vaccination-mot-influensa/", text: "rekommendation för gravida", datum: "2026-11-25" },
+    KALLA_1177_VARDTYP(TYP),
+  ]}>
+
+  <h2 id="vad">Vad gör man på barnmorskemottagningen?</h2>
+  <p>Barnmorskemottagningen är den del av vården som följer dig genom graviditeten, men den är också en mottagning för sexuell och reproduktiv hälsa i stort. Det gamla namnet MVC, mödravårdscentral, används fortfarande i vardagligt tal och i många sökningar. På 1177 är det samma sak: söker du på mödravårdscentral får du samma {tal(T.antal)} mottagningar som när du söker på barnmorskemottagning.</p>
+  <p>Hit vänder du dig bland annat för:</p>
+  <ul>
+    <li><strong>graviditetskontroller</strong> från tidig graviditet till efterkontrollen efter förlossningen</li>
+    <li><strong>cellprov</strong> i screeningen för livmoderhalscancer</li>
+    <li><strong>råd om preventivmedel</strong></li>
+  </ul>
+  <p>Vissa barnmorskemottagningar ligger i samma hus som en vårdcentral, och en del vårdcentraler har egen barnmorska. Andra är fristående eller ligger på ett sjukhus. Det förklarar varför listan på 1177 innehåller både renodlade barnmorskemottagningar och vårdcentraler.</p>
+
+  <h2 id="gravid">När du är gravid – kontakta MVC tidigt</h2>
+  <p>1177 skriver att det är bra att kontakta barnmorskemottagningen så snart du vet att du är gravid.</p>
+  <p>Besöken är frivilliga, men de flesta går på dem eftersom de är det sätt som vården följer hur du och barnet mår. <strong>Besöken är gratis</strong>, och enligt 1177 har du rätt att gå på dem under arbetstid.</p>
+  <h3>Det här brukar ingå</h3>
+  <ul>
+    <li>blodtryck vid varje besök</li>
+    <li>urinprov och blodprov, bland annat för att upptäcka infektioner som hiv och syfilis</li>
+    <li>erbjudande om ultraljud, oftast i vecka 18–20</li>
+    <li>intyg till Försäkringskassan om beräknad förlossning, ungefär i vecka 20</li>
+    <li>efterkontroll efter förlossningen, där du också kan ta upp frågan om preventivmedel</li>
+  </ul>
+  <p>Folkhälsomyndigheten rekommenderar gravida att vaccinera sig mot influensa efter graviditetsvecka 12, och vaccinet är gratis för gravida i alla regioner. Läs mer om <a href="/influensavaccin/">influensavaccin 2026</a>.</p>
+  <p>Är du orolig mellan besöken, ring barnmorskemottagningen eller 1177. En del sjukhus har en särskild akutmottagning för gravida. Ring 112 vid livshotande tillstånd.</p>
+
+  <h2 id="besok">Hur många besök blir det?</h2>
+  <p>Enligt 1177 brukar det bli <strong>sex till tio besök</strong> under graviditeten. Är det din första graviditet, eller behöver du mer stöd, blir det ofta fler. Fram till ungefär vecka 30 träffar du barnmorskan omkring en gång i månaden. Därefter blir besöken tätare inför förlossningen.</p>
+  <p>Eftersom besöken blir många under några månader kan det vara värt att välja en mottagning som ligger nära hemmet eller arbetet. Du har rätt att gå på besöken under arbetstid, så det är bra att planera dem med arbetsgivaren i god tid.</p>
+
+  <h2 id="cellprov">Cellprov och HPV-test</h2>
+  <p>Screeningen för livmoderhalscancer är ett nationellt erbjudande. Enligt 1177 kallas de som registrerades som kvinna vid födseln från 23 till 70 år:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ålder</th><th>Hur ofta</th></tr></thead>
+    <tbody>
+      <tr><td>23–50 år</td><td>Vart femte år</td></tr>
+      <tr><td>50–70 år</td><td>Vart sjunde år, sista gången vid 64–70 år</td></tr>
+      <tr><td>Tidigare allvarliga cellförändringar</td><td>Vart tredje år</td></tr>
+    </tbody>
+  </table></div>
+  <p>Du kan antingen lämna provet hos en barnmorska eller ta ett <strong>självprov</strong> hemma, och 1177 skriver att båda sätten är lika bra. Provet kostar ingenting. Självprovet skickar du med ett svarskuvert, och det går att ta även under mens. Provet hos barnmorskan bör du däremot inte lämna under mens. Svaret kommer inom två månader. Ett självtest du köper själv ingår inte i screeningen.</p>
+  <p>I vårdcentralernas kontaktkort på 1177 har {cellEt} vårdcentraler en egen e-tjänst för att boka om eller avboka tid för cellprov. Har du fått en kallelse med en tid som inte passar står det i kallelsen hur du ändrar den.</p>
+
+  <h2 id="preventivmedel">Preventivmedel</h2>
+  <p>Enligt 1177 kan du få hjälp med preventivmedel på barnmorskemottagning, ungdomsmottagning, mottagning för sexuell hälsa, gynekologisk mottagning och vårdcentral. Ofta kan du ta kontakt genom att logga in på 1177.se.</p>
+  <p>I vårdcentralernas kontaktkort på 1177 har {prevEt} vårdcentraler en e-tjänst för att förnya recept på preventivmedel. Preventivmedel som ingår i läkemedelsförmånen är <strong>gratis för unga till och med det år du fyller 21</strong>. Vissa regioner har en subvention upp till 26 år. Är du under 20–25 år kan <a href="/ungdomsmottagning/">ungdomsmottagningen</a> vara ett alternativ, där det oftast är kostnadsfritt.</p>
+
+  <h2 id="lan">Barnmorskemottagningar per län</h2>
+  <p>Tabellen visar hur många mottagningar som är registrerade som barnmorskemottagning i 1177 Hitta vård i varje län. Vi har placerat varje mottagning i rätt kommun med SCB:s kommungränser och räknat invånare per mottagning med SCB:s folkmängd. I hela landet går det i snitt {invPer(folkTot, T.antal - T.utanKommun)} invånare per mottagning. {tatast && glesast && <>Tätast är det i {tatast.kortnamn} och glesast i {glesast.kortnamn}.</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Barnmorskemottagningar</th><th class="num">Invånare per mottagning</th><th class="num">Vårdcentraler</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{invPer(r.folk, r.n)}</td><td class="num">{r.vc}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: 1177 Hitta vård, vårdtypen Barnmorskemottagning, hämtad {V.hamtad.slice(0, 10)}. {T.utanKommun} mottagningar saknar koordinater och är inte med i länsfördelningen. Regionerna registrerar mottagningar på olika sätt – en region som har barnmorskan på vårdcentralen kan visa färre separata mottagningar.</p>
+  <h3>Kommuner med flest barnmorskemottagningar</h3>
+  <p>{topp.map((x, i) => <>{i > 0 && ", "}<a href={x.k.href}>{x.k.namn}</a> ({x.antal})</>)}. Klicka på kommunen för att se vårdcentralerna där.</p>
+
+  <h2 id="valja">Välja och hitta barnmorskemottagning</h2>
+  <p>Enligt 1177 får du själv välja vilken mottagning du vill gå till för öppen vård, och barnmorskemottagningar nämns uttryckligen. Enligt patientlagen gäller rätten att välja offentligt finansierad öppen vård, alltså även privata mottagningar som har avtal med regionen.</p>
+  <ol>
+    <li>Sök på <strong>barnmorskemottagning</strong> och din ort på 1177 Hitta vård.</li>
+    <li>Kontrollera öppettider och om mottagningen har e-tjänster för att boka och skicka meddelanden.</li>
+    <li>Ring eller skriv till mottagningen och berätta att du är gravid, eller att du vill ha hjälp med preventivmedel eller cellprov.</li>
+  </ol>
+  <p>Vill du hitta vårdcentralen i samma område kan du söka på <a href="/">startsidan</a>. Efter förlossningen tar <a href="/bvc/">barnavårdscentralen (BVC)</a> över ansvaret för barnets hälsa.</p>
+</Guide>

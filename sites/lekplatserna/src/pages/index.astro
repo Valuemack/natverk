@@ -7,6 +7,7 @@ import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA, utrustning } from "../site.js";
 import { URVAL } from "../urval.js";
+import { GUIDER } from "../lib/guider.js";
 
 const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
 const n = KAT.enheter.length;
@@ -28,6 +29,9 @@ const fragor = [
 
   <h2>Hitta rätt sorts lekplats</h2>
   <div class="kort">{urval.map(([s, u, c]) => <a href={`/${s}/`}><strong>{u.namn}</strong><small>{c} st</small></a>)}</div>
+
+  <h2>Guider</h2>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
 
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>

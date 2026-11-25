@@ -117,7 +117,7 @@ export function arSammanfattning(ar) {
     const w = v.filter((x) => x.datum.startsWith(ym));
     return { ym, b95: medel(w.map((x) => x.b95)), diesel: medel(w.map((x) => x.diesel).filter((x) => x != null)), veckor: w.length };
   });
-  return { ar, veckor: v, b95: sammanf("b95"), diesel: sammanf("diesel"), manader, komplett: v.length >= 50 };
+  return { ar, veckor: v, b95: sammanf("b95"), diesel: sammanf("diesel"), manader, komplett: v.length >= 45 };
 }
 
 // ---------- Länder ----------

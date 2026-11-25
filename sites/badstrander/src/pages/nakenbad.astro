@@ -1,0 +1,92 @@
+---
+// Guide: nakenbad och naturiststränder. Bara platser där kommunen själv nämner nakenbad/naturistbad i HaV:s
+// badplatsregister tas med. Ämnet bär inte 1 500 ord med verifierad fakta – sidan är medvetet kortare.
+// Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, KLASS_AR, text, tal, klassAr } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const NAKEN = /naken|naturist|nudist/i;
+const nyast = KLASS_AR[0];
+const kort = (k) => (k ?? "–").replace(/ kvalitet$/i, "").replace("Tillfredställande", "Tillfredsställande");
+const typ = (e) => {
+  const t = text(e);
+  if (/officiell/i.test(t)) return "Officiellt nakenbad";
+  if (/dambad|för damer/i.test(t)) return "Nakenbad för damer";
+  if (/kallbadhuset är ett nakenbad|skilda nakenbad|privat nakenbad/i.test(t)) return "Nakenbad i kallbadhus";
+  if (/naturister håller till|badar många nakna/i.test(t)) return "Område där naturister badar";
+  return "Nakenbad eller naturistbad";
+};
+const platser = E.filter((e) => NAKEN.test(text(e))).map((e) => ({ e, typ: typ(e) }));
+const lanOrdning = [...new Set(platser.map((x) => x.e.lan))];
+const antalTyp = (t) => platser.filter((x) => x.typ === t).length;
+const utm = platser.filter((x) => /utmärkt/i.test(klassAr(x.e, nyast) ?? "")).length;
+
+const avsnitt = [
+  { id: "var", rubrik: "Var får man nakenbada?" },
+  { id: "lista", rubrik: `Nakenbad och naturiststränder – ${platser.length} platser` },
+  { id: "stockholm", rubrik: "Nakenbad i Stockholm och Uppsala" },
+  { id: "vast", rubrik: "Nakenbad i Göteborg och Halland" },
+  { id: "skane", rubrik: "Nakenbad i Skåne" },
+  { id: "kallbadhus", rubrik: "Nakenbad i kallbadhus" },
+  { id: "hitta", rubrik: "Hitta fler naturistbad" },
+];
+
+const fragor = [
+  { fraga: "Var finns officiella nakenbad i Sverige?", svar: `I HaV:s badplatsregister nämner kommunerna ${platser.length} badplatser med nakenbad eller naturistbad. Exempel är Ågesta naturistbad vid Magelungen, som Stockholms stad beskriver som stadens enda officiella naturistbad, och Halmstads officiella nakenbad vid Fylleåns mynning.` },
+  { fraga: "Finns det nakenbad i Göteborg?", svar: "Ja. Enligt Göteborgs stad finns naturistbad på sydvästra udden av Stora Amundön, och naturister håller till på den sydvästra delen av Smithska udden. Saltholmens kallbadhus är ett privat nakenbad som drivs av en ideell förening." },
+  { fraga: "Finns det nakenbad i Stockholm?", svar: "Ågesta naturistbad vid sjön Magelungen i Huddinge drivs av Stockholms stad tillsammans med Naturistföreningen Eos. Solviksbadet vid Mälaren har ett dambad med nakenbad, och Breviksbadet i Österåker har ett nudistbad." },
+  { fraga: "Vad är skillnaden på nakenbad och naturistbad?", svar: "Ordet nakenbad används ofta om en plats där man badar utan badkläder, till exempel en avdelning i ett kallbadhus. Naturistbad används oftare om stränder där naturister och naturistföreningar håller till. Kommunerna använder orden lite olika." },
+  { fraga: "Var finns en karta över naturistbad?", svar: "Sveriges Naturistförbund har en naturistkarta på sin webbplats med badplatser, campingar och inomhusbad." },
+];
+
+const titel = `Nakenbad – ${platser.length} naturiststränder och nakenbad`;
+const beskrivning = `${platser.length} nakenbad och naturiststränder i Sverige som kommunerna själva anger, med vattenkvalitet: Stockholm, Göteborg, Skåne, Halland och kallbadhus med nakenbad.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Nakenbad och naturiststränder"
+  svar={`Kommunerna anger själva <strong>${platser.length} badplatser med nakenbad eller naturistbad</strong> i Havs- och vattenmyndighetens register, bland dem Ågesta naturistbad i Stockholmsområdet, Stora Amundön i Göteborg, Halmstads officiella nakenbad och kallbadhusen i Helsingborg och Malmö. ${utm} av dem har utmärkt vattenkvalitet i senaste klassningen.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Nakenbad", href: "/nakenbad/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Kallbad och kallbadhus", href: "/kallbad/", text: "Kallbadhus och vinterbad" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten" },
+    { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/", text: "Så läser du provsvaren" },
+    { namn: "Hundbad", href: "/hundbad/", text: "Hundstränder och regler" },
+  ]}
+  kallor={[
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "kommunernas beskrivningar och klassningar", datum: "2026-11-25" },
+    { namn: "Naturvårdsverket – Allemansrätten på vatten", url: "https://www.naturvardsverket.se/amnesomraden/allemansratten/sa-gor-vi-allemansratt/pa-vatten/", text: "rätten att bada och hänsyn till tomter", datum: "2026-11-25" },
+    { namn: "Sveriges Naturistförbund – Naturistkarta", url: "https://www.naturism.se/naturistkarta/", text: "karta över naturistbad, campingar och inomhusbad", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="var">Var får man nakenbada?</h2>
+  <p>Allemansrätten ger dig rätt att bada vid stränder, och Naturvårdsverket påpekar att du ska hålla avstånd till tomter där de som bor ska kunna känna sig ostörda. Om att bada utan badkläder säger allemansrätten inget särskilt. I praktiken är det därför klokast att nakenbada på platser där det är uttalat tillåtet eller vedertaget, och att visa hänsyn mot andra på vanliga stränder.</p>
+  <p>Några kommuner har pekat ut <strong>officiella nakenbad</strong>. Andra har naturistbad som sköts tillsammans med en naturistförening, eller kallbadhus med nakenbad i separata avdelningar. På vissa stränder anger kommunen bara att naturister brukar hålla till i en viss del. Den här sidan tar bara med platser där kommunen själv nämner nakenbad eller naturister i sin beskrivning av badplatsen.</p>
+
+  <h2 id="lista">Nakenbad och naturiststränder – {platser.length} platser</h2>
+  <p>Tabellen visar alla badplatser i HaV:s register där kommunens beskrivning nämner nakenbad, naturistbad eller nudistbad, med senaste klassningen av vattnet ({nyast}).</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Badplats</th><th>Kommun</th><th>Typ enligt kommunen</th><th>Vatten {nyast}</th></tr></thead>
+    <tbody>{lanOrdning.flatMap((l) => platser.filter((x) => x.e.lan === l)).map((x) => <tr><td><a href={x.e.href}>{x.e.namn}</a></td><td>{x.e.kommun}</td><td>{x.typ}</td><td>{kort(klassAr(x.e, nyast))}</td></tr>)}</tbody>
+  </table></div>
+  <p>{antalTyp("Nakenbad i kallbadhus")} är nakenbad i kallbadhus, {antalTyp("Nakenbad för damer")} är dambad och {antalTyp("Officiellt nakenbad")} kallas uttryckligen officiella nakenbad av kommunen. Vid Hagön och Lilla Köpenhamn i Halmstad gäller samma nakenbad, som ligger längst söderut på Östra stranden.</p>
+
+  <h2 id="stockholm">Nakenbad i Stockholm och Uppsala</h2>
+  <p><strong>Ågesta naturistbad</strong> vid sjön Magelungen ligger i Huddinge kommun men drivs av Stockholms stad tillsammans med Naturistföreningen Eos. Enligt beskrivningen är det Stockholms stads enda officiella naturistbad. Där finns en stor gräsyta, en mindre sandstrand, grillplats, bouleplan, volleybollnät och en bastuvagn, och föreningen öppnar ett friluftscafé vid fint väder.</p>
+  <p>Vid <strong>Solviksbadet</strong> i Mälaren finns ett dambad med nakenbad, med egen brygga och omklädningshytter. <strong>Lövnäsbadet</strong> vid Yngern i Nykvarn är ett kommunalt bad med ett naturistbad i den södra delen. I Österåker är den mindre, norra stranden vid <strong>Breviksbadet</strong> ett nudistbad. Utanför Uppsala ligger <strong>Fjällnora naturistbad</strong> vid den lilla sjön Ramsen, en liten badplats med bryggor där det enligt kommunen blir djupt ganska snabbt.</p>
+
+  <h2 id="vast">Nakenbad i Göteborg och Halland</h2>
+  <p>I Göteborg nämner staden tre platser. På <strong>Stora Amundön</strong> finns naturistbad på sydvästra udden. På <strong>Smithska udden</strong>, ett stort klippbad, håller naturister till på den sydvästra delen. <strong>Saltholmens kallbadhus</strong> är ett privat nakenbad som drivs av den ideella föreningen Kallbadhusets Vänner Saltholmen, med separata avdelningar för kvinnor och män och en mindre gemensam. Där krävs medlemskort eller dagsbiljett.</p>
+  <p>I Halland finns <strong>Halmstads officiella nakenbad</strong> vid Fylleåns mynning, längst söderut på Östra stranden, en knappt fyra kilometer lång sandstrand. I Varberg är <strong>Skarpe Nord</strong> ett insynsskyddat nakenbad för damer mitt i stan.</p>
+
+  <h2 id="skane">Nakenbad i Skåne</h2>
+  <p>I Kristianstads kommun ligger <strong>Gropahålets naturistbad</strong> vid Ålakustvägen, en del av den långa sandstranden mellan Åhus och Kivik. Naturistbadet ligger till vänster och ett hundbad till höger när man kommer ner på stranden. I Malmö finns nakenbad vid <strong>Ribersborg</strong> och i kallbadhuset vid <strong>Sibbarp</strong>, och i Helsingborg har både <strong>Kallis</strong> och <strong>Pålsjöbaden</strong> skilda nakenbad med bastu.</p>
+
+  <h2 id="kallbadhus">Nakenbad i kallbadhus</h2>
+  <p>Fyra av platserna i listan är kallbadhus med nakenbad: Kallis och Pålsjöbaden i Helsingborg, Sibbarp i Malmö och Saltholmen i Göteborg. Enligt kommunernas beskrivningar har de separata avdelningar för damer och herrar, och tre av dem har bastu. Öppettider och entréavgifter sätts av den som driver kallbadhuset, så kontrollera dem innan du åker. Mer om kallbadhusen och om att bada i kallt vatten finns i guiden om <a href="/kallbad/">kallbad och vinterbad</a>.</p>
+
+  <h2 id="hitta">Hitta fler naturistbad</h2>
+  <p>Listan ovan är inte komplett. Många naturistbad ligger vid små sjöar eller på stränder som inte är registrerade badplatser, och då finns de inte i HaV:s data. <strong>Sveriges Naturistförbund</strong> har en naturistkarta på sin webbplats där badplatser, campingar och inomhusbad är utmärkta. Lokala naturistföreningar, som Naturistföreningen Eos i Stockholm, kan också svara på var det går att bada.</p>
+  <p>Vattenkvaliteten kontrolleras på samma sätt vid nakenbaden som vid andra badplatser. Klicka på badplatsens namn i tabellen för att se de senaste proverna och temperaturen.</p>
+</Guide>

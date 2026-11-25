@@ -14,9 +14,9 @@ const nu = skattedelar(v), da = skattedelar(forstaAr);
 const dProdukt = nu.produkt - da.produkt, dSkatt = nu.skatt - da.skatt;
 // Tidsbunden uppgift med källa – ses över när Skatteverket meddelar nytt.
 const SKATTELAGE = {
-  datum: "2026-11-20",
-  text: "Under 2026 har riksdagen tillfälligt sänkt skatten på bensin och diesel, först från den 1 maj och sedan ytterligare från den 1 juli. Enligt Skatteverket gäller den tillfälliga sänkningen av koldioxidskatten till och med den 30 november 2026. Fattas inget nytt beslut återgår skatten då till ordinarie nivå, och pumppriset stiger i så fall med skillnaden plus moms.",
-  kalla: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/nyheterinompunktskatter/2026/nyheterinompunktskatter/tillfalligtsanktkoldioxidskattpabensinochdiesel.5.3129d65419ef1497c06893.html",
+  datum: "2026-11-25",
+  text: "Under 2026 har riksdagen tillfälligt sänkt skatten på bensin och diesel: energiskatten från den 1 maj till och med den 30 september och koldioxidskatten från den 1 juli till och med den 30 november. Enligt Skatteverkets skattesatser är skatten från den 1 december 2026 åter 4,79 kronor per liter bensin och 3,96 kronor per liter diesel, mot 2,39 respektive 1,56 kronor i oktober–november. Med moms motsvarar det ungefär 3 kronor mer per liter vid pumpen. Den 1 januari 2027 höjs skatten till 4,89 kronor per liter bensin och 4,05 kronor per liter diesel.",
+  kalla: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/energiskatter/skattesatserochvissabelopp.4.15532c7b1442f256bae5e56.html",
 };
 const fragor = [
   { fraga: "Kommer bensinpriset att gå ner?", svar: "Ingen kan säga säkert. Priset följer världsmarknadspriset på bensin och diesel, kronans kurs mot dollarn och riksdagens skattebeslut. Skatteändringar är kända i förväg; resten varierar från vecka till vecka." },
@@ -40,7 +40,7 @@ const fragor = [
 
   <h2>3. Skatterna</h2>
   <p>Energiskatt, koldioxidskatt och moms utgör {procent(nu.andelSkatt * 100)} av priset just nu ({kr(nu.skatt)} per liter). Skatterna ändras genom riksdagsbeslut och slår igenom på pumppriset samma dag.</p>
-  <p><strong>Läget den {datumText(SKATTELAGE.datum)}:</strong> {SKATTELAGE.text} <a href={SKATTELAGE.kalla} rel="nofollow">Källa: Skatteverket</a>.</p>
+  <p><strong>Läget den {datumText(SKATTELAGE.datum)}:</strong> {SKATTELAGE.text} <a href={SKATTELAGE.kalla} rel="nofollow">Källa: Skatteverket</a>. Alla perioder finns på sidan om <a href="/guider/vad-bestar-bensinpriset-av/">bensinskatt</a>.</p>
 
   <h2>4. Konkurrensen där du tankar</h2>
   <p>Kedjorna sätter pumppriset per station. Där det finns många stationer och lågpriskedjor brukar priset vara lägre än på en ensam station längs landsvägen. Se <a href="/guider/billigaste-bensinen/">hur du hittar billigaste bensinen</a>.</p>

@@ -1,0 +1,116 @@
+---
+// Lång guide: maneter och brännmaneter. Artfakta från HaV och SLU Artdatabanken, egenvård från 1177,
+// salthalt från SMHI. Egen data: havsbaden i HaV:s register fördelade per havsområde. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, tal, pct } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const havsbad = E.filter((e) => e.extra?.vattentyp === "Hav");
+// Havsområden per län (kustlän). Skåne har kust mot både Kattegatt, Öresund och Östersjön.
+const OMRADE = [
+  { namn: "Västerhavet (Skagerrak och Kattegatt)", lan: ["Västra Götalands län", "Hallands län"], salt: "15–30", maneter: "Öronmanet, röd och blå brännmanet. Hösten kan ge kompassmanet och lungmanet." },
+  { namn: "Skåne (Kattegatt, Öresund och Östersjön)", lan: ["Skåne län"], salt: "–", maneter: "Övergång mellan Västerhavet och Östersjön: västkustens arter i norr och väster." },
+  { namn: "Egentliga Östersjön", lan: ["Blekinge län", "Kalmar län", "Gotlands län", "Östergötlands län", "Södermanlands län", "Stockholms län", "Uppsala län"], salt: "6–9", maneter: "Öronmanet i de södra delarna. Röd brännmanet främst på djupare, saltare vatten." },
+  { namn: "Bottenhavet och Bottenviken", lan: ["Gävleborgs län", "Västernorrlands län", "Västerbottens län", "Norrbottens län"], salt: "3–6", maneter: "HaV nämner ingen förekomst av öronmanet eller brännmaneter här." },
+].map((o) => ({ ...o, n: havsbad.filter((e) => o.lan.includes(e.lan)).length }));
+const vast = OMRADE[0].n + OMRADE[1].n;
+
+const ARTER = [
+  { namn: "Öronmanet", latin: "Aurelia aurita", storlek: "15–20 cm, upp till 40 cm", branns: "Nej, märks bara på tunn hud som läppar och runt ögonen", var: "Västerhavet och södra Östersjön" },
+  { namn: "Röd brännmanet", latin: "Cyanea capillata", storlek: "Oftast högst 50–60 cm", branns: "Ja, smärta, sveda och rodnad", var: "Västkusten nära ytan, i Östersjön på djupare vatten" },
+  { namn: "Blå brännmanet", latin: "Cyanea lamarckii", storlek: "Högst cirka 20 cm", branns: "Ja, men kortare trådar och svagare", var: "Västkusten" },
+  { namn: "Kompassmanet", latin: "Chrysaora hysoscella", storlek: "Upp till 30 cm", branns: "Ja, påtagligt", var: "Västkusten, tillfälligt sensommar och höst" },
+  { namn: "Lungmanet", latin: "Rhizostoma pulmo", storlek: "Cirka 50 cm, upp till 90 cm", branns: "Ja, men oftast svagt", var: "Västkusten, några exemplar på hösten" },
+  { namn: "Klängmedusa", latin: "Gonionemus vertens", storlek: "2–3 cm", branns: "Ja, smärtan varierar", var: "Sparsamt längs västkusten, vid ålgräs" },
+];
+
+const avsnitt = [
+  { id: "arter", rubrik: "Vilka maneter finns i Sverige?" },
+  { id: "oronmanet", rubrik: "Bränns öronmaneten?" },
+  { id: "brannmanet", rubrik: "Röd och blå brännmanet" },
+  { id: "var", rubrik: "Var finns maneterna? Kusterna och salthalten" },
+  { id: "nar", rubrik: "När på året kommer maneterna?" },
+  { id: "brand", rubrik: "Bränd av manet – så gör du" },
+  { id: "vard", rubrik: "När ska du söka vård?" },
+  { id: "ovanliga", rubrik: "Ovanliga gäster och maneter i sjöar" },
+];
+
+const fragor = [
+  { fraga: "Vilka maneter bränns i Sverige?", svar: "Röd och blå brännmanet är de maneter du behöver akta dig för, enligt SLU Artdatabanken. Även kompassmanet, lungmanet och den lilla klängmedusan har brännceller, men de är ovanliga. Den vanliga öronmaneten bränns inte." },
+  { fraga: "Vad gör man om man blir bränd av en manet?", svar: "1177 råder dig att skölja bort bränntrådarna med havsvatten, eftersom kranvatten kan frisätta mer gift, och att skrapa bort trådar med till exempel ett betalkort. Gnugga inte med handduk. Smärtstillande receptfria läkemedel och kräm kan lindra." },
+  { fraga: "Finns det brännmaneter i Östersjön?", svar: "Röd brännmanet finns i Östersjön men främst på större djup, där vattnet är saltare än vid ytan, enligt Havs- och vattenmyndigheten. På västkusten håller den sig oftare nära ytan." },
+  { fraga: "Bränns öronmaneter?", svar: "Nej. Öronmanetens brännceller är inte tillräckligt starka för att bränna människor, men de kan kännas på tunn hud som läppar och runt ögonen." },
+  { fraga: "När är det mest maneter?", svar: "Maneterna förekommer mest under sommaren och hösten i svenska havsvatten, enligt 1177. Ovanliga arter som kompassmanet och lungmanet dyker upp på västkusten på hösten." },
+  { fraga: "Hur stor blir en brännmanet?", svar: "Röd brännmanet blir enligt HaV vanligen inte större än 50–60 centimeter i diameter i svenska vatten. Blå brännmanet blir högst cirka 20 centimeter." },
+  { fraga: "Finns det maneter i sjöar?", svar: "Ja, den kinesiska sötvattensmaneten har hittats i ett tjugotal svenska sjöar. Den är som störst några centimeter och bränns inte." },
+];
+
+const titel = `Maneter i Sverige – brännmanet, öronmanet och råd`;
+const beskrivning = `Vilka maneter bränns i Sverige? Röd och blå brännmanet, öronmanet och ovanliga gäster, var de finns längs kusterna, när de kommer och vad du gör om du bränns.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Maneter och brännmaneter"
+  svar={`De maneter som bränns i Sverige är framför allt <strong>röd och blå brännmanet</strong>. Den vanliga <strong>öronmaneten bränns inte</strong>. Brännmaneterna är vanligast på västkusten och kommer mest under sommar och höst. Blir du bränd: skölj med <strong>havsvatten</strong>, inte kranvatten, och skrapa bort trådarna. Kontakta vården vid ögonbesvär eller kraftig reaktion.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Maneter", href: "/maneter/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Algblomning", href: "/algblomning/", text: "Blågröna alger och bad" },
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Så varmt är vattnet i sjö och hav" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Sandstränder med utmärkt vatten" },
+    { namn: "Badsäkerhet", href: "/badsakerhet/", text: "Barn, flaggor och första hjälpen" },
+  ]}
+  kallor={[
+    { namn: "Havs- och vattenmyndigheten – Maneter", url: "https://www.havochvatten.se/arter-och-livsmiljoer/fakta-om-arter-och-livsmiljoer/maneter.html", text: "arter, utbredning, storlek och brännceller", datum: "2026-11-25" },
+    { namn: "SLU Artdatabanken – Brännheta gäster i våra vatten", url: "https://www.slu.se/artdatabanken/arter-och-natur/artiklar/brannheta-gaster-i-vara-vatten/", text: "vanliga och ovanliga maneter", datum: "2026-11-25" },
+    { namn: "1177 – Bränd av manet", url: "https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/brand-av-manet/", text: "symtom, egenvård och när du ska söka vård", datum: "2026-11-25" },
+    { namn: "SMHI – Salt i haven runt Sverige", url: "https://www.smhi.se/kunskapsbanken/oceanografi/haven-runt-sverige/salt-i-haven-runt-sverige-", text: "salthalt i Västerhavet, Östersjön och Bottniska viken", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "havsbaden per län", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="arter">Vilka maneter finns i Sverige?</h2>
+  <p>Tre arter dominerar i svenska vatten: öronmanet, röd brännmanet och blå brännmanet. SLU Artdatabanken sammanfattar det enkelt: av dessa behöver vi akta oss för blå och röd brännmanet. Därtill kommer några ovanliga arter som ibland driver in från söder. Tabellen bygger på uppgifter från Havs- och vattenmyndigheten (HaV), SLU Artdatabanken och 1177.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Art</th><th>Storlek</th><th>Bränns?</th><th>Var i Sverige</th></tr></thead>
+    <tbody>{ARTER.map((a) => <tr><td><strong>{a.namn}</strong><br /><small><i>{a.latin}</i></small></td><td>{a.storlek}</td><td>{a.branns}</td><td>{a.var}</td></tr>)}</tbody>
+  </table></div>
+  <p>Storlekarna gäller maneternas klocka, alltså den runda kroppen. Det är bränntrådarna under klockan som bränns.</p>
+
+  <h2 id="oronmanet">Bränns öronmaneten?</h2>
+  <p>Nej. Öronmaneten är den manet du oftast ser, både i vattnet och uppspolad på stranden. Du känner igen den på att den är genomskinlig och har fyra ringar i mitten. HaV skriver att öronmanetens brännceller inte är tillräckligt starka för att bränna människor, men att de kan kännas på tunn hud. SLU nämner ögon och läppar och annan känslig hud.</p>
+  <p>Antalet öronmaneter varierar mycket mellan åren, och vissa somrar kan de bli mycket talrika. De lever främst i de övre vattenlagren i Västerhavet och i södra Östersjön.</p>
+
+  <h2 id="brannmanet">Röd och blå brännmanet</h2>
+  <p><strong>Röd brännmanet</strong> är den största av de vanliga arterna och den som bränns mest. I svenska vatten blir den enligt HaV vanligen inte större än 50–60 centimeter i diameter. Den simmar fritt från ytan och neråt, både nära kusten och längre ut.</p>
+  <p><strong>Blå brännmanet</strong> är mindre, högst cirka 20 centimeter i svenska vatten, och finns längs västkusten. Den har kortare trådar och bränns mindre än den röda. Båda arterna ska du hålla avstånd till.</p>
+
+  <h2 id="var">Var finns maneterna? Kusterna och salthalten</h2>
+  <p>Hur salt havet är styr var maneterna trivs. SMHI anger att Västerhavet har 15–30 gram salt per kilo vatten, egentliga Östersjön 6–9 gram och Bottenviken bara 3–4 gram. Vi har delat in de {tal(havsbad.length)} havsbaden i HaV:s register efter havsområde:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Havsområde</th><th class="num">Havsbad</th><th class="num">Salt g/kg</th><th>Maneter enligt HaV och SLU</th></tr></thead>
+    <tbody>{OMRADE.map((o) => <tr><td>{o.namn}</td><td class="num">{o.n}</td><td class="num">{o.salt}</td><td>{o.maneter}</td></tr>)}</tbody>
+  </table></div>
+  <p>Ungefär {pct(vast, havsbad.length)} av havsbaden ligger alltså i Västra Götaland, Halland eller Skåne, där brännmaneterna är vanligast. I Östersjön finns röd brännmanet främst på större djup, där vattnet är saltare än vid ytan. Därför är risken att möta brännmaneter vid stranden störst på västkusten. Längs Norrlandskusten är vattnet så sött att HaV inte nämner någon förekomst alls.</p>
+
+  <h2 id="nar">När på året kommer maneterna?</h2>
+  <p>Enligt 1177 förekommer maneterna mest under sommaren och hösten i svenska havsvatten. Öronmaneten kan bli mycket talrik på sommaren. På västkusten fortsätter säsongen in på hösten, och det är då de ovanliga sydliga arterna kan dyka upp. SLU Artdatabanken beskriver hur kompassmanet och lungmanet ett år noterades längs hela västkusten, från norra Bohuslän till Halland, och att klimatförändringar kanske kan förklara att de uppträdde så rikligt.</p>
+  <p>Hur många maneter det blir ett visst år går inte att förutse. HaV skriver att antalet öronmaneter varierar mycket mellan åren, och SLU beskriver hur de sydliga arterna förs hit med strömmar och vind.</p>
+
+  <h2 id="brand">Bränd av manet – så gör du</h2>
+  <p>1177 beskriver symtomen efter brännmanet som rodnad och sveda, svullnad, klåda och lätt till måttlig smärta som ibland kan bli svår. En del mår illa eller kräks, och huden kan få ytliga brännskador. Råden från 1177:</p>
+  <ol>
+    <li><strong>Skölj bort bränntrådarna med vatten</strong>, i första hand havsvatten. Kranvatten kan göra att mer gift frisätts.</li>
+    <li><strong>Skrapa bort trådarna</strong> med ett styvt föremål, till exempel ett betalkort. Bred tejp, till exempel silvertejp, kan också användas.</li>
+    <li><strong>Gnugga inte</strong> med en handduk.</li>
+    <li>Mot smärtan kan receptfria läkemedel som paracetamol eller ibuprofen hjälpa, och kräm med lidokain kan lindra. Mot klåda finns hydrokortisonkräm. Läs på förpackningen och fråga på apoteket, särskilt för barn: 1177 anger åldersgränser för krämerna.</li>
+  </ol>
+  <p>1177 nämner inte vinäger som behandling för de maneter som finns i Sverige.</p>
+
+  <h2 id="vard">När ska du söka vård?</h2>
+  <p>Kontakta en vårdcentral eller jouröppen mottagning om du har fått besvär i ögonen, om huden reagerar kraftigt med utbredd rodnad, svullnad och kraftig ömhet, eller om du får feber och känner dig medtagen. Ring <strong>1177</strong> för råd om du är osäker. Vid andningsbesvär eller annan allvarlig reaktion, ring <strong>112</strong>.</p>
+  <p>Utomlands är läget ett annat. 1177 råder dig att söka vård genast vid kontakt med maneter utomlands, eftersom vissa arter i tropiska vatten kan ge allvarliga eller livshotande reaktioner.</p>
+
+  <h2 id="ovanliga">Ovanliga gäster och maneter i sjöar</h2>
+  <p><strong>Kompassmanet</strong> dyker enligt HaV ibland upp på västkusten under sensommaren eller hösten. Den blir upp till 30 centimeter och har 24 långa trådar som kan brännas påtagligt. <strong>Lungmanet</strong> brukar också visa sig i några exemplar på hösten. Den kan bli upp till 90 centimeter men bränns oftast svagt.</p>
+  <p><strong>Klängmedusan</strong> är bara två till tre centimeter men har upp till 80 trådar. Den är inte inhemsk och finns sparsamt längs nästan hela västkusten, från Bohuslän till södra Kattegatt, ofta vid ålgräsängar. Somrarna 2018 och 2025 var den lokalt talrik. Den <strong>amerikanska kammaneten</strong> som syns på sensommaren och hösten är ingen riktig manet och bränns inte.</p>
+  <p>I sötvatten finns den <strong>kinesiska sötvattensmaneten</strong>, som har hittats i ett tjugotal svenska sjöar. Den är som störst några centimeter och bränns inte. Ser du en ovanlig manet kan du rapportera fyndet, HaV hänvisar till rapporteringstjänsten Rappen.</p>
+</Guide>

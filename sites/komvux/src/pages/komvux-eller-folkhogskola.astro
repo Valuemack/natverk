@@ -1,0 +1,121 @@
+---
+// Komvux eller folkhögskola – jämförelse av ålder, kostnad, bedömning, behörighet, urvalsgrupp och studiestöd.
+// Fakta från skollagen, folkhogskola.nu, UHR, antagning.se och CSN; komvuxsiffror från Skolverkets jämförelsetal. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, RIKET } from "../site.js";
+import { tal, pct, kr, CSN, CSN_AR, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const kv = RIKET.komvux;
+const antalKommuner = KAT.kommuner.length;
+const JAMFOR = [
+  ["Lägsta ålder", "Från andra halvåret det år du fyller 20 (yngre om du har slutfört gymnasiet)", "18 år, du kan söka det år du fyller 18"],
+  ["Var du söker", "Hos din hemkommun", "Direkt till varje folkhögskola"],
+  ["Kostnad", "Avgiftsfri, lärverktyg utan kostnad", "Undervisningen avgiftsfri, men du betalar material, resor, mat och eventuellt internat"],
+  ["Bedömning", "Betyg A–F i varje kurs eller ämne", "Inga betyg, utan intyg och ett samlat studieomdöme"],
+  ["Behörighet till högskolan", "Gymnasieexamen från komvux", "Behörighetsintyg efter minst ett år på allmän kurs"],
+  ["Urvalsgrupp", "Betygsgrupperna BI eller BII", "Folkhögskolegruppen BF"],
+  ["Meritpoäng", "Ja, för vissa kurser i språk och matematik", "Nej, folkhögskolekurser ger inga meritpoäng"],
+  ["Studietakt", "Heltid eller deltid, utbildning under hela året", "I klass, ofta heltid under ett läsår"],
+  ["Distans", `Vanligt – ${pct(kv?.andel_distans_gymnasial)} på gymnasial nivå läser på distans`, "Finns på vissa kurser"],
+  ["Studiestöd", "Studiemedel från hösten det år du fyller 20, före det studiehjälp", "Samma regler som för komvux"],
+];
+
+const avsnitt = [
+  { id: "skillnad", rubrik: "Skillnaden mellan komvux och folkhögskola" },
+  { id: "jamforelse", rubrik: "Jämförelse punkt för punkt" },
+  { id: "behorighet", rubrik: "Behörighet till högskolan på komvux och folkhögskola" },
+  { id: "urval", rubrik: "Urvalsgrupp BF eller betyg – vad lönar sig?" },
+  { id: "kostnad", rubrik: "Vad kostar komvux och folkhögskola?" },
+  { id: "csn", rubrik: "CSN på komvux och folkhögskola" },
+  { id: "valja", rubrik: "Så väljer du – sju frågor att ställa dig" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan komvux och folkhögskola?", svar: "Komvux är kommunens vuxenutbildning med betyg i varje kurs och start under hela året. Folkhögskolan är en del av folkbildningen, har inga betyg och läser oftast i klass ett läsår i taget. Båda kan ge behörighet till högskolan." },
+  { fraga: "Ger folkhögskola behörighet till högskolan?", svar: "Ja. Efter minst ett års heltidsstudier på allmän kurs med godkänd nivå i bland annat svenska 1–3, engelska 1–2 och matematik 1 får du ett behörighetsintyg som ger grundläggande behörighet." },
+  { fraga: "Är det lättare att komma in på högskolan via folkhögskola?", svar: "Det beror på utbildningen. Med folkhögskola tävlar du i urvalsgruppen BF, där studieomdömet räknas. Hur mycket konkurrens det är där skiljer sig mellan utbildningar och terminer. Jämför antagningsstatistiken på antagning.se för de utbildningar du vill söka." },
+  { fraga: "Kostar folkhögskola något?", svar: "Undervisningen är avgiftsfri, men du betalar själv för litteratur, material, studieresor och mat. Bor du på internat betalar du för boende och mat. Komvux är avgiftsfritt och lärverktygen ska vara gratis." },
+  { fraga: "Kan man få CSN på folkhögskola?", svar: `Ja. Från hösten det år du fyller 20 kan du få studiemedel, ${kr(CSN.vanligt.bidrag + CSN.vanligt.lan)} i veckan på heltid ${CSN_AR}. Är du yngre kan du få studiehjälp till och med våren det år du fyller 20.` },
+  { fraga: "Hur gammal måste man vara för att gå på folkhögskola?", svar: "De flesta längre kurser, som allmän kurs, kräver att du är 18 år, men du kan söka det år du fyller 18. På komvux är gränsen andra halvåret det år du fyller 20, om du inte redan har slutfört gymnasiet." },
+  { fraga: "Får man betyg på folkhögskola?", svar: "Nej, inte i enskilda kurser. Folkhögskolan gör en samlad bedömning av dina studier. Har du läst minst ett år på allmän kurs får du ett studieomdöme, och när du uppfyller kraven får du ett behörighetsintyg." },
+  { fraga: "Kan man komplettera folkhögskola med komvux?", svar: "Ja. Saknar du en särskild behörighet efter folkhögskolan kan du läsa den på komvux. Du har enligt skollagen rätt att läsa det som krävs för särskild behörighet till en högskoleutbildning." },
+];
+---
+<Guide site={SITE} titel="Komvux eller folkhögskola? 10 skillnader jämförda"
+  beskrivning="Komvux eller folkhögskola? Jämför ålder, kostnad, betyg eller studieomdöme, behörighet, urvalsgrupp BF och CSN – och se vilket som passar dig bäst."
+  h1="Komvux eller folkhögskola?"
+  svar="Välj <strong>komvux</strong> om du vill ha betyg, läsa i egen takt, på distans eller enstaka kurser, eller börja när som helst under året. Välj <strong>folkhögskola</strong> om du vill läsa i klass utan betyg och tävla med studieomdöme i urvalsgruppen BF. Båda är avgiftsfria och kan ge behörighet till högskolan."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Komvux eller folkhögskola", href: "/komvux-eller-folkhogskola/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Högskolebehörighet via komvux", href: "/hogskolebehorighet/", text: "Examen, kompletteringar och urval" },
+    { namn: "Räkna ut meritvärde", href: "/meritvarde/", text: "Kalkylator för jämförelsetal" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Studiemedel 2027" },
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Rätt, urval och terminer" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Distans per kommun" },
+  ]}
+  kallor={[
+    { namn: "Folkhögskola.nu – Grundläggande behörighet", url: "https://www.folkhogskola.nu/vad-ar-folkhogskola/behorighet/hogskola-och-universitet/grundlaggande-behorighet/", text: "krav för behörighetsintyg, studieomdöme och bedömning", datum: "2026-11-25" },
+    { namn: "Folkhögskola.nu – Ålder", url: "https://www.folkhogskola.nu/vad-ar-folkhogskola/ansokan/alder/", text: "åldersgräns för längre kurser", datum: "2026-11-25" },
+    { namn: "Folkhögskola.nu – Kostnader", url: "https://www.folkhogskola.nu/vad-ar-folkhogskola/ansokan/kostnader/", text: "vad du betalar själv", datum: "2026-11-25" },
+    { namn: "UHR – Urval till grundnivå", url: "https://www.uhr.se/link/b72d04cad95148c6959648dacc1142b1.aspx", text: "urvalsgrupperna BI, BII och BF och fördelningen av platser", datum: "2026-11-25" },
+    { namn: "Antagning.se – Meritpoäng", url: "https://www.antagning.se/sv/betyg-och-behorighet/gymnasieskolan/gymnasieexamen-2014-och-framat/meritpoang/", text: "folkhögskolekurser ger inte meritpoäng", datum: "2026-11-25" },
+    { namn: "CSN – Om du är under 20 år på komvux eller folkhögskola", url: "https://www.csn.se/bidrag-och-lan/om-du-ar-under-20-ar-pa-komvux-eller-folkhogskola.html", text: "studiehjälp och studiemedel", datum: "2026-11-25" },
+    { ...K.skollagen, text: "ålder, avgiftsfrihet och lärverktyg på komvux (20 kap. 7, 7 a, 11 och 20 §§)" },
+    K.statistik,
+  ]}>
+
+  <h2 id="skillnad">Skillnaden mellan komvux och folkhögskola</h2>
+  <p>Både komvux och folkhögskola vänder sig till vuxna som vill läsa in grundskolan eller gymnasiet, bli behöriga till högskolan eller byta bana. Skillnaden ligger i <strong>hur</strong> du studerar och <strong>hur</strong> du bedöms.</p>
+  <p><strong>Komvux</strong> är kommunens vuxenutbildning och regleras i skollagen. Du läser kurser eller ämnen på grundläggande eller gymnasial nivå och får betyg från A till F i varje kurs. Det går att läsa en enda kurs, till exempel matematik, eller en hel gymnasieexamen. Utbildningen pågår under hela året, och många läser på distans eller på deltid vid sidan av jobbet. {tal(kv?.elever_gymnasial, 0)} personer läste på gymnasial nivå och {tal(kv?.elever_grundlaggande, 0)} på grundläggande nivå {kv?.ar}, i {antalKommuner} kommuner med komvux i vår katalog.</p>
+  <p><strong>Folkhögskolan</strong> är en del av folkbildningen. Den <strong>allmänna kursen</strong> ger samma ämnen som grundskolan och gymnasiet och läses i en klass, ofta på heltid. Det finns inga betyg i enskilda kurser. I stället gör skolan en samlad bedömning, ett studieomdöme. Vissa folkhögskolor har internat, så att du kan bo på skolan.</p>
+
+  <h2 id="jamforelse">Jämförelse punkt för punkt</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Komvux</th><th>Folkhögskola (allmän kurs)</th></tr></thead>
+    <tbody>{JAMFOR.map(([r, a, b]) => <tr><th scope="row">{r}</th><td>{a}</td><td>{b}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Sammanställning från skollagen, folkhogskola.nu, UHR, antagning.se och CSN. Andelen distans gäller hela riket {kv?.ar} enligt Skolverket.</p>
+
+  <h2 id="behorighet">Behörighet till högskolan på komvux och folkhögskola</h2>
+  <h3>Komvux</h3>
+  <p>På komvux blir du behörig genom en <strong>examen från komvux</strong>. Antagning.se anger att ett samlat betygsdokument eller studiebevis inte räcker. Det krävs antingen en högskoleförberedande examen, eller en yrkesexamen med godkänt i svenska 2 och 3 (eller svenska som andraspråk 2 och 3) och engelska 6. Har du redan en gymnasieexamen kan du komplettera bara de kurser som fattas. Läs mer på sidan om <a href="/hogskolebehorighet/">högskolebehörighet via komvux</a>.</p>
+  <h3>Folkhögskola</h3>
+  <p>På folkhögskolan får du ett <strong>behörighetsintyg</strong> när du har läst på allmän kurs i minst ett år, alltså minst 35 veckors heltidsstudier, och nått lägst godkänd nivå i:</p>
+  <ul>
+    <li>svenska eller svenska som andraspråk 1–3</li>
+    <li>engelska 1–2 och matematik 1a, 1b eller 1c</li>
+    <li>historia, naturkunskap, samhällskunskap 1a1 och religionskunskap 1</li>
+  </ul>
+  <p>Kraven gäller från höstterminen 2025 enligt folkhogskola.nu. Har du läst minst ett år på allmän kurs får du också ett studieomdöme. Saknar du en särskild behörighet, till exempel en högre nivå i matematik, kan du komplettera den på komvux.</p>
+
+  <h2 id="urval">Urvalsgrupp BF eller betyg – vad lönar sig?</h2>
+  <p>När det finns fler sökande än platser fördelar högskolan minst en tredjedel av platserna efter betyg, minst en tredjedel efter högskoleprovet och högst en tredjedel genom alternativt urval. Betygsurvalet delas i tre grupper:</p>
+  <ul>
+    <li><strong>BI, direktgruppen</strong> – du har avslutat gymnasiet utan kompletteringar.</li>
+    <li><strong>BII, kompletteringsgruppen</strong> – du har kompletterat betyg, till exempel på komvux.</li>
+    <li><strong>BF, folkhögskolegruppen</strong> – du söker med studieomdöme från folkhögskolan.</li>
+  </ul>
+  <p>Med folkhögskola konkurrerar du alltså bara med andra folkhögskolestuderande. Med betyg från komvux konkurrerar du i BII, eller i BI om du har en svensk yrkesexamen och kompletterar för grundläggande behörighet. Vilken grupp som har lägst gräns skiljer sig mellan utbildningar och terminer, så det finns inget allmänt svar. Titta på antagningsstatistiken på antagning.se för de utbildningar du är intresserad av. Du kan också skriva högskoleprovet, oavsett om du läser på komvux eller folkhögskola.</p>
+  <p>En skillnad som ofta glöms bort är <strong>meritpoängen</strong>. På komvux kan kurser i moderna språk, engelska och matematik ge upp till 2,5 meritpoäng ovanpå betygen. Kurser från folkhögskolan ger inga meritpoäng. Räkna själv med <a href="/meritvarde/">meritvärdeskalkylatorn</a>.</p>
+
+  <h2 id="kostnad">Vad kostar komvux och folkhögskola?</h2>
+  <p><strong>Komvux är avgiftsfritt.</strong> Skollagen säger att utbildningen ska vara avgiftsfri och att du ska få tillgång till läroböcker och lärverktyg utan kostnad. Kommunen får låta dig köpa sådant som du får behålla, men bara till vad det kostar kommunen.</p>
+  <p><strong>På folkhögskolan är undervisningen avgiftsfri</strong>, men du betalar själv för kurslitteratur, material, kopiering, studieresor och lunch eller fika. Bor du på internat betalar du för boende och mat. Vissa skolor har obligatoriska måltider som kostar även för den som inte bor på skolan. Beloppen skiljer sig mellan skolor, så fråga skolan innan du tackar ja.</p>
+
+  <h2 id="csn">CSN på komvux och folkhögskola</h2>
+  <p>Reglerna för studiemedel är desamma på komvux och folkhögskola när du läser på grundskole- eller gymnasienivå. Från andra halvåret det år du fyller 20 kan du få studiemedel. På heltid {CSN_AR} är det {kr(CSN.vanligt.bidrag)} i bidrag och {kr(CSN.vanligt.lan)} i lån per vecka. Är du yngre än så kan du få <strong>studiehjälp</strong>, samma bidrag som på gymnasiet, till och med våren det år du fyller 20.</p>
+  <p>Läser du på komvux och saknar treårig gymnasieutbildning kan du ha rätt till <strong>högre bidrag</strong>, där en större del av pengarna är bidrag och inte lån. Räkna ut ditt belopp med <a href="/csn/">CSN-kalkylatorn</a>.</p>
+
+  <h2 id="valja">Så väljer du – sju frågor att ställa dig</h2>
+  <ol>
+    <li><strong>Behöver du bara några kurser?</strong> Då är komvux oftast enklast, eftersom du kan läsa enstaka kurser.</li>
+    <li><strong>Vill du börja snart?</strong> Komvux ska enligt förordningen bedrivas under hela året. På folkhögskolan söker du till en kurs med ett bestämt startdatum.</li>
+    <li><strong>Behöver du jobba samtidigt?</strong> Komvux på deltid eller distans är lättare att kombinera med arbete.</li>
+    <li><strong>Trivs du bäst i en klass med fasta tider?</strong> Folkhögskolans allmänna kurs läses i klass, medan komvux ofta läses kurs för kurs.</li>
+    <li><strong>Är betygen ett hinder för dig?</strong> På folkhögskolan bedöms du med studieomdöme i stället för betyg i varje kurs.</li>
+    <li><strong>Vill du ha meritpoäng?</strong> De finns bara med betyg, alltså via komvux eller gymnasiet.</li>
+    <li><strong>Vill du läsa hemifrån?</strong> På komvux läste {pct(kv?.andel_distans_gymnasial)} av eleverna på gymnasial nivå på distans {kv?.ar}. Se <a href="/distans/">distans per kommun</a>.</li>
+  </ol>
+  <p>Det går också att kombinera, till exempel att bli behörig på folkhögskolan och läsa en särskild behörighet på komvux. Hitta komvux i din kommun i <a href="/#lan">listan över län och kommuner</a>.</p>
+</Guide>

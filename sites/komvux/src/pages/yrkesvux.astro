@@ -1,0 +1,124 @@
+---
+// Yrkesvux: Skolverkets yrkespaket (Gy25) med poäng, omräknat till veckor (20 verksamhetspoäng per heltidsvecka),
+// regler ur skollagen 20 kap. och förordningen 2011:1108. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, RIKET } from "../site.js";
+import { tal, pct, kr, CSN_VECKA, CSN_AR, veckor, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+// Yrkespaket med angivna gymnasiepoäng enligt Skolverkets sida "Yrkespaket och Gy25" (läst 2026-11-25). Urval per område.
+const OMRADEN = [
+  { omr: "Vård och omsorg", paket: [["Undersköterska", 1500], ["Undersköterska, påbyggnad från vårdbiträde", 700], ["Vårdbiträde", 800]] },
+  { omr: "Barn och fritid", paket: [["Barnskötare", 1400], ["Elevassistent", 1400], ["Personal inom funktionshinderområdet", 1500], ["Väktare", 1300]] },
+  { omr: "El och energi", paket: [["Service- och installationselektriker", 1400], ["Distributionselektriker", 1500], ["Distributionselektriker för utbildade elektriker", 600], ["Drifttekniker it", 1100], ["Larm- och säkerhetstekniker", 800]] },
+  { omr: "Bygg och anläggning", paket: [["Träarbetare", 1100], ["Betongarbetare", 1100], ["Murare", 1100], ["Plattsättare", 1000], ["Golvläggare", 1100], ["Byggnadsmålare", 1000], ["Anläggningsmaskinförare", 1000], ["Byggnadsplåtslagare", 600]] },
+  { omr: "Restaurang och livsmedel", paket: [["Kock", 1200], ["Servitör", 1200], ["Bagare och konditor", 1400], ["Charkuterist", 900], ["Styckare", 800]] },
+  { omr: "Industriteknik", paket: [["CNC-operatör metall", 1300], ["Underhållsteknik", 1300], ["Plåtsvetsare (MIG/MAG, MMA eller TIG)", 1400], ["Rörsvetsare (MIG/MAG, MMA eller TIG)", 1600], ["Processteknik livsmedel", 1300], ["Låssmed", 700]] },
+  { omr: "Hotell och turism", paket: [["Hotell och reception, baspaket", 500], ["Turism och event, baspaket", 500]] },
+];
+const alla = OMRADEN.flatMap((o) => o.paket);
+const kortast = alla.reduce((a, b) => (b[1] < a[1] ? b : a));
+const langst = alla.reduce((a, b) => (b[1] > a[1] ? b : a));
+const kv = RIKET.komvux;
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är yrkesvux?" },
+  { id: "paket", rubrik: "Yrkespaket – alla yrken med poäng och studietid" },
+  { id: "gy25", rubrik: "Nya yrkespaket sedan 1 juli 2025" },
+  { id: "regionalt", rubrik: "Regionalt yrkesvux och att läsa i en annan kommun" },
+  { id: "antagning", rubrik: "Vem kommer in? Urvalet till yrkesvux" },
+  { id: "validering", rubrik: "Validering av yrkeskunskaper" },
+  { id: "sfi", rubrik: "Yrkesvux tillsammans med sfi" },
+  { id: "ekonomi", rubrik: "Kostnad och CSN under yrkesutbildningen" },
+  { id: "examen", rubrik: "Yrkesexamen och vägen vidare" },
+];
+
+const fragor = [
+  { fraga: "Vad är yrkesvux?", svar: "Yrkesvux är yrkesutbildning inom komvux på gymnasial nivå. Utbildningen ges ofta som ett yrkespaket, en sammanhållen utbildning mot ett yrke med praktik på en arbetsplats. Den är avgiftsfri och du söker hos din hemkommun." },
+  { fraga: "Hur lång är en yrkesutbildning på komvux?", svar: `Det beror på yrket. Yrkespaketen i vår sammanställning är mellan ${tal(kortast[1], 0)} och ${tal(langst[1], 0)} gymnasiepoäng. Med 20 poäng i veckan på heltid motsvarar det ${veckor(kortast[1])} till ${veckor(langst[1])} veckor.` },
+  { fraga: "Hur lång är barnskötarutbildningen på komvux?", svar: `Yrkespaketet barnskötare omfattar 1 400 gymnasiepoäng, vilket motsvarar ${veckor(1400)} veckor på heltid eller ${veckor(1400, 0.5)} veckor på halvtid.` },
+  { fraga: "Kan man bli elektriker på komvux?", svar: `Ja. Det finns yrkespaket för service- och installationselektriker (1 400 poäng, ${veckor(1400)} veckor på heltid) och distributionselektriker (1 500 poäng). För den som redan är utbildad elektriker finns ett kortare paket på 600 poäng.` },
+  { fraga: "Kan man läsa yrkesvux i en annan kommun?", svar: "Ja. Du har enligt skollagen rätt att läsa yrkesämnen och sammanhållen yrkesutbildning i en annan kommun inom samma primära samverkansområde, även om din hemkommun erbjuder utbildningen. Du ansöker alltid via hemkommunen." },
+  { fraga: "Får man CSN på yrkesvux?", svar: `Ja, du kan få studiemedel från hösten det år du fyller 20. På heltid ${CSN_AR} är det ${kr(CSN_VECKA)} i veckan i bidrag och lån.` },
+  { fraga: "Finns lastbilsförare som yrkespaket?", svar: "Ja, under namnet Yrkesförare godstransporter. Skolverket har delat upp det i tio yrkespaket i den nya ordningen. Fråga din kommun vilka av dem som erbjuds och hur många poäng de omfattar." },
+  { fraga: "Vad är ett yrkespaket?", svar: "Ett yrkespaket är en sammanhållen yrkesutbildning på komvux där ämnen som behövs för ett yrke läses tillsammans, med arbetsplatsförlagt lärande. Skolverket tar fram paketen, och sedan 1 juli 2025 bygger de på ämnen enligt Gy25." },
+];
+---
+<Guide site={SITE} titel="Yrkesvux – yrkesutbildningar på komvux med poäng och tid"
+  beskrivning={`Yrkesvux på komvux: ${alla.length} yrkespaket med poäng och studietid, från ${tal(kortast[1], 0)} till ${tal(langst[1], 0)} poäng. Så söker du, urvalet, regionalt yrkesvux och CSN ${CSN_AR}.`}
+  h1="Yrkesvux – yrkesutbildning på komvux"
+  svar={`Yrkesvux är <strong>yrkesutbildning på komvux</strong>, oftast som ett <strong>yrkespaket</strong> med praktik på en arbetsplats. Paketen är mellan ${tal(kortast[1], 0)} och ${tal(langst[1], 0)} gymnasiepoäng, vilket motsvarar ${veckor(kortast[1])}–${veckor(langst[1])} veckor på heltid. Undersköterska är 1 500 poäng och barnskötare 1 400. Utbildningen är avgiftsfri och du söker hos din hemkommun.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Yrkesvux", href: "/yrkesvux/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Undersköterska på komvux", href: "/underskoterska/", text: "Yrkespaket, tid och bevis" },
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Rätt, urval och terminer" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Kalkylator för studiemedel" },
+    { namn: "Sfi", href: "/sfi/", text: "Svenska för invandrare" },
+    { namn: "Högskolebehörighet via komvux", href: "/hogskolebehorighet/", text: "Från yrkesexamen till högskolan" },
+  ]}
+  kallor={[
+    K.yrkespaket,
+    { namn: "Skolverket – Anordna yrkesutbildning inom regionalt yrkesvux", url: "https://www.skolverket.se/styrning-och-ansvar/anordna-utbildning/anordna-utbildning-inom-komvux/anordna-yrkesutbildning-inom-regionalt-yrkesvux", text: "samverkan mellan kommuner och statsbidrag", datum: "2026-11-25" },
+    { ...K.skollagen, text: "sammanhållen yrkesutbildning (6 a §), rätt att läsa i annan kommun (19 d §) och sfi i kombination (25 §)" },
+    { ...K.forordningen, text: "20 verksamhetspoäng per heltidsvecka, urvalsordningen och yrkesexamen" },
+    { namn: "Antagning.se – Grundläggande behörighet med examen från komvux", url: "https://www.antagning.se/sv/betyg-och-behorighet/gymnasial-vuxenutbildning/gymnasieexamen-fran-komvux/grundlaggande-behorighet/", text: "behörighet med yrkesexamen", datum: "2026-11-25" },
+    { ...K.csn, text: "studiemedel 2027" },
+    K.statistik,
+  ]}>
+
+  <h2 id="vad">Vad är yrkesvux?</h2>
+  <p>Yrkesvux är den del av komvux som utbildar mot ett yrke. Du läser yrkesämnen på gymnasial nivå, samma ämnen som i gymnasieskolans yrkesprogram, men på heltid eller deltid och med start under hela året. Utbildningen kan läsas som:</p>
+  <ul>
+    <li><strong>ett yrkespaket</strong> – en sammanhållen utbildning mot ett bestämt yrke, med arbetsplatsförlagt lärande (APL) där du lär dig på en riktig arbetsplats, eller</li>
+    <li><strong>enstaka nivåer i yrkesämnen</strong> – till exempel för att bygga på en utbildning du redan har.</li>
+  </ul>
+  <p>Yrkesvux är avgiftsfritt, och du ska få läroböcker och lärverktyg utan kostnad. Komvux har många vuxna elever: {tal(kv?.elever_gymnasial, 0)} personer läste på gymnasial nivå {kv?.ar}, och {pct(kv?.andel_kvinnor_gymnasial)} av dem var kvinnor. {pct(kv?.andel_annan_anordnare_gymnasial)} av eleverna på gymnasial nivå läste hos en annan anordnare än kommunen, till exempel ett utbildningsföretag som kommunen har avtal med.</p>
+
+  <h2 id="paket">Yrkespaket – alla yrken med poäng och studietid</h2>
+  <p>Tabellen visar ett urval av Skolverkets yrkespaket med den omfattning Skolverket anger. Studietiden har vi räknat ut med förordningens regel att 20 poäng motsvarar en veckas heltidsstudier. Den verkliga tiden blir kortare om du har betyg eller erfarenhet som kan tillgodoräknas.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Yrkespaket</th><th class="num">Poäng</th><th class="num">Veckor heltid</th><th class="num">Veckor halvtid</th></tr></thead>
+    <tbody>{OMRADEN.map((o) => <>
+      <tr><th colspan="4" scope="rowgroup">{o.omr}</th></tr>
+      {o.paket.map(([n, p]) => <tr><td>{n}</td><td class="num">{tal(p, 0)}</td><td class="num">{veckor(p)}</td><td class="num">{veckor(p, 0.5)}</td></tr>)}
+    </>)}</tbody>
+  </table></div>
+  <p>Det finns fler paket, bland annat inom naturbruk, försäljning och service, fordon och transport, VVS och fastighet samt frisör och stylist. Fordonsområdet har till exempel paket för personbilsmekaniker, lastbilsmekaniker, lager- och terminalarbetare och yrkesförare inom gods och buss. Vilka paket din kommun erbjuder framgår av kommunens utbud. Skolverket anger själv att listan över yrkespaket kan ändras.</p>
+
+  <h2 id="gy25">Nya yrkespaket sedan 1 juli 2025</h2>
+  <p>Sedan 1 juli 2025 gäller reformen Gy25 även i komvux. Yrkespaketen bygger nu på <strong>ämnen</strong> i stället för kurser, och du får ämnesbetyg. Några paket har bytt namn eller ändrat omfattning: målare heter nu byggnadsmålare, och paketen för yrkesförare inom godstransporter har gjorts om till tio olika paket.</p>
+  <p>Har du börjat ett äldre, kursbaserat yrkespaket före 1 juli 2025 får du läsa klart det. Möjligheten att läsa kurser i ett yrkespaket upphör helt den 30 juni 2030. Från den 1 juli 2028 införs också ett <strong>yrkesprov</strong> på gymnasial nivå i komvux enligt en ändring i skollagen.</p>
+
+  <h2 id="regionalt">Regionalt yrkesvux och att läsa i en annan kommun</h2>
+  <p>Inom <strong>regionalt yrkesvux</strong> planerar och erbjuder flera kommuner yrkesutbildning tillsammans, med statsbidrag från Skolverket. Det innebär att du kan få tillgång till fler yrkesutbildningar än de som finns i just din kommun.</p>
+  <p>Skollagen ger dig dessutom rätt att läsa yrkesämnen och sammanhållen yrkesutbildning i en annan kommun inom samma <strong>primära samverkansområde</strong>, även om din egen kommun har utbildningen. Du ansöker ändå alltid via din hemkommun, som skickar ansökan vidare.</p>
+
+  <h2 id="antagning">Vem kommer in? Urvalet till yrkesvux</h2>
+  <p>Om det finns fler sökande än platser gör kommunen ett urval bland de behöriga sökandena i den ordning som förordningen om vuxenutbildning anger:</p>
+  <ol>
+    <li>den som vill slutföra studier enligt sin individuella studieplan,</li>
+    <li>den som saknar gymnasieexamen eller motsvarande,</li>
+    <li>den som är eller riskerar att bli arbetslös,</li>
+    <li>den som behöver utbildningen för sin nuvarande yrkesverksamhet,</li>
+    <li>den som behöver utbildningen för ett planerat yrkesval.</li>
+  </ol>
+  <p>Du kan börja på komvux från andra halvåret det år du fyller 20, eller tidigare om du har slutfört ett nationellt program i gymnasieskolan. Läs mer om hela ansökan på sidan <a href="/ansoka/">ansöka till komvux</a>.</p>
+
+  <h2 id="validering">Validering av yrkeskunskaper</h2>
+  <p>Har du redan arbetat i yrket kan du korta utbildningen. Kommunen ska enligt skollagen erbjuda <strong>validering</strong> om du behöver det. Validering är en strukturerad process där dina kunskaper kartläggs och bedöms, oavsett om du har lärt dig dem på jobbet, i ett annat land eller på egen hand. Resultatet kan ge betyg genom prövning, eller ett intyg.</p>
+  <p>Ett räkneexempel: validerar du 400 poäng av ett yrkespaket på 1 400 poäng har du 1 000 poäng kvar. Det är 50 veckor på heltid i stället för 70. Fråga efter validering och inledande kartläggning när du söker. Du kan också få hjälp av kommunens studie- och yrkesvägledare.</p>
+
+  <h2 id="sfi">Yrkesvux tillsammans med sfi</h2>
+  <p>Läser du sfi ska kommunen enligt skollagen verka för att sfi kan kombineras med annan utbildning, praktik eller validering. Det gör det möjligt att läsa svenska och ett yrke samtidigt, så att du lär dig yrkesorden medan du lär dig yrket. Fråga din kommun om de har sådana kombinerade utbildningar, och läs mer på sidan om <a href="/sfi/">sfi</a>.</p>
+
+  <h2 id="ekonomi">Kostnad och CSN under yrkesutbildningen</h2>
+  <p>Utbildningen kostar inget. För att klara ekonomin kan du söka studiemedel från CSN, från hösten det år du fyller 20. På heltid {CSN_AR} får du {kr(CSN_VECKA)} i veckan i bidrag och lån. Så mycket blir det för hela utbildningen med några vanliga yrkespaket:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Yrkespaket</th><th class="num">Veckor heltid</th><th class="num">Studiemedel totalt</th></tr></thead>
+    <tbody>{[["Undersköterska", 1500], ["Barnskötare", 1400], ["Service- och installationselektriker", 1400], ["Kock", 1200], ["Träarbetare", 1100]].map(([n, p]) => <tr><td>{n}</td><td class="num">{veckor(p)}</td><td class="num">{kr(veckor(p) * CSN_VECKA)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Beloppen gäller fullt studiemedel med lån. Saknar du treårigt gymnasium och är minst 25 år kan du ha rätt till högre bidrag, där en större del är bidrag. Räkna på ditt fall med <a href="/csn/">CSN-kalkylatorn</a>.</p>
+
+  <h2 id="examen">Yrkesexamen och vägen vidare</h2>
+  <p>Ett yrkespaket ger betyg i ämnena, men inte automatiskt en examen. Kompletterar du med de ämnen som krävs för examen, bland annat svenska, engelska och matematik, kan du få en <strong>yrkesexamen</strong> från komvux. Med en yrkesexamen och godkänt i svenska 2 och 3 (eller svenska som andraspråk 2 och 3) och engelska 6 får du grundläggande behörighet till högskolan, enligt antagning.se. Läs mer på sidan om <a href="/hogskolebehorighet/">högskolebehörighet via komvux</a>.</p>
+</Guide>

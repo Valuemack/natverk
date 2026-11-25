@@ -1,0 +1,156 @@
+---
+// Lång guide: förskollärare och barnskötare – legitimation, utbildning och statistik per kommun.
+// Fakta: skollagen 2 kap. 13–22 a §§, högskoleförordningen bilaga 2, förordning 2011:326, Skolverkets legitimationssidor
+// och PM Barn och personal i förskola 2025. Kommunsiffror: Skolverkets kommunala jämförelsetal (nattlig hämtning). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, RIKET } from "../site.js";
+import { relaterade, rangordna, perLan, tal, pct, heltal, KOMMUNSTAT, STAT_AR, SKOLVERKET_PM_2025, SKOLVERKET_JMF, SKOLLAGEN } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const MIN_BARN = 300; // små kommuner svänger mycket mellan åren
+const urval = { barn_inskrivna: MIN_BARN };
+const hogst = rangordna("andel_forskollarexamen", true, urval).slice(0, 10);
+const lagst = rangordna("andel_forskollarexamen", false, urval).slice(0, 10);
+const medData = KOMMUNSTAT.filter((x) => x.s.andel_forskollarexamen != null);
+const under30 = medData.filter((x) => x.s.andel_forskollarexamen < 30).length;
+const over50 = medData.filter((x) => x.s.andel_forskollarexamen >= 50).length;
+const lan = perLan("andel_forskollarexamen").sort((a, b) => b.v - a.v);
+// Barn per heltidstjänst med förskollärarexamen = barn per heltidstjänst / andel förskollärare.
+const perFl = (s) => (s?.barn_per_heltidstjanst && s?.andel_forskollarexamen ? s.barn_per_heltidstjanst / (s.andel_forskollarexamen / 100) : null);
+const rFl = perFl(RIKET);
+const fl = (x) => perFl(x.s);
+const ar = STAT_AR;
+
+const avsnitt = [
+  { id: "skillnad", rubrik: "Förskollärare eller barnskötare – vad är skillnaden?" },
+  { id: "bli-forskollarare", rubrik: "Så blir du förskollärare" },
+  { id: "legitimation", rubrik: "Förskollärarlegitimation" },
+  { id: "barnskotare", rubrik: "Så blir du barnskötare" },
+  { id: "statistik", rubrik: "Hur många förskollärare finns det?" },
+  { id: "kommuner", rubrik: "Andel förskollärare i varje kommun" },
+  { id: "lan", rubrik: "Förskollärare per län" },
+  { id: "foraldrar", rubrik: "Vad betyder siffrorna för ditt barn?" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan förskollärare och barnskötare?", svar: "En förskollärare har en högskoleexamen på 210 högskolepoäng och legitimation från Skolverket. Bara förskollärare får ansvara för undervisningen i förskolan. Barnskötare arbetar i samma arbetslag med omsorg och undervisning, men det finns inget nationellt utbildningskrav för yrket." },
+  { fraga: "Hur lång är förskollärarutbildningen?", svar: "Förskollärarexamen omfattar 210 högskolepoäng enligt högskoleförordningen, vilket motsvarar tre och ett halvt års heltidsstudier. I utbildningen ingår 30 högskolepoäng verksamhetsförlagd utbildning på en förskola." },
+  { fraga: "Vad kostar förskollärarlegitimation?", svar: "Det kostar 1 890 kronor att ansöka om förskollärarlegitimation hos Skolverket. De flesta får beslut inom fyra månader. Har du en examen som utfärdats före 1 juli 2011 är ansökan avgiftsfri." },
+  { fraga: "Hur många förskollärare finns det i Sverige?", svar: `Hösten 2025 arbetade knappt 99 500 personer med barn i förskolan, motsvarande drygt 92 000 heltidstjänster. Av dem hade 42,5 procent förskollärarexamen och 45 procent förskollärarlegitimation, räknat i heltidstjänster.` },
+  { fraga: "Måste en barnskötare ha utbildning?", svar: "Skollagen kräver inte någon särskild examen. Den säger att det i förskolan, utöver förskollärare, får finnas annan personal med sådan utbildning eller erfarenhet att barnens utveckling och lärande främjas. Många arbetsgivare efterfrågar ändå barn- och fritidsprogrammet eller motsvarande utbildning från komvux." },
+  { fraga: "Vilken kommun har flest förskollärare?", svar: `Bland kommuner med minst ${MIN_BARN} barn i förskolan har ${hogst[0].k.namn} högst andel personal med förskollärarexamen, ${pct(hogst[0].s.andel_forskollarexamen)}. Lägst har ${lagst[0].k.namn} med ${pct(lagst[0].s.andel_forskollarexamen)} (${ar}).` },
+  { fraga: "Får en barnskötare undervisa?", svar: "Barnskötare får delta i undervisningen som ett komplement till förskollärarna, men det är förskolläraren som leder och ansvarar för den. Det framgår av skollagen 2 kap. 13–15 §§ och Skolverkets vägledning." },
+];
+
+const titel = "Förskollärare och barnskötare – legitimation och statistik";
+const beskrivning = `Så blir du förskollärare eller barnskötare, vad legitimationen kostar och hur stor andel förskollärare som arbetar i din kommuns förskolor (${ar}).`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Förskollärare och barnskötare"
+  svar={`En <strong>förskollärare</strong> har en högskoleexamen på 210 högskolepoäng och legitimation från Skolverket, och är den som ansvarar för undervisningen i förskolan. En <strong>barnskötare</strong> arbetar i samma arbetslag men har inget lagstadgat utbildningskrav. Hösten 2025 hade 42,5 procent av förskolans personal förskollärarexamen, och andelen skiljer sig stort mellan kommunerna.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Förskollärare", href: "/forskollarare/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Jämför kommuner", href: "/jamfor/", text: "Barngrupper och personal i alla kommuner" },
+    ...relaterade("/lpfo-18/", "/kommunal-eller-fristaende/", "/forskoleklass/", "/forskoleplats/"),
+  ]}
+  kallor={[
+    SKOLLAGEN,
+    { namn: "Högskoleförordning (1993:100), bilaga 2 – förskollärarexamen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/hogskoleforordning-1993100_sfs-1993-100/", text: "examen om 210 högskolepoäng", datum: "2026-11-25" },
+    { namn: "Förordning (2021:1335) om utbildning till lärare och förskollärare", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-20211335-om-utbildning-till-larare_sfs-2021-1335/", text: "utbildningsvetenskaplig kärna, VFU och ändringarna 1 juli 2028", datum: "2026-11-25" },
+    { namn: "Förordning (2011:326) om behörighet och legitimation för lärare och förskollärare", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-2011326-om-behorighet-och_sfs-2011-326/", text: "introduktionsperiod med mentor", datum: "2026-11-25" },
+    { namn: "Skolverket – Ansök om legitimation med svensk examen", url: "https://www.skolverket.se/kompetensutveckling/legitimation/ansok-om-legitimation-med-svensk-examen", text: "avgift 1 890 kronor", datum: "2026-11-25" },
+    { namn: "Skolverket – Aktuell handläggningstid", url: "https://www.skolverket.se/kompetensutveckling/legitimation/aktuell-handlaggningstid", text: "de flesta får beslut inom fyra månader", datum: "2026-11-25" },
+    { namn: "Skolverket – Krav för att få undervisa", url: "https://www.skolverket.se/kompetensutveckling/legitimation/regler-och-krav-for-legitimation/krav-for-att-fa-undervisa", text: "barnskötare som komplement i undervisningen", datum: "2026-11-25" },
+    { namn: "Skolverket – Tioårig grundskola", url: "https://www.skolverket.se/styrning-och-ansvar/en-skola-i-forandring/tioarig-grundskola", text: "förskollärares tillfälliga behörighet i nya årskurs 1", datum: "2026-11-25" },
+    SKOLVERKET_PM_2025,
+    SKOLVERKET_JMF,
+  ]}>
+
+  <h2 id="skillnad">Förskollärare eller barnskötare – vad är skillnaden?</h2>
+  <p>I de flesta förskolor arbetar förskollärare och barnskötare sida vid sida i samma arbetslag. Båda tar hand om barnen, planerar dagen och deltar i lek och undervisning. Skillnaden ligger i ansvaret och i kraven på utbildning.</p>
+  <p>Enligt skollagen (2 kap. 13 §) får bara den som har <strong>legitimation som lärare eller förskollärare</strong> och är behörig bedriva undervisning. Skolverket förklarar att personal som inte är förskollärare, till exempel barnskötare, får vara ett komplement till förskollärarna i undervisningen. Läroplanen Lpfö 18 säger också att undervisningen ska ske under ledning av förskollärare, och att förskolläraren ansvarar för att omsorg, utveckling och lärande bildar en helhet.</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Förskollärare</th><th>Barnskötare</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Utbildning</th><td>Förskollärarexamen, 210 hp</td><td>Inget nationellt krav</td></tr>
+      <tr><th scope="row">Legitimation</th><td>Ja, från Skolverket</td><td>Nej</td></tr>
+      <tr><th scope="row">Undervisning</th><td>Leder och ansvarar</td><td>Deltar som komplement</td></tr>
+      <tr><th scope="row">Utvecklingssamtal</th><td>Övergripande ansvar</td><td>Kan delta</td></tr>
+      <tr><th scope="row">Tillsvidareanställning</th><td>Kräver legitimation</td><td>Inget krav på legitimation</td></tr>
+    </tbody>
+  </table></div>
+  <p>Förskolläraren har enligt skollagen (8 kap. 11 §) det övergripande ansvaret för utvecklingssamtalet med vårdnadshavarna. Rektorn är chef för både förskollärare och barnskötare och ansvarar för att förskollärarna får förutsättningar att ta ansvar för undervisningen.</p>
+
+  <h2 id="bli-forskollarare">Så blir du förskollärare</h2>
+  <p>Förskollärarprogrammet läses på universitet eller högskola. Enligt högskoleförordningen uppnås förskollärarexamen efter <strong>210 högskolepoäng</strong>, alltså tre och ett halvt års heltidsstudier. Utbildningen består av tre delar enligt förordningen om utbildning till lärare och förskollärare:</p>
+  <ul>
+    <li><strong>Förskolepedagogiskt område, 120 hp</strong> – ämneskunskaper och förskoledidaktik för arbetet med barnen.</li>
+    <li><strong>Utbildningsvetenskaplig kärna, 60 hp</strong> – gemensam för lärar- och förskollärarutbildningarna.</li>
+    <li><strong>Verksamhetsförlagd utbildning (VFU), 30 hp</strong> – praktik på en förskola under handledning.</li>
+  </ul>
+  <p>Från <strong>1 juli 2028</strong> ändras fördelningen: den utbildningsvetenskapliga kärnan blir 45 hp och det förskolepedagogiska området 135 hp. Den totala längden är densamma.</p>
+  <h3>Introduktionsperiod det första året</h3>
+  <p>När en nyutexaminerad förskollärare anställs ska huvudmannen se till att hen genomför en introduktionsperiod (skollagen 2 kap. 22 a §). Perioden ska vara minst ett läsår på heltid, och förskolläraren ska ha stöd av en mentor som själv är legitimerad.</p>
+
+  <h2 id="legitimation">Förskollärarlegitimation</h2>
+  <p>Det är <strong>Skolverket</strong> som utfärdar förskollärarlegitimation, efter ansökan. Kravet är en behörighetsgivande förskollärarexamen. Du ansöker digitalt med e-legitimation eller på papper.</p>
+  <ul>
+    <li><strong>Avgift:</strong> 1 890 kronor. Ansökan är avgiftsfri om examen utfärdades före 1 juli 2011.</li>
+    <li><strong>Handläggningstid:</strong> enligt Skolverket får de flesta beslut inom fyra månader. Den som bara söker på en svensk förskollärarexamen får vanligtvis beslut utan ytterligare utredning.</li>
+    <li><strong>Anställning:</strong> huvudregeln är att bara legitimerade förskollärare kan få tillsvidareanställning som förskollärare (skollagen 2 kap. 20 §).</li>
+  </ul>
+  <h3>Förskollärare och den tioåriga grundskolan</h3>
+  <p>Hösten 2028 blir grundskolan tioårig och förskoleklassen upphör. Skolverket ändrar legitimationerna automatiskt och utan avgift. Den som är legitimerad förskollärare den 30 juni 2028 och har undervisat i förskoleklass eller grundskola läsåret 2027/28 blir tillfälligt behörig att undervisa i nya årskurs 1 fram till 30 juni 2035. Läs mer på sidan om <a href="/forskoleklass/">förskoleklass och fritidshem</a>.</p>
+
+  <h2 id="barnskotare">Så blir du barnskötare</h2>
+  <p>Skollagen (2 kap. 14 §) säger att det i förskolan, utöver förskollärare, får finnas annan personal med sådan utbildning eller erfarenhet att barnens utveckling och lärande främjas. Det finns alltså ingen examen som krävs enligt lag för att arbeta som barnskötare.</p>
+  <p>I Skolverkets statistik redovisas de vanligaste vägarna. 15 procent av heltidstjänsterna i förskolan har en avslutad <strong>gymnasial utbildning för arbete med barn</strong>, som barn- och fritidsprogrammet eller motsvarande kurser inom komvux. Ytterligare 22 procent har viss pedagogisk utbildning utan examen, och 18 procent har en annan utbildning. Andelen med gymnasial barnutbildning har minskat med 5 procentenheter sedan 2016.</p>
+  <p>Den som arbetar som barnskötare och vill bli förskollärare kan läsa förskollärarprogrammet. Antagningen sker via antagning.se.</p>
+
+  <h2 id="statistik">Hur många förskollärare finns det?</h2>
+  <p>Skolverkets riksstatistik för hösten 2025 visar att knappt <strong>99 500 personer</strong> arbetade med barn i förskolan, motsvarande drygt 92 000 heltidstjänster. Det är 2,6 procent färre än året innan, i takt med att antalet barn minskar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Personalens utbildning, hösten 2025</th><th class="num">Andel av heltidstjänsterna</th></tr></thead>
+    <tbody>
+      <tr><td>Förskollärarexamen</td><td class="num">42,5 %</td></tr>
+      <tr><td>Lärarexamen</td><td class="num">1,5 %</td></tr>
+      <tr><td>Gymnasial utbildning för arbete med barn</td><td class="num">15 %</td></tr>
+      <tr><td>Viss pedagogisk utbildning</td><td class="num">22 %</td></tr>
+      <tr><td>Övrig utbildning</td><td class="num">18 %</td></tr>
+    </tbody>
+  </table></div>
+  <p>Av alla heltidstjänster har 45 procent <strong>förskollärarlegitimation</strong>. Skillnaden mellan huvudmännen är stor. I kommunala förskolor har 46 procent förskollärarexamen, i fristående 32 procent. Bara 3,9 procent av personalen är män, något fler i förskolor med enskild huvudman (5,2 procent) än i kommunala (3,6 procent). Andelen har varit i stort sett oförändrad i tio år. Männen är yngre: 56 procent av dem är under 40 år mot 36 procent av kvinnorna, och medelåldern är 40 respektive 45 år.</p>
+  <p>Kommunsiffrorna längre ned kommer från Skolverkets kommunala jämförelsetal ({ar}). Där är rikssnittet {pct(RIKET?.andel_forskollarexamen)} med förskollärarexamen och {pct(RIKET?.andel_forskollarlegitimation, 1)} med legitimation. Det skiljer sig något från riksstatistiken, eftersom jämförelsetalen räknas på ett annat underlag. Använd dem för att jämföra kommuner med varandra.</p>
+
+  <h2 id="kommuner">Andel förskollärare i varje kommun</h2>
+  <p>Av {medData.length} kommuner med uppgifter har <strong>{under30}</strong> färre än 30 procent förskollärare, medan <strong>{over50}</strong> har minst hälften. Tabellerna visar kommuner med minst {MIN_BARN} inskrivna barn. Mycket små kommuner kan svänga kraftigt mellan åren.</p>
+  <h3>Högst andel förskollärare</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Förskollärarexamen</th><th class="num">Barn per heltidstjänst</th><th class="num">Barn i förskola</th></tr></thead>
+    <tbody>{hogst.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_forskollarexamen)}</td><td class="num">{tal(x.s.barn_per_heltidstjanst)}</td><td class="num">{heltal(x.s.barn_inskrivna)}</td></tr>)}</tbody>
+  </table></div>
+  <h3>Lägst andel förskollärare</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Förskollärarexamen</th><th class="num">Barn per heltidstjänst</th><th class="num">Barn i förskola</th></tr></thead>
+    <tbody>{lagst.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_forskollarexamen)}</td><td class="num">{tal(x.s.barn_per_heltidstjanst)}</td><td class="num">{heltal(x.s.barn_inskrivna)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Alla kommuner finns i <a href="/jamfor/">jämförelsen av kommunerna</a>, och på varje kommunsida ser du siffrorna bredvid rikssnittet.</p>
+
+  <h2 id="lan">Förskollärare per län</h2>
+  <p>Länssiffrorna är vägda med antalet inskrivna barn, så att stora kommuner väger tyngre än små.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Förskollärarexamen</th><th class="num">Kommuner</th></tr></thead>
+    <tbody>{lan.map((x) => <tr><td><a href={x.lan.href}>{x.lan.namn}</a></td><td class="num">{pct(x.v)}</td><td class="num">{x.n}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="foraldrar">Vad betyder siffrorna för ditt barn?</h2>
+  <p>Andelen förskollärare säger inget om en enskild förskola, men den visar hur lätt kommunen har att rekrytera. Ett sätt att göra siffran konkret är att räkna hur många barn det går på varje heltidstjänst med förskollärarexamen. Vi delar antalet barn per heltidstjänst med andelen förskollärare.</p>
+  <p>I riket blir det <strong>{tal(rFl)} barn per förskollärartjänst</strong> ({tal(RIKET?.barn_per_heltidstjanst)} barn per heltidstjänst delat med {pct(RIKET?.andel_forskollarexamen)}). I {hogst[0].k.namn} blir det {tal(fl(hogst[0]))} och i {lagst[0].k.namn} {tal(fl(lagst[0]))}. Det är en uppskattning, eftersom personalen inte är jämnt fördelad mellan förskolorna.</p>
+  <p>Frågor som är bra att ställa när du besöker en förskola:</p>
+  <ul>
+    <li>Hur många förskollärare och barnskötare finns i just den barngrupp ditt barn ska gå i?</li>
+    <li>Vem leder undervisningen, och hur planeras den?</li>
+    <li>Hur löser förskolan vikarier vid sjukdom?</li>
+    <li>Vem har ansvar för utvecklingssamtalet?</li>
+  </ul>
+</Guide>

@@ -1,0 +1,1810 @@
+{
+  "skapad": "2026-11-24",
+  "hamtat": {
+    "narakut": "2026-11-19",
+    "jour": "2026-11-19",
+    "vardtyper": "2026-11-24"
+  },
+  "narakut": {
+    "antal": 142,
+    "perLan": {
+      "Örebro län": 35,
+      "Jämtlands län": 4,
+      "Västerbottens län": 11,
+      "Norrbottens län": 10,
+      "Kalmar län": 6,
+      "Västra Götalands län": 17,
+      "Uppsala län": 4,
+      "Gävleborgs län": 4,
+      "Skåne län": 10,
+      "Hallands län": 7,
+      "Blekinge län": 2,
+      "Värmlands län": 5,
+      "Östergötlands län": 4,
+      "Kronobergs län": 3,
+      "Dalarnas län": 7,
+      "Jönköpings län": 3,
+      "Västernorrlands län": 4,
+      "Södermanlands län": 4,
+      "Västmanlands län": 2
+    }
+  },
+  "jour": {
+    "antal": 154,
+    "perLan": {
+      "Örebro län": 35,
+      "Jämtlands län": 4,
+      "Västerbottens län": 12,
+      "Norrbottens län": 11,
+      "Kalmar län": 6,
+      "Västra Götalands län": 17,
+      "Uppsala län": 4,
+      "Gävleborgs län": 4,
+      "Skåne län": 10,
+      "Hallands län": 7,
+      "Blekinge län": 2,
+      "Värmlands län": 5,
+      "Östergötlands län": 4,
+      "Kronobergs län": 3,
+      "Dalarnas län": 7,
+      "Stockholms län": 10,
+      "Jönköpings län": 3,
+      "Västernorrlands län": 4,
+      "Södermanlands län": 4,
+      "Västmanlands län": 2
+    }
+  },
+  "narakutEllerJour": {
+    "antal": 154,
+    "perLan": {
+      "Örebro län": 35,
+      "Jämtlands län": 4,
+      "Västerbottens län": 12,
+      "Norrbottens län": 11,
+      "Kalmar län": 6,
+      "Västra Götalands län": 17,
+      "Uppsala län": 4,
+      "Gävleborgs län": 4,
+      "Skåne län": 10,
+      "Hallands län": 7,
+      "Blekinge län": 2,
+      "Värmlands län": 5,
+      "Östergötlands län": 4,
+      "Kronobergs län": 3,
+      "Dalarnas län": 7,
+      "Jönköpings län": 3,
+      "Västernorrlands län": 4,
+      "Södermanlands län": 4,
+      "Västmanlands län": 2,
+      "Stockholms län": 10
+    },
+    "lista": [
+      {
+        "namn": "Adolfsbergs vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Akuten, Östersund",
+        "kommun": "Östersund",
+        "lan": "Jämtlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Akutmottagning Lycksele",
+        "kommun": "Lycksele",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Akutmottagning Umeå",
+        "kommun": "Umeå",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Arjeplogs hälsocentral",
+        "kommun": "Arjeplog",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Arvidsjaurs hälsocentral",
+        "kommun": "Arvidsjaur",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Askersunds vårdcentral",
+        "kommun": "Askersund",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Baggängens vårdcentral, Karlskoga",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Blå Kustens hälsocentral",
+        "kommun": "Oskarshamn",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Borgholms hälsocentral",
+        "kommun": "Borgholm",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Borås jourcentral, Borås",
+        "kommun": "Borås",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Brickebackens vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Brickegårdens vårdcentral, Karlskoga",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Capio vårdcentral Haga, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Capio vårdcentral Hallsberg, Hallsberg",
+        "kommun": "Hallsberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Capio vårdcentral Lekeberg, Fjugesta",
+        "kommun": "Lekeberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Distriktsläkarjour akuten",
+        "kommun": "Östersund",
+        "lan": "Jämtlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Enköpings jourmottagning, Enköping",
+        "kommun": "Enköping",
+        "lan": "Uppsala län",
+        "narakut": true
+      },
+      {
+        "namn": "Esplanadens hälsocentral",
+        "kommun": "Västervik",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Eyra vårdcentral",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Familjeläkarjour Gävle",
+        "kommun": "Gävle",
+        "lan": "Gävleborgs län",
+        "narakut": true
+      },
+      {
+        "namn": "Familjeläkarjour Hudiksvall",
+        "kommun": "Hudiksvall",
+        "lan": "Gävleborgs län",
+        "narakut": true
+      },
+      {
+        "namn": "Familjeläkarjour Ljusdal",
+        "kommun": "Ljusdal",
+        "lan": "Gävleborgs län",
+        "narakut": true
+      },
+      {
+        "namn": "Familjeläkarjour Söderhamn",
+        "kommun": "Söderhamn",
+        "lan": "Gävleborgs län",
+        "narakut": true
+      },
+      {
+        "namn": "Fjällhälsan, Hede",
+        "kommun": "Härjedalen",
+        "lan": "Jämtlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Freya vårdcentral",
+        "kommun": "Lindesberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Haparanda hälsocentral",
+        "kommun": "Haparanda",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Eslöv",
+        "kommun": "Eslöv",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Falkenberg, Vårdcentralen Halland",
+        "kommun": "Falkenberg",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Hylte, Vårdcentralen Halland",
+        "kommun": "Hylte",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Laholm, Vårdcentralen Halland",
+        "kommun": "Laholm",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Landskrona",
+        "kommun": "Landskrona",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Helgmottagningen Trelleborg",
+        "kommun": "Trelleborg",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Hällefors vårdcentral",
+        "kommun": "Hällefors",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Hälsorum Offerdal, Änge",
+        "kommun": "Krokom",
+        "lan": "Jämtlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Idun vårdcentral Storå",
+        "kommun": "Lindesberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Jokkmokks hälsocentral",
+        "kommun": "Jokkmokk",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentral Capio Vårdcentral Lysekil, Lysekil",
+        "kommun": "Lysekil",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentral Karlshamn",
+        "kommun": "Karlshamn",
+        "lan": "Blekinge län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentral Karlskrona",
+        "kommun": "Karlskrona",
+        "lan": "Blekinge län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Arvika",
+        "kommun": "Arvika",
+        "lan": "Värmlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Grimmered, Göteborg",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen i Motala",
+        "kommun": "Motala",
+        "lan": "Östergötlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Karlstad",
+        "kommun": "Karlstad",
+        "lan": "Värmlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Kristinehamn",
+        "kommun": "Kristinehamn",
+        "lan": "Värmlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Linköping",
+        "kommun": "Linköping",
+        "lan": "Östergötlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Luleå",
+        "kommun": "Luleå",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Norrköping",
+        "kommun": "Norrköping",
+        "lan": "Östergötlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Piteå",
+        "kommun": "Piteå",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Säffle",
+        "kommun": "Säffle",
+        "lan": "Värmlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Torsby",
+        "kommun": "Torsby",
+        "lan": "Värmlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen Åby, Mölndal",
+        "kommun": "Mölndal",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourcentralen, Vårdcentralen Finspång",
+        "kommun": "Finspång",
+        "lan": "Östergötlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourläkarcentralen Växjö, Söder Växjö",
+        "kommun": "Växjö",
+        "lan": "Kronobergs län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagning Avesta",
+        "kommun": "Avesta",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagning Falun",
+        "kommun": "Falun",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagning Mellersta Dalarna",
+        "kommun": "Borlänge",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagning Norra och Västra Dalarna",
+        "kommun": "Mora",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagning Särna",
+        "kommun": "Älvdalen",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagningen i Tierp, Tierp",
+        "kommun": "Tierp",
+        "lan": "Uppsala län",
+        "narakut": true
+      },
+      {
+        "namn": "Jourmottagningen i Östhammar, Östhammar",
+        "kommun": "Östhammar",
+        "lan": "Uppsala län",
+        "narakut": true
+      },
+      {
+        "namn": "Karla vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Karolina vårdcentral, Karlskoga",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Kopparbergs vårdcentral",
+        "kommun": "Ljusnarsberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Kry Närakut Kungsbacka, Kungsbacka",
+        "kommun": "Kungsbacka",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Kumla vårdcentral",
+        "kommun": "Kumla",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Kungälv jourcentral, Kungälv",
+        "kommun": "Kungälv",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Halmstad, Vårdcentralen Halland",
+        "kommun": "Halmstad",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Helsingborg",
+        "kommun": "Helsingborg",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Hässleholm",
+        "kommun": "Hässleholm",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Kristianstad",
+        "kommun": "Kristianstad",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Lund",
+        "kommun": "Lund",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Södervärn, Malmö",
+        "kommun": "Malmö",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Varberg, Vårdcentralen Halland",
+        "kommun": "Varberg",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Ystad",
+        "kommun": "Ystad",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgmottagningen Ängelholm",
+        "kommun": "Ängelholm",
+        "lan": "Skåne län",
+        "narakut": true
+      },
+      {
+        "namn": "Kvälls- och helgöppet Viktoriakliniken och Kattegattkliniken, Halmstad",
+        "kommun": "Halmstad",
+        "lan": "Hallands län",
+        "narakut": true
+      },
+      {
+        "namn": "Laxå vårdcentral",
+        "kommun": "Laxå",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Lidköping jourcentral, Lidköping",
+        "kommun": "Lidköping",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Lillåns vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Lindesbergs vårdcentral",
+        "kommun": "Lindesberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Malå sjukstuga jourtid",
+        "kommun": "Malå",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Mikaeli vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Mitt i Stan vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Mottagning Närakut Ludvika",
+        "kommun": "Ludvika",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Nora vårdcentral",
+        "kommun": "Nora",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Nybro hälsocentral",
+        "kommun": "Nybro",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Närakut Eksjö",
+        "kommun": "Eksjö",
+        "lan": "Jönköpings län",
+        "narakut": true
+      },
+      {
+        "namn": "Närakut Jönköping",
+        "kommun": "Jönköping",
+        "lan": "Jönköpings län",
+        "narakut": true
+      },
+      {
+        "namn": "Närakut Ludvika",
+        "kommun": "Ludvika",
+        "lan": "Dalarnas län",
+        "narakut": true
+      },
+      {
+        "namn": "Närakut Värnamo",
+        "kommun": "Värnamo",
+        "lan": "Jönköpings län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Alingsås jourcentral",
+        "kommun": "Alingsås",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Bäckefors jourcentral, Bäckefors",
+        "kommun": "Bengtsfors",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Gamlestadstorget jourcentral, Göteborg",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Hisingen jourcentral, Göteborg",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Mariestad jourcentral, Mariestad",
+        "kommun": "Mariestad",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Skövde jourcentral, Skövde",
+        "kommun": "Skövde",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Tanumshede jourcentral, Tanumshede",
+        "kommun": "Tanum",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Uddevalla jourcentral, Uddevalla",
+        "kommun": "Uddevalla",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Närhälsan Östra sjukhuset närakut",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Odensbackens vårdcentral",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Olaus Petri vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Pajala hälsocentral",
+        "kommun": "Pajala",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Pilgårdens vårdcentral, Degerfors",
+        "kommun": "Degerfors",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Praktikertjänst Backa vårdcentral, Karlskoga",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsakut Umeå",
+        "kommun": "Umeå",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjour Härnösand, Närvården Härnösand",
+        "kommun": "Härnösand",
+        "lan": "Västernorrlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjour Skellefteå",
+        "kommun": "Skellefteå",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjour Sollefteå Kramfors",
+        "kommun": "Sollefteå",
+        "lan": "Västernorrlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjour Sundsvall",
+        "kommun": "Sundsvall",
+        "lan": "Västernorrlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjour Örnsköldsvik",
+        "kommun": "Örnsköldsvik",
+        "lan": "Västernorrlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjouren Kullbergska sjukhuset, Vårdcentralen Linden Katrineholm",
+        "kommun": "Katrineholm",
+        "lan": "Södermanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjouren Vårdcentralen City Eskilstuna, Eskilstuna",
+        "kommun": "Eskilstuna",
+        "lan": "Södermanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjouren Vårdcentralen Strängnäs, Vårdcentralen Strängnäs",
+        "kommun": "Strängnäs",
+        "lan": "Södermanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Primärvårdsjouren Vårdcentralen Åsidan Nyköping, Nyköping",
+        "kommun": "Nyköping",
+        "lan": "Södermanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Skebäcks vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Skene jourcentral, Skene",
+        "kommun": "Mark",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Sorsele sjukstuga jourtid",
+        "kommun": "Sorsele",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Stensö hälsocentral",
+        "kommun": "Kalmar",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Storuman sjukstuga jourtid",
+        "kommun": "Storuman",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Trollhättan jourcentral, Trollhättan",
+        "kommun": "Trollhättan",
+        "lan": "Västra Götalands län",
+        "narakut": true
+      },
+      {
+        "namn": "Tybble vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Tärnaby sjukstuga jourtid",
+        "kommun": "Storuman",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Uppsala Närakut Aleris",
+        "kommun": "Uppsala",
+        "lan": "Uppsala län",
+        "narakut": true
+      },
+      {
+        "namn": "Varberga vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Vilhelmina sjukstuga hälsocentral",
+        "kommun": "Vilhelmina",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Vilhelmina sjukstuga jourtid",
+        "kommun": "Vilhelmina",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Vimmerby hälsocentral",
+        "kommun": "Vimmerby",
+        "lan": "Kalmar län",
+        "narakut": true
+      },
+      {
+        "namn": "Vivalla/Lundby vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralen Kungshögen, Ljungby",
+        "kommun": "Ljungby",
+        "lan": "Kronobergs län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralen Läkarhuset Ljungby, Ljungby",
+        "kommun": "Ljungby",
+        "lan": "Kronobergs län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralernas jourmottagning Köping",
+        "kommun": "Köping",
+        "lan": "Västmanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralernas jourmottagning Västerås",
+        "kommun": "Västerås",
+        "lan": "Västmanlands län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralsjouren norra länsdelen, Lindesberg",
+        "kommun": "Lindesberg",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralsjouren södra länsdelen, Kumla",
+        "kommun": "Kumla",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralsjouren västra länsdelen, Karlskoga",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Vårdcentralsjouren Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Åsele sjukstuga jourtid",
+        "kommun": "Åsele",
+        "lan": "Västerbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Älvsbyns hälsocentral",
+        "kommun": "Älvsbyn",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Ängens vårdcentral, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län",
+        "narakut": true
+      },
+      {
+        "namn": "Överkalix hälsocentral, Division Nära",
+        "kommun": "Överkalix",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Övertorneå hälsocentral",
+        "kommun": "Övertorneå",
+        "lan": "Norrbottens län",
+        "narakut": true
+      },
+      {
+        "namn": "Akutmottagning Skellefteå",
+        "kommun": "Skellefteå",
+        "lan": "Västerbottens län",
+        "narakut": false
+      },
+      {
+        "namn": "Jourcentralen Boden",
+        "kommun": "Boden",
+        "lan": "Norrbottens län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Danderyd",
+        "kommun": "Danderyd",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Haga",
+        "kommun": "Stockholm",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Handen",
+        "kommun": "Haninge",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Huddinge",
+        "kommun": "Huddinge",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Järva",
+        "kommun": "Stockholm",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Nacka, Nacka",
+        "kommun": "Nacka",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Rosenlund",
+        "kommun": "Stockholm",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut Sollentuna, Sollentuna",
+        "kommun": "Sollentuna",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut, Norrtälje sjukhus Tiohundra",
+        "kommun": "Norrtälje",
+        "lan": "Stockholms län",
+        "narakut": false
+      },
+      {
+        "namn": "Närakut, Södertälje sjukhus",
+        "kommun": "Södertälje",
+        "lan": "Stockholms län",
+        "narakut": false
+      }
+    ]
+  },
+  "akutSjukhus": {
+    "antal": 66,
+    "perLan": {
+      "Jämtlands län": 1,
+      "Örebro län": 3,
+      "Västra Götalands län": 8,
+      "Dalarnas län": 3,
+      "Gävleborgs län": 3,
+      "Skåne län": 9,
+      "Stockholms län": 6,
+      "Blekinge län": 1,
+      "Västerbottens län": 3,
+      "Norrbottens län": 5,
+      "Västernorrlands län": 3,
+      "Östergötlands län": 3,
+      "Västmanlands län": 1,
+      "Uppsala län": 2,
+      "Värmlands län": 3,
+      "Hallands län": 2,
+      "Jönköpings län": 3,
+      "Kalmar län": 3,
+      "Södermanlands län": 3,
+      "Gotlands län": 1
+    },
+    "lista": [
+      {
+        "namn": "Akuten, Östersund",
+        "kommun": "Östersund",
+        "lan": "Jämtlands län"
+      },
+      {
+        "namn": "Akutmottagning 1 Karlskoga lasarett",
+        "kommun": "Karlskoga",
+        "lan": "Örebro län"
+      },
+      {
+        "namn": "Akutmottagning Alingsås, Alingsås",
+        "kommun": "Alingsås",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning Avesta",
+        "kommun": "Avesta",
+        "lan": "Dalarnas län"
+      },
+      {
+        "namn": "Akutmottagning Bollnäs",
+        "kommun": "Bollnäs",
+        "lan": "Gävleborgs län"
+      },
+      {
+        "namn": "Akutmottagning Falun",
+        "kommun": "Falun",
+        "lan": "Dalarnas län"
+      },
+      {
+        "namn": "Akutmottagning Gävle",
+        "kommun": "Gävle",
+        "lan": "Gävleborgs län"
+      },
+      {
+        "namn": "Akutmottagning Helsingborg",
+        "kommun": "Helsingborg",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Huddinge, Karolinska Universitetssjukhuset",
+        "kommun": "Huddinge",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagning Hudiksvall",
+        "kommun": "Hudiksvall",
+        "lan": "Gävleborgs län"
+      },
+      {
+        "namn": "Akutmottagning Hässleholm",
+        "kommun": "Hässleholm",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Karlskrona",
+        "kommun": "Karlskrona",
+        "lan": "Blekinge län"
+      },
+      {
+        "namn": "Akutmottagning Kristianstad",
+        "kommun": "Kristianstad",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Kungälv, Kungälv",
+        "kommun": "Kungälv",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning Landskrona",
+        "kommun": "Landskrona",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Lund",
+        "kommun": "Lund",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Lycksele",
+        "kommun": "Lycksele",
+        "lan": "Västerbottens län"
+      },
+      {
+        "namn": "Akutmottagning Malmö",
+        "kommun": "Malmö",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Mora",
+        "kommun": "Mora",
+        "lan": "Dalarnas län"
+      },
+      {
+        "namn": "Akutmottagning Mölndal, Mölndal",
+        "kommun": "Mölndal",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning NÄL, Trollhättan",
+        "kommun": "Trollhättan",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning och IVAK Kalix sjukhus",
+        "kommun": "Kalix",
+        "lan": "Norrbottens län"
+      },
+      {
+        "namn": "Akutmottagning och IVAK Kiruna sjukhus",
+        "kommun": "Kiruna",
+        "lan": "Norrbottens län"
+      },
+      {
+        "namn": "Akutmottagning Sahlgrenska, Göteborg",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning Skellefteå",
+        "kommun": "Skellefteå",
+        "lan": "Västerbottens län"
+      },
+      {
+        "namn": "Akutmottagning Skövde",
+        "kommun": "Skövde",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning Sollefteå",
+        "kommun": "Sollefteå",
+        "lan": "Västernorrlands län"
+      },
+      {
+        "namn": "Akutmottagning Sundsvall",
+        "kommun": "Sundsvall",
+        "lan": "Västernorrlands län"
+      },
+      {
+        "namn": "Akutmottagning Trelleborg",
+        "kommun": "Trelleborg",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Umeå",
+        "kommun": "Umeå",
+        "lan": "Västerbottens län"
+      },
+      {
+        "namn": "Akutmottagning US, Akutkliniken US",
+        "kommun": "Linköping",
+        "lan": "Östergötlands län"
+      },
+      {
+        "namn": "Akutmottagning Västerås",
+        "kommun": "Västerås",
+        "lan": "Västmanlands län"
+      },
+      {
+        "namn": "Akutmottagning Ystad",
+        "kommun": "Ystad",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Ängelholm",
+        "kommun": "Ängelholm",
+        "lan": "Skåne län"
+      },
+      {
+        "namn": "Akutmottagning Örnsköldsvik",
+        "kommun": "Örnsköldsvik",
+        "lan": "Västernorrlands län"
+      },
+      {
+        "namn": "Akutmottagning Östra, Göteborg",
+        "kommun": "Göteborg",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning, Borås",
+        "kommun": "Borås",
+        "lan": "Västra Götalands län"
+      },
+      {
+        "namn": "Akutmottagning, Danderyds sjukhus",
+        "kommun": "Danderyd",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagning, Medicinska specialistkliniken",
+        "kommun": "Motala",
+        "lan": "Östergötlands län"
+      },
+      {
+        "namn": "Akutmottagning, Norrtälje sjukhus Tiohundra",
+        "kommun": "Norrtälje",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagning, Södertälje sjukhus",
+        "kommun": "Södertälje",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagningen - Lasarettet i Enköping",
+        "kommun": "Enköping",
+        "lan": "Uppsala län"
+      },
+      {
+        "namn": "Akutmottagningen Arvika, Sjukhuset Arvika",
+        "kommun": "Arvika",
+        "lan": "Värmlands län"
+      },
+      {
+        "namn": "Akutmottagningen Centralsjukhuset Karlstad",
+        "kommun": "Karlstad",
+        "lan": "Värmlands län"
+      },
+      {
+        "namn": "Akutmottagningen Gällivare sjukhus",
+        "kommun": "Gällivare",
+        "lan": "Norrbottens län"
+      },
+      {
+        "namn": "Akutmottagningen Hallands sjukhus Halmstad",
+        "kommun": "Halmstad",
+        "lan": "Hallands län"
+      },
+      {
+        "namn": "Akutmottagningen Hallands sjukhus Varberg",
+        "kommun": "Varberg",
+        "lan": "Hallands län"
+      },
+      {
+        "namn": "Akutmottagningen Höglandssjukhuset Eksjö",
+        "kommun": "Eksjö",
+        "lan": "Jönköpings län"
+      },
+      {
+        "namn": "Akutmottagningen Kalmar",
+        "kommun": "Kalmar",
+        "lan": "Kalmar län"
+      },
+      {
+        "namn": "Akutmottagningen Kullbergska sjukhuset, Katrineholm",
+        "kommun": "Katrineholm",
+        "lan": "Södermanlands län"
+      },
+      {
+        "namn": "Akutmottagningen Lindesbergs lasarett, Lindesberg",
+        "kommun": "Lindesberg",
+        "lan": "Örebro län"
+      },
+      {
+        "namn": "Akutmottagningen Länssjukhuset Ryhov, Jönköping",
+        "kommun": "Jönköping",
+        "lan": "Jönköpings län"
+      },
+      {
+        "namn": "Akutmottagningen Mälarsjukhuset, Eskilstuna",
+        "kommun": "Eskilstuna",
+        "lan": "Södermanlands län"
+      },
+      {
+        "namn": "Akutmottagningen Nyköpings lasarett, Nyköping",
+        "kommun": "Nyköping",
+        "lan": "Södermanlands län"
+      },
+      {
+        "namn": "Akutmottagningen Oskarshamn",
+        "kommun": "Oskarshamn",
+        "lan": "Kalmar län"
+      },
+      {
+        "namn": "Akutmottagningen Piteå sjukhus",
+        "kommun": "Piteå",
+        "lan": "Norrbottens län"
+      },
+      {
+        "namn": "Akutmottagningen Sjukhuset Torsby",
+        "kommun": "Torsby",
+        "lan": "Värmlands län"
+      },
+      {
+        "namn": "Akutmottagningen Sunderby sjukhus, Sunderbyn, Luleå",
+        "kommun": "Luleå",
+        "lan": "Norrbottens län"
+      },
+      {
+        "namn": "Akutmottagningen Universitetssjukhuset Örebro, Örebro",
+        "kommun": "Örebro",
+        "lan": "Örebro län"
+      },
+      {
+        "namn": "Akutmottagningen Värnamo sjukhus",
+        "kommun": "Värnamo",
+        "lan": "Jönköpings län"
+      },
+      {
+        "namn": "Akutmottagningen Västervik",
+        "kommun": "Västervik",
+        "lan": "Kalmar län"
+      },
+      {
+        "namn": "Akutmottagningen, Akutkliniken ViN",
+        "kommun": "Norrköping",
+        "lan": "Östergötlands län"
+      },
+      {
+        "namn": "Akutmottagningen, Capio S:t Görans Sjukhus",
+        "kommun": "Stockholm",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagningen, Södersjukhuset",
+        "kommun": "Stockholm",
+        "lan": "Stockholms län"
+      },
+      {
+        "namn": "Akutmottagningen, Uppsala",
+        "kommun": "Uppsala",
+        "lan": "Uppsala län"
+      },
+      {
+        "namn": "Akutmottagningen, Visby lasarett",
+        "kommun": "Gotland",
+        "lan": "Gotlands län"
+      }
+    ]
+  },
+  "kort": {
+    "Uppsala län": {
+      "kort": 53,
+      "eTjanst": 53,
+      "listningsko": 0,
+      "influensaText": 27,
+      "tbeText": 0,
+      "recept": 53,
+      "intyg": 0,
+      "sjukskrivning": 1,
+      "klagomal": 26,
+      "provBoka": 0,
+      "vaccinBoka": 0,
+      "cellprov": 21,
+      "preventivmedel": 0
+    },
+    "Värmlands län": {
+      "kort": 42,
+      "eTjanst": 38,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 31,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 0,
+      "provBoka": 25,
+      "vaccinBoka": 0,
+      "cellprov": 1,
+      "preventivmedel": 0
+    },
+    "Skåne län": {
+      "kort": 185,
+      "eTjanst": 184,
+      "listningsko": 0,
+      "influensaText": 5,
+      "tbeText": 0,
+      "recept": 184,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 184,
+      "provBoka": 0,
+      "vaccinBoka": 3,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Gotlands län": {
+      "kort": 6,
+      "eTjanst": 6,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 6,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 0,
+      "provBoka": 5,
+      "vaccinBoka": 1,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Stockholms län": {
+      "kort": 253,
+      "eTjanst": 247,
+      "listningsko": 23,
+      "influensaText": 26,
+      "tbeText": 0,
+      "recept": 196,
+      "intyg": 68,
+      "sjukskrivning": 25,
+      "klagomal": 93,
+      "provBoka": 22,
+      "vaccinBoka": 16,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Södermanlands län": {
+      "kort": 31,
+      "eTjanst": 31,
+      "listningsko": 0,
+      "influensaText": 1,
+      "tbeText": 0,
+      "recept": 30,
+      "intyg": 5,
+      "sjukskrivning": 4,
+      "klagomal": 3,
+      "provBoka": 1,
+      "vaccinBoka": 6,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Östergötlands län": {
+      "kort": 51,
+      "eTjanst": 51,
+      "listningsko": 0,
+      "influensaText": 1,
+      "tbeText": 2,
+      "recept": 48,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 48,
+      "provBoka": 2,
+      "vaccinBoka": 9,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Jönköpings län": {
+      "kort": 56,
+      "eTjanst": 56,
+      "listningsko": 0,
+      "influensaText": 7,
+      "tbeText": 1,
+      "recept": 54,
+      "intyg": 55,
+      "sjukskrivning": 0,
+      "klagomal": 54,
+      "provBoka": 3,
+      "vaccinBoka": 55,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Kronobergs län": {
+      "kort": 32,
+      "eTjanst": 32,
+      "listningsko": 0,
+      "influensaText": 21,
+      "tbeText": 1,
+      "recept": 32,
+      "intyg": 31,
+      "sjukskrivning": 0,
+      "klagomal": 32,
+      "provBoka": 0,
+      "vaccinBoka": 1,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Kalmar län": {
+      "kort": 41,
+      "eTjanst": 41,
+      "listningsko": 0,
+      "influensaText": 1,
+      "tbeText": 0,
+      "recept": 41,
+      "intyg": 41,
+      "sjukskrivning": 0,
+      "klagomal": 41,
+      "provBoka": 0,
+      "vaccinBoka": 2,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Blekinge län": {
+      "kort": 18,
+      "eTjanst": 18,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 18,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 0,
+      "provBoka": 0,
+      "vaccinBoka": 0,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Hallands län": {
+      "kort": 48,
+      "eTjanst": 48,
+      "listningsko": 0,
+      "influensaText": 43,
+      "tbeText": 0,
+      "recept": 12,
+      "intyg": 36,
+      "sjukskrivning": 9,
+      "klagomal": 7,
+      "provBoka": 31,
+      "vaccinBoka": 46,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Västra Götalands län": {
+      "kort": 223,
+      "eTjanst": 216,
+      "listningsko": 0,
+      "influensaText": 75,
+      "tbeText": 38,
+      "recept": 215,
+      "intyg": 212,
+      "sjukskrivning": 22,
+      "klagomal": 30,
+      "provBoka": 6,
+      "vaccinBoka": 183,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Örebro län": {
+      "kort": 32,
+      "eTjanst": 31,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 31,
+      "intyg": 0,
+      "sjukskrivning": 2,
+      "klagomal": 2,
+      "provBoka": 1,
+      "vaccinBoka": 29,
+      "cellprov": 1,
+      "preventivmedel": 26
+    },
+    "Västmanlands län": {
+      "kort": 28,
+      "eTjanst": 28,
+      "listningsko": 0,
+      "influensaText": 2,
+      "tbeText": 2,
+      "recept": 27,
+      "intyg": 2,
+      "sjukskrivning": 2,
+      "klagomal": 26,
+      "provBoka": 1,
+      "vaccinBoka": 19,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Dalarnas län": {
+      "kort": 29,
+      "eTjanst": 29,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 29,
+      "intyg": 0,
+      "sjukskrivning": 0,
+      "klagomal": 29,
+      "provBoka": 2,
+      "vaccinBoka": 29,
+      "cellprov": 0,
+      "preventivmedel": 8
+    },
+    "Gävleborgs län": {
+      "kort": 41,
+      "eTjanst": 41,
+      "listningsko": 0,
+      "influensaText": 5,
+      "tbeText": 0,
+      "recept": 41,
+      "intyg": 41,
+      "sjukskrivning": 0,
+      "klagomal": 41,
+      "provBoka": 40,
+      "vaccinBoka": 41,
+      "cellprov": 0,
+      "preventivmedel": 0
+    },
+    "Västernorrlands län": {
+      "kort": 34,
+      "eTjanst": 34,
+      "listningsko": 2,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 34,
+      "intyg": 4,
+      "sjukskrivning": 9,
+      "klagomal": 1,
+      "provBoka": 6,
+      "vaccinBoka": 6,
+      "cellprov": 0,
+      "preventivmedel": 10
+    },
+    "Jämtlands län": {
+      "kort": 35,
+      "eTjanst": 31,
+      "listningsko": 0,
+      "influensaText": 12,
+      "tbeText": 0,
+      "recept": 28,
+      "intyg": 28,
+      "sjukskrivning": 1,
+      "klagomal": 27,
+      "provBoka": 0,
+      "vaccinBoka": 3,
+      "cellprov": 0,
+      "preventivmedel": 28
+    },
+    "Västerbottens län": {
+      "kort": 38,
+      "eTjanst": 38,
+      "listningsko": 0,
+      "influensaText": 0,
+      "tbeText": 0,
+      "recept": 38,
+      "intyg": 1,
+      "sjukskrivning": 37,
+      "klagomal": 0,
+      "provBoka": 2,
+      "vaccinBoka": 32,
+      "cellprov": 0,
+      "preventivmedel": 12
+    },
+    "Norrbottens län": {
+      "kort": 30,
+      "eTjanst": 30,
+      "listningsko": 0,
+      "influensaText": 16,
+      "tbeText": 1,
+      "recept": 25,
+      "intyg": 1,
+      "sjukskrivning": 0,
+      "klagomal": 1,
+      "provBoka": 4,
+      "vaccinBoka": 23,
+      "cellprov": 0,
+      "preventivmedel": 6
+    }
+  },
+  "receptTyper": {
+    "hjalpmedel": 886,
+    "preventivmedel": 90,
+    "glutenfritt": 61,
+    "nutrition": 26
+  },
+  "vardbetyg": {
+    "Stockholms län": {
+      "n": 237,
+      "svar": 23459,
+      "period": "2025",
+      "tillganglighet": 80.3
+    },
+    "Kalmar län": {
+      "n": 38,
+      "svar": 3508,
+      "period": "2025",
+      "tillganglighet": 87
+    },
+    "Västmanlands län": {
+      "n": 28,
+      "svar": 2968,
+      "period": "2025",
+      "tillganglighet": 82.8
+    },
+    "Skåne län": {
+      "n": 175,
+      "svar": 15422,
+      "period": "2025",
+      "tillganglighet": 80.1
+    },
+    "Örebro län": {
+      "n": 29,
+      "svar": 2692,
+      "period": "2025",
+      "tillganglighet": 73.1
+    },
+    "Västra Götalands län": {
+      "n": 210,
+      "svar": 18499,
+      "period": "2025",
+      "tillganglighet": 79.5
+    },
+    "Gävleborgs län": {
+      "n": 41,
+      "svar": 3542,
+      "period": "2025",
+      "tillganglighet": 81.7
+    },
+    "Värmlands län": {
+      "n": 30,
+      "svar": 2501,
+      "period": "2025",
+      "tillganglighet": 79.7
+    },
+    "Uppsala län": {
+      "n": 48,
+      "svar": 4329,
+      "period": "2025",
+      "tillganglighet": 81.1
+    },
+    "Hallands län": {
+      "n": 46,
+      "svar": 4508,
+      "period": "2025",
+      "tillganglighet": 80.6
+    },
+    "Västerbottens län": {
+      "n": 38,
+      "svar": 3125,
+      "period": "2025",
+      "tillganglighet": 76.2
+    },
+    "Jönköpings län": {
+      "n": 47,
+      "svar": 4203,
+      "period": "2025",
+      "tillganglighet": 82
+    },
+    "Norrbottens län": {
+      "n": 30,
+      "svar": 2669,
+      "period": "2025",
+      "tillganglighet": 74.4
+    },
+    "Jämtlands län": {
+      "n": 26,
+      "svar": 1993,
+      "period": "2025",
+      "tillganglighet": 86.2
+    },
+    "Blekinge län": {
+      "n": 20,
+      "svar": 1119,
+      "period": "2025",
+      "tillganglighet": 80.5
+    },
+    "Östergötlands län": {
+      "n": 48,
+      "svar": 4852,
+      "period": "2025",
+      "tillganglighet": 80.2
+    },
+    "Västernorrlands län": {
+      "n": 32,
+      "svar": 2936,
+      "period": "2025",
+      "tillganglighet": 75.9
+    },
+    "Dalarnas län": {
+      "n": 31,
+      "svar": 3117,
+      "period": "2025",
+      "tillganglighet": 82.4
+    },
+    "Gotlands län": {
+      "n": 6,
+      "svar": 683,
+      "period": "2025",
+      "tillganglighet": 81.3
+    },
+    "Kronobergs län": {
+      "n": 32,
+      "svar": 2362,
+      "period": "2025",
+      "tillganglighet": 81.4
+    }
+  }
+}

@@ -1,0 +1,141 @@
+---
+// Lång guide: allmän förskola (525 timmar från tre år) och 15 timmar i veckan vid föräldraledighet eller arbetslöshet.
+// Fakta: skollagen 8 kap. 3–7, 12 a, 14 a–c, 16 och 20 §§; Skolverket "Rätt till förskola" (uppdaterad 2026-11-16),
+// "Utökad tid … aktivitetskravet" och PM Barn och personal i förskola 2025. Egen beräkning: 525 timmar omräknat och
+// tidslinje per födelseår (räknare). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { relaterade, SKOLLAGEN, SKOLVERKET_PM_2025 } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const AR = [2022, 2023, 2024, 2025];
+const tidslinje = AR.map((y) => ({ y, start: y + 3, sista: y + 5, skola: y + 6 }));
+
+const avsnitt = [
+  { id: "vad-ar", rubrik: "Vad är allmän förskola?" },
+  { id: "525-timmar", rubrik: "Hur mycket är 525 timmar?" },
+  { id: "nar", rubrik: "När börjar allmän förskola för mitt barn?" },
+  { id: "15-timmar", rubrik: "15 timmar i veckan vid föräldraledighet" },
+  { id: "avgift", rubrik: "Är allmän förskola gratis?" },
+  { id: "uppsokande", rubrik: "Kommunen ska höra av sig" },
+  { id: "aktivitetskrav", rubrik: "Aktivitetskravet och mer tid i förskolan" },
+  { id: "deltagande", rubrik: "Hur många barn går i förskolan?" },
+];
+
+const fragor = [
+  { fraga: "När börjar allmän förskola?", svar: "Från och med höstterminen det år barnet fyller tre år. Ett barn som fyller tre i december har alltså rätt till allmän förskola redan från augusti samma år." },
+  { fraga: "Hur många timmar är allmän förskola?", svar: "Minst 525 timmar om året. Enligt förarbetena motsvarar det i princip tre timmar om dagen under skolans terminer. Kommunen bestämmer hur timmarna läggs ut." },
+  { fraga: "Är allmän förskola gratis?", svar: "Avgiften får bara avse den tid som går utöver 525 timmar om året. Går barnet bara de 525 timmarna ska det alltså inte kosta något. Går barnet mer räknar kommunen ned avgiften enligt sin taxa." },
+  { fraga: "Hur många timmar får mitt barn vara på förskolan när jag är föräldraledig?", svar: "Barn vars förälder är föräldraledig med ett syskon har från ett års ålder rätt till minst tre timmar om dagen eller 15 timmar i veckan. Det är en miniminivå, och kommunen får besluta om längre tid." },
+  { fraga: "Vilka tider gäller för 15 timmar?", svar: "Det är inte reglerat när på dagen de tre timmarna eller 15 timmarna ska ligga. Det bestämmer kommunen." },
+  { fraga: "Gäller 15 timmar även om jag är arbetslös?", svar: "Ja. Samma rätt till minst tre timmar om dagen eller 15 timmar i veckan gäller barn vars föräldrar är arbetslösa." },
+  { fraga: "Har barn i pedagogisk omsorg rätt till allmän förskola?", svar: "Ja. Även barn som går i pedagogisk omsorg ska erbjudas allmän förskola. Förskolan ses då som ett komplement till den andra verksamheten." },
+];
+
+const titel = "Allmän förskola och 15 timmar – 525 timmar från tre år";
+const beskrivning = "Allmän förskola ger alla barn 525 timmar om året från hösten de fyller tre. Så räknas timmarna, vad 15 timmar i veckan gäller och när avgiften faller bort.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Allmän förskola och 15 timmar"
+  svar={`Från höstterminen det år barnet fyller tre har alla barn rätt till förskola minst <strong>525 timmar om året</strong>, ofta kallat allmän förskola. Det motsvarar ungefär tre timmar om dagen under skolans terminer och är avgiftsfritt. Barn vars förälder är föräldraledig med ett syskon eller arbetslös har från ett års ålder rätt till minst <strong>15 timmar i veckan</strong>.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Allmän förskola", href: "/allman-forskola/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={relaterade("/forskoleplats/", "/maxtaxa/", "/pedagogisk-omsorg/", "/forskoleklass/", "/inskolning/")}
+  kallor={[
+    { namn: "Skolverket – Rätt till förskola", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/ratt-till-forskola", text: "allmän förskola, 525 timmar, 15 timmar och uppsökande verksamhet (sidan uppdaterad 16 november 2026)", datum: "2026-11-25" },
+    { ...SKOLLAGEN, text: "8 kap. 3–7, 12 a, 14 a–c, 16 och 20 §§" },
+    { namn: "Skolverket – Utökad tid i förskola och fritidshem kopplat till aktivitetskravet", url: "https://www.skolverket.se/styrning-och-ansvar/styrning-och-kvalitetsarbete/kommuners-arbete-for-fler-barn-i-forskolan/utokad-tid-i-forskola-och-fritidshem-kopplat-till-aktivitetskravet", text: "aktivitetskrav från 1 juli 2026 och extra medel till kommunerna", datum: "2026-11-25" },
+    SKOLVERKET_PM_2025,
+  ]}>
+
+  <h2 id="vad-ar">Vad är allmän förskola?</h2>
+  <p>Enligt skollagen (8 kap. 4 §) ska barn från och med höstterminen det år de fyller tre år erbjudas förskola under minst 525 timmar om året. Det gäller alla barn, oavsett om föräldrarna arbetar, studerar, är föräldralediga eller arbetslösa. Skolverket påpekar att allmän förskola inte är ett reglerat begrepp, men det är så rätten brukar kallas.</p>
+  <p>Allmän förskola är en miniminivå. Arbetar eller studerar föräldrarna har barnet rätt till förskola i den omfattning som behövs, redan från ett års ålder (8 kap. 5 §). För dem betyder allmän förskola främst att avgiften blir lägre från tre år.</p>
+  <p>Kommunen bestämmer hur allmän förskola organiseras, utifrån lokala förutsättningar, barnets behov och föräldrarnas önskemål. Förarbetena betonar enligt Skolverket att verksamheten ska präglas av kontinuitet.</p>
+
+  <h2 id="525-timmar">Hur mycket är 525 timmar?</h2>
+  <p>Förarbetena anger att 525 timmar om året i princip motsvarar tre timmar om dagen under skolans terminer. Så här blir det omräknat på olika sätt:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Räknat som</th><th class="num">Ungefär</th></tr></thead>
+    <tbody>
+      <tr><td>3 timmar om dagen</td><td class="num">175 dagar</td></tr>
+      <tr><td>Per vecka under 35 veckor</td><td class="num">15 timmar</td></tr>
+      <tr><td>Per vecka utslaget på årets 52 veckor</td><td class="num">10 timmar</td></tr>
+      <tr><td>Per månad utslaget på 12 månader</td><td class="num">44 timmar</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Egen omräkning av 525 timmar. Kommunen bestämmer hur timmarna förläggs, till exempel om förskolan ges vissa dagar eller vissa timmar varje dag och om den följer skolans lov.</p>
+  <p>Timmarna i allmän förskola och de 15 timmarna vid föräldraledighet är två olika regler. 15 timmar i veckan gäller hela året från ett års ålder om föräldern är föräldraledig eller arbetslös, medan de 525 timmarna gäller alla barn från tre år.</p>
+
+  <section class="sokverktyg" id="nar">
+    <h2>När börjar allmän förskola för mitt barn?</h2>
+    <p>Fyll i barnets födelseår så visar räknaren när rättigheterna börjar och när kommunen ska kontakta er om barnet inte har en plats.</p>
+    <form class="berakning" onsubmit="return false">
+      <label for="af-ar">Barnets födelseår</label><input id="af-ar" type="number" name="ar" min="2018" max="2030" value="2024" inputmode="numeric" />
+    </form>
+    <dl class="fakta af-ut" aria-live="polite"></dl>
+    <p class="kalla">Räknat enligt skollagen 8 kap. 4, 12 a och 14 c §§ och 7 kap. 10 §. Den exakta terminsstarten bestämmer kommunen.</p>
+  </section>
+  <div class="tabell"><table>
+    <thead><tr><th>Född</th><th>Allmän förskola från</th><th>Sista höst med särskilt erbjudande</th><th>Börjar skolan</th></tr></thead>
+    <tbody>{tidslinje.map((r) => <tr><td>{r.y}</td><td>Hösten {r.start}</td><td>Hösten {r.sista}</td><td>Hösten {r.skola}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Barn födda 2022 och senare börjar i årskurs 1 i den tioåriga grundskolan. Se <a href="/forskoleklass/">förskoleklass och skolstart</a>.</p>
+
+  <h2 id="15-timmar">15 timmar i veckan vid föräldraledighet</h2>
+  <p>När en förälder är föräldraledig med ett syskon, eller arbetslös, har barnet från ett års ålder rätt till förskola minst <strong>tre timmar om dagen eller 15 timmar i veckan</strong> (8 kap. 6 §). Det är vad många kallar 15-timmarsregeln.</p>
+  <ul>
+    <li><strong>Inga reglerade tider:</strong> enligt Skolverket är det inte reglerat mellan vilka klockslag timmarna ska ligga. Kommunen bestämmer, till exempel förmiddagar eller vissa dagar.</li>
+    <li><strong>Miniminivå:</strong> förarbetena framhåller att timmarna är minsta garanterade tid. Kommunen får besluta om längre tid.</li>
+    <li><strong>Föräldraledighet enligt lag:</strong> rätten gäller föräldraledighet enligt föräldraledighetslagen för vård av annat barn.</li>
+  </ul>
+  <p>När barnet fyller tre gäller dessutom de 525 avgiftsfria timmarna. Hur kommunen räknar avgiften när båda reglerna gäller står i kommunens taxa.</p>
+
+  <h2 id="avgift">Är allmän förskola gratis?</h2>
+  <p>Ja, i den meningen att avgiften från höstterminen det år barnet fyller tre bara får avse den del av verksamheten som överstiger 525 timmar om året (8 kap. 16 och 20 §§). Det gäller både kommunala och fristående förskolor. Ett barn som bara går de 525 timmarna ska alltså inte betala någon avgift.</p>
+  <p>Går barnet mer räknar kommunen ned avgiften, och hur mycket bestämmer kommunen i sin taxa. Avgiften får aldrig bli högre än <a href="/maxtaxa/">maxtaxan</a>. För barn som erbjuds förskola för att de behöver särskilt stöd får avgiften bara avse tiden över 15 timmar i veckan.</p>
+
+  <h2 id="uppsokande">Kommunen ska höra av sig</h2>
+  <p>Kommunen har en skyldighet att själv söka upp familjer vars barn inte går i förskolan (8 kap. 12 a §). Kommunen ska kontakta vårdnadshavarna och informera om förskolans syfte och barnets rätt till förskola:</p>
+  <ul>
+    <li>första gången inför hösten det år barnet fyller tre,</li>
+    <li>sedan inför varje höst och vår då barnet inte har en plats,</li>
+    <li>sista gången inför våren det år barnet fyller sex.</li>
+  </ul>
+  <p>Kontakten kan ske genom hembesök, möten, telefonsamtal eller informationsträffar. Det är frivilligt att tacka ja till ett möte. Även barn i pedagogisk omsorg omfattas.</p>
+  <p>För barn som är födda utomlands och har bott i Sverige högst fem år, eller vars vårdnadshavare är födda utomlands och bott här högst fem år, ska kommunen dessutom erbjuda en plats utan att någon ansökt (8 kap. 14 a–c §§). Läs mer på sidan om <a href="/forskoleplats/#sarskilt-erbjudande">förskoleplats</a>.</p>
+
+  <h2 id="aktivitetskrav">Aktivitetskravet och mer tid i förskolan</h2>
+  <p>Från 1 juli 2026 gäller ett aktivitetskrav i försörjningsstödet. Den som har försörjningsstöd kan behöva delta i aktiviteter för att närma sig arbetsmarknaden. Enligt Skolverket ska barn till föräldrar som omfattas kunna erbjudas mer tid i förskola, fritidshem eller pedagogisk omsorg än skollagen kräver.</p>
+  <p>Kommunerna får 130 miljoner kronor 2026 och 260 miljoner kronor om året från 2027 för detta, via det generella statsbidraget. Omfattas du av aktivitetskravet, fråga kommunen hur mycket tid barnet kan få i förskolan.</p>
+
+  <h2 id="deltagande">Hur många barn går i förskolan?</h2>
+  <p>Hösten 2025 var 86 procent av alla barn mellan ett och fem år inskrivna i förskolan. Bland fyra- och femåringar var det drygt 95 procent. Skolverket redovisar också skillnader efter bakgrund:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Barn 1–5 år</th><th class="num">Inskrivna i förskola</th></tr></thead>
+    <tbody>
+      <tr><td>Födda i Sverige, minst en förälder född i Sverige</td><td class="num">drygt 87 %</td></tr>
+      <tr><td>Födda i Sverige, båda föräldrarna födda utomlands</td><td class="num">knappt 83 %</td></tr>
+      <tr><td>Födda utomlands</td><td class="num">drygt 75 %</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Skolverket, PM Barn och personal i förskola 2025.</p>
+  <p>Störst skillnad fanns bland tvååringar, där inskrivningsgraden skilde drygt 27 procentenheter mellan barn födda utomlands och barn med svensk bakgrund. Skolverket skriver att alla kommuner ska arbeta för att fler barn ska gå i förskolan, och reglerna om uppsökande verksamhet och särskilt erbjudande är en del av det. Andelen per län finns på sidan om <a href="/forskoleplats/#inskrivna">förskoleplats</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("nar"); if (!s) return;
+      const f = s.querySelector("form"), ut = s.querySelector(".af-ut");
+      const rad = (a, b) => `<dt>${a}</dt><dd>${b}</dd>`;
+      const rakna = () => {
+        const y = Math.round(+f.ar.value);
+        if (!y || y < 2015 || y > 2035) { ut.innerHTML = rad("Fyll i", "Ange ett födelseår."); return; }
+        ut.innerHTML =
+          rad("Ett år", `Under ${y + 1}: rätt till förskola om ni arbetar eller studerar, minst 15 timmar i veckan om ni är föräldralediga eller arbetslösa`)
+          + rad("Allmän förskola", `Från höstterminen ${y + 3}: minst 525 timmar om året, avgiftsfritt`)
+          + rad("Kommunen hör av sig", `Inför hösten ${y + 3} om barnet saknar plats, sedan varje termin till och med våren ${y + 6}`)
+          + rad("Skolstart", `Hösten ${y + 6}${y + 6 >= 2028 ? " i årskurs 1 (tioårig grundskola)" : " i förskoleklass"}`);
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Guide>

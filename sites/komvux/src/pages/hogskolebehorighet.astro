@@ -1,0 +1,160 @@
+---
+// Högskolebehörighet via komvux: krav enligt UHR och antagning.se, rätten att läsa enligt skollagen 20 kap. 19–19 a §§,
+// urvalsgrupper (UHR), anmälningsdatum (antagning.se) och en egen kalkylator för tiden det tar. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import KalkStil from "../components/KalkStil.astro";
+import { SITE, IDAG, RIKET } from "../site.js";
+import { tal, pct, kr, CSN, CSN_AR, POANG_PER_VECKA, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const kv = RIKET.komvux;
+// Antagning.se, Viktiga datum (uppdaterad 2026-11-03).
+const DATUM = [
+  { termin: "Vårterminen 2027", oppnar: "2026-09-15", sista: "2026-10-15", komplettering: "2026-12-01" },
+  { termin: "Höstterminen 2027", oppnar: "2027-03-15", sista: "2027-04-15", komplettering: null },
+];
+const d = (s) => new Date(`${s}T12:00:00Z`);
+const fmt = (s) => d(s).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const nasta = DATUM.find((x) => d(x.sista) >= IDAG);
+const dagar = nasta ? Math.round((d(nasta.sista) - IDAG) / 864e5) : null;
+
+const avsnitt = [
+  { id: "grundlaggande", rubrik: "Grundläggande behörighet – vad krävs?" },
+  { id: "examen", rubrik: "Examen från komvux – därför räcker inte bara kurserna" },
+  { id: "sarskild", rubrik: "Särskild behörighet" },
+  { id: "ratt", rubrik: "Din rätt att läsa in behörigheten på komvux" },
+  { id: "tid", rubrik: "Hur lång tid tar det? Räkna ut" },
+  { id: "urval", rubrik: "Urvalsgrupper: BI, BII och högskoleprovet" },
+  { id: "datum", rubrik: "Sista anmälningsdag och komplettering" },
+  { id: "gy25", rubrik: "Kursbetyg och ämnesbetyg efter 2025" },
+];
+
+const fragor = [
+  { fraga: "Hur blir man behörig till högskolan via komvux?", svar: "Du behöver en examen från komvux: antingen en högskoleförberedande examen, eller en yrkesexamen med godkänt i svenska 2 och 3 (eller svenska som andraspråk 2 och 3) och engelska 6. Med ämnesbetyg gäller nivå 3 i svenska och nivå 2 i engelska." },
+  { fraga: "Räcker det att läsa svenska 3 och engelska 6 på komvux?", svar: "Bara om du redan har en gymnasieexamen eller får en examen från komvux. Ett samlat betygsdokument eller studiebevis ger enligt antagning.se inte grundläggande behörighet. Har du en yrkesexamen räcker det att komplettera de kurser som fattas." },
+  { fraga: "Har man rätt att läsa in högskolebehörighet på komvux?", svar: "Ja. Skollagen ger dig rätt att läsa på gymnasial nivå på komvux för att få grundläggande behörighet till högskolan eller yrkeshögskolan, och för att få särskild behörighet till en högskoleutbildning. Kommunen måste då ta emot dig." },
+  { fraga: "Vad är särskild behörighet?", svar: "Särskild behörighet är förkunskaper i vissa ämnen och nivåer som en utbildning kräver utöver den grundläggande behörigheten, till exempel en högre nivå i matematik. Kraven står i utbildningens beskrivning på antagning.se." },
+  { fraga: "Hamnar man i BII om man kompletterar på komvux?", svar: "Ja, i regel. Behörighetskompletteringar prövas i BII. Har du en svensk yrkesexamen eller utländska betyg och kompletterar för grundläggande behörighet räknas kompletteringarna dock i BI." },
+  { fraga: "När är sista anmälningsdag till högskolan?", svar: "Till höstterminen är sista anmälningsdag den 15 april och till vårterminen den 15 oktober. Till höstterminen 2027 öppnar anmälan den 15 mars 2027 och stänger den 15 april 2027." },
+  { fraga: "Kan man bli behörig till högskolan utan gymnasiebetyg?", svar: "Ja, genom reell kompetens. Du kan visa att du har motsvarande kunskaper på annat sätt, till exempel genom arbete. Det prövas av lärosätet eller antagningen när du söker. Ett annat sätt är allmän kurs på folkhögskola." },
+  { fraga: "Hur lång tid tar det att läsa in högskolebehörighet?", svar: "Det beror på vad du saknar. Med en yrkesexamen saknar du ofta bara svenska 2, svenska 3 och engelska 6, alltså tre kurser på 100 poäng. Det tar 15 veckor på heltid eller 30 veckor på halvtid." },
+];
+---
+<Guide site={SITE} titel="Högskolebehörighet via komvux – krav och tid 2027"
+  beskrivning="Bli behörig till högskolan via komvux: examen, svenska 3 och engelska 6, särskild behörighet, din rätt att läsa, urvalsgrupp BII och sista anmälningsdag 2027."
+  h1="Högskolebehörighet via komvux"
+  svar="För grundläggande behörighet till högskolan behöver du en <strong>examen från komvux</strong>: en högskoleförberedande examen, eller en yrkesexamen med godkänt i <strong>svenska 2 och 3</strong> (eller svenska som andraspråk) och <strong>engelska 6</strong>. Du har rätt att läsa in behörigheten på komvux, och det är avgiftsfritt. Sista anmälningsdag till hösten 2027 är 15 april."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Högskolebehörighet", href: "/hogskolebehorighet/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Räkna ut meritvärde", href: "/meritvarde/", text: "Jämförelsetal och meritpoäng" },
+    { namn: "Komvux eller folkhögskola", href: "/komvux-eller-folkhogskola/", text: "Två vägar till behörighet" },
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Så söker du hos kommunen" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Läs in behörigheten vid sidan av jobbet" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Studiemedel och högre bidrag" },
+  ]}
+  kallor={[
+    { namn: "Antagning.se – Grundläggande behörighet med examen från komvux", url: "https://www.antagning.se/sv/betyg-och-behorighet/gymnasial-vuxenutbildning/gymnasieexamen-fran-komvux/grundlaggande-behorighet/", text: "krav med kursbetyg", datum: "2026-11-25" },
+    { namn: "Antagning.se – Behörighet med Gy25", url: "https://www.antagning.se/sv/betyg-och-behorighet/amnesbetyg-pa-gymnasieniva-gy25/behorighet-med-gy25/", text: "krav med ämnesbetyg", datum: "2026-11-25" },
+    { namn: "UHR – Behörighet till grundnivå", url: "https://www.uhr.se/link/74fe6f0fea57422aaed0b4de3c606e59.aspx", text: "grundläggande och särskild behörighet, reell kompetens", datum: "2026-11-25" },
+    { namn: "UHR – Betygskomplettering", url: "https://www.uhr.se/link/776d8079693b47729554a58d61dd878d.aspx", text: "urvalsgrupperna BI och BII", datum: "2026-11-25" },
+    { namn: "UHR – Urval till grundnivå", url: "https://www.uhr.se/link/b72d04cad95148c6959648dacc1142b1.aspx", text: "fördelning av platser", datum: "2026-11-25" },
+    { namn: "Antagning.se – Viktiga datum", url: "https://www.antagning.se/sv/anmal-dig-sa-har/viktiga-datum/", text: "anmälningsdatum 2026–2027", datum: "2026-11-25" },
+    K.antagningKomvux,
+    { ...K.skollagen, text: "rätt till komvux för behörighet (20 kap. 19–19 c §§)" },
+    { ...K.forordningen, text: "examen från komvux och 20 verksamhetspoäng per heltidsvecka" },
+  ]}>
+
+  <h2 id="grundlaggande">Grundläggande behörighet – vad krävs?</h2>
+  <p>Alla utbildningar på högskolan kräver <strong>grundläggande behörighet</strong>. Via komvux kan du få den på två sätt:</p>
+  <ol>
+    <li><strong>Högskoleförberedande examen</strong> från gymnasieskolan eller komvux. Den ger grundläggande behörighet direkt.</li>
+    <li><strong>Yrkesexamen</strong> från gymnasieskolan eller komvux, kompletterad med godkänt betyg (lägst E) i
+      <ul>
+        <li>svenska 2 och 3, eller svenska som andraspråk 2 och 3, och</li>
+        <li>engelska 6.</li>
+      </ul>
+    </li>
+  </ol>
+  <p>Med ämnesbetyg enligt Gy25 heter motsvarande krav nivå 3 i svenska eller svenska som andraspråk och nivå 2 i engelska. Har du en yrkesexamen från ett yrkesprogram är det alltså ofta bara svenska och engelska som fattas.</p>
+  <p>Har du ett äldre slutbetyg från komvux, utfärdat före 1 juli 2025, eller betyg från utlandet gäller andra regler. Kontrollera din situation på antagning.se.</p>
+
+  <h2 id="examen">Examen från komvux – därför räcker inte bara kurserna</h2>
+  <p>Ett vanligt misstag är att läsa svenska 3 och engelska 6 på komvux utan att ha en examen. Enligt antagning.se ger ett <strong>samlat betygsdokument eller ett studiebevis inte grundläggande behörighet</strong>. Det krävs en gymnasieexamen, från gymnasieskolan eller komvux.</p>
+  <p>Saknar du helt examen behöver du alltså läsa till en examen från komvux. Enligt förordningen om vuxenutbildning omfattar en examen 2 400 gymnasiepoäng, varav minst 2 250 ska vara godkända, och den ska innehålla bland annat svenska, engelska, matematik och ett komvuxarbete eller gymnasiearbete. Allt du har läst tidigare, i gymnasiet eller på komvux, räknas in. Be en studievägledare i din kommun räkna på exakt vad du saknar.</p>
+
+  <h2 id="sarskild">Särskild behörighet</h2>
+  <p>Många utbildningar kräver dessutom <strong>särskild behörighet</strong>: kunskaper i vissa ämnen på en viss nivå. Det kan till exempel vara en högre nivå i matematik. Kraven står i beskrivningen av varje utbildning på antagning.se.</p>
+  <p>Du kan läsa de ämnen som krävs på komvux, och du har rätt till det. Lärosätena kan i vissa fall göra undantag eller ställa högre krav. Du kan också bli behörig genom <strong>reell kompetens</strong>, alltså kunskaper du har skaffat på annat sätt, till exempel i arbetet.</p>
+
+  <h2 id="ratt">Din rätt att läsa in behörigheten på komvux</h2>
+  <p>Skollagen ger dig <strong>rätt</strong> att läsa på gymnasial nivå på komvux om du saknar grundläggande behörighet till högskolan eller yrkeshögskolan. Du har också rätt att läsa det som krävs för särskild behörighet till en högskoleutbildning. Det betyder att kommunen måste ta emot dig, och att du inte hamnar i kommunens urval när platserna inte räcker. Kan behörigheten nås på flera sätt bestämmer hemkommunen vilken utbildning den erbjuder.</p>
+  <p>Rätten gäller från andra halvåret det år du fyller 20, eller tidigare om du har slutfört ett nationellt program i gymnasieskolan. Utbildningen är avgiftsfri. Läs mer om hur du <a href="/ansoka/">ansöker till komvux</a>.</p>
+
+  <h3>Behörighet till yrkeshögskolan</h3>
+  <p>Samma rätt gäller för yrkeshögskolan. Saknar du grundläggande behörighet till en yrkeshögskoleutbildning har du rätt att läsa in den på komvux, och du har också rätt att läsa de särskilda kunskaper som en yrkeshögskoleutbildning kräver. Kraven för varje utbildning står hos utbildningsanordnaren.</p>
+
+  <h2 id="tid">Hur lång tid tar det? Räkna ut</h2>
+  <p>På komvux motsvarar {POANG_PER_VECKA} poäng en veckas heltidsstudier. Fyll i hur många gymnasiepoäng du saknar. En kurs eller nivå är ofta 100 poäng, men kontrollera med din studievägledare.</p>
+  <section class="sokverktyg kalk" id="beh-kalk" data-c={JSON.stringify({ ppv: POANG_PER_VECKA, bidrag: CSN.vanligt.bidrag, lan: CSN.vanligt.lan })}>
+    <form class="sv-form" onsubmit="return false">
+      <label>Poäng du saknar <input type="number" name="p" min="50" max="2400" step="50" value="300" /></label>
+      <label>Studietakt
+        <select name="takt"><option value="1">Heltid – 20 poäng/vecka</option><option value="0.75">75 % – 15 poäng/vecka</option><option value="0.5">Halvtid – 10 poäng/vecka</option></select>
+      </label>
+    </form>
+    <div class="mt-resultat" aria-live="polite"></div>
+    <p class="kalla">Studiemedel enligt CSN:s belopp {CSN_AR} med vanligt bidrag och fullt lån.</p>
+  </section>
+  <p>Ett exempel: har du en yrkesexamen och saknar svenska 2, svenska 3 och engelska 6 är det tre kurser på 100 poäng, alltså 300 poäng. Det tar 15 veckor på heltid eller 30 veckor på halvtid. Det går att läsa på distans vid sidan av jobbet. I hela landet läste {pct(kv?.andel_distans_gymnasial)} av eleverna på gymnasial nivå på distans {kv?.ar}, se <a href="/distans/">komvux på distans</a>.</p>
+
+  <h3>Tre vanliga situationer</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Du har</th><th>Du behöver läsa</th><th>Urvalsgrupp med kompletteringen</th></tr></thead>
+    <tbody>
+      <tr><td>Högskoleförberedande examen, men saknar särskild behörighet</td><td>Bara de ämnen och nivåer som utbildningen kräver</td><td>BII</td></tr>
+      <tr><td>Yrkesexamen från gymnasiet</td><td>Svenska 2 och 3 (eller SvA) och engelska 6, om de saknas</td><td>BI, enligt undantaget för yrkesexamen</td></tr>
+      <tr><td>Ingen examen alls</td><td>En hel examen från komvux, där tidigare betyg räknas in</td><td>Beror på hur examen utfärdas – fråga antagningen</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="urval">Urvalsgrupper: BI, BII och högskoleprovet</h2>
+  <p>Att vara behörig betyder inte att du kommer in. När det finns fler sökande än platser fördelas minst en tredjedel av platserna efter betyg, minst en tredjedel efter <strong>högskoleprovet</strong> och högst en tredjedel genom alternativt urval. I betygsurvalet finns tre grupper:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Grupp</th><th>Vem</th></tr></thead>
+    <tbody>
+      <tr><td>BI, direktgruppen</td><td>Avslutade gymnasiestudier utan kompletteringar</td></tr>
+      <tr><td>BII, kompletteringsgruppen</td><td>Betyg med kompletteringar, till exempel från komvux</td></tr>
+      <tr><td>BF, folkhögskolegruppen</td><td>Studieomdöme från folkhögskola</td></tr>
+    </tbody>
+  </table></div>
+  <p>Kompletterar du för att bli behörig prövas du i BII. Undantaget är den som har en svensk yrkesexamen eller utländska betyg och kompletterar för grundläggande behörighet på komvux: då räknas kompletteringarna i BI. Kompletterar du bara för att höja ditt meritvärde prövas du i både BI och BII. Räkna ut ditt värde med <a href="/meritvarde/">meritvärdeskalkylatorn</a>.</p>
+
+  <h3>Högskoleprovet som komplement</h3>
+  <p>Du kan skriva högskoleprovet oavsett om du läser på komvux eller inte. Resultatet används för den tredjedel av platserna som fördelas efter provet, så det kan vara ett komplement om dina betyg inte räcker. Du måste ändå vara behörig till utbildningen.</p>
+
+  <h2 id="datum">Sista anmälningsdag och komplettering</h2>
+  {nasta && <p>Nästa sista anmälningsdag är <strong>{fmt(nasta.sista)}</strong> för {nasta.termin.toLowerCase()}, om {dagar} dagar.</p>}
+  <div class="tabell"><table>
+    <thead><tr><th>Termin</th><th>Anmälan öppnar</th><th>Sista anmälningsdag</th><th>Sista kompletteringsdag</th></tr></thead>
+    <tbody>{DATUM.map((x) => <tr><td>{x.termin}</td><td>{fmt(x.oppnar)}</td><td>{fmt(x.sista)}</td><td>{x.komplettering ? fmt(x.komplettering) : "anges på antagning.se"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Läser du in behörigheten under terminen kan du ofta ändå söka. Du måste då vara behörig och ha skickat in dina betyg senast den sista kompletteringsdagen. Planera därför så att kursen är klar och betyget satt i tid.</p>
+
+  <h2 id="gy25">Kursbetyg och ämnesbetyg efter 2025</h2>
+  <p>Sedan 1 juli 2025 får du som läser på komvux <strong>ämnesbetyg</strong> enligt Gy25 i stället för kursbetyg. Har du kursbetyg sedan tidigare gäller de fortfarande, och kraven för behörighet finns för båda systemen. Prövning i det gamla kurssystemet kan göras till och med 30 juni 2030.</p>
+  <p>För dig som söker innebär det att ämnena heter nivåer: svenska nivå 3 motsvarar kravet svenska 3, och engelska nivå 2 motsvarar engelska 6. Fråga din kommun vilket system du läser i om du kompletterar en äldre examen.</p>
+
+  <KalkStil />
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("beh-kalk"); if (!s) return;
+      const C = JSON.parse(s.dataset.c), f = s.querySelector("form"), ut = s.querySelector(".mt-resultat");
+      const kr = (n) => `${Math.round(n).toLocaleString("sv-SE")} kr`;
+      const rakna = () => {
+        const p = Math.max(0, +f.p.value || 0), t = +f.takt.value, v = Math.ceil(p / (C.ppv * t));
+        ut.innerHTML = `<p><strong>${v} veckor</strong> (cirka ${(v / 20).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} terminer). Studiemedel för hela tiden: ${kr((C.bidrag + C.lan) * t * v)}, varav ${kr(C.bidrag * t * v)} bidrag.</p>`;
+      };
+      f.addEventListener("input", rakna); f.addEventListener("change", rakna); rakna();
+    })();
+  </script>
+</Guide>

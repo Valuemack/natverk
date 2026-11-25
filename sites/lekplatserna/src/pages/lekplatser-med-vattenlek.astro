@@ -1,0 +1,128 @@
+---
+// Långt format av urvalssidan /lekplatser-med-vattenlek/ (samma URL; tas bort ur [urval].astro).
+// Lekplatslistan räknas ur sajtens data; plaskdammar och regler från Stockholms stad, Göteborgs stad och Malmö stad,
+// säkerhet från 1177. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, UTRUSTNING, utrustning } from "../site.js";
+import { har, E, MED_REDSKAP, tal, kommun, lanEnheter } from "../lib/guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const STHLM_PLASKDAMMAR = 58; // Stockholms stads söktjänst, typ Plaskdamm, läst 2026-11-25.
+const v = E.filter(har("vattenlek")).sort((a, b) => a.lan.localeCompare(b.lan, "sv") || a.kommun.localeCompare(b.kommun, "sv") || a.namn.localeCompare(b.namn, "sv"));
+const perLan = KAT.lan.map((l) => ({ l, n: lanEnheter(l).filter(har("vattenlek")).length })).filter((x) => x.n > 0).sort((a, b) => b.n - a.n);
+const kommuner = new Set(v.map((e) => e.kommun)).size;
+const iSthlm = v.filter((e) => e.kommun === "Stockholm").length;
+const ovriga = (e) => utrustning(e).filter((u) => u !== "vattenlek");
+const bast = v.filter((e) => e.egenSida).sort((a, b) => utrustning(b).length - utrustning(a).length).slice(0, 5);
+
+const avsnitt = [
+  { id: "skillnad", rubrik: "Plaskdamm, vattenlek och vattenlekplats" },
+  { id: "lista", rubrik: "Alla lekplatser med vattenlek" },
+  { id: "lan", rubrik: "Vattenlek per län" },
+  { id: "storstad", rubrik: "Plaskdammar i Stockholm, Göteborg och Malmö" },
+  { id: "sasong", rubrik: "När öppnar plaskdammarna?" },
+  { id: "regler", rubrik: "Regler och hygien i plaskdammen" },
+  { id: "sakerhet", rubrik: "Säkerhet: små barn och vatten" },
+  { id: "bygga", rubrik: "Så ska en plaskdamm vara byggd" },
+  { id: "packa", rubrik: "Packlista för plaskdammen" },
+];
+
+const fragor = [
+  { fraga: "När öppnar plaskdammarna?", svar: "Plaskdammar och vattenlekar är bara igång på sommaren, och kommunen bestämmer datum för varje anläggning. I Stockholm fylls till exempel Olovslundsparkens plaskdamm i början av juni. Malmös Hyllie vattenpark har vatten mellan maj och oktober." },
+  { fraga: "Hur många plaskdammar finns det i Stockholm?", svar: `Stockholms stads söktjänst för lekplatser, parklekar och plaskdammar visade ${STHLM_PLASKDAMMAR} plaskdammar när vi kontrollerade den i november 2026. Dammarna ägs och sköts av stadsdelsförvaltningarna.` },
+  { fraga: "Är vattnet i en plaskdamm klorerat?", svar: "Plaskdammar med vattencirkulation räknas som bassängbad. Stockholms stad kräver att nya dammar har automatisk klorering och pH-reglering, filter och en dusch intill. Enklare vattenlekar med pump eller kran har ofta vanligt kranvatten som rinner bort." },
+  { fraga: "Måste små barn ha badblöja i plaskdammen?", svar: "Ja, det är en vanlig regel. Stockholms stad ber besökare se till att barn badar i badkläder och att små barn bär badblöja, att duscha före bad och att bara använda rena badleksaker." },
+  { fraga: "Får hundar bada i plaskdammen?", svar: "Nej. Stockholms stads trivselregler för plaskdammarna säger att det inte är tillåtet för hundar att bada i dem. Andra kommuner har liknande regler av hygienskäl." },
+  { fraga: "Kan barn drunkna i en plaskdamm?", svar: "Risken finns även i grunt vatten. 1177 skriver att även små dammar och stora vattenpölar kan vara farliga och att barn aldrig ska lämnas ensamma i eller nära vatten. Barn under två till tre år ska vara på gripavstånd. Vid olycka: ring 112." },
+  { fraga: "Vad är skillnaden mellan plaskdamm och vattenlek?", svar: "En plaskdamm är en grund bassäng som barnen kan sitta och plaska i. En vattenlek är redskap som pumpar, rännor, dammluckor eller fontäner där barnen leker med rinnande vatten. En vattenlekplats kan ha båda." },
+];
+---
+<Guide site={SITE} titel={`Plaskdammar och vattenlek – ${v.length} lekplatser med vatten`}
+  beskrivning={`Plaskdammar och vattenlek: alla ${v.length} lekplatser med vattenlek i vår data, ${STHLM_PLASKDAMMAR} plaskdammar i Stockholm, säsong, hygienregler och säkerhet för små barn.`}
+  h1="Plaskdammar och lekplatser med vattenlek"
+  svar={`Plaskdammar och vattenlekar är <strong>bara igång på sommaren</strong>, och varje kommun bestämmer datumen själv. Vi känner till <strong>${v.length} lekplatser med vattenlek</strong> i ${kommuner} kommuner. Bara i Stockholms stad finns ${STHLM_PLASKDAMMAR} plaskdammar. Små barn ska ha badblöja, och barn ska alltid ha en vuxen nära sig vid vatten.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Lekplatser med vattenlek", href: "/lekplatser-med-vattenlek/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Temalekplatser", href: "/temalekplatser/", text: "Flera har vattenlek" },
+    { namn: "Lekplatser med linbana", href: "/lekplatser-med-linbana/", text: "Utflyktsmål med fart" },
+    { namn: "Lekplatser med studsmatta", href: "/lekplatser-med-studsmatta/", text: "Nedgrävda studsmattor och hoppkuddar" },
+    { namn: "Vad göra med barn", href: "/vad-gora-med-barn/", text: "Fler utflykter och regnväderstips" },
+    { namn: "Barnkalas på lekplats", href: "/barnkalas/", text: "Sommarkalas vid vattnet" },
+  ]}
+  kallor={[
+    { namn: "Stockholms stad – Drift och skötsel av plaskdammar", url: "https://tillstand.stockholm/tillstand-regler-och-tillsyn/fritid-och-underhallning/plaskdammar/", text: "bassängbad, anmälningsplikt, klorering, dusch och skyltning", datum: "2026-11-25" },
+    { namn: "Stockholms stad – Hitta lekplatser, parklekar och plaskdammar", url: "https://parker.stockholm/hitta-lekplatser-parklekar-plaskdammar/?servicetyp=107", text: `${STHLM_PLASKDAMMAR} plaskdammar i söktjänsten`, datum: "2026-11-25" },
+    { namn: "Stockholms stad – Olovslundsparkens plaskdamm", url: "https://parker.stockholm/hitta-lekplatser-parklekar-plaskdammar/plaskdamm/olovslundsparkens-plaskdamm/", text: "trivselregler, rengöring och när dammen fylls", datum: "2026-11-25" },
+    { namn: "Göteborgs Stad – Älvsborgsdammen (Plaskis)", url: "https://goteborg.se/wps/portal/start/goteborg-vaxer/poddar-och-video/filmer%20om%20stadsutveckling/alvsborgsdammen---upprustning", text: "historik och upprustning 2025/26", datum: "2026-11-25" },
+    { namn: "Malmö stad – Temalekplatser", url: "https://malmo.se/Uppleva-och-gora/For-familjer-barn-och-unga/Temalekplatser.html", text: "Hyllie vattenpark och Vattenlekplatsen", datum: "2026-11-25" },
+    { namn: "1177 – Vattensäkerhet för barn och vuxna", url: "https://www.1177.se/barn--gravid/att-ta-hand-om-barn/barnsakerhet/vattensakerhet-for-barn-och-vuxna/", text: "tillsyn, gripavstånd och risker i grunt vatten", datum: "2026-11-25" },
+    { namn: "Lekplatsdata: kommunernas öppna data och OpenStreetMap", url: "https://www.openstreetmap.org/copyright", text: "lekplatser med vattenlek (© OpenStreetMap-bidragsgivare, ODbL)", datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="skillnad">Plaskdamm, vattenlek och vattenlekplats</h2>
+  <p>Orden används lite om vartannat, men de betyder olika saker:</p>
+  <ul>
+    <li><strong>Plaskdamm</strong> – en grund, gjuten bassäng där barnen kan sitta, krypa och plaska. Plaskdammar med vattencirkulation räknas som bassängbad och har renat vatten.</li>
+    <li><strong>Vattenlek</strong> – redskap där barnen leker med rinnande vatten, till exempel en handpump, rännor, dammluckor, vattenhjul eller sprutande fontäner.</li>
+    <li><strong>Vattenlekplats</strong> – en lekplats byggd kring vatten, som ofta har både plaskdamm och vattenlek.</li>
+  </ul>
+  <p>Plaskdammen passar de minsta, eftersom vattnet är grunt och barnen kan sitta ner i det. Vattenlekar med pump och rännor lockar barn upp i skolåldern, som vill bygga dammar och styra vattnet.</p>
+  <h3>Vattenlek för olika åldrar</h3>
+  <p>För ett- och tvååringar räcker det ofta med att sitta i grunt vatten med en hink och en spade. Tre- till femåringar vill gärna fylla, hälla och se vad som flyter. Skolbarn tycker om att pumpa, leda om vattnet i rännor och bygga dammar av sand. En vattenlekplats med både plaskdamm och pump passar därför syskon i olika åldrar.</p>
+
+  <h2 id="lista">Alla lekplatser med vattenlek</h2>
+  <p>Här är alla {v.length} lekplatser där vattenlek är registrerad i kommunernas öppna data eller i OpenStreetMap. Listan är långt ifrån komplett. Bara Stockholms stad har {STHLM_PLASKDAMMAR} plaskdammar, men i vår data finns vattenlek på {iSthlm} lekplatser i Stockholm. Redskapen är nämligen bara kända för {tal(MED_REDSKAP.length)} av {tal(E.length)} lekplatser.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Lekplats</th><th>Kommun</th><th class="num">Fler redskap</th></tr></thead>
+    <tbody>{v.map((e) => <tr><td><a href={e.href}>{e.namn}</a></td><td><a href={`/${e.kommunSlug}/`}>{e.kommun}</a></td><td class="num">{ovriga(e).length}</td></tr>)}</tbody>
+  </table></div>
+  <h3>Lekplatser med vattenlek och flest andra redskap</h3>
+  <p>Vill du att barnen ska ha mer att göra än att plaska? De här lekplatserna har vattenlek och flest andra redskap: {bast.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a> i {e.kommun} ({ovriga(e).length} redskap till)</>)}. På deras sidor ser du vilka redskapen är.</p>
+  <p>Saknas en plaskdamm du känner till? Den syns här när den finns i kommunens öppna data eller när någon har lagt in vattenleken i OpenStreetMap.</p>
+
+  <h2 id="lan">Vattenlek per län</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Lekplatser med vattenlek</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{x.n}</td></tr>)}</tbody>
+  </table></div>
+  <p>Fördelningen speglar mest vilka kommuner som redovisar sina redskap. Västerås, Uppsala och Malmö publicerar detaljerade uppgifter om sina lekplatser, och därför syns deras vattenlekar.</p>
+
+  <h2 id="storstad">Plaskdammar i Stockholm, Göteborg och Malmö</h2>
+  <h3>Stockholm</h3>
+  <p>Stockholms stads söktjänst visar {STHLM_PLASKDAMMAR} plaskdammar, spridda över alla stadsdelar. De ägs och sköts av stadsdelsförvaltningarna. Flera ligger intill en lekplats eller parklek, och vid en del finns en portabel toalett. Har du frågor om en viss damm kontaktar du den stadsdelsförvaltning som ansvarar för den. I stadens söktjänst kan du välja typen Plaskdamm och filtrera på stadsdelsområde för att hitta den närmaste.</p>
+  <h3>Göteborg</h3>
+  <p>Göteborgs mest kända plaskdamm är Älvsborgsdammen, som kallas Plaskis, vid Mariaplan i Majorna. Den byggdes på 1930-talet, är omkring tusen kvadratmeter stor och rustades upp under vinterhalvåret 2025/26. Vår och höst används dammen av skateboardåkare.</p>
+  <h3>Malmö</h3>
+  <p>Två av Malmös 24 temalekplatser är byggda kring vatten. I Hyllie vattenpark nedanför vattentornet vid Hyllie station kan barnen experimentera med vatten, och där är vattnet på mellan maj och oktober. På Vattenlekplatsen finns vatten bara sommartid.</p>
+
+  <h2 id="sasong">När öppnar plaskdammarna?</h2>
+  <p>Det finns inget gemensamt datum. Varje kommun, och i Stockholm varje stadsdel, bestämmer när dammarna fylls och töms. Tidpunkten styrs av vädret, av när dammarna har rengjorts och kontrollerats inför säsongen och ibland av helt andra saker. Olovslundsparkens plaskdamm i Bromma fylls till exempel först i början av juni, när salamandrarna i naturdammen intill har vandrat färdigt.</p>
+  <p>Räkna med att de flesta plaskdammar är igång under sommarlovet och stängda resten av året. Dammarna stängs också tillfälligt för rengöring. Olovslundsparkens damm rengörs varje tisdag, och då byts vattnet. Kontrollera alltid kommunens sida innan ni åker.</p>
+
+  <h2 id="regler">Regler och hygien i plaskdammen</h2>
+  <p>Plaskdammar med vattencirkulation räknas som bassängbad. I Stockholm ska de därför anmälas till miljöförvaltningen och kontrolleras med egenkontroll och vattenprover. Staden kräver att nya dammar har filter, automatisk klorering och pH-reglering, en dusch och en skylt med regler och kontaktuppgifter.</p>
+  <p>Som besökare hjälper du till att hålla vattnet rent. Stockholms stads trivselregler är typiska:</p>
+  <ul>
+    <li>Barnen badar i badkläder, och små barn har badblöja.</li>
+    <li>Duscha före bad.</li>
+    <li>Använd rena badleksaker och släng inte skräp i vattnet.</li>
+    <li>Hundar får inte bada i plaskdammen.</li>
+  </ul>
+  <p>Ät och grilla en bit bort från dammen, så att mat och aska inte hamnar i vattnet.</p>
+
+  <h2 id="sakerhet">Säkerhet: små barn och vatten</h2>
+  <p>En plaskdamm är grund, men det betyder inte att den är riskfri. 1177 skriver att även små dammar och stora vattenpölar kan vara farliga, och att man aldrig ska lämna barn ensamma i eller nära vatten. Barn som är yngre än två till tre år ska vara på gripavstånd, och barn i fem- till sexårsåldern behöver ha en vuxen med sig. Bestäm vem av de vuxna som har uppsikt, särskilt när det är trångt. Kanterna och ytan runt duschen kan bli hala, så låt barnen gå i stället för att springa runt dammen. Vid en olycka: ring 112.</p>
+
+  <h2 id="bygga">Så ska en plaskdamm vara byggd</h2>
+  <p>Stockholms stad har skrivit ner vad som gäller när staden bygger nya plaskdammar eller renoverar gamla. Kraven visar vad som skiljer en bra plaskdamm från en dålig, och vad du som förälder kan hålla utkik efter:</p>
+  <ul>
+    <li><strong>Placering.</strong> Dammen ska inte ligga i en lågpunkt där regnvatten samlas, och den ska ha viss skugga utan att grenar hänger över vattnet. Skateboardramper bör ligga minst 50 meter bort, och grillplatser ska inte ligga intill om de saknar egen vattenkran.</li>
+    <li><strong>Hygien.</strong> En dusch med god avrinning och en hårdgjord yta runt dammen, en tydlig skylt med regler och kontaktuppgifter och gärna en toalett i närheten.</li>
+    <li><strong>Teknik.</strong> Filter, automatisk klorering och pH-reglering, och en vattencirkulation där hela vattenmängden passerar reningen minst en gång i timmen.</li>
+  </ul>
+  <p>Ser du något som inte fungerar, som grumligt vatten, en trasig dusch eller glas i dammen, anmäl det till den förvaltning som står på skylten.</p>
+
+  <h2 id="packa">Packlista för plaskdammen</h2>
+  <p>Badkläder och badblöja, handduk, ombyte, solskydd och solhatt, vattenflaska, filt, en påse för blöta kläder och några rena badleksaker. Ta med en tröja även en varm dag, eftersom barn som leker länge i vatten lätt blir kalla.</p>
+</Guide>

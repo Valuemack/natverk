@@ -1,0 +1,129 @@
+---
+// Lång guide: akuten, närakut eller jourcentral – vart ska man vända sig? Egen data: 1177 Hitta vård
+// (vårdtyperna Jourmottagning och Närakut) per län och kommun, plus katalogens vårdcentraler.
+// Fakta granskade mot 1177.se 2026-11-25 (källor längst ned). Ingen medicinsk rådgivning.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT } from "../site.js";
+import { G, PUBLICERAD, DATA_DATUM, lanRader, tal, invPer } from "../lib/guide.js";
+
+const J = G.narakutEllerJour;
+const rader = lanRader((lan) => {
+  const lista = J.lista.filter((e) => e.lan === lan);
+  const kommuner = [...new Set(lista.map((e) => e.kommun).filter(Boolean))].sort((a, b) => a.localeCompare(b, "sv"));
+  return { n: lista.length, kommuner };
+}).sort((a, b) => b.n - a.n || a.namn.localeCompare(b.namn, "sv"));
+const kommunHref = Object.fromEntries(KAT.kommuner.map((k) => [k.namn, k.href]));
+const flest = rader[0];
+const stockholm = rader.find((r) => r.namn === "Stockholms län");
+const totalFolk = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const namnad = J.lista.filter((e) => /närakut/i.test(e.namn)).length;
+
+const avsnitt = [
+  { id: "vart", rubrik: "Vart ska du vända dig? En snabb guide" },
+  { id: "112", rubrik: "När ska du ringa 112?" },
+  { id: "akuten", rubrik: "Akutmottagningen på sjukhuset" },
+  { id: "narakut", rubrik: "Närakut, jourcentral och jouröppen vårdcentral" },
+  { id: "lan", rubrik: "Jour och närakut per län" },
+  { id: "1177", rubrik: "Ring 1177 när du är osäker" },
+  { id: "psykisk", rubrik: "Akut psykisk ohälsa" },
+  { id: "kostnad", rubrik: "Vad kostar ett besök?" },
+];
+
+const fragor = [
+  { fraga: "Ska jag åka till akuten eller vårdcentralen?", svar: "Vid sjukdom eller besvär är vårdcentralen nästan alltid rätt första kontakt. Akutmottagningen på sjukhuset är till för allvarliga olycksfall och plötslig svår sjukdom. Ring 112 om det är livshotande och 1177 om du är osäker." },
+  { fraga: "Vad är skillnaden mellan närakut och akutmottagning?", svar: "En närakut eller jourcentral tar emot besvär som inte kan vänta till vårdcentralens vanliga öppettider, ofta kvällar och helger. Akutmottagningen finns på sjukhus, har öppet dygnet runt och är till för allvarliga tillstånd." },
+  { fraga: "Vad är en jourcentral?", svar: "Jourcentral är ett vanligt namn på en jouröppen mottagning, alltså en vårdcentral eller mottagning med öppet kvällar och helger för akuta besvär som inte kan vänta. På 1177 heter vårdtypen jourmottagning. Ofta behöver du ringa innan du åker." },
+  { fraga: "Hur många närakuter och jourcentraler finns det?", svar: `1177 Hitta vård listar ${tal(J.antal)} jour- och närakutmottagningar i Sverige (${DATA_DATUM}). Flest finns i ${flest.namn} (${flest.n} st), men det beror delvis på att regionerna registrerar sina mottagningar på olika sätt.` },
+  { fraga: "När ska man ringa 112?", svar: "Ring 112 om någon plötsligt blir allvarligt sjuk eller har varit med om en allvarlig olycka, till exempel vid tecken på stroke eller vid stark bröstsmärta som inte går över inom 15 minuter. Kör inte själv till akuten om du känner dig allvarligt sjuk." },
+  { fraga: "Måste jag ringa innan jag åker till närakuten?", svar: "Det skiljer sig mellan mottagningar. Enligt 1177 behöver du oftast ringa innan du besöker en jouröppen mottagning. Ring mottagningen eller 1177, så får du veta om du ska komma och vart." },
+  { fraga: "Är det dyrare att gå till akuten?", svar: "Avgifterna bestäms av varje region och kan skilja sig mellan vårdcentral, närakut och akutmottagning. Besöken räknas in i högkostnadsskyddet för öppen vård. Se din regions avgifter på 1177.se." },
+];
+
+const titel = "Akuten, närakut eller jourcentral – vart ska du gå?";
+const beskrivning = `Akuten, närakut, jourcentral eller vårdcentral? Så väljer du rätt enligt 1177, när du ska ringa 112 och ${tal(J.antal)} jour- och närakutmottagningar per län.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Akuten, närakut eller jourcentral?"
+  svar={`Ring <strong>112</strong> vid allvarlig olycka eller plötslig svår sjukdom. Är det inte livshotande är <strong>vårdcentralen</strong> nästan alltid rätt första kontakt. Kan besväret inte vänta till vardagen tar en <strong>närakut eller jourcentral</strong> emot på kvällar och helger, ofta efter att du ringt först. Osäker? Ring <strong>1177</strong> dygnet runt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Akut, närakut eller jour", href: "/akut-narakut-jourcentral/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Kom utan att boka tid" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Öppet nu och närmaste vårdcentral" },
+    { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/", text: "Så mycket betalar du som mest" },
+    { namn: "Vårdgaranti och väntetider", href: "/vardgaranti/", text: "Dina rättigheter i primärvården" },
+  ]}
+  kallor={[
+    { namn: "1177 – Sök vård på rätt mottagning", url: "https://www.1177.se/sa-fungerar-varden/att-valja-vardmottagning/sok-vard-pa-ratt-mottagning/", text: "vårdcentral, jouröppen mottagning, akutmottagning och 112", datum: "2026-11-25" },
+    { namn: "1177 – Stroke", url: "https://www.1177.se/sjukdomar--besvar/hjarna-och-nerver/stroke-och-blodkarl-i-hjarnan/stroke/", text: "AKUT-testet och när du ska ringa 112", datum: "2026-11-25" },
+    { namn: "1177 – Ont i bröstet", url: "https://www.1177.se/sjukdomar--besvar/hjarta-och-blodkarl/ont-i-brostet/", text: "när bröstsmärta kräver 112", datum: "2026-11-25" },
+    { namn: "1177 – Högkostnadsskydd för öppenvård", url: "https://www.1177.se/sa-fungerar-varden/kostnader-och-ersattningar/hogkostnadsskydd-for-oppenvard/", text: "1 450 kr per tolv månader", datum: "2026-11-25" },
+    { namn: "1177 Hitta vård – Jourmottagning och Närakut", url: "https://www.1177.se/hitta-vard/?caretype=Jourmottagning&s=name&region=00", text: `${tal(J.antal)} mottagningar, sammanställda per län och kommun av redaktionen`, datum: G.hamtat.jour },
+  ]}>
+
+  <h2 id="vart">Vart ska du vända dig? En snabb guide</h2>
+  <p>Svensk vård är uppbyggd i nivåer. Det mesta tas om hand på vårdcentralen, en del kräver en jouröppen mottagning på kvällen, och bara de allvarligaste tillstånden hör hemma på sjukhusets akutmottagning. Att välja rätt ger dig kortare väntan och gör att akuten kan prioritera de svårast sjuka. Tabellen sammanfattar hur 1177 beskriver de olika vägarna in i vården.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Läge</th><th>Vart</th><th>Öppet</th></tr></thead>
+    <tbody>
+      <tr><td>Livshotande: allvarlig olycka, plötslig svår sjukdom</td><td><strong>Ring 112</strong></td><td>Dygnet runt</td></tr>
+      <tr><td>Allvarligt men du kan ta dig dit utan ambulans</td><td>Akutmottagning på sjukhus</td><td>Dygnet runt</td></tr>
+      <tr><td>Akuta besvär som inte kan vänta till vardag</td><td>Närakut, jourcentral eller jouröppen vårdcentral</td><td>Kvällar och helger, ibland nätter</td></tr>
+      <tr><td>Sjukdom, besvär, kontroller, recept och intyg</td><td>Din vårdcentral</td><td>Dagtid vardagar</td></tr>
+      <tr><td>Osäker på hur allvarligt det är</td><td><strong>Ring 1177</strong></td><td>Dygnet runt</td></tr>
+    </tbody>
+  </table></div>
+  <p>Två saker är viktiga att komma ihåg. Den första är att du inte ska köra själv till akutmottagningen om du känner dig allvarligt sjuk. Ring 112 i stället, så kommer en ambulans vid behov. Den andra är att akutmottagningen inte är rätt plats för lättare besvär, även om den är öppen när vårdcentralen är stängd.</p>
+
+  <h2 id="112">När ska du ringa 112?</h2>
+  <p>112 är numret till SOS Alarm vid akut nöd. 1177 säger att du ska ringa 112 om någon plötsligt känner sig allvarligt sjuk eller har varit med om en allvarlig olycka. Två vanliga exempel där 1177 uttryckligen säger 112 är stroke och bröstsmärta.</p>
+  <h3>Tecken på stroke – AKUT-testet</h3>
+  <ul>
+    <li><strong>A – Ansikte:</strong> be personen le och visa tänderna. Hänger ena mungipan, ring 112.</li>
+    <li><strong>K – Kroppsdel:</strong> be personen lyfta båda armarna och hålla kvar dem i tio sekunder. Faller en arm, ring 112.</li>
+    <li><strong>U – Uttal:</strong> be personen säga en enkel mening. Sluddrar personen eller hittar inte orden, ring 112.</li>
+    <li><strong>T – Tid:</strong> ju snabbare behandling, desto mindre skador.</li>
+  </ul>
+  <p>Enligt 1177 ska du ringa 112 även om symtomen är lindriga eller har gått över, och du ska inte köra bil.</p>
+  <h3>Bröstsmärta</h3>
+  <p>1177 anger att du ska ringa 112 vid stark, tryckande eller krampartad smärta i bröstet som inte går över inom 15 minuter, vid en obehaglig känsla i bröstet i mer än 15 minuter utan känd orsak, eller om bröstsmärtan kommer tillsammans med andfåddhet, illamående, kallsvettning eller oregelbundna hjärtslag.</p>
+  <p>Listan ovan är inte heltäckande. Är du osäker, ring hellre 112 eller 1177 än vänta.</p>
+
+  <h2 id="akuten">Akutmottagningen på sjukhuset</h2>
+  <p>Akutmottagningen finns på sjukhus och har öppet dygnet runt. Den är till för allvarliga olycksfall och plötslig svår sjukdom, alltså tillstånd där du kan behöva sjukhusets resurser direkt. Livshotande tillstånd ska alltid till akutmottagningen, helst med ambulans via 112.</p>
+  <p>Eftersom akuten tar emot de svårast sjuka först kan den som kommer med ett lindrigare besvär få vänta länge. En del sjukhus har också särskilda akutmottagningar, till exempel för barn, för gravida eller för ögon. Vilka som finns på närmaste sjukhus ser du på 1177 Hitta vård eller genom att ringa 1177.</p>
+  <h3>Psykiatrisk akutmottagning</h3>
+  <p>Större sjukhus har även en psykiatrisk akutmottagning. Se avsnittet om <a href="#psykisk">akut psykisk ohälsa</a> nedan.</p>
+
+  <h2 id="narakut">Närakut, jourcentral och jouröppen vårdcentral</h2>
+  <p>Mellan vårdcentralen och akuten finns de jouröppna mottagningarna. 1177 beskriver dem som vårdcentraler eller mottagningar som har öppet kvällar, helger och ibland nätter för akuta besvär som inte kan vänta. De kallas olika saker i olika regioner: <strong>närakut</strong> i bland annat Stockholm och Jönköping, <strong>jourcentral</strong> i bland annat Västra Götaland, Värmland och Östergötland, och <strong>jourmottagning</strong> eller <strong>jouröppen vårdcentral</strong> på andra håll, till exempel i Uppsala och Dalarna. Namnen här kommer från mottagningarnas egna namn på 1177. På vissa orter ligger jouren i stället på sjukhusets akutmottagning.</p>
+  <p>Typiska besvär som kan passa en närakut eller jourcentral är sådant som behöver bedömas samma dag men inte är livshotande. Exakt vad varje mottagning tar emot skiljer sig, och därför säger 1177 att du oftast ska ringa innan du åker. Då får du veta om mottagningen är rätt för dig, om du behöver boka en tid och hur länge du kan få vänta.</p>
+  <h3>Skillnaden mot drop-in på vårdcentralen</h3>
+  <p>Drop-in betyder att vårdcentralen tar emot utan bokad tid under vissa tider på dagen. Det är inte samma sak som jour. Vi listar <a href="/drop-in/">vårdcentralerna som har drop-in</a> med tiderna, så att du kan se om din vårdcentral kan ta emot dig samma dag innan du söker dig till jouren.</p>
+  <p>Av de {tal(J.antal)} mottagningar som 1177 listar som jour- eller närakutmottagning har {namnad} ordet närakut i namnet. Resten heter till exempel jourcentral, jourläkarmottagning eller är vårdcentraler med jouröppettider.</p>
+
+  <h2 id="lan">Jour och närakut per län</h2>
+  <p>Tabellen visar hur många mottagningar som är registrerade som jourmottagning eller närakut i 1177 Hitta vård, och i vilka kommuner de ligger. Siffrorna har vi räknat fram själva genom att placera varje mottagning i rätt kommun med SCB:s kommungränser. Tänk på att regionerna registrerar mottagningarna på olika sätt. Region Örebro län har till exempel registrerat de flesta av sina vårdcentraler med jouröppettider som jourmottagning, medan andra regioner bara registrerar ett fåtal stora närakuter. Ett högt antal betyder alltså inte automatiskt bättre tillgång.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Jour/närakut</th><th class="num">Invånare per mottagning</th><th>Kommuner med jour eller närakut</th></tr></thead>
+    <tbody>{rader.map((r) => (
+      <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{invPer(r.folk, r.n)}</td>
+        <td>{r.kommuner.length ? r.kommuner.map((k, i) => <>{i > 0 && ", "}{kommunHref[k] ? <a href={kommunHref[k]}>{k}</a> : k}</>) : "Ingen registrerad – se akutmottagningen"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Källa: 1177 Hitta vård, vårdtyperna Jourmottagning och Närakut, hämtade {G.hamtat.jour}. Sammanställning och kommunindelning: vårdcentralen.nu. Invånare enligt SCB.</p>
+  {stockholm && <p>I Stockholms län, med flest invånare, finns {stockholm.n} registrerade närakuter. Sammanlagt bor det cirka {tal(Math.round(totalFolk / J.antal / 1000) * 1000)} invånare per jour- eller närakutmottagning i hela landet. Klicka på en kommun för att se vårdcentralerna där med öppettider och drop-in.</p>}
+
+  <h2 id="1177">Ring 1177 när du är osäker</h2>
+  <p>1177 är sjukvårdsrådgivningens nummer och svarar dygnet runt i hela landet. Du får prata med en sjuksköterska som bedömer dina besvär och ger råd om du kan vänta, ska kontakta vårdcentralen, söka dig till en jouröppen mottagning eller behöver akutmottagningen.</p>
+  <p>Det lönar sig att ringa 1177 innan du åker till akuten med något som inte är uppenbart livshotande. Du slipper då riskera att sitta länge i ett väntrum där du inte får hjälp med just ditt besvär. Ring däremot 112 direkt vid livshotande tillstånd. 1177 ersätter aldrig 112.</p>
+  <p>På 1177.se kan du också läsa om symtom och sjukdomar, och efter inloggning skicka meddelanden till din vårdcentral eller boka tid. Använd e-tjänsterna för sådant som kan vänta, inte för akuta besvär.</p>
+
+  <h2 id="psykisk">Akut psykisk ohälsa</h2>
+  <p>Om du eller någon i din närhet mår mycket dåligt psykiskt och genast behöver hjälp säger 1177 att du ska söka dig till en psykiatrisk akutmottagning eller ringa 112. Vid tankar på att ta sitt liv eller risk för att någon skadar sig är det alltid 112 som gäller.</p>
+  <p>Mindre akut psykisk ohälsa, som nedstämdhet, oro eller sömnproblem, kan vårdcentralen ta hand om. 1177 räknar psykisk ohälsa till det vårdcentralen hjälper till med.</p>
+
+  <h2 id="kostnad">Vad kostar ett besök?</h2>
+  <p>Patientavgiften bestäms av varje region, och regionerna kan ha olika avgifter för vårdcentral, närakut och akutmottagning. Vi anger inga belopp per region här, eftersom de ändras och skiljer sig åt. Se din regions avgifter på 1177.se eller fråga mottagningen.</p>
+  <p>Oavsett var du söker räknas avgifterna för öppen vård in i <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet</a>. Enligt 1177 betalar du högst 1 450 kronor under en tolvmånadersperiod, sedan får du frikort. En region kan ha ett lägre tak. Besök som du uteblir från utan att avboka räknas oftast inte in, och kan kosta extra.</p>
+  <p>Personer som fyllt 85 år betalar enligt hälso- och sjukvårdslagen inga vårdavgifter i öppen vård. Vad som gäller för barn och unga bestämmer regionen.</p>
+</Guide>

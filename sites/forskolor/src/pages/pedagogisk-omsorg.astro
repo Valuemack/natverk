@@ -1,0 +1,129 @@
+---
+// Lång guide: pedagogisk omsorg (dagbarnvårdare, "dagmamma", familjedaghem), nattis och öppen förskola.
+// Fakta: skollagen 1 kap. 1–2 §§, 8 kap. 3 och 16 §§, 25 kap. 1–10 §§; förordning 2001:160 1 §; Skolverket "Pedagogisk
+// omsorg" (uppdaterad 2026-07-30), "Rätt till förskola" och PM Annan pedagogisk verksamhet 2025 (mätdatum 2025-10-15).
+// Egen beräkning: jämförelse med förskolan och maxtaxa 2027. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, RIKET } from "../site.js";
+import { relaterade, tal, SKOLLAGEN, SKOLVERKET_PM_2025 } from "../guider.js";
+import { MAXTAXA, maxAvgift } from "../maxtaxa.js";
+
+const PUBLICERAD = "2026-11-25";
+const M27 = MAXTAXA.find((m) => m.ar === 2027);
+const kr = (n) => `${n.toLocaleString("sv-SE")} kr`;
+const PO = { barn: 4840, verksamheter: 700, enskild: 66, hemmet: 81, barnPerVerks: 7.4, personal: 1040, pedUtb: 40, barnPerPers: 4.7, barn15: 4410, barn15_2016: 11600 };
+const NATTIS = { barn: 4620, kommuner: 153, kommunal: 95, unga: 53 };
+const forskolaBarn = RIKET?.barn_inskrivna ?? 468070;
+const perHundra = (PO.barn / (PO.barn + forskolaBarn)) * 100;
+
+const avsnitt = [
+  { id: "vad-ar", rubrik: "Vad är pedagogisk omsorg?" },
+  { id: "jamforelse", rubrik: "Pedagogisk omsorg jämfört med förskola" },
+  { id: "ratt", rubrik: "Har man rätt till dagbarnvårdare?" },
+  { id: "kvalitet", rubrik: "Krav på verksamheten och personalen" },
+  { id: "avgift", rubrik: "Vad kostar pedagogisk omsorg?" },
+  { id: "siffror", rubrik: "Pedagogisk omsorg i siffror" },
+  { id: "nattis", rubrik: "Nattis – omsorg på kvällar, nätter och helger" },
+  { id: "oppen-forskola", rubrik: "Öppen förskola och öppen fritids" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan förskola och pedagogisk omsorg?", svar: "Förskolan är en skolform med läroplan, krav på legitimerade förskollärare och rätt till plats. Pedagogisk omsorg, till exempel en dagbarnvårdare, är ett alternativ utanför skolväsendet. Den har ingen egen läroplan, men förskolans läroplan ska vara vägledande." },
+  { fraga: "Finns dagmamma kvar?", svar: `Ja, men det blir allt färre. Det som kallas dagmamma heter i dag dagbarnvårdare eller familjedaghem och är en form av pedagogisk omsorg. Hösten 2025 gick knappt ${tal(PO.barn, 0)} barn i pedagogisk omsorg i hela landet, och 81 procent av verksamheterna bedrevs huvudsakligen i det egna hemmet.` },
+  { fraga: "Måste kommunen erbjuda dagbarnvårdare?", svar: "Nej, inte som en rättighet. Kommunen ska sträva efter att erbjuda pedagogisk omsorg i stället för förskola om föräldrarna önskar det. Det betyder att kommunen inte utan vidare kan avstå, men det finns ingen garanti för en plats." },
+  { fraga: "Vad kostar pedagogisk omsorg?", svar: `Avgiften får tas ut på samma sätt som i förskolan och ska vara skälig. Kommuner som använder maxtaxan tillämpar den även här, så för första barnet är avgiften 2027 högst ${kr(maxAvgift(M27, "forskola", 1))} i månaden.` },
+  { fraga: "Har barn i pedagogisk omsorg rätt till allmän förskola?", svar: "Ja. Även barn som går i pedagogisk omsorg ska erbjudas förskola minst 525 timmar om året från hösten det år de fyller tre, och kommunens uppsökande verksamhet omfattar också dem." },
+  { fraga: "Vad är nattis?", svar: `Nattis är omsorg på kvällar, nätter och helger när förskola och fritidshem är stängda. Kommunen ska sträva efter att erbjuda det om föräldrarna arbetar då. Hösten 2025 fanns barn inskrivna på nattis i ${NATTIS.kommuner} av 290 kommuner.` },
+  { fraga: "Vad är öppen förskola?", svar: "Öppen förskola är en verksamhet dit barn kommer tillsammans med en förälder eller annan vuxen. Kommunen får anordna öppen förskola, men är inte skyldig att göra det." },
+];
+
+const titel = "Pedagogisk omsorg – dagbarnvårdare, dagmamma och nattis";
+const beskrivning = "Vad pedagogisk omsorg och dagbarnvårdare är, skillnaden mot förskola, vad det kostar och vem som har rätt till nattis – med Skolverkets statistik för 2025.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Pedagogisk omsorg och nattis"
+  svar={`<strong>Pedagogisk omsorg</strong> är ett alternativ till förskola eller fritidshem, som en dagbarnvårdare (dagmamma) som tar emot barn i sitt hem. Kommunen ska sträva efter att erbjuda det om du önskar, men det är ingen rättighet. <strong>Nattis</strong> är omsorg på kvällar, nätter och helger. Hösten 2025 gick knappt ${tal(PO.barn, 0)} barn i pedagogisk omsorg och ${tal(NATTIS.barn, 0)} på nattis.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Pedagogisk omsorg och nattis", href: "/pedagogisk-omsorg/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={relaterade("/forskoleplats/", "/kommunal-eller-fristaende/", "/maxtaxa/", "/allman-forskola/", "/lpfo-18/")}
+  kallor={[
+    { namn: "Skolverket – Pedagogisk omsorg", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/pedagogisk-omsorg", text: "regler, läroplanen som vägledning och godkännande (sidan uppdaterad 30 juli 2026)", datum: "2026-11-25" },
+    { namn: "Skolverket – Annan pedagogisk verksamhet år 2025", url: "https://www.skolverket.se/sok-publikationer/publikationsserier/beskrivande-statistik/2026/annan-pedagogisk-verksamhet---ar-2025", text: "statistik med mätdatum 15 oktober 2025", datum: "2026-11-25" },
+    { namn: "Skolverket – Rätt till förskola", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/ratt-till-forskola", text: "nattis, allmän förskola för barn i pedagogisk omsorg", datum: "2026-11-25" },
+    { ...SKOLLAGEN, text: "25 kap. 1–10 §§ samt 8 kap. 3 och 16 §§" },
+    { namn: "Förordning (2001:160) om statsbidrag till kommuner som tillämpar maxtaxa", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-2001160-om-statsbidrag-till-kommuner-som_sfs-2001-160/", text: "1 § om att maxtaxan omfattar pedagogisk omsorg och nattis", datum: "2026-11-25" },
+    SKOLVERKET_PM_2025,
+  ]}>
+
+  <h2 id="vad-ar">Vad är pedagogisk omsorg?</h2>
+  <p>Pedagogisk omsorg erbjuds i stället för förskola eller fritidshem och vänder sig till barn i samma åldrar. Den vanligaste formen är <strong>familjedaghem</strong>, där en dagbarnvårdare tar emot barn i sitt eget hem eller i en särskild lokal. Det är det som förr kallades dagmamma. En annan form är flerfamiljslösningar, där familjerna turas om att ha barnen hemma hos sig.</p>
+  <p>Pedagogisk omsorg kan drivas av kommunen eller av en enskild huvudman. Den hör till det skollagen kallar <strong>annan pedagogisk verksamhet</strong> (25 kap.), tillsammans med öppen förskola, öppen fritidsverksamhet och nattis. Annan pedagogisk verksamhet är inte en del av skolväsendet, och bara de delar av skollagen som uttryckligen säger det gäller för den.</p>
+  <p>Enligt skollagen ska pedagogisk omsorg stimulera barns utveckling och lärande och förbereda dem för fortsatt utbildning. Det finns ingen egen läroplan, men Skolverket anger att förskolans läroplan, <a href="/lpfo-18/">Lpfö 18</a>, ska vara vägledande.</p>
+
+  <h2 id="jamforelse">Pedagogisk omsorg jämfört med förskola</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Förskola</th><th>Pedagogisk omsorg</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Del av skolväsendet</th><td>Ja, egen skolform</td><td>Nej, annan pedagogisk verksamhet</td></tr>
+      <tr><th scope="row">Rätt till plats</th><td>Ja, inom fyra månader</td><td>Nej, kommunen ska sträva efter att erbjuda</td></tr>
+      <tr><th scope="row">Läroplan</th><td>Lpfö 18 är bindande</td><td>Lpfö 18 är vägledande</td></tr>
+      <tr><th scope="row">Personal</th><td>Bara legitimerade förskollärare får bedriva undervisning</td><td>Personal med lämplig utbildning eller erfarenhet</td></tr>
+      <tr><th scope="row">Avgift</th><td>Skälig, maxtaxa i alla kommuner</td><td>Skälig, maxtaxan omfattar även pedagogisk omsorg</td></tr>
+      <tr><th scope="row">525 avgiftsfria timmar från 3 år</th><td>Ja</td><td>Nej, men barnet ska erbjudas allmän förskola</td></tr>
+      <tr><th scope="row">Typisk gruppstorlek</th><td>15,3 barn per grupp</td><td>7,4 barn per verksamhet</td></tr>
+      <tr><th scope="row">Barn per anställd</th><td>{tal(RIKET?.barn_per_heltidstjanst)} per heltidstjänst</td><td>4,7 per personal</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Siffror för hösten 2025 från Skolverket. Förskolans värden är per heltidstjänst och pedagogisk omsorg per anställd person, så jämförelsen är ungefärlig.</p>
+  <p>I praktiken är den största skillnaden gruppens storlek: i ett familjedaghem är barnen färre och de vuxna färre. Fråga kommunen eller huvudmannen hur verksamheten ordnas när dagbarnvårdaren är sjuk eller har semester, och hur barnet får del av allmän förskola från tre års ålder.</p>
+
+  <h2 id="ratt">Har man rätt till dagbarnvårdare?</h2>
+  <p>Nej, inte på samma sätt som till förskola. Skollagen (25 kap. 2 §) säger att kommunen ska <strong>sträva efter</strong> att erbjuda pedagogisk omsorg i stället för förskola eller fritidshem om vårdnadshavaren önskar det. Enligt Skolverket betyder det att kommunen inte utan vidare kan avstå. Om det saknas efterfrågan just nu ska kommunen ändå planera för att kunna erbjuda det när situationen ändras.</p>
+  <p>Kommunen behöver inte erbjuda någon viss form, men ska ta skälig hänsyn till föräldrarnas önskemål. Barn som går i pedagogisk omsorg ska erbjudas allmän förskola från hösten det år de fyller tre, och omfattas också av kommunens uppsökande verksamhet. Läs mer på sidan om <a href="/allman-forskola/">allmän förskola</a>.</p>
+  <h3>Starta egen pedagogisk omsorg</h3>
+  <p>En enskild som vill driva pedagogisk omsorg ansöker hos kommunen, som också har tillsyn. För att bli godkänd krävs bland annat insikt i reglerna, lämplighet, att verksamheten är öppen för alla barn som kommunen ska sträva efter att erbjuda omsorg och att avgifterna inte är oskäligt höga (25 kap. 10 §).</p>
+
+  <h2 id="kvalitet">Krav på verksamheten och personalen</h2>
+  <ul>
+    <li><strong>Lokaler och grupper:</strong> verksamheten ska bedrivas i ändamålsenliga lokaler i grupper med lämplig sammansättning och storlek (25 kap. 7 §).</li>
+    <li><strong>Personal:</strong> det ska finnas personal med sådan utbildning eller erfarenhet att barnens behov av omsorg och en god pedagogisk verksamhet kan tillgodoses, och personalen ska få kompetensutveckling.</li>
+    <li><strong>Registerkontroll:</strong> alla som är 15 år eller äldre och folkbokförda där verksamheten bedrivs ska på kommunens begäran visa ett utdrag ur belastnings- och misstankeregistret som är högst sex månader gammalt (25 kap. 2 a §). Utan utdrag får verksamheten inte bedrivas.</li>
+    <li><strong>Värdegrund:</strong> verksamheten ska utformas med respekt för barnets rättigheter och demokratiska värderingar, och personalen ska motverka kränkande behandling.</li>
+    <li><strong>Uppföljning:</strong> kommunen ska systematiskt följa upp verksamheten och ha skriftliga rutiner för klagomål (25 kap. 8 §).</li>
+  </ul>
+  <p>Hösten 2025 hade 40 procent av personalen i pedagogisk omsorg pedagogisk utbildning, varav 9 procent högskoleexamen. Som jämförelse hade 42,5 procent av personalen i förskolan förskollärarexamen. Mer om utbildningskraven i förskolan finns på sidan om <a href="/forskollarare/">förskollärare och barnskötare</a>.</p>
+
+  <h2 id="avgift">Vad kostar pedagogisk omsorg?</h2>
+  <p>Enligt skollagen (25 kap. 9 §) får avgifter tas ut på samma sätt som i förskolan och fritidshemmet, det vill säga skäliga avgifter. Förordningen om maxtaxa jämställer pedagogisk omsorg och nattis med förskola och fritidshem, så kommunernas maxtaxa gäller även här. Från 1 januari 2027 är avgiften högst:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">I stället för förskola</th><th class="num">I stället för fritidshem</th></tr></thead>
+    <tbody>{[1, 2, 3].map((n) => <tr><th scope="row">Barn {n}</th><td class="num">{kr(maxAvgift(M27, "forskola", n))}</td><td class="num">{kr(maxAvgift(M27, "fritidshem", n))}</td></tr>)}</tbody>
+  </table></div>
+  <p>Regeln om 525 avgiftsfria timmar i skollagen gäller förskolan. För ett barn i pedagogisk omsorg som också går i allmän förskola bestämmer kommunen hur avgifterna samordnas. Räkna ut din egen avgift med <a href="/maxtaxa/">maxtaxekalkylatorn</a>.</p>
+
+  <h2 id="siffror">Pedagogisk omsorg i siffror</h2>
+  <p>Pedagogisk omsorg har minskat stadigt. Bland barn mellan ett och fem år har antalet gått från knappt 11 600 år 2016 till knappt 4 410 år 2025, en minskning med {tal(((PO.barn15_2016 - PO.barn15) / PO.barn15_2016) * 100, 0)} procent. För varje hundra barn i förskola eller pedagogisk omsorg går ungefär {tal(perHundra, 1)} i pedagogisk omsorg.</p>
+  <dl class="fakta">
+    <dt>Inskrivna barn</dt><dd>knappt {tal(PO.barn, 0)} (−6,3 % på ett år)</dd>
+    <dt>Verksamheter</dt><dd>{PO.verksamheter}, varav {PO.enskild} % med enskild huvudman</dd>
+    <dt>Bedrivs i hemmet</dt><dd>{PO.hemmet} % av verksamheterna</dd>
+    <dt>Barn per verksamhet</dt><dd>{tal(PO.barnPerVerks)} i genomsnitt, vanligast 5–6 barn (41 %)</dd>
+    <dt>Anställda</dt><dd>knappt {tal(PO.personal, 0)} (−17 % på ett år)</dd>
+    <dt>Barn per anställd</dt><dd>{tal(PO.barnPerPers)}</dd>
+  </dl>
+  <p class="kalla">Källa: Skolverket, Annan pedagogisk verksamhet år 2025, mätdatum 15 oktober 2025.</p>
+
+  <h2 id="nattis">Nattis – omsorg på kvällar, nätter och helger</h2>
+  <p>Förskola och fritidshem behöver inte vara öppna på kvällar, nätter, helger eller större helgdagar (8 kap. 3 § och 14 kap. 8 §). För föräldrar som arbetar då ska kommunen <strong>sträva efter</strong> att erbjuda omsorg i den omfattning som behövs (25 kap. 5 §). Det kallas ofta nattis och är inte förskola, utan annan pedagogisk verksamhet.</p>
+  <p>Enligt Skolverket betyder "sträva efter" även här att kommunen inte utan vidare kan avstå. Om det saknas efterfrågan måste kommunen ändå planera för att kunna erbjuda omsorg när behovet uppstår. Behovet bedöms utifrån föräldrarnas förvärvsarbete och familjens situation i övrigt. Fråga din kommun hur du ansöker.</p>
+  <dl class="fakta">
+    <dt>Barn på nattis</dt><dd>knappt {tal(NATTIS.barn, 0)} (−8,5 % på ett år)</dd>
+    <dt>Kommuner med nattis</dt><dd>{NATTIS.kommuner} av 290 (53 %)</dd>
+    <dt>Kommunal huvudman</dt><dd>{NATTIS.kommunal} % av barnen</dd>
+    <dt>Ålder</dt><dd>{NATTIS.unga} % är 1–5 år, 47 % är 6–12 år</dd>
+  </dl>
+  <p>Avgiften för nattis följer också maxtaxan. Hur den räknas ihop med avgiften för förskolan bestämmer kommunen.</p>
+
+  <h2 id="oppen-forskola">Öppen förskola och öppen fritids</h2>
+  <p><strong>Öppen förskola</strong> är en mötesplats där barn kommer tillsammans med en förälder eller annan vuxen. Den ska erbjuda barnen pedagogisk verksamhet och ge de vuxna social gemenskap (25 kap. 3 §). Kommunen får anordna öppen förskola men måste inte. Hösten 2025 fanns 539 öppna förskolor i 237 kommuner, och 92 procent drevs av kommunen.</p>
+  <p><strong>Öppen fritidsverksamhet</strong>, ibland kallad fritidsklubb, får erbjudas i stället för fritidshem från höstterminen det år barnet fyller tio. Den fanns i 56 kommuner med totalt 566 verksamheter. Läs mer om fritids på sidan om <a href="/forskoleklass/">förskoleklass och fritidshem</a>.</p>
+</Guide>

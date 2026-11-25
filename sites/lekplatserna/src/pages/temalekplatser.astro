@@ -1,0 +1,110 @@
+---
+// Långt format av urvalssidan /temalekplatser/ (samma URL och titel; tas bort ur [urval].astro).
+// Teman, antal och storleksklasser räknas ur sajtens data; Malmös temalekplatser från malmo.se,
+// Borås indelning från boras.se. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT } from "../site.js";
+import { URVAL } from "../urval.js";
+import { E, tal, isTema, kommun, rakna, lanEnheter } from "../lib/guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const u = URVAL.temalekplatser;
+const T = E.filter(isTema).sort((a, b) => a.kommun.localeCompare(b.kommun, "sv") || a.namn.localeCompare(b.namn, "sv"));
+const nTema = T.filter((e) => e.typ === "temalekplats").length;
+const nNatur = T.filter((e) => e.typ === "naturlekplats").length;
+const perKommun = rakna(T, (e) => e.kommun).map(([namn, n]) => ({ k: kommun(namn), n }));
+const perLan = KAT.lan.map((l) => ({ l, n: lanEnheter(l).filter(isTema).length })).filter((x) => x.n > 0).sort((a, b) => b.n - a.n);
+// Teman med samma ord grupperas ("Ko" och "Kossor" räknas var för sig; vi slår inte ihop gissningsvis).
+const teman = rakna(T.filter((e) => e.extra?.tema), (e) => e.extra.tema).filter(([, n]) => n >= 2);
+const STORLEK = ["närlekplats", "områdeslekplats", "stadsdelslekplats", "stadsdels-/tätortslekplats", "badlekplats", "utflyktslekplats"];
+const storlek = STORLEK.map((s) => [s, E.filter((e) => e.extra?.storlek === s).length]).filter(([, n]) => n > 0);
+const MALMO = ["Bondgårdslekplatsen", "Cirkuslekplatsen", "Den hemliga staden", "Djungellekplatsen", "Djurlekplatsen", "Fiskelekplatsen", "Fågellekplatsen", "Hav- och strandlekplatsen", "Hyllie vattenpark", "Mary Anderssons lekplats", "Musiklekplatsen", "Nangijalalekplatsen", "Rymdlekplatsen", "Rörelselekplatsen", "Sagolekplatsen", "Skogslekplatsen", "Sollekplatsen", "Spindellekplatsen", "Spirallekplatsen", "Teaterlekplatsen", "Trädgårdslekplatsen", "Vattenlekplatsen", "Äventyrslekplatsen", "Öresundslekplatsen"];
+const malmoHos = T.filter((e) => e.kommun === "Malmö").length;
+const tTillg = T.filter((e) => e.extra?.tillganglighet === "tillgänglighetsanpassad").length;
+const flest = [...T].sort((a, b) => b.extra.utrustning_antal - a.extra.utrustning_antal).slice(0, 6);
+const typText = (e) => e.extra?.tema ?? (e.typ === "naturlekplats" ? "Naturlek" : "–");
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en temalekplats?" },
+  { id: "natur", rubrik: "Vad är en naturlekplats?" },
+  { id: "var", rubrik: "Var finns temalekplatserna?" },
+  { id: "teman", rubrik: "Vanligaste temana" },
+  { id: "alla", rubrik: `Alla ${T.length} tema- och naturlekplatser` },
+  { id: "malmo", rubrik: "Malmös 24 temalekplatser" },
+  { id: "storlek", rubrik: "Närlekplats, stadsdelslekplats och utflyktslekplats" },
+  { id: "besok", rubrik: "Planera besöket" },
+];
+
+const fragor = [
+  { fraga: u.fraga, svar: u.svar },
+  { fraga: "Vad är en naturlekplats?", svar: "En naturlekplats använder naturens egna material och former i stället för färdiga lekredskap: stockar att balansera på, stenar och stubbar att hoppa mellan, kullar, buskar och träd. Den ligger ofta i eller intill ett skogsområde." },
+  { fraga: "Var finns flest temalekplatser?", svar: `Flest i vår data finns i ${perKommun.slice(0, 3).map((x) => `${x.k.namn} (${x.n})`).join(", ")}. Det beror delvis på att de kommunerna anger tema i sina öppna data. Malmö har enligt staden 24 temalekplatser.` },
+  { fraga: "Vilka temalekplatser finns i Malmö?", svar: "Malmö stad listar 24 temalekplatser, bland annat Djurlekplatsen i Beijers park som var stadens första, Nangijalalekplatsen i Oxie, Rymdlekplatsen, Cirkuslekplatsen, Bondgårdslekplatsen och Hyllie vattenpark." },
+  { fraga: "Vilka teman är vanligast?", svar: `I vår data är de vanligaste temana ${teman.slice(0, 5).map(([t]) => t.toLowerCase()).join(", ")}. Många teman handlar om djur, natur, sagor och fordon.` },
+  { fraga: "Kostar det att besöka en temalekplats?", svar: "Nej, kommunernas temalekplatser är vanliga lekplatser i parker och är gratis och öppna för alla. Parkering i närheten kan däremot kosta." },
+];
+---
+<Guide site={SITE} titel={u.titel(T.length)}
+  beskrivning={`${u.h1}: alla ${T.length} i vår data per kommun, de vanligaste temana, Malmös 24 temalekplatser och skillnaden mellan tema-, natur- och utflyktslekplats.`}
+  h1={u.h1}
+  svar={`En <strong>temalekplats</strong> är en lekplats där redskapen bildar en helhet kring ett tema, som rymden, en bondgård eller ett piratskepp. En <strong>naturlekplats</strong> bygger på stockar, stenar och växter. Vi känner till <strong>${T.length} tema- och naturlekplatser</strong> (${nTema} tema, ${nNatur} natur), flest i ${perKommun[0].k.namn}. Malmö har enligt staden ytterligare 24.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: u.namn, href: "/temalekplatser/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Plaskdammar och vattenlek", href: "/lekplatser-med-vattenlek/", text: "Lekplatser med vatten" },
+    { namn: "Lekplatser med linbana", href: "/lekplatser-med-linbana/", text: "Utflyktsmål med fart" },
+    { namn: "Kompisgunga", href: "/kompisgunga/", text: "Finns på många temalekplatser" },
+    { namn: "Vad göra med barn", href: "/vad-gora-med-barn/", text: "Utflykter och regnväderstips" },
+    { namn: "Barnkalas på lekplats", href: "/barnkalas/", text: "Temat gör kalaset" },
+  ]}
+  kallor={[
+    { namn: "Malmö stad – Temalekplatser", url: "https://malmo.se/Uppleva-och-gora/For-familjer-barn-och-unga/Temalekplatser.html", text: "stadens 24 temalekplatser med beskrivningar", datum: "2026-11-25" },
+    { namn: "Borås Stad – Lekplatser", url: "https://www.boras.se/upplevaochgora/lekplatserochaktivitetsplatser/lekplatser.4.3cc917c815870110c12a1fcb.html", text: "indelningen i utflykts-, stadsdels- och kvarterslekplatser", datum: "2026-11-25" },
+    { namn: "Boverket – Krav på lekplatser", url: "https://www.boverket.se/sv/PBL-kunskapsbanken/lov--byggande/tillsyn/exempel-pa-tillsynsomraden/lekplatser/krav-pa-lekplatser/", text: "säkerhet och tillgänglighet på lekplatser", datum: "2026-11-25" },
+    { namn: "Lekplatsdata: kommunernas öppna data och OpenStreetMap", url: "https://www.openstreetmap.org/copyright", text: "tema, typ och storlek per lekplats (© OpenStreetMap-bidragsgivare, ODbL)", datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="vad">Vad är en temalekplats?</h2>
+  <p>En temalekplats är en lekplats där redskap, färger och former berättar en historia. I stället för en vanlig klätterställning finns kanske ett skeppsvrak, en drake eller en lada, och sandlådan kan vara en strand eller en byggarbetsplats. Temat ger leken en ram: barnen blir sjörövare, bönder eller astronauter utan att någon behöver förklara reglerna.</p>
+  <p>Temalekplatser är oftast större än kvarterets lekplats och byggs för att locka besökare från hela staden. Därför finns det ibland toalett och fler sittplatser. I Malmö har till exempel 10 av stadens 24 temalekplatser offentlig toalett. Malmö stad beskriver sina temalekplatser som lekplatser med unika, specialbyggda attraktioner som följer ett visst tema.</p>
+
+  <h2 id="natur">Vad är en naturlekplats?</h2>
+  <p>En naturlekplats använder det som redan finns i naturen, eller material som ser ut att höra hemma där: stockar att balansera på, stubbar att hoppa mellan, stenar, kullar, slänter, buskage och träd att klättra i. Ofta finns det plats för kojbygge. Naturlekplatser ligger gärna i kanten av ett skogsområde och smälter in i omgivningen.</p>
+  <p>Leken blir friare än på en vanlig lekplats. En stock kan vara en båt, en bro eller en häst. I vår data finns {nNatur} lekplatser som kommunen eller OpenStreetMap kallar naturlekplats, och flera temalekplatser har naturtema, till exempel barrskog, trollskog eller vildmark.</p>
+
+  <h2 id="var">Var finns temalekplatserna?</h2>
+  <p>Tabellen visar var de {T.length} tema- och naturlekplatserna i vår data finns. Fördelningen beror mycket på vilka kommuner som anger tema i sina öppna data. Borås anger tema för {T.filter((e) => e.kommun === "Borås").length} av sina lekplatser, och därför hamnar kommunen i topp. Malmö har {malmoHos} i vår data men 24 enligt staden.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Tema- och naturlekplatser</th></tr></thead>
+    <tbody>{perKommun.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{x.n}</td></tr>)}</tbody>
+  </table></div>
+  <h3>Tillgänglighet på temalekplatserna</h3>
+  <p>{tTillg} av de {T.length} tema- och naturlekplatserna är tillgänglighetsanpassade enligt kommunen. Andelen är hög eftersom Borås och Uppsala, som har flest temalekplatser i vår data, anger tillgängligheten för sina lekplatser i öppna data. En anpassad lekplats har till exempel fast underlag till delar av lekplatsen och några redskap som går att använda med rullstol, men alla redskap behöver inte vara tillgängliga.</p>
+  <p>Per län: {perLan.map((x, i) => <>{i > 0 && ", "}<a href={x.l.href}>{x.l.kortnamn}</a> {x.n}</>)}.</p>
+
+  <h2 id="teman">Vanligaste temana</h2>
+  <p>Av lekplatserna i vår data har {T.filter((e) => e.extra?.tema).length} ett namngivet tema. De här temana förekommer på minst två lekplatser:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Tema</th><th class="num">Lekplatser</th></tr></thead>
+    <tbody>{teman.map(([t, n]) => <tr><td>{t}</td><td class="num">{n}</td></tr>)}</tbody>
+  </table></div>
+  <p>Djur och natur är vanligast: enhörningar och elefanter, barrskog, trollskog och havet. Många teman hämtar också idéer från sagor och trolleri, medan fordon, blåljus, bageri och bygg och anläggning låter barnen leka vuxenliv. Flera teman finns på två eller tre lekplatser i samma kommun, så det går att göra en egen temarunda.</p>
+
+  <h2 id="alla">Alla {T.length} tema- och naturlekplatser</h2>
+  <p>Tabellen är sorterad efter kommun. Klicka på lekplatsen för att se redskap, underlag och närmaste parkering. Flest redskap har {flest.map((e, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a> ({e.kommun})</>)}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Lekplats</th><th>Kommun</th><th>Tema</th></tr></thead>
+    <tbody>{T.map((e) => <tr><td><a href={e.href}>{e.namn}</a></td><td>{e.kommun}</td><td>{typText(e)}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="malmo">Malmös 24 temalekplatser</h2>
+  <p>Malmö är den kommun som tydligast satsat på temalekplatser. Enligt Malmö stad är ett tjugotal av stadens lekplatser temalekplatser, och staden listar 24 stycken: {MALMO.join(", ")}.</p>
+  <p>Djurlekplatsen i Beijers park var stadens första temalekplats. Nangijalalekplatsen i Oxie är inspirerad av Astrid Lindgrens <em>Bröderna Lejonhjärta</em>. Enligt stadens beskrivningar har 14 av de 24 fågelbogunga, 7 tillgänglig gunga och 10 offentlig toalett. Eftersom temat inte finns med i den data vi hämtar för Malmö, finns de flesta av dem hos oss som vanliga lekplatser på sidan <a href={kommun("Malmö")?.href}>lekplatser i Malmö</a>.</p>
+
+  <h2 id="storlek">Närlekplats, stadsdelslekplats och utflyktslekplats</h2>
+  <p>Många kommuner delar in sina lekplatser efter storlek och hur långt folk reser för att besöka dem. Borås skiljer till exempel på kvarterslekplatser med gungställning, rutschkana och sandlåda, stadsdelslekplatser och större utflyktslekplatser som Lekfortet i Annelundsparken och Ramnaparken.</p>
+  <p>I vår data har {tal(storlek.reduce((a, [, n]) => a + n, 0))} lekplatser en sådan klass angiven av kommunen: {storlek.map(([s, n]) => `${s} ${n}`).join(", ")}.</p>
+
+  <h2 id="besok">Planera besöket</h2>
+  <p>Temalekplatser är gratis och öppna för alla, men de är populära. En solig helgdag kan det vara trångt, och parkeringen nära lekplatsen fylls snabbt. Kolla gärna på lekplatsens egen sida hos oss vilka redskap som finns och var närmaste parkering ligger. Ta med matsäck och räkna med att stanna längre än på en vanlig lekplats, och ta reda på i förväg om det finns toalett.</p>
+</Guide>

@@ -1,0 +1,156 @@
+---
+// Lång guide: vad göra med barn – aktiviteter, utflykter och regnväder. Utflyktslekplatser och länstabell räknas ur
+// sajtens lekplatsdata; gratisaktiviteter kontrollerade mot bibliotekslagen, Fritidsbanken, Naturvårdsverket och museernas sidor. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, UTRUSTNING, utrustning } from "../site.js";
+import { har, E, tal, isTema, kommun, lanEnheter, folkLan, FOLK_TOTALT } from "../lib/guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const SPECIAL = ["linbana", "studsmatta", "hoppkudde", "vattenlek", "klättervägg", "hinderbana", "motorikbana", "skatepark"];
+// "Värda en resa": lekplatser med egen sida, flest redskap och minst ett specialredskap.
+const utflykt = E.filter((e) => e.egenSida && SPECIAL.some((u) => har(u)(e)))
+  .map((e) => ({ e, u: utrustning(e) }))
+  .sort((a, b) => b.u.length - a.u.length || a.e.namn.localeCompare(b.e.namn, "sv")).slice(0, 12);
+const lan = KAT.lan.map((l) => { const en = lanEnheter(l); return {
+  l, n: en.length, per: (10000 * en.length) / folkLan(l), tema: en.filter(isTema).length,
+  lin: en.filter(har("linbana")).length, studs: en.filter((e) => har("studsmatta")(e) || har("hoppkudde")(e)).length,
+  vatten: en.filter(har("vattenlek")).length, puls: en.filter(har("pulkabacke")).length,
+}; });
+const perSverige = (10000 * E.length) / FOLK_TOTALT;
+const tatast = [...lan].sort((a, b) => b.per - a.per)[0];
+const glesast = [...lan].sort((a, b) => a.per - b.per)[0];
+const pulka = E.filter(har("pulkabacke")).length;
+const s = kommun("Stockholm"), g = kommun("Göteborg");
+const rakn = (k, f) => k?.enheter.filter(f).length ?? 0;
+const kr = (n) => n.toFixed(1).replace(".", ",");
+const STADER = ["Stockholm", "Göteborg", "Malmö", "Uppsala"].map(kommun).filter(Boolean).map((k) => ({
+  k, n: k.enheter.length, tema: k.enheter.filter(isTema).length, lin: k.enheter.filter(har("linbana")).length,
+  vatten: k.enheter.filter(har("vattenlek")).length,
+  bast: k.enheter.filter((e) => e.egenSida).sort((a, b) => utrustning(b).length - utrustning(a).length)[0],
+}));
+
+const avsnitt = [
+  { id: "idag", rubrik: "Vad göra med barn idag? Snabba idéer" },
+  { id: "utflykt", rubrik: "Utflykter med barn: lekplatser värda en resa" },
+  { id: "lan", rubrik: "Lekplatser och specialredskap per län" },
+  { id: "stader", rubrik: "Vad göra med barn i Stockholm, Göteborg, Malmö och Uppsala" },
+  { id: "gratis", rubrik: "Gratis aktiviteter med barn" },
+  { id: "regn", rubrik: "Vad göra med barn när det regnar?" },
+  { id: "alder", rubrik: "Aktiviteter efter ålder" },
+  { id: "arstid", rubrik: "Lov och årstider" },
+  { id: "planera", rubrik: "Planera utflykten" },
+];
+
+const fragor = [
+  { fraga: "Vad kan man göra med barn gratis?", svar: "Lekplatser, skog och strand, bibliotek och många lovaktiviteter är gratis. På folkbiblioteken är det enligt bibliotekslagen avgiftsfritt att låna, och på Fritidsbanken lånar man sport- och friluftsutrustning gratis i 14 dagar." },
+  { fraga: "Vad gör man med barn när det regnar?", svar: "Inomhus: bibliotek, museum, simhall, lekland eller pyssel och bakning hemma. Utomhus går det bra att leka i regnet med regnkläder, till exempel att hoppa i vattenpölar eller gå en kort skogspromenad, och lekplatserna är ofta tomma." },
+  { fraga: "Vad kan man göra med barn i Stockholm?", svar: `Stockholm har ${tal(s?.enheter.length ?? 0)} lekplatser i vår data, varav ${rakn(s, har("vattenlek"))} med vattenlek och ${rakn(s, (e) => har("studsmatta")(e) || har("hoppkudde")(e))} med studsmatta eller hoppkudde. Lägg till museer, parklekar och skärgårdsbåtar så finns något för alla väder.` },
+  { fraga: "Vad kan man göra med barn i Göteborg?", svar: `I Göteborg känner vi till ${tal(g?.enheter.length ?? 0)} lekplatser, bland annat ${rakn(g, har("kompisgunga"))} med kompisgunga. Slottsskogen, skärgården och stadens museer är andra vanliga utflyktsmål.` },
+  { fraga: "Får man tälta i naturen med barn?", svar: "Ja. Enligt allemansrätten får man tälta något enstaka dygn i naturen, på en plats som inte ligger nära bostadshus. I nationalparker och naturreservat kan det finnas särskilda regler." },
+  { fraga: "Är museer gratis för barn?", svar: "Det varierar. Tekniska museet i Stockholm har till exempel gratis entré för barn 0–6 år, och Nordiska museet har fri entré för barn till och med 18 år på skoldagar under terminerna. Kontrollera alltid museets egen sida innan besöket." },
+];
+---
+<Guide site={SITE} titel="Vad göra med barn? Utflykter, gratis tips och regnväder"
+  beskrivning={`Vad göra med barn idag: utflyktslekplatser med linbana och vattenlek, gratis aktiviteter, tips när det regnar och idéer per ålder. Med lekplatser per län.`}
+  h1="Vad göra med barn?"
+  svar={`De enklaste aktiviteterna med barn är gratis: <strong>lekplatsen, skogen, biblioteket</strong> och stranden. När det regnar fungerar bibliotek, museum, simhall och lekland. För en större utflykt kan du välja en temalekplats eller en lekplats med linbana eller vattenlek. Vi listar ${tal(E.length)} lekplatser i hela Sverige.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vad göra med barn", href: "/vad-gora-med-barn/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Temalekplatser", href: "/temalekplatser/", text: "Lekplatser med ett tema eller natur" },
+    { namn: "Lekplatser med linbana", href: "/lekplatser-med-linbana/", text: "Fart för de lite äldre" },
+    { namn: "Plaskdammar och vattenlek", href: "/lekplatser-med-vattenlek/", text: "Sommarens självklara utflykt" },
+    { namn: "Barnkalas på lekplats", href: "/barnkalas/", text: "Platser, lekar och regler" },
+    { namn: "Kompisgunga", href: "/kompisgunga/", text: "Gungan för flera barn samtidigt" },
+  ]}
+  kallor={[
+    { namn: "Bibliotekslag (2013:801), 9 §", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/bibliotekslag-2013801_sfs-2013-801/", text: "avgiftsfria lån på folkbiblioteken", datum: "2026-11-25" },
+    { namn: "Fritidsbanken", url: "https://www.fritidsbanken.se/", text: "gratis lån av sport- och friluftsutrustning i 14 dagar", datum: "2026-11-25" },
+    { namn: "Naturvårdsverket – Så gör vi allemansrätt", url: "https://www.naturvardsverket.se/amnesomraden/allemansratten/sa-gor-vi-allemansratt/", text: "tältning, fridlysta växter och särskilda regler i skyddade områden", datum: "2026-11-25" },
+    { namn: "Tekniska museet – Öppettider och priser", url: "https://www.tekniskamuseet.se/besok/oppettider-och-priser/", text: "barn 0–6 år gratis", datum: "2026-11-25" },
+    { namn: "Nordiska museet – Besök", url: "https://www.nordiskamuseet.se/besok", text: "fri entré för barn till och med 18 år på skoldagar under terminerna", datum: "2026-11-25" },
+    { namn: "Stockholms stad – Vasaparkens parklek", url: "https://parker.stockholm/hitta-lekplatser-parklekar-plaskdammar/parklek/vasaparkens-parklek/", text: "parklekar har fritidsledare på plats under öppettiderna", datum: "2026-11-25" },
+    { namn: "Stockholms stad – Plaskdammar i söktjänsten", url: "https://parker.stockholm/hitta-lekplatser-parklekar-plaskdammar/?servicetyp=107", text: "58 plaskdammar", datum: "2026-11-25" },
+    { namn: "Malmö stad – Temalekplatser", url: "https://malmo.se/Uppleva-och-gora/For-familjer-barn-och-unga/Temalekplatser.html", text: "24 temalekplatser", datum: "2026-11-25" },
+    { namn: "Folkmängd per kommun 2024: SCB", url: "https://www.statistikdatabasen.scb.se/", text: "befolkning för lekplatser per 10 000 invånare", datum: "2026-11-25" },
+    { namn: "Lekplatsdata: kommunernas öppna data och OpenStreetMap", url: "https://www.openstreetmap.org/copyright", text: "lekplatser och redskap (© OpenStreetMap-bidragsgivare, ODbL)", datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="idag">Vad göra med barn idag? Snabba idéer</h2>
+  <p>Den bästa aktiviteten är ofta den som går att göra utan planering. Här är idéer sorterade efter väder och kostnad:</p>
+  <ul>
+    <li><strong>Ute och gratis:</strong> en ny lekplats, skogspromenad med matsäck, skattjakt i parken, cykeltur, fågelskådning, bad eller plaskdamm på sommaren och pulkaåkning på vintern.</li>
+    <li><strong>Inne och gratis:</strong> biblioteket med sagostund, öppna förskolan för de minsta, pyssel, bakning, kojbygge och bordsspel.</li>
+    <li><strong>Kostar en slant:</strong> simhall, museum, lekland, bio, bowling, klätterhall och djurpark.</li>
+  </ul>
+  <p>Byt gärna lekplats ibland. Barn som går till samma lekplats varje dag blir ofta lika glada av nya redskap som av en dyr utflykt. Använd sökrutan på <a href="/">startsidan</a> för att hitta lekplatser nära dig.</p>
+
+  <h2 id="utflykt">Utflykter med barn: lekplatser värda en resa</h2>
+  <p>De här lekplatserna har flest redskap i vår data och minst ett av de redskap som gör en lekplats till ett utflyktsmål: linbana, studsmatta, vattenlek, klättervägg, hinderbana, motorikbana eller skatepark.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Lekplats</th><th>Kommun</th><th class="num">Redskap</th><th>Höjdpunkter</th></tr></thead>
+    <tbody>{utflykt.map(({ e, u }) => <tr><td><a href={e.href}>{e.namn}</a></td><td>{e.kommun}</td><td class="num">{u.length}</td><td>{u.filter((x) => SPECIAL.includes(x)).map((x) => UTRUSTNING[x].toLowerCase()).join(", ")}</td></tr>)}</tbody>
+  </table></div>
+  <p>Fler utflyktsmål finns bland <a href="/temalekplatser/">temalekplatserna</a>, som är byggda kring en berättelse som rymden, sjörövare eller bondgården.</p>
+
+  <h2 id="lan">Lekplatser och specialredskap per län</h2>
+  <p>I hela landet finns {kr(perSverige)} lekplatser per 10 000 invånare i vår data. Tätast är det i {tatast.l.namn} med {kr(tatast.per)}, glesast i {glesast.l.namn} med {kr(glesast.per)}. Redskapen är bara kända för en del av lekplatserna, så en nolla betyder ofta att uppgiften saknas.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Lekplatser</th><th class="num">Per 10 000 inv.</th><th class="num">Tema/natur</th><th class="num">Linbana</th><th class="num">Studsmatta</th><th class="num">Vattenlek</th></tr></thead>
+    <tbody>{lan.map((x) => <tr><td><a href={x.l.href}>{x.l.kortnamn}</a></td><td class="num">{tal(x.n)}</td><td class="num">{kr(x.per)}</td><td class="num">{x.tema}</td><td class="num">{x.lin}</td><td class="num">{x.studs}</td><td class="num">{x.vatten}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="stader">Vad göra med barn i Stockholm, Göteborg, Malmö och Uppsala</h2>
+  <p>I de fyra största städerna finns flest lekplatser, men också flest museer, simhallar och parker. Tabellen visar vad vår lekplatsdata innehåller, och vilken lekplats med egen sida som har flest redskap.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th class="num">Lekplatser</th><th class="num">Tema/natur</th><th class="num">Linbana</th><th class="num">Vattenlek</th><th>Flest redskap</th></tr></thead>
+    <tbody>{STADER.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{tal(x.n)}</td><td class="num">{x.tema}</td><td class="num">{x.lin}</td><td class="num">{x.vatten}</td><td>{x.bast && <a href={x.bast.href}>{x.bast.namn}</a>}</td></tr>)}</tbody>
+  </table></div>
+  <p>I <strong>Stockholm</strong> finns dessutom parklekar, alltså lekplatser där fritidsledare finns på plats under öppettiderna, och 58 plaskdammar på sommaren enligt staden. <strong>Göteborg</strong> har Slottsskogen och plaskdammen Plaskis vid Mariaplan. <strong>Malmö</strong> har 24 temalekplatser enligt staden, från Rymdlekplatsen till Hyllie vattenpark. <strong>Uppsala</strong> redovisar redskapen för sina lekplatser i öppna data, och därför syns stadens lekplatser ofta högt i våra listor.</p>
+
+  <h2 id="gratis">Gratis aktiviteter med barn</h2>
+  <h3>Lekplatsen och naturen</h3>
+  <p>Kommunala lekplatser är gratis och för det mesta öppna dygnet runt. Naturen är också gratis tack vare allemansrätten. Ni får röra er fritt i skog och mark, plocka bär och svamp och tälta något enstaka dygn en bit från bostadshus. Vissa växter är fridlysta, och i nationalparker och naturreservat kan det finnas särskilda regler.</p>
+  <h3>Biblioteket</h3>
+  <p>Enligt bibliotekslagen är det avgiftsfritt att låna litteratur på folkbiblioteken. Många bibliotek har barnavdelning med plats att sitta och läsa, och ofta sagostunder eller lovaktiviteter.</p>
+  <h3>Fritidsbanken</h3>
+  <p>På Fritidsbanken lånar man sport- och friluftsutrustning gratis i 14 dagar. Det gör det lätt att prova en ny aktivitet utan att köpa utrustning.</p>
+  <h3>Museer</h3>
+  <p>Villkoren skiljer sig mycket. Tekniska museet i Stockholm har gratis entré för barn 0–6 år, och Nordiska museet har fri entré för barn till och med 18 år på skoldagar under terminerna, men inte på helger och lov. Kolla museets egen sida innan ni åker.</p>
+
+  <h2 id="regn">Vad göra med barn när det regnar?</h2>
+  <p>Regn behöver inte betyda en dag inomhus. Med regnkläder och stövlar är vattenpölar en lek i sig, skogen doftar mer och lekplatserna är ofta tomma. Ta med en termos och torra kläder i en påse.</p>
+  <p>Vill ni vara inne finns det många alternativ:</p>
+  <ul>
+    <li><strong>Biblioteket</strong> – gratis och oftast med en barnhörna.</li>
+    <li><strong>Museum</strong> – naturhistoriska och tekniska museer har ofta mycket att röra vid.</li>
+    <li><strong>Simhall</strong> – många har barnbassäng med varmare vatten.</li>
+    <li><strong>Lekland</strong> – bäst för barn som behöver röra sig. Kolla om det kräver förbokning, särskilt på helger och lov.</li>
+    <li><strong>Hemma</strong> – koja av filtar, bakning, pyssel med kartong, skattjakt inomhus eller en egen teaterföreställning.</li>
+  </ul>
+  <p>Vi listar inte lekland och inomhuslek ännu, eftersom vi saknar en säker datakälla för dem.</p>
+
+  <h2 id="alder">Aktiviteter efter ålder</h2>
+  <h3>0–2 år</h3>
+  <p>Korta utflykter nära hemmet fungerar bäst. Öppna förskolan, sagostund på biblioteket, babysim och en lekplats med sandlåda och småbarnsgungor räcker långt.</p>
+  <h3>3–5 år</h3>
+  <p>Nu blir temalekplatser, djurparker och korta skogsutflykter roliga. Barnen orkar gå en bit själva om det finns något att upptäcka på vägen.</p>
+  <h3>6–9 år</h3>
+  <p>Linbanor, klätterväggar, cykelturer och tipspromenader passar. Låt barnen vara med och välja utflyktsmål på kartan.</p>
+  <h3>10–12 år</h3>
+  <p>Äldre barn vill ha utmaning: hinderbanor, skateparker, klätterhallar, längre cykelturer och övernattning i tält.</p>
+
+  <h2 id="arstid">Lov och årstider</h2>
+  <h3>Sommar</h3>
+  <p>Bad, plaskdamm, picknick och cykelturer. Tidiga morgnar och sena eftermiddagar är svalare och lugnare på lekplatserna.</p>
+  <h3>Höst</h3>
+  <p>Svampplockning, lövhögar, kastanjer och kottar att pyssla med, och en ficklampspromenad när det blir mörkt tidigt.</p>
+  <h3>Vinter</h3>
+  <p>Pulka, snögubbar, skridskor på plogade isbanor och en termos med varm choklad. På vintern är det inomhusaktiviteterna som blir fulla, särskilt under sportlovet.</p>
+  <h3>Vår</h3>
+  <p>Leta vårblommor, titta på grodyngel i en damm och prova en ny lekplats när snön har smält.</p>
+  <p>Inför sommarlov, höstlov och sportlov samlar många kommuner sina lovaktiviteter på webbplatsen, ofta gratis eller billiga. På sommaren är plaskdammar och vattenlek populärast. Se vår guide om <a href="/lekplatser-med-vattenlek/">plaskdammar och vattenlek</a>. På vintern är pulkabacken självklar. Bara {pulka} lekplatser i vår data har en pulkabacke registrerad, så fråga gärna kommunen eller grannarna var de bästa backarna finns.</p>
+
+  <h2 id="planera">Planera utflykten</h2>
+  <p>Kolla vädret, packa matsäck, vatten och extra kläder och ta reda på var närmaste toalett finns. På lekplatsernas egna sidor hos oss ser du redskap, underlag och parkeringar i närheten. För små barn fungerar ett mål nära hemmet ofta bäst, eftersom en lång resa annars tar mer ork än själva utflykten. För längre utflykter: planera in pauser och välj ett mål där även vuxna kan sitta ner en stund.</p>
+</Guide>

@@ -41,7 +41,7 @@ export const SITE = {
   beskrivning: "Alla förskolor i Sverige per kommun – kommunala och fristående, med adress, barngruppernas storlek och andel förskollärare. Uppdateras varje natt.",
   organisation: "förskolor.nu",
   farg: "#1d5c63",
-  meny: [{"namn":"Maxtaxa","href":"/maxtaxa/"},{"namn":"Jämför kommuner","href":"/jamfor/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Maxtaxa","href":"/maxtaxa/"},{"namn":"Guider","href":"/guider/"},{"namn":"Jämför kommuner","href":"/jamfor/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om förskolor.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

@@ -1,0 +1,126 @@
+---
+// Lång guide: TBE-vaccin. Egen uträkning: TBE-fall per län (Folkhälsomyndighetens statistik) per 100 000
+// invånare och antal vårdcentraler per län ur katalogen. Fakta granskade mot Folkhälsomyndigheten och 1177
+// 2026-11-25. Ingen medicinsk rådgivning – vaccinationsschemat återges så som 1177 beskriver det.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { PUBLICERAD, lanRader, tal, komma } from "../lib/guide.js";
+
+// Folkhälsomyndigheten, TBE-statistik, tabellen "Samtliga fall" (hämtad 2026-11-25). [2024, 2025, 2026 hittills]
+const FALL = {
+  "Blekinge län": [2, 2, 5], "Dalarnas län": [6, 4, 8], "Gotlands län": [0, 3, 4], "Gävleborgs län": [12, 13, 14],
+  "Hallands län": [4, 4, 5], "Jämtlands län": [2, 2, 0], "Jönköpings län": [15, 21, 21], "Kalmar län": [8, 8, 4],
+  "Kronobergs län": [2, 6, 6], "Norrbottens län": [1, 1, 2], "Skåne län": [12, 21, 29], "Stockholms län": [105, 137, 164],
+  "Södermanlands län": [34, 25, 50], "Uppsala län": [32, 60, 74], "Värmlands län": [31, 30, 39], "Västerbottens län": [2, 0, 3],
+  "Västernorrlands län": [1, 3, 6], "Västmanlands län": [20, 26, 28], "Västra Götalands län": [62, 94, 84], "Örebro län": [17, 21, 34],
+  "Östergötlands län": [16, 22, 30],
+};
+const summa = (i) => Object.values(FALL).reduce((s, v) => s + v[i], 0);
+const rader = lanRader((lan) => {
+  const f = FALL[lan] ?? [0, 0, 0];
+  return { f, snitt: (f[0] + f[1]) / 2 };
+}).map((r) => ({ ...r, per100k: r.folk ? (r.snitt / r.folk) * 100000 : 0 }))
+  .sort((a, b) => b.per100k - a.per100k);
+const topp = rader.slice(0, 3);
+const folkTot = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const rikets = ((summa(0) + summa(1)) / 2 / folkTot) * 100000;
+const okning = Math.round(((summa(2) - summa(0)) / summa(0)) * 100);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är TBE?" },
+  { id: "var", rubrik: "Var i Sverige finns TBE?" },
+  { id: "fall", rubrik: "TBE-fall per län – vår uträkning" },
+  { id: "vem", rubrik: "Vem rekommenderas TBE-vaccin?" },
+  { id: "doser", rubrik: "Hur många doser behövs?" },
+  { id: "nar", rubrik: "När ska du vaccinera dig?" },
+  { id: "kostnad", rubrik: "Vad kostar TBE-vaccin och är det gratis?" },
+  { id: "boka", rubrik: "Var vaccinerar du dig?" },
+];
+
+const fragor = [
+  { fraga: "Hur många doser TBE-vaccin behöver man?", svar: "Enligt 1177 får de flesta under 50 år tre doser första året och en fjärde dos tre år senare, sedan påfyllnad vart tionde år. Den som är 50 år eller äldre eller har nedsatt immunförsvar får fler doser och påfyllnad vart femte år. Vårdpersonalen gör upp ditt schema." },
+  { fraga: "Var i Sverige finns TBE?", svar: "Framför allt i södra och mellersta Sverige. Enligt 1177 är viruset vanligast i Stockholms, Södermanlands och Uppsala läns kusttrakter och runt Mälaren. Folkhälsomyndighetens rekommendation omfattar i praktiken större delen av Sverige söder om Dalälven." },
+  { fraga: "Är TBE-vaccin gratis?", svar: "Oftast inte. TBE-vaccin ingår inte i något nationellt program och betalas som regel av den som vaccinerar sig. Vissa regioner betalar en del eller erbjuder gratis vaccin till barn – Region Stockholm erbjuder till exempel kostnadsfri vaccination till barn födda 2018–2023." },
+  { fraga: "Från vilken ålder kan barn vaccineras mot TBE?", svar: "Enligt 1177 kan barn vaccineras från ett års ålder. Folkhälsomyndighetens rekommendation gäller barn från tre år som riskerar fästingbett i områden med mycket TBE." },
+  { fraga: "Hur många får TBE varje år?", svar: `Enligt Folkhälsomyndighetens statistik rapporterades ${summa(0)} fall 2024 och ${summa(1)} fall 2025. Under 2026 har hittills ${summa(2)} fall rapporterats.` },
+  { fraga: "Smittar TBE mellan människor?", svar: "Nej. TBE sprids med fästingbett och smittar inte från person till person, enligt Folkhälsomyndigheten." },
+  { fraga: "Skyddar TBE-vaccinet mot borrelia?", svar: "Nej. Vaccinet skyddar bara mot TBE-viruset. Mot borrelia, som också sprids av fästingar, finns inget vaccin i Sverige i dag." },
+];
+
+const titel = "TBE-vaccin – doser, kostnad och var risken är störst";
+const beskrivning = `TBE-vaccin: vem det rekommenderas för, hur många doser 1177 anger, kostnad och var du vaccinerar dig. Plus TBE-fallen per län och 100 000 invånare.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="TBE-vaccin"
+  svar={`TBE sprids med fästingbett och är vanligast i <strong>Stockholms, Uppsala och Södermanlands län och runt Mälaren</strong>. Folkhälsomyndigheten rekommenderar vaccin för dig från tre år som riskerar fästingbett där. Grundvaccinationen är <strong>tre doser första året</strong> (fyra från 50 år), sedan påfyllnad. Vaccinet är oftast inte gratis – du bokar på en vaccinationsmottagning eller vårdcentral.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "TBE-vaccin", href: "/tbe-vaccin/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Influensavaccin 2026", href: "/influensavaccin/", text: "Vem det är gratis för och var du får det" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Alla vårdcentraler med öppettider" },
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Utan tidsbokning" },
+    { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/", text: "Vad räknas in – och vad inte" },
+  ]}
+  kallor={[
+    { namn: "Folkhälsomyndigheten – Sjukdomsinformation om TBE", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/smittsamma-sjukdomar/smittsam-sjukdom/sjukdomsinformation-om-tbe/", text: "smitta, utbredning och antal fall per år", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – Vaccination mot TBE", url: "https://www.folkhalsomyndigheten.se/vara-amnesomraden/vaccinationer/vaccinationer-a-o/vaccination-mot-tbe/", text: "rekommendation, riskområden och kostnad", datum: "2026-11-25" },
+    { namn: "Folkhälsomyndigheten – TBE-statistik", url: "https://www.folkhalsomyndigheten.se/statistik-och-data/hitta-statistik-och-data/tbe-statistik/", text: "antal fall per län 2024–2026", datum: "2026-11-25" },
+    { namn: "1177 – Vaccination mot TBE", url: "https://www.1177.se/undersokning-behandling/vaccinationer/vaccination-mot-tbe/", text: "doser, påfyllnad, ålder och var du vaccinerar dig", datum: "2026-11-25" },
+    { namn: "1177 – Fästingbett", url: "https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/fastingbett/", text: "inget vaccin mot borrelia", datum: "2026-11-25" },
+    { namn: "1177 Stockholm – Vaccination mot TBE", url: "https://www.1177.se/Stockholm/undersokning-behandling/vaccinationer/vaccination-mot-tbe/", text: "kostnadsfri vaccination för barn födda 2018–2023", datum: "2026-11-25" },
+    { namn: "SCB – folkmängd per kommun", text: "invånare per län för uträkningen per 100 000" },
+  ]}>
+
+  <h2 id="vad">Vad är TBE?</h2>
+  <p>TBE står för <em>tick-borne encephalitis</em>, på svenska fästingburen hjärninflammation. Det är en virussjukdom som sprids med fästingbett. Viruset smittar inte mellan människor. Enligt Folkhälsomyndigheten får de flesta som smittas inga symtom alls, och ungefär en tredjedel får lindriga influensaliknande symtom som går över inom en vecka. En del får en allvarligare sjukdom med hjärninflammation. Av dem som får neurologiska symtom blir de flesta helt återställda, men ungefär en tredjedel får långdragna eller bestående besvär, till exempel trötthet och minnesstörningar. Någon specifik behandling finns inte – vården behandlar symtomen. Därför är vaccin det viktigaste skyddet för den som ofta vistas där TBE är vanligt.</p>
+  <p>Fästingar är aktiva när temperaturen är över fem grader. Enligt 1177 pågår säsongen oftast från mars till november, och flest smittas under sommaren och tidig höst. TBE-vaccinet skyddar bara mot TBE. Det skyddar inte mot borrelia, den andra vanliga fästingburna sjukdomen.</p>
+  <p>Blir du sjuk efter ett fästingbett, ring 1177 för rådgivning eller kontakta din vårdcentral. Vid plötslig svår sjukdom, ring 112.</p>
+
+  <h2 id="var">Var i Sverige finns TBE?</h2>
+  <p>TBE finns framför allt i södra och mellersta Sverige. 1177 nämner särskilt kusttrakterna i Stockholms, Södermanlands och Uppsala län samt området runt Mälaren. Folkhälsomyndigheten delar in landet i riskområden och skriver att rekommendationen om vaccin i praktiken gäller större delen av Sverige söder om Dalälven. Smittrisken är störst i Götaland och Svealand.</p>
+  <p>Rekommendationen bygger på hur mycket du riskerar att bli biten i ett område där TBE förekommer. Den som har sommarstuga, båt eller vistas mycket i skog och mark i ett riskområde berörs därför mer än den som bara gör korta besök. Folkhälsomyndigheten uppdaterar sin bedömning av riskområdena, så kontrollera vad som gäller där du ska vistas.</p>
+
+  <h2 id="fall">TBE-fall per län – vår uträkning</h2>
+  <p>Folkhälsomyndigheten publicerar antalet rapporterade TBE-fall per län. Vi har räknat om snittet för 2024 och 2025 till antal fall per 100 000 invånare, så att små och stora län går att jämföra. Hela landet hade {summa(0)} fall 2024 och {summa(1)} fall 2025, i genomsnitt {komma(rikets)} per 100 000 invånare. Hittills under 2026 har {summa(2)} fall rapporterats, {okning} procent fler än hela 2024.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026 hittills</th><th class="num">Per 100 000 inv. (snitt 24–25)</th></tr></thead>
+    <tbody>{rader.map((r) => (
+      <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.f[0]}</td><td class="num">{r.f[1]}</td><td class="num">{r.f[2]}</td><td class="num">{komma(r.per100k)}</td></tr>
+    ))}</tbody>
+    <tfoot><tr><th>Hela landet</th><th class="num">{summa(0)}</th><th class="num">{summa(1)}</th><th class="num">{summa(2)}</th><th class="num">{komma(rikets)}</th></tr></tfoot>
+  </table></div>
+  <p class="kalla">Källa: Folkhälsomyndigheten, TBE-statistik (hämtad 25 november 2026). Statistiken utgår från den region där fallet först anmäldes, inte nödvändigtvis där smittan skedde. Uträkning per 100 000 invånare: vårdcentralen.nu med SCB:s folkmängd.</p>
+  <p>Räknat per invånare ligger {topp.map((r) => r.kortnamn).join(", ").replace(/, ([^,]*)$/, " och $1")} högst. Stockholms län har flest fall i antal, men eftersom länet har många invånare blir risken per person lägre än i flera mindre län. Norrlandslänen har mycket få fall. Tänk på att fallen räknas där de rapporteras, så en stockholmare som smittas på semester i Uppland räknas oftast i Stockholm.</p>
+
+  <h2 id="vem">Vem rekommenderas TBE-vaccin?</h2>
+  <p>Folkhälsomyndigheten rekommenderar vaccination för vuxna och barn från tre års ålder som riskerar fästingbett i områden med måttlig till hög förekomst av TBE. Personer med nedsatt immunförsvar rekommenderas vaccin även i områden med lägre förekomst, om de bor eller regelbundet vistas där.</p>
+  <p>1177 anger att barn kan vaccineras redan från ett års ålder, men den nationella rekommendationen gäller från tre år. Fråga vaccinationsmottagningen om vad som passar ditt barn. Har du en sjukdom eller tar läkemedel som påverkar immunförsvaret, prata med din läkare innan du vaccinerar dig.</p>
+
+  <h2 id="doser">Hur många doser behövs?</h2>
+  <p>TBE-vaccinet ges som en serie sprutor. Hur många du behöver beror på ålder och immunförsvar. 1177 beskriver schemat så här:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Grupp</th><th>Första året</th><th>Efter tre år</th><th>Därefter</th></tr></thead>
+    <tbody>
+      <tr><td>De flesta under 50 år</td><td>3 doser</td><td>Dos 4</td><td>Påfyllnad vart tionde år</td></tr>
+      <tr><td>50 år och äldre, och personer med nedsatt immunförsvar</td><td>4 doser</td><td>Dos 5</td><td>Påfyllnad vart femte år</td></tr>
+    </tbody>
+  </table></div>
+  <p>För den som är under 50 ges enligt 1177 dos två en till tre månader efter den första och dos tre fem till tolv månader efter den andra. Exakt schema bestämmer vaccinationsmottagningen utifrån vilket vaccin du får och din situation. Har du missat en dos eller tappat bort hur många du fått, fråga vaccinationsmottagningen hur du ska fortsätta. Spara ditt vaccinationskort.</p>
+
+  <h2 id="nar">När ska du vaccinera dig?</h2>
+  <p>1177 råder dig att vaccinera dig i god tid innan fästingsäsongen. Eftersom grundvaccinationen består av flera doser med en till tre månader mellan de två första, och säsongen enligt 1177 oftast börjar i mars, behöver den som vill ha flera doser före sommaren börja under vintern eller tidig vår.</p>
+  <p>Påfyllnadsdoserna ingår i schemat på samma sätt som grundvaccinationen. Den som fick sina första sprutor för många år sedan och inte fyllt på enligt schemat bör fråga vaccinationsmottagningen hur de ska fortsätta.</p>
+
+  <h2 id="kostnad">Vad kostar TBE-vaccin och är det gratis?</h2>
+  <p>TBE-vaccinet ingår inte i något nationellt vaccinationsprogram. Enligt Folkhälsomyndigheten betalar man därför som regel själv, men vissa regioner betalar en del av kostnaden. Det är varje region som bestämmer.</p>
+  <p>Ett exempel är Region Stockholm, som enligt sin information på 1177 erbjuder kostnadsfri TBE-vaccination till barn födda mellan 2018 och 2023. Vad som gäller i andra regioner ser du på 1177.se när du har valt din region. Priset för den som betalar själv sätts av mottagningen och kan skilja sig mycket. Fråga om priset per dos och om det finns paketpris för hela grundvaccinationen.</p>
+  <p>Vaccinationer räknas oftast inte in i <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet för öppen vård</a>, enligt 1177. Du betalar alltså även om du har frikort.</p>
+
+  <h2 id="boka">Var vaccinerar du dig?</h2>
+  <p>1177 hänvisar till vaccinationsmottagningar, och en del vårdcentraler erbjuder också TBE-vaccin. Så hittar du en mottagning:</p>
+  <ol>
+    <li>Sök på <strong>vaccination</strong> eller <strong>TBE</strong> på 1177 Hitta vård, eller ring din vårdcentral och fråga om de vaccinerar.</li>
+    <li>Kontrollera om mottagningen har drop-in eller om du behöver boka. Många har e-tjänster på 1177 för att boka vaccination.</li>
+    <li>Fråga vad en dos kostar och om din region subventionerar vaccinet för dig eller dina barn.</li>
+  </ol>
+  <p>Vill du vaccinera dig på din vanliga vårdcentral kan du hitta den med <a href="/">sökningen på startsidan</a>. Där ser du adress, telefon och öppettider. På <a href="/drop-in/">drop-in-sidan</a> ser du vilka vårdcentraler som tar emot utan bokad tid.</p>
+</Guide>

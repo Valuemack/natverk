@@ -1,13 +1,10 @@
 ---
-// Sfi i hela landet: skolor med sfi per län och kommunernas resultat enligt Skolverket.
-import Layout from "@natverk/core/Layout.astro";
-import Annons from "@natverk/core/Annons.astro";
-import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { SITE, KAT, UPPDATERAD, KALLA, RIKET, statFor } from "../site.js";
+// Sfi – lång guide: studievägar och kurser enligt nya kursplanen (SKOLFS 2026:67), rätten till sfi enligt skollagen,
+// och egen statistik per kommun (elever, distans, godkända) från Skolverkets jämförelsetal. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, RIKET, statFor } from "../site.js";
+import { tal, pct, PUBLICERAD, GRANSKAD, K } from "../guider.js";
 
-const tal = (v, d = 1) => (v == null ? "–" : Number(v).toLocaleString("sv-SE", { maximumFractionDigits: d }));
-const pct = (v) => (v == null ? "–" : `${tal(v, 0)} %`);
 // Godkända + avbrutna ska rymmas inom samma kursdeltagare; annars är siffrorna inte jämförbara.
 const rimlig = (s) => s?.andel_godkanda_av_avslutade_eller_avbrutna != null && s.andel_avbrutna != null && s.andel_godkanda_av_avslutade_eller_avbrutna + s.andel_avbrutna <= 100.5;
 const sf = RIKET.sfi;
@@ -16,37 +13,127 @@ const kommuner = KAT.kommuner.map((k) => ({ k, sfi: statFor(k)?.sfi, skolor: med
 const medResultat = kommuner.filter((x) => rimlig(x.sfi) && x.sfi.elever >= 100);
 const bast = [...medResultat].sort((a, b) => b.sfi.andel_godkanda_av_avslutade_eller_avbrutna - a.sfi.andel_godkanda_av_avslutade_eller_avbrutna);
 const flest = [...kommuner].filter((x) => x.sfi?.elever).sort((a, b) => b.sfi.elever - a.sfi.elever).slice(0, 15);
+const distans = [...kommuner].filter((x) => x.sfi?.elever >= 300 && x.sfi.andel_distans != null).sort((a, b) => b.sfi.andel_distans - a.sfi.andel_distans);
+const utanDistans = distans.filter((x) => x.sfi.andel_distans < 1).length;
 const antalSkolor = KAT.enheter.filter((e) => e.extra?.nivaer?.includes("sfi")).length;
-const fragor = [
-  { fraga: "Vad är sfi?", svar: "Sfi, svenska för invandrare, är kommunens kostnadsfria grundutbildning i svenska för vuxna som har ett annat modersmål. Sfi ingår i den kommunala vuxenutbildningen och har fyra kurser, A till D." },
-  { fraga: "Vem kan läsa sfi?", svar: "Du kan läsa sfi från den 1 juli det år du fyller 16 om du bor i Sverige och saknar grundläggande kunskaper i svenska. Du söker hos kommunen där du bor." },
-  sf && { fraga: "Hur många klarar sfi?", svar: `I hela landet blev ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} % av de sfi-kurser som avslutades eller avbröts ${sf.ar} godkända. ${tal(sf.andel_avbrutna)} % av kurserna avbröts.` },
-  bast[0] && { fraga: "Var klarar flest sfi?", svar: `Bland kommuner med minst 100 sfi-elever har ${bast[0].k.namn} högst andel godkända (${tal(bast[0].sfi.andel_godkanda_av_avslutade_eller_avbrutna)} %), följt av ${bast.slice(1, 3).map((x) => `${x.k.namn} (${tal(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)} %)`).join(" och ")}.` },
-].filter(Boolean);
----
-<Layout site={SITE} titel={`Sfi i alla kommuner – skolor och resultat ${sf?.ar ?? ""}`.trim()}
-  beskrivning={`Sfi – svenska för invandrare – i alla kommuner: ${antalSkolor} skolor med sfi och hur många som blir godkända i varje kommun. ✓ Statistik från Skolverket.`}
-  smulor={[{ namn: "Start", href: "/" }, { namn: "Sfi", href: "/sfi/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>Sfi – svenska för invandrare</h1>
-  <p class="svar">{antalSkolor} skolenheter i {kommuner.filter((x) => x.skolor).length} kommuner har sfi.{sf && <> {tal(sf.elever, 0)} personer läste sfi {sf.ar} och <strong>{tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} %</strong> av de avslutade eller avbrutna kurserna blev godkända.</>}</p>
+const antalKommuner = kommuner.filter((x) => x.skolor).length;
 
-  <h2>Flest sfi-elever</h2>
+// Kursplan för sfi, SKOLFS 2026:67 (gäller kurser som påbörjas efter 31 december 2026).
+const STUDIEVAGAR = [
+  { vag: "Studieväg 1", for: "liten eller ingen erfarenhet av formella studier", kurser: [["1A", 900], ["1B", 1000], ["1C", 1000], ["1D", 900]] },
+  { vag: "Studieväg 2", for: "erfarenhet av formella studier", kurser: [["2B", 600], ["2C", 800], ["2D", 700]] },
+  { vag: "Studieväg 3", for: "bred erfarenhet av formella studier", kurser: [["3C", 500], ["3D", 300]] },
+];
+const summa = (v) => v.kurser.reduce((a, [, p]) => a + p, 0);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är sfi och vem får läsa?" },
+  { id: "nivaer", rubrik: "Sfi-nivåer: studievägar och kurser" },
+  { id: "nya-kurser", rubrik: "Nya sfi-kurser från 1 januari 2027" },
+  { id: "tid", rubrik: "Hur lång tid tar sfi? Treårsregeln" },
+  { id: "distans", rubrik: "Sfi på distans" },
+  { id: "resultat", rubrik: "Hur många klarar sfi?" },
+  { id: "kommuner", rubrik: "Andel godkända per kommun" },
+  { id: "efter", rubrik: "Ansöka och studera vidare efter sfi" },
+];
+
+const fragor = [
+  { fraga: "Vad är sfi?", svar: "Sfi, kommunal vuxenutbildning i svenska för invandrare, är kommunens avgiftsfria grundutbildning i svenska för vuxna med ett annat modersmål. Sfi är en del av komvux och har tre studievägar med kurser från 1A till 3D." },
+  { fraga: "Vilka sfi-nivåer finns?", svar: "Sfi har kurserna A, B, C och D fördelade på tre studievägar. Studieväg 1 har 1A–1D, studieväg 2 har 2B–2D och studieväg 3 har 3C–3D. D är den högsta nivån. Från 2027 finns också kurserna grundläggande läs- och skrivinlärning och latinisering." },
+  { fraga: "Vem kan läsa sfi?", svar: "Du har rätt till sfi från andra kalenderhalvåret det år du fyller 16, om du bor i Sverige och saknar grundläggande kunskaper i svenska. Du söker hos kommunen där du bor." },
+  { fraga: "Hur länge får man läsa sfi?", svar: "Enligt skollagen gäller rätten till sfi i tre år från det att du togs emot första gången. Kommunen kan förlänga tiden om det finns särskilda skäl, högst sex månader i taget och totalt högst tre år." },
+  { fraga: "Kan man läsa sfi på distans?", svar: `Ja, i många kommuner. I hela landet läste ${pct(sf?.andel_distans)} av sfi-eleverna på distans ${sf?.ar}. Andelen skiljer sig mycket mellan kommunerna, och ${utanDistans} av de ${distans.length} kommunerna med minst 300 elever hade nästan ingen distans.` },
+  sf && { fraga: "Hur många klarar sfi?", svar: `I hela landet blev ${tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} % av de sfi-kurser som avslutades eller avbröts ${sf.ar} godkända. ${tal(sf.andel_avbrutna)} % av kurserna avbröts.` },
+  { fraga: "Kostar sfi något?", svar: "Nej. Sfi är avgiftsfri enligt skollagen, och du ska få tillgång till läroböcker och andra lärverktyg utan kostnad." },
+].filter(Boolean);
+
+const titel = "Sfi – nivåer, kurser och resultat i alla kommuner";
+---
+<Guide site={SITE} titel={titel}
+  beskrivning={`Sfi förklarat: studievägar 1–3, kurserna 1A–3D, nya kursplanen från 2027 och treårsregeln. Plus andel godkända och sfi på distans i ${antalKommuner} kommuner.`}
+  h1="Sfi – svenska för invandrare"
+  svar={`Sfi är kommunens <strong>avgiftsfria utbildning i svenska</strong> för vuxna med annat modersmål. Den har <strong>tre studievägar</strong> med kurserna 1A–1D, 2B–2D och 3C–3D, där D är högst. Du har rätt till sfi från hösten det år du fyller 16 och söker hos din kommun. ${antalSkolor} skolenheter i ${antalKommuner} kommuner har sfi.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Sfi", href: "/sfi/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Så söker du hos din kommun" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Distans per kommun" },
+    { namn: "Yrkesvux", href: "/yrkesvux/", text: "Yrkesutbildning, även ihop med sfi" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Studiemedel 2027" },
+    flest[0] && { namn: `Sfi i ${flest[0].k.namn}`, href: `${flest[0].k.href}#sfi`, text: "Skolor och statistik" },
+  ].filter(Boolean)}
+  kallor={[
+    { namn: "Skolverkets föreskrifter (SKOLFS 2026:67) om kursplaner och studievägar för sfi", url: "https://skolfs.skolverket.se/api/document/GRUNDFORFATTNING/2026:67/pdf", text: "studievägar, kurser och verksamhetspoäng från 2027", datum: "2026-11-25" },
+    { namn: "Skolverket – Nya kurser i komvux i sfi", url: "https://www.skolverket.se/styrning-och-ansvar/en-skola-i-forandring/skolverket-ser-over-kursplaner-i-komvux/nya-kurser-i-komvux-i-sfi", text: "övergången till nya kursplaner", datum: "2026-11-25" },
+    { ...K.skollagen, text: "rätten till sfi, treårsregeln, avgiftsfrihet och kombination med arbete (20 kap. 7, 24–26, 31 och 31 a §§)" },
+    { ...K.forordningen, text: "nationella prov i sfi (4 kap. 10 a §)" },
+    K.statistik,
+    K.register,
+  ]}>
+
+  <h2 id="vad">Vad är sfi och vem får läsa?</h2>
+  <p>Sfi står för <strong>kommunal vuxenutbildning i svenska för invandrare</strong>. Det är inte en egen skolform utan en del av komvux, och kommunen är skyldig att erbjuda den. Syftet är att ge vuxna med ett annat modersmål grundläggande kunskaper i svenska, för vardagen, samhällslivet, arbetet och fortsatta studier.</p>
+  <p>Enligt skollagen har du <strong>rätt till sfi</strong> från och med andra kalenderhalvåret det år du fyller 16, om du</p>
+  <ul>
+    <li>är bosatt i Sverige, och</li>
+    <li>saknar sådana grundläggande kunskaper i svenska som sfi ger.</li>
+  </ul>
+  <p>Utbildningen är <strong>avgiftsfri</strong>. Du ska också få tillgång till läroböcker och andra lärverktyg utan kostnad. Sfi ska gå att kombinera med förvärvsarbete, och kommunen ska verka för att den kan kombineras med praktik, validering eller annan utbildning. Undervisningen ska i genomsnitt vara minst 15 timmar i veckan under en fyraveckorsperiod, om du inte själv ber om färre timmar.</p>
+
+  <h2 id="nivaer">Sfi-nivåer: studievägar och kurser</h2>
+  <p>Sfi är uppdelad i tre <strong>studievägar</strong> för personer med olika studiebakgrund. Inom varje studieväg finns kurser som betecknas med en siffra för studievägen och en bokstav för nivån. D är den högsta nivån i alla studievägar. Den som har gått i skola länge börjar oftast högre upp och har färre kurser kvar. Tabellen bygger på Skolverkets kursplan som gäller från 2027.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Studieväg</th><th>För dig med</th><th>Kurser (verksamhetspoäng)</th><th class="num">Summa</th></tr></thead>
+    <tbody>{STUDIEVAGAR.map((v) => (
+      <tr><td>{v.vag}</td><td>{v.for}</td><td>{v.kurser.map(([k, p]) => `${k} (${p})`).join(", ")}</td><td class="num">{tal(summa(v), 0)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Verksamhetspoängen visar hur stor kursen är beräknad att vara, inte hur lång tid den tar för just dig. Du kan börja på den kurs som passar dina kunskaper, och du kan byta studieväg om det visar sig bättre. Nationella prov används i slutet av kurserna 1B, 2B, 1C, 2C, 3C, 1D, 2D och 3D enligt förordningen om vuxenutbildning.</p>
+  <h3>Vilken kurs börjar jag på?</h3>
+  <p>Vilken studieväg och kurs du börjar på beror på din studiebakgrund och vad du redan kan på svenska. Skolan bedömer det när du börjar. Har du till exempel studerat på universitet passar studieväg 3, där det bara finns två kurser fram till sfi D. Den som inte har gått i skola alls börjar i studieväg 1, och kan från 2027 först läsa kursen grundläggande läs- och skrivinlärning.</p>
+
+  <h2 id="nya-kurser">Nya sfi-kurser från 1 januari 2027</h2>
+  <p>Skolverket har beslutat om nya kursplaner för sfi (SKOLFS 2026:67). De trädde i kraft 15 augusti 2026 och gäller för kurser som börjar <strong>efter den 31 december 2026</strong>. De gamla kursplanerna från 2017 upphävs, men gäller fortfarande för kurser som du har börjat före den 1 januari 2027.</p>
+  <ul>
+    <li><strong>Samma struktur:</strong> tre studievägar och kurserna A–D finns kvar.</li>
+    <li><strong>Två nya kurser:</strong> grundläggande läs- och skrivinlärning (400 verksamhetspoäng) för den som behöver lära sig läsa och skriva, och latinisering (100 verksamhetspoäng) för den som kan läsa och skriva på ett språk med ett annat alfabet.</li>
+    <li><strong>Nytt innehåll:</strong> kurserna har fått nytt centralt innehåll och nya betygskriterier.</li>
+  </ul>
+  <p>Läser du redan sfi behöver du alltså inte börja om. Har du gjort ett uppehåll och kommer tillbaka under 2027 kan du hamna i den nya kursplanen. Fråga din skola vad som gäller för dig.</p>
+
+  <h2 id="tid">Hur lång tid tar sfi? Treårsregeln</h2>
+  <p>Hur lång tid sfi tar beror på din bakgrund, hur många timmar du läser i veckan och om du arbetar samtidigt. Det finns ingen fast kurslängd. Däremot har skollagen en gräns för hur länge rätten till sfi gäller:</p>
+  <ul>
+    <li>Rätten gäller i <strong>tre år</strong> från det att du togs emot till sfi första gången.</li>
+    <li>Kommunen får förlänga tiden om det finns särskilda skäl, med högst sex månader i taget.</li>
+    <li>Förlängningarna får sammanlagt vara högst tre år.</li>
+  </ul>
+  <p>Det lönar sig därför att planera studierna så att du hinner klart, till exempel genom att läsa fler timmar i veckan eller kombinera sfi med distansstudier.</p>
+
+  <h2 id="distans">Sfi på distans</h2>
+  <p>I hela landet läste <strong>{pct(sf?.andel_distans)}</strong> av sfi-eleverna på distans {sf?.ar}. Det är betydligt lägre än på komvux gymnasial nivå, där {pct(RIKET.komvux?.andel_distans_gymnasial)} läste på distans. Möjligheten skiljer sig mycket mellan kommunerna. Av de {distans.length} kommunerna med minst 300 sfi-elever hade {utanDistans} i stort sett ingen distansundervisning alls. Här är kommunerna med högst andel:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Andel på distans</th><th class="num">Sfi-elever</th></tr></thead>
+    <tbody>{distans.slice(0, 10).map((x) => <tr><td><a href={`${x.k.href}#sfi`}>{x.k.namn}</a></td><td class="num">{pct(x.sfi.andel_distans)}</td><td class="num">{tal(x.sfi.elever, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Distansstudier kräver att du kan planera din tid själv. Mer om distans i hela vuxenutbildningen finns på sidan <a href="/distans/">komvux på distans</a>.</p>
+
+  <h2 id="resultat">Hur många klarar sfi?</h2>
+  {sf && <p>{tal(sf.elever, 0)} personer läste sfi {sf.ar}, och {pct(sf.andel_kvinnor)} av dem var kvinnor. Av de kurser som avslutades eller avbröts blev <strong>{tal(sf.andel_godkanda_av_avslutade_eller_avbrutna)} %</strong> godkända, medan {tal(sf.andel_avbrutna)} % avbröts. En avbruten kurs kan bero på att eleven har fått arbete, flyttat eller tagit uppehåll, så andelen avbrutna säger inte allt om undervisningen.</p>}
+  <h3>Flest sfi-elever</h3>
   <div class="tabell"><table>
     <thead><tr><th>Kommun</th><th class="num">Elever</th><th class="num">Godkända</th><th class="num">Distans</th></tr></thead>
     <tbody>{flest.map((x) => <tr><td><a href={`${x.k.href}#sfi`}>{x.k.namn}</a></td><td class="num">{tal(x.sfi.elever, 0)}</td><td class="num">{pct(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)}</td><td class="num">{pct(x.sfi.andel_distans)}</td></tr>)}</tbody>
   </table></div>
 
-  <Annons plats="sfi-1" />
-
-  <h2>Andel godkända per kommun</h2>
-  <p>Kommuner med minst 100 sfi-elever och kompletta uppgifter, sorterade efter andel godkända av de kurser som avslutades eller avbröts {sf?.ar}. Riket: {tal(sf?.andel_godkanda_av_avslutade_eller_avbrutna)} %.</p>
+  <h2 id="kommuner">Andel godkända per kommun</h2>
+  <p>Kommuner med minst 100 sfi-elever och kompletta uppgifter, sorterade efter andel godkända av de kurser som avslutades eller avbröts {sf?.ar}. Riket: {tal(sf?.andel_godkanda_av_avslutade_eller_avbrutna)} %. Andelen påverkas av elevernas bakgrund och studieväg, så jämför med försiktighet.</p>
   <div class="tabell"><table>
     <thead><tr><th>Kommun</th><th class="num">Godkända</th><th class="num">Avbrutna</th><th class="num">Elever</th></tr></thead>
     <tbody>{bast.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.sfi.andel_godkanda_av_avslutade_eller_avbrutna)}</td><td class="num">{pct(x.sfi.andel_avbrutna)}</td><td class="num">{tal(x.sfi.elever, 0)}</td></tr>)}</tbody>
   </table></div>
-  <p class="kalla">Källa: Skolverket, kommunala jämförelsetal. Andelen påverkas av elevernas bakgrund och studieväg, så jämför med försiktighet.</p>
 
-  <Annons plats="sfi-2" />
-  <Faq fragor={fragor} />
-  <p class="kalla">{KALLA}</p>
-</Layout>
+  <h2 id="efter">Ansöka och studera vidare efter sfi</h2>
+  <p>Du söker till sfi hos <strong>kommunen där du bor</strong>, oftast via kommunens e-tjänst för vuxenutbildning. Kommunen kan ha egen undervisning eller köpa den av en annan anordnare. Välj din kommun i <a href="/#lan">listan över län och kommuner</a> för att se vilka skolor som har sfi.</p>
+  <p>Efter sfi D kan du fortsätta med <strong>svenska som andraspråk</strong> på komvux, först på grundläggande nivå och sedan på gymnasial nivå. Svenska eller svenska som andraspråk på gymnasial nivå krävs för gymnasieexamen och för behörighet till högskolan. Kommunen ska enligt skollagen också verka för att sfi kan kombineras med annan utbildning, till exempel en yrkesutbildning. Läs mer om <a href="/yrkesvux/">yrkesvux</a> och om hur du <a href="/ansoka/">ansöker till komvux</a>.</p>
+</Guide>

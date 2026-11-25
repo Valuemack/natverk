@@ -1,0 +1,111 @@
+---
+// Lång guide: vårdgaranti och väntetider. Egen data: patienternas betyg på tillgänglighet per region i
+// Nationell patientenkät 2025 (vårdcentralsnivå via Vårdbetyg, CC BY 4.0, snitt räknat av redaktionen) och
+// listningskö per region ur 1177-korten (scripts/07). Fakta granskade mot 1177, HSL, patientlagen och SKR 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, lanRader, tal, komma } from "../lib/guide.js";
+
+const rader = lanRader((lan) => {
+  const v = G.vardbetyg[lan];
+  return { t: v?.tillganglighet ?? null, nVb: v?.n ?? 0, svar: v?.svar ?? 0, ko: G.kort[lan]?.listningsko ?? 0, kort: G.kort[lan]?.kort ?? 0 };
+}).sort((a, b) => (b.t ?? -1) - (a.t ?? -1));
+const medT = rader.filter((r) => r.t != null);
+const bast = medT[0], samst = medT.at(-1);
+const totSvar = medT.reduce((s, r) => s + r.svar, 0), totN = medT.reduce((s, r) => s + r.nVb, 0);
+const riket = medT.reduce((s, r) => s + r.t * r.nVb, 0) / totN;
+const totKo = rader.reduce((s, r) => s + r.ko, 0);
+const period = Object.values(G.vardbetyg)[0]?.period ?? "2025";
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är vårdgarantin? 0–3–90–90" },
+  { id: "primarvard", rubrik: "Vårdgarantin på vårdcentralen" },
+  { id: "listad", rubrik: "Du måste vara listad" },
+  { id: "inte-halls", rubrik: "Om vårdgarantin inte hålls" },
+  { id: "vantetider", rubrik: "Var ser du väntetiderna?" },
+  { id: "patientenkat", rubrik: "Tillgänglighet enligt patienterna – per region" },
+  { id: "rattigheter", rubrik: "Fler rättigheter i patientlagen" },
+];
+
+const fragor = [
+  { fraga: "Vad innebär vårdgarantin?", svar: "Vårdgarantin ger dig rätt till kontakt med vårdcentralen samma dag, medicinsk bedömning av legitimerad personal inom tre dagar, första besök i specialiserad vård inom 90 dagar och behandling inom 90 dagar efter beslut." },
+  { fraga: "Hur länge får man vänta på vårdcentralen?", svar: "Enligt vårdgarantin ska du få kontakt med vårdcentralen samma dag som du söker och en medicinsk bedömning inom tre dagar, om vården bedömer att du behöver det. Bedömningen görs av legitimerad personal, inte nödvändigtvis en läkare." },
+  { fraga: "Gäller vårdgarantin om jag inte är listad?", svar: "Enligt 1177 gäller vårdgarantin i primärvården hos den vårdcentral där du är listad, i den region där du är folkbokförd. Lista dig därför på en vårdcentral." },
+  { fraga: "Vad gör jag om vårdgarantin inte hålls?", svar: "I primärvården kan du byta vårdcentral, högst två gånger på ett år. Gäller det specialistvård ska du erbjudas vård hos en annan mottagning, även i en annan region, utan extra kostnad. Kontakta regionens vårdgarantikansli eller vårdlots." },
+  { fraga: "Var kan jag se väntetider i vården?", svar: "SKR publicerar statistik om väntetider från regionernas rapportering på webbplatsen Väntetider i vården. Fråga också din mottagning eller regionens vårdlots om väntetiden för just din vård." },
+  { fraga: "Vad är Nationell patientenkät?", svar: "Nationell patientenkät är en återkommande enkät där patienter svarar på frågor om bland annat bemötande, information och tillgänglighet. Resultaten per vårdcentral finns sammanställda öppet." },
+];
+
+const titel = "Vårdgaranti och väntetider – 0, 3, 90 och 90 dagar";
+const beskrivning = `Vårdgarantin 0–3–90–90: kontakt samma dag, bedömning inom tre dagar, 90 dagar till specialist. Vad du gör om den inte hålls och patienternas betyg per region.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Vårdgaranti och väntetider"
+  svar={`Vårdgarantin ger dig rätt till <strong>kontakt med vårdcentralen samma dag</strong>, <strong>medicinsk bedömning inom tre dagar</strong>, <strong>första besök hos specialist inom 90 dagar</strong> och <strong>behandling inom 90 dagar</strong> efter beslut. I primärvården gäller den hos vårdcentralen där du är listad. Hålls den inte kan du få vård någon annanstans utan extra kostnad.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vårdgaranti", href: "/vardgaranti/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Lista dig där du vill" },
+    { namn: "Patientnämnden", href: "/patientnamnden/", text: "Om du inte är nöjd med vården" },
+    { namn: "Akuten, närakut eller jourcentral", href: "/akut-narakut-jourcentral/", text: "När det inte kan vänta" },
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Kom samma dag utan bokad tid" },
+  ]}
+  kallor={[
+    { namn: "1177 – Vårdgaranti", url: "https://www.1177.se/sa-fungerar-varden/lagar-och-bestammelser/vardgaranti/", text: "0–3–90–90, listning och vad du gör om garantin inte hålls", datum: "2026-11-25" },
+    { namn: "Hälso- och sjukvårdslag (2017:30), 9 kap.", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/halso-och-sjukvardslag-201730_sfs-2017-30/", text: "vårdgarantin och vård hos annan vårdgivare", datum: "2026-11-25" },
+    { namn: "Patientlag (2014:821)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/patientlag-2014821_sfs-2014-821/", text: "tillgänglighet, information, fast läkarkontakt och ny medicinsk bedömning", datum: "2026-11-25" },
+    { namn: "SKR – Väntetider i vården", url: "https://extra.skr.se/vantetiderivarden.46246.html", text: "statistik över väntetider", datum: "2026-11-25" },
+    { namn: "Vårdbetyg – öppna data om vårdcentraler (CC BY 4.0)", url: "https://vardbetyg.se/data/vardcentraler.csv", text: `Nationell patientenkät ${period} per vårdcentral, snitt per region räknat av redaktionen`, datum: "2026-11-19" },
+  ]}>
+
+  <h2 id="vad">Vad är vårdgarantin? 0–3–90–90</h2>
+  <p>Vårdgarantin är en lagstadgad rätt som anger hur länge du som längst ska behöva vänta på olika steg i vården. Den regleras i hälso- och sjukvårdslagen, 9 kapitlet, och gäller i hela landet. Regionerna får ha kortare tidsgränser, men inte längre. Garantin brukar sammanfattas med siffrorna 0–3–90–90:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Steg</th><th>Tidsgräns</th><th>Var</th></tr></thead>
+    <tbody>
+      <tr><td>Kontakt med vården</td><td><strong>Samma dag</strong> (0 dagar)</td><td>Vårdcentralen</td></tr>
+      <tr><td>Medicinsk bedömning av legitimerad personal</td><td><strong>Inom 3 dagar</strong></td><td>Vårdcentralen</td></tr>
+      <tr><td>Första besök i den specialiserade vården</td><td><strong>Inom 90 dagar</strong></td><td>Specialistmottagning</td></tr>
+      <tr><td>Behandling efter beslut</td><td><strong>Inom 90 dagar</strong></td><td>Sjukhus eller specialistmottagning</td></tr>
+    </tbody>
+  </table></div>
+  <p>Vårdgarantin gäller planerad vård. Är det akut ska du inte vänta – ring 112 vid livshotande tillstånd eller läs om <a href="/akut-narakut-jourcentral/">akuten, närakut och jourcentral</a>. Den gäller inte heller sådant du själv väljer att vänta på, till exempel om du tackar nej till en erbjuden tid.</p>
+
+  <h2 id="primarvard">Vårdgarantin på vårdcentralen</h2>
+  <p>De två första stegen gäller primärvården. Du ska få <strong>kontakt med vårdcentralen samma dag</strong> som du söker, till exempel per telefon, via 1177.se eller på plats. Kontakten behöver inte vara ett besök, utan kan vara ett samtal där personalen tar reda på vad du behöver.</p>
+  <p>Om vårdcentralen bedömer att du behöver en <strong>medicinsk bedömning</strong> ska du få den inom tre dagar. Bedömningen görs av legitimerad personal, till exempel läkare, sjuksköterska eller fysioterapeut, beroende på dina besvär. Det betyder alltså inte att du alltid har rätt att träffa en läkare inom tre dagar. Patientlagen säger dessutom att du ska få en medicinsk bedömning snarast, om det inte är uppenbart obehövligt.</p>
+  <p>Kan du inte få kontakt med din vårdcentral samma dag, försök igen via 1177.se eller på nytt telefonnummer om vårdcentralen har knappval. Ring 1177 för rådgivning om du är osäker på hur bråttom det är.</p>
+
+  <h2 id="listad">Du måste vara listad</h2>
+  <p>Enligt 1177 gäller vårdgarantin i den region där du är folkbokförd, och i primärvården kräver den att du är listad på en vårdcentral. Hälso- och sjukvårdslagen har nyligen ändrats (lag 2026:878) så att det står uttryckligen i 9 kapitlet 1 § att garantin för kontakt och bedömning i primärvården gäller hos den vårdcentral där du är listad.</p>
+  <p>Är du inte listad, eller vet du inte var du är listad? Logga in på 1177.se och se dina vårdval, eller läs om hur du <a href="/byta-vardcentral/">byter vårdcentral</a>. Listningen ger dig också rätt att välja en fast läkarkontakt på vårdcentralen.</p>
+
+  <h2 id="inte-halls">Om vårdgarantin inte hålls</h2>
+  <h3>I primärvården</h3>
+  <p>Hålls inte vårdgarantin på din vårdcentral är ditt alternativ enligt 1177 att byta vårdcentral. Du får byta högst två gånger på ett år, om det inte finns särskilda skäl för fler byten.</p>
+  <h3>I den specialiserade vården</h3>
+  <p>Får du inte ett första besök eller en behandling inom 90 dagar ska regionen erbjuda dig vård hos en annan vårdgivare, även i en annan region, <strong>utan extra kostnad</strong> för dig. Det står både i hälso- och sjukvårdslagen (9 kap. 2 §) och i patientlagen (2 kap. 4 §). Du har rätt att tacka nej och vänta kvar. Behöver du resa längre för att få vården kan du i vissa fall få ersättning för extra resekostnader.</p>
+  <p>Kontakta regionens <strong>vårdgarantikansli</strong> eller <strong>vårdlots</strong>, som hjälper dig att hitta en mottagning med kortare väntetid. Kontaktuppgifterna finns på 1177.se när du valt din region. Är du missnöjd med hur ditt ärende hanteras kan du också vända dig till <a href="/patientnamnden/">patientnämnden</a>.</p>
+
+  <h2 id="vantetider">Var ser du väntetiderna?</h2>
+  <p>Regionerna rapporterar väntetider till Sveriges Kommuner och Regioner (SKR), som publicerar statistiken på webbplatsen <strong>Väntetider i vården</strong>. Där kan du jämföra hur stor andel av patienterna som fått vård inom vårdgarantins gränser i olika regioner och verksamheter. Statistiken visar hur det ser ut i stort, inte hur länge just du kommer att vänta.</p>
+  <p>Vill du veta väntetiden för din egen vård, fråga mottagningen som har din remiss eller regionens vårdlots. Har du fått en remiss till specialist kan du ofta också välja en annan mottagning med kortare kö, enligt patientlagens regler om val av utförare i öppen vård.</p>
+
+  <h2 id="patientenkat">Tillgänglighet enligt patienterna – per region</h2>
+  <p>Vårdgarantin mäter tider, men hur upplever patienterna tillgängligheten? I Nationell patientenkät svarar patienter på frågor om bland annat hur lätt det var att komma i kontakt med vårdcentralen och om väntetiden var rimlig. Resultaten finns öppet per vårdcentral. Vi har räknat ut genomsnittet per region för dimensionen <strong>tillgänglighet</strong> i mätningen {period}, på en skala där 100 är bäst. Underlaget är {tal(totN)} vårdcentraler och {tal(totSvar)} svar. Genomsnittet för hela landet är {komma(riket)}. {bast && samst && <>Högst betyg har {bast.kortnamn} ({komma(bast.t)}) och lägst {samst.kortnamn} ({komma(samst.t)}).</>}</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Region</th><th class="num">Tillgänglighet (0–100)</th><th class="num">Vårdcentraler i enkäten</th><th class="num">Svar</th><th class="num">Listningskö</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.t != null ? komma(r.t) : "–"}</td><td class="num">{r.nVb || "–"}</td><td class="num">{r.svar ? tal(r.svar) : "–"}</td><td class="num">{r.ko}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Nationell patientenkät {period}, resultat per vårdcentral via Vårdbetyg (vardbetyg.se, CC BY 4.0). Snittet per region är ett ovägt medelvärde av vårdcentralernas resultat, räknat av vårdcentralen.nu. Alla vårdcentraler har inte resultat i de öppna data, så antalet i enkäten kan vara betydligt lägre än antalet vårdcentraler i länet (tydligast i Stockholm). Listningskö: vårdcentraler som visade kö för listning i sitt kontaktkort på 1177 ({G.hamtat.vardtyper}), totalt {totKo}. "–" = uppgift saknas.</p>
+  <p>Skillnaderna mellan regionerna är små jämfört med skillnaderna mellan enskilda vårdcentraler. Vill du jämföra din egen vårdcentral, se dess sida här på sajten eller sök på vårdcentralens namn på 1177.</p>
+
+  <h2 id="rattigheter">Fler rättigheter i patientlagen</h2>
+  <p>Vårdgarantin är en del av ett större regelverk som stärker din ställning som patient. Patientlagen (2014:821) ger dig bland annat rätt till:</p>
+  <ul>
+    <li><strong>Information</strong> om ditt hälsotillstånd, behandlingar och förväntad väntetid (3 kap.).</li>
+    <li><strong>Fast vårdkontakt och fast läkarkontakt</strong> på den vårdcentral där du är listad (6 kap.).</li>
+    <li><strong>Ny medicinsk bedömning</strong> vid livshotande eller särskilt allvarlig sjukdom (8 kap.).</li>
+    <li><strong>Val av vårdcentral och öppen vård</strong> i hela landet (9 kap.).</li>
+  </ul>
+  <p>Enligt 3 kapitlet ska vården också informera dig om vårdgarantin och om möjligheten att välja vårdgivare. Fråga din vårdcentral om du är osäker på vad som gäller för dig.</p>
+</Guide>

@@ -1,0 +1,109 @@
+---
+// Lång guide: distriktssköterska. Egen data: 1177 Hitta vård, vårdtypen Distriktssköterskemottagning, per län och kommun
+// (scripts/06, hämtad 2026-11-25). Fakta granskade mot Socialstyrelsen (HSLF-FS 2018:43, vaccination) och 1177 2026-11-25.
+// Medvetet kortare än 1 500 ord: distriktssköterskans arbetsuppgifter varierar per region och vårdcentral, och vi skriver
+// inte mer än vi kan belägga.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, DATA_DATUM, lanRader, tal, invPer, vardtyp, vardtypLan, toppKommuner, KALLA_1177_VARDTYP } from "../lib/guide.js";
+
+const TYP = "Distriktssköterskemottagning";
+const T = vardtyp(TYP);
+const rader = lanRader((lan) => ({ n: vardtypLan(TYP, lan) })).sort((a, b) => b.n - a.n);
+const vcTot = rader.reduce((s, r) => s + r.vc, 0);
+const folkTot = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const topp = toppKommuner(TYP, 12);
+const hjalpmedel = G.receptTyper?.hjalpmedel ?? 0;
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en distriktssköterska?" },
+  { id: "hjalp", rubrik: "Vad kan distriktssköterskan hjälpa till med?" },
+  { id: "forskriva", rubrik: "Får distriktssköterskan skriva ut läkemedel och vaccinera?" },
+  { id: "hembesok", rubrik: "Hembesök och hemsjukvård" },
+  { id: "lan", rubrik: "Distriktssköterskemottagningar per län" },
+  { id: "kontakt", rubrik: "Så får du kontakt med en distriktssköterska" },
+];
+
+const fragor = [
+  { fraga: "Vad gör en distriktssköterska?", svar: "En distriktssköterska är en legitimerad sjuksköterska med specialistutbildning för arbete i primärvården. På vårdcentralen arbetar distriktssköterskor ofta med bedömning av besvär, kontroller vid kroniska sjukdomar, sårvård, vaccinationer, provtagning och råd om levnadsvanor. Vad som ingår skiljer sig mellan vårdcentraler." },
+  { fraga: "Får en distriktssköterska skriva ut recept?", svar: "Ja, i viss utsträckning. Sjuksköterskor med specialistexamen inom distriktssköterskeområdet kan få förskrivningsrätt från Socialstyrelsen för vissa läkemedel enligt föreskriften HSLF-FS 2018:43. Det gäller inte alla läkemedel." },
+  { fraga: "Får en distriktssköterska ge vaccin utan läkare?", svar: "Enligt Socialstyrelsen får specialistsjuksköterskor inom distriktssköterskeområdet eller hälso- och sjukvård för barn och ungdomar ordinera vissa vacciner till barn och vuxna, enligt 9 § i HSLF-FS 2018:43." },
+  { fraga: "Gör distriktssköterskan hembesök?", svar: "Ofta, men inte överallt och bara efter bedömning. Hembesök brukar gälla dig som har svårt att ta dig till vårdcentralen. I många kommuner har kommunen tagit över hemsjukvården. Fråga din vårdcentral vad som gäller." },
+  { fraga: "Kostar ett besök hos distriktssköterskan?", svar: "Avgiften bestäms av regionen och kan skilja sig från avgiften för ett läkarbesök. Patientavgifter för besök i öppen vård räknas in i högkostnadsskyddet." },
+  { fraga: "Hur många distriktssköterskemottagningar finns det?", svar: `1177 Hitta vård listar ${tal(T.antal)} mottagningar under vårdtypen distriktssköterskemottagning (november 2026). De flesta finns på vårdcentraler.` },
+];
+
+const titelKort = "Distriktssköterska – uppgifter, recept och hembesök";
+const beskrivning = `Distriktssköterskan på vårdcentralen: vad hon eller han hjälper till med, förskrivning och vaccination, hembesök och ${tal(T.antal)} mottagningar per län.`;
+---
+<Guide site={SITE} titel={titelKort} beskrivning={beskrivning} h1="Distriktssköterska på vårdcentralen"
+  svar={`En <strong>distriktssköterska</strong> är en legitimerad sjuksköterska med specialistutbildning för primärvården. På vårdcentralen bedömer distriktssköterskan besvär, gör kontroller vid kroniska sjukdomar, sårvård, vaccinationer och provtagning, och kan ha <strong>förskrivningsrätt</strong> för vissa läkemedel. Kontakta din vårdcentral eller 1177.se för att boka tid. Vid livshotande tillstånd, ring 112.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Distriktssköterska", href: "/distriktsskoterska/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "BVC", href: "/bvc/", text: "Distriktssköterskan på barnavårdscentralen" },
+    { namn: "Provtagning och blodprov", href: "/provtagning/", text: "Lämna prover på vårdcentralen" },
+    { namn: "Influensavaccin", href: "/influensavaccin/", text: "Vem som får gratis vaccin" },
+    { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/", text: "Vad besöken kostar" },
+  ]}
+  kallor={[
+    { namn: "Socialstyrelsen – HSLF-FS 2018:43 om behörighet för sjuksköterskor att förskriva och ordinera läkemedel", url: "https://www.socialstyrelsen.se/kunskapsstod-och-regler/regler-och-riktlinjer/foreskrifter-och-allmanna-rad/konsoliderade-foreskrifter/201843-om-behorighet-for-sjukskoterskor-att-forskriva-och-ordinera-lakemedel/", text: "förskrivningsrätt och ordination av vaccin", datum: "2026-11-25" },
+    { namn: "Socialstyrelsen – Vem får ordinera läkemedel för vaccination?", url: "https://www.socialstyrelsen.se/kunskapsstod-och-regler/regler-och-riktlinjer/vem-far-gora-vad/vaccination/", text: "vilka sjuksköterskor som får ordinera vilka vacciner", datum: "2026-11-25" },
+    { namn: "Socialstyrelsen – Förskrivningsrätt för sjuksköterska", url: "https://legitimation.socialstyrelsen.se/andra-behorigheter/forskrivningsratt/forskrivningsratt-for-sjukskoterska/", text: "ansökan och utbildningskrav (75 hp)", datum: "2026-11-25" },
+    KALLA_1177_VARDTYP(TYP),
+  ]}>
+
+  <h2 id="vad">Vad är en distriktssköterska?</h2>
+  <p>En distriktssköterska är en legitimerad sjuksköterska som har läst en specialistutbildning inom distriktssköterskeområdet. Utbildningen omfattar 75 högskolepoäng och leder till en specialistsjuksköterskeexamen. Distriktssköterskor arbetar framför allt i primärvården: på vårdcentraler, barnavårdscentraler och i hemsjukvården.</p>
+  <p>Titeln finns i hela landet, men hur distriktssköterskans arbete är upplagt bestäms av regionen och den enskilda vårdcentralen. På vissa vårdcentraler har distriktssköterskorna egna mottagningar med bokade tider, på andra tar de emot på drop-in eller sköter telefonrådgivningen. Därför ser 1177:s register olika ut i olika regioner: på en del vårdcentraler finns en särskild distriktssköterskemottagning listad, på andra ingår den i vårdcentralen.</p>
+
+  <h2 id="hjalp">Vad kan distriktssköterskan hjälpa till med?</h2>
+  <p>Ofta är det distriktssköterskan du träffar eller pratar med först när du kontaktar vårdcentralen. Hon eller han bedömer dina besvär och avgör om du behöver träffa en läkare, en annan yrkesgrupp, eller om du kan få råd och behandling direkt. Vanliga uppgifter på vårdcentralen är:</p>
+  <ul>
+    <li><strong>Bedömning och rådgivning</strong> vid akuta besvär, till exempel infektioner, och hänvisning vidare vid behov.</li>
+    <li><strong>Kontroller vid kroniska sjukdomar</strong>, till exempel diabetes och högt blodtryck, ofta i form av återkommande sjuksköterskebesök.</li>
+    <li><strong>Sårvård</strong>, omläggningar och borttagning av stygn.</li>
+    <li><strong>Vaccinationer</strong>, till exempel mot influensa och inför resor.</li>
+    <li><strong>Provtagning</strong> och injektioner, se även <a href="/provtagning/">provtagning och blodprov</a>.</li>
+    <li><strong>Råd om levnadsvanor</strong>, som alkohol, tobak, matvanor och fysisk aktivitet.</li>
+    <li><strong>Hjälpmedel och förbrukningsartiklar</strong>, till exempel inkontinensskydd eller material vid diabetes, beroende på region.</li>
+  </ul>
+  <p>Exakt vad din vårdcentral erbjuder står ofta i vårdcentralens kontaktkort på 1177. När vi gick igenom kontaktkorten nämnde {tal(hjalpmedel)} vårdcentraler förskrivning av hjälpmedel.</p>
+  <p>På <a href="/bvc/">barnavårdscentralen</a> är det i regel en distriktssköterska eller barnsjuksköterska som följer barnet, med bland annat vägning, mätning, vaccinationer och samtal med föräldrarna.</p>
+
+  <h2 id="forskriva">Får distriktssköterskan skriva ut läkemedel och vaccinera?</h2>
+  <h3>Förskrivningsrätt</h3>
+  <p>Sjuksköterskor kan ansöka om förskrivningsrätt hos Socialstyrelsen. Reglerna finns i Socialstyrelsens föreskrifter <strong>HSLF-FS 2018:43</strong> om behörighet för sjuksköterskor att förskriva och ordinera läkemedel. För att få förskrivningsrätt krävs legitimation och en utbildning som uppfyller kraven i föreskriften, till exempel specialistexamen inom distriktssköterskeområdet. Förskrivningsrätten gäller bara vissa läkemedel som Läkemedelsverket har listat. För många läkemedel krävs fortfarande en läkare.</p>
+  <h3>Vaccination</h3>
+  <p>Enligt Socialstyrelsen får specialistsjuksköterskor inom distriktssköterskeområdet, eller inom hälso- och sjukvård för barn och ungdomar, ordinera vissa vacciner till barn och vuxna. Det står i 9 § i HSLF-FS 2018:43. Därför kan du ofta få till exempel <a href="/influensavaccin/">influensavaccin</a> av en sjuksköterska utan att träffa en läkare. Även andra sjuksköterskor kan få ordinera vissa vaccin om de har rätt utbildning.</p>
+  <p>Frågor om dina egna läkemedel, doser eller biverkningar ska du ställa till den som har ordinerat dem, eller ringa 1177.</p>
+
+  <h2 id="hembesok">Hembesök och hemsjukvård</h2>
+  <p>Många vårdcentraler erbjuder hembesök av distriktssköterska för dig som har svårt att ta dig till mottagningen, till exempel på grund av hög ålder eller sjukdom. Hembesök görs efter bedömning och är inte en rättighet för alla. Det kan gälla till exempel provtagning, sårvård eller hjälp med läkemedel.</p>
+  <p>Hemsjukvården, alltså mer omfattande vård i hemmet, är organiserad olika i landet. I många regioner har kommunerna tagit över hemsjukvården, medan läkarinsatserna fortfarande görs av vårdcentralen. Vill du veta vad som gäller där du bor, fråga din vårdcentral eller kommunen.</p>
+
+  <h2 id="lan">Distriktssköterskemottagningar per län</h2>
+  <p>1177 Hitta vård listar <strong>{tal(T.antal)} mottagningar</strong> under vårdtypen distriktssköterskemottagning. Som jämförelse finns {tal(vcTot)} vårdcentraler i vår katalog. Siffrorna visar mest hur regionerna registrerar sina mottagningar: i vissa län har nästan varje vårdcentral en egen distriktssköterskemottagning i registret, i andra är den en del av vårdcentralen. Ett lågt antal betyder alltså inte att det saknas distriktssköterskor.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Distriktssköterskemottagningar</th><th class="num">Vårdcentraler i katalogen</th><th class="num">Invånare per mottagning</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{r.vc}</td><td class="num">{invPer(r.folk, r.n)}</td></tr>)}</tbody>
+    <tfoot><tr><td>Hela landet</td><td class="num">{tal(T.antal)}</td><td class="num">{tal(vcTot)}</td><td class="num">{invPer(folkTot, T.antal)}</td></tr></tfoot>
+  </table></div>
+  <p class="kalla">Källa: 1177 Hitta vård, vårdtypen Distriktssköterskemottagning, hämtad {DATA_DATUM} och sammanställd av vårdcentralen.nu. Invånare per mottagning är avrundat till tusental. {T.utanKommun ? `${T.utanKommun} mottagningar kunde inte placeras i en kommun och ingår bara i totalen.` : ""}</p>
+  {topp.length > 0 && <>
+    <p>Flest distriktssköterskemottagningar i registret har dessa kommuner:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Kommun</th><th class="num">Mottagningar</th></tr></thead>
+      <tbody>{topp.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{x.antal}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  <h2 id="kontakt">Så får du kontakt med en distriktssköterska</h2>
+  <ol>
+    <li><strong>Kontakta din vårdcentral</strong> per telefon eller via 1177.se. Säg vad det gäller, så bokar personalen in dig hos rätt yrkesgrupp.</li>
+    <li><strong>Boka eller ändra tid</strong> via e-tjänsterna på 1177.se om din vårdcentral har dem.</li>
+    <li><strong>Gå på drop-in</strong> om vårdcentralen har det. Se <a href="/drop-in/">vårdcentraler med drop-in</a>.</li>
+    <li><strong>Ring 1177</strong> om du vill ha sjukvårdsrådgivning dygnet runt. Det är också sjuksköterskor som svarar där.</li>
+  </ol>
+  <p>Vid livshotande tillstånd ska du alltid ringa 112.</p>
+</Guide>

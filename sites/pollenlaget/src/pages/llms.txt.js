@@ -1,3 +1,4 @@
+import { GUIDER } from "../lib/guider-lista.js";
 import { SITE, REGIONER, TYPER, SVERIGE, prognosFor, KALENDER_AR, kalenderFor, mmdd, UPPDATERAD } from "../site.js";
 
 export function GET() {
@@ -14,6 +15,9 @@ export function GET() {
     "## Viktiga sidor",
     `- [Pollenkalender](${SITE.url}/pollenkalender/)`,
     ...TYPER.map((t) => `- [${t.namn}](${SITE.url}/pollen/${t.slug}/)`),
+    "",
+    "## Guider",
+    ...GUIDER.map((g) => `- [${g.namn}](${SITE.url}${g.href}): ${g.text}`),
     "",
     "## Orter",
     ...REGIONER.map((r) => `- [Pollenprognos ${r.namn}](${SITE.url}/${r.slug}/)${bjork && kalenderFor(r, bjork) ? `: björkpollen brukar börja runt ${mmdd(kalenderFor(r, bjork).typisk_start)} (median ${KALENDER_AR[0]}–${KALENDER_AR.at(-1)})` : ""}`),

@@ -1,0 +1,139 @@
+---
+// Lång guide: sjukintyg och läkarintyg. Egen nytta: räknare för sjukdag 8 och 15 utifrån första sjukdagen,
+// och vårdcentraler per län med e-tjänster för intyg och sjukskrivning på 1177 (scripts/07).
+// Fakta granskade mot Försäkringskassan, Transportstyrelsen och 1177 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { G, PUBLICERAD, lanRader, tal, pct } from "../lib/guide.js";
+
+const rader = lanRader((lan) => {
+  const k = G.kort[lan] ?? {};
+  return { kort: k.kort ?? 0, intyg: k.intyg ?? 0, sjuk: k.sjukskrivning ?? 0 };
+}).sort((a, b) => b.intyg / (b.kort || 1) - a.intyg / (a.kort || 1));
+const sum = (f) => rader.reduce((s, r) => s + r[f], 0);
+const totKort = sum("kort"), totIntyg = sum("intyg"), totSjuk = sum("sjuk");
+
+const avsnitt = [
+  { id: "anstalld", rubrik: "Sjuk som anställd: dag 1, 8 och 15" },
+  { id: "rakna", rubrik: "Räkna ut när du behöver läkarintyg" },
+  { id: "karens", rubrik: "Karensavdraget" },
+  { id: "andra", rubrik: "Arbetssökande och egenföretagare" },
+  { id: "fa-intyg", rubrik: "Så får du ett läkarintyg för sjukskrivning" },
+  { id: "lan", rubrik: "E-tjänster för intyg – per län" },
+  { id: "korkort", rubrik: "Läkarintyg för körkort" },
+  { id: "kostnad", rubrik: "Vad kostar ett intyg?" },
+];
+
+const fragor = [
+  { fraga: "När behöver jag läkarintyg när jag är sjuk?", svar: "Som anställd får arbetsgivaren begära läkarintyg när du är sjuk mer än sju kalenderdagar, alltså från dag 8. Kollektivavtal kan ha andra regler. Arbetssökande ska lämna läkarintyg till Försäkringskassan senast dag 8." },
+  { fraga: "Vem betalar när jag är sjuk?", svar: "Enligt Försäkringskassan betalar arbetsgivaren sjuklön de två första veckorna. Från dag 15 kan du få sjukpenning från Försäkringskassan, om arbetsgivaren har sjukanmält dig." },
+  { fraga: "Hur stort är karensavdraget?", svar: "Karensavdraget är 20 procent av den sjuklön du får en genomsnittlig vecka. Det är arbetsgivaren som gör avdraget från sjuklönen." },
+  { fraga: "Hur skickar jag läkarintyget till Försäkringskassan?", svar: "Oftast skickar läkaren intyget digitalt till Försäkringskassan utan att du behöver göra något. Har Försäkringskassan inte fått det kan du skicka det via 1177." },
+  { fraga: "Behöver jag läkarintyg för körkort?", svar: "För högre behörigheter, som lastbil och buss, och för taxiförarlegitimation krävs läkarintyg. Vissa sjukdomar, till exempel diabetes som behandlas med läkemedel, kräver också läkarintyg. Se Transportstyrelsens regler." },
+  { fraga: "Räknas läkarintyg in i högkostnadsskyddet?", svar: "Oftast inte. Enligt 1177 räknas intyg och hälsoundersökningar oftast inte in i högkostnadsskyddet för öppen vård." },
+  { fraga: "Kan jag få sjukintyg digitalt?", svar: "Många vårdcentraler har e-tjänster för att begära intyg eller förlänga sjukskrivning på 1177. Läkaren behöver ändå bedöma om du har rätt till intyg." },
+];
+
+const titel = "Sjukintyg och läkarintyg – dag 8, dag 15 och körkort";
+const beskrivning = `Sjukintyg: när arbetsgivaren får kräva läkarintyg, karensavdrag, sjukpenning från dag 15 och intyg för körkort. Räkna ut dina datum och se e-tjänster per län.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Sjukintyg och läkarintyg"
+  svar={`Som anställd får du <strong>sjuklön från arbetsgivaren de två första veckorna</strong>, med ett karensavdrag. Från <strong>dag 8</strong> får arbetsgivaren begära läkarintyg, och från <strong>dag 15</strong> kan du få sjukpenning från Försäkringskassan. Läkaren skickar oftast intyget digitalt. Intyg för till exempel körkort kostar oftast extra och räknas inte in i högkostnadsskyddet.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Sjukintyg och läkarintyg", href: "/sjukintyg-lakarintyg/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Högkostnadsskydd och frikort", href: "/hogkostnadsskydd-frikort/", text: "Vad räknas in" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Kontakt och e-tjänster" },
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Utan tidsbokning" },
+    { namn: "Förnya recept", href: "/fornya-recept/", text: "Så gör du på 1177" },
+  ]}
+  kallor={[
+    { namn: "Försäkringskassan – Sjukskriven när du är anställd", url: "https://www.forsakringskassan.se/privatperson/sjuk-eller-skadad/ersattning-nar-du-ar-sjuk-eller-skadad-sjukpenning/sjukskriven-nar-du-ar-anstalld", text: "sjuklön, sjukpenning från dag 15 och digitala läkarintyg", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Sjuklön (för arbetsgivare)", url: "https://www.forsakringskassan.se/arbetsgivare/sjukdom-och-skada/sjuklon", text: "läkarintyg efter sju kalenderdagar och kollektivavtal", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Karensavdrag", url: "https://www.forsakringskassan.se/arbetsgivare/sjukdom-och-skada/karensavdrag", text: "20 procent av genomsnittlig veckosjuklön", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Sjukskriven när du är arbetssökande", url: "https://www.forsakringskassan.se/privatperson/sjuk-eller-skadad/ersattning-nar-du-ar-sjuk-eller-skadad-sjukpenning/sjukskriven-nar-du-ar-arbetssokande", text: "sjukanmälan dag 1 och läkarintyg senast dag 8", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Sjukpenning för dig med enskild firma", url: "https://www.forsakringskassan.se/privatperson/sjuk-eller-skadad/ersattning-nar-du-ar-sjuk-eller-skadad-sjukpenning/sjukpenning-har-eget-foretag/sjukpenning-for-dig-med-enskild-firma", text: "karensdagar och läkarintyg efter sju dagar", datum: "2026-11-25" },
+    { namn: "Transportstyrelsen – Medicinska krav för körkort", url: "https://www.transportstyrelsen.se/sv/vagtrafik/korkort/ta-korkort/medicinska-krav/", text: "sjukdomar som kräver läkarintyg och synkrav", datum: "2026-11-25" },
+    { namn: "Transportstyrelsen – Digitalt läkarintyg", url: "https://www.transportstyrelsen.se/sv/vagtrafik/korkort/trafikmedicin/digitalt-lakarintyg/", text: "intyg för högre behörigheter och taxi", datum: "2026-11-25" },
+    { namn: "1177 – Högkostnadsskydd för öppenvård", url: "https://www.1177.se/sa-fungerar-varden/kostnader-och-ersattningar/hogkostnadsskydd-for-oppenvard/", text: "intyg räknas oftast inte in", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="anstalld">Sjuk som anställd: dag 1, 8 och 15</h2>
+  <p>Reglerna för sjukskrivning bygger på dagar räknade från första sjukdagen. För dig som är anställd ser det ut så här enligt Försäkringskassan:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Sjukdag</th><th>Vad händer</th><th>Vem betalar</th></tr></thead>
+    <tbody>
+      <tr><td>Dag 1</td><td>Du sjukanmäler dig till arbetsgivaren. Karensavdrag görs.</td><td>Arbetsgivaren (sjuklön)</td></tr>
+      <tr><td>Dag 8</td><td>Arbetsgivaren får begära läkarintyg, eftersom du varit sjuk mer än sju kalenderdagar.</td><td>Arbetsgivaren (sjuklön)</td></tr>
+      <tr><td>Dag 15</td><td>Arbetsgivaren sjukanmäler dig till Försäkringskassan. Läkarintyget behövs för sjukpenningen.</td><td>Försäkringskassan (sjukpenning)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Kollektivavtal kan ha andra regler för när du ska visa intyg, så kontrollera vad som gäller på din arbetsplats. Utgångspunkten i lagen är dag 8.</p>
+  <p>Läkarintyget kallas ibland sjukintyg. Det är samma sak: ett intyg från läkare om att sjukdomen sätter ned din arbetsförmåga. Läkaren skickar oftast intyget digitalt till Försäkringskassan utan att du behöver göra något. Har Försäkringskassan inte fått det kan du skicka det själv via 1177.</p>
+
+  <h2 id="rakna">Räkna ut när du behöver läkarintyg</h2>
+  <p>Fyll i din första sjukdag, så räknar vi ut vilka datum som gäller. Dagarna räknas som kalenderdagar, inklusive helger.</p>
+  <form class="berakning" id="sjuk" onsubmit="return false">
+    <label>Första sjukdag<input type="date" id="sj-dag" /></label>
+    <output id="sj-ut" aria-live="polite">Välj ett datum.</output>
+  </form>
+  <p class="kalla">Räknaren följer huvudreglerna ovan. Kollektivavtal, återinsjuknande och särskilda beslut kan ge andra datum.</p>
+
+  <h2 id="karens">Karensavdraget</h2>
+  <p>När du blir sjuk gör arbetsgivaren ett <strong>karensavdrag</strong> från sjuklönen. Enligt Försäkringskassan är karensavdraget <strong>20 procent av den sjuklön du får en genomsnittlig vecka</strong>. Kollektivavtal kan påverka hur det räknas.</p>
+  <p>Den som har ett särskilt högriskskydd, till exempel för att man har varit sjuk mer än tio gånger på tolv månader, kan slippa karensavdraget. Det ansöker du om hos Försäkringskassan. Behovsanställda som inte har rätt till sjuklön får i stället avdraget gjort från sjukpenningen.</p>
+
+  <h2 id="andra">Arbetssökande och egenföretagare</h2>
+  <h3>Arbetssökande</h3>
+  <p>Är du helt arbetssökande ska du sjukanmäla dig till Försäkringskassan <strong>första dagen</strong> du är sjuk. Läkarintyg ska lämnas senast dag 8. För att få sjukpenning de första 14 dagarna behöver du ha varit inskriven på Arbetsförmedlingen och sökt arbete aktivt. Karensavdraget motsvarar då en hel dag med ersättning.</p>
+  <h3>Enskild firma</h3>
+  <p>Har du enskild firma sjukanmäler du dig till Försäkringskassan första dagen, eller senast inom sju dagar. Läkarintyg behövs om du är sjuk längre än sju dagar. Egenföretagare har inte karensavdrag utan <strong>karensdagar</strong>, vanligen sju, då du inte får någon sjukpenning.</p>
+
+  <h2 id="fa-intyg">Så får du ett läkarintyg för sjukskrivning</h2>
+  <p>Ett läkarintyg för sjukskrivning skrivs efter att en läkare har bedömt dig. Vanligen sker det på din vårdcentral.</p>
+  <ol>
+    <li>Kontakta din vårdcentral via telefon eller 1177.se och berätta att du behöver bedömas för sjukskrivning.</li>
+    <li>Läkaren bedömer dina besvär och hur de påverkar din förmåga att arbeta.</li>
+    <li>Om läkaren skriver ett intyg skickas det oftast digitalt till Försäkringskassan. Du kan läsa och skicka dina intyg i 1177:s tjänst för intyg.</li>
+    <li>Ge arbetsgivaren en kopia om den har begärt intyg.</li>
+  </ol>
+  <p>Det är läkaren som avgör om du har rätt till ett intyg och hur länge. Är du akut sjuk, ring 1177 för rådgivning eller 112 om det är livshotande. Sjukskrivning är inget akut ärende.</p>
+
+  <h2 id="lan">E-tjänster för intyg – per län</h2>
+  <p>Vi har gått igenom {tal(totKort)} vårdcentralers kontaktkort på 1177. {tal(totIntyg)} vårdcentraler ({pct(totIntyg, totKort)} procent) har en e-tjänst där du kan begära eller fråga om intyg, och {tal(totSjuk)} har en särskild e-tjänst för sjukskrivning, till exempel att förlänga den. Andelen skiljer sig mycket mellan länen, eftersom regionerna sätter upp e-tjänsterna på olika sätt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Vårdcentraler</th><th class="num">E-tjänst för intyg</th><th class="num">E-tjänst för sjukskrivning</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.kort}</td><td class="num">{r.intyg} ({pct(r.intyg, r.kort)} %)</td><td class="num">{r.sjuk}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: vårdcentralernas kontaktkort på 1177 Hitta vård, hämtade {G.hamtat.vardtyper}. Sammanställning vårdcentralen.nu. Utan särskild e-tjänst kan du oftast ändå skicka ett meddelande eller ringa.</p>
+
+  <h2 id="korkort">Läkarintyg för körkort</h2>
+  <p>För lägre behörigheter, som vanlig personbil, lämnar du enligt Transportstyrelsen en hälsodeklaration. Läkarintyg krävs i vissa fall. Enligt Transportstyrelsen gäller det bland annat:</p>
+  <ul>
+    <li><strong>Högre behörigheter</strong>, till exempel lastbil och buss, och <strong>taxiförarlegitimation</strong>. Läkaren kan skicka intyget digitalt till Transportstyrelsen efter att du godkänt det.</li>
+    <li><strong>Diabetes</strong> som behandlas med läkemedel. Behandlas diabetesen bara med kost behövs inget intyg.</li>
+    <li><strong>Epilepsi</strong> – oftast krävs ett särskilt läkarintyg.</li>
+    <li><strong>Grovt eller upprepat rattfylleri</strong> under de senaste fem åren.</li>
+  </ul>
+  <p>Från den 15 januari 2026 krävs inte längre läkarintyg för ADHD och autism. För syn gäller att du ska se minst 0,5 med båda ögonen tillsammans, och för lastbil och buss gäller strängare krav. Ett grundläggande synintyg kan utfärdas av legitimerad optiker eller läkare.</p>
+  <p>Fråga din vårdcentral om de skriver körkortsintyg och vad det kostar, innan du bokar.</p>
+
+  <h2 id="kostnad">Vad kostar ett intyg?</h2>
+  <p>Enligt 1177 räknas intyg och hälsoundersökningar oftast <strong>inte</strong> in i <a href="/hogkostnadsskydd-frikort/">högkostnadsskyddet</a>. Det betyder att du kan behöva betala för ett körkortsintyg, ett intyg till försäkringsbolag eller resor även om du har frikort. Priset bestäms av regionen eller mottagningen, och vi anger inga belopp.</p>
+  <p>Vad ett läkarintyg för sjukskrivning kostar beror på din region. Fråga alltid om priset innan du bokar en tid för ett intyg som inte är kopplat till vård.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const f = document.getElementById("sj-dag"), ut = document.getElementById("sj-ut");
+      const fmt = (d) => d.toLocaleDateString("sv-SE", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+      const plus = (d, n) => new Date(d.getTime() + n * 864e5);
+      f.value = new Date().toISOString().slice(0, 10);
+      const rakna = () => {
+        if (!f.value) { ut.textContent = "Välj ett datum."; return; }
+        const d1 = new Date(f.value + "T12:00:00Z");
+        ut.innerHTML = `Dag 1: <strong>${fmt(d1)}</strong> – karensavdrag.<br>Dag 8: <strong>${fmt(plus(d1, 7))}</strong> – arbetsgivaren får begära läkarintyg.<br>Dag 15: <strong>${fmt(plus(d1, 14))}</strong> – sjukpenning från Försäkringskassan kan börja.`;
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Guide>

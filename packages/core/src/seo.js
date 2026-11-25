@@ -64,6 +64,30 @@ export const faqLd = (fragor) => ({
   })),
 });
 
+// Lång guidesida: Article med datum och utgivare. Författaren är redaktionen (Organization) – ingen påhittad person.
+export const artikelLd = (site, { titel, beskrivning, sokvag, publicerad, uppdaterad, avsnitt = [] }) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: String(titel).slice(0, 110),
+  description: beskrivning,
+  inLanguage: "sv-SE",
+  mainEntityOfPage: abs(site, sokvag),
+  datePublished: publicerad,
+  dateModified: uppdaterad ?? publicerad,
+  author: { "@type": "Organization", name: `Redaktionen på ${site.namn}`, url: abs(site, "/om/") },
+  publisher: { "@type": "Organization", name: site.organisation ?? site.namn, url: site.url },
+  ...(avsnitt.length && { articleSection: avsnitt.map((a) => a.rubrik) }),
+});
+
+// Steg-för-steg (HowTo). Använd bara när sidan faktiskt är en instruktion med steg.
+export const howToLd = ({ namn, beskrivning, steg }) => ({
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: namn,
+  ...(beskrivning && { description: beskrivning }),
+  step: steg.map((s, i) => ({ "@type": "HowToStep", position: i + 1, name: s.namn, text: s.text })),
+});
+
 // Bottar utan nytta för svenska sajter stängs ute; AI- och sökbottar välkomnas.
 const BLOCKERADE = ["Baiduspider", "MJ12bot", "DotBot", "PetalBot", "ExaSearchBot", "Bytespider"];
 const AI_BOTTAR = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot",

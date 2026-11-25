@@ -1,0 +1,153 @@
+---
+// Lång guide: förskoleplats – rätten till plats, ansökan och kö, fyra månader, byta och säga upp, stängning.
+// Fakta: skollagen 8 kap. 3–7, 12–15, 18–19 §§ och 29 kap. 6 §; Skolverket "Rätt till förskola" (uppdaterad 2026-11-16).
+// Egen data: andel inskrivna barn 1–5 år per län (Skolverkets jämförelsetal, viktat med inskrivna barn) och datumräknare.
+// Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, RIKET } from "../site.js";
+import { relaterade, perLan, rangordna, tal, pct, SKOLLAGEN, SKOLVERKET_JMF, STAT_AR } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const lan = perLan("andel_barn_1_5_inskrivna").sort((a, b) => b.v - a.v);
+const kommunInskr = rangordna("andel_barn_1_5_inskrivna", true, { barn_inskrivna: 300 });
+const lagst = kommunInskr.at(-1), hogst = kommunInskr[0];
+
+const avsnitt = [
+  { id: "ratt-till-plats", rubrik: "Vem har rätt till förskoleplats?" },
+  { id: "ansoka", rubrik: "Så ansöker du om förskoleplats" },
+  { id: "fyra-manader", rubrik: "Fyra månader – räkna ut datumen" },
+  { id: "vilken-forskola", rubrik: "Vilken förskola får barnet plats på?" },
+  { id: "fristaende", rubrik: "Kö till fristående förskolor" },
+  { id: "sarskilt-erbjudande", rubrik: "När kommunen erbjuder plats utan ansökan" },
+  { id: "byta-saga-upp", rubrik: "Byta förskola, flytta eller säga upp platsen" },
+  { id: "stangt", rubrik: "Sommarstängt och planeringsdagar" },
+  { id: "inskrivna", rubrik: "Hur många barn går i förskolan?" },
+];
+
+const fragor = [
+  { fraga: "Hur lång tid tar det att få förskoleplats?", svar: "När du har anmält önskemål om plats i en kommunal förskola ska kommunen erbjuda plats inom fyra månader. Barn som behöver särskilt stöd ska erbjudas plats skyndsamt. Regeln gäller förskola med offentlig huvudman, inte kön till en enskild fristående förskola." },
+  { fraga: "När kan jag ställa mitt barn i kö till förskolan?", svar: "Det bestämmer kommunen. Lagen säger bara att barn har rätt till förskola från ett års ålder och att kommunen har fyra månader på sig efter att du anmält önskemål. Vill du ha plats ett visst datum bör du därför anmäla senast fyra månader innan." },
+  { fraga: "Måste jag ta den plats kommunen erbjuder?", svar: "Nej. Kommunen ska erbjuda en plats så nära hemmet som möjligt och ta skälig hänsyn till dina önskemål, men du är inte tvungen att tacka ja. Du behöver inte acceptera en plats i en fristående förskola med konfessionella inslag." },
+  { fraga: "Har mitt barn rätt till förskola om jag är föräldraledig?", svar: "Ja. Om du är föräldraledig med ett annat barn, eller arbetslös, har barnet från ett års ålder rätt till förskola minst tre timmar om dagen eller 15 timmar i veckan. Kommunen får erbjuda mer tid." },
+  { fraga: "Kan mitt barn gå i förskola i en annan kommun?", svar: "Ja, om barnet har särskilda skäl, till exempel anknytning till två kommuner vid gemensam vårdnad. Utan särskilda skäl får den andra kommunen ta emot barnet, men det är en möjlighet och inte en rättighet." },
+  { fraga: "Hur säger jag upp förskoleplatsen?", svar: "Uppsägningen görs till kommunen eller till den fristående förskolan, enligt deras regler. Uppsägningstid och om avgift tas ut under den bestäms lokalt, så läs kommunens eller förskolans villkor." },
+  { fraga: "Får förskolan stänga på sommaren?", svar: "Det finns ingen regel i skollagen som låter en huvudman stänga alla sina förskolor samtidigt. Huvudmannen får erbjuda ett sommaröppet alternativ, men det ska ta hänsyn till barnets trygghet och ligga på rimligt avstånd från hemmet." },
+];
+
+const titel = "Förskoleplats – ansöka, kö, byta och säga upp";
+const beskrivning = "Så ansöker du om förskoleplats: rätten till plats från ett år, fyra månaders garanti, kö till fristående förskolor, byte, uppsägning och sommarstängt.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Förskoleplats"
+  svar={`Barn har rätt till förskoleplats från <strong>ett års ålder</strong> om föräldrarna arbetar eller studerar, och alla barn från hösten det år de fyller tre. Du ansöker hos hemkommunen, som ska erbjuda plats i kommunal förskola <strong>inom fyra månader</strong>, så nära hemmet som möjligt. Fristående förskolor har urval på grunder som kommunen godkänner.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Förskoleplats", href: "/forskoleplats/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={relaterade("/kommunal-eller-fristaende/", "/allman-forskola/", "/inskolning/", "/maxtaxa/", "/pedagogisk-omsorg/")}
+  kallor={[
+    { namn: "Skolverket – Rätt till förskola", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/ratt-till-forskola", text: "fyra månader, närhet, annan kommun, sommarstängning och JO:s bedömningar (sidan uppdaterad 16 november 2026)", datum: "2026-11-25" },
+    { ...SKOLLAGEN, text: "8 kap. 3–7, 12–15 och 18–19 §§ samt 29 kap. 6 § (hemkommun)" },
+    SKOLVERKET_JMF,
+    { namn: "Försäkringskassan – Vab för barn under 12 år", url: "https://www.forsakringskassan.se/privatperson/familj-och-barn/vab-for-barn-under-12-ar", text: "vab kan inte tas ut när förskolan är stängd", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="ratt-till-plats">Vem har rätt till förskoleplats?</h2>
+  <p>Det är hemkommunen, alltså kommunen där barnet är folkbokfört, som ansvarar för att barnet får plats. Rätten gäller barn som bor i Sverige och som inte har börjat skolan. Skollagen (8 kap. 4–7 §§) delar in rätten i fyra fall:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Situation</th><th>Från</th><th>Hur mycket</th></tr></thead>
+    <tbody>
+      <tr><td>Föräldrarna arbetar eller studerar, eller barnet har ett eget behov på grund av familjens situation</td><td>1 år</td><td>Så mycket som behövs</td></tr>
+      <tr><td>Föräldrarna är arbetslösa eller föräldralediga med ett annat barn</td><td>1 år</td><td>Minst 3 timmar om dagen eller 15 timmar i veckan</td></tr>
+      <tr><td>Barnet behöver särskilt stöd i sin utveckling</td><td>Även före 1 år</td><td>Efter barnets behov</td></tr>
+      <tr><td>Alla barn (allmän förskola)</td><td>Hösten det år barnet fyller 3</td><td>Minst 525 timmar om året</td></tr>
+    </tbody>
+  </table></div>
+  <p>Enligt Skolverket, som hänvisar till förarbetena, kan ett eget behov finnas om barnet har ett annat modersmål än svenska, bor i glesbygd eller om föräldrarna är långtidssjukskrivna. Förskolan behöver inte vara öppen på kvällar, nätter, helger eller större helgdagar. Behöver du omsorg då, läs om <a href="/pedagogisk-omsorg/">nattis och pedagogisk omsorg</a>. Om rätten från tre år finns mer på sidan om <a href="/allman-forskola/">allmän förskola och 15 timmar</a>.</p>
+
+  <h2 id="ansoka">Så ansöker du om förskoleplats</h2>
+  <p>Ansökan görs till hemkommunen, och hur det går till bestämmer kommunen. Titta på din kommuns webbplats efter ansökan om förskoleplats. I ansökan brukar du kunna ange vilka förskolor du helst vill ha och från vilket datum. Det är det datum du anmäler önskemålet som startar kommunens fyramånadersfrist.</p>
+  <p>Bor du i en kommun som ingår i ett förvaltningsområde för finska, meänkieli eller samiska ska kommunen fråga om du vill ha plats i en förskola där hela eller en väsentlig del av verksamheten bedrivs på det språket (8 kap. 12 b §). Den rätten gäller även om bara ett barns vårdnadshavare begär det.</p>
+  <h3>Att tänka på innan du ansöker</h3>
+  <ul>
+    <li>Räkna bakåt från när barnet ska börja: senast fyra månader innan bör ansökan vara inne.</li>
+    <li>Planera för <a href="/inskolning/">inskolningen</a>. Hur den läggs upp bestämmer förskolan, så fråga i god tid hur länge du behöver vara ledig.</li>
+    <li>Kontrollera kommunens taxa. De flesta tar ut avgift efter <a href="/maxtaxa/">maxtaxan</a>.</li>
+    <li>Vill du ha en fristående förskola, ta reda på om den har egen kö eller använder kommunens.</li>
+  </ul>
+
+  <section class="sokverktyg" id="fyra-manader">
+    <h2>Fyra månader – räkna ut datumen</h2>
+    <p>Fyll i barnets födelsedatum och när barnet ska börja. Räknaren visar när barnet tidigast har rätt till plats, senaste dag att anmäla för att kommunen ska hinna, och när allmän förskola börjar.</p>
+    <form class="berakning" onsubmit="return false">
+      <label for="fp-fodd">Barnets födelsedatum</label><input id="fp-fodd" type="date" name="fodd" value="2025-09-15" />
+      <label for="fp-start">Önskad start</label><input id="fp-start" type="date" name="start" value="2026-10-01" />
+      <label for="fp-anm">Eller: dag du anmäler</label><input id="fp-anm" type="date" name="anm" />
+    </form>
+    <dl class="fakta fp-ut" aria-live="polite"></dl>
+    <p class="kalla">Fristen gäller kommunal förskola (8 kap. 14 § skollagen). Barn som behöver särskilt stöd ska erbjudas plats skyndsamt. Räknaren ger inte besked om din ansökan – kontakta kommunen.</p>
+  </section>
+
+  <h2 id="vilken-forskola">Vilken förskola får barnet plats på?</h2>
+  <p>Barnet ska erbjudas plats vid en förskoleenhet <strong>så nära hemmet som möjligt</strong>, och kommunen ska ta skälig hänsyn till dina önskemål (8 kap. 15 §). Det betyder inte att du alltid får förstahandsvalet. Enligt Skolverket framgår av förarbetena att kommunen också får ta hänsyn till vad som krävs för att använda resurserna effektivt.</p>
+  <p>Kommunen kan erbjuda plats i en egen förskola eller i en fristående förskola. Du behöver inte acceptera en plats i en fristående förskola med konfessionella inslag, eftersom sådana inslag inte får finnas i en kommunal förskola.</p>
+  <h3>Förskola i en annan kommun</h3>
+  <p>Ett barn har rätt att tas emot i en kommunal förskola i en annan kommun om det har särskilda skäl (8 kap. 13 §). Exempel som Skolverket nämner är att barnet har anknytning till två kommuner genom gemensam vårdnad, bor nära kommungränsen eller att föräldrarna arbetar i den andra kommunen. Utan särskilda skäl får den andra kommunen ta emot barnet om du önskar det, men det är en möjlighet och ingen rättighet.</p>
+
+  <h2 id="fristaende">Kö till fristående förskolor</h2>
+  <p>En fristående förskola ska vara öppen för alla barn som ska erbjudas förskola (8 kap. 18 §). Kommunen kan medge undantag med hänsyn till verksamhetens karaktär, till exempel ett <a href="/kommunal-eller-fristaende/">föräldrakooperativ</a> som bara tar emot barn till medlemmar. Finns det inte plats för alla ska urvalet göras på grunder som kommunen där förskolan ligger har godkänt (8 kap. 19 §).</p>
+  <p>Fyramånadersregeln gäller förskola med offentlig huvudman. Står du bara i kö till en viss fristående förskola är det alltså inte den förskolan som måste ge plats inom fyra månader. Har du också anmält önskemål till kommunen gäller kommunens skyldighet som vanligt. Hur kön fungerar hos en fristående förskola framgår av förskolans egna regler.</p>
+
+  <h2 id="sarskilt-erbjudande">När kommunen erbjuder plats utan ansökan</h2>
+  <p>Kommunen ska i vissa fall själv erbjuda plats till barn som har rätt till allmän förskola, utan att föräldrarna ansökt (8 kap. 14 a–c §§). Det gäller om barnet är fött utomlands och har vistats i Sverige högst fem år, eller om vårdnadshavarna är födda utomlands och har vistats här högst fem år.</p>
+  <ul>
+    <li>Erbjudandet ges från hösten det år barnet fyller tre, senast <strong>tre månader</strong> före det datum barnet tidigast kan börja.</li>
+    <li>Platsen hålls reserverad till och med <strong>en månad</strong> efter det datumet.</li>
+    <li>Ett nytt erbjudande lämnas inför varje höst till och med det år barnet fyller fem.</li>
+    <li>Det är frivilligt att tacka ja.</li>
+  </ul>
+  <p>Kommunen ska dessutom genom uppsökande verksamhet kontakta vårdnadshavare till barn som inte har plats, första gången inför hösten det år barnet fyller tre och sista gången inför våren det år barnet fyller sex (8 kap. 12 a §).</p>
+
+  <h2 id="byta-saga-upp">Byta förskola, flytta eller säga upp platsen</h2>
+  <p>Skollagen reglerar inte hur byte och uppsägning går till. Det styrs av kommunens regler för förskolan och, i en fristående förskola, av förskolans villkor. Det gäller också uppsägningstid och om avgift tas ut under den tiden. Läs villkoren innan du säger upp.</p>
+  <ul>
+    <li><strong>Byta förskola:</strong> kontakta kommunen eller den förskola du vill byta till. Hur ett byte ansöks om, och om du behåller nuvarande plats under väntetiden, står i kommunens regler.</li>
+    <li><strong>Flytta till en annan kommun:</strong> hemkommunen är den kommun där barnet är folkbokfört (29 kap. 6 §). När ni flyttar blir den nya kommunen ansvarig, så ansök där i god tid, gärna fyra månader före flytten.</li>
+    <li><strong>Säga upp:</strong> uppsägningen görs till den som har gett platsen. När barnet börjar förskoleklass eller skolan upphör rätten till förskola.</li>
+  </ul>
+
+  <h2 id="stangt">Sommarstängt och planeringsdagar</h2>
+  <p>Enligt Skolverket finns det ingen bestämmelse i skollagen som låter en kommun eller en enskild huvudman stänga alla sina förskolor samtidigt. Huvudmannen får erbjuda ett sommaröppet alternativ, men ska då ta hänsyn till barnets behov av trygghet och kontinuitet, och förskolan ska ligga på rimligt avstånd från hemmet.</p>
+  <p>För planeringsdagar och personalutbildning finns ingen reglering av antalet dagar. JO har lämnat två respektive fyra stängda dagar per år utan kritik när ett alternativ erbjöds, men kritiserat sex dagar. Förskolan kan inte kräva att du tar hand om barnet de dagarna, utan måste kunna erbjuda ett godtagbart alternativ. Tänk på att du inte kan ta ut tillfällig föräldrapenning (vab) för att förskolan är stängd.</p>
+
+  <h2 id="inskrivna">Hur många barn går i förskolan?</h2>
+  <p>Hösten {STAT_AR} var {pct(RIKET?.andel_barn_1_5_inskrivna)} av alla barn mellan ett och fem år inskrivna i förskolan, totalt {tal(RIKET?.barn_inskrivna, 0)} barn. Andelen skiljer sig mellan kommunerna, från {pct(lagst?.s.andel_barn_1_5_inskrivna, 1)} i {lagst?.k.namn} till {pct(hogst?.s.andel_barn_1_5_inskrivna, 1)} i {hogst?.k.namn}, bland kommuner med minst 300 inskrivna barn. Tabellen visar länen, viktat med antal inskrivna barn.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Andel barn 1–5 år inskrivna</th><th class="num">Inskrivna barn</th></tr></thead>
+    <tbody>{lan.map((x) => <tr><td><a href={x.lan.href}>{x.lan.namn}</a></td><td class="num">{pct(x.v, 1)}</td><td class="num">{tal(x.barn, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Skolverkets kommunala jämförelsetal, hösten {STAT_AR}. Länsvärdet är ett medelvärde av kommunerna viktat med inskrivna barn. Se alla kommuner på <a href="/jamfor/">Jämför kommuner</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("fyra-manader"); if (!s) return;
+      const f = s.querySelector("form"), ut = s.querySelector(".fp-ut");
+      const p = (v) => { if (!v) return null; const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d); };
+      const plusMan = (dt, n) => { const r = new Date(dt.getFullYear(), dt.getMonth() + n, 1); const sista = new Date(r.getFullYear(), r.getMonth() + 1, 0).getDate(); r.setDate(Math.min(dt.getDate(), sista)); return r; };
+      const fmt = (dt) => dt.toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" });
+      const rad = (dt, dd) => `<dt>${dt}</dt><dd>${dd}</dd>`;
+      const rakna = () => {
+        const fodd = p(f.fodd.value), start = p(f.start.value), anm = p(f.anm.value);
+        let h = "";
+        if (fodd) {
+          const ett = plusMan(fodd, 12);
+          h += rad("Fyller ett år", `${fmt(ett)} – rätt till plats om ni arbetar, studerar, är föräldralediga eller arbetslösa`);
+          h += rad("Allmän förskola", `Från höstterminen ${fodd.getFullYear() + 3}, minst 525 timmar om året`);
+          h += rad("Rätten till förskola slutar", `När barnet börjar skolan, normalt hösten ${fodd.getFullYear() + 6}`);
+          if (start && start < ett) h += rad("Obs", "Önskad start är före ettårsdagen. Före ett år finns rätt till plats bara om barnet behöver särskilt stöd.");
+        }
+        if (start) h += rad("Anmäl senast", `${fmt(plusMan(start, -4))} för att kommunen ska behöva erbjuda plats till ${fmt(start)}`);
+        if (anm) h += rad("Plats senast", `${fmt(plusMan(anm, 4))} om du anmäler ${fmt(anm)}`);
+        ut.innerHTML = h || "<dt>Fyll i</dt><dd>Ange minst ett datum.</dd>";
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Guide>

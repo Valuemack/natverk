@@ -78,7 +78,7 @@ export const SITE = {
   beskrivning: "Komvux och sfi i alla Sveriges kommuner – skolor, utbildningsnivåer, distansstudier och statistik från Skolverket. Uppdateras varje natt.",
   organisation: "komvux.nu",
   farg: "#3b3f8f",
-  meny: [{"namn":"CSN","href":"/csn/"},{"namn":"Sfi","href":"/sfi/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Guider","href":"/guider/"},{"namn":"CSN","href":"/csn/"},{"namn":"Sfi","href":"/sfi/"},{"namn":"Alla län","href":"/#lan"},{"namn":"Om","href":"/om/"}],
   sidfot: [
     { namn: "Om komvux.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },

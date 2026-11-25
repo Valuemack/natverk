@@ -1,0 +1,23 @@
+---
+// Hubbsida för de långa guiderna om pollenslag och pollenallergi.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, KALLA } from "../site.js";
+import { GUIDER } from "../lib/guider-lista.js";
+
+const allergi = GUIDER.filter((g) => g.grupp === "allergi"), pollen = GUIDER.filter((g) => g.grupp === "pollen");
+---
+<Layout site={SITE} titel="Guider om pollen och pollenallergi"
+  beskrivning="Guider om pollenallergi, korsallergi och receptfri allergimedicin, och om björk-, gräs-, hassel-, al-, gråbo- och ambrosiapollen med säsong per ort."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad="2026-11-25">
+  <h1>Guider om pollen och pollenallergi</h1>
+  <p class="svar">Här finns våra längre guider. Allergiguiderna bygger på 1177, Läkemedelsverket och Astma- och Allergiförbundet. Pollenguiderna bygger på Naturhistoriska riksmuseets mätningar på 23 orter. Sidorna ger information, inte personliga råd. Ring 1177 för sjukvårdsrådgivning och 112 vid akuta besvär.</p>
+
+  <h2>Pollenallergi</h2>
+  <div class="kort">{allergi.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+
+  <h2>Pollenslagen</h2>
+  <div class="kort">{pollen.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+
+  <p>Vill du se när alla pollenslag brukar komma på din ort? Se <a href="/pollenkalender/">pollenkalendern</a>.</p>
+  <p class="kalla">{KALLA}</p>
+</Layout>

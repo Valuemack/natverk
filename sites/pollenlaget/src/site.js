@@ -104,6 +104,7 @@ export const SITE = {
     { namn: "Björk", href: "/pollen/bjork/" },
     { namn: "Gräs", href: "/pollen/gras/" },
     { namn: "Alla orter", href: "/#orter" },
+    { namn: "Pollenallergi", href: "/guider/" },
     { namn: "Om", href: "/om/" },
   ],
   sidfot: [

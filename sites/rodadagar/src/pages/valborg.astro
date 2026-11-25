@@ -1,0 +1,132 @@
+---
+// Valborg (/valborg/). Veckodag, vecka och vad 30 april betyder för ledigheten räknas fram ur sajtens helgdagslogik;
+// fakta från Nordiska museet, svenska och finska Wikipedia, länsstyrelserna, Naturvårdsverket, SVT och svensk författning.
+// Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { datum, plusDagar, iso, kort, veckodag, versal, isoVecka, dagarMellan } from "@natverk/core/datum.js";
+import { klamdagarAr, langhelgerAr, flaggdagarAr } from "../lib/helgdagar.js";
+import { lista } from "../lib/text.js";
+import { SITE, IDAG, AR } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const valborg = (y) => datum(y, 4, 30);
+const nasta = valborg(AR) >= IDAG ? valborg(AR) : valborg(AR + 1);
+const nastaAr = nasta.getUTCFullYear();
+const kvar = dagarMellan(IDAG, nasta);
+const fmt = (d) => `${veckodag(d)} ${kort(d)} ${d.getUTCFullYear()}`;
+const AREN = Array.from({ length: 9 }, (_, i) => AR - 1 + i);
+
+// Vad veckodagen betyder: klämdag eller långhelg runt första maj.
+const betydelse = (y) => {
+  const v = valborg(y), k = klamdagarAr(y).filter((x) => x.orsak.id === "forsta-maj");
+  const wd = v.getUTCDay();
+  if (wd === 6) return "Lördag – första maj infaller på söndagen";
+  if (wd === 0) return "Söndag – första maj på måndagen ger långhelg";
+  if (k.some((x) => iso(x.datum) === iso(v))) return "Klämdag – ledig valborg ger fyra dagar i rad";
+  if (wd === 4) return "Första maj är fredag – långhelg direkt efter valborg";
+  if (wd === 5) return "Fredag – första maj infaller på lördagen";
+  if (k.length) return `Klämdag ${veckodag(k[0].datum)} ${kort(k[0].datum)} efter första maj`;
+  return "Vardag – första maj mitt i veckan";
+};
+const rader = AREN.map((y) => ({ y, d: valborg(y), v: isoVecka(valborg(y)).vecka, b: betydelse(y) }));
+const fredagar = AREN.filter((y) => valborg(y).getUTCDay() === 5);
+const langhelg = langhelgerAr(nastaAr).find((l) => l.fran <= datum(nastaAr, 5, 1) && l.till >= datum(nastaAr, 5, 1));
+const flagg = flaggdagarAr(nastaAr).find((f) => iso(f.datum) === iso(nasta));
+
+const avsnitt = [
+  { id: "datum", rubrik: `När är valborg ${nastaAr}?` },
+  { id: "rod-dag", rubrik: "Är valborg en röd dag eller ledig dag?" },
+  { id: "flaggdag", rubrik: "Flaggdag den 30 april" },
+  { id: "historia", rubrik: "Varför firar vi valborg?" },
+  { id: "firande", rubrik: "Så firas valborg i dag" },
+  { id: "elda", rubrik: "Elda säkert: eldningsförbud och igelkottar" },
+  { id: "utomlands", rubrik: "Vappen i Finland och Walpurgisnacht i Tyskland" },
+];
+
+const fragor = [
+  { fraga: `När är valborg ${nastaAr}?`, svar: `Valborgsmässoafton ${nastaAr} infaller ${fmt(nasta)}, vecka ${isoVecka(nasta).vecka}. Valborg har fast datum och firas alltid den 30 april, kvällen före första maj.` },
+  { fraga: "Är valborg en röd dag?", svar: "Nej. Valborgsmässoafton finns inte med i lagen (1989:253) om allmänna helgdagar. Dagen efter, första maj, är däremot alltid en röd dag." },
+  { fraga: "Är man ledig på valborg?", svar: "Inte enligt lag. Valborgsmässoafton är en vanlig arbetsdag, och till skillnad från midsommarafton, julafton och nyårsafton jämställs den inte med söndag i semesterlagen. Vad som gäller på din arbetsplats står i ditt avtal." },
+  { fraga: "Varför heter det valborgsmässoafton?", svar: "Namnet kommer från helgonet Valborg, eller Walpurga, som enligt traditionen helgonförklarades den 1 maj. Valborgsmässoafton är kvällen före valborgsmässan den 1 maj." },
+  { fraga: "Varför eldar man på valborg?", svar: "En möjlig förklaring är att eldarna skulle skydda betesdjuren mot väsen och rovdjur när de släpptes ut på bete. En annan kommer från tysk tro om häxor som samlades på valborgsnatten. I dag är brasorna framför allt ett sätt att välkomna våren." },
+  { fraga: "Är 30 april en flaggdag?", svar: "Ja. Den 30 april är allmän flaggdag enligt förordningen (1982:270) om allmänna flaggdagar, eftersom det är kung Carl XVI Gustafs födelsedag." },
+  { fraga: "Vad är vappen?", svar: "Vappen, eller vappu på finska, är det finländska firandet av valborg och första maj. Studenterna sätter på sig studentmössan den 30 april, och den 1 maj är officiell flaggdag i Finland." },
+];
+
+const titel = `Valborg ${nastaAr} – valborgsmässoafton ${veckodag(nasta)} 30 april`;
+const beskrivning = `Valborg ${nastaAr} är ${fmt(nasta)}. Är valborg röd dag eller ledig? Veckodag år för år, flaggdagen, historien bakom brasorna och hur du eldar säkert.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1={`Valborg ${nastaAr}`}
+  svar={`Valborgsmässoafton ${nastaAr} infaller <strong>${fmt(nasta)}</strong> (vecka ${isoVecka(nasta).vecka}), om ${kvar} ${kvar === 1 ? "dag" : "dagar"}. Valborg firas alltid den <strong>30 april</strong>. Dagen är <strong>ingen röd dag</strong> och ingen helgafton, men den är allmän flaggdag. Dagen efter, första maj, är röd dag. Valborg firas med majbrasor och körsång.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Alla helgdagar", href: "/helgdagar/" }, { namn: "Valborg", href: "/valborg/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: `Första maj ${nastaAr}`, href: `/forsta-maj/${nastaAr}/`, text: "Röd dag dagen efter valborg" },
+    { namn: `Klämdagar ${nastaAr}`, href: `/klamdagar/${nastaAr}/`, text: "Ta ledigt smart runt helgerna" },
+    { namn: `Flaggdagar ${nastaAr}`, href: `/flaggdagar/${nastaAr}/`, text: "Alla allmänna flaggdagar" },
+    { namn: `Kalender ${nastaAr}`, href: `/vecka/${nastaAr}/`, text: "Hela året med veckonummer" },
+  ]}
+  kallor={[
+    { namn: "Nordiska museet – Valborgsmässoafton", url: "https://www.nordiskamuseet.se/aretsdagar/valborgsmassoafton", text: "namnet, eldarna, djäknartågen och firandet efter kriget", datum: "2026-11-25" },
+    { namn: "Wikipedia – Valborgsmässoafton", url: "https://sv.wikipedia.org/wiki/Valborgsm%C3%A4ssoafton", text: "Walpurga, häxtron och studentfirandet i Uppsala, Lund och Stockholm", datum: "2026-11-25" },
+    { namn: "Wikipedia – Vappen", url: "https://sv.wikipedia.org/wiki/Vappen", text: "det finländska firandet", datum: "2026-11-25" },
+    { namn: "Länsstyrelsen Västra Götaland – Brandrisk och eldningsförbud", url: "https://www.lansstyrelsen.se/vastra-gotaland/samhalle/sakerhet-och-beredskap/brandrisk-och-eldningsforbud.html", text: "vem som beslutar om eldningsförbud", datum: "2026-11-25" },
+    { namn: "Länsstyrelsen Stockholm – Elda säkert i naturen", url: "https://www.lansstyrelsen.se/stockholm/natur-och-landsbygd/om-eldningsforbud/elda-sakert-i-naturen.html", text: "kontrollera eldningsförbud innan du eldar", datum: "2026-11-25" },
+    { namn: "Naturvårdsverket – Eldning och allemansrätten", url: "https://www.naturvardsverket.se/amnesomraden/allemansratten/sa-gor-vi-allemansratt/eldning/", text: "eldningsförbud och att släcka helt", datum: "2026-11-25" },
+    { namn: "SVT – Så räddar du livet på igelkottarna under valborg", url: "https://www.svt.se/nyheter/inrikes/sa-raddar-du-livet-pa-igelkottarna-under-valborg", text: "Naturskyddsföreningens råd (artikel från 2017)", datum: "2026-11-25" },
+    { namn: "Lag (1989:253) om allmänna helgdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/" },
+    { namn: "Förordning (1982:270) om allmänna flaggdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982270-om-allmanna-flaggdagar_sfs-1982-270/" },
+    { namn: "Semesterlagen (1977:480)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/semesterlag-1977480_sfs-1977-480/", text: "vilka aftnar som jämställs med söndag" },
+  ]}>
+
+  <h2 id="datum">När är valborg {nastaAr}?</h2>
+  <p>Valborgsmässoafton {nastaAr} är <strong>{fmt(nasta)}</strong>, vecka {isoVecka(nasta).vecka}. Valborg har fast datum, den 30 april, men veckodagen skiftar från år till år. Veckodagen avgör om valborg blir en vanlig arbetskväll, en fredagskväll före helgen eller inledningen på en långhelg med första maj. Tabellen visar vad det blir de närmaste åren.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Veckodag</th><th class="num">Vecka</th><th>Vad det betyder</th></tr></thead>
+    <tbody>{rader.map((r) => (
+      <tr class:list={{ markerad: iso(r.d) === iso(nasta) }}><td>{r.y}</td><td>{versal(veckodag(r.d))}</td><td class="num">{r.v}</td><td>{r.b}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p>Av åren i tabellen infaller valborg på en fredag {lista(fredagar.map(String)) || "inget år"}. Då är det lättast att fira sent, eftersom de flesta är lediga dagen efter.{langhelg && langhelg.dagar >= 3 && <> {nastaAr} blir första maj en del av en ledighet på {langhelg.dagar} dagar i rad, {veckodag(langhelg.fran)} {kort(langhelg.fran)} till {veckodag(langhelg.till)} {kort(langhelg.till)}.</>}</p>
+
+  <h2 id="rod-dag">Är valborg en röd dag eller ledig dag?</h2>
+  <p><strong>Valborgsmässoafton är ingen röd dag.</strong> Den finns inte med bland de allmänna helgdagarna i lagen (1989:253). Den räknas inte heller som helgafton: semesterlagen jämställer bara midsommarafton, julafton och nyårsafton med söndag. Valborg är därför en vanlig arbetsdag om den infaller måndag till fredag, och vad som gäller på din arbetsplats beror på avtalet.</p>
+  <p><strong>Första maj är däremot alltid röd dag.</strong> Hur de två dagarna hamnar i förhållande till helgen avgör ledigheten:</p>
+  <ul>
+    <li>Är valborg en <strong>måndag</strong> blir den en klämdag mellan helgen och första maj på tisdagen. En semesterdag ger fyra lediga dagar i rad.</li>
+    <li>Är valborg en <strong>onsdag</strong> infaller första maj på torsdagen, och fredagen blir en klämdag.</li>
+    <li>Är valborg en <strong>torsdag</strong> infaller första maj på fredagen och ger en långhelg på tre dagar.</li>
+    <li>Är valborg en <strong>fredag</strong> hamnar första maj på lördagen och ger ingen extra ledig dag.</li>
+  </ul>
+  <p>Kristi himmelsfärdsdag kan i teorin infalla redan den 30 april och göra valborg till en röd dag. Det händer bara när påskdagen är så tidig som 22 mars, nästa gång år 2285.</p>
+
+  <h2 id="flaggdag">Flaggdag den 30 april</h2>
+  <p>Även om valborg inte är en röd dag är den 30 april en <strong>allmän flaggdag</strong>. Enligt förordningen (1982:270) om allmänna flaggdagar flaggas det för kung Carl XVI Gustafs födelsedag. Myndigheter och många privatpersoner hissar därför flaggan på valborgsmässoafton. Dagen efter, första maj, är också allmän flaggdag. {flagg ? `${nastaAr} infaller flaggdagen en ${veckodag(nasta)}.` : ""} Se <a href={`/flaggdagar/${nastaAr}/`}>flaggdagar {nastaAr}</a>.</p>
+
+  <h2 id="historia">Varför firar vi valborg?</h2>
+  <p>Namnet kommer från helgonet <strong>Valborg</strong>, eller Walpurga, som dog år 779 och som enligt traditionen helgonförklarades den 1 maj. Valborgsmässoafton är alltså kvällen före valborgsmässan. Enligt Nordiska museet kommer seden från det katolska firandet av Walpurgis i Tyskland, och i Sverige och Finland har dagen firats åtminstone sedan medeltiden. Reformationen på 1500-talet tog bort många helgondagar, men valborg levde kvar.</p>
+  <h3>Eldarna</h3>
+  <p>Varför man tänder eldar finns det flera förklaringar till. Nordiska museet beskriver valborg som en växling i jordbrukets år. En möjlig förklaring är att eldarna skulle skydda betesdjuren mot övernaturliga väsen och rovdjur när de släpptes ut på bete. I tysk tradition var valborgsnatten den natt då häxorna red till berget Brocken i Harz, och eldarna skulle skrämma bort dem. Andra menar att man brände det gamla för att ge plats åt det nya. I dag är brasorna framför allt ett sätt att hälsa våren välkommen.</p>
+  <h3>Från djäknar till studenter</h3>
+  <p>Under medeltiden gick skolelever, så kallade djäknar, i tåg genom stiftsstäderna. Från mitten av 1800-talet blev det studentstädernas valborgsfester. Efter andra världskriget fick firandet ett uppsving i städerna, när arbetar- och folkrörelseorganisationer ordnade valborgseldar i bostadsområdena. I Skåne, Halland och Blekinge fanns en egen tradition där ungdomar gick runt i byarna och uppvaktade bönderna.</p>
+
+  <h2 id="firande">Så firas valborg i dag</h2>
+  <p>Valborg firas med <strong>majbrasor</strong>, eller valborgseldar, och med <strong>körsång och vårtal</strong>. Vid många universitet och högskolor sätter studenterna på sig studentmössan den 30 april.</p>
+  <h3>Uppsala</h3>
+  <p>Uppsala har det kanske mest kända firandet. Klockan 15.00 viftar rektorn med studentmössan från Carolinas balkong, och då sätter studenterna på sig sina mössor. Sedan 1975 hålls också forsränningen på förmiddagen, som Uppsala teknolog- och naturvetarkår arrangerar.</p>
+  <h3>Lund, Stockholm och Göteborg</h3>
+  <p>I Lund kallas dagen <strong>siste april</strong>. Studentnationerna tävlar mot varandra, och studentsångarna sjunger ut vintern från Universitetshusets trappa. På Skansen i Stockholm har det hållits vårtal och studentsång sedan 1894. I Göteborg hör Cortègen till valborgsfirandet, och i Linköping sjunger studentsångare vårsånger på Borggården.</p>
+
+  <h2 id="elda">Elda säkert: eldningsförbud och igelkottar</h2>
+  <p>En valborgsbrasa är en eld som alla andra, och reglerna för eldning gäller. Det är <strong>kommunen</strong> som, efter samråd med räddningstjänsten, beslutar om eldningsförbud, och länsstyrelsen kan besluta om förbud för hela länet. Är våren torr kan det därför vara förbjudet att elda just på valborg.</p>
+  <ul>
+    <li>Ta alltid reda på om det råder eldningsförbud innan du tänder. Lokala beslut finns på kommunens webbplats.</li>
+    <li>Räddningstjänsten kan avråda från eldning även när det inte finns något förbud.</li>
+    <li>Släck elden helt innan du lämnar platsen.</li>
+  </ul>
+  <p><strong>Tänk på djuren.</strong> Igelkottar söker sig gärna in i rishögar. Naturskyddsföreningen har gett rådet att flytta en liten brasa innan den tänds, att bygga stora brasor så sent som möjligt och att röra om i en hög som legat länge, till exempel med en lång pinne.</p>
+
+  <h2 id="utomlands">Vappen i Finland och Walpurgisnacht i Tyskland</h2>
+  <p>I Finland heter firandet <strong>vappen</strong>, på finska vappu. Studenterna sätter på sig studentmössan på kvällen den 30 april, och i Helsingfors får statyn Havis Amanda en studentmössa. Till vappen hör mjöd och struvor, och den 1 maj är officiell flaggdag i Finland.</p>
+  <p>I Tyskland är <strong>Walpurgisnacht</strong> starkt förknippad med häxor och berget Brocken i Harz. Det är den tyska traditionen som enligt Nordiska museet antas förklara varför seden att tända eldar kom till de svenska städerna.</p>
+</Guide>

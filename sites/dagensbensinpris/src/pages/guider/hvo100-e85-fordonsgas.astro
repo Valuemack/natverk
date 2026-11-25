@@ -1,0 +1,158 @@
+---
+// Lång guide: HVO100, E85 och fordonsgas – dagens priser per kedja, pris per kWh och per mil (Energimyndighetens värmevärden),
+// standarder (Drivkraft Sverige), skatt (Skatteverket), stationer (bensinstationer.nu) och antal bilar (Trafikanalys). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, BENSINSTATIONER_URL, idagPris, kedjePris, kr, pris, procent, datumText } from "../../site.js";
+import { VARMEVARDEN, KORSTRACKOR, REDUKTIONSPLIKT } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const DM = [
+  { k: "hvo100", namn: "HVO100", enhet: "liter", kwh: VARMEVARDEN.hvo100, href: "/hvo100/" },
+  { k: "e85", namn: "E85", enhet: "liter", kwh: VARMEVARDEN.e85, href: "/e85/" },
+  { k: "biogas", namn: "Fordonsgas", enhet: "kilo", kwh: VARMEVARDEN.biogas, href: "/fordonsgas/" },
+];
+const JAMFOR = [
+  { k: "bensin95", namn: "Bensin 95", enhet: "liter", kwh: VARMEVARDEN.bensin95, href: "/bensin-95/" },
+  { k: "diesel", namn: "Diesel", enhet: "liter", kwh: VARMEVARDEN.diesel, href: "/diesel/" },
+];
+const alla = [...DM, ...JAMFOR].map((d) => ({ ...d, p: idagPris(d.k) })).filter((d) => d.p != null).map((d) => ({ ...d, perKwh: d.p / d.kwh }));
+const hit = (k) => alla.find((d) => d.k === k);
+const hvo = hit("hvo100"), e85 = hit("e85"), gas = hit("biogas"), b95 = hit("bensin95"), dsl = hit("diesel");
+const billigast = [...alla].sort((a, b) => a.perKwh - b.perKwh)[0];
+// En bil som behöver lika mycket energi som en bensinbil på 0,6 l/mil.
+const kwhMil = 0.6 * VARMEVARDEN.bensin95;
+const kedjor = LISTKEDJOR.map((c) => ({ c, p: Object.fromEntries(DM.map((d) => [d.k, kedjePris(c, d.k)])) }));
+const antal = (k) => STATIONER.filter((s) => s.drivmedel?.[k] === true).length;
+const lanTopp = (k) => Object.entries(STATIONER.filter((s) => s.drivmedel?.[k] === true).reduce((m, s) => ((m[s.lan ?? "Okänt"] = (m[s.lan ?? "Okänt"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 3);
+const bilar = (n) => KORSTRACKOR.perDrivmedel.find((x) => x.namn.startsWith(n));
+const milD = bilar("Diesel")?.mil ?? 0, milE = bilar("Etanol")?.mil ?? 0, milG = bilar("Gas")?.mil ?? 0;
+const arsJamfor = [
+  hvo && dsl && { namn: "HVO100 mot diesel (dieselbil)", mil: milD, forn: milD * 0.5 * hvo.p, foss: milD * 0.5 * dsl.p },
+  e85 && b95 && { namn: "E85 mot bensin 95 (flexifuelbil)", mil: milE, forn: milE * (kwhMil / VARMEVARDEN.e85) * e85.p, foss: milE * 0.6 * b95.p },
+  gas && b95 && { namn: "Fordonsgas mot bensin 95 (gasbil)", mil: milG, forn: milG * (kwhMil / VARMEVARDEN.biogas) * gas.p, foss: milG * 0.6 * b95.p },
+].filter(Boolean);
+const e85Brytpunkt = b95 && e85 ? b95.perKwh * VARMEVARDEN.e85 : null;
+
+const avsnitt = [
+  { id: "priser", rubrik: "Priser idag: HVO100, E85 och fordonsgas" },
+  { id: "per-mil", rubrik: "Vilket drivmedel är billigast per mil?" },
+  { id: "per-ar", rubrik: "Vad kostar det per år?" },
+  { id: "hvo100", rubrik: "HVO100 – förnybar diesel" },
+  { id: "e85", rubrik: "E85 – etanol för flexifuelbilar" },
+  { id: "fordonsgas", rubrik: "Fordonsgas – biogas per kilo" },
+  { id: "skillnader", rubrik: "Skillnaderna i korthet" },
+  { id: "stationer", rubrik: "Var kan man tanka?" },
+  { id: "skatt", rubrik: "Skatt och reduktionsplikt" },
+];
+
+const fragor = [
+  hvo && { fraga: "Vad kostar HVO100 idag?", svar: `HVO100 kostar i snitt ${kr(hvo.p)} per liter enligt kedjornas listpriser ${datum}${dsl ? `, vilket är ${kr(hvo.p - dsl.p)} mer än vanlig diesel` : ""}.` },
+  { fraga: "Vad är skillnaden mellan HVO och diesel?", svar: "HVO tillverkas av oljor och fetter, oftast restprodukter, i stället för av råolja. Kemiskt liknar den fossil diesel och följer standarden SS-EN 15940. Vanlig diesel innehåller ofta en del inblandad HVO." },
+  { fraga: "Kan man tanka HVO100 i alla dieselbilar?", svar: "Nej, bara i fordon som tillverkaren har godkänt för HVO100 enligt standarden EN 15940. Kontrollera instruktionsboken eller fråga märkesverkstaden." },
+  e85 && { fraga: "Vad kostar E85 idag?", svar: `E85 kostar i snitt ${kr(e85.p)} per liter ${datum}. Eftersom E85 innehåller mindre energi per liter än bensin motsvarar det ${kr(e85.perKwh * VARMEVARDEN.bensin95)} per liter bensin räknat på energin.` },
+  { fraga: "Hur mycket etanol är det i E85?", svar: "Enligt standarden SS-EN 15293:2018 ska E85 innehålla 70–85 volymprocent etanol och högre alkoholer, både sommar och vinter. Vinterkvaliteten får ha högre ångtryck. Drivkraft Sverige anger att vinter-E85 har cirka 75 procent etanol." },
+  gas && { fraga: "Vad kostar fordonsgas per kilo?", svar: `Fordonsgas kostar i snitt ${kr(gas.p)} per kilo ${datum}. Ett kilo innehåller ungefär lika mycket energi som ${(VARMEVARDEN.biogas / VARMEVARDEN.bensin95).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} liter bensin.` },
+  { fraga: "Vilket drivmedel är billigast per mil?", svar: `Räknat per kilowattimme energi är ${billigast.namn} billigast idag med ${pris(billigast.perKwh)} kr per kWh. Hur mycket det blir per mil beror på bilen, eftersom motorer utnyttjar energin olika bra.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel={`HVO100, E85 och fordonsgas – priser och skillnader`}
+  beskrivning={`HVO100 kostar ${hvo ? kr(hvo.p) : "–"}/l, E85 ${e85 ? kr(e85.p) : "–"}/l och fordonsgas ${gas ? kr(gas.p) : "–"}/kg idag. Pris per kWh, per mil och år, vilka bilar som kan tanka och skatten.`}
+  h1="HVO100, E85 och fordonsgas – priser och skillnader"
+  svar={`Idag kostar <strong>HVO100 ${hvo ? kr(hvo.p) : "–"}</strong> per liter, <strong>E85 ${e85 ? kr(e85.p) : "–"}</strong> per liter och <strong>fordonsgas ${gas ? kr(gas.p) : "–"}</strong> per kilo. Räknat per kilowattimme energi är ${billigast.namn.toLowerCase() === "bensin 95" ? "vanlig bensin 95" : billigast.namn} billigast just nu. HVO100 kan tankas i godkända dieselbilar, E85 bara i flexifuelbilar och fordonsgas bara i gasbilar.`}
+  smulor={[{ namn: "Bensinpris idag", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "HVO100 – pris idag", href: "/hvo100/", text: "Pris per kedja och stationer" },
+    { namn: "E85 – pris idag", href: "/e85/", text: "Pris per kedja och stationer" },
+    { namn: "Fordonsgas – pris idag", href: "/fordonsgas/", text: "Pris per kilo och stationer" },
+    { namn: "Lönar sig E85?", href: "/guider/lonar-sig-e85/", text: "Brytpunkten mot bensin 95" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Biodrivmedlen i vanlig bensin och diesel" },
+  ]}
+  kallor={[
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll i HVO, E85, biogas, bensin och diesel", datum: "2026-11-25" },
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/fakta-statistik/standarder/", text: "SS-EN 15293:2018 (E85), SS-EN 15940:2023 (HVO) och SS-EN 16723-2:2017 (fordonsgas)", datum: "2026-11-25" },
+    { namn: "Drivkraft Sverige – Förnybara drivmedel", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/fornybara-drivmedel/", text: "råvaror till HVO och etanolhalt i vinter-E85", datum: "2026-11-25" },
+    { namn: "Skatteverket – Energiskatter", url: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/energiskatter.4.18e1b10334ebe8bc8000843.html", text: "avdrag för biomassadelen i biodrivmedel", datum: "2026-11-25" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "antal personbilar och körsträcka per drivmedel", datum: "2026-11-25" },
+    { namn: "Lag (2017:1201) om reduktion av växthusgasutsläpp från bensin och diesel", url: REDUKTIONSPLIKT.lag, text: "definitionen av reduktionspliktigt drivmedel", datum: "2026-11-25" },
+    { namn: "Stationsregister: bensinstationer.nu", url: BENSINSTATIONER_URL, text: "vilka stationer som säljer respektive drivmedel" },
+  ]}>
+
+  <h2 id="priser">Priser idag: HVO100, E85 och fordonsgas</h2>
+  <p>Tabellen visar listpriserna hos de kedjor som publicerar priser för de förnybara drivmedlen, uppdaterade varje natt. HVO100 och E85 säljs per liter, fordonsgas per kilo. Priset på en enskild station sätts lokalt och kan avvika.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th>{DM.map((d) => <th class="num">{d.namn} (kr/{d.enhet === "kilo" ? "kg" : "l"})</th>)}</tr></thead>
+    <tbody>{kedjor.map((x) => <tr><td><a href={`/kedja/${x.c.toLowerCase().replace(/\s+/g, "-")}/`}>{x.c}</a></td>{DM.map((d) => <td class="num">{x.p[d.k] != null ? pris(x.p[d.k]) : "–"}</td>)}</tr>)}
+      <tr><td><strong>Snitt</strong></td>{DM.map((d) => <td class="num"><strong>{idagPris(d.k) != null ? pris(idagPris(d.k)) : "–"}</strong></td>)}</tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kedjornas listpriser inkl. moms {LP_DATUM}. – = kedjan publicerar inget pris.</p>
+  {hvo && dsl && <p>HVO100 kostar idag {procent((hvo.p / dsl.p - 1) * 100)} mer än vanlig diesel ({kr(dsl.p)}). E85 kostar {e85 && b95 ? `${kr(Math.abs(b95.p - e85.p))} ${e85.p < b95.p ? "mindre" : "mer"} per liter än bensin 95` : "–"}, men det säger lite om vad milen kostar eftersom energiinnehållet skiljer sig.</p>}
+
+  <h2 id="per-mil">Vilket drivmedel är billigast per mil?</h2>
+  <p>För att jämföra drivmedlen rättvist räknar vi om priset till kronor per kilowattimme (kWh) med Energimyndighetens värmevärden. Den sista kolumnen visar vad en mil kostar för en bil som behöver lika mycket energi som en bensinbil som drar 0,6 liter per mil, alltså {kwhMil.toLocaleString("sv-SE", { maximumFractionDigits: 1 })} kWh.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel</th><th class="num">Pris</th><th class="num">kWh per enhet</th><th class="num">Kr per kWh</th><th class="num">Motsvarar kr/l bensin</th><th class="num">Kr per mil</th></tr></thead>
+    <tbody>{[...alla].sort((a, b) => a.perKwh - b.perKwh).map((d) => (
+      <tr><td><a href={d.href}>{d.namn}</a></td><td class="num">{pris(d.p)} kr/{d.enhet === "kilo" ? "kg" : "l"}</td><td class="num">{d.kwh.toLocaleString("sv-SE")}</td><td class="num">{pris(d.perKwh)}</td><td class="num">{pris(d.perKwh * VARMEVARDEN.bensin95)}</td><td class="num">{pris(d.perKwh * kwhMil)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Värmevärden: Energimyndigheten. För fordonsgas används värdet för biogas per kilo ({VARMEVARDEN.biogas.toLocaleString("sv-SE")} kWh). Dagens listpriser {LP_DATUM}.</p>
+  <p>Jämförelsen är förenklad. En dieselbil drar oftast mindre bränsle per mil än en motsvarande bensinbil, så en diesel- eller HVO-bil behöver i praktiken färre kWh per mil. För en flexifuelbil är jämförelsen mellan E85 och bensin mer rättvisande, eftersom det är samma motor. {e85Brytpunkt && <>Räknat på energin blir E85 billigare än 95 när literpriset är under {kr(e85Brytpunkt)}.</>} Se <a href="/guider/lonar-sig-e85/">lönar sig E85</a> för en jämförelse med uppmätt merförbrukning.</p>
+
+  <h2 id="per-ar">Vad kostar det per år?</h2>
+  <p>Tabellen räknar fram årskostnaden med Trafikanalys genomsnittliga körsträcka för respektive biltyp och jämför med det fossila alternativet i samma bil. Förbrukningen är exempel: 0,5 liter per mil för dieselbilen, 0,6 liter bensin per mil för bensin- och gasbilen, och för E85 och fordonsgas lika mycket energi per mil som 0,6 liter bensin.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Jämförelse</th><th class="num">Mil per år</th><th class="num">Förnybart</th><th class="num">Fossilt</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>{arsJamfor.map((x) => <tr><td>{x.namn}</td><td class="num">{x.mil.toLocaleString("sv-SE")}</td><td class="num">{kr(x.forn, 0)}</td><td class="num">{kr(x.foss, 0)}</td><td class="num">{x.forn >= x.foss ? "+" : "−"}{kr(Math.abs(x.forn - x.foss), 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Dagens listpriser {LP_DATUM}. Körsträcka: Trafikanalys, Körsträckor {KORSTRACKOR.ar}. Den verkliga förbrukningen beror på bilen och körsättet.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="hvo100">HVO100 – förnybar diesel</h2>
+  <p>HVO står för hydrerad vegetabilisk olja. Den tillverkas genom att oljor och fetter behandlas med vätgas. Enligt Drivkraft Sverige, som hänvisar till Energimyndigheten, kom 66 procent av råvaran till HVO från animaliska fetter 2023, och nästan all råvara importeras.</p>
+  <p>Ren HVO säljs som HVO100 och följer standarden SS-EN 15940 för paraffinisk diesel. Eftersom den kemiskt liknar vanlig diesel kan dieselbilar köra på den, men bara om fordonstillverkaren har godkänt HVO100. Enligt standardutdraget innehåller HVO100 oftast ingen FAME (RME), men det bör kontrolleras med leverantören. HVO blandas också in i vanlig diesel, och då gäller dieselstandarden.</p>
+  <p>Energiinnehållet är {VARMEVARDEN.hvo100.toLocaleString("sv-SE")} kWh per liter enligt Energimyndigheten, mot {VARMEVARDEN.diesel.toLocaleString("sv-SE")} kWh för diesel. Förbrukningen blir därför ungefär densamma, och prisskillnaden per liter är i stort sett också skillnaden per mil.</p>
+
+  <h2 id="e85">E85 – etanol för flexifuelbilar</h2>
+  <p>E85 är ett etanolbränsle för flexifuelbilar (FFV). Enligt standarden SS-EN 15293:2018 ska bränslet innehålla 70–85 volymprocent etanol och högre alkoholer. Skillnaden mellan sommar- och vinterkvalitet ligger i ångtrycket, alltså hur lättflyktigt bränslet är, som får vara högre på vintern. Drivkraft Sverige anger att vinter-E85 innehåller cirka 75 procent etanol.</p>
+  <h3>När byts kvaliteten?</h3>
+  <ul>
+    <li><strong>Götaland och Svealand:</strong> sommarkvalitet 1 maj–15 september, vinterkvalitet 1 november–15 mars.</li>
+    <li><strong>Norrland:</strong> sommarkvalitet 16 maj–31 augusti, vinterkvalitet 16 oktober–31 mars.</li>
+  </ul>
+  <p>Däremellan är det övergångsperioder då båda kvaliteterna får säljas. Eftersom etanolen är skattebefriad men bensindelen beskattas kan priset skilja mellan sommar och vinter. Med Energimyndighetens värde på {VARMEVARDEN.e85.toLocaleString("sv-SE")} kWh per liter innehåller E85 ungefär {procent((1 - VARMEVARDEN.e85 / VARMEVARDEN.bensin95) * 100)} mindre energi än bensin 95. Bara bilar som är byggda för E85 får tankas med det.</p>
+
+  <h2 id="fordonsgas">Fordonsgas – biogas per kilo</h2>
+  <p>Fordonsgas är biogas, naturgas eller en blandning av dem, och den säljs per kilo. Gasen ska uppfylla standarden SS-EN 16723-2:2017. Ett kilo biogas innehåller {VARMEVARDEN.biogas.toLocaleString("sv-SE")} kWh enligt Energimyndigheten, vilket motsvarar ungefär {(VARMEVARDEN.biogas / VARMEVARDEN.bensin95).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} liter bensin. Jämför därför kilopriset med {(VARMEVARDEN.biogas / VARMEVARDEN.bensin95).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} gånger literpriset för 95.</p>
+  <p>Trafikanalys räknar som gasbilar de bilar som har gas som första eller andra drivmedel. Många gasbilar kan alltså även köras på bensin när gasen tar slut. {bilar("Gas") && <>Under {KORSTRACKOR.ar} fanns {bilar("Gas").bilar.toLocaleString("sv-SE")} gasbilar i trafik, och de körde i snitt {bilar("Gas").mil.toLocaleString("sv-SE")} mil.</>}</p>
+
+  <h2 id="skillnader">Skillnaderna i korthet</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>HVO100</th><th>E85</th><th>Fordonsgas</th></tr></thead>
+    <tbody>
+      <tr><td>Ersätter</td><td>Diesel</td><td>Bensin</td><td>Bensin</td></tr>
+      <tr><td>Vilka bilar</td><td>Dieselbilar godkända för HVO100</td><td>Flexifuelbilar (FFV)</td><td>Gasbilar</td></tr>
+      <tr><td>Säljs per</td><td>Liter</td><td>Liter</td><td>Kilo</td></tr>
+      <tr><td>Standard</td><td>SS-EN 15940</td><td>SS-EN 15293</td><td>SS-EN 16723-2</td></tr>
+      <tr><td>Energi</td><td>{VARMEVARDEN.hvo100.toLocaleString("sv-SE")} kWh/l</td><td>{VARMEVARDEN.e85.toLocaleString("sv-SE")} kWh/l</td><td>{VARMEVARDEN.biogas.toLocaleString("sv-SE")} kWh/kg</td></tr>
+      <tr><td>Pris idag</td><td>{hvo ? kr(hvo.p) : "–"}</td><td>{e85 ? kr(e85.p) : "–"}</td><td>{gas ? kr(gas.p) : "–"}</td></tr>
+      <tr><td>Stationer i registret</td><td>{antal("hvo100").toLocaleString("sv-SE")}</td><td>{antal("e85").toLocaleString("sv-SE")}</td><td>{antal("biogas").toLocaleString("sv-SE")}</td></tr>
+    </tbody>
+  </table></div>
+  {bilar("Etanol") && <p>Enligt Trafikanalys fanns {bilar("Etanol").bilar.toLocaleString("sv-SE")} etanolbilar och {bilar("Gas").bilar.toLocaleString("sv-SE")} gasbilar i trafik under {KORSTRACKOR.ar}, jämfört med {bilar("Diesel").bilar.toLocaleString("sv-SE")} dieselbilar. Hur många dieselbilar som är godkända för HVO100 finns inte i statistiken.</p>}
+
+  <h2 id="stationer">Var kan man tanka?</h2>
+  <p>De förnybara drivmedlen finns inte på alla stationer. Så här många stationer i vårt register anger att de säljer respektive drivmedel, och de tre län där det finns flest:</p>
+  <ul>{DM.map((d) => <li><strong><a href={d.href}>{d.namn}</a>:</strong> {antal(d.k).toLocaleString("sv-SE")} stationer, flest i {lanTopp(d.k).map(([l, n]) => `${l} (${n})`).join(", ")}.</li>)}</ul>
+  <p>Hitta en station nära dig på <a href={`${BENSINSTATIONER_URL}/`}>bensinstationer.nu</a>. Fordonsgas finns på klart färre platser, så den som kör gasbil har nytta av att planera längre resor.</p>
+
+  <h2 id="skatt">Skatt och reduktionsplikt</h2>
+  <p>Enligt Skatteverket dras energi- och koldioxidskatten av för den del av bränslet som kommer från biomassa, om bolaget har hållbarhetsbesked från Energimyndigheten. För E85 betyder det att bara bensindelen beskattas, och för HVO100 och biogas dras hela punktskatten av för biomassadelen. Moms betalas på alla drivmedel. Skatten väger därför lättare i E85-priset än i bensinpriset.</p>
+  <p>Reduktionsplikten gäller inte på samma sätt. Lagen omfattar bensin och diesel med högst 98 volymprocent biodrivmedel, vilket betyder att ren HVO100 ligger utanför. Plikten styr i stället hur mycket HVO och etanol som blandas in i vanlig diesel och bensin. Läs mer i guiden om <a href="/guider/reduktionsplikt/">reduktionsplikten</a>.</p>
+</Guide>

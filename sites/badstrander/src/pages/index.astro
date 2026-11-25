@@ -7,6 +7,7 @@ import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { GUIDER } from "../lib/guider.js";
 
 const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
 const n = KAT.enheter.length;
@@ -28,6 +29,9 @@ const fragor = [
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
 
   <Annons plats="start-1" />
+
+  <h2 id="guider">Guider om bad</h2>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
 
   <h2 id="lan">{Plur} per län och kommun</h2>
   {KAT.lan.map((l) => (

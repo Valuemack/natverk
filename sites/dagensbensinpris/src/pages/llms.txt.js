@@ -22,8 +22,11 @@ export function GET() {
     `- [Bensinpriset ${AR}](${SITE.url}/historik/${AR}/)`,
     `- [Bensinpris i Europa](${SITE.url}/europa/)`,
     `- [Bensinpris per kommun](${SITE.url}/ort/)`,
-    `- [Vad består bensinpriset av?](${SITE.url}/guider/vad-bestar-bensinpriset-av/)`,
-    `- [Bränslekalkylator](${SITE.url}/rakna/)`,
+    `- [Bensinskatt – vad består bensinpriset av?](${SITE.url}/guider/vad-bestar-bensinpriset-av/)`,
+    `- [Bränsleförbrukning och kostnad per mil (kalkylator)](${SITE.url}/rakna/)`,
+    `- [HVO100, E85 och fordonsgas – priser och skillnader](${SITE.url}/guider/hvo100-e85-fordonsgas/)`,
+    `- [Bensin 95 eller 98](${SITE.url}/guider/95-eller-98/)`,
+    `- [Reduktionsplikten](${SITE.url}/guider/reduktionsplikt/)`,
     `- [Källor och metod](${SITE.url}/om/)`,
   ];
   return new Response(rader.join("\n") + "\n", { headers: { "Content-Type": "text/plain; charset=utf-8" } });

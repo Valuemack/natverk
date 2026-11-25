@@ -1,0 +1,149 @@
+---
+// Lång guide: algblomning och bad. Statistik ur kommunernas algbedömning vid provtagningen (HaV:s öppna data)
+// och riskbedömningen i badvattenprofilerna. Fakta från HaV:s vägledning, 1177 och SMHI. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, ALLA_PROV, PROV_AR, SENASTE_AR, pct, tal, MANAD } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const A = ALLA_PROV.filter((p) => p.algblomning === "Blomning" || p.algblomning === "Ingen blomning");
+const bl = (p) => p.algblomning === "Blomning";
+const B = A.filter(bl);
+const ar0 = PROV_AR[0], ar1 = PROV_AR.at(-1);
+const unika = (lista) => new Set(lista.map((p) => p.e.id)).size;
+
+const lanRader = LAN.map((l) => {
+  const v = A.filter((p) => p.e.lan === l.namn), b = v.filter(bl);
+  return { l, n: v.length, b: b.length, platser: unika(b) };
+}).filter((r) => r.n >= 50).sort((a, b) => b.b / b.n - a.b / a.n);
+const manRader = ["06", "07", "08"].map((m) => { const v = A.filter((p) => p.datum.slice(5, 7) === m); return { m, n: v.length, b: v.filter(bl).length }; });
+const arRader = PROV_AR.map((y) => { const v = A.filter((p) => p.datum.startsWith(`${y}`)); const b = v.filter(bl); return { y, n: v.length, b: b.length, platser: unika(b) }; });
+const typ = (t) => { const v = A.filter((p) => p.e.extra?.vattentyp === t); return { n: v.length, b: v.filter(bl).length }; };
+const sjo = typ("Sjö"), hav = typ("Hav");
+
+// Kommuner med flest observationer av blomning.
+const perKommun = Object.entries(B.reduce((m, p) => ((m[p.e.kommun] = (m[p.e.kommun] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+// Badvattenprofilens riskbedömning och aktuella avrådanden.
+const risk = E.filter((e) => e.extra?.blomningsrisk?.cyanobakterier);
+const riskLan = LAN.map((l) => ({ l, n: risk.filter((e) => e.lan === l.namn).length })).filter((r) => r.n).sort((a, b) => b.n - a.n);
+const avradAlg = E.flatMap((e) => (e.extra?.avradan ?? []).filter((a) => /alg/i.test(a.orsak ?? "")).map((a) => ({ e, a })));
+const senasteBlom = E.map((e) => ({ e, p: (e.extra?.senaste_prov ?? []).find((p) => p.datum.startsWith(`${SENASTE_AR}`) && bl(p)) })).filter((x) => x.p);
+const fmtDatum = (d) => new Date(`${d}T12:00:00Z`).toLocaleDateString("sv-SE", { day: "numeric", month: "long", timeZone: "UTC" });
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är algblomning?" },
+  { id: "bada", rubrik: "Kan man bada vid algblomning?" },
+  { id: "kanna-igen", rubrik: "Så känner du igen algblomning" },
+  { id: "statistik", rubrik: "Var blommar det mest? Statistik per län" },
+  { id: "nar", rubrik: "När på sommaren kommer algblomningen?" },
+  { id: "risk", rubrik: "Badplatser med känd risk" },
+  { id: "symtom", rubrik: "Symtom och vad du gör om du har badat" },
+  { id: "hund", rubrik: "Hundar och algblomning" },
+  { id: "karta", rubrik: "Algblomning idag och på karta" },
+];
+
+const fragor = [
+  { fraga: "Kan man bada vid algblomning?", svar: "Det är klokt att avstå. HaV skriver att varken människor eller djur bör bada när vattnet är grumligt av blomning, och 1177 råder dig att undvika vatten med blommande alger. Om du ändå badar: svälj inget vatten och duscha efteråt." },
+  { fraga: "Är algblomning farligt?", svar: "Vissa cyanobakterier bildar gifter. För vuxna är risken normalt liten enligt SMHI, men barn som får i sig vatten kan bli magsjuka, och hundar kan bli allvarligt sjuka och i värsta fall dö. Det går inte att se på vattnet om blomningen är giftig." },
+  { fraga: "Hur ser algblomning ut?", svar: "Vattnet blir grumligt och får en gul, grön, blågrön, gulbrun eller orange färg. Ibland samlas partiklar på ytan eller i strandkanten, och kan klumpa ihop sig så att det liknar ärtsoppa eller rabarbersoppa." },
+  { fraga: "När är det algblomning?", svar: `Framför allt i juli och augusti, när vattnet är varmt och vädret lugnt. I kommunernas bedömningar ${ar0}–${ar1} noterades blomning i ${pct(manRader[2].b, manRader[2].n, 1)} av proverna i augusti, mot ${pct(manRader[0].b, manRader[0].n, 1)} i juni.` },
+  { fraga: "Vad är blågröna alger?", svar: "Blågröna alger är ett annat namn på cyanobakterier. De finns i sött och bräckt vatten, både i sjöar och i Östersjön, och kan bilda stora blomningar på sommaren." },
+  { fraga: "Vad gör jag om hunden badat i algblomning?", svar: "Håll uppsikt över hunden. Djur som fått i sig algbemängt vatten kan bli allvarligt sjuka, och enligt SMHI ska husdjur med symtom få veterinärvård så fort som möjligt. Kontakta veterinär direkt om hunden verkar sjuk." },
+  { fraga: "Hur länge ska man vänta efter en algblomning?", svar: "1177 rekommenderar att vänta några dagar med att bada i skyddade vikar efter att blomningen försvunnit, även om vattnet ser klart ut." },
+];
+
+const titel = `Algblomning – kan man bada? Råd, symtom och statistik`;
+const beskrivning = `Kan man bada vid algblomning? Så känner du igen blågröna alger, symtom, råd för barn och hundar och var algblomning noterats oftast ${ar0}–${ar1}, per län.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Algblomning och bad"
+  svar={`Undvik att bada när vattnet är grumligt och grönt, gulbrunt eller blågrönt av <strong>algblomning</strong>. Vissa cyanobakterier bildar gifter som kan ge hudutslag och magsjuka, och barn och hundar är mest utsatta. Kommunerna noterade blomning i <strong>${pct(B.length, A.length, 1)}</strong> av ${tal(A.length)} bedömningar ${ar0}–${ar1}, oftast i augusti och i sjöar.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Algblomning", href: "/algblomning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Badvattenkvalitet", href: "/badvattenkvalitet/", text: "Så läser du provsvaren" },
+    { namn: "Hundbad", href: "/hundbad/", text: "Regler och stränder för hundar" },
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Varmt vatten och uppvällning" },
+    { namn: "Maneter", href: "/maneter/", text: "Brännmaneter och öronmaneter" },
+    { namn: "Bäst vattenkvalitet", href: "/basta-vattenkvalitet/", text: "Badplatser med utmärkt vatten" },
+  ]}
+  kallor={[
+    { namn: "HaV – Vägledning kring EU-bad (rapport 2025:7)", url: "https://www.havochvatten.se/data-kartor-och-rapporter/rapporter-och-andra-publikationer/publikationer/2025-06-12-vagledning-kring-eu-bad.html", text: "hur kommunerna bedömer och rapporterar algblomning", datum: "2026-11-25" },
+    { namn: "HaV – Fakta om badvatten", url: "https://www.havochvatten.se/badplatser-och-badvatten/fakta-om-badvatten.html", text: "algtoxiner analyseras normalt inte, egen bedömning", datum: "2026-11-25" },
+    { namn: "1177 – Algförgiftning", url: "https://www.1177.se/olyckor--skador/bett-stick-och-vaxter/algforgiftning/", text: "symtom, råd och när du ska söka vård", datum: "2026-11-25" },
+    { namn: "SMHI – Algblomning", url: "https://www.smhi.se/kunskapsbanken/oceanografi/alger/algblomning", text: "orsaker, risker för människor och djur, satellitövervakning", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "kommunernas algbedömningar och badvattenprofiler", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vad">Vad är algblomning?</h2>
+  <p>Algblomning betyder att mikroskopiska växtplankton förökar sig så kraftigt att vattnet byter färg. De blomningar som oroar badare består oftast av <strong>cyanobakterier</strong>, som också kallas blågröna alger. Enligt 1177 finns de i både sött och bräckt vatten, alltså i sjöar och i Östersjön. Vind och strömmar kan också föra dem till västkusten.</p>
+  <p>SMHI beskriver vad som behövs: näring i form av kväve och fosfor, starkt solljus och lugnt väder så att ytvattnet inte rörs om. Övergödning gör att det finns mer näring än naturligt. Därför kommer blomningarna ofta efter en period av värme och stiltje. Alla blomningar är inte giftiga, men det går inte att se skillnad med blotta ögat. Algtoxiner analyseras normalt inte i badvatten, skriver HaV. Det är alltså din egen bedömning som gäller när du står på stranden.</p>
+
+  <h2 id="bada">Kan man bada vid algblomning?</h2>
+  <p>Myndigheterna uttrycker sig lite olika, men budskapet är detsamma: var försiktig.</p>
+  <ul>
+    <li><strong>HaV</strong> skriver i sin vägledning till kommunerna att varken människor eller djur bör bada när vattnet är grumligt av blomning, och att det är klokt att undvika bad vid algblomning.</li>
+    <li><strong>1177</strong> råder dig att undvika vatten med blommande alger och att särskilt hålla barn och husdjur borta från stränderna. Rör inte heller algmassor som spolats upp på land.</li>
+    <li><strong>SMHI</strong> konstaterar att risken för vuxna normalt är liten och att det kan gå bra att bada, så länge du inte sväljer vatten och duschar efteråt.</li>
+  </ul>
+  <p>För vuxna som simmar en kort stund och inte sväljer vatten är risken alltså liten. För små barn som leker i strandkanten är den större. De får lätt i sig många kallsupar, och det är just i strandkanten algerna samlas. Kommunen kan tillfälligt avråda från bad vid algblomning, men hinner inte alltid upptäcka en blomning innan du gör det.</p>
+
+  <h2 id="kanna-igen">Så känner du igen algblomning</h2>
+  <p>HaV:s vägledning beskriver vad kommunernas provtagare ska titta efter. Samma tecken kan du använda själv:</p>
+  <ul>
+    <li><strong>Färgen.</strong> Vattnet blir gult, grönt, blågrönt, gulbrunt eller orange.</li>
+    <li><strong>Grumligheten.</strong> Vattnet är grumligt och du ser kortare ner än vanligt.</li>
+    <li><strong>Ytan.</strong> Små korn eller flagor samlas vid ytan. Vid kraftig blomning klumpar de ihop sig och liknar ärtsoppa eller rabarbersoppa.</li>
+    <li><strong>Strandkanten.</strong> Algerna driver ofta in mot land och lägger sig i en rand längs stranden.</li>
+  </ul>
+  <p>Tänk på vinden. En blåsig dag kan algerna blandas ner i vattnet eller drivas bort, så att vattnet ser klart ut fast blomningen finns kvar i närheten.</p>
+
+  <h2 id="statistik">Var blommar det mest? Statistik per län</h2>
+  <p>Vid varje provtagning bedömer kommunen om det finns blomning. Vi har räknat ihop {tal(A.length)} sådana bedömningar från {ar0}–{ar1}. Tabellen visar län med minst 50 bedömningar, sorterade efter hur ofta blomning noterades.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Bedömningar</th><th class="num">Med blomning</th><th class="num">Andel</th><th class="num">Badplatser</th></tr></thead>
+    <tbody>{lanRader.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{tal(r.n)}</td><td class="num">{r.b}</td><td class="num">{pct(r.b, r.n, 1)}</td><td class="num">{r.platser}</td></tr>)}</tbody>
+  </table></div>
+  <p>{lanRader[0].l.namn}, {lanRader[1].l.namn} och {lanRader[2].l.namn} sticker ut. Flest observationer totalt har {perKommun.slice(0, 5).map(([k, n]) => `${k} (${n})`).join(", ")}. Siffrorna speglar också hur noga kommunen rapporterar. En kommun som provtar ofta och noterar varje blomning hamnar högre än en som provtar sällan.</p>
+  <p>Skillnaden mellan sjö och hav är tydlig. Blomning noterades i {pct(sjo.b, sjo.n, 1)} av bedömningarna vid sjöbad, men bara {pct(hav.b, hav.n, 1)} vid havsbad. Det betyder inte att havet är fritt från alger. Blomningar till havs syns inte alltid vid provtagningen, och de kan drivas in mot land med vinden.</p>
+
+  <h2 id="nar">När på sommaren kommer algblomningen?</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Bedömningar</th><th class="num">Med blomning</th><th class="num">Andel</th></tr></thead>
+    <tbody>{manRader.map((r) => <tr><td>{MANAD[r.m][0].toUpperCase() + MANAD[r.m].slice(1)}</td><td class="num">{tal(r.n)}</td><td class="num">{r.b}</td><td class="num">{pct(r.b, r.n, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Risken ökar under sommaren och är störst i augusti. Det stämmer med 1177, som skriver att algerna blommar framför allt mellan juli och september när vattnet är som varmast, och med SMHI:s bild att de potentiellt skadliga blomningarna i Östersjön är vanligast i juli och augusti.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Bedömningar</th><th class="num">Med blomning</th><th class="num">Badplatser med blomning</th></tr></thead>
+    <tbody>{arRader.map((r) => <tr><td>{r.y}</td><td class="num">{tal(r.n)}</td><td class="num">{r.b}</td><td class="num">{r.platser}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="risk">Badplatser med känd risk</h2>
+  <p>För varje EU-bad gör kommunen en badvattenprofil, där bland annat risken för algblomning ska bedömas. I HaV:s data är <strong>{risk.length} badplatser</strong> markerade med risk för blomning av cyanobakterier. Flest finns i {riskLan.slice(0, 4).map((r) => `${r.l.namn} (${r.n})`).join(", ")}.</p>
+  {avradAlg.length > 0 && <p>Senaste säsongen avrådde kommunerna från bad på grund av algblomning vid {avradAlg.map(({ e, a }, i) => <>{i > 0 && ", "}<a href={e.href}>{e.namn}</a> ({e.kommun}, från {fmtDatum(a.fran)})</>)}.</p>}
+  <p>Säsongen {SENASTE_AR} noterades blomning vid {senasteBlom.length} badplatser. Badplatsens egen sida visar om det senaste provet hade blomning.</p>
+
+  <h2 id="symtom">Symtom och vad du gör om du har badat</h2>
+  <p>Enligt 1177 kan algtoxiner ge hudutslag och klåda, besvär i ögonen, huvudvärk och magsjuka med illamående, kräkningar och diarré. Symtomen kommer vanligen några timmar efter badet. För att bli magsjuk krävs enligt SMHI oftast mer vatten än en kallsup, men barn får lättare i sig vatten.</p>
+  <h3>Om du har badat i algblomning</h3>
+  <ul>
+    <li>Duscha och tvåla in hela kroppen, och skölj noga med rent vatten.</li>
+    <li>Skölj ögonen noga om de svider.</li>
+    <li>Ring <strong>1177</strong> för råd om du eller ditt barn får symtom.</li>
+    <li>Vid misstänkt förgiftning kan du ringa Giftinformationscentralen på 010-456 67 00. Vid akuta, allvarliga symtom ring <strong>112</strong>.</li>
+  </ul>
+  <p>Enligt 1177 förstörs gifterna inte av kokning. Att koka vatten från en sjö med blomning gör det alltså inte säkert att dricka.</p>
+
+  <h2 id="hund">Hundar och algblomning</h2>
+  <p>Hundar är mer utsatta än människor, eftersom de gärna dricker vattnet de badar i. SMHI skriver att husdjur, boskap och vilda djur löper störst risk, och att djur som dricker algbemängt vatten kan bli allvarligt sjuka och till och med dö. 1177 konstaterar att hundar, katter och andra husdjur är särskilt känsliga för alggifterna och råder dig att hålla husdjur borta från stränderna vid blomning.</p>
+  <p>Låt därför inte hunden bada eller dricka där vattnet är grumligt och färgat, och håll den borta från uppspolade algmassor. Får hunden symtom efter ett bad ska den enligt SMHI få veterinärvård så fort som möjligt. Ring veterinären direkt, vänta inte. Läs mer om <a href="/hundbad/">hundbad och regler för hundar på stranden</a>.</p>
+
+  <h2 id="karta">Algblomning idag och på karta</h2>
+  <p>Det finns ingen enskild karta som visar algblomning vid alla badplatser i realtid. Det här är de bästa källorna:</p>
+  <ul>
+    <li><strong>Badplatsens egen sida här.</strong> Visar om kommunen noterade blomning vid senaste provet och om det finns en avrådan.</li>
+    <li><strong>SMHI:s algsituation.</strong> SMHI har sedan 2002 övervakat cyanobakterieblomningar i Östersjön med satellit, och visar bilderna under sommaren.</li>
+    <li><strong>Kommunen.</strong> Enligt badvattenförordningen ska kommunen omedelbart informera allmänheten om risken när det blommar vid ett EU-bad, ofta genom skyltar på stranden.</li>
+  </ul>
+  <p>Satellitbilderna visar blomningar till havs, inte vid en enskild strand eller i sjöar. Det säkraste är fortfarande att titta på vattnet innan du går i.</p>
+</Guide>

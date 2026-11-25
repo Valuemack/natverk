@@ -1,0 +1,43 @@
+---
+// Hubbsida för de långa guiderna (2026-11-25). En rad per guide om vad den svarar på, grupperat efter ämne.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../site.js";
+
+const GRUPPER = [
+  { rubrik: "När du blir sjuk", guider: [
+    { href: "/akut-narakut-jourcentral/", namn: "Akuten, närakut eller jourcentral", text: "Vart du ska vända dig, när du ringer 112 eller 1177 och jourmottagningar per län." },
+    { href: "/drop-in/", namn: "Vårdcentraler med drop-in", text: "Kom utan bokad tid – vårdcentraler med drop-in per län och kommun." },
+    { href: "/sjukintyg-lakarintyg/", namn: "Sjukintyg och läkarintyg", text: "Dag 8, dag 15, karensavdrag och intyg för körkort, med datumräknare." },
+    { href: "/provtagning/", namn: "Provtagning och blodprov", text: "Drop-in för prover, provsvar på 1177 och provtagning per län." },
+  ] },
+  { rubrik: "Vaccin", guider: [
+    { href: "/influensavaccin/", namn: "Influensavaccin 2026", text: "Vem som får vaccinet gratis, när vaccinationen startar och hur du bokar." },
+    { href: "/tbe-vaccin/", namn: "TBE-vaccin", text: "Dosschema, kostnad och fall av TBE per län enligt Folkhälsomyndigheten." },
+  ] },
+  { rubrik: "Barn, graviditet och unga", guider: [
+    { href: "/barnmorskemottagning/", namn: "Barnmorskemottagning (MVC)", text: "Graviditet, cellprov och preventivmedel – och mottagningar per län." },
+    { href: "/bvc/", namn: "BVC – barnavårdscentral", text: "Besöken från nyfödd till sex år, vaccinationer och BVC per län." },
+    { href: "/ungdomsmottagning/", namn: "Ungdomsmottagning", text: "Åldersgränser, vad du kan få hjälp med och tystnadsplikt." },
+  ] },
+  { rubrik: "Vårdcentralen och dina rättigheter", guider: [
+    { href: "/byta-vardcentral/", namn: "Byta vårdcentral", text: "Så listar du dig, hur ofta du får byta och vilken vårdcentral du tillhör." },
+    { href: "/vardgaranti/", namn: "Vårdgaranti och väntetider", text: "0–3–90–90, vad du gör om garantin inte hålls och patienternas betyg per region." },
+    { href: "/hogkostnadsskydd-frikort/", namn: "Högkostnadsskydd och frikort", text: "Taket för besök och läkemedel, med kalkylator för frikort och läkemedelstrappan." },
+    { href: "/fornya-recept/", namn: "Förnya recept", text: "Steg för steg på 1177, hur länge recept gäller och e-tjänsten per län." },
+    { href: "/distriktsskoterska/", namn: "Distriktssköterska", text: "Vad distriktssköterskan gör, förskrivning, vaccination och hembesök." },
+    { href: "/patientnamnden/", namn: "Patientnämnden", text: "Så klagar du på vården, och när du vänder dig till IVO eller Löf." },
+  ] },
+];
+---
+<Layout site={SITE} titel="Guider om vården – akut, vaccin, BVC, recept och frikort"
+  beskrivning="Guider från vårdcentralen.nu: akuten eller jourcentral, vaccin, MVC, BVC, recept, sjukintyg, frikort, vårdgaranti och patientnämnden – med data per län."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]}>
+  <h1>Guider om vården</h1>
+  <p class="svar">Här samlar vi våra längre genomgångar om hur vården fungerar. Faktauppgifterna är kontrollerade mot 1177, myndigheter och lagtext, som anges på varje sida. Vi ger inga medicinska råd: vid livshotande tillstånd ring 112, för sjukvårdsrådgivning ring 1177.</p>
+  {GRUPPER.map((g) => (
+    <>
+      <h2>{g.rubrik}</h2>
+      <div class="kort">{g.guider.map((x) => <a href={x.href}><strong>{x.namn}</strong><small>{x.text}</small></a>)}</div>
+    </>
+  ))}
+</Layout>

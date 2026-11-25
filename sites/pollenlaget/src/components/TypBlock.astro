@@ -1,0 +1,50 @@
+---
+// Datablocken för ett pollenslag: dagens nivå per ort (bara i säsong), typisk säsong per ort och gränsvärden.
+// Används både av den korta typsidan och av de långa guiderna, så att innehållet är detsamma.
+// visa = "idag" | "sasong" | "grans". id/rubrik kan skickas in så att blocket passar i guidens innehållsförteckning.
+import { UPPDATERAD, KALLA_NRM, REGIONER, prognosFor, aktuell, kalenderFor, KALENDER_AR, mmdd, kornText, nivaText } from "../site.js";
+
+const { typ: t, visa, id, rubrik, ord } = Astro.props;
+const arText = KALENDER_AR.length ? `${KALENDER_AR[0]}–${KALENDER_AR.at(-1)}` : "";
+const g = t.gransvarden ?? {};
+const idag = visa === "idag" ? REGIONER.map((r) => {
+  const p = prognosFor(r);
+  if (!aktuell(p)) return null;
+  const d = p.dagar.find((x) => x.datum === UPPDATERAD) ?? p.dagar[0];
+  const n = d.nivaer.find((x) => x.pollen === t.namn);
+  return n ? { r, niva: n.niva } : null;
+}).filter(Boolean) : [];
+const kal = visa === "sasong" ? REGIONER.map((r) => ({ r, k: kalenderFor(r, t) })).filter((x) => x.k) : [];
+---
+{visa === "idag" && idag.length > 0 && <>
+  <h2 id={id}>{rubrik ?? `${ord} idag`}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>Nivå</th></tr></thead>
+    <tbody>{idag.map((x) => <tr><td><a href={`/${x.r.slug}/`}>{x.r.namn}</a></td><td><span class={`niva niva-${x.niva}`}>{nivaText(x.niva)}</span></td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Prognosnivåer: {KALLA_NRM} (CC BY-ND 4.0).</p>
+</>}
+
+{visa === "sasong" && kal.length > 0 && <>
+  {rubrik !== false && <h2 id={id}>{rubrik ?? `När kommer ${ord}?`}</h2>}
+  <p>Typisk säsong per ort, från söder till norr. Median för {arText} räknat från uppmätta halter.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ort</th><th>Börjar</th><th>Topp</th><th>Slutar</th><th class="num">Dagar med höga halter*</th><th class="num">Högsta dygnsvärde</th></tr></thead>
+    <tbody>{[...kal].reverse().map(({ r, k }) => <tr><td><a href={`/${r.slug}/`}>{r.namn}</a></td><td>{mmdd(k.typisk_start, false)}</td><td>{mmdd(k.typisk_topp, false)}</td><td>{mmdd(k.typiskt_slut, false)}</td><td class="num">{k.dagar_over_mattlig_snitt}</td><td class="num">{kornText(k.hogsta_dygnsvarde)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">* Snitt per år med dygnsvärden över {g.mattlig ?? "–"} korn/m³. Bearbetning av uppmätta halter från {KALLA_NRM} (CC BY-SA 4.0).</p>
+</>}
+
+{visa === "grans" && g.lag != null && <>
+  {rubrik !== false && <h2 id={id}>{rubrik ?? `Gränsvärden för ${ord}`}</h2>}
+  <div class="tabell"><table>
+    <thead><tr><th>Halt</th><th class="num">Pollenkorn per m³ luft</th></tr></thead>
+    <tbody>
+      <tr><td><span class="niva niva-1">Låga</span></td><td class="num">1–{g.lag}</td></tr>
+      <tr><td><span class="niva niva-3">Måttliga</span></td><td class="num">{g.lag + 1}–{g.mattlig}</td></tr>
+      <tr><td><span class="niva niva-5">Höga</span></td><td class="num">{g.mattlig + 1}–{g.hog}</td></tr>
+      <tr><td><span class="niva niva-7">Mycket höga</span></td><td class="num">över {g.hog}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Gränsvärden enligt {KALLA_NRM}.</p>
+</>}

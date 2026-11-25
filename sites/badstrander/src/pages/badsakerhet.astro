@@ -1,0 +1,116 @@
+---
+// Lång guide: badsäkerhet – drunkning, badvakter, flaggor och första hjälpen. Statistik från Myndigheten för
+// civilt försvar (MCF), råd från 1177. Egen data: vad kommunerna anger om livräddare och livräddningsutrustning
+// i HaV:s badplatsregister. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { E, LAN, text, tal } from "../lib/guidedata.js";
+
+const PUBLICERAD = "2026-11-25";
+const har = (re) => E.filter((e) => re.test(text(e)));
+const bevakad = har(/livräddare|badvakter|havslivräddare|livräddarbevakad|livräddarbevakning/i).filter((e) => !/förekommer ej|obevakad/i.test(text(e)));
+const obevakad = har(/obevakad|badvakt förekommer ej/i);
+const livboj = har(/livboj/i);
+const hjart = har(/hjärtstartare/i);
+const utrustning = har(/livboj|räddningsstege|livräddningsutrustning|räddningsutrustning|livräddningsredskap|livbåt|hjärtstartare/i);
+const hopptorn = har(/hopptorn/i);
+const djup = har(/djupangiv|djupmarker/i);
+const utrLan = LAN.map((l) => ({ l, n: utrustning.filter((e) => e.lan === l.namn).length, alla: E.filter((e) => e.lan === l.namn).length })).filter((r) => r.n).sort((a, b) => b.n - a.n).slice(0, 8);
+
+const avsnitt = [
+  { id: "drunkning", rubrik: "Drunkning i Sverige – siffrorna" },
+  { id: "risker", rubrik: "Det som ökar risken" },
+  { id: "barn", rubrik: "Barn vid vatten" },
+  { id: "badvakt", rubrik: "Badvakter och livräddare – var finns de?" },
+  { id: "utrustning", rubrik: "Livräddningsutrustning på badplatsen" },
+  { id: "flaggor", rubrik: "Flaggor, hopptorn och regler på stranden" },
+  { id: "radda", rubrik: "Så hjälper du någon som håller på att drunkna" },
+  { id: "simma", rubrik: "Simkunnighet och räddningsväst" },
+];
+
+const fragor = [
+  { fraga: "Hur många drunknar i Sverige varje år?", svar: "Enligt Myndigheten för civilt försvar omkommer cirka 100 människor varje år i drunkningsolyckor, och lika många behöver vårdas på sjukhus. Räknas självmord in är det ungefär 200 dödsfall per år." },
+  { fraga: "Finns det badvakter på svenska stränder?", svar: `På de flesta badplatser finns ingen badvakt, och bad sker på egen risk. I HaV:s register anger kommunerna livräddare eller badvakter vid ${bevakad.length} badplatser, främst i Halmstad, Helsingborg, Malmö, Varberg och Vellinge, och då oftast dagtid under högsäsong.` },
+  { fraga: "Vad betyder röd flagga på stranden?", svar: "En röd eller svart flagga betyder badförbud, enligt 1177. Flaggor används på bevakade stränder." },
+  { fraga: "Vad gör man om någon håller på att drunkna?", svar: "Ropa på hjälp och ring 112. Om personen inte andas, börja med hjärt-lungräddning och ge fem inblåsningar så snart som möjligt, gärna redan i vattnet om du kan. Personen ska alltid till sjukhus för bedömning, även om hen verkar må bra." },
+  { fraga: "Hur gamla barn kan bada själva?", svar: "1177 säger att du aldrig ska lämna barn ensamma i eller nära vatten, och att barn i fem- till sexårsåldern behöver ha en vuxen med sig. Även äldre barn som kan simma behöver uppsikt." },
+  { fraga: "Varför drunknar vuxna?", svar: "1177 anger att hälften av alla drunkningsolyckor sker under påverkan av alkohol eller droger. Sjukdomar som epilepsi, diabetes och hjärtsjukdomar kan också öka risken." },
+];
+
+const titel = `Badsäkerhet – drunkning, badvakter och flaggor`;
+const beskrivning = `Cirka 100 drunknar i Sverige varje år. Riskerna, barn vid vatten, var det finns badvakter och livbojar, vad flaggorna betyder och första hjälpen vid drunkning.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Badsäkerhet: drunkning, badvakter och regler"
+  svar={`Varje år omkommer <strong>cirka 100 människor</strong> i drunkningsolyckor i Sverige, enligt Myndigheten för civilt försvar. Hälften av olyckorna sker under påverkan av alkohol eller droger. De flesta badplatser saknar badvakt, så bad sker på egen risk. Lämna aldrig barn ensamma vid vatten, och ring <strong>112</strong> direkt om någon är i nöd.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Badsäkerhet", href: "/badsakerhet/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Kallbad och vinterbad", href: "/kallbad/", text: "Köldchock och råd för kallt vatten" },
+    { namn: "Badtemperatur", href: "/badtemperatur/", text: "Uppvällning och kallt vatten" },
+    { namn: "Sveriges bästa stränder", href: "/basta-strander/", text: "Långgrunda stränder för barn" },
+    { namn: "Algblomning", href: "/algblomning/", text: "Barn och alger i strandkanten" },
+    { namn: "Maneter", href: "/maneter/", text: "Bränd av manet – så gör du" },
+  ]}
+  kallor={[
+    { namn: "Myndigheten för civilt försvar – Vattensäkerhet", url: "https://www.mcf.se/sv/amnesomraden/skydd-mot-olyckor-och-farliga-amnen/stod-till-kommunal-raddningstjanst/brandskydd-och-forebyggande/vattensakerhet/", text: "drunkningsstatistik och lagar om vattensäkerhet", datum: "2026-11-25" },
+    { namn: "1177 – Vattensäkerhet för barn och vuxna", url: "https://www.1177.se/barn--gravid/att-ta-hand-om-barn/barnsakerhet/vattensakerhet-for-barn-och-vuxna/", text: "råd, flaggor, alkohol och sjukdomar", datum: "2026-11-25" },
+    { namn: "1177 – Drunkningsolyckor", url: "https://www.1177.se/olyckor--skador/akuta-rad---forsta-hjalpen/drunkningsolyckor/", text: "första hjälpen", datum: "2026-11-25" },
+    { namn: "Havs- och vattenmyndigheten – Badplatser och badvatten (öppna data)", url: "https://www.havochvatten.se/badplatser-och-badvatten.html", text: "kommunernas uppgifter om livräddare och utrustning", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="drunkning">Drunkning i Sverige – siffrorna</h2>
+  <p>Myndigheten för civilt försvar (MCF), som tidigare hette MSB, anger att cirka <strong>100 människor omkommer i drunkningsolyckor varje år</strong> och att lika många behöver vårdas på sjukhus. Räknar man med självmord är det ungefär 200 människor som dör av drunkning varje år.</p>
+  <p>Räddningstjänsten ryckte under åren 2021–2025 ut till i genomsnitt <strong>450 drunkningar och drunkningstillbud per år</strong>. Det är alltså betydligt fler som är nära att drunkna än som omkommer. För detaljerade tabeller hänvisar MCF till sin statistikdatabas om drunkningar.</p>
+  <p>Drunkning sker inte bara vid badplatser. Olyckor inträffar också vid båtliv, på isen och i pooler. MCF nämner föräldrar, äldre, ägare av pooler och dammar och båtfolk som grupper som förekommer ofta i olycksstatistiken.</p>
+
+  <h2 id="risker">Det som ökar risken</h2>
+  <p>De flesta drunkningar går att förebygga. 1177 lyfter fram några risker som återkommer:</p>
+  <ul>
+    <li><strong>Alkohol och droger.</strong> Hälften av alla drunkningsolyckor sker under påverkan av alkohol eller droger. Vatten och alkohol hör inte ihop.</li>
+    <li><strong>Att bada ensam.</strong> Bada aldrig ensam om du inte kan simma.</li>
+    <li><strong>Okänt vatten.</strong> Hoppa eller dyk aldrig i okänt vatten, och simma aldrig under bryggor och hoppställningar.</li>
+    <li><strong>Sjukdomar.</strong> Epilepsi, diabetes, hjärtsjukdomar och öronsjukdomar kan öka risken. Den som har en sådan sjukdom bör helst bada i sällskap.</li>
+  </ul>
+  <p>Kallt vatten är en risk i sig. Vid kusten kan uppvällning göra vattnet iskallt från en dag till en annan, och i maj ligger vattnet i kommunernas mätningar kring 15 grader. Läs mer i guiderna om <a href="/badtemperatur/">badtemperatur</a> och <a href="/kallbad/">kallbad</a>.</p>
+
+  <h2 id="barn">Barn vid vatten</h2>
+  <p>1177 är tydlig: lämna aldrig barn ensamma i närheten av eller i vatten. Barn i fem- till sexårsåldern behöver ha en vuxen med sig. Föräldrar har enligt föräldrabalken ett tillsynsansvar för sina barn, och MCF nämner föräldrar som en av de grupper som ofta förekommer i olycksstatistiken.</p>
+  <ul>
+    <li>Bestäm vilken vuxen som har uppsikt över barnen i vattnet, så att ingen tror att någon annan tittar.</li>
+    <li>Barn som inte kan simma ska ha en räddningsväst med krage, enligt 1177.</li>
+    <li>Välj gärna en långgrund strand. Se listan över <a href="/basta-strander/#barn">långgrunda stränder med utmärkt vatten</a>.</li>
+  </ul>
+  <p>Pooler och dammar i trädgårdar är en särskild risk för små barn. Boverkets regler kräver skydd mot drunkning vid pooler och dammar, enligt MCF.</p>
+
+  <h2 id="badvakt">Badvakter och livräddare – var finns de?</h2>
+  <p>På de allra flesta svenska badplatser finns <strong>ingen badvakt</strong>. MCF:s genomgång av lagar om vattensäkerhet tar upp krav på utrustning för livräddning, men inget krav på bemanning. Vi har gått igenom kommunernas beskrivningar av alla {tal(E.length)} badplatser i Havs- och vattenmyndighetens register. Livräddare eller badvakter nämns bara vid <strong>{bevakad.length} badplatser</strong>:</p>
+  <ul class="kolumner">{bevakad.map((e) => <li><a href={e.href}>{e.namn}</a> ({e.kommun})</li>)}</ul>
+  <p>Bevakningen gäller nästan alltid dagtid under högsäsong. I Helsingborg anger kommunen att flera stränder bevakas av havslivräddare dagtid i juni, juli och augusti. Vid Tylösand och Tylöbäck i Halmstad finns livräddare under badsäsongen, och vid Sibbarp i Malmö är hjälpstationen bemannad av badvakter dagtid. På andra håll skriver kommunen uttryckligen att badplatsen är obevakad eller att bad sker på egen risk, som vid {obevakad.map((e) => e.namn).join(", ")}.</p>
+
+  <h2 id="utrustning">Livräddningsutrustning på badplatsen</h2>
+  <p>Enligt lagen om skydd mot olyckor ska ägare till anläggningar i skälig omfattning hålla utrustning för livräddning, vilket MCF lyfter fram i sin sammanställning. På en badplats kan det till exempel vara livboj eller räddningsstege.</p>
+  <p>I HaV:s register nämner kommunen livräddningsutrustning vid {utrustning.length} badplatser, varav livboj vid {livboj.length} och hjärtstartare vid {hjart.length}. Det säger mer om hur utförligt kommunerna beskriver sina badplatser än om hur många som faktiskt har utrustning. Flest omnämnanden finns i:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Utrustning nämns</th><th class="num">Badplatser i länet</th></tr></thead>
+    <tbody>{utrLan.map((r) => <tr><td><a href={r.l.href}>{r.l.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{r.alla}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="flaggor">Flaggor, hopptorn och regler på stranden</h2>
+  <p>På bevakade stränder används flaggor. Enligt 1177 betyder en <strong>röd eller svart flagga badförbud</strong>. Följ alltid livräddarnas anvisningar.</p>
+  <p>Hopptorn och höga bryggor finns vid {hopptorn.length} badplatser enligt kommunerna. Hoppa bara där du vet att det är tillräckligt djupt, och aldrig i okänt vatten. Vid {djup.length} badplatser anger kommunen att det finns djupangivelser på bryggorna. Läs dem, och respektera förbud mot dykning där sådana finns.</p>
+  <p>Kommunen kan också avråda från bad, till exempel efter ett otjänligt vattenprov eller vid algblomning. En sådan avrådan handlar om vattenkvaliteten och visas på badplatsens sida här. Läs mer om <a href="/badvattenkvalitet/">badvattenkvalitet och provsvar</a>.</p>
+
+  <h2 id="radda">Så hjälper du någon som håller på att drunkna</h2>
+  <p>Råden kommer från 1177:</p>
+  <ol>
+    <li><strong>Ropa på hjälp och ring 112.</strong></li>
+    <li>Om personen inte andas: gör <strong>hjärt-lungräddning</strong> medan du väntar på ambulansen. Börja med att ge <strong>fem inblåsningar</strong> så snart som möjligt, gärna redan i vattnet om du kan.</li>
+    <li>Den som har varit nära att drunkna blir ofta snabbt nedkyld. Ta personen i skydd från vinden.</li>
+    <li>Personen behöver alltid komma till sjukhus för bedömning, även om hen verkar må bra och andas själv. Vatten i lungorna kan ge problem efteråt. Ring 112 om personen får andningsbesvär senare.</li>
+  </ol>
+  <p>Ta reda på var närmaste livboj och hjärtstartare finns när du kommer till en badplats. Vid {hjart.length} badplatser anger kommunen att det finns en hjärtstartare.</p>
+
+  <h2 id="simma">Simkunnighet och räddningsväst</h2>
+  <p>Att kunna simma är det viktigaste skyddet. Enligt 1177 ska alla barn få kostnadsfri simundervisning i skolan, och rådet till alla är att lära sig simma och fortsätta öva.</p>
+  <p>1177 påpekar att alla som inte kan simma behöver en så kallad räddningsväst med krage, och att det är viktigt att ha en räddningsväst om du inte kan simma. Det gäller både barn och vuxna, vid bad såväl som på bryggor och i båt. Bada aldrig ensam om du inte är säker i vattnet.</p>
+</Guide>

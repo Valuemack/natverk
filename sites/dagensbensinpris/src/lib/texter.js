@@ -4,7 +4,7 @@ export const OM_DRIVMEDEL = {
     ingress: "Blyfri bensin med 95 oktan är det vanligaste drivmedlet för personbilar i Sverige.",
     stycken: [
       "Bensin 95 får enligt den europeiska standarden innehålla upp till 10 procent etanol. Pumpen är märkt E5 eller E10 efter hur mycket etanol bensinen högst innehåller. De flesta bensinbilar tål E10, men kontrollera instruktionsboken eller tanklocket om du är osäker.",
-      "Bränslebolagen omfattas av reduktionsplikten: de måste blanda in förnybart så att växthusgasutsläppen från bensinen minskar med en viss procent. För 2024–2026 är nivån 6 procent för bensin, vilket i praktiken uppfylls med etanol.",
+      "Bränslebolagen omfattas av reduktionsplikten: de måste blanda in förnybart så att växthusgasutsläppen från bensinen minskar med en viss procent. Sedan den 1 juli 2025 är nivån 10 procent för bensin (6 procent under 2024), och i bensin blandas etanol in.",
       "Ungefär halva priset är skatt: energiskatt, koldioxidskatt och moms. Resten är produktkostnad, frakt och bolagens marginal, som följer världsmarknadspriset på bensin och kronans värde mot dollarn.",
     ],
   },
@@ -19,7 +19,7 @@ export const OM_DRIVMEDEL = {
     ingress: "Diesel används av dieselbilar, lastbilar, bussar och arbetsmaskiner. Den diesel som säljs vid svenska pumpar är miljöklass 1 (MK1).",
     stycken: [
       "Dieselns pris följer världsmarknadspriset på diesel (gasolja), som inte alltid går i takt med bensinen. Efterfrågan från industri, sjöfart och uppvärmning påverkar, liksom tillgången på raffinaderikapacitet.",
-      "Diesel omfattas också av reduktionsplikten, som för 2024–2026 är 6 procent. Den uppfylls främst med förnybara komponenter som HVO.",
+      "Diesel omfattas också av reduktionsplikten, som sedan den 1 juli 2025 är 10 procent (6 procent under 2024). Den uppfylls med förnybara komponenter som HVO.",
       "En dieselbil drar oftast mindre bränsle per mil än en motsvarande bensinbil. Därför kan diesel löna sig trots ett högre literpris. Räkna på din egen förbrukning i bränslekalkylatorn.",
     ],
   },

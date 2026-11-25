@@ -1,0 +1,23 @@
+---
+// Hubbsida för de långa guiderna (2026-11-25). Länkar till varje guide med en rad om vad den svarar på.
+import Layout from "@natverk/core/Layout.astro";
+import { kort, veckodag } from "@natverk/core/datum.js";
+import { SITE, AR } from "../site.js";
+
+const GUIDER = [
+  { href: `/vecka/${AR}/`, namn: `Kalender ${AR} med veckonummer`, text: "Alla månader med veckonummer, röda dagar, klämdagar och arbetsdagar per månad." },
+  { href: `/vecka/${AR + 1}/`, namn: `Kalender ${AR + 1} med veckonummer`, text: "Nästa års kalender med alla veckor, helgdagar och flaggdagar. Går att skriva ut eller spara i mobilen." },
+  { href: "/skollov/", namn: "Skollov: sportlov, påsklov och sommarlov", text: "Lovveckorna i de tolv största kommunerna, hämtade från kommunernas egna sidor." },
+  { href: "/lonedag/", namn: "Lönedagar och bankdagar", text: "När lönen kommer varje månad, bankdagar per månad och en räknare för andra lönedatum." },
+  { href: "/valborg/", namn: "Valborg", text: "Valborgsmässoafton år för år, flaggdagen, historien bakom brasorna och hur du eldar säkert." },
+  { href: "/mors-dag/", namn: "Mors dag", text: "Sista söndagen i maj – datum, mors dag i andra länder och historien." },
+  { href: "/fars-dag/", namn: "Fars dag", text: "Andra söndagen i november – datum, fars dag i andra länder och historien." },
+];
+---
+<Layout site={SITE} titel="Guider – kalender, lov, lönedagar och märkesdagar"
+  beskrivning="Långa guider från rödadagar.nu: kalender med veckonummer, skollov i de största kommunerna, lönedagar och bankdagar, valborg, mors dag och fars dag."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]}>
+  <h1>Guider</h1>
+  <p class="svar">Här samlar vi våra längre genomgångar. Datumen räknas fram ur lagen om allmänna helgdagar, och faktauppgifterna är kontrollerade mot källorna som listas på varje sida.</p>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+</Layout>

@@ -1,0 +1,143 @@
+---
+// Komvux på distans: egen sammanställning av Skolverkets jämförelsetal (andel distans per kommun, län och anordnare),
+// plus regler om ansökan och studiemedel. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, RIKET, statFor } from "../site.js";
+import { tal, pct, kr, CSN, CSN_AR, CSN_VECKA, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const kv = RIKET.komvux, sf = RIKET.sfi;
+const rader = KAT.kommuner.map((k) => ({ k, s: statFor(k)?.komvux })).filter((x) => x.s?.elever_gymnasial && x.s.andel_distans_gymnasial != null);
+const stora = rader.filter((x) => x.s.elever_gymnasial >= 500);
+const hogst = [...stora].sort((a, b) => b.s.andel_distans_gymnasial - a.s.andel_distans_gymnasial).slice(0, 15);
+const grund = rader.filter((x) => x.s.elever_grundlaggande >= 300 && x.s.andel_distans_grundlaggande != null).sort((a, b) => b.s.andel_distans_grundlaggande - a.s.andel_distans_grundlaggande).slice(0, 10);
+const lagst = [...stora].sort((a, b) => a.s.andel_distans_gymnasial - b.s.andel_distans_gymnasial).slice(0, 8);
+const median = (() => { const v = rader.map((x) => x.s.andel_distans_gymnasial).sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; })();
+const minstHalva = rader.filter((x) => x.s.andel_distans_gymnasial >= 50).length;
+const underTio = rader.filter((x) => x.s.andel_distans_gymnasial < 10).length;
+
+// Vägt snitt (efter antal elever på gymnasial nivå) per län och per andel extern anordnare.
+const vagt = (lista) => {
+  const e = lista.reduce((a, x) => a + x.s.elever_gymnasial, 0);
+  return { n: lista.length, elever: e, andel: e ? lista.reduce((a, x) => a + x.s.elever_gymnasial * x.s.andel_distans_gymnasial, 0) / e : null };
+};
+const lan = KAT.lan.map((l) => ({ l, ...vagt(rader.filter((x) => x.k.lanSlug === l.slug)) })).filter((x) => x.n).sort((a, b) => b.andel - a.andel);
+const medAnnan = rader.filter((x) => x.s.andel_annan_anordnare_gymnasial != null);
+const mycketExtern = vagt(medAnnan.filter((x) => x.s.andel_annan_anordnare_gymnasial >= 75));
+const merEgen = vagt(medAnnan.filter((x) => x.s.andel_annan_anordnare_gymnasial <= 25));
+
+const avsnitt = [
+  { id: "hur-vanligt", rubrik: "Hur många läser komvux på distans?" },
+  { id: "kommuner", rubrik: "Komvux på distans i din kommun" },
+  { id: "grundlaggande", rubrik: "Distans på grundläggande nivå" },
+  { id: "lan", rubrik: "Distans per län" },
+  { id: "anordnare", rubrik: "Varför skiljer det sig så mycket?" },
+  { id: "fungerar", rubrik: "Så fungerar distansstudier på komvux" },
+  { id: "ansoka", rubrik: "Söka komvux på distans – även i en annan kommun" },
+  { id: "jobb", rubrik: "Distans, jobb och CSN" },
+  { id: "passar", rubrik: "Passar distans dig?" },
+];
+
+const fragor = [
+  { fraga: "Kan man läsa komvux på distans?", svar: `Ja. I hela landet läste ${pct(kv?.andel_distans_gymnasial)} av eleverna på gymnasial nivå och ${pct(kv?.andel_distans_grundlaggande)} på grundläggande nivå på distans ${kv?.ar}. Hur stort utbudet är beror på din kommun.` },
+  { fraga: "Hur söker man komvux på distans?", svar: "Du söker hos din hemkommun, precis som till annan komvux. Kommunen bestämmer vilka distanskurser du kan läsa och hos vilken anordnare. Vill du läsa en kurs som din kommun inte erbjuder kan du ha rätt att läsa den i en annan kommun." },
+  { fraga: "Kan man läsa komvux på distans i en annan kommun?", svar: "Ja, om utbildningen inte finns i din hemkommun har du enligt skollagen rätt att läsa den hos en annan kommun. Ansökan går alltid via hemkommunen." },
+  { fraga: "Får man CSN för komvux på distans?", svar: `Ja, på samma villkor som annan komvux. Du måste läsa minst 10 poäng i veckan (halvtid). På heltid ${CSN_AR} får du ${kr(CSN_VECKA)} i veckan.` },
+  { fraga: "Kan man jobba och läsa komvux på distans?", svar: `Ja. Tänk på CSN:s fribelopp: vid 20 veckors heltidsstudier får du tjäna ${kr(CSN.fribeloppHalvar)} per kalenderhalvår ${CSN_AR} innan studiemedlet minskar. På deltid är fribeloppet högre.` },
+  { fraga: "Var läser flest komvux på distans?", svar: `Bland kommuner med minst 500 elever på gymnasial nivå har ${hogst[0]?.k.namn} högst andel distans (${pct(hogst[0]?.s.andel_distans_gymnasial)}), följt av ${hogst.slice(1, 3).map((x) => `${x.k.namn} (${pct(x.s.andel_distans_gymnasial)})`).join(" och ")}.` },
+  { fraga: "Kan man läsa sfi på distans?", svar: `Ja, men det är mindre vanligt. ${pct(sf?.andel_distans)} av sfi-eleverna läste på distans ${sf?.ar}. Mer om det på vår sida om sfi.` },
+  { fraga: "Kostar komvux på distans något?", svar: "Nej. Komvux på distans är avgiftsfritt på samma sätt som undervisning på plats, och du ska få lärverktyg utan kostnad. Du behöver själv ha tillgång till dator och internet." },
+  { fraga: "Kan man läsa grundskolenivå på distans?", svar: `Ja, i många kommuner. På grundläggande nivå läste ${pct(kv?.andel_distans_grundlaggande)} på distans i hela landet ${kv?.ar}. Andelen skiljer sig mycket mellan kommunerna.` },
+];
+---
+<Guide site={SITE} titel={`Komvux på distans – andel per kommun ${kv?.ar}`}
+  beskrivning={`Komvux på distans: ${pct(kv?.andel_distans_gymnasial)} av eleverna på gymnasial nivå läser på distans. Se andelen i din kommun och ditt län, hur du söker och hur du kombinerar med jobb.`}
+  h1="Komvux på distans"
+  svar={`I hela landet läste <strong>${pct(kv?.andel_distans_gymnasial)}</strong> av komvuxeleverna på gymnasial nivå och ${pct(kv?.andel_distans_grundlaggande)} på grundläggande nivå på distans ${kv?.ar}. Andelen skiljer sig mycket: i ${minstHalva} kommuner läste minst hälften på distans, i ${underTio} färre än var tionde. Du söker distanskurser hos din hemkommun, och CSN gäller som vanligt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Komvux på distans", href: "/distans/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Ansöka till komvux", href: "/ansoka/", text: "Rätt, urval och terminer" },
+    { namn: "CSN för komvux", href: "/csn/", text: "Kalkylator och fribelopp" },
+    { namn: "Sfi", href: "/sfi/", text: "Sfi på distans per kommun" },
+    { namn: "Räkna ut meritvärde", href: "/meritvarde/", text: "Läs upp betyg på distans" },
+    hogst[0] && { namn: `Komvux i ${hogst[0].k.namn}`, href: hogst[0].k.href, text: "Högst andel distans" },
+  ].filter(Boolean)}
+  kallor={[
+    { ...K.statistik, text: "andel distans, elever och anordnare per kommun" },
+    { ...K.skollagen, text: "ansökan till hemkommunen och rätt att läsa i annan kommun (20 kap. 11 b, 13, 19 d och 21 §§)" },
+    { ...K.forordningen, text: "studieomfattning i verksamhetspoäng (2 kap. 1 §)" },
+    K.csnTakt,
+    { namn: "CSN – Inkomst och fribelopp", url: "https://www.csn.se/fragor-och-svar/hur-stor-inkomst-far-jag-ha-nar-jag-studerar-med-studiemedel/inkomst-och-fribelopp.html", text: `fribelopp ${CSN_AR}`, datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="hur-vanligt">Hur många läser komvux på distans?</h2>
+  <p>Distans är en av de vanligaste formerna för komvux. Enligt Skolverkets statistik för {kv?.ar} såg det ut så här i hela landet:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Utbildning</th><th class="num">Elever</th><th class="num">Andel på distans</th></tr></thead>
+    <tbody>
+      <tr><td>Komvux, gymnasial nivå</td><td class="num">{tal(kv?.elever_gymnasial, 0)}</td><td class="num">{pct(kv?.andel_distans_gymnasial)}</td></tr>
+      <tr><td>Komvux, grundläggande nivå</td><td class="num">{tal(kv?.elever_grundlaggande, 0)}</td><td class="num">{pct(kv?.andel_distans_grundlaggande)}</td></tr>
+      <tr><td>Sfi</td><td class="num">{tal(sf?.elever, 0)}</td><td class="num">{pct(sf?.andel_distans)}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ungefär var tredje elev på gymnasial nivå läser alltså på distans. I hälften av kommunerna är andelen på gymnasial nivå {pct(median)} eller högre.</p>
+
+  <h2 id="kommuner">Komvux på distans i din kommun</h2>
+  <p>Möjligheten att läsa på distans beror mycket på var du bor. Tabellen visar de kommuner med minst 500 elever på gymnasial nivå där störst andel läste på distans {kv?.ar}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Distans, gymnasial</th><th class="num">Distans, grundläggande</th><th class="num">Elever, gymnasial</th></tr></thead>
+    <tbody>{hogst.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_distans_gymnasial)}</td><td class="num">{pct(x.s.andel_distans_grundlaggande)}</td><td class="num">{tal(x.s.elever_gymnasial, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <h3>Lägst andel distans</h3>
+  <p>I andra kommuner läser nästan alla på plats. Lägst andel bland kommunerna med minst 500 elever: {lagst.map((x, i) => <><a href={x.k.href}>{x.k.namn}</a> ({pct(x.s.andel_distans_gymnasial)}){i < lagst.length - 1 ? ", " : "."}</>)} Det betyder inte att distans saknas helt, men att utbudet är mindre eller att fler väljer undervisning på plats. Varje kommunsida på komvux.nu visar andelen för just den kommunen.</p>
+
+  <h2 id="grundlaggande">Distans på grundläggande nivå</h2>
+  <p>På grundläggande nivå, alltså grundskolans ämnen, läste {pct(kv?.andel_distans_grundlaggande)} på distans {kv?.ar}. Det är lägre än på gymnasial nivå, men i vissa kommuner läser en stor del av eleverna även grundskoleämnen hemifrån. Kommunerna med minst 300 elever på grundläggande nivå och högst andel distans:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Distans, grundläggande</th><th class="num">Elever, grundläggande</th></tr></thead>
+    <tbody>{grund.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_distans_grundlaggande)}</td><td class="num">{tal(x.s.elever_grundlaggande, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Läser du svenska som andraspråk på grundläggande nivå efter sfi kan distans vara ett sätt att kombinera studierna med arbete, men det kräver att du redan kan läsa och skriva på svenska.</p>
+
+  <h2 id="lan">Distans per län</h2>
+  <p>Vi har vägt ihop kommunernas uppgifter efter antal elever för att få en siffra per län. Siffran är ett vägt snitt av kommunernas egna uppgifter och kan därför skilja sig något från Skolverkets värde för hela riket.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Andel på distans</th><th class="num">Elever, gymnasial</th><th class="num">Kommuner</th></tr></thead>
+    <tbody>{lan.map((x) => <tr><td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{pct(x.andel)}</td><td class="num">{tal(x.elever, 0)}</td><td class="num">{x.n}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="anordnare">Varför skiljer det sig så mycket?</h2>
+  <p>Kommunerna organiserar komvux på olika sätt. En del undervisar själva, andra köper utbildning av utbildningsföretag. Vår sammanställning visar ett tydligt samband med distans:</p>
+  <ul>
+    <li>I de {mycketExtern.n} kommuner där minst 75 procent av eleverna på gymnasial nivå läser hos en annan anordnare än kommunen läste <strong>{pct(mycketExtern.andel)}</strong> på distans.</li>
+    <li>I de {merEgen.n} kommuner där högst 25 procent läser hos en annan anordnare läste bara <strong>{pct(merEgen.andel)}</strong> på distans.</li>
+  </ul>
+  <p>Sambandet visar inte orsaken, men det betyder att möjligheten att läsa på distans i praktiken hänger ihop med hur din kommun har organiserat sin komvux. I hela landet läste {pct(kv?.andel_annan_anordnare_gymnasial)} av eleverna på gymnasial nivå hos en annan anordnare än kommunen.</p>
+
+  <h2 id="fungerar">Så fungerar distansstudier på komvux</h2>
+  <p>På distans läser du kursen eller ämnet hemifrån, i en digital lärplattform med material, uppgifter och kontakt med lärare. Hur mycket som sker på fasta tider varierar mellan anordnare. Några saker att ta reda på innan du väljer:</p>
+  <ul>
+    <li><strong>Prov och examination:</strong> fråga om prov skrivs på plats, och i så fall var.</li>
+    <li><strong>Lärarkontakt:</strong> hur och hur ofta du kan få hjälp av en lärare.</li>
+    <li><strong>Takt:</strong> om kursen har fasta veckor eller om du läser i egen takt med ett slutdatum.</li>
+    <li><strong>Laborationer och praktik:</strong> ämnen som kemi, fysik och yrkesutbildningar kan ha moment som kräver närvaro.</li>
+  </ul>
+  <p>Omfattningen räknas på samma sätt som för annan komvux. En kurs eller nivå på 100 gymnasiepoäng motsvarar fem veckor på heltid, med 20 poäng per vecka.</p>
+
+  <h2 id="ansoka">Söka komvux på distans – även i en annan kommun</h2>
+  <p>Du söker distanskurser hos <strong>din hemkommun</strong>, som till all annan komvux. Kommunen avgör vilka kurser och anordnare den erbjuder. Har din kommun inte den utbildning du har rätt till, har du enligt skollagen rätt att läsa den i en annan kommun, och ansökan skickas då vidare dit. Läs mer på sidan om hur du <a href="/ansoka/">ansöker till komvux</a>.</p>
+
+  <h2 id="jobb">Distans, jobb och CSN</h2>
+  <p>Distans kan göra det lättare att arbeta samtidigt. Du kan få studiemedel om du läser minst 10 poäng i veckan, alltså halvtid. Då får du {kr(CSN_VECKA / 2)} i veckan {CSN_AR}. Vid heltid är det {kr(CSN_VECKA)}.</p>
+  <p>Jobbar du samtidigt gäller CSN:s <strong>fribelopp</strong>. Vid 20 veckors heltidsstudier får du tjäna {kr(CSN.fribeloppHalvar)} per kalenderhalvår innan studiemedlet minskar, och på deltid är gränsen högre. Räkna på ditt fall med <a href="/csn/">CSN-kalkylatorn</a>.</p>
+
+  <h2 id="passar">Passar distans dig?</h2>
+  <p>Distans ger frihet, men kräver att du planerar själv. Distans brukar fungera bra om du</p>
+  <ul>
+    <li>kan sätta av fasta tider varje vecka för studierna,</li>
+    <li>har en dator och en lugn plats att arbeta på,</li>
+    <li>läser ett ämne du har viss grund i, till exempel för att höja ett betyg.</li>
+  </ul>
+  <p>Fråga också anordnaren om det finns handledning på plats eller i digitala möten, och vad som händer om du inte hinner bli klar till kursens slutdatum. Svaren skiljer sig mellan anordnare.</p>
+  <p>Behöver du mycket stöd, eller läser du svenska från början, kan undervisning på plats vara ett bättre val. Ett alternativ är att blanda: läs vissa kurser på plats och andra på distans.</p>
+</Guide>

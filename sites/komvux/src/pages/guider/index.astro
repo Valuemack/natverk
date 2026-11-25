@@ -1,0 +1,13 @@
+---
+// Hubb för de långa guidesidorna om komvux, sfi, behörighet och studiemedel.
+import Layout from "@natverk/core/Layout.astro";
+import { SITE } from "../../site.js";
+import { GUIDER, PUBLICERAD } from "../../guider.js";
+---
+<Layout site={SITE} titel="Guider om komvux – behörighet, CSN, sfi och yrkesvux"
+  beskrivning="Guider om komvux och sfi: ansökan, högskolebehörighet, meritvärde, CSN 2027, yrkesvux, undersköterska, distans och komvux eller folkhögskola. Med källor."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad={PUBLICERAD}>
+  <h1>Guider om komvux och sfi</h1>
+  <p class="svar">Fördjupande guider om vuxenutbildning. Varje guide bygger på Skolverkets statistik för alla kommuner och är faktagranskad mot skollagen, Skolverket, CSN, UHR och antagning.se.</p>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+</Layout>

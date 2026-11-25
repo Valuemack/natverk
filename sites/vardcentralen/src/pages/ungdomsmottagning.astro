@@ -1,0 +1,112 @@
+---
+// Lång guide: ungdomsmottagning. Egen data: 1177 Hitta vård, vårdtypen Ungdomsmottagning, per län och kommun
+// (scripts/06, hämtad 2026-11-25). Fakta granskade mot UMO, 1177 och FSUM 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT } from "../site.js";
+import { V, PUBLICERAD, lanRader, tal, invPer, vardtyp, vardtypLan, KALLA_1177_VARDTYP } from "../lib/guide.js";
+
+const TYP = "Ungdomsmottagning";
+const T = vardtyp(TYP);
+const lista = (V.typer[TYP]?.perKommun) ?? {};
+const kommunPerKod = new Map(KAT.kommuner.map((k) => [k.enheter[0]?.extra?.kommunkod, k]));
+const rader = lanRader((lan, l) => {
+  const kommunerMed = l.kommuner.filter((k) => lista[k.enheter[0]?.extra?.kommunkod]).length;
+  return { n: vardtypLan(TYP, lan), kommunerMed, kommunerTot: l.kommuner.length };
+}).sort((a, b) => b.n - a.n);
+const kommunerMed = Object.keys(lista).filter((kod) => kommunPerKod.has(kod)).length;
+const folkTot = rader.reduce((s, r) => s + (r.folk ?? 0), 0);
+const flest = Object.entries(lista).map(([kod, n]) => ({ k: kommunPerKod.get(kod), n })).filter((x) => x.k).sort((a, b) => b.n - a.n).slice(0, 10);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en ungdomsmottagning?" },
+  { id: "alder", rubrik: "Åldersgräns – vem får gå dit?" },
+  { id: "hjalp", rubrik: "Vad kan du få hjälp med?" },
+  { id: "kostnad", rubrik: "Kostar det något?" },
+  { id: "sekretess", rubrik: "Tystnadsplikt – får föräldrar veta?" },
+  { id: "lan", rubrik: "Ungdomsmottagningar per län och kommun" },
+  { id: "hitta", rubrik: "Så hittar du och kontaktar en ungdomsmottagning" },
+];
+
+const fragor = [
+  { fraga: "Vilken ålder gäller på ungdomsmottagningen?", svar: "Enligt UMO brukar ungdomsmottagningar vara öppna för dig som är från 12 eller 13 år tills du är mellan 20 och 25 år. Exakt vilka åldrar som gäller skiljer sig mellan mottagningar." },
+  { fraga: "Kostar det att gå till ungdomsmottagningen?", svar: "Nej, inte om du är under 18 år. De flesta ungdomsmottagningar är också gratis för dig över 18, men på vissa ställen kostar det lika mycket som på en vårdcentral. Uteblir du från en bokad tid kan det kosta." },
+  { fraga: "Får mina föräldrar veta att jag har varit på ungdomsmottagningen?", svar: "Personalen har tystnadsplikt. Är du under 18 kan föräldrar ibland få vissa uppgifter, beroende på din ålder och vad det gäller. Preventivmedel och test för könssjukdomar kan ofta göras utan att föräldrarna behöver få veta." },
+  { fraga: "Vad kan man få hjälp med på ungdomsmottagningen?", svar: "Till exempel frågor om kroppen, sex och relationer, preventivmedel, test för könssjukdomar och graviditet, akut-p-piller, nedstämdhet och stress, ätstörningar och om du har varit utsatt för våld." },
+  { fraga: "Behöver man boka tid på ungdomsmottagningen?", svar: "Det skiljer sig mellan mottagningar. Kontrollera på mottagningens sida på 1177 eller UMO.se om du ska ringa, boka via 1177.se eller kan komma utan bokad tid." },
+  { fraga: "Hur många ungdomsmottagningar finns det?", svar: `1177 Hitta vård listar ${tal(T.antal)} mottagningar under vårdtypen ungdomsmottagning (november 2026), i ${kommunerMed} kommuner. Föreningen för Sveriges ungdomsmottagningar har över 200 medlemsmottagningar.` },
+];
+
+const titel = `Ungdomsmottagning – ålder, hjälp och ${tal(T.antal)} mottagningar`;
+const beskrivning = `Ungdomsmottagning: från 12–13 till 20–25 år, gratis under 18 och tystnadsplikt. Vad du kan få hjälp med och ${tal(T.antal)} mottagningar per län och kommun.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Ungdomsmottagning"
+  svar={`Ungdomsmottagningen är till för dig som är från <strong>12–13 år upp till 20–25 år</strong>, beroende på mottagning. Där får du hjälp med kropp, sex, preventivmedel, test för könssjukdomar och psykiskt mående. Det är <strong>gratis om du är under 18</strong>, och personalen har tystnadsplikt. 1177 listar ${tal(T.antal)} ungdomsmottagningar.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Ungdomsmottagning", href: "/ungdomsmottagning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Barnmorskemottagning (MVC)", href: "/barnmorskemottagning/", text: "Preventivmedel och cellprov" },
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Alla vårdcentraler med öppettider" },
+    { namn: "Akuten, närakut eller jourcentral", href: "/akut-narakut-jourcentral/", text: "Om du behöver hjälp direkt" },
+    { namn: "Byta vårdcentral", href: "/byta-vardcentral/", text: "Välj din egen vårdcentral" },
+  ]}
+  kallor={[
+    { namn: "UMO – Om ungdomsmottagningen", url: "https://www.umo.se/att-ta-hjalp/ungdomsmottagningen/om-ungdomsmottagningen/", text: "åldrar, kostnad, personal och vad du kan få hjälp med", datum: "2026-11-25" },
+    { namn: "UMO – Sekretess och tystnadsplikt", url: "https://www.umo.se/att-ta-hjalp/rattigheter-och-lagar/sekretess-och-tystnadsplikt/", text: "vad föräldrar kan få veta", datum: "2026-11-25" },
+    { namn: "1177 – Sök vård på rätt mottagning", url: "https://www.1177.se/sa-fungerar-varden/att-valja-vardmottagning/sok-vard-pa-ratt-mottagning/", text: "ungdomsmottagningens uppdrag och åldrar", datum: "2026-11-25" },
+    { namn: "1177 – Preventivmedel", url: "https://www.1177.se/liv--halsa/sexuell-halsa/skydd-mot-graviditet/preventivmedel--skydd-mot-graviditet/", text: "gratis preventivmedel för unga", datum: "2026-11-25" },
+    { namn: "FSUM – Föreningen för Sveriges ungdomsmottagningar", url: "https://www.fsum.nu/", text: "över 200 medlemsmottagningar", datum: "2026-11-25" },
+    KALLA_1177_VARDTYP(TYP),
+  ]}>
+
+  <h2 id="vad">Vad är en ungdomsmottagning?</h2>
+  <p>En ungdomsmottagning är en mottagning för unga där du kan prata om och få hjälp med kropp, sex, relationer och hur du mår. Du kan själv ta kontakt med mottagningen. Enligt UMO.se finns det minst en barnmorska och en kurator på alla ungdomsmottagningar.</p>
+  <p>Mottagningarna ser olika ut i olika delar av landet. I 1177 Hitta vård finns till exempel särskilda mottagningar för unga män och några digitala ungdomsmottagningar, till exempel en för hela Kalmar län.</p>
+
+  <h2 id="alder">Åldersgräns – vem får gå dit?</h2>
+  <p>Enligt UMO brukar ungdomsmottagningar vara öppna för dig som är från <strong>12 eller 13 år</strong> tills du är <strong>mellan 20 och 25 år</strong>. Exakt vilka åldrar som gäller skiljer sig mellan mottagningar, och 1177 skriver detsamma. Kontrollera därför åldersgränsen på den mottagning du vill gå till.</p>
+  <p>Är du äldre än gränsen vänder du dig i stället till din vårdcentral, en barnmorskemottagning eller en mottagning för sexuell hälsa. Webbplatsen UMO.se riktar sig till dig som är mellan 13 och 25 år.</p>
+
+  <h2 id="hjalp">Vad kan du få hjälp med?</h2>
+  <p>UMO räknar upp en lång rad saker som du kan få hjälp med på en ungdomsmottagning:</p>
+  <ul>
+    <li>frågor om kroppen</li>
+    <li>nedstämdhet, stress och oro</li>
+    <li>sex och relationer, och sexuell läggning</li>
+    <li>skydd mot graviditet och könssjukdomar, och test för könssjukdomar</li>
+    <li>graviditetstest, akut-p-piller och kopparspiral</li>
+    <li>ätstörningar</li>
+    <li>om du har varit utsatt för våld eller övergrepp</li>
+  </ul>
+  <p>De flesta mottagningar delar ut gratis kondomer. Behöver du preventivmedel kan du få hjälp att välja, och preventivmedel som ingår i läkemedelsförmånen är enligt 1177 gratis för unga till och med det år du fyller 21. I vissa regioner gäller det upp till 26 år.</p>
+  <p>Mår du väldigt dåligt och behöver hjälp direkt, ring 112 eller sök dig till en psykiatrisk akutmottagning. Vill du prata med någon om hur du mår men det inte är akut, ring 1177 eller kontakta ungdomsmottagningens kurator.</p>
+
+  <h2 id="kostnad">Kostar det något?</h2>
+  <p>Enligt UMO <strong>kostar det inget att besöka en ungdomsmottagning om du är under 18 år</strong>. De flesta mottagningar är också kostnadsfria för dig som är äldre, men på vissa ställen kostar ett besök lika mycket som ett besök på vårdcentralen. Har du bokat en tid och inte kommer, kan du behöva betala en avgift för uteblivet besök. Avboka därför om du inte kan komma.</p>
+
+  <h2 id="sekretess">Tystnadsplikt – får föräldrar veta?</h2>
+  <p>Alla som arbetar på en ungdomsmottagning, och i vården i övrigt, har <strong>tystnadsplikt</strong>, och det som står i din journal skyddas av sekretess. Det finns några undantag som är bra att känna till, enligt UMO:</p>
+  <ul>
+    <li>Är du under 18 år kan dina föräldrar ibland få vissa uppgifter. Det beror på hur gammal du är och vad det gäller.</li>
+    <li>Personalen måste anmäla till socialtjänsten om de är oroliga för att du far illa.</li>
+    <li>Preventivmedel och test för könssjukdomar kan ofta göras utan att dina föräldrar behöver få veta.</li>
+  </ul>
+  <p>Är du orolig för vad som kommer att berättas, fråga personalen i början av besöket. De förklarar vad som gäller för just dig.</p>
+
+  <h2 id="lan">Ungdomsmottagningar per län och kommun</h2>
+  <p>1177 Hitta vård listar {tal(T.antal)} mottagningar under vårdtypen ungdomsmottagning. Vi har placerat dem i kommuner med SCB:s kommungränser: de finns i {kommunerMed} av landets 290 kommuner. Siffrorna omfattar också några mottagningar för unga män och digitala mottagningar. I hela landet blir det i snitt {invPer(folkTot, T.antal - T.utanKommun)} invånare per ungdomsmottagning.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Ungdomsmottagningar</th><th class="num">Kommuner med mottagning</th><th class="num">Invånare per mottagning</th></tr></thead>
+    <tbody>{rader.map((r) => <tr><td><a href={r.href}>{r.kortnamn}</a></td><td class="num">{r.n}</td><td class="num">{r.kommunerMed} av {r.kommunerTot}</td><td class="num">{invPer(r.folk, r.n)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: 1177 Hitta vård, vårdtypen Ungdomsmottagning, hämtad {V.hamtad.slice(0, 10)}. {T.utanKommun} mottagningar, bland annat digitala, saknar adress med koordinater och ingår inte i länsfördelningen. Invånare räknas på hela befolkningen.</p>
+  <h3>Kommuner med flest ungdomsmottagningar</h3>
+  <p>{flest.map((x, i) => <>{i > 0 && ", "}<a href={x.k.href}>{x.k.namn}</a> ({x.n})</>)}.</p>
+
+  <h2 id="hitta">Så hittar du och kontaktar en ungdomsmottagning</h2>
+  <ol>
+    <li>Sök efter <strong>ungdomsmottagning</strong> och din ort på 1177 Hitta vård eller på UMO.se.</li>
+    <li>Kontrollera åldersgränsen, öppettiderna och om mottagningen har drop-in.</li>
+    <li>Ring eller boka via 1177.se om mottagningen har e-tjänster, eller kom på drop-in om mottagningen har det.</li>
+  </ol>
+  <p>Du får själv välja vilken ungdomsmottagning du vill gå till. 1177 nämner ungdomsmottagningar uttryckligen bland de mottagningar som du kan välja fritt. Det betyder att du kan välja en mottagning nära skolan i stället för nära hemmet. Är du över åldersgränsen kan du läsa mer om <a href="/barnmorskemottagning/">barnmorskemottagningen</a>, där du också kan få hjälp med preventivmedel och cellprov.</p>
+</Guide>

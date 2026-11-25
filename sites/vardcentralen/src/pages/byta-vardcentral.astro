@@ -1,10 +1,12 @@
 ---
 // Guide: byta vårdcentral och se vilken vårdcentral man tillhör – med siffror per region ur katalogen.
-import Layout from "@natverk/core/Layout.astro";
-import Faq from "@natverk/core/Faq.astro";
-import { faqLd, besk } from "@natverk/core/seo.js";
+// Utbyggd till långt format 2026-11-25 (Guide.astro). Behåller stegen, regiontabellen och frågorna från
+// tidigare version; svaret om hur ofta man får byta är rättat efter HSL 7 kap. 3 b §.
+// Fakta granskade mot 1177, patientlagen och hälso- och sjukvårdslagen 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
 import { talText } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+import { SITE, KAT } from "../site.js";
+import { G, PUBLICERAD } from "../lib/guide.js";
 
 const E = KAT.enheter;
 const privat = (e) => e.extra?.huvudman === "privat";
@@ -12,46 +14,114 @@ const dropin = (e) => e.extra?.dropin === true;
 const lista = (e) => e.extra?.listning !== false;
 const regioner = KAT.lan.map((l) => {
   const v = E.filter((e) => e.lan === l.namn);
-  return { l, n: v.length, privat: v.filter(privat).length, dropin: v.filter(dropin).length, listning: v.filter(lista).length };
+  return { l, n: v.length, privat: v.filter(privat).length, dropin: v.filter(dropin).length, listning: v.filter(lista).length, ko: G.kort[l.namn]?.listningsko ?? 0 };
 }).filter((r) => r.n).sort((a, b) => b.n - a.n);
 const pct = (a, b) => (b ? `${Math.round((100 * a) / b)} %` : "–");
 const totPriv = E.filter(privat).length;
+const totKo = regioner.reduce((s, r) => s + r.ko, 0);
+const flestPriv = [...regioner].sort((a, b) => b.privat / b.n - a.privat / a.n)[0];
+
+const steg = [
+  { namn: "Hitta en vårdcentral", text: "Sök på adress eller ort och jämför öppettider, drop-in och avstånd." },
+  { namn: "Logga in på 1177.se", text: "Logga in med BankID eller Freja eID." },
+  { namn: "Välj Välj/ändra vårdval", text: "På startsidan efter inloggning ser du dina vårdval. Välj att ändra och sök upp den nya vårdcentralen." },
+  { namn: "Bekräfta", text: "Du behöver inte säga upp den gamla vårdcentralen, och dina journaler finns kvar." },
+];
+
+const avsnitt = [
+  { id: "sa-byter-du", rubrik: "Så byter du vårdcentral" },
+  { id: "vilken", rubrik: "Vilken vårdcentral tillhör jag?" },
+  { id: "listning", rubrik: "Vad betyder det att vara listad?" },
+  { id: "hur-ofta", rubrik: "Hur ofta får man byta vårdcentral?" },
+  { id: "annan-region", rubrik: "Välja vårdcentral i en annan region" },
+  { id: "region", rubrik: "Vårdcentraler per region" },
+  { id: "valja", rubrik: "Vad ska jag tänka på när jag väljer?" },
+];
 
 const fragor = [
-  { fraga: "Hur vet jag vilken vårdcentral jag tillhör?", svar: "Logga in på 1177.se med BankID eller Freja eID och gå till inkorgen eller tjänsten för listning – där står vilken vårdcentral du är listad på. Du kan också ringa din region eller närmaste vårdcentral och fråga. Har du aldrig valt själv är du oftast listad på en vårdcentral nära din folkbokföringsadress." },
-  { fraga: "Hur byter jag vårdcentral?", svar: "Enklast är att logga in på 1177.se och välja Byt vårdcentral eller Listning. Välj den nya vårdcentralen och bekräfta. Du kan också lämna en blankett på den vårdcentral du vill byta till. Bytet gäller oftast från samma dag eller inom några dagar, och du behöver inte säga upp den gamla." },
-  { fraga: "Får jag välja vårdcentral i en annan region?", svar: "Ja. Enligt patientlagen får du välja vårdcentral i hela landet. Hur listningen går till och om du betalar en annan patientavgift avgörs av regionen där vårdcentralen ligger." },
-  { fraga: "Hur ofta får man byta vårdcentral?", svar: "Det bestämmer varje region. Många regioner tillåter byte när som helst, medan vissa begränsar antalet byten per år. Kontrollera reglerna i din region på 1177.se." },
+  { fraga: "Hur vet jag vilken vårdcentral jag tillhör?", svar: "Logga in på 1177.se med BankID eller Freja eID. På startsidan efter inloggning ser du dina vårdval, alltså vilken vårdcentral du är listad på. Du kan också ringa din region eller närmaste vårdcentral och fråga. Har du aldrig valt själv kan du i vissa regioner ha listats automatiskt." },
+  { fraga: "Hur byter jag vårdcentral?", svar: "Enklast är att logga in på 1177.se och välja Välj/ändra vårdval. Välj den nya vårdcentralen och bekräfta. I vissa fall behöver du i stället kontakta den vårdcentral du vill byta till. Du behöver inte säga upp den gamla, eftersom du bara kan vara listad på en vårdcentral i taget." },
+  { fraga: "Får jag välja vårdcentral i en annan region?", svar: "Ja. Enligt patientlagen får du välja vårdcentral i hela landet. Hur listningen går till och vilken patientavgift du betalar avgörs av regionen där vårdcentralen ligger." },
+  { fraga: "Hur ofta får man byta vårdcentral?", svar: "Högst två gånger under en period på ett år. Det står i hälso- och sjukvårdslagen 7 kap. 3 b §. Om det finns särskilda skäl får regionen tillåta fler byten." },
   { fraga: "Är privata vårdcentraler dyrare?", svar: `Nej. Privata vårdcentraler som ingår i regionens vårdval har samma patientavgift och högkostnadsskydd som regionens egna. Av ${talText(E.length)} vårdcentraler i Sverige drivs ${pct(totPriv, E.length)} privat.` },
   { fraga: "Vad ska jag tänka på när jag väljer vårdcentral?", svar: "Avstånd, öppettider, om det finns drop-in och om det går att få digitala besök. Det kan också vara en fördel att välja en vårdcentral med barnavårdscentral (BVC) om du har små barn." },
+  { fraga: "Kan jag gå till en annan vårdcentral än den jag är listad på?", svar: "Ja, tillfälligt. Enligt 1177 kan du söka vård på en annan vårdcentral, till exempel om du är på resa. Vårdgarantin i primärvården gäller däremot hos den vårdcentral där du är listad." },
 ];
 ---
-<Layout site={SITE} titel="Byta vårdcentral – så gör du och vilken du tillhör"
-  beskrivning={besk("Så byter du vårdcentral på 1177 och ser vilken vårdcentral du är listad på.", "✓ Steg för steg", "✓ Välj i hela landet", `✓ ${talText(E.length)} vårdcentraler per region`)}
-  smulor={[{ namn: "Start", href: "/" }, { namn: "Byta vårdcentral", href: "/byta-vardcentral/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>Byta vårdcentral – och se vilken du tillhör</h1>
-  <p class="svar">Du väljer själv vårdcentral, i hela landet. Byt enklast genom att <strong>logga in på 1177.se</strong> och välja <strong>Byt vårdcentral</strong>. Där ser du också vilken vårdcentral du är listad på i dag.</p>
+<Guide site={SITE} titel="Byta vårdcentral – så gör du och vilken du tillhör"
+  beskrivning={`Så byter du vårdcentral på 1177 och ser vilken du är listad på. Högst två byten per år, välj i hela landet – med ${talText(E.length)} vårdcentraler per region.`}
+  h1="Byta vårdcentral – och se vilken du tillhör"
+  svar={`Du väljer själv vårdcentral, i hela landet. Byt enklast genom att <strong>logga in på 1177.se</strong> och välja <strong>Välj/ändra vårdval</strong>. Där ser du också vilken vårdcentral du är listad på i dag. Du får byta <strong>högst två gånger på ett år</strong>, och du behöver inte säga upp den gamla vårdcentralen.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Byta vårdcentral", href: "/byta-vardcentral/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  steg={{ namn: "Byta vårdcentral på 1177", beskrivning: "Så byter du vårdcentral genom att ändra ditt vårdval på 1177.se.", steg }}
+  relaterat={[
+    { namn: "Hitta vårdcentral nära dig", href: "/", text: "Öppet nu och närmaste vårdcentral" },
+    { namn: "Vårdcentraler med drop-in", href: "/drop-in/", text: "Utan tidsbokning" },
+    { namn: "Vårdgaranti och väntetider", href: "/vardgaranti/", text: "Gäller där du är listad" },
+    { namn: "BVC – barnavårdscentralen", href: "/bvc/", text: "Välj BVC för ditt barn" },
+    { namn: "Patientnämnden", href: "/patientnamnden/", text: "Om du inte är nöjd med vården" },
+  ]}
+  kallor={[
+    { namn: "1177 – Välja vårdmottagning", url: "https://www.1177.se/sa-fungerar-varden/att-valja-vardmottagning/valja-vardmottagning/", text: "listning, vårdval och högst två byten per år", datum: "2026-11-25" },
+    { namn: "Hälso- och sjukvårdslag (2017:30), 7 kap. 3 a–3 b §§", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/halso-och-sjukvardslag-201730_sfs-2017-30/", text: "listning hos en utförare i taget och högst två byten per år", datum: "2026-11-25" },
+    { namn: "Patientlag (2014:821), 6 och 9 kap.", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/patientlag-2014821_sfs-2014-821/", text: "fast läkarkontakt och val av vårdcentral i hela landet", datum: "2026-11-25" },
+    { namn: "1177 – Vårdgaranti", url: "https://www.1177.se/sa-fungerar-varden/lagar-och-bestammelser/vardgaranti/", text: "vårdgarantin gäller där du är listad", datum: "2026-11-25" },
+    { namn: "1177 Hitta vård (Inera)", url: "https://www.1177.se/hitta-vard/", text: "vårdcentraler, listning och listningskö per region", datum: G.hamtat.vardtyper },
+  ]}>
 
-  <h2>Så byter du vårdcentral</h2>
+  <h2 id="sa-byter-du">Så byter du vårdcentral</h2>
   <ol>
     <li><strong>Hitta en vårdcentral</strong> – sök på adress eller ort på <a href="/">startsidan</a> och jämför öppettider, drop-in och avstånd.</li>
     <li><strong>Logga in på 1177.se</strong> med BankID eller Freja eID.</li>
-    <li><strong>Välj Byt vårdcentral</strong> (ibland kallat Listning eller Välj vårdcentral) och sök upp den nya.</li>
+    <li><strong>Välj Välj/ändra vårdval</strong> (ibland kallat Byt vårdcentral eller Listning) och sök upp den nya.</li>
     <li><strong>Bekräfta.</strong> Du behöver inte säga upp den gamla, och dina journaler finns kvar.</li>
   </ol>
-  <p>Har du inte BankID kan du lämna en blankett för listning på den vårdcentral du vill byta till.</p>
+  <p>Har du inte e-legitimation kan du kontakta den vårdcentral du vill byta till. Enligt 1177 behöver man ibland göra så även med e-legitimation, eftersom rutinerna skiljer sig mellan regionerna. Ofta finns en blankett för listning på vårdcentralen.</p>
+  <p>Eftersom du bara får vara listad på en vårdcentral i taget ersätter det nya valet det gamla. Det står i hälso- och sjukvårdslagen, 7 kapitlet 3 a §.</p>
 
-  <h2>Vilken vårdcentral tillhör jag?</h2>
-  <p>Logga in på 1177.se – din listning visas under tjänsten för listning eller Byt vårdcentral. Har du aldrig valt själv har regionen oftast listat dig på en vårdcentral nära din folkbokföringsadress. Du kan också ringa din region eller närmaste vårdcentral.</p>
+  <h2 id="vilken">Vilken vårdcentral tillhör jag?</h2>
+  <p>Logga in på 1177.se. På startsidan efter inloggning ser du dina vårdval, och där står vilken vårdcentral du är listad på. Har du aldrig valt själv kan du ändå vara listad: i vissa regioner listas man automatiskt, oftast på en vårdcentral nära folkbokföringsadressen. Du kan också ringa din region eller närmaste vårdcentral och fråga.</p>
+  <p>Är du inte listad någonstans kan du ändå söka vård, men du får inte samma fasta kontakt. Det kan också påverka vårdgarantin, som enligt 1177 gäller hos den vårdcentral där du är listad.</p>
 
-  <h2>Vårdcentraler per region</h2>
+  <h2 id="listning">Vad betyder det att vara listad?</h2>
+  <p>Att vara listad, eller att ha gjort ett vårdval, betyder att du har valt en vårdcentral som har huvudansvaret för din primärvård. Det ger dig flera rättigheter:</p>
+  <ul>
+    <li><strong>Fast läkarkontakt.</strong> Enligt patientlagen, 6 kapitlet 3 §, har du rätt att välja och få tillgång till en fast läkarkontakt hos den vårdcentral där du är listad.</li>
+    <li><strong>Vårdgaranti.</strong> Kontakt samma dag och medicinsk bedömning inom tre dagar gäller hos din vårdcentral. Läs mer om <a href="/vardgaranti/">vårdgarantin</a>.</li>
+    <li><strong>Kontinuitet.</strong> Vårdcentralen har dina journaler och kan följa dig över tid, till exempel vid kroniska sjukdomar.</li>
+  </ul>
+  <p>Listningen låser dig inte. Enligt 1177 kan du tillfälligt söka vård på en annan vårdcentral, till exempel när du är på resa. Patientavgiften är densamma oavsett om vårdcentralen drivs av regionen eller av en privat vårdgivare som ingår i vårdvalet.</p>
+
+  <h2 id="hur-ofta">Hur ofta får man byta vårdcentral?</h2>
+  <p>Du får byta vårdcentral <strong>högst två gånger under en period på ett år</strong>. Regeln står i hälso- och sjukvårdslagen, 7 kapitlet 3 b §, och 1177 skriver samma sak. Om det finns särskilda skäl får regionen tillåta fler byten. Det är regionen som bedömer vad som är särskilda skäl.</p>
+  <p>Tänk därför igenom ditt val. Är du missnöjd med bemötandet eller vården kan det ibland vara bättre att först framföra synpunkter till vårdcentralen eller kontakta <a href="/patientnamnden/">patientnämnden</a>, innan du använder ett av dina byten.</p>
+  <h3>Kö för att lista sig</h3>
+  <p>Vissa vårdcentraler har kö för nya patienter. I vår genomgång av vårdcentralernas kontaktkort på 1177 hade {totKo} vårdcentraler listningskö när uppgifterna hämtades. Fråga vårdcentralen hur kön fungerar och hur länge den brukar vara.</p>
+
+  <h2 id="annan-region">Välja vårdcentral i en annan region</h2>
+  <p>Patientlagen, 9 kapitlet 1 §, ger dig rätt att välja utförare av offentligt finansierad öppen vård både inom och utanför din egen region. Du kan alltså lista dig på en vårdcentral nära jobbet i en annan region, eller nära en sommarbostad. Hur listningen går till och vilken patientavgift du betalar bestäms av regionen där vårdcentralen ligger.</p>
+  <p>Har du en pågående behandling, fråga den nya vårdcentralen vad bytet innebär för dig innan du byter.</p>
+
+  <h2 id="region">Vårdcentraler per region</h2>
+  <p>Tabellen visar hur många vårdcentraler det finns i varje region, hur stor andel som drivs privat, hur många som har drop-in och hur många som hade kö för listning på 1177. {flestPriv && <>Störst andel privata vårdcentraler har {flestPriv.l.namn.replace(/ län$/, "")} med {pct(flestPriv.privat, flestPriv.n)}.</>}</p>
   <div class="tabell"><table>
-    <thead><tr><th>Region</th><th class="num">Vårdcentraler</th><th class="num">Privata</th><th class="num">Drop-in</th></tr></thead>
-    <tbody>{regioner.map((r) => <tr><td><a href={r.l.href}>{r.l.namn.replace(/ län$/, "")}</a></td><td class="num">{r.n}</td><td class="num">{pct(r.privat, r.n)}</td><td class="num">{r.dropin}</td></tr>)}</tbody>
+    <thead><tr><th>Region</th><th class="num">Vårdcentraler</th><th class="num">Privata</th><th class="num">Drop-in</th><th class="num">Listningskö</th></tr></thead>
+    <tbody>{regioner.map((r) => <tr><td><a href={r.l.href}>{r.l.namn.replace(/ län$/, "")}</a></td><td class="num">{r.n}</td><td class="num">{pct(r.privat, r.n)}</td><td class="num">{r.dropin}</td><td class="num">{r.ko}</td></tr>)}</tbody>
   </table></div>
-  <p class="kalla">Drop-in = vårdcentralen har angett drop-in-tider. Se också <a href="/drop-in/">alla vårdcentraler med drop-in</a>.</p>
+  <p class="kalla">Drop-in = vårdcentralen har angett drop-in-tider. Listningskö = vårdcentralen visade kö för listning i sitt kontaktkort på 1177 ({G.hamtat.vardtyper}). Se också <a href="/drop-in/">alla vårdcentraler med drop-in</a>.</p>
+
+  <h2 id="valja">Vad ska jag tänka på när jag väljer?</h2>
+  <p>Vilken vårdcentral som passar bäst beror på ditt liv. Några saker som ofta spelar roll:</p>
+  <ul>
+    <li><strong>Avstånd och läge</strong> – nära hemmet, jobbet eller skolan.</li>
+    <li><strong>Öppettider</strong> – har vårdcentralen öppet tidigt, sent eller på helger?</li>
+    <li><strong>Drop-in</strong> – kan du komma utan bokad tid vid enklare besvär?</li>
+    <li><strong>E-tjänster</strong> – kan du <a href="/fornya-recept/">förnya recept</a>, boka tid och skicka meddelanden via 1177?</li>
+    <li><strong>BVC och barnmorska</strong> – praktiskt om du har små barn eller väntar barn.</li>
+    <li><strong>Fast läkare</strong> – fråga om det finns möjlighet att få en fast läkarkontakt.</li>
+  </ul>
+  <p>Alla vårdcentraler i vår katalog har en egen sida med adress, telefon, öppettider och länk till kontaktkortet på 1177, där du ser e-tjänsterna. Sök fram dem på <a href="/">startsidan</a> eller via ditt län.</p>
 
   <p class="kalla">Akut sjuk? Ring 112. För sjukvårdsrådgivning dygnet runt, ring 1177. Sidan är en guide och ersätter inte regionens egen information.</p>
-  <Faq fragor={fragor} />
-  <p class="kalla">{KALLA}</p>
-</Layout>
+</Guide>

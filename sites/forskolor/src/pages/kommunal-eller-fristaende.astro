@@ -1,0 +1,170 @@
+---
+// Lång guide: kommunal eller fristående förskola, föräldrakooperativ och inriktningar.
+// Fakta: skollagen 1 kap. 6–7 b §§, 2 kap. 5 och 7 §§, 2 a kap. (från 2027-07-01, lag 2026:1634 med övergångsbestämmelser),
+// 8 kap. 12, 16, 18–22 §§, 26 kap. 3–4 §§; Skolverket PM Barn och personal i förskola 2025, rapport 2025:9 Enskilda
+// huvudmän i förskolan, Avgifter. Egen data: sajtens katalog (SCB/OSM) och Skolverkets jämförelsetal. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, RIKET } from "../site.js";
+import { relaterade, rangordna, perLan, tal, pct, SKOLLAGEN, SKOLVERKET_PM_2025, SKOLVERKET_JMF, STAT_AR } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+const alla = KAT.kommuner.flatMap((k) => k.enheter);
+const komm = alla.filter((e) => e.typ === "kommunal förskola").length;
+const frist = alla.length - komm;
+const inr = (e) => { const v = e.extra?.inriktning; return !v ? [] : Array.isArray(v) ? v : String(v).split(/,\s*/); };
+const raknaInr = {};
+for (const e of alla) for (const i of inr(e)) {
+  raknaInr[i] ??= { namn: i, tot: 0, frist: 0 };
+  raknaInr[i].tot++; if (e.typ !== "kommunal förskola") raknaInr[i].frist++;
+}
+const inriktningar = Object.values(raknaInr).filter((x) => x.tot >= 3).sort((a, b) => b.tot - a.tot);
+const kedjor = Object.entries(alla.filter((e) => e.typ !== "kommunal förskola" && e.kedja && e.kedja !== e.namn)
+  .reduce((m, e) => ((m[e.kedja] = (m[e.kedja] || 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 10);
+const utanFrist = KAT.kommuner.filter((k) => !k.enheter.some((e) => e.typ !== "kommunal förskola")).length;
+const enskildTopp = rangordna("andel_barn_enskild_regi", true, { barn_inskrivna: 300 }).slice(0, 10);
+const lanEnskild = perLan("andel_barn_enskild_regi").sort((a, b) => b.v - a.v);
+const R = RIKET ?? {};
+
+const avsnitt = [
+  { id: "skillnader", rubrik: "Skillnaderna i korthet" },
+  { id: "huvudman", rubrik: "Huvudman, godkännande och tillsyn" },
+  { id: "driftsformer", rubrik: "Föräldrakooperativ, personalkooperativ och bolag" },
+  { id: "inriktningar", rubrik: "Montessori, Waldorf, I Ur och Skur och andra inriktningar" },
+  { id: "storsta", rubrik: "De största fristående huvudmännen" },
+  { id: "siffror", rubrik: "Barngrupper och förskollärare – kommunal mot enskild" },
+  { id: "var", rubrik: "Var finns de fristående förskolorna?" },
+  { id: "nya-regler", rubrik: "Nya regler för enskilda huvudmän 2027" },
+  { id: "valja", rubrik: "Frågor att ställa när du väljer förskola" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan kommunal och fristående förskola?", svar: "Skillnaden är vem som är huvudman. En kommunal förskola drivs av kommunen, en fristående av en enskild huvudman som kommunen har godkänt. Båda följer skollagen och läroplanen Lpfö 18, och avgiften får inte bli högre för att förskolan är fristående." },
+  { fraga: "Kostar fristående förskola mer?", svar: "Regelverket är likartat. Kommunens avgifter ska vara skäliga och en fristående förskolas avgifter får inte vara oskäligt höga. I båda fallen får avgiften från hösten det år barnet fyller tre bara avse tiden över 525 timmar om året, och måltider ska ingå i avgiften." },
+  { fraga: "Vad är ett föräldrakooperativ?", svar: "Ett föräldrakooperativ är en fristående förskola som drivs av föräldrarna. Kommunen kan godkänna att förskolan bara tar emot barn till medlemmar. Hösten 2025 var 23 procent av förskolorna med enskild huvudman föräldrakooperativ." },
+  { fraga: "Hur ställer jag mitt barn i kö till en fristående förskola?", svar: "Hur kön fungerar bestäms av kommunen och förskolan, så fråga dem. Om det inte finns plats för alla ska urvalet göras på grunder som kommunen där förskolan ligger har godkänt." },
+  { fraga: "Får en fristående förskola vara religiös?", svar: "En fristående förskola kan godkännas med konfessionell inriktning. Undervisningen ska ändå vara icke-konfessionell, och deltagande i konfessionella inslag ska alltid vara frivilligt. Du behöver inte tacka ja till en sådan plats om kommunen erbjuder den." },
+  { fraga: "Vem kontrollerar fristående förskolor?", svar: "Kommunen där förskolan ligger godkänner huvudmannen och har tillsyn över förskolan. Skolinspektionen granskar hur kommunen sköter sin tillsyn." },
+  { fraga: "Har fristående förskolor färre förskollärare?", svar: `Ja, i genomsnitt. Enligt Skolverket hade ${pct(46)} av personalen i kommunala förskolor förskollärarexamen hösten 2025 mot ${pct(32)} i förskolor med enskild huvudman. Skillnaderna mellan enskilda förskolor är stora.` },
+];
+
+const titel = "Kommunal eller fristående förskola – skillnader och val";
+const beskrivning = "Kommunal eller fristående förskola? Skillnader i avgift, kö, tillsyn och personal, vad föräldrakooperativ är och hur vanliga Montessori och Waldorf är.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Kommunal eller fristående förskola"
+  svar={`En <strong>kommunal förskola</strong> drivs av kommunen, en <strong>fristående</strong> av en enskild huvudman som kommunen har godkänt, till exempel ett föräldrakooperativ eller ett aktiebolag. Båda följer skollagen och läroplanen och har samma regler för avgifter. Hösten ${STAT_AR} gick ${pct(R.andel_barn_enskild_regi, 1)} av barnen i förskola med enskild huvudman. Där var barngrupperna något mindre men andelen förskollärare lägre.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Kommunal eller fristående", href: "/kommunal-eller-fristaende/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[...relaterade("/forskoleplats/", "/lpfo-18/", "/forskollarare/", "/maxtaxa/"), { namn: "Jämför kommuner", href: "/jamfor/", text: "Barngrupper och personal i alla kommuner" }]}
+  kallor={[
+    { ...SKOLLAGEN, text: "1 kap. 6–7 b §§, 2 kap. 5 och 7 §§, 2 a kap., 8 kap. 12, 16 och 18–22 §§ samt 26 kap. 3–4 §§" },
+    SKOLVERKET_PM_2025,
+    { namn: "Skolverket – Enskilda huvudmän i förskolan (rapport 2025:9)", url: "https://www.skolverket.se/sok-publikationer/publikationsserier/rapporter/2025/enskilda-huvudman-i-forskolan", text: "juridiska former, koncerner och etableringsmönster", datum: "2026-11-25" },
+    { namn: "Skolverket – Avgifter", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/avgifter", text: "måltider och blöjor ingår även i fristående förskolor", datum: "2026-11-25" },
+    { namn: "Skolverket – Rätt till förskola", url: "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/ratt-till-forskola", text: "konfessionella inslag och mottagande i fristående förskola", datum: "2026-11-25" },
+    SKOLVERKET_JMF,
+  ]}>
+
+  <h2 id="skillnader">Skillnaderna i korthet</h2>
+  <p>I sajtens katalog finns {tal(alla.length, 0)} förskolor, varav {tal(komm, 0)} kommunala och {tal(frist, 0)} fristående ({pct((frist / alla.length) * 100)}). Skolverket räknade hösten 2025 med 5 880 kommunala och 2 660 enskilda förskoleenheter. En enhet kan omfatta flera byggnader, och katalogen bygger på SCB:s register över förskolebyggnader, så siffrorna är inte direkt jämförbara.</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Kommunal förskola</th><th>Fristående förskola</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Huvudman</th><td>Kommunen</td><td>Enskild, godkänd av kommunen</td></tr>
+      <tr><th scope="row">Lag och läroplan</th><td>Skollagen och Lpfö 18</td><td>Skollagen och Lpfö 18</td></tr>
+      <tr><th scope="row">Avgift</th><td>Ska vara skälig</td><td>Får inte vara oskäligt hög</td></tr>
+      <tr><th scope="row">525 timmar från 3 år</th><td>Avgift bara för tid däröver</td><td>Avgift bara för tid däröver</td></tr>
+      <tr><th scope="row">Mottagande</th><td>Kommunen erbjuder plats inom fyra månader</td><td>Öppen för alla, urval på grunder kommunen godkänt</td></tr>
+      <tr><th scope="row">Religion</th><td>Ska vara icke-konfessionell</td><td>Kan ha konfessionell inriktning, undervisningen ska vara icke-konfessionell</td></tr>
+      <tr><th scope="row">Finansiering</th><td>Kommunens budget och avgifter</td><td>Bidrag från hemkommunen och avgifter</td></tr>
+      <tr><th scope="row">Tillsyn</th><td>Skolinspektionen</td><td>Kommunen, som i sin tur granskas av Skolinspektionen</td></tr>
+    </tbody>
+  </table></div>
+  <p>För dig som förälder är skillnaden ofta mindre än man tror. Samma läroplan gäller och samma regler om avgifter, mat och blöjor. Det som kan skilja är storlek, inriktning, kö och hur mycket föräldrarna själva är engagerade.</p>
+
+  <h2 id="huvudman">Huvudman, godkännande och tillsyn</h2>
+  <p>Den som vill starta en fristående förskola ansöker hos kommunen där förskolan ska ligga (2 kap. 7 §). Godkännandet gäller viss utbildning vid en viss förskoleenhet och anger om utbildningen har konfessionell inriktning. Kommunen har sedan tillsyn över förskolan och kontrollerar att huvudmannen fortsätter att uppfylla kraven (26 kap. 4 §). Skolinspektionen har tillsyn över hur kommunerna sköter den tillsynen (26 kap. 3 §).</p>
+  <p>Hemkommunen betalar ett bidrag för varje barn. Grundbeloppet ska bestämmas efter samma grunder som kommunen använder för sina egna förskolor och omfattar bland annat omsorg och pedagogik, material, måltider, administration och lokaler (8 kap. 21–22 §§). För barn med omfattande behov av särskilt stöd kan ett tilläggsbelopp betalas.</p>
+
+  <h2 id="driftsformer">Föräldrakooperativ, personalkooperativ och bolag</h2>
+  <p>Hösten 2025 fanns drygt 2 130 huvudmän för förskola: 290 kommuner och drygt 1 840 enskilda. Drygt 94 procent av de enskilda driver bara en eller två förskolor. Enskilda förskolor finns i 244 kommuner. Bland förskolorna med enskild huvudman ser fördelningen ut så här enligt Skolverket:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Driftsform</th><th class="num">Andel av enskilda förskolor 2025</th></tr></thead>
+    <tbody>
+      <tr><td>Föräldrakooperativ</td><td class="num">23 %</td></tr>
+      <tr><td>Personalkooperativ</td><td class="num">10 %</td></tr>
+    </tbody>
+    <thead><tr><th>Juridisk form</th><th class="num"></th></tr></thead>
+    <tbody>
+      <tr><td>Aktiebolag (inkl. andra bolag)</td><td class="num">47 %</td></tr>
+      <tr><td>Ekonomisk förening</td><td class="num">drygt 34 %</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Skolverket, PM Barn och personal i förskola 2025. Driftsform och juridisk form är två olika indelningar och summeras inte.</p>
+  <p>Andelen föräldrakooperativ har minskat med 5,6 procentenheter sedan 2016, medan andelen personalkooperativ varit ungefär oförändrad. Enligt Skolverkets rapport från 2025 går sex av tio barn i fristående förskolor i en förskola som drivs av ett aktiebolag. I ett föräldrakooperativ är föräldrarna medlemmar i den förening som driver förskolan. Vad medlemskapet innebär står i kooperativets stadgar, så fråga innan du tackar ja.</p>
+
+  <h2 id="inriktningar">Montessori, Waldorf, I Ur och Skur och andra inriktningar</h2>
+  <p>Alla förskolor följer läroplanen, men många fristående förskolor har en pedagogisk eller annan inriktning. Tabellen bygger på sajtens katalog och räknar förskolor där inriktningen framgår av förskolans eller huvudmannens namn eller av OpenStreetMap. Det är alltså ett minimiantal – fler förskolor kan arbeta enligt en inriktning utan att det syns i namnet.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Inriktning</th><th class="num">Förskolor</th><th class="num">varav fristående</th></tr></thead>
+    <tbody>{inriktningar.map((x) => <tr><td>{x.namn}</td><td class="num">{tal(x.tot, 0)}</td><td class="num">{tal(x.frist, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: förskolor.nu:s katalog, byggd på SCB:s öppna geodata och OpenStreetMap. En förskola kan ha flera inriktningar.</p>
+
+  <h2 id="storsta">De största fristående huvudmännen</h2>
+  <p>Nio av tio enskilda huvudmän driver bara en förskola, enligt Skolverkets rapport från 2025. Samtidigt finns stora aktörer: i rapporten var AcadeMedia den största koncernen inom förskolan med 145 förskolor. I sajtens katalog har dessa huvudmän flest förskolor. Varje rad är en juridisk person, och en koncern kan ha flera bolag:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Huvudman</th><th class="num">Förskolor i katalogen</th></tr></thead>
+    <tbody>{kedjor.map(([n, a]) => <tr><td>{n}</td><td class="num">{a}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="siffror">Barngrupper och förskollärare – kommunal mot enskild</h2>
+  <p>Fristående förskolor har i genomsnitt något mindre barngrupper men lägre andel förskollärare. Siffrorna gäller hösten {STAT_AR}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Kommunal</th><th class="num">Enskild</th><th class="num">Riket</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Barn per barngrupp</th><td class="num">{tal(R.barn_per_grupp_kommunal)}</td><td class="num">{tal(R.barn_per_grupp_enskild)}</td><td class="num">{tal(R.barn_per_grupp)}</td></tr>
+      <tr><th scope="row">Barn per heltidstjänst</th><td class="num">{tal(R.barn_per_heltidstjanst_kommunal)}</td><td class="num">{tal(R.barn_per_heltidstjanst_enskild)}</td><td class="num">{tal(R.barn_per_heltidstjanst)}</td></tr>
+      <tr><th scope="row">Personal med förskollärarexamen (PM)</th><td class="num">46 %</td><td class="num">32 %</td><td class="num">42,5 %</td></tr>
+      <tr><th scope="row">Personal med förskollärarlegitimation (PM)</th><td class="num">48 %</td><td class="num">34 %</td><td class="num">45 %</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Skolverkets kommunala jämförelsetal (barngrupper, heltidstjänster) och PM Barn och personal i förskola 2025 (examen och legitimation, andel av heltidstjänsterna).</p>
+  <p>Skolverkets rapport från 2025 visar också skillnader mellan olika slags enskilda huvudmän. Där hade förskolor som drivs av aktiebolag i genomsnitt 14,7 barn per grupp och förskolor som drivs av stiftelser 12,9. Läs mer om personalen på sidan om <a href="/forskollarare/">förskollärare och barnskötare</a>.</p>
+
+  <h2 id="var">Var finns de fristående förskolorna?</h2>
+  <p>Fristående förskolor är vanligast i storstäderna. Enligt Skolverkets rapport är fyra av tio förskolor fristående i storstäder och storstadsnära kommuner, mot två av tio i mindre städer och på landsbygden. I {utanFrist} kommuner finns ingen fristående förskola i sajtens katalog. Här är kommunerna med högst andel barn i förskola med enskild huvudman:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Andel barn i enskild regi</th><th class="num">Inskrivna barn</th></tr></thead>
+    <tbody>{enskildTopp.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_barn_enskild_regi, 1)}</td><td class="num">{tal(x.s.barn_inskrivna, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <details>
+    <summary>Andel barn i enskild regi per län</summary>
+    <div class="tabell"><table>
+      <thead><tr><th>Län</th><th class="num">Andel</th></tr></thead>
+      <tbody>{lanEnskild.map((x) => <tr><td><a href={x.lan.href}>{x.lan.namn}</a></td><td class="num">{pct(x.v, 1)}</td></tr>)}</tbody>
+    </table></div>
+  </details>
+  <p class="kalla">Källa: Skolverkets kommunala jämförelsetal hösten {STAT_AR}, kommuner med minst 300 inskrivna barn. Länsvärdet är viktat med inskrivna barn.</p>
+
+  <h2 id="nya-regler">Nya regler för enskilda huvudmän 2027</h2>
+  <p>Den 1 juli 2027 träder en ändring i skollagen i kraft (lag 2026:1634) som skärper kraven på enskilda huvudmän. Det här är de delar som rör förskolan:</p>
+  <ul>
+    <li><strong>Bara juridiska personer:</strong> bara enskilda som är juridiska personer kan godkännas som nya huvudmän. En fysisk person som redan är godkänd får fortsätta till och med den 30 juni 2029.</li>
+    <li><strong>Nya villkor för godkännande</strong> i ett nytt 2 a kap., bland annat långsiktighet, ekonomiska förutsättningar för minst två år, insikt och lämplighet. De nya villkoren tillämpas på ansökningar om utbildning som startar efter den 30 juni 2028.</li>
+    <li><strong>Värdeöverföringsförbud:</strong> när en ny förskoleenhet startar ska kommunen besluta om förbud mot värdeöverföringar i fem år, och när en ny ägare får bestämmande inflytande gäller ett förbud i upp till tre år. Regeln vid nyetablering tillämpas på utbildning som startar efter den 30 juni 2028.</li>
+  </ul>
+  <p>För förskolor som redan är i gång märks ändringarna främst i hur kommunen prövar och granskar huvudmännen.</p>
+
+  <h2 id="valja">Frågor att ställa när du väljer förskola</h2>
+  <p>Oavsett driftsform kan de här frågorna hjälpa dig att jämföra förskolor:</p>
+  <ul>
+    <li>Hur stora är barngrupperna och hur många vuxna finns i varje grupp?</li>
+    <li>Hur många förskollärare arbetar på förskolan?</li>
+    <li>Har förskolan en särskild inriktning, och vad betyder den i vardagen?</li>
+    <li>Hur går kön till, och står barnet då också i kommunens kö?</li>
+    <li>Förväntas föräldrarna delta i arbetet, som i ett föräldrakooperativ?</li>
+    <li>Har förskolan konfessionella inslag, och hur görs deltagandet frivilligt?</li>
+    <li>Hur ser <a href="/inskolning/">inskolningen</a> ut, och vilka dagar är förskolan stängd för planering?</li>
+  </ul>
+  <p>Statistik för barngrupper och personal finns per kommun på <a href="/jamfor/">Jämför kommuner</a> och på varje kommunsida. Förskolor i din närhet hittar du via <a href="/#lan">länslistan</a>.</p>
+</Guide>

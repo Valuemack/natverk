@@ -1,0 +1,129 @@
+---
+// Ansöka till komvux: rätten enligt skollagen 20 kap., urvalsordningen i förordningen 2011:1108 3 kap. 7 §,
+// och egen statistik över elever från andra kommuner (Skolverkets jämförelsetal). Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE, KAT, RIKET, statFor } from "../site.js";
+import { tal, pct, PUBLICERAD, GRANSKAD, K } from "../guider.js";
+
+const kv = RIKET.komvux;
+const rader = KAT.kommuner.map((k) => ({ k, s: statFor(k)?.komvux })).filter((x) => x.s?.elever_gymnasial >= 300 && x.s.andel_fran_annan_kommun_gymnasial != null);
+const tar = [...rader].sort((a, b) => b.s.andel_fran_annan_kommun_gymnasial - a.s.andel_fran_annan_kommun_gymnasial).slice(0, 10);
+const storst = [...rader].sort((a, b) => b.s.elever_gymnasial - a.s.elever_gymnasial).slice(0, 10);
+const antalEnheter = KAT.enheter.length;
+
+const avsnitt = [
+  { id: "ratt", rubrik: "Vem har rätt att läsa på komvux?" },
+  { id: "steg", rubrik: "Så ansöker du till komvux steg för steg" },
+  { id: "terminer", rubrik: "När kan man söka? Antagning och terminer" },
+  { id: "urval", rubrik: "Om det inte finns plats för alla – urvalet" },
+  { id: "annan-kommun", rubrik: "Söka komvux i en annan kommun" },
+  { id: "vagledning", rubrik: "Studievägledning och studieplan" },
+  { id: "kostnad", rubrik: "Vad kostar komvux?" },
+];
+const steg = [
+  { namn: "Ta reda på vad du behöver läsa", text: "Kontakta en studie- och yrkesvägledare i din kommun om du är osäker på vilka kurser eller ämnen du behöver." },
+  { namn: "Sök hos din hemkommun", text: "Ansök i kommunens e-tjänst för vuxenutbildning eller på kommunens blankett. Ansökan är avgiftsfri." },
+  { namn: "Bifoga betyg", text: "Ladda upp tidigare betyg från grundskola eller gymnasium så att kommunen kan pröva din behörighet." },
+  { namn: "Vänta på beslut", text: "Hemkommunen eller anordnaren beslutar om du blir antagen och meddelar dig." },
+  { namn: "Sök studiemedel", text: "Ansök om studiemedel hos CSN så fort du har valt utbildning. Du kan få pengar högst fyra veckor bakåt." },
+];
+
+const fragor = [
+  { fraga: "Hur söker man till komvux?", svar: "Du söker hos kommunen där du är folkbokförd, oftast i kommunens e-tjänst för vuxenutbildning. Bifoga dina tidigare betyg. Vill du läsa hos en annan huvudman skickar hemkommunen ansökan vidare." },
+  { fraga: "När kan man söka till komvux?", svar: "Komvux ska enligt förordningen bedrivas kontinuerligt under hela året. Det finns ingen gemensam antagning för hela landet, utan varje kommun bestämmer sina kursstarter och ansökningsperioder. Titta på din kommuns webbplats." },
+  { fraga: "Hur gammal måste man vara för att gå på komvux?", svar: "Du kan börja på komvux från och med andra kalenderhalvåret det år du fyller 20. På gymnasial nivå kan du börja tidigare om du har slutfört ett nationellt program i gymnasieskolan." },
+  { fraga: "Har man rätt att läsa på komvux?", svar: "Ja, i flera fall. Du har rätt till grundläggande nivå om du saknar kunskaper från grundskolan. På gymnasial nivå har du rätt att läsa det som krävs för grundläggande eller särskild behörighet till högskolan eller yrkeshögskolan." },
+  { fraga: "Vem prioriteras om det inte finns plats?", svar: "Först den som vill slutföra sin individuella studieplan, sedan den som saknar gymnasieexamen, den som är eller riskerar att bli arbetslös, den som behöver utbildningen i sitt arbete och sist den som behöver den för ett planerat yrkesval." },
+  { fraga: "Kan man gå komvux i en annan kommun?", svar: "Ja. Du har rätt att läsa i en annan kommun om utbildningen inte finns i din hemkommun. För yrkesutbildning gäller rätten inom samma samverkansområde även om hemkommunen har utbildningen." },
+  { fraga: "Kostar komvux något?", svar: "Nej. Komvux är avgiftsfritt enligt skollagen, och det får inte kosta något att ansöka. Du ska få läroböcker och lärverktyg utan kostnad." },
+  { fraga: "Vad är en individuell studieplan?", svar: "En individuell studieplan beskriver vilka kurser och ämnen du ska läsa på komvux och i vilken ordning. Den görs när du börjar. Vid urval går den som vill slutföra sin studieplan före andra sökande." },
+];
+---
+<Guide site={SITE} titel="Ansöka till komvux – så gör du, rätt och urval"
+  beskrivning="Så ansöker du till komvux: vem som har rätt att läsa, ålder, steg för steg, terminer och antagning, urvalsordningen och att läsa i en annan kommun."
+  h1="Ansöka till komvux"
+  svar="Du ansöker till komvux hos <strong>kommunen där du bor</strong>, oftast i kommunens e-tjänst. Du kan börja från <strong>andra halvåret det år du fyller 20</strong>. Komvux pågår under hela året, så varje kommun har egna ansökningsperioder. Utbildningen och ansökan är avgiftsfria, och du har rätt att läsa det som krävs för behörighet till högskolan."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Ansöka till komvux", href: "/ansoka/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad={GRANSKAD} avsnitt={avsnitt} fragor={fragor}
+  steg={{ namn: "Så ansöker du till komvux", steg }}
+  relaterat={[
+    { namn: "CSN för komvux", href: "/csn/", text: "Kalkylator för studiemedel" },
+    { namn: "Högskolebehörighet via komvux", href: "/hogskolebehorighet/", text: "Vad du behöver läsa" },
+    { namn: "Yrkesvux", href: "/yrkesvux/", text: "Yrkesutbildningar på komvux" },
+    { namn: "Komvux på distans", href: "/distans/", text: "Distans per kommun" },
+    { namn: "Sfi", href: "/sfi/", text: "Svenska för invandrare" },
+  ]}
+  kallor={[
+    { ...K.skollagen, text: "rätt till komvux, ansökan, annan kommun och avgiftsfrihet (2 kap. 29 §, 20 kap. 2, 7, 8, 11–15 och 19–22 §§)" },
+    { ...K.forordningen, text: "kontinuerlig utbildning (2 kap. 25 §) och urvalsordning (3 kap. 7 §)" },
+    { namn: "Skolverket – Från ansökan till antagning inom komvux på gymnasial nivå", url: "https://www.skolverket.se/styrning-och-ansvar/anordna-utbildning/anordna-utbildning-inom-komvux/fran-ansokan-till-antagning-inom-komvux-pa-gymnasial-niva", text: "hemkommunens ansvar och kostnad", datum: "2026-11-25" },
+    { namn: "Utbildningsguiden – Hitta utbildningar för vuxna", url: "https://utbildningsguiden.skolverket.se/utbildning-for-vuxna/valja-utbildning-for-vuxna/hitta-utbildningar-for-vuxna", text: "ansökan till hemkommunen", datum: "2026-11-25" },
+    { ...K.csn, text: "ansökan om studiemedel" },
+    K.statistik,
+  ]}>
+
+  <h2 id="ratt">Vem har rätt att läsa på komvux?</h2>
+  <p>Komvux är till för vuxna. Du kan börja från och med <strong>andra kalenderhalvåret det år du fyller 20</strong>, alltså hösten det året. Har du slutfört ett nationellt program i gymnasieskolan kan du läsa på gymnasial nivå även om du är yngre. Du ska också bo i Sverige och ha förutsättningar att klara utbildningen.</p>
+  <p>Skollagen ger dig en <strong>rätt</strong> till komvux i flera fall. Då måste kommunen ta emot dig:</p>
+  <ul>
+    <li><strong>Grundläggande nivå</strong> – om du saknar de kunskaper som man normalt får i grundskolan.</li>
+    <li><strong>Grundläggande behörighet</strong> – om du saknar grundläggande behörighet till högskolan eller yrkeshögskolan har du rätt att läsa det som krävs på gymnasial nivå.</li>
+    <li><strong>Särskild behörighet</strong> – du har också rätt att läsa det som krävs för särskild behörighet till en högskoleutbildning eller särskilda kunskaper till en yrkeshögskoleutbildning.</li>
+  </ul>
+  <p>Utöver det kan du söka andra kurser på gymnasial nivå, till exempel en yrkesutbildning eller kurser för att höja betygen. Då konkurrerar du om platserna, och lagen säger att de som har störst behov av utbildning ska prioriteras. Finns det flera sätt att nå behörigheten bestämmer hemkommunen vilket den erbjuder.</p>
+
+  <h2 id="steg">Så ansöker du till komvux steg för steg</h2>
+  <ol>{steg.map((s) => <li><strong>{s.namn}.</strong> {s.text}</li>)}</ol>
+  <p>Ansökan går alltid till <strong>hemkommunen</strong>, även om du vill läsa hos en annan kommun eller ett utbildningsföretag. Om utbildningen anordnas av någon annan skickar hemkommunen ansökan vidare, och den som anordnar utbildningen beslutar om du tas emot. Vår katalog har {tal(antalEnheter, 0)} skolenheter för vuxenutbildning i {KAT.kommuner.length} kommuner. Hitta din kommun i <a href="/#lan">listan över län och kommuner</a>.</p>
+
+  <h2 id="terminer">När kan man söka? Antagning och terminer</h2>
+  <p>Enligt förordningen om vuxenutbildning ska komvux bedrivas <strong>kontinuerligt under hela året</strong>. Det finns alltså inte en gemensam antagning för hela landet, som till högskolan. I stället bestämmer varje kommun sina ansökningsperioder och kursstarter.</p>
+  <ul>
+    <li>Kursstarter och sista ansökningsdag skiljer sig mellan kommuner och mellan utbildningar. De står på kommunens webbplats.</li>
+    <li>Sök i god tid före kursstart, eftersom kommunen behöver pröva din behörighet och ibland skicka ansökan vidare till en annan anordnare.</li>
+    <li>Det högre bidraget från CSN har en begränsad budget varje år, så det kan löna sig att söka tidigt om du har rätt till det.</li>
+  </ul>
+  <p>Tänk också på CSN. Du kan söka studiemedel så fort du har valt utbildning, även innan du är antagen, men pengarna kan bara betalas ut för fyra veckor bakåt från veckan då CSN får ansökan.</p>
+
+  <h2 id="urval">Om det inte finns plats för alla – urvalet</h2>
+  <p>Har du inte rätt till utbildningen och det finns fler behöriga sökande än platser, gör kommunen ett urval. Förordningen om vuxenutbildning anger ordningen:</p>
+  <ol>
+    <li>den som vill slutföra studier enligt sin individuella studieplan,</li>
+    <li>den som saknar gymnasieexamen eller motsvarande,</li>
+    <li>den som är eller riskerar att bli arbetslös,</li>
+    <li>den som behöver utbildningen för sin nuvarande yrkesverksamhet,</li>
+    <li>den som behöver utbildningen för ett planerat yrkesval.</li>
+  </ol>
+  <p>Den som har rätt till utbildningen för att bli behörig ingår inte i urvalet, utan ska tas emot. Har du redan en gymnasieexamen och vill höja ett betyg kan du alltså få vänta på plats om det är fullt. Ett alternativ kan då vara en prövning, där du visar dina kunskaper utan att gå kursen.</p>
+
+  <h2 id="annan-kommun">Söka komvux i en annan kommun</h2>
+  <p>Skollagen ger dig rätt att läsa i en annan kommun om utbildningen inte finns i din hemkommun. För yrkesämnen och sammanhållen yrkesutbildning gäller rätten inom samma primära samverkansområde, även om hemkommunen har utbildningen. Hemkommunen står då i vissa fall för kostnaden.</p>
+  <p>I hela landet kom {pct(kv?.andel_fran_annan_kommun_gymnasial)} av eleverna på gymnasial nivå från en annan kommun än den där de läste ({kv?.ar}). Andelen är högst i kommuner som tar emot många elever från grannkommunerna:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Elever från annan kommun</th><th class="num">Elever, gymnasial nivå</th></tr></thead>
+    <tbody>{tar.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{pct(x.s.andel_fran_annan_kommun_gymnasial)}</td><td class="num">{tal(x.s.elever_gymnasial, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <h3>Kommunerna med flest komvuxelever</h3>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Gymnasial nivå</th><th class="num">Grundläggande nivå</th><th class="num">Från annan kommun</th></tr></thead>
+    <tbody>{storst.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{tal(x.s.elever_gymnasial, 0)}</td><td class="num">{tal(x.s.elever_grundlaggande, 0)}</td><td class="num">{pct(x.s.andel_fran_annan_kommun_gymnasial)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kommuner med minst 300 elever på gymnasial nivå. Källa: Skolverket, kommunala jämförelsetal {kv?.ar}.</p>
+
+  <h2 id="vagledning">Studievägledning och studieplan</h2>
+  <p>Enligt skollagen ska elever i alla skolformer, även komvux, ha tillgång till studie- och yrkesvägledning. Kontakta en <strong>studievägledare</strong> i din kommun innan du söker om du är osäker på vad du behöver läsa. Det är särskilt viktigt om du siktar på en viss högskoleutbildning, eftersom det är den som avgör vilka särskilda behörigheter du behöver.</p>
+  <p>Kommunen ska också erbjuda en inledande kartläggning till den som vill få sina kunskaper kartlagda, och validering om du behöver det. När du börjar upprättas en <strong>individuell studieplan</strong> med de kurser och ämnen du ska läsa. Den spelar roll vid urvalet, eftersom den som vill slutföra sin studieplan går först.</p>
+
+  <h3>Checklista innan du skickar ansökan</h3>
+  <ul>
+    <li>Har du tagit fram dina <strong>betyg</strong> från grundskolan och gymnasiet?</li>
+    <li>Vet du <strong>vad du ska läsa</strong> och varför? Skriv i ansökan om du behöver kurserna för behörighet till högskolan eller yrkeshögskolan, eftersom du då har rätt till dem.</li>
+    <li>Har du tänkt på <strong>studietakten</strong>? Minst halvtid, 10 poäng i veckan, krävs för studiemedel.</li>
+    <li>Har du betyg från ett annat land? Bifoga dem och fråga kommunen hur de bedöms.</li>
+    <li>Har du sökt <strong>CSN</strong> i tid? Pengarna betalas bara ut fyra veckor bakåt.</li>
+  </ul>
+
+  <h2 id="kostnad">Vad kostar komvux?</h2>
+  <p>Komvux är <strong>avgiftsfritt</strong>, och skollagen säger uttryckligen att det inte får kosta något att ansöka. Du ska få läroböcker och andra lärverktyg utan kostnad. Kommunen får låta dig köpa material som du får behålla, men bara till vad det kostar kommunen.</p>
+  <p>För att klara ekonomin kan du söka studiemedel från CSN från hösten det år du fyller 20. Räkna ut beloppet med <a href="/csn/">CSN-kalkylatorn</a>.</p>
+</Guide>

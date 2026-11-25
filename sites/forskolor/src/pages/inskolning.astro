@@ -1,0 +1,141 @@
+---
+// Lång guide: inskolning på förskolan – vad läroplanen säger, föräldraledighet, planering, sjukdom.
+// Fakta: Lpfö 18 avsnitt 2.4, 2.5 och 2.8 (Skolverket, gällande från 2025-08-01); Försäkringskassan (föräldrapenning,
+// uppdaterad 2026-08-24; vab, uppdaterad 2026-11-10); föräldraledighetslagen (1995:584) 13 §; 1177 Förkylning hos barn.
+// Inskolningsmodeller beskrivs neutralt eftersom upplägget bestäms av varje förskola. Egen planerare. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import { SITE } from "../site.js";
+import { relaterade } from "../guider.js";
+
+const PUBLICERAD = "2026-11-25";
+
+const avsnitt = [
+  { id: "vad-ar", rubrik: "Vad är inskolning?" },
+  { id: "upplagg", rubrik: "Hur lång är inskolningen?" },
+  { id: "ledighet", rubrik: "Föräldraledighet och föräldrapenning" },
+  { id: "planerare", rubrik: "Planera inskolningen" },
+  { id: "fragor", rubrik: "Frågor att ställa till förskolan" },
+  { id: "sjuk", rubrik: "När barnet blir sjukt de första månaderna" },
+  { id: "forbered", rubrik: "Förbered dig och barnet" },
+  { id: "overgang", rubrik: "Inskolning i förskoleklass och fritids" },
+];
+
+const fragor = [
+  { fraga: "Hur lång är inskolningen på förskolan?", svar: "Det finns ingen regel om hur lång inskolningen ska vara. Varje förskola bestämmer sitt upplägg. Fråga förskolan i god tid så att du kan planera ledigheten." },
+  { fraga: "Kan man ta ut föräldrapenning under inskolningen?", svar: "Ja. Enligt Försäkringskassan går det bra att vara föräldraledig med föräldrapenning vid inskolning, både dagar på sjukpenningnivå och lägstanivå." },
+  { fraga: "Kan man vabba vid inskolning?", svar: "Nej. Tillfällig föräldrapenning (vab) betalas inte ut för inskolning. Du kan i stället ta ut föräldrapenning." },
+  { fraga: "Kan mormor eller farfar sköta inskolningen?", svar: "Ja. Om ingen av föräldrarna kan vara med kan ni föra över föräldrapenningdagar till någon annan som gör inskolningen, till exempel en mor- eller farförälder." },
+  { fraga: "När måste jag säga till min arbetsgivare?", svar: "Den som vill vara föräldraledig ska anmäla det till arbetsgivaren minst två månader före ledighetens början, eller så snart som möjligt om det inte går (13 § föräldraledighetslagen)." },
+  { fraga: "Varför blir barnet sjukt så ofta när det börjar förskolan?", svar: "Barn blir oftare förkylda än vuxna. Enligt 1177 är det vanligt med tio till femton förkylningar om året under de första åren. Barnet kan gå tillbaka när det orkar en hel dag i gruppen och har varit feberfritt ett dygn utan febernedsättande medicin." },
+];
+
+const titel = "Inskolning på förskolan – planering, ledighet och sjukdom";
+const beskrivning = "Så går inskolning på förskolan till: vad läroplanen kräver, föräldrapenning och anmälan till jobbet, en planerare för datumen och när barnet blir sjukt.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Inskolning på förskolan"
+  svar={`<strong>Inskolning</strong> är barnets första tid på förskolan, då en förälder eller annan vuxen är med tills barnet känner sig tryggt. Upplägget och längden bestämmer varje förskola. Du kan ta ut <strong>föräldrapenning</strong> under inskolningen men inte vab, och ledigheten ska anmälas till arbetsgivaren minst två månader innan. Läroplanen ger rektorn ansvar för att varje barn får en god introduktion.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Inskolning", href: "/inskolning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={relaterade("/packlista/", "/forskoleplats/", "/lpfo-18/", "/allman-forskola/", "/kommunal-eller-fristaende/")}
+  kallor={[
+    { namn: "Skolverket – Läroplan för förskolan Lpfö 18", url: "https://www.skolverket.se/undervisning/forskolan/laroplan-for-forskolan", text: "avsnitt 2.4 Förskola och hem, 2.5 Övergång och samverkan och 2.8 Rektorns ansvar", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Föräldrapenning", url: "https://www.forsakringskassan.se/privatperson/familj-och-barn/foraldrapenning", text: "föräldraledighet vid inskolning, överföring av dagar och ansökan inom 90 dagar (uppdaterad 24 augusti 2026)", datum: "2026-11-25" },
+    { namn: "Försäkringskassan – Vab för barn under 12 år", url: "https://www.forsakringskassan.se/privatperson/familj-och-barn/vab-for-barn-under-12-ar", text: "när vab inte kan tas ut och regeln om ordinarie vårdare (uppdaterad 10 november 2026)", datum: "2026-11-25" },
+    { namn: "Föräldraledighetslag (1995:584), 13 §", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/foraldraledighetslag-1995584_sfs-1995-584/", text: "anmälan till arbetsgivaren två månader i förväg", datum: "2026-11-25" },
+    { namn: "1177 – Förkylning hos barn", url: "https://www.1177.se/barn--gravid/vanliga-besvar-och-sjukdomar-hos-barn/vanliga-sjukdomar-och-besvar-hos-barn--aldre-an-1-ar/forkylning-hos-barn/", text: "hur ofta barn blir förkylda och när de kan gå tillbaka till förskolan", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vad-ar">Vad är inskolning?</h2>
+  <p>Inskolning är perioden när barnet börjar på förskolan och vänjer sig vid den nya miljön, de andra barnen och personalen. Under den tiden är en förälder eller annan nära vuxen med på förskolan, och barnets tid där utan vuxen ökar efter hand.</p>
+  <p>Ordet inskolning finns inte i skollagen eller läroplanen, men läroplanen Lpfö 18 ställer krav som rör den. Rektorn ansvarar för att <strong>varje barn tillsammans med vårdnadshavare får en god introduktion i förskolan</strong> (avsnitt 2.8). Arbetslaget ska ta ansvar för att utveckla en tillitsfull relation mellan förskolan och hemmen och föra fortlöpande samtal med vårdnadshavarna om barnets trivsel, utveckling och lärande (avsnitt 2.4). Mer om läroplanen finns på sidan om <a href="/lpfo-18/">Lpfö 18</a>.</p>
+
+  <h2 id="upplagg">Hur lång är inskolningen?</h2>
+  <p>Det finns ingen regel om hur lång inskolningen ska vara eller hur den ska läggas upp. Det bestämmer varje förskola, och upplägget kan skilja sig mellan förskolor i samma kommun. Grovt sett finns två sätt att tänka:</p>
+  <ul>
+    <li><strong>Kortare period med föräldern med hela dagarna:</strong> föräldern är med i verksamheten under hela dagarna en kortare tid, och barnet lämnas sedan för hela dagar.</li>
+    <li><strong>Längre period med gradvis ökad tid:</strong> barnet är på förskolan en kortare stund de första dagarna, och tiden utan förälder ökar steg för steg.</li>
+  </ul>
+  <p>Fråga förskolan hur de arbetar, om upplägget kan anpassas efter barnet, hur lång tid de räknar med och hur flexibla de är om barnet behöver mer tid. Det är den uppgiften du behöver för att planera ledigheten.</p>
+
+  <h2 id="ledighet">Föräldraledighet och föräldrapenning</h2>
+  <p>Enligt Försäkringskassan går det bra att vara föräldraledig vid inskolning, och det gäller både föräldrapenningdagar på sjukpenningnivå och dagar på lägstanivå. Det här är bra att veta:</p>
+  <ul>
+    <li><strong>Inte vab:</strong> tillfällig föräldrapenning kan inte tas ut för inskolning.</li>
+    <li><strong>Någon annan kan skola in:</strong> om ingen av föräldrarna kan vara med kan ni föra över föräldrapenningdagar till någon annan som gör inskolningen, till exempel barnets farfar eller mormor.</li>
+    <li><strong>Anmäl till jobbet i tid:</strong> föräldraledighet ska anmälas till arbetsgivaren minst två månader före ledighetens början, eller så snart som möjligt om det inte går (13 § föräldraledighetslagen).</li>
+    <li><strong>Ansök i tid hos Försäkringskassan:</strong> ansökan om föräldrapenning ska ha kommit in senast 90 dagar efter första dagen du var hemma med barnet.</li>
+  </ul>
+  <p>Föräldrapenningen kan tas ut på hel- eller deltid. Är du med på förskolan halva dagar kan du alltså ta ut föräldrapenning för den del av arbetstiden du inte arbetar.</p>
+
+  <section class="sokverktyg" id="planerare">
+    <h2>Planera inskolningen</h2>
+    <p>Fyll i när inskolningen börjar och hur många vardagar förskolan räknar med. Planeraren visar datumen, när du senast bör anmäla ledigheten till arbetsgivaren och sista dag att ansöka om föräldrapenning.</p>
+    <form class="berakning" onsubmit="return false">
+      <label for="is-start">Första dagen</label><input id="is-start" type="date" name="start" value="2027-08-16" />
+      <label for="is-dagar">Antal vardagar</label><input id="is-dagar" type="number" name="dagar" min="1" max="40" value="10" inputmode="numeric" />
+      <label for="is-omf">Ledighet per dag</label>
+      <select id="is-omf" name="omf"><option value="1">Hel dag</option><option value="0.75">Tre fjärdedelar</option><option value="0.5">Halv dag</option><option value="0.25">En fjärdedel</option></select>
+    </form>
+    <dl class="fakta is-ut" aria-live="polite"></dl>
+    <p class="kalla">Planeraren räknar måndag–fredag och hoppar inte över helgdagar. Antalet vardagar är ditt eget val utifrån förskolans upplägg – det finns ingen lagstadgad längd.</p>
+  </section>
+
+  <h2 id="fragor">Frågor att ställa till förskolan</h2>
+  <p>Ett inskolningssamtal eller ett besök före start är ett bra tillfälle att få svar. Bra frågor att ha med sig:</p>
+  <ul>
+    <li>Hur lägger ni upp inskolningen, och hur många dagar räknar ni med?</li>
+    <li>Vilka tider ska vi vara där de första dagarna?</li>
+    <li>Får barnet en särskild kontaktperson under inskolningen?</li>
+    <li>Hur gör ni om barnet behöver längre tid?</li>
+    <li>Vad behöver barnet ha med sig? Se vår <a href="/packlista/">packlista för förskolan</a>.</li>
+    <li>Hur gör ni med sömn, mat och eventuella allergier?</li>
+    <li>Hur får vi information om barnets dag efter inskolningen?</li>
+    <li>Vilka dagar är förskolan stängd för planering?</li>
+  </ul>
+
+  <h2 id="sjuk">När barnet blir sjukt de första månaderna</h2>
+  <p>Förkylningar sprids lätt där barn har mycket kroppskontakt med varandra och med vuxna, skriver 1177. Barn blir oftare förkylda än vuxna, och under de första åren är det vanligt med tio till femton förkylningar om året. Planera därför för att barnet kan behöva vara hemma ibland, även strax efter inskolningen.</p>
+  <ul>
+    <li><strong>När kan barnet gå tillbaka?</strong> Enligt 1177 när barnet orkar vara i barngruppen hela dagen och delta i de vanliga aktiviteterna, och har varit feberfritt i ett dygn utan febernedsättande läkemedel. Lite snuva eller lätt hosta kan finnas kvar.</li>
+    <li><strong>Vab:</strong> när barnet är sjukt och du är hemma från jobbet kan du få tillfällig föräldrapenning. Är barnet sjukt längre än sju dagar behövs ett intyg från läkare eller sjuksköterska.</li>
+    <li><strong>Söka vård:</strong> kontakta en vårdcentral eller jourmottagning om febern håller i sig mer än fyra dygn eller kommer tillbaka. Ring 1177 för sjukvårdsrådgivning. Ring 112 vid akut fara för liv eller hälsa.</li>
+  </ul>
+  <p>Den här sidan ger allmän information och ersätter inte vårdens bedömning. Är du orolig för ditt barn, ring 1177.</p>
+
+  <h2 id="forbered">Förbered dig och barnet</h2>
+  <p>Några praktiska saker att ordna före start:</p>
+  <ul>
+    <li><strong>Ledigheten:</strong> anmäl till arbetsgivaren minst två månader innan och planera med marginal ifall barnet behöver fler dagar.</li>
+    <li><strong>Kläder och saker:</strong> märk kläder, ombyten och eventuell napp eller gosedjur. Enligt en kammarrättsdom som Skolverket hänvisar till ska blöjor ingå i avgiften.</li>
+    <li><strong>Rutiner:</strong> berätta för personalen om barnets sömn, mat och hur barnet brukar tröstas.</li>
+    <li><strong>Avgiften:</strong> kontrollera från vilket datum avgiften börjar och vad den blir enligt <a href="/maxtaxa/">maxtaxan</a>.</li>
+  </ul>
+
+  <h2 id="overgang">Inskolning i förskoleklass och fritids</h2>
+  <p>Försäkringskassan nämner inskolning i både förskola och förskoleklass, så föräldrapenning kan användas även där. Inför övergången från förskolan ska förskolan enligt läroplanen (avsnitt 2.5) samverka med förskoleklassen, skolan och fritidshemmet, och det ska finnas samarbetsformer som förbereder barnen och vårdnadshavarna. Från hösten 2028 ersätts förskoleklassen av en ny årskurs 1 i den tioåriga grundskolan. Läs mer på sidan om <a href="/forskoleklass/">förskoleklass och fritidshem</a>.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const s = document.getElementById("planerare"); if (!s) return;
+      const f = s.querySelector("form"), ut = s.querySelector(".is-ut");
+      const p = (v) => { if (!v) return null; const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d); };
+      const fmt = (d) => d.toLocaleDateString("sv-SE", { weekday: "short", day: "numeric", month: "short" });
+      const fmtL = (d) => d.toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" });
+      const plusMan = (dt, n) => { const r = new Date(dt.getFullYear(), dt.getMonth() + n, 1); const sista = new Date(r.getFullYear(), r.getMonth() + 1, 0).getDate(); r.setDate(Math.min(dt.getDate(), sista)); return r; };
+      const rad = (a, b) => `<dt>${a}</dt><dd>${b}</dd>`;
+      const rakna = () => {
+        const start = p(f.start.value), n = Math.min(40, Math.max(1, Math.round(+f.dagar.value || 0))), omf = +f.omf.value;
+        if (!start) { ut.innerHTML = rad("Fyll i", "Ange första dagen."); return; }
+        const dagar = []; const d = new Date(start);
+        while (dagar.length < n) { if (d.getDay() !== 0 && d.getDay() !== 6) dagar.push(new Date(d)); d.setDate(d.getDate() + 1); }
+        const sista = dagar[dagar.length - 1];
+        ut.innerHTML = rad("Inskolningsdagar", dagar.map(fmt).join(", "))
+          + rad("Sista inskolningsdag", fmtL(sista))
+          + rad("Anmäl ledigheten senast", `${fmtL(plusMan(dagar[0], -2))} (två månader före)`)
+          + rad("Föräldrapenningdagar", `${(n * omf).toLocaleString("sv-SE")} dagar (${n} vardagar × ${(omf * 100).toLocaleString("sv-SE")} %)`)
+          + rad("Ansök om föräldrapenning senast", (() => { const x = new Date(dagar[0]); x.setDate(x.getDate() + 90); return fmtL(x); })());
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+</Guide>

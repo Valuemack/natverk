@@ -39,6 +39,7 @@ export const URVAL = {
     svar: "Ja, studsmattor och hoppkuddar på kommunala lekplatser är gratis att använda. Hoppkuddar är ofta bara uppblåsta under sommarhalvåret.",
   },
   "lekplatser-med-kompisgunga": {
+    guide: { href: "/kompisgunga/", namn: "Guide: kompisgunga och tillgängliga lekplatser" },
     namn: "Lekplatser med kompisgunga",
     titel: (n) => `Lekplatser med kompisgunga – ${n} st i Sverige`,
     h1: "Lekplatser med kompisgunga",
@@ -48,6 +49,7 @@ export const URVAL = {
     svar: "En kompisgunga är en stor rund gunga, ofta formad som ett fågelbo, där flera barn kan ligga eller sitta tillsammans. Den passar också barn som har svårt att sitta i en vanlig gunga.",
   },
   "tillgangliga-lekplatser": {
+    guide: { href: "/kompisgunga/", namn: "Guide: kompisgunga och tillgängliga lekplatser" },
     namn: "Tillgänglighetsanpassade lekplatser",
     titel: (n) => `Tillgängliga lekplatser – ${n} anpassade lekplatser`,
     h1: "Tillgänglighetsanpassade lekplatser",

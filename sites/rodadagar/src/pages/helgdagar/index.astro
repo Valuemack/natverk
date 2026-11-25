@@ -31,5 +31,11 @@ const rader = HELGDAGAR.map((h) => ({ h, d: nastaForekomst(h, IDAG) }));
         {HELG_AR.map((y) => <td><a href={`/${g.slug}/${y}/`}>{kort(gruppHuvud(g, y).datum)}</a></td>)}</tr>
     ))}</tbody>
   </table></div>
+  <h2>Märkesdagar som inte är röda dagar</h2>
+  <div class="kort">
+    <a href="/valborg/"><strong>Valborg</strong><small>Valborgsmässoafton 30 april</small></a>
+    <a href="/mors-dag/"><strong>Mors dag</strong><small>Sista söndagen i maj</small></a>
+    <a href="/fars-dag/"><strong>Fars dag</strong><small>Andra söndagen i november</small></a>
+  </div>
   <Annons plats="helgdagar-1" />
 </Layout>

@@ -1,14 +1,16 @@
 ---
-import Layout from "@natverk/core/Layout.astro";
-import Annons from "@natverk/core/Annons.astro";
-import Faq from "@natverk/core/Faq.astro";
-import { faqLd, besk } from "@natverk/core/seo.js";
-import { kort, lang, mandagIVecka, plusDagar, veckorIAr, iso, isoVecka } from "@natverk/core/datum.js";
-import { helgdagarAr } from "../../lib/helgdagar.js";
-import { SITE, IDAG, AR_LISTA, UPPDATERAD } from "../../site.js";
+// Kalender för ett år med veckonummer (/vecka/2027/). Långt format enligt Guide-mallen (2026-11-25):
+// månadskalender med veckonummer, alla veckor med datum, röda dagar, klämdagar, arbetsdagar per månad,
+// flaggdagar och export till kalenderapp. Allt räknas fram ur sajtens helgdagslogik; ISO 8601-fakta från Wikipedia.
+import Guide from "@natverk/core/Guide.astro";
+import { kort, lang, mandagIVecka, plusDagar, veckorIAr, iso, isoVecka, datum, veckodag, versal, arHelg, dagarMellan, MANADER } from "@natverk/core/datum.js";
+import { helgdagarAr, rodaDagarAr, klamdagarAr, langhelgerAr, arbetsdagarAr, flaggdagarAr } from "../../lib/helgdagar.js";
+import { lista, st, smaNamn, period } from "../../lib/text.js";
+import { SITE, IDAG, AR_LISTA } from "../../site.js";
 
 export const getStaticPaths = () => AR_LISTA.map((ar) => ({ params: { ar: String(ar) }, props: { ar } }));
 const { ar } = Astro.props;
+const PUBLICERAD = "2026-11-25";
 const antal = veckorIAr(ar);
 const helg = new Map();
 for (const y of [ar - 1, ar, ar + 1]) for (const h of helgdagarAr(y)) {
@@ -18,33 +20,221 @@ const idagV = isoVecka(IDAG);
 const hd = (id) => helgdagarAr(ar).find((h) => h.id === id);
 const vk = (id) => isoVecka(hd(id).datum);
 const vkText = (id) => { const x = vk(id); return x.ar === ar ? `vecka ${x.vecka}` : `vecka ${x.vecka} ${x.ar}`; };
-const jan1 = isoVecka(new Date(Date.UTC(ar, 0, 1)));
+const jan1 = isoVecka(datum(ar, 1, 1));
+const dec31 = isoVecka(datum(ar, 12, 31));
+const dm = (d) => `${d.getUTCDate()}/${d.getUTCMonth() + 1}`;
+const veckor = Array.from({ length: antal }, (_, i) => { const m = mandagIVecka(ar, i + 1); return { v: i + 1, m, s: plusDagar(m, 6) }; });
+
+// Egen data för året.
+const alla = helgdagarAr(ar);
+const roda = rodaDagarAr(ar);
+const vardagsRoda = roda.filter((h) => !arHelg(h.datum));
+const helgRoda = roda.filter((h) => arHelg(h.datum));
+const klam = klamdagarAr(ar);
+const langhelger = langhelgerAr(ar);
+const langsta = langhelger.reduce((a, b) => (!a || b.dagar > a.dagar ? b : a), null);
+const arbete = arbetsdagarAr(ar);
+const flagg = flaggdagarAr(ar);
+const skottar = (ar % 4 === 0 && ar % 100 !== 0) || ar % 400 === 0;
+const ar53 = Array.from({ length: 21 }, (_, i) => 2020 + i).filter((y) => veckorIAr(y) === 53);
+const per400 = Array.from({ length: 400 }, (_, i) => 2000 + i).filter((y) => veckorIAr(y) === 53).length;
+const nasta53 = ar53.find((y) => y > ar);
+
+// Längsta perioden utan röd dag eller helgafton på en vardag.
+const lediga = alla.filter((h) => !arHelg(h.datum)).map((h) => h.datum);
+const glapp = lediga.slice(1).map((d, i) => ({ fran: lediga[i], till: d, dagar: dagarMellan(lediga[i], d) }))
+  .reduce((a, b) => (!a || b.dagar > a.dagar ? b : a), null);
+const glappVeckor = glapp ? Math.floor(glapp.dagar / 7) : 0;
+
+// Månadskalender: veckorader med veckonummer, celler null utanför månaden.
+const ledigMap = new Map(alla.map((h) => [iso(h.datum), h]));
+const flaggMap = new Map(flagg.map((f) => [iso(f.datum), f.namn]));
+const manader = MANADER.map((namn, mi) => {
+  const forsta = datum(ar, mi + 1, 1);
+  const sista = plusDagar(datum(ar, mi + 2, 1), -1);
+  const rader = [];
+  for (let m = plusDagar(forsta, -((forsta.getUTCDay() + 6) % 7)); m <= sista; m = plusDagar(m, 7)) {
+    rader.push({ v: isoVecka(m).vecka, dagar: Array.from({ length: 7 }, (_, i) => { const d = plusDagar(m, i); return d.getUTCMonth() === mi ? d : null; }) });
+  }
+  const iManad = roda.filter((h) => h.datum.getUTCMonth() === mi);
+  return { namn, rader, dagar: sista.getUTCDate(), arbetsdagar: arbete.manader[mi], forstaV: rader[0].v, sistaV: rader.at(-1).v, roda: iManad };
+});
+const cellKlass = (d) => {
+  const h = ledigMap.get(iso(d));
+  return { rod: (h && h.typ === "rod") || d.getUTCDay() === 0, afton: h && h.typ === "afton" && !arHelg(d), flagg: flaggMap.has(iso(d)), idag: iso(d) === iso(IDAG) };
+};
+const cellTitel = (d) => [ledigMap.get(iso(d))?.namn, flaggMap.get(iso(d)) && `Flaggdag: ${flaggMap.get(iso(d))}`].filter(Boolean).join(" · ") || undefined;
+
+// Märkesdagar som inte är röda dagar.
+const sistaSondag = (m) => { const d = plusDagar(datum(ar, m + 1, 1), -1); return plusDagar(d, -d.getUTCDay()); };
+const andraSondag = (m) => { const d = datum(ar, m, 1); return plusDagar(d, ((7 - d.getUTCDay()) % 7) + 7); };
+const morsDag = sistaSondag(5);
+const farsDag = andraSondag(11);
+const valborg = datum(ar, 4, 30);
+
+// Export till kalenderapp (.ics) – röda dagar och helgaftnar.
+const icsData = JSON.stringify(alla.map((h) => [iso(h.datum).replaceAll("-", ""), iso(plusDagar(h.datum, 1)).replaceAll("-", ""), h.namn]));
+
 const fragor = [
   { fraga: `Hur många veckor har ${ar}?`, svar: `${ar} har ${antal} veckor enligt ISO 8601, som används i Sverige. Ett år har 53 veckor när det börjar på en torsdag, eller på en onsdag under skottår.` },
   { fraga: `När börjar vecka 1 ${ar}?`, svar: `Vecka 1 ${ar} börjar ${lang(mandagIVecka(ar, 1))}. Vecka 1 är den vecka som innehåller årets första torsdag.${jan1.ar !== ar ? ` Den 1 januari ${ar} tillhör därför vecka ${jan1.vecka} ${jan1.ar}.` : ""}` },
   { fraga: `Vilken vecka är påsk ${ar}?`, svar: `Påskdagen ${ar} (${kort(hd("paskdagen").datum)}) infaller ${vkText("paskdagen")}. Långfredagen ${kort(hd("langfredagen").datum)} är ${vkText("langfredagen")} och annandag påsk ${kort(hd("annandag-pask").datum)} ${vkText("annandag-pask")}.` },
   { fraga: `Vilken vecka är midsommar ${ar}?`, svar: `Midsommarafton ${ar} (${kort(hd("midsommarafton").datum)}) infaller ${vkText("midsommarafton")}.` },
   { fraga: `Vilken vecka är julafton ${ar}?`, svar: `Julafton ${ar} (${lang(hd("julafton").datum)}) infaller ${vkText("julafton")}.` },
+  { fraga: `Hur många arbetsdagar har ${ar}?`, svar: `${ar} har ${arbete.totalt} arbetsdagar, räknat som vardagar som inte är röda dagar, midsommarafton, julafton eller nyårsafton.` },
 ];
-const veckor = Array.from({ length: antal }, (_, i) => { const m = mandagIVecka(ar, i + 1); return { v: i + 1, m, s: plusDagar(m, 6) }; });
+
+const avsnitt = [
+  { id: "kalender", rubrik: `Kalender ${ar} månad för månad` },
+  { id: "veckor", rubrik: `Alla ${antal} veckor ${ar} med datum` },
+  { id: "roda-dagar", rubrik: `Röda dagar i kalendern ${ar}` },
+  { id: "klamdagar", rubrik: `Klämdagar och långhelger ${ar}` },
+  { id: "manader", rubrik: `Arbetsdagar och veckor per månad` },
+  { id: "markesdagar", rubrik: `Flaggdagar och märkesdagar ${ar}` },
+  { id: "iso", rubrik: "Så räknas veckonummer i Sverige" },
+  { id: "exportera", rubrik: "Skriv ut eller lägg in i din kalender" },
+];
+
+const titel = `Kalender ${ar} med veckonummer och röda dagar`;
+const beskrivning = `Kalender ${ar} med veckonummer: alla ${antal} veckor med datum, ${roda.length} röda dagar, ${st(klam.length, "klämdag", "klämdagar")}, flaggdagar och arbetsdagar per månad. Att skriva ut eller spara i mobilen.`;
 ---
-<Layout site={SITE} titel={`Veckonummer ${ar} – alla ${antal} veckor med datum`}
-  beskrivning={besk(`Alla veckonummer ${ar} med datum för måndag och söndag: ${antal} veckor enligt ISO 8601.`, `Vecka 1 börjar ${kort(mandagIVecka(ar, 1))} ${mandagIVecka(ar, 1).getUTCFullYear()}.`, "Helgdagar markerade per vecka.")}
-  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }, { namn: `${ar}`, href: `/vecka/${ar}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>Veckonummer {ar}</h1>
-  <p class="svar">{ar} har <strong>{antal} veckor</strong>. Vecka 1 börjar måndag {kort(veckor[0].m)} {veckor[0].m.getUTCFullYear()} och vecka {antal} slutar söndag {kort(veckor.at(-1).s)} {veckor.at(-1).s.getUTCFullYear()}.</p>
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1={`Kalender ${ar} med veckonummer`}
+  svar={`Kalendern för ${ar} har <strong>${antal} veckor</strong>. Vecka 1 börjar måndag ${kort(veckor[0].m)} ${veckor[0].m.getUTCFullYear()} och vecka ${antal} slutar söndag ${kort(veckor.at(-1).s)} ${veckor.at(-1).s.getUTCFullYear()}. Året har <strong>${roda.length} röda dagar</strong>, varav ${vardagsRoda.length} på en vardag, ${st(klam.length, "klämdag", "klämdagar")} och ${arbete.totalt} arbetsdagar. Nedan finns alla månader med veckonummer.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Vecka", href: "/vecka/" }, { namn: `Kalender ${ar}`, href: `/vecka/${ar}/` }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: `Röda dagar ${ar}`, href: `/${ar}/`, text: "Alla helgdagar, aftnar och semestertips" },
+    { namn: `Klämdagar ${ar}`, href: `/klamdagar/${ar}/`, text: "Ta ledigt smart runt helgerna" },
+    { namn: `Arbetsdagar ${ar}`, href: `/arbetsdagar/${ar}/`, text: "Per månad, kvartal och i timmar" },
+    { namn: `Flaggdagar ${ar}`, href: `/flaggdagar/${ar}/`, text: "Alla allmänna flaggdagar" },
+    { namn: "Vilken vecka är det?", href: "/vecka/", text: "Veckonummer idag" },
+  ]}
+  kallor={[
+    { namn: "Lag (1989:253) om allmänna helgdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/", text: "vilka dagar som är röda dagar" },
+    { namn: "Förordning (1982:270) om allmänna flaggdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982270-om-allmanna-flaggdagar_sfs-1982-270/", text: "de allmänna flaggdagarna" },
+    { namn: "Semesterlagen (1977:480)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/semesterlag-1977480_sfs-1977-480/", text: "midsommarafton, julafton och nyårsafton jämställs med söndag" },
+    { namn: "Wikipedia – Veckonummer", url: "https://sv.wikipedia.org/wiki/Veckonummer", text: "regeln för vecka 1 och veckonumrering i andra länder", datum: "2026-11-25" },
+    { namn: "Wikipedia – ISO 8601", url: "https://sv.wikipedia.org/wiki/ISO_8601", text: "standarden och skrivsättet för veckor", datum: "2026-11-25" },
+  ]}>
+
   <div class="lank-rad">{AR_LISTA.map((y) => <a href={`/vecka/${y}/`} aria-current={y === ar ? "page" : undefined}>{y}</a>)}</div>
+
+  <h2 id="kalender">Kalender {ar} månad för månad</h2>
+  <p>Här är hela året med veckonumret längst till vänster på varje rad. Veckan börjar på måndag, som i svenska kalendrar. <span class="kal-rod">Röda dagar och söndagar</span> är röda, <span class="kal-afton">helgaftnar</span> som de flesta är lediga är understrukna, och allmänna flaggdagar har en liten flagga.</p>
+  <div class="kal-ar">{manader.map((mn) => (
+    <table class="kal-manad">
+      <caption>{versal(mn.namn)} {ar}</caption>
+      <thead><tr><th class="kal-v" title="Vecka">v</th><th>må</th><th>ti</th><th>on</th><th>to</th><th>fr</th><th>lö</th><th>sö</th></tr></thead>
+      <tbody>{mn.rader.map((r) => (
+        <tr class:list={{ "kal-nu": idagV.ar === ar && idagV.vecka === r.v && mn.rader.includes(r) }}>
+          <th class="kal-v" scope="row">{r.v}</th>
+          {r.dagar.map((d) => d ? <td class:list={cellKlass(d)} title={cellTitel(d)}>{d.getUTCDate()}</td> : <td />)}
+        </tr>
+      ))}</tbody>
+    </table>
+  ))}</div>
+
+  <h2 id="veckor">Alla {antal} veckor {ar} med datum</h2>
+  <p>{ar} har <strong>{antal} veckor</strong>.
+    {jan1.ar !== ar
+      ? <> Den 1 januari är en {veckodag(datum(ar, 1, 1))} och hör till vecka {jan1.vecka} {jan1.ar}, så vecka 1 börjar först måndag {kort(veckor[0].m)}.</>
+      : <> Den 1 januari är en {veckodag(datum(ar, 1, 1))} och ligger i vecka 1, som därför börjar {veckor[0].m.getUTCFullYear() !== ar ? `redan måndag ${kort(veckor[0].m)} ${veckor[0].m.getUTCFullYear()}` : `måndag ${kort(veckor[0].m)}`}.</>}
+    {" "}Den 31 december är en {veckodag(datum(ar, 12, 31))} i vecka {dec31.vecka}{dec31.ar !== ar ? ` ${dec31.ar}, alltså årets sista dagar hör till nästa års första vecka` : ""}.
+    {antal === 53 && <> Att ett år får en vecka 53 är ovanligt: under perioden 2000–2399 händer det {per400} gånger på 400 år.</>}</p>
   <div class="tabell"><table>
-    <thead><tr><th class="num">Vecka</th><th>Måndag</th><th>Söndag</th><th>Helgdagar</th></tr></thead>
+    <thead><tr><th class="num">Vecka</th><th>Måndag–söndag</th><th>Helgdagar</th></tr></thead>
     <tbody>{veckor.map(({ v, m, s }) => (
       <tr class:list={{ markerad: idagV.ar === ar && idagV.vecka === v }}>
-        <td class="num">{v}</td><td>{kort(m)}</td><td>{kort(s)}</td>
+        <td class="num">{v}</td><td>{dm(m)}–{dm(s)}</td>
         <td>{(helg.get(v) || []).map((h, i) => <>{i > 0 && ", "}<a href={`/${h.slug}/`}>{h.namn}</a></>)}</td>
       </tr>
     ))}</tbody>
   </table></div>
-  <p>Veckonumren följer ISO 8601: veckan börjar på måndag och vecka 1 är den vecka som innehåller årets första torsdag (alltså den vecka där 4 januari ligger).</p>
-  <p><a href={`/${ar}/`}>Röda dagar {ar} →</a> · <a href={`/arbetsdagar/${ar}/`}>Arbetsdagar {ar} →</a></p>
-  <Annons plats="vecka-ar" />
-  <Faq fragor={fragor} />
-</Layout>
+
+  <h2 id="roda-dagar">Röda dagar i kalendern {ar}</h2>
+  <p>{ar} har {roda.length} allmänna helgdagar enligt lagen om allmänna helgdagar. {vardagsRoda.length} av dem infaller på en vardag och ger alltså en ledig dag mitt i veckan för den som arbetar måndag till fredag: {lista(vardagsRoda.map((h) => `${smaNamn(h.namn)} (${veckodag(h.datum)} ${kort(h.datum)}, v. ${isoVecka(h.datum).vecka})`))}.</p>
+  {helgRoda.length > 0 && <p>På en lördag eller söndag hamnar {lista(helgRoda.map((h) => `${smaNamn(h.namn)} ${kort(h.datum)}`))}. Sverige flyttar inte helgdagar som infaller på en helg, så de ger ingen extra ledighet.</p>}
+  <p>Midsommarafton, julafton och nyårsafton är inga röda dagar, men semesterlagen jämställer dem med söndag och de flesta är lediga. {ar} infaller julafton en {veckodag(hd("julafton").datum)} och nyårsafton en {veckodag(hd("nyarsafton").datum)}. Påskhelgen sträcker sig från långfredagen {kort(hd("langfredagen").datum)} i {vkText("langfredagen")} till annandag påsk {kort(hd("annandag-pask").datum)} i {vkText("annandag-pask")}.</p>
+  {glapp && <p>Längst utan någon ledig helgdag på en vardag är det mellan {smaNamn(alla.find((h) => iso(h.datum) === iso(glapp.fran)).namn)} {kort(glapp.fran)} och {smaNamn(alla.find((h) => iso(h.datum) === iso(glapp.till)).namn)} {kort(glapp.till)}: {glapp.dagar} dagar, drygt {glappVeckor} veckor.</p>}
+
+  <h2 id="klamdagar">Klämdagar och långhelger {ar}</h2>
+  {klam.length > 0
+    ? <p>En klämdag är en vardag mellan en helgdag och en helg. {ar} finns det {st(klam.length, "klämdag", "klämdagar")}: {lista(klam.map((k) => `${veckodag(k.datum)} ${kort(k.datum)} i vecka ${isoVecka(k.datum).vecka} (vid ${smaNamn(k.orsak.namn)}, ger ${k.ledigaDagar} lediga dagar i rad)`))}. Klämdagen efter Kristi himmelsfärdsdag återkommer varje år, eftersom den helgdagen alltid är en torsdag.</p>
+    : <p>{ar} finns det inga klämdagar.</p>}
+  {langsta && <p>Den längsta sammanhängande ledigheten utan att ta semester är {langsta.dagar} dagar: {lista(langhelger.filter((l) => l.dagar === langsta.dagar).map((l) => period(l.fran, l.till)))}. Totalt har {ar} {st(langhelger.length, "långhelg", "långhelger")} på minst tre dagar. Se <a href={`/klamdagar/${ar}/`}>klämdagar {ar}</a> för hur du får ut mest ledighet av få semesterdagar.</p>}
+
+  <h2 id="manader">Arbetsdagar och veckor per månad</h2>
+  <p>Arbetsdagar är vardagar som varken är röda dagar eller helgaftnar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Dagar</th><th class="num">Arbetsdagar</th><th>Veckor</th><th>Röda dagar</th></tr></thead>
+    <tbody>
+      {manader.map((mn) => <tr><td>{versal(mn.namn)}</td><td class="num">{mn.dagar}</td><td class="num">{mn.arbetsdagar}</td><td>{mn.forstaV}–{mn.sistaV}</td><td>{mn.roda.map((h) => smaNamn(h.kort)).join(", ")}</td></tr>)}
+      <tr class="markerad"><td>Hela {ar}</td><td class="num">{skottar ? 366 : 365}</td><td class="num">{arbete.totalt}</td><td>1–{antal}</td><td>{roda.length}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Flest arbetsdagar har {(() => { const max = Math.max(...arbete.manader); return lista(manader.filter((m) => m.arbetsdagar === max).map((m) => m.namn)) + ` (${max})`; })()}, färst {(() => { const min = Math.min(...arbete.manader); return lista(manader.filter((m) => m.arbetsdagar === min).map((m) => m.namn)) + ` (${min})`; })()}. {skottar ? `${ar} är skottår, så februari har 29 dagar.` : `${ar} är inget skottår, så februari har 28 dagar.`}</p>
+
+  <h2 id="markesdagar">Flaggdagar och märkesdagar {ar}</h2>
+  <p>{ar} har {flagg.length} allmänna flaggdagar enligt flaggdagsförordningen. Utöver de röda dagarna är det {lista(flagg.filter((f) => !ledigMap.has(iso(f.datum))).map((f) => `${/^(Konungens|Kronprinsessans|Drottningens|Valdagen)/.test(f.namn) ? f.namn.charAt(0).toLowerCase() + f.namn.slice(1) : f.namn} ${kort(f.datum)}`))}. Se <a href={`/flaggdagar/${ar}/`}>flaggdagar {ar}</a> för veckodagar.</p>
+  <p>Några dagar som många har i kalendern är varken röda dagar eller flaggdagar, men flyttar sig med veckodagarna:</p>
+  <ul>
+    <li><a href="/valborg/">Valborgsmässoafton</a> är alltid 30 april, {ar} en {veckodag(valborg)} i vecka {isoVecka(valborg).vecka}.</li>
+    <li><a href="/mors-dag/">Mors dag</a> är sista söndagen i maj, {ar} den {kort(morsDag)} (vecka {isoVecka(morsDag).vecka}).</li>
+    <li><a href="/fars-dag/">Fars dag</a> är andra söndagen i november, {ar} den {kort(farsDag)} (vecka {isoVecka(farsDag).vecka}).</li>
+    <li><a href="/lonedag/">Lönedagen</a> den 25:e flyttas till bankdagen före när den hamnar på en helg eller röd dag.</li>
+  </ul>
+
+  <h2 id="iso">Så räknas veckonummer i Sverige</h2>
+  <p>Sverige följer den internationella standarden ISO 8601. Veckan börjar på måndag och vecka 1 är den första veckan som har minst fyra dagar i det nya året. Det betyder att vecka 1 alltid innehåller årets första torsdag och den 4 januari. Ligger 1 januari på en fredag, lördag eller söndag hör de dagarna därför till sista veckan året innan.</p>
+  <p>De flesta år har 52 veckor. Ett år får 53 veckor när det börjar på en torsdag, eller på en onsdag om det är skottår. Under 2020–2040 gäller det {lista(ar53.map(String))}.{nasta53 ? ` Nästa år med vecka 53 efter ${ar} är ${nasta53}.` : ""}</p>
+  <h3>Andra länder räknar annorlunda</h3>
+  <p>Veckonummer är vanliga i Sverige och flera andra europeiska länder, men ovanliga i till exempel USA. Där, liksom i Kanada och Mexiko, börjar veckan på söndag och vecka 1 är veckan med 1 januari. En amerikansk kalender kan därför visa ett annat veckonummer än en svensk, särskilt runt årsskiftet.</p>
+  <h3>Skriva vecka enligt standarden</h3>
+  <p>I ISO 8601 skrivs en vecka med år, bokstaven W och veckonumret, till exempel {ar}-W{String(isoVecka(hd("midsommarafton").datum).vecka).padStart(2, "0")} för midsommarveckan. Lägger man till veckodagens nummer, där måndag är 1, blir midsommarafton {ar}-W{String(isoVecka(hd("midsommarafton").datum).vecka).padStart(2, "0")}-5.</p>
+
+  <h2 id="exportera">Skriv ut eller lägg in i din kalender</h2>
+  <p>Kalendern går att skriva ut utan menyer och annonser. Du kan också ladda ner årets röda dagar och helgaftnar som en kalenderfil (.ics) och öppna den i kalenderappen i telefonen eller på datorn. Filen skapas i din webbläsare och innehåller {alla.length} heldagshändelser.</p>
+  <div class="knappar">
+    <button type="button" class="knapp" id="kal-skriv">Skriv ut kalendern</button>
+    <button type="button" class="knapp" id="kal-ics" data-ar={ar} data-dagar={icsData}>Ladda ner röda dagar {ar} (.ics)</button>
+  </div>
+
+  <style>
+    .kal-ar { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 1rem 1.25rem; margin: 1rem 0 1.5rem; }
+    .kal-manad { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: .92rem; }
+    .kal-manad caption { text-align: left; font-weight: 700; padding: .25rem 0; }
+    .kal-manad th, .kal-manad td { text-align: center; padding: .2rem 0; width: 12.5%; }
+    .kal-manad thead th { font-weight: 600; font-size: .8rem; opacity: .75; }
+    .kal-v { opacity: .6; font-weight: 400; font-size: .8rem; border-right: 1px solid currentColor; }
+    .kal-manad td.rod, .kal-rod { color: #b3261e; font-weight: 700; }
+    .kal-manad td.afton, .kal-afton { text-decoration: underline; text-underline-offset: 3px; }
+    .kal-manad td.flagg::after { content: "⚑"; font-size: .6rem; vertical-align: super; color: #1d4f91; }
+    .kal-manad td.idag { outline: 2px solid currentColor; border-radius: 4px; }
+    .kal-nu { background: rgba(179, 38, 30, .07); }
+    @media print {
+      :global(header), :global(footer), :global(nav), :global(.annons), :global(.knappar), :global(.relaterat), :global(.faq), :global(.smulor) { display: none !important; }
+      .kal-ar { grid-template-columns: repeat(3, 1fr); }
+      .kal-manad { break-inside: avoid; }
+    }
+  </style>
+  <script is:inline slot="skript">
+    (function () {
+      var p = document.getElementById("kal-skriv");
+      if (p) p.addEventListener("click", function () { window.print(); });
+      var b = document.getElementById("kal-ics");
+      if (!b) return;
+      b.addEventListener("click", function () {
+        var dagar = JSON.parse(b.dataset.dagar), ar = b.dataset.ar, nu = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+        var rader = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//rodadagar.nu//Roda dagar " + ar + "//SV", "CALSCALE:GREGORIAN", "X-WR-CALNAME:Röda dagar " + ar];
+        dagar.forEach(function (d) {
+          rader.push("BEGIN:VEVENT", "UID:" + d[0] + "-" + d[2].replace(/[^a-zA-Z0-9]/g, "") + "@rodadagar.nu", "DTSTAMP:" + nu,
+            "DTSTART;VALUE=DATE:" + d[0], "DTEND;VALUE=DATE:" + d[1], "SUMMARY:" + d[2], "TRANSP:TRANSPARENT", "END:VEVENT");
+        });
+        rader.push("END:VCALENDAR");
+        var url = URL.createObjectURL(new Blob([rader.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
+        var a = document.createElement("a"); a.href = url; a.download = "roda-dagar-" + ar + ".ics";
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+    })();
+  </script>
+</Guide>
