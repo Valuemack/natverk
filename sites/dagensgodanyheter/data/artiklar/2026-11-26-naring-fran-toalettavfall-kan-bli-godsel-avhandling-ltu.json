@@ -1,0 +1,99 @@
+{
+  "id": "56c9353029cb",
+  "slug": "naring-fran-toalettavfall-kan-bli-godsel-avhandling-ltu",
+  "kategori": "teknik",
+  "vinjett": "Avlopp och jordbruk",
+  "rubrik": "Ny avhandling vid LTU: näring från toalettavfall kan bli gödsel för jordbruket",
+  "seorubrik": "Toalettavfall kan bli gödsel – ny avhandling från LTU",
+  "ingress": "En ny doktorsavhandling vid Luleå tekniska universitet visar hur kväve och fosfor från toalettavfall kan tas tillvara och bli gödsel. Metoden kan minska både resursförbrukningen och miljöpåverkan från dagens avloppssystem.",
+  "avsnitt": [
+    {
+      "rubrik": "Samma näring betalas två gånger",
+      "stycken": [
+        "Stephanie Rusch Fehrmann har nyligen försvarat sin doktorsavhandling i VA-teknik vid Luleå tekniska universitet. Hon pekar på en motsägelse i hur samhället hanterar näringsämnen. Först läggs stora resurser på att tillverka gödsel till jordbruket. Sedan kostar det ännu mer att rena bort samma ämnen ur avloppsvattnet.",
+        "Kvävegödsel kräver mycket energi att framställa, och fosfor bryts ur mineralfyndigheter som är begränsade. När näringen har passerat genom livsmedelskedjan hamnar en stor del i avloppet. Där räknas den som en förorening. Enligt forskaren sorterar svenskar plast, papper och matavfall noggrant, men avloppsvattnet blandas fortfarande ihop. Universitetet lyfte forskningen i samband med World Toilet Day den 19 november."
+      ]
+    },
+    {
+      "rubrik": "Bakterier binder kvävet och vattnet tas bort",
+      "stycken": [
+        "Toaletten står för ungefär 90 procent av det kväve och den fosfor som finns i avloppsvattnet från hushållen. Om detta så kallade svartvatten samlas in för sig blir det enklare att återvinna näringen.",
+        "Avhandlingen visar att bakterier kan stabilisera kvävet. När en stor del av vattnet sedan avlägsnas koncentreras näringsämnena till en produkt som är lättare att frakta och sprida. Processen skulle också kunna drivas med överskottsvärme från industrin, vilket minskar behovet av ny energi.",
+        "Forskaren ser möjligheter att ta fram ett flytande gödselmedel. Lantbrukare skulle kunna använda det för att ge grödorna extra näring tidigt under växtsäsongen."
+      ]
+    },
+    {
+      "rubrik": "Helsingborg visar att tekniken fungerar i praktiken",
+      "stycken": [
+        "I Oceanhamnen i Helsingborg samlas svartvatten redan in separat och används bland annat till biogas. Det nya stadsområdet har restauranger, hotell, butiker och omkring 1 000 invånare. Fullt utbyggt väntas cirka 2 000 personer bo där, och staden planerar ytterligare ett område med liknande lösningar. Rusch Fehrmann har studerat hur näringen som finns kvar efter behandlingen kan tas tillvara."
+      ]
+    },
+    {
+      "rubrik": "Finansiering behövs för nästa steg",
+      "stycken": [
+        "Det finns utmaningar kvar. Läkemedelsrester och andra oönskade ämnen måste hanteras. De olika behandlingsstegen har inte heller provats tillsammans i en sammanhängande process.",
+        "Nu vill forskaren kombinera teknikerna och pröva om de kan ge ett säkert gödselmedel som också håller kommersiellt. För att utveckla och testa hela kedjan krävs ny finansiering, som ännu inte finns. Enligt henne behöver dessutom VA-branschen bli mer mottaglig för nya angreppssätt, eftersom traditionell rening fortfarande dominerar trots att fungerande exempel redan finns."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Fakta: Gödsel från toaletten",
+    "punkter": [
+      "Avhandling i VA-teknik vid Luleå tekniska universitet av Stephanie Rusch Fehrmann",
+      "Runt 90 procent av hushållsavloppets kväve och fosfor härrör från toaletten",
+      "Bakterier stabiliserar kvävet, och vattnet tas bort för att koncentrera näringen",
+      "Oceanhamnen i Helsingborg samlar redan in svartvatten separat, med omkring 1 000 invånare i dag",
+      "Forskningen lyftes på World Toilet Day den 19 november"
+    ]
+  },
+  "varfor": "Kvävegödsel kräver mycket energi och fosfor kommer från begränsade fyndigheter. Om näringen i toalettavfallet kan återföras till åkrarna slipper samhället både tillverka den och rena bort den. Avhandlingen visar en möjlig väg dit, med en metod som dessutom kan använda industrins överskottsvärme.",
+  "taggar": [
+    "mat och jordbruk",
+    "rent vatten",
+    "avloppsvatten",
+    "gödsel",
+    "kretslopp"
+  ],
+  "beskrivning": "En ny avhandling vid Luleå tekniska universitet visar hur kväve och fosfor från toalettavfall kan återvinnas och bli gödsel för jordbruket.",
+  "kalla": {
+    "id": "ltu",
+    "namn": "Luleå tekniska universitet",
+    "url": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-11-19-skitviktig-forskning-visar-vardet-i-det-vi-spolar-bort",
+    "kandidatUrl": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-11-19-skitviktig-forskning-visar-vardet-i-det-vi-spolar-bort",
+    "hem": "https://www.ltu.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-19T12:42:46.000Z",
+    "rubrik": "Skitviktig forskning visar värdet i det vi spolar bort"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:55:00.277Z",
+  "uppdaterad": "2026-11-26T02:55:00.277Z",
+  "bild": null,
+  "bildmotiv": "A liquid fertilizer being spread over a green spring farm field in Sweden, with young crops in rows under soft morning light",
+  "bildalt": "Flytande gödsel sprids över en grön åker med unga grödor på våren",
+  "bildsok": [
+    "wastewater treatment plant",
+    "liquid fertilizer spreading field",
+    "biogas plant"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 47
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:55:00.277Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att svartvatten samlas in separat i Oceanhamnen och används till biogas, och att det finns fungerande exempel på källsorterande system. Rusch Fehrmanns gödselprocess är däremot inte testad som helhet: behandlingsstegen har ännu inte provats tillsammans. Mellanrubriken kan därför uppfattas som att forskarens metod är beprövad i praktiken. Skriv hellre t.ex. 'Helsingborg samlar redan in svartvatten separat'.",
+      "overdrift: Källan säger att återvinningen 'skulle kunna minska' resursförbrukning och miljöpåverkan. Det rör sig om en process som inte är färdigutvecklad. 'Metoden kan' låter något säkrare. Mindre överdrift.",
+      "overdrift: Källan beskriver att vi betalar för näringsämnena två gånger. Den påstår inte att samhället helt skulle slippa tillverka gödsel eller rena avloppsvatten. Formuleringen är något förstärkt. Mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

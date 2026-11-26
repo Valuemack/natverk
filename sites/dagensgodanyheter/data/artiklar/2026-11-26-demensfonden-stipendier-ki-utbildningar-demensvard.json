@@ -1,0 +1,121 @@
+{
+  "id": "88d55097388b",
+  "slug": "demensfonden-stipendier-ki-utbildningar-demensvard",
+  "kategori": "halsa",
+  "vinjett": "Demensvård",
+  "rubrik": "Demensfonden ger nya stipendier till KI:s utbildningar i demensvård",
+  "seorubrik": "Stipendier till KI:s demensvårdsutbildningar 2027",
+  "ingress": "Demensfonden fortsätter att dela ut stipendier till vårdpersonal som läser Karolinska Institutets utbildningar i demensvård. Målet är att fler läkare, arbetsterapeuter och fysioterapeuter ska kunna fördjupa sina kunskaper om demenssjukdomar.",
+  "avsnitt": [
+    {
+      "rubrik": "Stödet fortsätter inför nästa kursstart",
+      "stycken": [
+        "Karolinska Institutet startar en ny omgång av magisterutbildningen i demensvård för läkare i februari 2027. Inför starten har Demensfonden på nytt beslutat att stödja deltagarna med utbildningsstipendier.",
+        "Satsningen är inte ny. Fonden har gett stipendier till deltagare sedan 2022, och beslutet innebär att stödet fortsätter även till nästa kull studenter."
+      ]
+    },
+    {
+      "rubrik": "Utbildningar för flera yrkesgrupper i vården",
+      "stycken": [
+        "Karolinska Institutet driver utbildningarna tillsammans med Stiftelsen Silviahemmet. De är uppdragsutbildningar som vänder sig till personer som redan arbetar i hälso- och sjukvården och vill lära sig mer om demens.",
+        "Studierna bedrivs på distans och på halvfart. Det gör det möjligt att läsa vid sidan av arbetet. Förutom magisterutbildningen för läkare finns en utbildning för arbetsterapeuter och fysioterapeuter, där nästa start är planerad till hösten 2027.",
+        "Deltagare på alla tre inriktningarna kan söka stipendier från Demensfonden. Sedan 2013 har fler än 100 läkare, arbetsterapeuter och fysioterapeuter gått igenom KI:s utbildningar inom demensvård."
+      ]
+    },
+    {
+      "rubrik": "Fonden vill stärka kunskapen i demensvården",
+      "stycken": [
+        "Enligt Demensfonden är syftet med stipendierna att höja kompetensen i demensvården. Fonden vill att fler ska få chansen att utveckla sina kunskaper och på så sätt bidra till hur demensvården ser ut i framtiden.",
+        "Demensfonden är en svensk forskningsfond som förvaltas av Demensförbundet. Den stöttar forskning och utvecklingsarbete om demenssjukdomar, till exempel Alzheimers sjukdom. Hittills har fonden delat ut mer än 100 miljoner kronor till demensforskning i Sverige."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Utbildningarna och stipendierna",
+    "punkter": [
+      "Magisterutbildningen i demensvård för läkare startar i februari 2027",
+      "Utbildningen för arbets- och fysioterapeuter planeras starta hösten 2027",
+      "Demensfonden har gett utbildningsstipendier sedan 2022",
+      "Över 100 yrkesverksamma har gått KI:s demensvårdsutbildningar sedan 2013",
+      "Utbildningarna ges i samarbete med Stiftelsen Silviahemmet, på distans och halvfart",
+      "Totalt har Demensfonden bidragit med mer än 100 miljoner kronor till forskning om demens i Sverige"
+    ]
+  },
+  "varfor": "Demensvården behöver personal med fördjupad kunskap om sjukdomarna. Stipendierna gör det lättare för läkare, arbetsterapeuter och fysioterapeuter att vidareutbilda sig utan att lämna sitt arbete. Att stödet nu fortsätter innebär att ännu fler kan bidra till att utveckla vården för personer med demens.",
+  "taggar": [
+    "demens",
+    "demensvård",
+    "utbildning",
+    "alzheimers sjukdom"
+  ],
+  "beskrivning": "Demensfonden fortsätter att ge stipendier till vårdpersonal som läser Karolinska Institutets utbildningar i demensvård. Nästa start är i februari 2027.",
+  "kalla": {
+    "id": "ki",
+    "namn": "Karolinska Institutet",
+    "url": "https://nyheter.ki.se/kis-utbildningar-inom-demensvard-far-fortsatt-stod-fran-demensfonden",
+    "kandidatUrl": "https://nyheter.ki.se/kis-utbildningar-inom-demensvard-far-fortsatt-stod-fran-demensfonden",
+    "hem": "https://ki.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T00:00:00.000Z",
+    "rubrik": "KI:s utbildningar inom demensvård får fortsatt stöd från Demensfonden"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:50:26.441Z",
+  "uppdaterad": "2026-11-26T02:50:26.441Z",
+  "bild": {
+    "fil": "/bilder/demensfonden-stipendier-ki-utbildningar-demensvard.webp",
+    "og": "/bilder/demensfonden-stipendier-ki-utbildningar-demensvard.jpg",
+    "liten": "/bilder/demensfonden-stipendier-ki-utbildningar-demensvard-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: ett lugnt rum på ett äldreboende med fåtölj och pussel på bordet, en miljö där demensvård bedrivs",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a calm, softly lit care home common room with an armchair, a table with a jigsaw puzzle and a window overlooking autumn trees",
+    "skapad": "2026-11-26T02:56:32.777Z",
+    "anvandning": {
+      "input_tokens": 252,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 252
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1176
+    },
+    "kostnadUSD": 0.02898,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a calm, softly lit care home common room with an armchair, a table with a jigsaw puzzle and a window overlooking autumn trees",
+  "bildalt": "Ett lugnt rum på ett äldreboende med fåtölj och pussel på bordet, en miljö där demensvård bedrivs",
+  "bildsok": [
+    "elderly care nursing home",
+    "dementia care",
+    "medical education lecture"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.38,
+    "tillit": 0.95,
+    "total": 55
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:50:26.441Z",
+    "anmarkningar": [
+      "overdrift: Källan nämner två utbildningar: en för läkare och en gemensam för arbets- och fysioterapeuter. Stipendierna kan sökas av deltagare från tre yrkesgrupper. \"Tre inriktningar\" kan läsas som tre separata utbildningar. Bör formuleras om, till exempel \"deltagare från alla tre yrkesgrupperna\".",
+      "overdrift: Källan säger inte att stipendierna gör det möjligt att studera utan att lämna arbetet. Det följer av att utbildningen ges på distans och halvfart, inte av stipendierna. Det är en mindre slutsats som saknar stöd i källan."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

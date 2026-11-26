@@ -1,0 +1,95 @@
+{
+  "id": "e8059087c494",
+  "slug": "ki-och-mayo-clinic-fordjupar-forskningssamarbetet",
+  "kategori": "halsa",
+  "vinjett": "Medicinsk forskning",
+  "rubrik": "KI och Mayo Clinic fördjupar samarbetet med nytt anslag för cancerforskning",
+  "seorubrik": "KI och Mayo Clinic utökar forskningssamarbetet",
+  "ingress": "Karolinska Institutet och amerikanska Mayo Clinic bygger vidare på sitt över 30 år långa partnerskap. Nya bidrag till gemensamma projekt, samarbete kring forskningslabb och ett fyraårigt cancerforskningsanslag ska ge forskarna fler möjligheter.",
+  "avsnitt": [
+    {
+      "rubrik": "Nya labb väckte intresse i Florida",
+      "stycken": [
+        "Den 19 oktober besökte Sophie Erhardt och Elham Rostami från KI Mayo Clinic i Florida. Vid ett forskningsmöte i Jacksonville presenterade de två nya satsningar: KI HumanLab och ExtremeLab.",
+        "I Solna håller KI HumanLab på att inrättas i Bioclinicum, ett stenkast från Karolinska Universitetssjukhuset. Tanken är att forskare och kliniker från olika områden ska kunna undersöka samma forskningsdeltagare på flera sätt under ett och samma besök. ExtremeLab har utrustning för att studera människans prestationsförmåga och hur kroppen klarar extrema miljöer.",
+        "Mayo Clinic Florida arbetar samtidigt med ett eget projekt, Lab of the Future, som planeras öppna 2029. Enligt KI visade Mayo Clinic stort intresse för hur HumanLab har organiserats. Direkt efter presentationen tog Mayo Clinics konsortium för akut- och intensivvårdsforskning initiativ till samtal om samarbete. Eftersom båda parter bygger sin infrastruktur parallellt kan systemen redan från början utformas så att de fungerar tillsammans."
+      ]
+    },
+    {
+      "rubrik": "Bidrag och utbyten ska ge fler gemensamma projekt",
+      "stycken": [
+        "Partnerskapet har fem gemensamma forskningsteman. Under besöket träffade KI-forskarna ordförandena och vice ordförandena för dessa teman. För att få i gång fler projekt ska startbidrag och resebidrag utlysas.",
+        "Forskarutbyten är en annan viktig del. Doktoranden Patrik Fridh tillbringar några veckor vid Mayo Clinic i Rochester. Där undersöker han tillsammans med professor Doo-Sup Choi hur cellulära processer och kommunikationen mellan hjärnans celler inverkar på hur hjärnan fungerar, och hur detta kan ligga bakom neurologiska och psykiatriska sjukdomar.",
+        "Enligt Sophie Erhardt, som samordnat samarbetet sedan 2019, kompletterar de två institutionerna varandra. Mayo Clinics styrka ligger i automatisering och hantering av data, medan KI tillsammans med Karolinska Universitetssjukhuset är starka när det gäller register, kohorter och klinisk forskning. Hon pekar också på Mayo Clinics biobank med 6,1 miljoner sökbara prover."
+      ]
+    },
+    {
+      "rubrik": "Cancersamarbetet får ett större anslag",
+      "stycken": [
+        "Cancer Research KI och Mayo Clinic startade 2019 ett gemensamt program inriktat på bröstcancer. År 2022 utvidgades det till alla cancerformer. Mellan 2020 och 2025 finansierades 16 tvååriga projekt med sammanlagt 18,75 miljoner kronor.",
+        "Nu utlyses ett nytt anslag, CRKI–Mayo CCC Synergy Grant. Det löper i fyra år och ger 2,5 miljoner kronor per år vid KI, med lika stor finansiering vid Mayo Clinic.",
+        "Arbetet fortsätter i december med ett första möte om KI HumanLab, och samma månad besöker två företrädare för Mayo Clinic KI. Den årliga gemensamma konferensen hålls i Jacksonville den 15–16 mars 2027."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Samarbetet KI–Mayo Clinic",
+    "punkter": [
+      "Partnerskapet har pågått i över 30 år",
+      "Över 3 000 personer – studenter, forskare och anställda – har varit delaktiga",
+      "Fem teman, bland annat RNA-baserade terapier, cancer och transplantation",
+      "16 cancerprojekt fick 18,75 miljoner kronor 2020–2025",
+      "Nytt fyraårigt anslag: 2,5 miljoner kronor per år vid KI",
+      "Nästa gemensamma konferens: Jacksonville 15–16 mars 2027"
+    ]
+  },
+  "varfor": "Samarbetet ger forskare vid KI tillgång till Mayo Clinics plattformar, bland annat en biobank med miljontals prover. Det nya anslaget gör det möjligt att driva större och längre cancerprojekt än tidigare. Enligt KI når forskningen patienterna snabbare när den bedrivs nära vården.",
+  "taggar": [
+    "cancerforskning",
+    "forskningssamarbete",
+    "precisionsmedicin",
+    "hjärnforskning"
+  ],
+  "beskrivning": "Karolinska Institutet och Mayo Clinic bygger vidare på 30-årigt partnerskap med nya labbsamarbeten och ett fyraårigt anslag för cancerforskning.",
+  "kalla": {
+    "id": "ki",
+    "namn": "Karolinska Institutet",
+    "url": "https://nyheter.ki.se/ki-och-mayo-clinic-utvecklar-samarbetet",
+    "kandidatUrl": "https://nyheter.ki.se/ki-och-mayo-clinic-utvecklar-samarbetet",
+    "hem": "https://ki.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-20T00:00:00.000Z",
+    "rubrik": "KI och Mayo Clinic utvecklar samarbetet"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:54:02.042Z",
+  "uppdaterad": "2026-11-26T02:54:02.042Z",
+  "bild": null,
+  "bildmotiv": "rows of labelled sample tubes in a biobank freezer rack inside a modern medical research laboratory, cool blue light",
+  "bildalt": "Provrör i ett biobanksställ i ett modernt medicinskt forskningslaboratorium",
+  "bildsok": [
+    "medical research laboratory",
+    "biobank samples freezer",
+    "laboratory pipette research"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 47
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:54:02.042Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att Erhardt lyfter fram Mayo Clinics biobank med 6,1 miljoner prover som forskare kan söka i. Den säger inte uttryckligen att KI-forskare får tillgång till plattformarna genom samarbetet. Artikeln drar en något säkrare slutsats än källan.",
+      "overdrift: Slutsatsen är rimlig med tanke på siffrorna: tidigare tvååriga projekt, nu fyra år med 2,5 miljoner kronor per år. Källan säger dock inte detta själv, så det är artikelns egen tolkning.",
+      "overdrift: Källan är mer försiktig. Den säger att utvecklingen 'skapar möjligheter' att underlätta gemensam forskning och att man 'kan hitta sätt' att få systemen att fungera tillsammans. Skillnaden är liten."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

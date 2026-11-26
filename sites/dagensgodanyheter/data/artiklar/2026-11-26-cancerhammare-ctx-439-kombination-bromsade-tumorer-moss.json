@@ -1,0 +1,122 @@
+{
+  "id": "f8d0066f1636",
+  "slug": "cancerhammare-ctx-439-kombination-bromsade-tumorer-moss",
+  "kategori": "halsa",
+  "vinjett": "Cancerforskning",
+  "rubrik": "Kombination av två hämmare bromsade tumörer hos möss i ny studie från Kyoto",
+  "seorubrik": "Ny cancerhämmare CTX-439 testad på möss – Kyotostudie",
+  "ingress": "Forskare vid Kyotos universitet och företaget Chordia Therapeutics har tagit fram en ny hämmare som kan tas via munnen. I kombination med en annan hämmare gav den tydlig effekt mot tumörer i försök på celler och möss.",
+  "avsnitt": [
+    {
+      "rubrik": "Ny hämmare riktar in sig på två enzymer i cancerceller",
+      "stycken": [
+        "Ämnet heter CTX-439 och blockerar två enzymer, CDK12 och CDK13. Inom cancerforskningen ses de som lovande mål för behandling. Enzymerna styr hur gener avläses genom att fästa fosfatgrupper på RNA-polymeras II, det proteinkomplex som läser av DNA.",
+        "När enzymerna hämmas störs avläsningen av särskilt långa gener. Det försämrar cellernas förmåga att reparera skador på arvsmassan, och cancercellerna får svårare att dela sig. Hittills har det funnits få hämmare av den här typen som kan ges via munnen. Det var skälet till att forskargruppen tog fram en egen.",
+        "Forskarna prövade CTX-439 på flera olika cancercellinjer och i musmodeller av bröstcancer."
+      ]
+    },
+    {
+      "rubrik": "Genetisk sökning visade hur cancercellerna försvarar sig",
+      "stycken": [
+        "Med gensaxen CRISPR letade forskarna efter faktorer som gör cancerceller motståndskraftiga mot CTX-439. De hittade två proteiner, BCL-2 och BCL-xL. Båda motverkar celldöd och hjälper därmed cancercellerna att fortsätta växa.",
+        "Ett tredje protein av samma slag, MCL1, påverkades på ett oväntat sätt. Behandlingen ledde till fel i hur genens budbärar-RNA klipptes ihop. Avläsningen fortsatte också förbi den punkt där den normalt slutar. I cellkärnan ökade därför avläsningen av MCL1, medan mängden i cellens cytoplasma minskade. Det tyder enligt forskarna på att färdigt budbärar-RNA inte nådde ut från kärnan.",
+        "Följden blev att halten av MCL1 sjönk snabbt. Då blev cancercellerna mer beroende av BCL-2 och BCL-xL för att överleva. Enligt huvudforskaren Kosuke Yusa kunde motsägelsen lösas genom att RNA från kärnan och cytoplasman analyserades var för sig."
+      ]
+    },
+    {
+      "rubrik": "Kombinationen gav starkare effekt än varje hämmare för sig",
+      "stycken": [
+        "En analys av RNA-sekvensering visade att CTX-439 hämmar avläsningen av långa gener och samtidigt främjar den förlängda avläsningen av korta gener som MCL1. Ämnet slår alltså mot båda typerna.",
+        "Forskarna kombinerade därefter CTX-439 med en hämmare av BCL-2 och BCL-xL. Kombinationen ledde till betydligt mer celldöd bland cancercellerna än någon av hämmarna gav ensam. Den hade också god effekt mot tumörer både i cellodlingar och i levande djur.",
+        "Arbetet befinner sig fortfarande på det prekliniska stadiet. Gruppen planerar fler sådana studier för att förstå mekanismerna bakom CTX-439 bättre och för att utvärdera kombinationsbehandlingen. Det långsiktiga målet är effektivare cancerbehandlingar."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Så gick studien till",
+    "punkter": [
+      "Ny hämmare: CTX-439, riktad mot enzymerna CDK12 och CDK13",
+      "Utvecklad av Kyotos universitet och Chordia Therapeutics",
+      "Testad på cancercellinjer och i musmodeller av bröstcancer",
+      "CRISPR-sökning pekade ut proteinerna BCL-2 och BCL-xL",
+      "Kombination med en BCL-2/BCL-xL-hämmare ökade celldöden i cancercellerna",
+      "Nyheten publicerades den 26 november 2026"
+    ]
+  },
+  "varfor": "Hämmare av CDK12 och CDK13 som kan tas via munnen har hittills varit få, och forskarna har nu tagit fram en sådan. Studien visar också vilka proteiner som avgör hur väl ämnet fungerar. Den kunskapen kan enligt forskarna leda till kombinationsbehandlingar med starkare effekt mot cancer. Resultaten kommer från cell- och djurförsök, och fler prekliniska studier återstår.",
+  "taggar": [
+    "genetik",
+    "cancerforskning",
+    "bröstcancer",
+    "läkemedelsutveckling"
+  ],
+  "beskrivning": "Forskare i Kyoto har tagit fram en ny hämmare, CTX-439, som i kombination med en annan hämmare bromsade tumörer i försök på celler och möss.",
+  "kalla": {
+    "id": "kyoto-u",
+    "namn": "Kyotos universitet",
+    "url": "https://www.kyoto-u.ac.jp/en/research-news/2026-11-26",
+    "kandidatUrl": "https://www.kyoto-u.ac.jp/en/research-news/2026-11-26",
+    "hem": "https://www.kyoto-u.ac.jp/en",
+    "typ": "larosate",
+    "publicerad": "2026-11-26T12:00:00.000Z",
+    "rubrik": "Exposing a new way of inhibiting cancer"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:48:36.180Z",
+  "uppdaterad": "2026-11-26T02:48:36.180Z",
+  "bild": {
+    "fil": "/bilder/cancerhammare-ctx-439-kombination-bromsade-tumorer-moss.webp",
+    "og": "/bilder/cancerhammare-ctx-439-kombination-bromsade-tumorer-moss.jpg",
+    "liten": "/bilder/cancerhammare-ctx-439-kombination-bromsade-tumorer-moss-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: odlade cancerceller i en petriskål i ett forskningslaboratorium",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "Fluorescent microscope image of cultured cancer cells in a petri dish on a laboratory bench, soft blue and green light",
+    "skapad": "2026-11-26T02:55:54.000Z",
+    "anvandning": {
+      "input_tokens": 249,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 249
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1173
+    },
+    "kostnadUSD": 0.028965,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "Fluorescent microscope image of cultured cancer cells in a petri dish on a laboratory bench, soft blue and green light",
+  "bildalt": "Odlade cancerceller i en petriskål i ett forskningslaboratorium",
+  "bildsok": [
+    "cancer cells microscopy",
+    "laboratory cell culture",
+    "laboratory mouse"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.7,
+    "betydelse": 0.5,
+    "tillit": 0.92,
+    "total": 75
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:48:36.180Z",
+    "anmarkningar": [
+      "overdrift: Källan kallar Yusa korresponderande författare (corresponding author), inte huvudforskare. Sakinnehållet i det återgivna uttalandet stämmer. Detta är en mindre oprecision."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

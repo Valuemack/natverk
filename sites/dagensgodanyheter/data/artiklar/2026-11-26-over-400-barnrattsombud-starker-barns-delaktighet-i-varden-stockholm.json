@@ -1,0 +1,91 @@
+{
+  "id": "7e540f809d07",
+  "slug": "over-400-barnrattsombud-starker-barns-delaktighet-i-varden-stockholm",
+  "kategori": "inrikes",
+  "vinjett": "Barns rättigheter",
+  "rubrik": "Över 400 barnrättsombud ska stärka barns delaktighet i vården i Stockholm",
+  "seorubrik": "Barnrättsombud stärker barns röst i vården i Stockholm",
+  "ingress": "Region Stockholm har utbildat över 400 medarbetare till barnrättsombud. De ska hjälpa vården att förklara saker så att barn förstår och att låta barnen få komma till tals om sin egen vård.",
+  "avsnitt": [
+    {
+      "rubrik": "Utbildning sedan 2014 har gett ett brett nätverk",
+      "stycken": [
+        "Det var på Sachsska barn- och ungdomssjukhuset som utbildningen till barnrättsombud först kom i gång, år 2014. Från våren 2021 erbjuds den även på Astrid Lindgrens barnsjukhus. I dag driver de två sjukhusen utbildningen tillsammans inom Region Stockholm.",
+        "Hittills har över 400 medarbetare gått utbildningen. De ingår sedan i ett nätverk där de kan utbyta erfarenheter och fortsätta lära sig.",
+        "Ombuden finns i många delar av vården, exempelvis inom ambulanssjukvård, förlossningsvård, barnsjukvård, vuxenvård samt barn- och ungdomspsykiatri. Av de utbildade på Astrid Lindgrens barnsjukhus kommer en del även från lekterapi och sjukhusskola samt från organisationerna Clownmedicin och Min Stora Dag."
+      ]
+    },
+    {
+      "rubrik": "Deltagarna förbättrar sin egen arbetsplats",
+      "stycken": [
+        "Utbildningen tar bland annat upp barns utveckling, delaktighet och barnkonsekvensanalyser. Med en sådan analys undersöker man hur ett beslut påverkar barn. Det är en central del av kursen.",
+        "Varje deltagare arbetar med ett konkret förbättringsområde från den egna verksamheten. Det kan vara hur ett väntrum ser ut, hur barn får information inför ett vårdbesök eller hur övergången från barnsjukvård till vuxenvård fungerar.",
+        "Enligt den som ansvarar för utbildningen på Sachsska hör tidigare deltagare ofta av sig och berättar att deras analyser har lett till verkliga förändringar. Målet är att nå många yrkesgrupper. Barnets rättigheter ska beaktas både när barnet självt är patient och när en vuxen närstående får vård."
+      ]
+    },
+    {
+      "rubrik": "Information anpassad efter barnet",
+      "stycken": [
+        "En universitetssjuksköterska på Astrid Lindgrens barnsjukhus arbetar särskilt med barns rättigheter. Enligt henne måste barn först förstå vad som händer för att kunna vara delaktiga. Informationen behöver därför passa barnets ålder, förutsättningar och situation. Muntlig information räcker inte alltid. Bilder, berättelser och filmer kan göra det lättare för barnet att förstå och känna sig tryggt. Vårdnadshavarna har också en viktig roll i att stötta barnet och fortsätta prata om det som händer.",
+        "I vardagen ställer personalen frågor till sig själva. Hälsade de på barnet? Fick barnet ställa frågor? Fick barnet säga sitt? Barnrättsombuden stöttar chefer och kollegor så att barnets bästa vägs in när beslut fattas och när verksamheten förändras.",
+        "Delaktighet betyder inte att barn fattar medicinska beslut. Däremot ska vården så långt det går ta hänsyn till barnets erfarenheter, frågor och önskemål. Det gäller även när situationen är svår eller när olika behov måste vägas mot varandra."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Barnrättsombud i Region Stockholm",
+    "punkter": [
+      "Första utbildningen hölls 2014 på Sachsska barn- och ungdomssjukhuset",
+      "Även Astrid Lindgrens barnsjukhus erbjuder den sedan våren 2021",
+      "Över 400 medarbetare har utbildats och ingår i ett nätverk",
+      "Kursen tar upp barns utveckling, delaktighet och barnkonsekvensanalyser",
+      "Ombud finns bland annat inom förlossningsvård, barn- och ungdomspsykiatri och ambulanssjukvård"
+    ]
+  },
+  "varfor": "Barn som förstår sin vård kan lättare känna sig trygga och få uttrycka vad de tycker. Med över 400 utbildade ombud i många olika verksamheter kan barnets perspektiv få plats i fler av de situationer där barn möter vården. Deltagarna arbetar dessutom med konkreta förbättringar på sina egna arbetsplatser, till exempel väntrum och information inför vårdbesök.",
+  "taggar": [
+    "barnkonventionen",
+    "barnsjukvård",
+    "barns rättigheter",
+    "region stockholm"
+  ],
+  "beskrivning": "Region Stockholm har utbildat över 400 barnrättsombud som ska hjälpa vården att informera barn bättre och låta dem komma till tals om sin egen vård.",
+  "kalla": {
+    "id": "region-stockholm",
+    "namn": "Region Stockholm",
+    "url": "https://www.regionstockholm.se/nyheter/2026/11/barnens-rost-ska-bli-hord/",
+    "kandidatUrl": "https://www.regionstockholm.se/nyheter/2026/11/barnens-rost-ska-bli-hord",
+    "hem": "https://www.regionstockholm.se",
+    "typ": "myndighet",
+    "publicerad": "2026-11-20T08:48:27.000Z",
+    "rubrik": "Barnens röst ska bli hörd"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:53:06.938Z",
+  "uppdaterad": "2026-11-26T02:53:06.938Z",
+  "bild": null,
+  "bildmotiv": "a colorful children's hospital waiting room with small chairs, picture books and toys, soft daylight through large windows",
+  "bildalt": "Färgglatt väntrum på ett barnsjukhus med små stolar, bilderböcker och leksaker",
+  "bildsok": [
+    "children's hospital waiting room",
+    "pediatric ward hospital"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.4,
+    "tillit": 0.9,
+    "total": 49
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:53:06.938Z",
+    "anmarkningar": [
+      "overdrift: Enligt källan stöttar barnrättsombuden chefer och medarbetare så att barnets bästa beaktas i beslut och förändringsarbete. Att anpassa information och låta barn komma till tals beskrivs i källan som en del av det bredare barnrättsarbetet, inte specifikt som ombudens uppgift. Det är en mindre förenkling."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

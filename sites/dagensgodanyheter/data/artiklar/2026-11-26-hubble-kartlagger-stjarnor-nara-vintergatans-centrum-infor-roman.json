@@ -1,0 +1,122 @@
+{
+  "id": "94e9e51a621f",
+  "slug": "hubble-kartlagger-stjarnor-nara-vintergatans-centrum-infor-roman",
+  "kategori": "vetenskap",
+  "vinjett": "Rymden",
+  "rubrik": "Hubble kartlägger stjärnor nära Vintergatans centrum inför Roman-teleskopet",
+  "seorubrik": "Hubble fotograferar Vintergatans centrum inför Roman",
+  "ingress": "Rymdteleskopet Hubble har tagit nya bilder av det täta stjärnfältet kring Vintergatans centrum. Enligt NASA ska observationerna göra det lättare att tolka data från det kommande rymdteleskopet Nancy Grace Roman, som ska leta efter planeter kring andra stjärnor.",
+  "avsnitt": [
+    {
+      "rubrik": "Ett hav av stjärnor i galaxens kärna",
+      "stycken": [
+        "Bilderna är riktade mot Vintergatans centrala utbuktning. Det är ett tätt packat, klotformat område av stjärnor som omger mitten av galaxens skiva. På bilderna lyser stjärnor i många olika färger. På en av dem syns en mörk fläck, men vid närmare granskning visar den sig vara fylld av svaga stjärnor.",
+        "Enligt NASA rymmer utbuktningen nästan en fjärdedel av galaxens stjärnmassa. I andra galaxer går det bara att se ett diffust sken från sådana områden, eftersom stjärnorna står för tätt och ligger för långt bort. I vår egen galax ligger området så nära att Hubbles skarpa blick kan urskilja enskilda stjärnor. Forskarna hoppas att studierna ska leda till nya planetfynd och ge bättre kunskap om hur galaxer bildas, utvecklas och påverkar varandra under miljarder år."
+      ]
+    },
+    {
+      "rubrik": "Samma våglängder som Roman ska använda",
+      "stycken": [
+        "Hubble observerar främst i ultraviolett, synligt och nära infrarött ljus. Roman kommer i stället att samla in nära infrarött ljus och en del synligt ljus. För att resultaten ska gå att jämföra har Hubble studerat området i de våglängder där teleskopen överlappar, alltså den röda delen av det synliga spektrumet och nära infrarött.",
+        "Tack vare sin höga upplösning kan Hubble mäta stjärnornas ljusstyrka, ålder, sammansättning och rörelse över tid. Med den kunskapen kan astronomer leta efter möjliga exoplaneter, lokalisera svarta hål och mörk materia och förstå vår galax miljö och utveckling bättre."
+      ]
+    },
+    {
+      "rubrik": "Förarbete för jakten på planeter med mikrolinser",
+      "stycken": [
+        "En viktig uppgift för Roman blir att hitta exoplaneter genom så kallade mikrolinshändelser. De uppstår när ljuset från en avlägsen stjärna förstärks och förvrängs av massan hos ett närmare objekt som passerar framför den i synlinjen. Hur ljuset påverkas kan avslöja egenskaper hos den främre stjärnan och eventuella planeter runt den.",
+        "Hubbles data beskriver stjärnorna innan en sådan händelse inträffar. När Roman månader eller år senare fångar en mikrolinshändelse kan forskarna jämföra med Hubbles mätningar, vilket enligt NASA gör händelsen lättare att tolka. De nya observationerna kommer från ett program som leds av S. Terry vid University of Maryland och som ska stödja Romans sökande efter exoplaneter, svarta hål och neutronstjärnor."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Hubble och Vintergatans centrum",
+    "punkter": [
+      "Bilderna publicerades av NASA den 25 november 2026",
+      "Den centrala utbuktningen rymmer nästan en fjärdedel av Vintergatans stjärnmassa",
+      "Observationerna ingår i program nummer 17776, lett av S. Terry vid University of Maryland",
+      "Tidigare undersökningen SWEEPS studerade 180 000 stjärnor i utbuktningen",
+      "Hubble sköts upp 1990"
+    ]
+  },
+  "varfor": "Observationerna lägger en grund för Roman-teleskopets planetjakt i ett av galaxens tätaste områden. Genom att mäta stjärnorna i förväg blir framtida mikrolinshändelser lättare att tolka. Samtidigt bygger de vidare på Hubbles långa serie av precisa mätningar av stjärnor i Vintergatans centrum, något som kan ge ny kunskap om hur galaxer utvecklas.",
+  "taggar": [
+    "rymden",
+    "vintergatan",
+    "exoplaneter",
+    "rymdteleskop"
+  ],
+  "beskrivning": "Nya bilder från Hubble visar täta stjärnfält nära Vintergatans centrum. Data ska hjälpa NASA:s kommande Roman-teleskop att hitta exoplaneter.",
+  "kalla": {
+    "id": "nasa",
+    "namn": "NASA",
+    "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman/",
+    "kandidatUrl": "https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman",
+    "hem": "https://www.nasa.gov",
+    "typ": "rymd",
+    "publicerad": "2026-11-25T14:56:54.000Z",
+    "rubrik": "NASA’s Hubble Views Ocean of Stars in Groundwork for Roman"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:49:13.517Z",
+  "uppdaterad": "2026-11-26T02:49:13.517Z",
+  "bild": {
+    "fil": "/bilder/hubble-kartlagger-stjarnor-nara-vintergatans-centrum-infor-roman.webp",
+    "og": "/bilder/hubble-kartlagger-stjarnor-nara-vintergatans-centrum-infor-roman.jpg",
+    "liten": "/bilder/hubble-kartlagger-stjarnor-nara-vintergatans-centrum-infor-roman-640.webp",
+    "bredd": 1280,
+    "hojd": 720,
+    "alt": "Ett tätt fält av stjärnor mot svart rymd, med ljusa vita, blå och rödaktiga stjärnor i Skytten-området.",
+    "fotograf": "NASA",
+    "licens": "Public domain (NASA)",
+    "licensUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "kallaUrl": "https://images.nasa.gov/details/9809529",
+    "kalla": "NASA Image and Video Library",
+    "arkivtitel": "History of Hubble Space Telescope (HST)",
+    "kontroller": [
+      {
+        "url": "https://images.nasa.gov/details/PIA01267",
+        "passar": false,
+        "foto": false,
+        "personer": false
+      },
+      {
+        "url": "https://images.nasa.gov/details/GSFC_20171208_Archive_e002151",
+        "passar": false,
+        "foto": true,
+        "personer": false
+      },
+      {
+        "url": "https://images.nasa.gov/details/9809529",
+        "passar": true,
+        "foto": true,
+        "personer": false
+      }
+    ],
+    "granskningUSD": 0.0005512,
+    "kostnadUSD": 0
+  },
+  "bildmotiv": "a large gold-coated space telescope mirror being inspected in a bright clean room, with technicians' gloved hands out of focus",
+  "bildalt": "Spegel till ett rymdteleskop i ett renrum, sådan teknik används för att studera stjärnor i Vintergatan",
+  "bildsok": [
+    "Hubble Space Telescope",
+    "Milky Way galactic bulge",
+    "Nancy Grace Roman Space Telescope"
+  ],
+  "bildRymd": true,
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.4,
+    "tillit": 0.97,
+    "total": 66
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:49:13.517Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

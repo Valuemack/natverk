@@ -1,0 +1,96 @@
+{
+  "id": "b4e3fc582016",
+  "slug": "voyager-1-nar-en-ljusdag-fran-jorden",
+  "kategori": "vetenskap",
+  "vinjett": "Rymden",
+  "rubrik": "Voyager 1 har som första farkost nått en ljusdags avstånd från jorden",
+  "seorubrik": "Voyager 1 når en ljusdag från jorden – NASA",
+  "ingress": "Nasas rymdsond Voyager 1 nådde den 18 november 2026 en ljusdags avstånd från jorden, efter mer än 49 års färd. Ingen människotillverkad farkost har tidigare kommit så långt bort.",
+  "avsnitt": [
+    {
+      "rubrik": "Radiosignalen tar ett helt dygn att nå jorden",
+      "stycken": [
+        "En ljusdag är den sträcka som ljuset hinner färdas på 24 timmar. Det motsvarar ungefär 25,9 miljarder kilometer. Voyager 1 passerade den gränsen tidigt på morgonen den 18 november, amerikansk tid. Sonden sköts upp 1977 och är i dag den farkost som befinner sig längst bort från jorden.",
+        "Teamet vid Nasas Jet Propulsion Laboratory i södra Kalifornien, som drivs av Caltech, hörde av sonden ett dygn senare. Så lång tid tar det för radiosignalen att färdas hem, trots att den rör sig med ljusets hastighet.",
+        "Som jämförelse når ett solljus som passerar jorden månen på omkring 1,3 sekunder och Neptunus på ungefär fyra timmar. Därefter behöver ljuset ytterligare cirka 20 timmar för att komma fram till Voyager 1."
+      ]
+    },
+    {
+      "rubrik": "Bärvågen bekräftade milstolpen",
+      "stycken": [
+        "Sedan den 14 november har teamet inte fått några vetenskapliga eller tekniska data från Voyager 1. Sonden sänder däremot fortfarande en så kallad bärvåg, den signal som normalt för med sig informationen till jorden. Med hjälp av bärvågen och beräkningar av sondens bana kunde ingenjörerna bekräfta att milstolpen var nådd. De fortsätter att undersöka problemet med dataöverföringen.",
+        "Kontakten sköts via Nasas Deep Space Network, stora antenner på tre anläggningar runt om i världen. Enligt projektledningen lyssnar teamet på Voyager 1 varje dag och skickar kommandon en gång i veckan."
+      ]
+    },
+    {
+      "rubrik": "Från planeterna till den interstellära rymden",
+      "stycken": [
+        "Voyager 1 och tvillingen Voyager 2 sköts upp för att utnyttja en ovanlig planetkonstellation. De tog de första högupplösta bilderna av Jupiter och Saturnus och förändrade synen på planeterna och deras månar. Voyager 2 fortsatte sedan till Uranus och Neptunus.",
+        "År 2012 blev Voyager 1 den första farkosten att lämna heliosfären, den bubbla av partiklar och magnetfält som solen skapar och som skyddar mot kosmisk strålning. Voyager 2 följde efter 2018. Enligt forskarna har sonderna visat att solens inflytande sträcker sig förvånansvärt långt ut i den interstellära rymden. Båda mäter fortfarande förändringar i solens magnetfält.",
+        "Ombord finns också den gyllene skivan, en guldpläterad kopparskiva med bilder och ljud från jorden, tänkt som ett budskap till en avancerad civilisation som en dag kan hitta den."
+      ]
+    },
+    {
+      "rubrik": "Smart ingenjörskonst håller sonderna vid liv",
+      "stycken": [
+        "Sonderna drivs av en radioisotopgenerator som omvandlar värme från sönderfallande plutonium till el. Effekten minskar med omkring 4 watt per år. Tidigare i år stängde ingenjörerna av tre enheter på Voyager 1 och ersatte dem med alternativ som drar mindre ström. Åtgärden var inte riskfri, men den väntas ge båda sonderna tillräckligt med energi för att hålla de nuvarande instrumenten igång åtminstone till 50-årsdagen av uppskjutningen nästa sommar."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Voyager 1 i korthet",
+    "punkter": [
+      "Uppskjuten 1977 tillsammans med tvillingen Voyager 2",
+      "Nådde en ljusdag från jorden den 18 november 2026",
+      "En ljusdag är cirka 25,9 miljarder kilometer",
+      "Lämnade heliosfären 2012 i omkring 61 155 km/h",
+      "Förlorar ungefär 4 watt i effekt per år",
+      "Styrs från Nasas Jet Propulsion Laboratory, som drivs av Caltech"
+    ]
+  },
+  "varfor": "Voyager 1 är tillsammans med Voyager 2 mänsklighetens enda sonder i den interstellära rymden. Milstolpen visar hur långt en farkost kan nå när ingenjörer hela tiden hittar nya sätt att spara energi och lösa problem med åldrande teknik. Sonderna levererar fortfarande mätningar av hur solen påverkar rymden långt bortom planeterna.",
+  "taggar": [
+    "rymden",
+    "voyager 1",
+    "nasa",
+    "interstellära rymden"
+  ],
+  "beskrivning": "Nasas rymdsond Voyager 1 har nått en ljusdags avstånd från jorden, cirka 25,9 miljarder kilometer, efter mer än 49 års färd genom rymden.",
+  "kalla": {
+    "id": "jpl",
+    "namn": "NASA JPL",
+    "url": "https://www.jpl.nasa.gov/news/nasas-voyager-1-makes-history-reaching-one-light-day-from-earth/",
+    "kandidatUrl": "https://www.jpl.nasa.gov/news/nasas-voyager-1-makes-history-reaching-one-light-day-from-earth",
+    "hem": "https://www.jpl.nasa.gov",
+    "typ": "rymd",
+    "publicerad": "2026-11-19T14:00:00.000Z",
+    "rubrik": "NASA’s Voyager 1 Makes History Reaching One Light-Day from Earth"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:51:08.863Z",
+  "uppdaterad": "2026-11-26T02:51:08.863Z",
+  "bild": null,
+  "bildmotiv": "a large white deep-space radio antenna dish pointing at a starry night sky over a dry landscape",
+  "bildalt": "Stor parabolantenn för kommunikation med rymdsonder riktad mot en stjärnklar natthimmel",
+  "bildsok": [
+    "Deep Space Network antenna",
+    "Voyager spacecraft model",
+    "radio telescope dish night"
+  ],
+  "bildRymd": true,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.48,
+    "tillit": 0.97,
+    "total": 52
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:51:08.863Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

@@ -1,0 +1,98 @@
+{
+  "id": "16c891700985",
+  "slug": "dna-molekyl-skyddade-celler-parkinson-sintef",
+  "kategori": "halsa",
+  "vinjett": "Parkinsonforskning",
+  "rubrik": "Kort DNA-molekyl skyddade odlade celler mot skador kopplade till Parkinson",
+  "seorubrik": "Parkinson: DNA-molekyl skyddade celler i SINTEF-studie",
+  "ingress": "Forskare vid norska SINTEF har tagit fram en konstgjord DNA-molekyl som i labbförsök skyddade mänskliga celler mot den sortens stress som kopplas till Parkinsons sjukdom. Arbetet är i ett mycket tidigt skede men kan på sikt leda till nya läkemedel.",
+  "avsnitt": [
+    {
+      "rubrik": "Alla celler överlevde när molekylen tillsattes",
+      "stycken": [
+        "Forskarna utsatte odlade mänskliga celler för ämnet MPP+, som ofta används i försöksmodeller av Parkinson. Ämnet försämrar funktionen hos mitokondrierna, cellernas kraftverk, och framkallar oxidativ stress. När cellerna bara fick ämnet dog ungefär 40 procent av dem.",
+        "När forskarna samtidigt tillsatte sin nya molekyl överlevde däremot samtliga celler i försöket. Enligt forskarna tyder resultatet på att molekylen kan skydda celler mot oxidativ stress i en enkel försöksmodell.",
+        "Försöken gjordes inte på nervceller utan på en cellinje som kallas HEK293 och som ofta används i laboratorieforskning. Forskarna betonar att det återstår mycket arbete innan det kan bli tal om en behandling."
+      ]
+    },
+    {
+      "rubrik": "Upptäckt i rundmask gav idén",
+      "stycken": [
+        "Bakgrunden är en upptäckt från 2021. Då visade forskare vid Oslo universitetssjukhus att de kunde skydda en viss typ av nervcell mot åldersrelaterad nedbrytning genom att stänga av en särskild gen i rundmasken C. elegans. Det är samma typ av nervceller som drabbas vid Parkinson.",
+        "Genen styr tillverkningen av ett enzym som deltar i reparationen av skadat DNA. Den reparationen gynnar oss dock inte alltid. Försök med mänskliga celler har visat att mitokondrierna blir tåligare mot oxidativ stress när enzymet saknas. SINTEF-forskarna har därför letat efter sätt att minska produktionen av enzymet."
+      ]
+    },
+    {
+      "rubrik": "Fungerar som en dimmer i stället för en strömbrytare",
+      "stycken": [
+        "Molekylen är en så kallad antisensoligonukleotid, förkortad ASO. Det är en kort, konstgjord DNA-liknande molekyl som inte rör själva genen. I stället angriper den den budbärare, mRNA, som för genens recept från cellkärnan ut till cellens proteinfabriker. När receptet bryts ned tillverkas mindre av proteinet.",
+        "Forskarna beskriver metoden som motsatsen till ett mRNA-vaccin, där man i stället tillför ett recept. Till skillnad från att slå ut en gen helt går det med ASO att reglera hur mycket protein som bildas. Målet är att hitta den nivå som ger bäst effekt utan onödiga biverkningar. ASO-tekniken används redan i läkemedel mot vissa ärftliga sjukdomar, bland annat spinal muskelatrofi."
+      ]
+    },
+    {
+      "rubrik": "Robotar testade flera kandidater",
+      "stycken": [
+        "För att hitta rätt molekyl använde SINTEF en egen laboratorieplattform där robotar kan testa tusentals ämnen och cellprover parallellt. Flera kandidater minskade genens uttryck med omkring 70 procent. Även vid mycket höga koncentrationer överlevde 93 procent av cellerna, vilket enligt forskarna tyder på låg giftighet.",
+        "Forskarna arbetar också med andra sjukdomar där nervceller bryts ned, och en patentansökan baserad på tekniken är på gång."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om studien",
+    "punkter": [
+      "Forskningen bedrivs vid SINTEF:s avdelning för bioteknik och nanomedicin i Norge",
+      "Idén bygger på en upptäckt i rundmasken C. elegans vid Oslo universitetssjukhus 2021",
+      "Utan skydd dog cirka 40 procent av cellerna av ämnet MPP+, med ASO-molekylen överlevde alla",
+      "Bästa kandidaterna minskade genens uttryck med omkring 70 procent",
+      "93 procent av cellerna överlevde även vid mycket höga koncentrationer",
+      "Försöken gjordes på cellinjen HEK293, inte på nervceller"
+    ]
+  },
+  "varfor": "Parkinsons sjukdom blir en allt tyngre börda för patienter, anhöriga och vården i takt med att befolkningen åldras. Forskarnas förhoppning är att metoden på lång sikt ska kunna leda till ett läkemedel som bromsar sjukdomens förlopp. De påpekar själva att arbetet är i ett mycket tidigt skede och att de flesta nya läkemedel som testas inte går hela vägen.",
+  "taggar": [
+    "genetik",
+    "parkinsons sjukdom",
+    "läkemedelsforskning",
+    "nervceller"
+  ],
+  "beskrivning": "Norska SINTEF har tagit fram en konstgjord DNA-molekyl som i labbförsök skyddade mänskliga celler mot stress kopplad till Parkinsons sjukdom.",
+  "kalla": {
+    "id": "ntnu",
+    "namn": "NTNU och SINTEF (Norwegian SciTech News)",
+    "url": "https://norwegianscitechnews.com/2026/11/can-a-small-dna-fix-protect-against-parkinsons-disease/",
+    "kandidatUrl": "https://norwegianscitechnews.com/2026/11/can-a-small-dna-fix-protect-against-parkinsons-disease",
+    "hem": "https://norwegianscitechnews.com",
+    "typ": "larosate",
+    "publicerad": "2026-11-19T09:01:10.000Z",
+    "rubrik": "Can a small DNA fix protect against Parkinson’s disease?"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:55:39.427Z",
+  "uppdaterad": "2026-11-26T02:55:39.427Z",
+  "bild": null,
+  "bildmotiv": "a laboratory robot dispensing tiny liquid samples into a multi-well microplate on a clean white workbench, soft blue lighting",
+  "bildalt": "Laboratorierobot som fördelar små vätskeprover i en mikroplatta för cellförsök",
+  "bildsok": [
+    "laboratory cell culture",
+    "pipetting robot laboratory",
+    "microplate laboratory"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.93,
+    "total": 46
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:55:39.427Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att flera lovande kandidater minskade genuttrycket med omkring 70 procent. Att det var de 'bästa' framgår inte. Det är en mindre tillspetsning, och brödtextens formulering 'Flera kandidater' är korrekt."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

@@ -1,0 +1,145 @@
+{
+  "id": "a8ed761010c4",
+  "slug": "hera-visar-stadionstor-krater-pa-asteroiden-dimorphos",
+  "kategori": "vetenskap",
+  "vinjett": "Planetförsvar",
+  "rubrik": "ESA:s rymdsond Hera visar stadionstor krater på asteroiden som DART träffade",
+  "seorubrik": "Hera hittar stor krater på asteroiden Dimorphos",
+  "ingress": "ESA:s rymdsond Hera har nått asteroiden Dimorphos, som NASA:s farkost DART medvetet krockade med 2022. De första bilderna visar en krater stor som en idrottsarena och ger forskarna ny kunskap om hur jorden kan skyddas mot asteroider.",
+  "avsnitt": [
+    {
+      "rubrik": "En hel sida av asteroiden har plattats till",
+      "stycken": [
+        "Dimorphos är en liten asteroid, 151 meter i diameter, som kretsar kring den större asteroiden Didymos, som är 730 meter bred. Den 26 september 2022 styrde NASA medvetet in farkosten DART i Dimorphos. Krocken kortade asteroidens omloppstid med 33 minuter, vilket var betydligt mer än väntat.",
+        "Teleskop på jorden kunde mäta förändringen i banan. Däremot gick det inte att se vad som hade hänt med själva asteroiden. Forskarna var oense om huruvida den hade fått en krater, bytt form eller förblivit oförändrad.",
+        "Enligt Heras forskningsledare Patrick Michel blev svaret alla tre på en gång. Sidan som DART träffade har plattats till av en krater stor som en idrottsarena, och kratern sträcker sig över asteroidens hela bredd. Resten av Dimorphos ser däremot ut som förut. Stenfälten på andra delar av ytan liknar DART:s bilder från 2022."
+      ]
+    },
+    {
+      "rubrik": "Asteroiden snurrar oregelbundet och omges av hundratals stenblock",
+      "stycken": [
+        "När fler bilder kom in blev det tydligt att krocken har fått Dimorphos att tumla vilt i sin bana. Det berättar ESA:s missionsforskare Michael Kueppers.",
+        "En annan överraskning är att asteroidparet omges av hundratals tidigare okända stenblock. De är bara några meter stora och kretsar runt asteroiderna. Teamet måste ta hänsyn till dem när sonden de kommande veckorna går närmare för att ta skarpare bilder."
+      ]
+    },
+    {
+      "rubrik": "Tre instrument och en långsam bana",
+      "stycken": [
+        "Hera är ungefär lika stor som en småbil. Under den första observationsfasen har sonden använt tre instrument: en svartvit kamera, ett multispektralt instrument som registrerar 25 färger samtidigt och en värmekamera från den japanska rymdorganisationen JAXA som mäter yttemperaturen.",
+        "Just nu flyger Hera cirka 25–30 kilometer från asteroiderna. Eftersom deras dragningskraft är mycket svag håller sonden sig kvar med hjälp av sina styrraketer, i en medelhastighet på bara 12 centimeter per sekund."
+      ]
+    },
+    {
+      "rubrik": "Små satelliter ska undersöka asteroidens inre",
+      "stycken": [
+        "Bilderna är bara början. I december ska Hera närma sig asteroiderna till omkring 13 kilometer. I januari 2027 planerar ESA att släppa ut två små satelliter, stora som skokartonger, som ska gå ännu närmare.",
+        "Juventas, som leds av Luxemburg, ska med radar för första gången undersöka en asteroids inre och senare försöka landa. Den italienskledda Milani ska studera asteroidernas material och dammet runt dem. Tillsammans bildar de tre farkosterna ett system som kan göra kompletterande mätningar av asteroiderna och av följderna av DART:s krock.",
+        "ESA förbereder också nästa uppdrag, Ramses, tillsammans med JAXA. Ramses ska studera asteroiden Apophis när den passerar jorden på helt säkert avstånd den 13 april 2029."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Hera och Dimorphos",
+    "punkter": [
+      "Dimorphos är 151 meter och Didymos 730 meter i diameter",
+      "NASA:s DART träffade Dimorphos den 26 september 2022",
+      "Krocken kortade omloppstiden med 33 minuter",
+      "Asteroiderna befinner sig nu 193,5 miljoner kilometer från jorden",
+      "Hera byggdes av ett konsortium från 18 ESA-länder, lett av OHB i Tyskland",
+      "Två små satelliter, Juventas och Milani, ska släppas ut i januari 2027"
+    ]
+  },
+  "varfor": "DART visade att det går att ändra en asteroids bana. Heras bilder visar nu vad krocken gjorde med själva asteroiden. Enligt ESA är kombinationen av de två uppdragen ett viktigt steg mot att kunna använda tekniken som ett pålitligt skydd för jorden. Forskarna vill förstå inte bara att metoden fungerar, utan också varför och under vilka förhållanden den går att lita på.",
+  "taggar": [
+    "rymden",
+    "asteroider",
+    "planetförsvar",
+    "esa"
+  ],
+  "beskrivning": "ESA:s rymdsond Hera har nått asteroiden Dimorphos och funnit en stadionstor krater efter NASA:s DART-krock 2022, och hundratals okända stenblock.",
+  "kalla": {
+    "id": "esa-top",
+    "namn": "ESA (toppnyheter)",
+    "url": "https://www.esa.int/articles/about-us/directorates/operations/space-safety/hera/hera-reveals-stadium-sized-asteroid-crater-left-after-spacecraft-impact",
+    "kandidatUrl": "https://www.esa.int/articles/about-us/directorates/operations/space-safety/hera/hera-reveals-stadium-sized-asteroid-crater-left-after-spacecraft-impact",
+    "hem": "https://www.esa.int",
+    "typ": "rymd",
+    "publicerad": "2026-11-25T11:02:51.000Z",
+    "rubrik": "Hera reveals stadium-sized asteroid crater from spacecraft impact"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-26T02:49:44.274Z",
+  "uppdaterad": "2026-11-26T02:49:44.274Z",
+  "bild": {
+    "fil": "/bilder/hera-visar-stadionstor-krater-pa-asteroiden-dimorphos.webp",
+    "og": "/bilder/hera-visar-stadionstor-krater-pa-asteroiden-dimorphos.jpg",
+    "liten": "/bilder/hera-visar-stadionstor-krater-pa-asteroiden-dimorphos-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: en rymdsond med solpaneler testas i ett renrum inför ett uppdrag till en asteroid",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a modern research laboratory bench with glassware, a microscope and notebooks in soft daylight",
+    "skapad": "2026-11-26T02:56:25.535Z",
+    "anvandning": {
+      "input_tokens": 241,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 241
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1165
+    },
+    "kostnadUSD": 0.028925,
+    "kontroller": [
+      {
+        "url": "https://images.nasa.gov/details/PIA19813",
+        "passar": false,
+        "foto": true,
+        "personer": false
+      },
+      {
+        "url": "https://images.nasa.gov/details/KSC-2012-2879",
+        "passar": false,
+        "foto": true,
+        "personer": false
+      },
+      {
+        "url": "https://images.nasa.gov/details/KSC-2012-2882",
+        "passar": false,
+        "foto": true,
+        "personer": false
+      }
+    ],
+    "granskningUSD": 0.0005008
+  },
+  "bildmotiv": "A small boxy spacecraft with solar panels undergoing testing in a clean room, technicians' tools and test equipment around it, no visible faces or text",
+  "bildalt": "En rymdsond med solpaneler testas i ett renrum inför ett uppdrag till en asteroid",
+  "bildsok": [
+    "Hera spacecraft ESA",
+    "asteroid Didymos Dimorphos",
+    "spacecraft clean room testing"
+  ],
+  "bildRymd": true,
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.4,
+    "tillit": 0.97,
+    "total": 65
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-26T02:49:44.274Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}
