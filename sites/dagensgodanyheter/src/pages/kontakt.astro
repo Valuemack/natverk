@@ -1,0 +1,23 @@
+---
+import Tidning from "../components/Tidning.astro";
+import { SITE } from "../site.js";
+---
+<Tidning titel="Kontakt – Dagens goda nyheter"
+  beskrivning="Kontakta Dagens goda nyheter: tipsa om en god nyhet från en förstahandskälla, anmäl ett fel eller ställ en fråga om hur sajten fungerar."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Kontakt", href: "/kontakt/" }]}>
+  <div class="textsida">
+    <h1 class="sidrubrik">Kontakt</h1>
+    {SITE.epost
+      ? <p class="sidingress">Skriv till oss på <a href={`mailto:${SITE.epost}`}>{SITE.epost}</a>.</p>
+      : <p class="sidingress">E-postadressen till redaktionen publiceras här inom kort.</p>}
+
+    <h2>Tipsa om en god nyhet</h2>
+    <p>Vi skriver bara utifrån förstahandskällor. Skicka gärna en länk till pressmeddelandet, studien eller beslutet – inte till en tidningsartikel om det.</p>
+
+    <h2>Anmäl ett fel</h2>
+    <p>Ange vilken artikel det gäller och vad som är fel. Läs mer i vår <a href="/rattelser/">rättelsepolicy</a>.</p>
+
+    <h2>Frågor om din hälsa</h2>
+    <p>Vi kan inte svara på frågor om enskildas hälsa. Kontakta vården, ring 1177 eller läs på <a href="https://www.1177.se/" rel="nofollow">1177.se</a>. Vid akut fara: ring 112.</p>
+  </div>
+</Tidning>

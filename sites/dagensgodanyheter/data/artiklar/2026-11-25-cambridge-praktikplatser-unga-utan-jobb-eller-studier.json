@@ -1,0 +1,115 @@
+{
+  "id": "a6a2e9512228",
+  "slug": "cambridge-praktikplatser-unga-utan-jobb-eller-studier",
+  "kategori": "utrikes",
+  "vinjett": "Unga och arbete",
+  "rubrik": "Cambridge öppnar upp till 15 finansierade praktikplatser för unga utan jobb",
+  "seorubrik": "Cambridge ger unga utan jobb betalda praktikplatser",
+  "ingress": "University of Cambridge ska erbjuda upp till 15 finansierade praktikplatser för unga i regionen som varken studerar, arbetar eller utbildar sig. Pengarna kommer från regionens samverkansorgan, och målet är att ge unga arbetslivserfarenhet, självförtroende och nya yrkesvägar.",
+  "avsnitt": [
+    {
+      "rubrik": "Praktik för unga som står utanför skola och arbete",
+      "stycken": [
+        "Universitetet i Cambridge har presenterat planer på upp till 15 praktikplatser för unga i närområdet. Platserna riktar sig till unga som just nu står utanför både utbildning och arbetsliv. Finansieringen står Cambridgeshire and Peterborough Combined Authority för, ett regionalt samverkansorgan.",
+        "Praktiken ska genomföras under läsåret 2026–27. Tanken är att deltagarna ska få praktiska färdigheter som behövs på en arbetsplats, växa i sitt självförtroende och få pröva på yrken de kanske inte har funderat på tidigare.",
+        "Beskedet lämnades av universitetets rektor Deborah Prentice vid ett evenemang på King's College. Där uppmärksammades att det gått ett år sedan universitetet antog sitt samhällsramverk, People, Place, Partnership."
+      ]
+    },
+    {
+      "rubrik": "Fokus på yrken bakom forskningen",
+      "stycken": [
+        "De flesta platserna finns inom universitetets administrativa och tekniska stödverksamhet. Det kan handla om idrottsanläggningar, museer eller avdelningen som sköter fastigheter. På så sätt vill universitetet visa att det finns många fler yrken där än lärare och forskare.",
+        "Enligt rektorn är universitetet beroende av människor med mycket olika kompetenser. Hon menar att universitetet som stor lokal arbetsgivare har ett ansvar för att möjligheterna i Cambridge ska kännas tillgängliga för fler unga i regionen."
+      ]
+    },
+    {
+      "rubrik": "Ingen cv och inga formella intervjuer",
+      "stycken": [
+        "Rekryteringen sker på ett annat sätt än vanligt. Sökande behöver inte skicka in cv eller gå igenom traditionella anställningsintervjuer. Under praktiken kan deltagarna dessutom samla digitala märken som visar att de har skaffat sig färdigheter som lokala arbetsgivare har pekat ut som viktiga.",
+        "Två exempel på platser har redan presenterats. En praktikant ska arbeta med universitetets årliga festival, Cambridge Festival, där forskning delas med allmänheten. Uppgifterna omfattar förberedelser och att hjälpa till vid evenemang för vuxna och familjer, ibland på kvällar och helger.",
+        "En annan praktikant hamnar hos universitetets restaurangverksamhet. Där ska personen bidra till en översyn av universitetets policy för hållbar mat, som infördes 2016, bland annat genom att samla in synpunkter från hela universitetet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Praktiken i korthet",
+    "punkter": [
+      "Upp till 15 finansierade praktikplatser vid University of Cambridge",
+      "Riktar sig till unga som varken studerar, arbetar eller utbildar sig",
+      "Finansieras av Cambridgeshire and Peterborough Combined Authority",
+      "Genomförs under läsåret 2026–27",
+      "Rekrytering utan cv och formella intervjuer",
+      "Universitetets samhällsramverk lanserades i november 2025"
+    ]
+  },
+  "varfor": "Unga som står utanför både skola och arbete får här en väg in i arbetslivet hos en av regionens stora arbetsgivare. Genom att slopa cv och formella intervjuer sänks trösklarna för den som saknar tidigare erfarenhet. De digitala märkena bygger på färdigheter som lokala arbetsgivare efterfrågar, vilket kan göra erfarenheten användbar även efter praktiken.",
+  "taggar": [
+    "arbetsmarknad",
+    "unga",
+    "praktik",
+    "utbildning"
+  ],
+  "beskrivning": "University of Cambridge erbjuder upp till 15 finansierade praktikplatser för unga utan jobb eller studier. Ingen cv krävs och praktiken sker läsåret 2026–27.",
+  "kalla": {
+    "id": "cambridge",
+    "namn": "University of Cambridge",
+    "url": "https://www.cam.ac.uk/news/university-of-cambridge-and-cpca-announce-fully-funded-internships-for-local-young-people",
+    "hem": "https://www.cam.ac.uk",
+    "typ": "larosate",
+    "publicerad": "2026-11-25T10:49:13.000Z",
+    "rubrik": "University of Cambridge and CPCA announce fully funded internships for local young people"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:52:41.386Z",
+  "uppdaterad": "2026-11-25T22:52:41.386Z",
+  "bild": {
+    "fil": "/bilder/cambridge-praktikplatser-unga-utan-jobb-eller-studier.webp",
+    "og": "/bilder/cambridge-praktikplatser-unga-utan-jobb-eller-studier.jpg",
+    "liten": "/bilder/cambridge-praktikplatser-unga-utan-jobb-eller-studier-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: historiska universitetsbyggnader i Cambridge vid en grön gräsmatta en höstmorgon",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a bright shared office at a university with desks, laptops, notebooks and visitor lanyards on the table, nobody present",
+    "skapad": "2026-11-26T00:08:12.385Z",
+    "anvandning": {
+      "input_tokens": 249,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 249
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1173
+    },
+    "kostnadUSD": 0.028965,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a bright shared office at a university with desks, laptops, notebooks and visitor lanyards on the table, nobody present",
+  "bildalt": "Historiska universitetsbyggnader i Cambridge vid en grön gräsmatta en höstmorgon",
+  "poang": {
+    "positiv": 0.8,
+    "betydelse": 0.4,
+    "tillit": 0.93,
+    "total": 72
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:52:41.386Z",
+    "anmarkningar": [
+      "overdrift: Källan säger bara att rekryteringen går bort från traditionella cv och formella intervjuer. Att trösklarna sänks för den som saknar erfarenhet är redaktionens egen slutsats. Den är rimlig men inte belagd i källan.",
+      "overdrift: Källan beskriver ett alternativt rekryteringssätt som rör sig bort från traditionella cv och formella intervjuer. Artikeln formulerar det något mer kategoriskt än källan. Det är en mindre skillnad."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

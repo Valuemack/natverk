@@ -1,0 +1,81 @@
+{
+  "id": "0e74b9aa819f",
+  "slug": "naturturism-ska-hjalpa-rodopebergen-i-bulgarien",
+  "kategori": "djur-natur",
+  "vinjett": "Återförvildning",
+  "rubrik": "Lån till fjällstuga i Bulgariens Rodopeberg ska locka naturturister",
+  "seorubrik": "Naturturism ska lyfta Rodopebergen i Bulgarien",
+  "ingress": "I Rodopebergen i södra Bulgarien återvänder vilda djur. Nu får en lokal fotograf och guide ett lån från Rewilding Europe för att bygga klart en liten fjällstuga, så att fler kan uppleva naturen och bygden kan tjäna på den.",
+  "avsnitt": [
+    {
+      "rubrik": "Kronhjort, gems och kungsörn",
+      "stycken": [
+        "Byn Dobrostan ligger högt upp i de centrala Rodopebergen, omgiven av skog, djupa raviner och kalkstensklippor. Här lever bland annat kronhjort, gems, kungsörn och pilgrimsfalk, liksom mindre arter som sislar och sköldpaddor. Björn och varg lämnar ibland spår efter sig.",
+        "Ivo Danchev är naturfotograf och bergsguide och har arbetat med naturvård, bland annat för att få tillbaka gamar i Bulgarien. För ungefär tio år sedan flyttade han från Sofia till Dobrostan, där hans mammas släkt kommer ifrån."
+      ]
+    },
+    {
+      "rubrik": "Ett lån på 23 000 euro",
+      "stycken": [
+        "I omkring sju år har han byggt på Dobrostan Chalet med sina egna besparingar, i den takt pengarna räckt. Nu får han ett lån på 23 000 euro från Rewilding Europe Capital, organisationens lånefond för företag i och runt de områden där den arbetar med återförvildning. Pengarna ska gå till inredning, markarbeten och nödvändig infrastruktur, och de första gästerna väntas komma 2027.",
+        "Stugan ligger på omkring 1 300 meters höjd inne i Unesco-biosfärområdet Chervenata Stena och är tänkt för familjer, par och små grupper. Tanken är inte ett vanligt pensionat utan en bas för skräddarsydda turer, där Danchev själv guidar gästerna till djur, växter, geologi och lokal kultur. Fotografering blir en särskild inriktning, med hans femton år som yrkesfotograf i ryggen."
+      ]
+    },
+    {
+      "rubrik": "Naturen som inkomstkälla",
+      "stycken": [
+        "Rewilding Europe och lokala partner arbetar i Rodopebergen med att få tillbaka vilda djur och naturliga processer. I området Zhenda återställs naturskog på omkring 5 500 hektar, och sedan 2025 finns där en frilevande hjord av visenter, europeisk bison.",
+        "Tanken är att naturturism ska ge lokala inkomster, så att det också lönar sig att skydda naturen. Danchev planerar även större guidade program där deltagarna bor på andra ställen i byn, vilket kan gynna restauranger, matproducenter och andra lokala företag."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Dobrostan Chalet",
+    "punkter": [
+      "Liten fjällstuga i de centrala Rodopebergen, Bulgarien",
+      "Omkring 1 300 meter över havet, i biosfärområdet Chervenata Stena",
+      "Lån på 23 000 euro från Rewilding Europe Capital",
+      "Väntas ta emot de första gästerna 2027"
+    ]
+  },
+  "varfor": "När skyddad natur ger lokala jobb och inkomster blir det lättare att få stöd för att bevara den. Små företag som stugan i Dobrostan är ett konkret exempel på hur återförvildning kan kombineras med en levande landsbygd, och kan visa vägen för fler entreprenörer i regionen.",
+  "taggar": [
+    "återförvildning",
+    "naturturism",
+    "bulgarien",
+    "vilda djur"
+  ],
+  "beskrivning": "En guide i Bulgariens Rodopeberg får lån av Rewilding Europe för att bygga klart en fjällstuga för naturturister.",
+  "kalla": {
+    "id": "rewilding",
+    "namn": "Rewilding Europe",
+    "url": "https://rewildingeurope.com/news/helping-nature-positive-tourism-take-off-in-bulgarias-rhodope-mountains",
+    "hem": "https://rewildingeurope.com",
+    "typ": "organisation",
+    "publicerad": "2026-11-20T11:45:56.000Z",
+    "rubrik": "Helping nature-positive tourism take off in Bulgaria’s Rhodope Mountains"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T11:11:00.000Z",
+  "uppdaterad": "2026-11-25T11:11:00.000Z",
+  "bild": null,
+  "bildmotiv": "a small wooden mountain hut on a forested slope of the Rhodope Mountains with misty valleys at sunrise",
+  "bildalt": "En liten fjällstuga på en skogsklädd sluttning i Rodopebergen",
+  "poang": {
+    "positiv": 0.45,
+    "betydelse": 0.38,
+    "tillit": 0.85,
+    "total": 44
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T11:11:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

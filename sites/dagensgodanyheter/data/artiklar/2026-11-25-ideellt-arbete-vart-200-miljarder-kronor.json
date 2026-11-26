@@ -1,0 +1,82 @@
+{
+  "id": "f952c3c8a4cb",
+  "slug": "ideellt-arbete-vart-200-miljarder-kronor",
+  "kategori": "inrikes",
+  "vinjett": "Civilsamhället",
+  "rubrik": "Ideellt arbete i Sverige värt 200 miljarder – mer än detaljhandeln",
+  "seorubrik": "Ideellt arbete i Sverige värt 200 miljarder kronor",
+  "ingress": "Omkring 4,5 miljoner människor engagerade sig regelbundet ideellt i Sverige 2024. Det obetalda arbetet var värt runt 200 miljarder kronor, eller 3,1 procent av BNP, visar en ny beräkning från SCB och Marie Cederschiöld högskola.",
+  "avsnitt": [
+    {
+      "rubrik": "Från fotbollstränare till studiecirkelledare",
+      "stycken": [
+        "Med ideellt arbete menas obetalt arbete som görs inom en ideell organisation i civilsamhället. Det kan vara att leda träningar i en idrottsförening, sitta i styrelsen för en intresseorganisation eller hålla i studiecirklar i en kulturförening.",
+        "Sådant arbete räknas inte in i BNP enligt de internationella reglerna. Civilsamhällets ordinarie verksamhet finns däremot med i statistiken och hade 2024 ett förädlingsvärde på 194 miljarder kronor. Det frivilliga arbetet kommer alltså ovanpå det, som en stor insats som annars inte syns i siffrorna."
+      ]
+    },
+    {
+      "rubrik": "Större än detaljhandeln",
+      "stycken": [
+        "För att få perspektiv jämför SCB med detaljhandeln, som 2024 stod för 2,9 procent av BNP. Det ideella arbetets beräknade värde, 3,1 procent, var alltså större. Vid mätningarna 2014, 2019 och 2024 har det frivilliga arbetet legat högre än detaljhandeln i förhållande till BNP.",
+        "Värdet räknas fram genom att multiplicera antalet ideellt aktiva med hur många timmar de i snitt lägger per år och med vad arbetet skulle ha kostat om det hade varit betalt. För personer under 65 används genomsnittliga löner i civilsamhället, för äldre används genomsnittlig pension."
+      ]
+    },
+    {
+      "rubrik": "Alla åldrar bidrar",
+      "stycken": [
+        "Personer mellan 30 och 59 år stod för den största delen av värdet, men även de äldsta bidrar: personer som är 75 år eller äldre stod för omkring 15 miljarder kronor. Män stod för 55,5 procent av det beräknade värdet och kvinnor för 44,5 procent, vilket främst speglar att män lade fler timmar.",
+        "Jämförelser med andra länder är osäkra eftersom metoderna skiljer sig, men en brittisk studie har uppskattat värdet till 1,5 procent av BNP och en kanadensisk till omkring 1,7 procent. Marie Cederschiöld högskola har undersökt det ideella arbetet i Sverige sedan 1992."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Det ideella arbetet 2024",
+    "punkter": [
+      "Omkring 4,5 miljoner regelbundet ideellt aktiva",
+      "Beräknat värde: cirka 200 miljarder kronor",
+      "Motsvarar 3,1 procent av BNP – detaljhandeln: 2,9 procent",
+      "Personer 30–59 år står för den största delen",
+      "Källa: SCB och Marie Cederschiöld högskola"
+    ]
+  },
+  "varfor": "Det frivilliga engagemanget i föreningar håller i gång idrott, kultur och folkbildning över hela landet, men syns inte i den vanliga ekonomiska statistiken. Beräkningen sätter en siffra på hur stor den insatsen är och visar att det ideella engagemanget är en betydande resurs i samhället.",
+  "taggar": [
+    "civilsamhället",
+    "ideellt arbete",
+    "scb",
+    "föreningsliv"
+  ],
+  "beskrivning": "Ideellt arbete i Sverige var värt omkring 200 miljarder kronor 2024, 3,1 procent av BNP och mer än detaljhandelns andel.",
+  "kalla": {
+    "id": "scb",
+    "namn": "SCB",
+    "url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/naringsverksamhet-och-utrikeshandel/foretagens-produktion-forsaljning-och-ekonomi/civila-samhallet/pong/statistiknyhet/det-frivilliga-arbetets-ekonomiska-varde-2024",
+    "hem": "https://www.scb.se",
+    "typ": "statistik",
+    "publicerad": "2026-11-19T07:00:00.000Z",
+    "rubrik": "Svenskarna arbetade ideellt för 200 miljarder kronor 2024"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T11:01:00.000Z",
+  "uppdaterad": "2026-11-25T11:01:00.000Z",
+  "bild": null,
+  "bildmotiv": "a tidy community hall in Sweden with folding tables, coffee cups and stacked chairs after an event, warm light",
+  "bildalt": "En föreningslokal med bord, kaffekoppar och stolar efter en träff",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.46,
+    "tillit": 0.98,
+    "total": 52
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T11:01:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

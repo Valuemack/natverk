@@ -1,0 +1,26 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import Rad from "../../components/Rad.astro";
+import { ARTIKLAR, isoDag, dagText, versal } from "../../lib/artiklar.js";
+
+const MANADER = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+export function getStaticPaths() {
+  return [...new Set(ARTIKLAR.map((a) => isoDag(a.publicerad).slice(0, 7)))].map((m) => ({ params: { manad: m } }));
+}
+const { manad } = Astro.params;
+const namn = `${MANADER[Number(manad.slice(5, 7)) - 1]} ${manad.slice(0, 4)}`;
+const artiklar = ARTIKLAR.filter((a) => isoDag(a.publicerad).startsWith(manad));
+const dagar = [...new Set(artiklar.map((a) => isoDag(a.publicerad)))];
+---
+<Tidning titel={`Goda nyheter ${namn} – arkiv`}
+  beskrivning={`Alla ${artiklar.length} positiva nyheter från ${namn} på Dagens goda nyheter, dag för dag.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Arkiv", href: "/arkiv/" }, { namn: versal(namn), href: `/arkiv/${manad}/` }]}>
+  <h1 class="sidrubrik">Goda nyheter {namn}</h1>
+  <p class="sidingress">{artiklar.length} artiklar.</p>
+  {dagar.map((d) => (
+    <section class="sektion" id={`d-${d}`}>
+      <h2 class="sektion-rubrik">{versal(dagText(new Date(`${d}T12:00:00Z`)))}</h2>
+      <ul class="lista">{artiklar.filter((a) => isoDag(a.publicerad) === d).map((a) => <Rad a={a} />)}</ul>
+    </section>
+  ))}
+</Tidning>

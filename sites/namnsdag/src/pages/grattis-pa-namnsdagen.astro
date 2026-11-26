@@ -1,0 +1,188 @@
+---
+// Lång guidesida: Grattis på namnsdagen – hälsningar, idéer och tradition. Hälsningarna är skrivna av redaktionen.
+// Egen data: månadens största namnsdagar (namnlängden + SCB 2020) och en hälsningsgenerator som slår upp datumet.
+// Fakta om traditionen från Isof och Wikipedia, lästa 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import { SITE, AR, ALLA_NAMN, MANADER, dagText, dagHref, namnHref, barare, tal, giltigt, delMmdd, lista } from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const versal = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+// Den mest burna namnsdagen i varje månad.
+const perManad = MANADER.map((m, i) => {
+  const xs = ALLA_NAMN.filter((n) => giltigt(n, AR) && delMmdd(n.datum).m === i + 1).sort((a, b) => barare(b) - barare(a));
+  return { m, top: xs.slice(0, 3) };
+});
+const storsta = ALLA_NAMN.filter((n) => giltigt(n, AR)).sort((a, b) => barare(b) - barare(a)).slice(0, 10);
+const sumTopp = storsta.reduce((s, n) => s + barare(n), 0);
+
+const HALSNINGAR = [
+  { grupp: "Korta hälsningar", rader: [
+    "Grattis på namnsdagen, {namn}! Hoppas dagen blir lika fin som namnet.",
+    "Hurra för {namn} som har namnsdag idag!",
+    "Grattis på din dag, {namn}. Nu har du en ursäkt att äta tårta.",
+  ] },
+  { grupp: "Till en kollega", rader: [
+    "Grattis på namnsdagen, {namn}! Fikat är på oss idag.",
+    "Idag står ditt namn i almanackan, {namn}. Grattis från hela gänget!",
+  ] },
+  { grupp: "Till ett barn eller barnbarn", rader: [
+    "Grattis på namnsdagen, {namn}! Idag är det din dag i hela Sveriges almanacka.",
+    "Hipp hipp hurra för {namn}! Vi är så glada att just du heter som du gör.",
+  ] },
+  { grupp: "Till en vän eller partner", rader: [
+    "Grattis på namnsdagen, {namn}! Ett vackert namn till en fin människa.",
+    "Det finns många som heter {namn}, men bara en du. Grattis på namnsdagen!",
+  ] },
+  { grupp: "Lite mer formellt", rader: [
+    "Varma gratulationer på namnsdagen, {namn}. Vi önskar dig en riktigt fin dag.",
+    "Hjärtliga gratulationer på namnsdagen tillönskas {namn}.",
+  ] },
+];
+const exempel = (t) => t.replaceAll("{namn}", "Anna");
+
+const avsnitt = [
+  { id: "skapa", rubrik: "Skapa en namnsdagshälsning" },
+  { id: "halsningar", rubrik: "Grattis på namnsdagen – färdiga hälsningar" },
+  { id: "skriva", rubrik: "Så skriver du en personlig hälsning" },
+  { id: "present", rubrik: "Namnsdagspresent – små och stora idéer" },
+  { id: "tarta", rubrik: "Namnsdagstårta och fika" },
+  { id: "tradition", rubrik: "Traditionen att gratulera på namnsdagen" },
+  { id: "kalender", rubrik: "Årets största namnsdagar" },
+];
+
+const fragor = [
+  { fraga: "Vad skriver man på någons namnsdag?", svar: "Ett kort \"Grattis på namnsdagen\" följt av namnet räcker långt. Vill du göra det personligt kan du nämna vad namnet betyder eller vilka andra som har namnsdag samma dag." },
+  { fraga: "Ger man present på namnsdagen?", svar: "Det finns ingen regel om det. De flesta nöjer sig med en hälsning. Vill du ge något passar en liten gåva, till exempel blommor, en bok eller något hemgjort, bättre än en stor present." },
+  { fraga: "När har jag namnsdag?", svar: "Skriv ditt namn i rutan på den här sidan eller på startsidan så ser du dagen. Om namnet saknas i almanackan är den 1 januari gemensam namnsdag." },
+  { fraga: "Var namnsdagen viktigare förr?", svar: "Ja. Enligt Isof var namnsdagsfirandet under 1800-talet på många håll större än födelsedagsfirandet, och kungliga namnsdagar firades allmänt in på slutet av 1800-talet." },
+  { fraga: "Vilken namnsdag har flest att gratulera?", svar: `Anna den 9 december, med ${tal(barare(storsta[0]))} kvinnor som har Anna som tilltalsnamn (SCB 2020). Räknar man dagens alla namn är 30 november, med Anders och Andreas, den största dagen.` },
+];
+
+const titel = "Grattis på namnsdagen – hälsningar, idéer och tradition";
+const beskrivning = "Grattis på namnsdagen! Färdiga hälsningar till kollegor, barn och vänner, en hälsning med rätt datum för valfritt namn, presentidéer och årets största namnsdagar.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Grattis på namnsdagen"
+  svar={`Ett enkelt <strong>"Grattis på namnsdagen, [namn]!"</strong> är den vanligaste hälsningen. Skriv namnet i rutan nedan så får du dagen för namnsdagen och färdiga hälsningar att kopiera. Vill du göra mer kan du bjuda på fika eller ge en liten gåva. Förr var namnsdagen på många håll ett större firande än födelsedagen.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Grattis på namnsdagen", href: "/grattis-pa-namnsdagen/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Namnsdag idag", href: "/", text: "Vem ska du gratulera idag?" },
+    { namn: "Namnsdagens historia", href: "/namnsdag/", text: "Almanackan, namnlängden och firandet" },
+    { namn: "Ovanliga namn och betydelser", href: "/ovanliga-namn/", text: "Vad betyder namnet?" },
+    { namn: "Alla namnsdagar i kalendern", href: "/namnsdagar.ics", text: "Kalenderfil för mobilen" },
+    { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/", text: "När firar man om namnet saknas?" },
+  ]}
+  kallor={[
+    { namn: "Isof – Namnsdagar", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/namnsdagar", text: "firandet på 1800-talet och kungliga namnsdagar", datum: "2026-11-25" },
+    { namn: "Wikipedia – Namnsdag", url: "https://sv.wikipedia.org/wiki/Namnsdag", text: "seden i Sverige och Finland, och namnsdagens betydelse för barn", datum: "2026-11-25" },
+    { namn: "Wikipedia – Ja, må han leva", url: "https://sv.wikipedia.org/wiki/Ja,_m%C3%A5_han_leva", text: "sångens ursprung och användning vid födelsedagar", datum: "2026-11-25" },
+    { namn: "Isof – Alla namn i almanackan", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/alla-namn-i-almanackan", text: "namnlängden", datum: "2026-11-22" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn med minst 10 bärare (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "antal bärare 2020, CC0", datum: "2026-11-22" },
+  ]}>
+
+  <h2 id="skapa">Skapa en namnsdagshälsning</h2>
+  <p>Skriv namnet på den du vill gratulera. Du får veta när namnsdagen är och hur många dagar det är kvar, och tre hälsningar med namnet ifyllt.</p>
+  <form class="sokruta" id="halsning" onsubmit="return false">
+    <label for="halsning-namn">Vem vill du gratulera?</label>
+    <div class="rad">
+      <input id="halsning-namn" name="namn" autocomplete="off" placeholder="t.ex. Anna" />
+      <button class="knapp" type="submit">Skapa hälsning</button>
+    </div>
+    <output for="halsning-namn" aria-live="polite"><noscript>Verktyget kräver JavaScript. Hälsningarna finns också nedan.</noscript></output>
+  </form>
+
+  <h2 id="halsningar">Grattis på namnsdagen – färdiga hälsningar</h2>
+  <p>Här är hälsningar för olika tillfällen. Byt ut namnet, eller använd verktyget ovan. Hälsningarna är skrivna av oss och får användas fritt i sms, kort och mejl.</p>
+  {HALSNINGAR.map((g) => <>
+    <h3>{g.grupp}</h3>
+    <ul>{g.rader.map((r) => <li>{exempel(r)}</li>)}</ul>
+  </>)}
+
+  <h2 id="skriva">Så skriver du en personlig hälsning</h2>
+  <p>En namnsdag är ett bra tillfälle att visa att man tänker på någon, utan att det behöver bli lika stort som en födelsedag. Några sätt att göra hälsningen mer personlig:</p>
+  <ul>
+    <li><strong>Berätta vad namnet betyder.</strong> Astrid är ett nordiskt namn av "as" (gud) och "frid", och Lars är en kortform av Laurentius, den lagerkrönte. Fler betydelser finns på sidan om <a href="/ovanliga-namn/">namnens betydelse</a>.</li>
+    <li><strong>Nämn vilka som delar dagen.</strong> Den som heter Maja delar dag med Maria, och Andreas med Anders. Varje dag har en egen sida, till exempel <a href={dagHref("11-30")}>30 november</a>.</li>
+    <li><strong>Lägg till en siffra.</strong> På varje namnsida står hur många i Sverige som har namnet. "Du är en av 97 287 Annor, men den bästa" är en hälsning som stannar kvar.</li>
+    <li><strong>Var i tid.</strong> Lägg in namnsdagen i mobilens kalender. Varje namn har en kalenderfil, och det finns en fil med <a href="/namnsdagar.ics">alla namnsdagar</a>.</li>
+  </ul>
+
+  <h2 id="present">Namnsdagspresent – små och stora idéer</h2>
+  <p>Det finns ingen regel om att man ska ge en present på namnsdagen, och de flesta nöjer sig med en hälsning. Vill du ge något passar det oftast bäst med en liten gåva. Några idéer:</p>
+  <ul>
+    <li><strong>Blommor</strong> eller en krukväxt.</li>
+    <li><strong>Något med namnet på</strong>, som en mugg, en bok eller ett kort med namnets betydelse.</li>
+    <li><strong>Något hemgjort</strong>, till exempel bullar, en teckning från barnen eller ett eget kort.</li>
+    <li><strong>En upplevelse</strong>, som en fika eller en lunch tillsammans.</li>
+  </ul>
+  <p>För barn kan namnsdagen vara en extra liten festdag mitt i året, långt från födelsedagen. En liten present eller ett paket på frukostbordet kan göra dagen speciell.</p>
+
+  <h2 id="tarta">Namnsdagstårta och fika</h2>
+  <p>Ett enkelt sätt att fira på jobbet eller hemma är att bjuda på fika. Det kan vara en tårta, en sockerkaka eller bullar. Den som har namnsdag kan själv bjuda kollegorna, eller så ordnar arbetskamraterna något. Skriv gärna namnet på tårtan eller på ett kort bredvid fatet.</p>
+  <p>På en arbetsplats är det bra att ha koll på vilka namnsdagar som kommer. Sök på <a href="/">startsidan</a> för att se veckans namnsdagar, eller bläddra bland namnsdagarna månad för månad, till exempel <a href="/januari/">januari</a>.</p>
+
+  <h2 id="tradition">Traditionen att gratulera på namnsdagen</h2>
+  <p>Att fira namnsdag är en gammal sed. Enligt Isof var namnsdagsfirandet under 1800-talet på många håll i landet större än födelsedagsfirandet. Eftersom almanackan fanns i de flesta hem var namnen kända för många. Kungliga namnsdagar firades allmänt in på slutet av 1800-talet, och i städerna hölls Oscarsbaler och Karlsbaler för societeten. Kungens, drottningens och kronprinsessans namnsdagar är fortfarande allmänna flaggdagar.</p>
+  <p>Namnsdagen har särskilt varit en viktig dag för barnen, och firandet hade många drag som senare förknippades med födelsedagen. Födelsedagssången "Ja, må han leva" har rötter i slutet av 1700-talet, men enligt Wikipedia är den först känd som födelsedagssång omkring 1940. Läs mer om <a href="/namnsdag/">namnsdagens historia</a>.</p>
+  <p>I Finland är seden också levande. Den kom dit på 1700-talet, först till städerna i sydvästra Finland. Enligt Isof lever traditionen bland protestantiska länder i dag särskilt i Sverige och Finland.</p>
+
+  <h2 id="kalender">Årets största namnsdagar</h2>
+  <p>Vill du hinna gratulera så många som möjligt? Tabellen visar de tre namnen i varje månad som flest personer har som tilltalsnamn, enligt SCB 2020.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th>Största namnsdagarna</th></tr></thead>
+    <tbody>{perManad.map((p) => <tr><td><a href={`/${p.m}/`}>{versal(p.m)}</a></td><td>{p.top.map((n, i) => <>{i > 0 && ", "}<a href={namnHref(n.namn)}>{n.namn}</a> {dagText(n.datum)} ({tal(barare(n))})</>)}</td></tr>)}</tbody>
+  </table></div>
+  <p>De tio största namnsdagarna, {lista(storsta.slice(0, 5).map((n) => n.namn))} och fem till, bärs tillsammans av {tal(sumTopp)} personer. Störst är Anna den 9 december.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const f = document.getElementById("halsning");
+      if (!f) return;
+      const ut = f.querySelector("output"), falt = f.namn;
+      const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+      const MALL = [
+        "Grattis på namnsdagen, {namn}! Hoppas dagen blir lika fin som namnet.",
+        "Idag står ditt namn i almanackan, {namn}. Grattis från oss alla!",
+        "Det finns många som heter {namn}, men bara en du. Grattis på namnsdagen!",
+      ];
+      const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      let data;
+      const ladda = async () => (data ??= await (await fetch("/data/namnsdagar.json")).json());
+      const nasta = (k) => {
+        const nu = new Date(new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm" }).format(new Date()) + "T00:00:00Z");
+        const [m, d] = k.split("-").map(Number);
+        for (let y = nu.getUTCFullYear(); y < nu.getUTCFullYear() + 9; y++) {
+          const t = new Date(Date.UTC(y, m - 1, d));
+          if (t.getUTCMonth() === m - 1 && t >= nu) return Math.round((t - nu) / 86400000);
+        }
+        return null;
+      };
+      const visa = async () => {
+        const q = falt.value.trim();
+        if (!q) { ut.textContent = ""; return; }
+        const namn = esc(q.charAt(0).toUpperCase() + q.slice(1));
+        let info = "";
+        try {
+          const d = await ladda();
+          const t = d.namn.find((n) => n[0].toLowerCase() === q.toLowerCase());
+          if (t) {
+            const [, slug, k, , huvud] = t;
+            const dag = `${Number(k.slice(3))} ${MN[Number(k.slice(0, 2)) - 1]}`;
+            const kvar = nasta(k);
+            const nar = kvar === 0 ? "idag" : kvar === 1 ? "imorgon" : `om ${kvar} dagar`;
+            info = huvud
+              ? `<p>${namn} saknas i almanackan men kan firas på ${esc(huvud)}-dagen, <a href="/namn/${slug}/">${dag}</a> (${nar}).</p>`
+              : `<p>${namn} har namnsdag <a href="/namn/${slug}/">${dag}</a>, ${nar}.</p>`;
+          } else {
+            info = `<p>${namn} finns inte i almanackan. Den <a href="/1-januari/">1 januari</a> är gemensam namnsdag för alla namn som saknas.</p>`;
+          }
+        } catch {}
+        ut.innerHTML = info + "<ul>" + MALL.map((m) => `<li>${m.replaceAll("{namn}", namn)}</li>`).join("") + "</ul>";
+      };
+      let timer;
+      falt.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(visa, 300); });
+      f.addEventListener("submit", (e) => { e.preventDefault(); visa(); });
+    })();
+  </script>
+</Guide>

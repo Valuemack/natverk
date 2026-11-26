@@ -1,0 +1,39 @@
+/* Sajtspecifika komponenter för namnsdagsidag.se (temat ligger i packages/core/src/bas.css). */
+.idag { display: grid; gap: .4rem; background: #fff; border: 1px solid #e6d7df; border-top: 6px solid var(--farg);
+  border-radius: 6px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
+.idag .datumrad { color: var(--dampad); font-size: .95rem; text-transform: capitalize; }
+.idag .stornamn { font: 700 clamp(1.9rem, 6vw, 2.8rem)/1.15 var(--rubrik-font, Georgia, serif); color: var(--farg); margin: 0; }
+.idag .stornamn a { color: inherit; text-decoration: none; }
+.idag .stornamn a:hover { text-decoration: underline; }
+.idag .extra { margin: 0; }
+
+.namnchips { list-style: none; padding: 0; margin: .4rem 0 1rem; display: flex; flex-wrap: wrap; gap: .45rem; }
+.namnchips a { display: inline-block; padding: .3rem .75rem; border-radius: 99px; background: #f7eef3; color: var(--farg);
+  text-decoration: none; border: 1px solid #ead5e0; }
+.namnchips a:hover { background: var(--farg); color: #fff; }
+.namnchips small { color: var(--dampad); margin-left: .25rem; }
+
+.veckan { list-style: none; padding: 0; margin: .5rem 0 1rem; border-top: 1px solid var(--linje); }
+.veckan li { display: grid; grid-template-columns: 9.5rem 1fr; gap: .6rem; padding: .45rem 0; border-bottom: 1px solid var(--linje); }
+.veckan li[aria-current] { font-weight: 700; }
+.veckan .vd { color: var(--dampad); text-transform: capitalize; }
+
+.sokruta { background: var(--yta); border: 1px solid var(--linje); border-radius: 8px; padding: 1rem; margin: 1rem 0 1.4rem; }
+.sokruta label { display: block; font-weight: 600; margin-bottom: .35rem; }
+.sokruta .rad { display: flex; gap: .5rem; flex-wrap: wrap; }
+.sokruta input { flex: 1 1 14rem; font: inherit; padding: .55rem .65rem; border: 1px solid #c9c1c6; border-radius: 6px; }
+.sokruta output { display: block; margin-top: .6rem; min-height: 1.4em; }
+
+.staplar { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; align-items: end; gap: 2px; height: 140px;
+  border-bottom: 1px solid var(--linje); margin: .6rem 0 .2rem; }
+.staplar span { background: var(--farg); opacity: .85; border-radius: 2px 2px 0 0; min-height: 1px; }
+.staplar-ar { display: flex; justify-content: space-between; color: var(--dampad); font-size: .8rem; }
+
+.alfabet { display: flex; flex-wrap: wrap; gap: .3rem; margin: .5rem 0 1rem; }
+.alfabet a { display: inline-block; min-width: 2rem; text-align: center; padding: .25rem .4rem; border: 1px solid var(--linje); border-radius: 4px; text-decoration: none; }
+.namnkolumner { columns: 4 10rem; padding: 0; list-style: none; margin: .3rem 0 1rem; }
+.namnkolumner li { break-inside: avoid; padding: .1rem 0; }
+.namnkolumner small { color: var(--dampad); }
+
+.manadstabell td:first-child { white-space: nowrap; }
+.idag-rad td { background: #f7eef3; font-weight: 700; }

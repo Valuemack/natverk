@@ -1,0 +1,145 @@
+# Nattbygge för dagensgodanyheter.se: hämta förstahandskällor → skriv och faktagranska artiklar → bygg → publicera.
+# Körs kl. 03 svensk tid året runt. GitHub-scheman går i UTC, så två scheman finns:
+#   01:00 UTC = 03:00 sommartid (CEST)   02:00 UTC = 03:00 vintertid (CET)
+# Steget "Svensk tid" släpper bara igenom det schema som motsvarar 03 just nu. Valet görs på vilket schema som
+# utlöste körningen, inte på klockslaget, så att GitHubs förseningar (ofta 10–40 min) inte gör att en natt hoppas över.
+#
+# Hemligheter (Settings → Secrets and variables → Actions):
+#   ANTHROPIC_API_KEY      – Claude API-nyckel. Saknas den körs skrivmotorn i torrläge och inga nya artiklar skrivs.
+#   CLOUDFLARE_API_TOKEN   – samma som för de andra sajterna ("Cloudflare Pages: Edit")
+#   CLOUDFLARE_ACCOUNT_ID  – samma som för de andra sajterna
+#   INDEXNOW_KEY           – samma som för de andra sajterna
+#   OPENAI_API_KEY         – bild-API för illustrationer (sites/dagensgodanyheter/scripts/lib/ai-bild.mjs). Saknas den
+#                            får bara rymdnyheter bild (fria NASA-foton); övriga publiceras som ren text.
+# Valfria variabler (Variables): GODA_BILDMODELL (standard gpt-image-2.6-flare), GODA_BILDKVALITET (low/medium/high),
+#   GODA_KOSTNADSTAK (USD/natt för texterna, standard 4), GODA_BILDTAK (USD/natt för bilderna, standard 1),
+#   GODA_ANTAL (nya artiklar per natt, 1–15, standard 14)
+#
+# Nya artiklar (JSON) och bilder checkas in i repot av körningen, med "[skip ci]" så att push-bygget
+# för de andra sajterna (dagligt-bygge.yml) inte startas.
+name: Goda nyheter (nattbygge)
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      skriv:
+        description: "Skriv nya artiklar (annars bara bygg och publicera)"
+        type: boolean
+        default: true
+
+concurrency:
+  group: godanyheter
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  natt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Svensk tid
+        id: tid
+        run: |
+          OFFSET=$(TZ=Europe/Stockholm date +%z)
+          SCHEMA="${{ github.event.schedule }}"
+          KOR=0
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then KOR=1; fi
+          if [ "$SCHEMA" = "0 1 * * *" ] && [ "$OFFSET" = "+0200" ]; then KOR=1; fi
+          if [ "$SCHEMA" = "0 2 * * *" ] && [ "$OFFSET" = "+0100" ]; then KOR=1; fi
+          echo "Stockholm $(TZ=Europe/Stockholm date '+%F %H:%M') ($OFFSET), schema '$SCHEMA' → kör=$KOR"
+          echo "kor=$KOR" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        if: steps.tid.outputs.kor == '1'
+
+      - uses: actions/setup-node@v4
+        if: steps.tid.outputs.kor == '1'
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+        if: steps.tid.outputs.kor == '1'
+
+      - name: Tester
+        if: steps.tid.outputs.kor == '1'
+        run: node --test "sites/dagensgodanyheter/tester/*.test.mjs"
+
+      - name: Hämta och poängsätt kandidater
+        if: steps.tid.outputs.kor == '1' && github.event.inputs.skriv != 'false'
+        continue-on-error: true
+        timeout-minutes: 20
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run hamta -w sites/dagensgodanyheter
+
+      - name: Skriv och faktagranska artiklar
+        if: steps.tid.outputs.kor == '1' && github.event.inputs.skriv != 'false'
+        continue-on-error: true # misslyckas skrivningen publiceras sajten ändå med gårdagens artiklar
+        timeout-minutes: 40
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GODA_KOSTNADSTAK: ${{ vars.GODA_KOSTNADSTAK || '4' }} # USD per natt för Claude-anropen
+          GODA_AI_BILD: av # bilderna skapas i nästa steg, med eget kostnadstak
+        run: npm run skriv -w sites/dagensgodanyheter -- --antal=${{ vars.GODA_ANTAL || '14' }} # 12–15 nya artiklar per natt
+
+      - name: Bilder till nattens högst poängsatta artiklar (övriga blir ren text)
+        if: steps.tid.outputs.kor == '1'
+        continue-on-error: true # utan bild publiceras artikeln ändå, som ren text
+        timeout-minutes: 20
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # visuell kontroll av fria foton
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GODA_BILDMODELL: ${{ vars.GODA_BILDMODELL }}
+          GODA_BILDKVALITET: ${{ vars.GODA_BILDKVALITET }}
+          GODA_BILDTAK: ${{ vars.GODA_BILDTAK || '1' }} # USD per natt för bilderna
+        run: npm run bilder -w sites/dagensgodanyheter -- --max=5 # ~35 % av nattens artiklar, högst 5 nya bilder
+
+      - name: Spara nya artiklar i repot
+        if: steps.tid.outputs.kor == '1'
+        run: |
+          git config user.name "goda-nyheter-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sites/dagensgodanyheter/data/artiklar sites/dagensgodanyheter/data/provade.json sites/dagensgodanyheter/public/bilder || true
+          if git diff --cached --quiet; then echo "Inga nya artiklar."; exit 0; fi
+          N=$(git diff --cached --name-only -- sites/dagensgodanyheter/data/artiklar | wc -l)
+          git commit -m "Goda nyheter: $N nya eller bildsatta artiklar [skip ci]"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
+
+      - name: Bygg
+        if: steps.tid.outputs.kor == '1'
+        run: npm run build -w sites/dagensgodanyheter
+
+      - name: Sitemap-lastmod och IndexNow-förberedelse
+        if: steps.tid.outputs.kor == '1'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/dagensgodanyheter
+
+      - name: Publicera till Cloudflare Pages
+        if: steps.tid.outputs.kor == '1'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy sites/dagensgodanyheter/dist --project-name=dagensgodanyheter --branch=main --commit-dirty=true
+
+      - name: Pinga IndexNow (Bing m.fl.)
+        if: steps.tid.outputs.kor == '1' && vars.INDEXNOW_PA == '1'
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node packages/core/scripts/indexnow.mjs sites/dagensgodanyheter --skicka
+
+      - name: Rapport
+        if: steps.tid.outputs.kor == '1' && always()
+        run: |
+          F=sites/dagensgodanyheter/data/raw/skrivrapport.json
+          T=sites/dagensgodanyheter/data/raw/torrkorning.json
+          if [ -f "$F" ]; then node -e "const r=require('./$F');console.log('Publicerade:',r.publicerade.length,'Underkända:',r.underkanda.length,'Hoppade:',r.hoppade.length,'Kostnad: \$'+r.kostnad)" >> "$GITHUB_STEP_SUMMARY"; fi
+          if [ -f "$T" ]; then echo "Torrläge: ANTHROPIC_API_KEY saknas – inga nya artiklar skrevs." >> "$GITHUB_STEP_SUMMARY"; fi
+          B=sites/dagensgodanyheter/data/raw/bildplan.json
+          if [ -f "$B" ]; then node -e "const b=require('./$B');console.log('Bilder:',b.lage==='torr'?'torrläge ('+b.orsak+')':b.bilder.filter(x=>x.status==='skapad').length+' av '+b.antal+' skapade')" >> "$GITHUB_STEP_SUMMARY"; fi

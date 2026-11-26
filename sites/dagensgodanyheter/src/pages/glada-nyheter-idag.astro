@@ -1,0 +1,41 @@
+---
+// "Glada nyheter idag": dagens publicerade nyheter med full ingress. Finns inget från idag visas den senaste dagen med nyheter, tydligt daterad.
+import Tidning from "../components/Tidning.astro";
+import Rad from "../components/Rad.astro";
+import Siffror from "../components/Siffror.astro";
+import { ARTIKLAR, NU, isoDag, dagText, efterLasvarde, versal } from "../lib/artiklar.js";
+import { samlingLd } from "../lib/ld.js";
+
+const idag = isoDag(NU);
+const dagar = [...new Set(ARTIKLAR.map((a) => isoDag(a.publicerad)))].sort().reverse();
+const visadDag = dagar.includes(idag) ? idag : dagar[0];
+const dagens = efterLasvarde(ARTIKLAR.filter((a) => isoDag(a.publicerad) === visadDag));
+const arIdag = visadDag === idag;
+const dagNamn = visadDag ? dagText(new Date(`${visadDag}T12:00:00Z`)) : "";
+const tidigare = dagar.filter((d) => d !== visadDag).slice(0, 6);
+---
+<Tidning titel={`Glada nyheter idag – ${dagNamn}`}
+  beskrivning={`Glada och positiva nyheter ${arIdag ? "idag" : dagNamn}: ${dagens.length} goda nyheter, rangordnade efter läsvärde. ${dagens[0] ? dagens[0].rubrik : ""}`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Glada nyheter idag", href: "/glada-nyheter-idag/" }]}
+  ogBild={dagens[0]?.ogBild}
+  jsonld={[samlingLd({ namn: "Glada nyheter idag", beskrivning: `Dagens goda nyheter ${dagNamn}`, href: "/glada-nyheter-idag/", artiklar: dagens })]}>
+  <header class="sidhuvud">
+  <h1 class="sidrubrik">Glada nyheter idag</h1>
+  <p class="sidingress">
+    {arIdag
+      ? <>{versal(dagNamn)} har vi publicerat {dagens.length} {dagens.length === 1 ? "glad nyhet" : "glada nyheter"}, sorterade efter läsvärde. Nya artiklar kommer varje natt.</>
+      : <>Inga nya artiklar har publicerats idag än. Här är de {dagens.length} senaste glada nyheterna, från {dagNamn}. Nästa omgång publiceras i natt.</>}
+    {" "}Världen blir bättre på fler sätt än nyhetsflödet visar – här är dagens bevis.
+  </p>
+  </header>
+  <ul class="lista">{dagens.map((a) => <Rad a={a} rubrikNiva="h2" />)}</ul>
+
+  <Siffror bred forskjut={1} />
+
+  {tidigare.length > 0 && (
+    <section class="sektion">
+      <h2 class="sektion-rubrik">Tidigare dagar</h2>
+      <div class="knapprad">{tidigare.map((d) => <a href={`/arkiv/${d.slice(0, 7)}/#d-${d}`}>{versal(dagText(new Date(`${d}T12:00:00Z`)))}</a>)}</div>
+    </section>
+  )}
+</Tidning>

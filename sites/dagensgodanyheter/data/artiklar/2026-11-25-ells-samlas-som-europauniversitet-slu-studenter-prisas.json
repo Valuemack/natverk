@@ -1,0 +1,91 @@
+{
+  "id": "196ff5eb818f",
+  "slug": "ells-samlas-som-europauniversitet-slu-studenter-prisas",
+  "kategori": "vetenskap",
+  "vinjett": "Högre utbildning",
+  "rubrik": "SLU-studenter prisades när ELLS samlades som Europauniversitet i Montpellier",
+  "seorubrik": "SLU-studenter prisade när ELLS möttes i Montpellier",
+  "ingress": "Universiteten i alliansen ELLS, där SLU ingår, har för första gången samlats som Europauniversitet. I Montpellier lovade de att fördjupa samarbetet om klimat, livsmedel och naturresurser, och flera SLU-studenter fick pris.",
+  "avsnitt": [
+    {
+      "rubrik": "Universiteten bekräftade sitt samarbete med ett gemensamt avtal",
+      "stycken": [
+        "ELLS har fått stöd inom EU:s satsning European Universities. Nu har alla medlemsuniversitet för första gången samlats sedan beskedet kom. Mötet hölls i Montpellier i Frankrike under namnet General Assembly Forum.",
+        "Mötets höjdpunkt var en högtidlig signering av ett samförståndsavtal, ett så kallat Memorandum of Understanding. Där bekräftade samtliga medlemsuniversitet att de vill fördjupa samarbetet inom ramen för European University Alliance. Enligt SLU blev mötet en viktig milstolpe för alliansen."
+      ]
+    },
+    {
+      "rubrik": "Samarbete över gränserna ska ge studenterna fler möjligheter",
+      "stycken": [
+        "En central fråga på mötet var hur framtidens ledare kan rustas för att möta klimatutmaningar, trygga livsmedelsförsörjningen och förvalta naturresurser. Enligt SLU blir samhällets utmaningar alltmer globala, och inget enskilt universitet kan lösa dem ensamt.",
+        "Genom ett närmare samarbete över nationsgränserna vill universiteten erbjuda fler utbildningsvägar och starkare forskningsmiljöer. Studenterna står i centrum. De ska få fler chanser att arbeta internationellt, möta andra kulturer och ta del av kunskap från universitet i hela Europa.",
+        "SLU:s rektor Maria Knutson Wedel deltog och betonade hur viktigt studenternas engagemang är för samarbetet. SLU:s vicerektor för internationalisering, Ylva Hillbur, presenterade alliansens nästa utvecklingsfas. Presentationen möttes av stort engagemang."
+      ]
+    },
+    {
+      "rubrik": "Rekordmånga SLU-studenter och flera utmärkelser",
+      "stycken": [
+        "I samband med mötet hölls också ELLS studentkonferens i Montpellier. Studenter från hela Europa presenterade sin forskning, utbytte erfarenheter och knöt internationella kontakter.",
+        "SLU deltog med fler studenter än någonsin tidigare. Wilma Lagerman fick Sustainability Award för sitt arbete med hållbar utveckling. Leonie Brämer och Silke Bossant, som tidigare studerat inom programmet EnvEuro, prisades för bästa muntliga presentation inom biologi respektive bästa masteruppsats."
+      ]
+    },
+    {
+      "rubrik": "Nästa möte hålls i Uppsala",
+      "stycken": [
+        "Den 13–15 januari 2027 tar arbetet nästa steg, då parterna samlas till ett uppstartsmöte hos SLU i Uppsala. Värd för nästa års ELLS-konferens blir Warsaw University of Life Sciences."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "ELLS möte i Montpellier",
+    "punkter": [
+      "Första mötet för alla medlemsuniversitet sedan ELLS fick stöd inom EU:s satsning European Universities",
+      "Universiteten skrev under ett samförståndsavtal om fördjupat samarbete",
+      "SLU deltog med rekordmånga studenter i studentkonferensen",
+      "Wilma Lagerman fick Sustainability Award",
+      "Uppstartsmöte på SLU i Uppsala 13–15 januari 2027",
+      "Warsaw University of Life Sciences står värd för ELLS-konferensen 2027"
+    ]
+  },
+  "varfor": "Klimat, livsmedelsförsörjning och naturresurser är frågor som inget universitet kan lösa på egen hand. Med ett formellt avtal och stöd från EU får universiteten i ELLS bättre förutsättningar att samarbeta över gränserna. Studenterna får fler internationella möjligheter, och SLU-studenternas utmärkelser visar att den nya generationen redan bidrar med kunskap om hållbarhet.",
+  "taggar": [
+    "högre utbildning",
+    "internationellt samarbete",
+    "hållbar utveckling",
+    "slu"
+  ],
+  "beskrivning": "ELLS samlades för första gången som Europauniversitet i Montpellier. Universiteten skrev under ett avtal och flera SLU-studenter fick pris.",
+  "kalla": {
+    "id": "slu",
+    "namn": "SLU",
+    "url": "https://www.slu.se/nyheter/2026/11/ells-samlas-for-forsta-gangen-som-europauniversitet",
+    "hem": "https://www.slu.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-20T09:18:00.000Z",
+    "rubrik": "ELLS samlas för första gången som Europauniversitet"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:09:14.361Z",
+  "uppdaterad": "2026-11-25T23:09:14.361Z",
+  "bild": null,
+  "bildmotiv": "a sunny inner courtyard of a southern European university campus with stone benches, potted olive trees and parked bicycles, nobody in focus",
+  "bildalt": "Takåsar i Montpellier i södra Frankrike, där universiteten i ELLS samlades.",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.38,
+    "tillit": 0.95,
+    "total": 49
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:09:14.361Z",
+    "anmarkningar": [
+      "overdrift: Källan kallar signeringen 'en av forumets höjdpunkter', inte den enda höjdpunkten. Mindre förstärkning.",
+      "overdrift: Källan säger att framgångarna speglar alliansens mål att ge nästa generation kunskap. Artikelns slutsats går något längre, men det är en mindre tolkning."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

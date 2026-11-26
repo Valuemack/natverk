@@ -1,0 +1,119 @@
+{
+  "id": "6fa54f9f7770",
+  "slug": "ai-ska-gora-stralbehandling-snabbare-och-sakrare",
+  "kategori": "halsa",
+  "vinjett": "Cancervård",
+  "rubrik": "KI-forskare vill använda AI för snabbare och mer träffsäker strålbehandling",
+  "seorubrik": "AI kan göra strålbehandling snabbare – KI-forskning",
+  "ingress": "En forskare vid Karolinska Institutet och Södersjukhuset vill med hjälp av AI korta den manuella planeringen av strålbehandling. Målet är mer tid för patienterna, behandlingar som är anpassade till varje person och på sikt färre biverkningar.",
+  "avsnitt": [
+    {
+      "rubrik": "Datorprogram ska avlasta planeringen av strålterapi",
+      "stycken": [
+        "Albert Siegbahn är medicinsk fysiker vid Södersjukhuset i Stockholm och forskar vid Institutionen för klinisk forskning och utbildning vid Södersjukhuset, som hör till Karolinska Institutet. Han vill göra strålbehandlingen snabbare, säkrare och bättre anpassad till varje patient.",
+        "Enligt Siegbahn finns det redan datorprogram som snabbt och träffsäkert kan markera var tumörer och friska organ finns på röntgenbilder. Den stora utmaningen är att få tekniken att fungera i sjukhusens vardag. Programmen måste passa in i hur läkare och fysiker faktiskt arbetar för att göra nytta.",
+        "Han vill minska den tidskrävande manuella planeringen. Då kan personalen lägga mer tid på patienterna och på de svåra medicinska besluten."
+      ]
+    },
+    {
+      "rubrik": "Strålningen kan riktas mer exakt mot tumören",
+      "stycken": [
+        "Med hjälp av AI kan man beräkna vilket sätt att ge strålningen som bäst når tumören med den effekt man vill uppnå, och samtidigt skona den friska vävnaden runt omkring så mycket som möjligt. Enligt Siegbahn gör det behandlingen säkrare och minskar risken för svåra biverkningar efteråt.",
+        "På tio års sikt hoppas han att behandlingarna blir mycket mer flexibla. I dag används ofta samma strålningsplan under flera veckor. I framtiden kan datorer hjälpa till att justera behandlingen vid varje tillfälle om kroppens form eller tumörens läge har ändrats. Han vill också att programmen blir bättre på att visa när de är säkra på sin bedömning, så att personalen kan lita på dem."
+      ]
+    },
+    {
+      "rubrik": "Nytt centrum samlar vård, forskning och teknikföretag",
+      "stycken": [
+        "Arbetet sker inom Centrum för medicinsk strålningsvetenskap. Där samarbetar sjukvård, universitet och teknikföretag. Sjukvården vet vad patienterna behöver, universiteten står för den grundläggande forskningen och företagen bygger programmen.",
+        "Enligt Siegbahn riskerar goda idéer att aldrig bli verklighet om de tre delarna inte arbetar tillsammans. Centret ska bli en mötesplats där nya idéer kan prövas snabbt och komma till nytta i vården. Forskningen ska föras direkt in i det kliniska arbetet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "AI i strålbehandling",
+    "punkter": [
+      "Forskare: Albert Siegbahn, medicinsk fysiker vid Södersjukhuset i Stockholm",
+      "Lärosäte: Institutionen för klinisk forskning och utbildning, Södersjukhuset, Karolinska Institutet",
+      "Verksamhet: Centrum för medicinsk strålningsvetenskap",
+      "Samarbete: sjukvård, universitet och teknikföretag",
+      "Mål: mindre manuell planering, färre biverkningar och kortare tid från diagnos till behandling",
+      "Publicerat: 25 november 2026"
+    ]
+  },
+  "varfor": "Om centret når sina mål kan cancerpatienter få starta strålbehandlingen snabbare efter diagnosen, eftersom planeringen går smidigare. Förhoppningen är också att mer träffsäker strålning ger färre biverkningar. Ytterst handlar det om bättre livskvalitet för patienterna, både under och efter behandlingen.",
+  "taggar": [
+    "artificiell intelligens",
+    "strålbehandling",
+    "cancer",
+    "södersjukhuset"
+  ],
+  "beskrivning": "KI-forskare vid Södersjukhuset vill använda AI för att korta planeringen av strålbehandling och på sikt minska biverkningarna för cancerpatienter.",
+  "kalla": {
+    "id": "ki",
+    "namn": "Karolinska Institutet",
+    "url": "https://nyheter.ki.se/sa-kan-ai-forandra-framtidens-stralbehandling",
+    "kandidatUrl": "https://nyheter.ki.se/sa-kan-ai-forandra-framtidens-stralbehandling",
+    "hem": "https://ki.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T23:00:00.000Z",
+    "rubrik": "Så kan AI förändra framtidens strålbehandling"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:49:54.368Z",
+  "uppdaterad": "2026-11-25T23:49:54.368Z",
+  "bild": {
+    "fil": "/bilder/ska-gora-stralbehandling-snabbare-och-sakrare.webp",
+    "og": "/bilder/ska-gora-stralbehandling-snabbare-och-sakrare.jpg",
+    "liten": "/bilder/ska-gora-stralbehandling-snabbare-och-sakrare-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: linjäraccelerator för strålbehandling i ett behandlingsrum på ett sjukhus",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "A modern medical linear accelerator for radiation therapy in a calm, softly lit hospital treatment room, with an empty patient couch",
+    "skapad": "2026-11-26T00:08:43.295Z",
+    "anvandning": {
+      "input_tokens": 248,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 248
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1172
+    },
+    "kostnadUSD": 0.02896,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "A modern medical linear accelerator for radiation therapy in a calm, softly lit hospital treatment room, with an empty patient couch",
+  "bildalt": "Linjäraccelerator för strålbehandling i ett behandlingsrum på ett sjukhus",
+  "poang": {
+    "positiv": 0.7,
+    "betydelse": 0.5,
+    "tillit": 0.95,
+    "total": 68
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:49:54.368Z",
+    "anmarkningar": [
+      "overdrift: Källan säger inte uttryckligen att centret är nytt. Formuleringen ”bygger vi en mötesplats” och ”om centrumet lyckas med sina ambitioner” antyder att det är en pågående satsning, så avvikelsen är liten.",
+      "overdrift: Källan säger bara att det blir ”tryggare för oss som arbetar med dem”. Artikelns formulering är något starkare, men skillnaden är liten."
+    ]
+  },
+  "rattelser": [],
+  "bildsok": [
+    "linear accelerator radiotherapy",
+    "radiotherapy treatment room"
+  ],
+  "bildbeslut": "bild"
+}

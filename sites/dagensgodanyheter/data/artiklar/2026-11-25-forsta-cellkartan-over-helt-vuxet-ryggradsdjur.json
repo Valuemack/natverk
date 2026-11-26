@@ -1,0 +1,92 @@
+{
+  "id": "a29871a1d44f",
+  "slug": "forsta-cellkartan-over-helt-vuxet-ryggradsdjur",
+  "kategori": "vetenskap",
+  "vinjett": "Cellforskning",
+  "rubrik": "Forskare har kartlagt alla celltyper i en vuxen ryggradsdjurskropp för första gången",
+  "seorubrik": "Första cellkartan över ett helt vuxet ryggradsdjur",
+  "ingress": "Forskare vid MIT, Whitehead Institute och Charité i Berlin har byggt den första heltäckande kartan över celltyper och genaktivitet i ett vuxet ryggradsdjur. Kartan över den lilla genomskinliga fisken Danionella cerebrum kan hjälpa forskningen om bland annat hjärnans förmåga att återbildas.",
+  "avsnitt": [
+    {
+      "rubrik": "Över 600 000 celler i en centimeterlång fisk",
+      "stycken": [
+        "Forskarlaget undersökte mer än 600 000 enskilda celler från hela fiskens kropp. Resultatet är en så kallad transkriptomatlas, en karta som visar vilka gener som är aktiva i vilka celler. Studien publicerades i tidskriften Science den 29 oktober.",
+        "En cells transkriptom är alla de RNA-molekyler som cellen har tillverkat utifrån sitt DNA vid ett visst tillfälle. Det ger en ögonblicksbild av vilka gener cellen faktiskt använder.",
+        "Forskarna tog celler från hjärnan, ryggmärgen, ögonen, de inre organen, fenorna, huvudet och bålen. Med hjälp av rumsliga metoder kunde de också placera celltyperna på rätt plats i vävnaderna. Kartan blev så omfattande att även mycket sällsynta cellgrupper kom med."
+      ]
+    },
+    {
+      "rubrik": "Storleken gjorde det möjligt",
+      "stycken": [
+        "Cellkartor har blivit allt mer detaljerade, men att kartlägga ett helt vuxet ryggradsdjur har varit svårt. Större djur kräver omfattande och dyrt arbete. Danionella cerebrum är knappt en centimeter lång, vilket gjorde försöket genomförbart.",
+        "Arten beskrevs formellt först 2021. Fisken är nästan genomskinlig, och uppifrån går hjärnan att se genom huvudet. Den är också nära släkt med zebrafisken, vilket gör att forskarna kan använda genetiska verktyg som redan finns för en av biologins vanligaste modellorganismer."
+      ]
+    },
+    {
+      "rubrik": "Celler minns var de hör hemma",
+      "stycken": [
+        "När forskarna jämförde hela kroppen syntes mönster som är svåra att upptäcka när vävnader studeras var för sig. Nervceller från samma hjärnregion liknade ofta varandra mer än nervceller som använde samma signalämne men satt i olika regioner. Liknande mönster har setts hos andra ryggradsdjur, även däggdjur.",
+        "Kartan tyder också på att vuxna celler bär på ett slags molekylärt minne av var i kroppen de hör hemma. Bindvävsceller i bröst- och bukfenorna behöll genprogram som hos andra ryggradsdjur är kopplade till utvecklingen av fram- och bakben. Vad signalerna gör hos den vuxna fisken är okänt, men enligt forskarna kan de hjälpa vävnader att behålla eller återskapa rätt strukturer."
+      ]
+    },
+    {
+      "rubrik": "Ny kunskap om hur hjärnan läker",
+      "stycken": [
+        "Fisken har en stor förmåga att återbilda vävnad, bland annat i hjärnan och fenorna. När forskarna skadade en del av framhjärnan växte de förlorade nervcellerna tillbaka. Med kartan som referens kunde de följa förloppet från sårläkning och immunsvar till aktivitet i neurala stamceller och bildandet av nya nervceller.",
+        "Atlasen finns fritt tillgänglig i det interaktiva verktyget DigiFish. Där kan andra forskare utforska celltyper och genaktivitet i hela djuret."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Cellkartan i korthet",
+    "punkter": [
+      "Djur: fisken Danionella cerebrum, knappt 1 cm lång",
+      "Antal undersökta celler: över 600 000",
+      "Publicerad i Science den 29 oktober 2026",
+      "Lärosäten: MIT, Whitehead Institute och Charité–Universitätsmedizin Berlin",
+      "Arten beskrevs formellt 2021",
+      "Kartan är öppen för alla via verktyget DigiFish"
+    ]
+  },
+  "varfor": "Kartan ger forskare en utgångspunkt för att studera hur skador, åldrande, läkemedel och andra förändringar påverkar celler i hela kroppen samtidigt. Tillsammans med fiskens genomskinlighet gör den det möjligt att välja ut specifika celler och gener och följa dem i det levande djuret. Enligt forskarna kan det ge ny kunskap om hur vävnader samverkar och hur hjärnan återbildas.",
+  "taggar": [
+    "cellforskning",
+    "genetik",
+    "hjärnforskning",
+    "fiskar"
+  ],
+  "beskrivning": "Forskare har gjort den första kompletta kartan över celltyper i ett vuxet ryggradsdjur, en genomskinlig fisk som kan återbilda sin hjärna.",
+  "kalla": {
+    "id": "mit",
+    "namn": "MIT News",
+    "url": "https://news.mit.edu/2026/first-whole-body-single-cell-atlas-adult-vertebrate-1119",
+    "hem": "https://news.mit.edu",
+    "typ": "larosate",
+    "publicerad": "2026-11-19T17:00:00.000Z",
+    "rubrik": "Scientists create the first whole-body single-cell atlas of an adult vertebrate"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:08:32.097Z",
+  "uppdaterad": "2026-11-25T23:08:32.097Z",
+  "bild": null,
+  "bildmotiv": "a tiny transparent freshwater fish in a laboratory aquarium, its brain faintly visible through the top of its head",
+  "bildalt": "Liten genomskinlig fisk i ett akvarium där hjärnan syns genom huvudet",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.46,
+    "tillit": 0.93,
+    "total": 51
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:08:32.097Z",
+    "anmarkningar": [
+      "overdrift: Källan talar om den första heltäckande ('comprehensive') kartan över celltyper och genaktivitet. 'Alla celltyper' är något starkare än källan, även om Reddien talar om 'every cell type'. Det är en mindre överdrift.",
+      "overdrift: Ordet 'samtidigt' finns inte i källan, som bara säger 'across the whole animal'. Det är ett mindre tillägg."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

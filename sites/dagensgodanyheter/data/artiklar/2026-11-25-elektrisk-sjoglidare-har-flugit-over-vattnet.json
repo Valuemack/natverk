@@ -1,0 +1,83 @@
+{
+  "id": "eb355bb0cb77",
+  "slug": "elektrisk-sjoglidare-har-flugit-over-vattnet",
+  "kategori": "teknik",
+  "vinjett": "Transport",
+  "rubrik": "Elektrisk sjöglidare har flugit – ska bli snabb och tyst kusttrafik",
+  "seorubrik": "Elektrisk sjöglidare har flugit – ny tyst kusttrafik",
+  "ingress": "Ett företag grundat av två före detta MIT-studenter har provflugit en batteridriven farkost som flyter som en båt men flyger strax över vattnet. Målet är resor längs kusten som går mycket snabbare än färjor.",
+  "avsnitt": [
+    {
+      "rubrik": "Båt, bärplan och flygplan i ett",
+      "stycken": [
+        "Farkosten kallas sjöglidare och byggs av Regent Craft. Den ligger i vattnet som en båt, lyfter sig på bärplan när farten ökar och flyger sedan på en höjd som är mindre än ett vingspann över ytan. Där utnyttjar den markeffekten: luften som pressas ihop mellan vingen och vattnet ger mer lyft och mindre luftmotstånd.",
+        "Passagerarversionen heter Viceroy, är omkring 15 meter lång och har ett vingspann på drygt 19 meter. Den gjorde sin första flygning i september. Enligt företaget kan den ta upp till 14 personer eller ungefär 1,6 ton last, flyga i upp till cirka 290 kilometer i timmen och klara omkring 290 kilometer på en laddning.",
+        "Grundarna jämför med andra trafikslag: sex gånger snabbare än en färja och till ungefär halva priset av en flygbiljett. Företaget har också flugit en mindre förarlös version, Squire, i simulerade uppdrag med den amerikanska marinkåren, för logistik och sjuktransporter. En användning som försvaret är intresserat av är att leverera blod och sjukvårdsutrustning till svåråtkomliga platser."
+      ]
+    },
+    {
+      "rubrik": "En misslyckad flygning blev en lärdom",
+      "stycken": [
+        "Idén har rötter i en tävling 2016, när grundarna Billy Thalheimer och Mike Klinker byggde en människodriven flygmaskin som skulle utnyttja markeffekten över Charles River i Boston. Den dök rakt ner i vattnet. Grundarna har beskrivit kraschen som en nyttig läxa i teknik och riskhantering.",
+        "Efter examen arbetade de med elektriska flygplan som lyfter vertikalt, men räckvidden blev kort och regelverket krångligt. Att i stället flyga enbart över vatten förenklade både tekniken och tillståndsfrågorna. Ett batteri saknar rörliga delar och elmotorn har bara en, jämfört med jetmotorns tusentals."
+      ]
+    },
+    {
+      "rubrik": "Fabrik för 70 farkoster om året",
+      "stycken": [
+        "Regent har öppnat en fabrik på omkring 24 000 kvadratmeter i North Kingstown i delstaten Rhode Island. Den ska kunna bygga ungefär 70 passagerarfarkoster om året, och de första väntas bli klara mot slutet av nästa år. Bland investerarna finns Alaska Airlines, Japan Airlines och Lockheed Martin, och företaget säger sig ha en stor orderstock."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Sjöglidaren Viceroy",
+    "punkter": [
+      "Drivs helt med batteri och elmotorer",
+      "Upp till 14 passagerare eller cirka 1,6 ton last",
+      "Toppfart omkring 290 km/h, räckvidd omkring 290 km per laddning",
+      "Första flygningen: september 2026",
+      "Fabrik i Rhode Island för cirka 70 farkoster per år"
+    ]
+  },
+  "varfor": "Enligt företaget bor omkring 40 procent av jordens befolkning nära en kust. Om eldrivna farkoster kan koppla ihop kuststäder snabbare än färjor och tystare än flyg kan det bli ett tystare och mer hållbart sätt att resa på sträckor där det i dag finns få snabba alternativ.",
+  "taggar": [
+    "elflyg",
+    "sjöfart",
+    "batterier",
+    "mit",
+    "transport"
+  ],
+  "beskrivning": "En batteridriven sjöglidare från ett MIT-grundat företag har flugit. Den flyter, åker på bärplan och flyger strax över vattnet.",
+  "kalla": {
+    "id": "mit",
+    "namn": "MIT News",
+    "url": "https://news.mit.edu/2026/electric-seaglider-from-mit-alumni-takes-flight-1125",
+    "hem": "https://news.mit.edu",
+    "typ": "larosate",
+    "publicerad": "2026-11-25T05:00:00.000Z",
+    "rubrik": "Electric seaglider created by MIT alumni takes flight"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:41:00.000Z",
+  "uppdaterad": "2026-11-25T10:41:00.000Z",
+  "bild": null,
+  "bildmotiv": "a sleek electric wing-in-ground-effect craft skimming low over a calm coastal bay at dawn, no visible markings",
+  "bildalt": "Elektrisk sjöglidare som flyger lågt över en lugn havsvik",
+  "poang": {
+    "positiv": 0.45,
+    "betydelse": 0.3,
+    "tillit": 0.93,
+    "total": 61
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:41:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

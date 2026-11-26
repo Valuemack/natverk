@@ -1,0 +1,87 @@
+{
+  "id": "554d6dc4747f",
+  "slug": "esa-hera-solformorkelse-asteroiden-didymos",
+  "kategori": "vetenskap",
+  "vinjett": "Planetförsvar",
+  "rubrik": "ESA:s rymdsond Hera har fångat en solförmörkelse på asteroiden Didymos",
+  "seorubrik": "Rymdsonden Hera fångade solförmörkelse på Didymos",
+  "ingress": "Den europeiska rymdsonden Hera har tagit en tidig bild där den lilla asteroidmånen Dimorphos kastar sin skugga över asteroiden Didymos. Uppdraget ska ge kunskap om hur jorden kan skyddas mot farliga asteroider.",
+  "avsnitt": [
+    {
+      "rubrik": "En liten måne skuggar en större asteroid",
+      "stycken": [
+        "Den europeiska rymdorganisationen ESA har publicerat en av de första närbilderna från rymdsonden Hera. Bilden visar dubbelasteroiden Didymos och dess lilla måne Dimorphos. Månen står mellan solen och Didymos och lägger en skugga över en del av den steniga ytan. Där är solen helt skymd.",
+        "Enligt Patrick Michel, som är vetenskaplig ledare för Hera och forskningschef vid CNRS och Observatoire de la Côte d'Azur, uppstår förmörkelser på asteroider på samma sätt som på jorden, när asteroiden har en liten måne. Han förklarar att Didymos och Dimorphos följer samma himlamekanik som jorden och månen, fast i mycket mindre skala och med betydligt svagare tyngdkraft.",
+        "Michel påpekar också att en tänkt besökare på Didymos i princip skulle kunna uppleva en förmörkelse. I praktiken vore det svårt att stanna kvar där, eftersom tyngdkraften är så svag och asteroiden snurrar mycket fort."
+      ]
+    },
+    {
+      "rubrik": "Små himlakroppar med mycket svag tyngdkraft",
+      "stycken": [
+        "Skuggan blir stor i förhållande till Didymos eftersom Dimorphos kretsar nära, ungefär en kilometer bort. Dimorphos är bara 151 meter i diameter, ungefär lika stor som Cheopspyramiden i Giza. Didymos mäter 730 meter och är alltså något mindre än skyskrapan Burj Khalifa i Dubai.",
+        "De små massorna gör att tyngdkraften är extremt svag. Enligt ESA är den på asteroiderna mellan omkring 40 000 och 200 000 gånger svagare än på jorden. Bilden togs med Heras svartvita kamera Asteroid Framing Camera, som används både för att navigera och för vetenskapliga bilder."
+      ]
+    },
+    {
+      "rubrik": "Hera undersöker spåren efter DART",
+      "stycken": [
+        "År 2022 styrde den amerikanska rymdstyrelsen Nasa sin farkost DART rakt in i Dimorphos för att ändra månens bana runt Didymos. Nu har Hera kommit fram för att granska resultatet på nära håll, en sorts brottsplatsundersökning i rymden.",
+        "Målet är att samla in data som gör det möjligt att förstå experimentet i detalj. Då kan tekniken bli en väl beprövad metod för planetförsvar som går att upprepa om en asteroid någon gång skulle hota jorden.",
+        "ESA har meddelat att Hera-teamet visar de första närbilderna av Dimorphos i en direktsändning onsdagen den 25 november från klockan 19.45 centraleuropeisk tid, via ESA WebTV och ESA:s Youtubekanal."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Hera och dubbelasteroiden",
+    "punkter": [
+      "Hera är ESA:s uppdrag för planetförsvar",
+      "Dimorphos är 151 meter i diameter, Didymos 730 meter",
+      "Dimorphos kretsar ungefär en kilometer från Didymos",
+      "Nasas farkost DART kolliderade med Dimorphos år 2022",
+      "Bilden togs med kameran Asteroid Framing Camera",
+      "Första närbilderna visas den 25 november klockan 19.45 CET"
+    ]
+  },
+  "varfor": "Hera ska ta reda på exakt vad som hände när DART slog in i Dimorphos. Med den kunskapen kan en krock med en rymdfarkost bli en förstådd och upprepbar metod för att knuffa undan en farlig asteroid. Bilden av förmörkelsen visar också att uppdraget redan levererar detaljerade observationer.",
+  "taggar": [
+    "rymden",
+    "asteroider",
+    "planetförsvar",
+    "esa"
+  ],
+  "beskrivning": "ESA:s rymdsond Hera har fotograferat hur asteroidmånen Dimorphos kastar sin skugga över Didymos, en tidig bild från uppdraget för planetförsvar.",
+  "kalla": {
+    "id": "esa-top",
+    "namn": "ESA (toppnyheter)",
+    "url": "https://www.esa.int/articles/about-us/directorates/operations/space-safety/hera/hera-s-didymos-asteroid-in-eclipse",
+    "hem": "https://www.esa.int",
+    "typ": "rymd",
+    "publicerad": "2026-11-23T14:10:46.000Z",
+    "rubrik": "Hera’s Didymos asteroid in eclipse"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:57:09.626Z",
+  "uppdaterad": "2026-11-25T22:57:09.626Z",
+  "bild": null,
+  "bildmotiv": "a small spacecraft navigation camera mounted on an optical test bench in a clean room, technicians out of frame",
+  "bildalt": "Asteroidmånen Dimorphos kastar sin skugga över den större asteroiden Didymos i rymden.",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.4,
+    "tillit": 0.97,
+    "total": 55
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:57:09.626Z",
+    "anmarkningar": [
+      "overdrift: Källan kallar bilden en 'early view'. De första närbilderna ('first close-up images') ska enligt källan visas först i direktsändningen den 25 november. Att kalla förmörkelsebilden en närbild är därför något missvisande.",
+      "overdrift: Källan säger 'well understood and potentially repeatable'. 'Väl beprövad' är starkare än 'väl förstådd', och reservationen 'potentially' har fallit bort.",
+      "overdrift: 'Exakt' saknar stöd i källan, och 'potentiellt upprepbar' har blivit 'upprepbar'. Påståendet att bilden visar att uppdraget redan levererar detaljerade observationer är en egen tolkning, eftersom källan beskriver bilden som en tidig vy."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

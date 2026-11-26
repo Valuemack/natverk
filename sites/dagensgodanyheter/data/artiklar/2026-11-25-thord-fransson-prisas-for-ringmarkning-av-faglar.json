@@ -1,0 +1,83 @@
+{
+  "id": "3cd29a052a83",
+  "slug": "thord-fransson-prisas-for-ringmarkning-av-faglar",
+  "kategori": "djur-natur",
+  "vinjett": "Fågelskydd",
+  "rubrik": "Thord Fransson får pris för 40 års arbete med ringmärkning av fåglar",
+  "seorubrik": "Thord Fransson prisas för 40 års ringmärkning av fåglar",
+  "ingress": "Thord Fransson vid Naturhistoriska riksmuseet har tilldelats Marie-Claire Cronstedts pris. Han får det för sitt långa arbete med ringmärkning och forskning om fåglarnas flytt, kunskap som enligt juryn hjälper både artbevarandet och förståelsen av klimatförändringarnas effekter.",
+  "avsnitt": [
+    {
+      "rubrik": "Fyra decennier vid Ringmärkningscentralen",
+      "stycken": [
+        "Thord Fransson har arbetat i 40 år vid Ringmärkningscentralen på Naturhistoriska riksmuseet. Det är där som all svensk ringmärkning av fåglar koordineras och administreras. Han var dessutom centralens verksamhetschef under lång tid.",
+        "I den rollen har han hållit ihop ett stort nätverk av forskare, fågelstationer och hundratals ideella ringmärkare. Varje år har han hanterat hundratusentals uppgifter från övervakningen. Han har också ansvarat för det nationella systemet som ger ringmärkare licens."
+      ]
+    },
+    {
+      "rubrik": "Forskning och en atlas över fåglarnas flyttvägar",
+      "stycken": [
+        "Utöver det administrativa arbetet har Thord Fransson forskat om hur fåglar flyttar. Han har medverkat i mer än 100 vetenskapliga publikationer inom området.",
+        "Han är också en av huvudförfattarna till Svensk ringmärkningsatlas, ett bokverk i tre delar. Där sammanställs och kartläggs miljontals uppgifter om märkta fåglar och om var de senare har hittats. Verket beskrivs som en mycket värdefull källa till kunskap om de svenska fågelarternas flyttmönster.",
+        "Enligt Thord Fransson själv är kunskap en förutsättning för att kunna skydda fåglar och deras livsmiljöer, särskilt när klimatet förändras. Han lyfter också fram samarbetet med ideella entusiaster, forskare och allmänheten."
+      ]
+    },
+    {
+      "rubrik": "Juryn lyfter betydelsen för artbevarande",
+      "stycken": [
+        "Juryn motiverar priset med hans långa insats för fågelskyddet i Sverige och internationellt, och med att han har ökat förståelsen för fåglarnas flyttbeteende. Kunskapen har enligt juryn stor betydelse för allt från att bevara arter till att förstå hur klimatförändringarna påverkar fåglarnas beteende.",
+        "Gustaf Lind, generalsekreterare på Världsnaturfonden WWF, menar att Franssons arbete betyder mycket för möjligheten att skydda fågelarter i Sverige och i andra länder. Enligt honom är det människor som Fransson som ger inspiration och hopp i en tid när naturen är hårt pressad.",
+        "Priset delades ut den 25 november under WWF:s höstmöte, som hölls på Naturhistoriska riksmuseet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om priset och pristagaren",
+    "punkter": [
+      "Pristagare: Thord Fransson, Ringmärkningscentralen vid Naturhistoriska riksmuseet",
+      "Verksam vid Ringmärkningscentralen i 40 år, under lång tid som verksamhetschef",
+      "Medverkat i över 100 vetenskapliga publikationer om fåglars flytt",
+      "En av huvudförfattarna till Svensk ringmärkningsatlas i tre delar",
+      "Marie-Claire Cronstedts pris delas ut årligen sedan 2020 av Marie-Claire Cronstedts Stiftelse",
+      "Utdelat den 25 november på WWF:s höstmöte"
+    ]
+  },
+  "varfor": "Ringmärkning ger kunskap om var fåglar flyttar och hur deras beteende förändras. Enligt juryn är den kunskapen viktig både för att bevara arter och för att förstå hur klimatförändringarna påverkar fåglarna. Arbetet bygger dessutom på ett brett samarbete mellan forskare och hundratals ideella ringmärkare.",
+  "taggar": [
+    "fåglar",
+    "ringmärkning",
+    "fågelskydd",
+    "biologisk mångfald"
+  ],
+  "beskrivning": "Thord Fransson har fått Marie-Claire Cronstedts pris för 40 års arbete med ringmärkning och forskning om hur fåglar flyttar mellan olika platser.",
+  "kalla": {
+    "id": "wwf-se",
+    "namn": "WWF Sverige",
+    "url": "https://www.wwf.se/pressmeddelande/professor-prisas-for-insatser-inom-fagelskydd/",
+    "hem": "https://www.wwf.se",
+    "typ": "organisation",
+    "publicerad": "2026-11-25T11:57:15.000Z",
+    "rubrik": "Professor prisas för insatser inom fågelskydd"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:05:56.107Z",
+  "uppdaterad": "2026-11-25T23:05:56.107Z",
+  "bild": null,
+  "bildmotiv": "a small songbird with a metal identification ring on its leg, held gently at a bird ringing station in a Swedish coastal meadow",
+  "bildalt": "En liten sångfågel med en ring av metall runt benet vid en fågelstation",
+  "poang": {
+    "positiv": 0.7,
+    "betydelse": 0.2,
+    "tillit": 0.82,
+    "total": 62
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:05:56.107Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

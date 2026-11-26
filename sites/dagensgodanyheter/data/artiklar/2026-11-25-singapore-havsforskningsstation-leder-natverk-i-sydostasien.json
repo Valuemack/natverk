@@ -1,0 +1,127 @@
+{
+  "id": "0ada3b2e4805",
+  "slug": "singapore-havsforskningsstation-leder-natverk-i-sydostasien",
+  "kategori": "miljo",
+  "vinjett": "Havsforskning",
+  "rubrik": "Singapores havsforskningsstation ska leda nytt nätverk i Sydostasien",
+  "seorubrik": "Singapore leder nytt havsforskningsnätverk i Sydostasien",
+  "ingress": "Singapores marina forskningsstation får ett nytt namn och en större uppgift. Under ledning av National University of Singapore ska den samordna ett nytt nätverk där forskare i Sydostasien delar utrustning, data och kunskap om regionens hav.",
+  "avsnitt": [
+    {
+      "rubrik": "Från nationellt laboratorium till regional nod",
+      "stycken": [
+        "Anläggningen hette tidigare St John’s Island National Marine Laboratory och har nu bytt namn till National Marine Research Station, NMRS. Den ska leda det nybildade nätverket Southeast Asia Marine Research Stations, SEAMaRS. Enligt universitetet är det första nätverket av sitt slag i regionen.",
+        "NMRS drivs av National University of Singapore och är landets första och enda nationella forskningsinfrastruktur för havsvetenskap som ligger ute till havs. Stationen finansieras av National Research Foundation inom forskningsplanen RIE2030.",
+        "Den nya rollen presenterades av Singapores president Tharman Shanmugaratnam när en havsvetenskaplig vecka inleddes. Veckan pågår från den 25 november till den 2 december 2026 och uppmärksammar tio års arbete sedan stationen grundades 2016. Enligt presidenten hänger klimatförändringar, förlusten av biologisk mångfald och havens hälsa nära ihop. Därför behöver forskare i regionen kunna lära av varandra."
+      ]
+    },
+    {
+      "rubrik": "Forskare i fem länder ska dela resurser",
+      "stycken": [
+        "I dag ingår fler än tio institutioner i Indonesien, Malaysia, Filippinerna, Thailand och Singapore i nätverket. Bland dem finns universitet och forskningscentrum på Borneo, i södra Thailand och i Filippinerna.",
+        "NMRS är också nätverkets sekretariat. Stationen ska bilda arbetsgrupper för de prioriterade områdena: gemensam forskning som kan ge underlag till politiska beslut, delad tillgång till fartyg, utrustning och expertis, utbildning och utbyten för studenter och forskare samt långsiktig övervakning av haven med gemensamma system och öppen delning av data.",
+        "Enligt stationens chef Jani Tanzil stannar varken havsströmmar eller ekosystem vid nationsgränserna. Därför vill stationen samla resurser och bygga gemensamma insatser för problem som länderna delar."
+      ]
+    },
+    {
+      "rubrik": "Nytt forskningsfartyg och snabbare planktonanalys",
+      "stycken": [
+        "Stationen ska få ett nytt forskningsfartyg som ersätter RV Galaxea. Det gamla fartyget har under 18 år använts till allt från vattenprover till dykning och tester av marina robotar. Det nya fartyget får ett större däck, en så kallad månbrunn, en säkrare dykplattform för hårt väder och en jolle för att nå grunda kustområden.",
+        "Två nya bildinstrument ska också förbättra planktonforskningen. Det ena fotograferar mikroskopiska alger automatiskt och utan avbrott, så att forskarna kan följa förändringar över årstider och längre perioder. Det andra fångar större plankton och partiklar. Tillsammans ska instrumenten ersätta långsam manuell mikroskopi och göra artbestämningen snabbare och mer exakt."
+      ]
+    },
+    {
+      "rubrik": "Över 20 nya arter på tio år",
+      "stycken": [
+        "Under det första decenniet har forskare vid stationen upptäckt mer än 20 arter som var okända för vetenskapen i Singapores vatten. Bland dem finns en havsanemon och en kubmanet som har beskrivits de senaste fem åren. Stationen har även stöttat forskare från många lärosäten, företag och myndigheter och har ordnat utbildningar och seminarier för blivande havsforskare."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "National Marine Research Station",
+    "punkter": [
+      "Hette tidigare St John’s Island National Marine Laboratory",
+      "Nationell forskningsinfrastruktur sedan 2016",
+      "Leder nätverket SEAMaRS med fler än tio institutioner i fem länder",
+      "Mer än 20 nya arter har upptäckts i Singapores vatten",
+      "Fartyget RV Galaxea har använts i 18 år och ska ersättas",
+      "Havsvetenskaplig vecka 25 november–2 december 2026"
+    ]
+  },
+  "varfor": "Haven i Sydostasien delas av många länder, och problem som klimatförändringar och förlust av biologisk mångfald stannar inte vid gränserna. Ett gemensamt nätverk ger forskare i regionen tillgång till varandras fartyg, laboratorier och data. Det kan stärka både övervakningen av haven och underlaget för beslut om hur de ska skyddas.",
+  "taggar": [
+    "biologisk mångfald",
+    "klimatet",
+    "havsforskning",
+    "sydostasien",
+    "plankton"
+  ],
+  "beskrivning": "Singapores marina forskningsstation byter namn och ska leda SEAMaRS, ett nytt nätverk där forskare i fem länder i Sydostasien delar data och utrustning.",
+  "kalla": {
+    "id": "nus",
+    "namn": "National University of Singapore",
+    "url": "https://news.nus.edu.sg/nmrs",
+    "kandidatUrl": "https://news.nus.edu.sg/nmrs",
+    "hem": "https://news.nus.edu.sg",
+    "typ": "larosate",
+    "publicerad": "2026-11-25T10:07:26.000Z",
+    "rubrik": "Singapore’s national marine research facility broadens scope to lead marine science collaboration across Southeast Asia"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:50:33.219Z",
+  "uppdaterad": "2026-11-25T23:50:33.219Z",
+  "bild": {
+    "fil": "/bilder/singapore-havsforskningsstation-leder-natverk-i-sydostasien.webp",
+    "og": "/bilder/singapore-havsforskningsstation-leder-natverk-i-sydostasien.jpg",
+    "liten": "/bilder/singapore-havsforskningsstation-leder-natverk-i-sydostasien-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: forskningsfartyg vid en tropisk ö med korallrev i klart vatten",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a small marine research vessel anchored near a tropical island with coral reef visible through clear turquoise water",
+    "skapad": "2026-11-26T00:08:50.172Z",
+    "anvandning": {
+      "input_tokens": 243,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 243
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1167
+    },
+    "kostnadUSD": 0.028935,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a small marine research vessel anchored near a tropical island with coral reef visible through clear turquoise water",
+  "bildalt": "Forskningsfartyg vid en tropisk ö med korallrev i klart vatten",
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.5,
+    "tillit": 0.92,
+    "total": 67
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:50:33.219Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att NUS är värd för NMRS (\"hosted by\"). Det är NMRS som leder SEAMaRS, inte NUS. Formuleringen ger NUS en större ledande roll än källan anger.",
+      "overdrift: Källan beskriver delad tillgång som ett mål som arbetsgrupper ska främja (\"Encourage shared access\"), inte som något som redan är på plats. Mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildsok": [
+    "Singapore coral reef",
+    "St John's Island Singapore"
+  ],
+  "bildbeslut": "bild"
+}

@@ -1,0 +1,87 @@
+{
+  "id": "d534b284a155",
+  "slug": "hogre-foraldraersattning-kopplas-till-battre-psykisk-halsa-hos-pappor",
+  "kategori": "halsa",
+  "vinjett": "Folkhälsa",
+  "rubrik": "Högre föräldrapenning kopplas till bättre psykisk hälsa hos nyblivna pappor",
+  "seorubrik": "Föräldraersättning och pappors psykiska hälsa – SU-studie",
+  "ingress": "Förstagångspappor med högre, inkomstbaserad ersättning under föräldraledigheten använde mindre psykiatrisk vård under barnets första år. Det visar forskare vid Stockholms universitet och Karolinska Institutet i den första studien av sitt slag.",
+  "avsnitt": [
+    {
+      "rubrik": "Lägre risk för psykiatrisk vård med högre ersättning",
+      "stycken": [
+        "Pappor som fick den högre, inkomstbaserade föräldraersättningen löpte mindre risk att söka psykiatrisk vård under barnets första levnadsår. De fick också i mindre utsträckning antidepressiva eller ångestdämpande läkemedel förskrivna, jämfört med pappor som bara fick ersättning på grundnivå.",
+        "Studien är publicerad i Nature Communications. Enligt forskarna är det första gången någon undersöker om ersättningsnivån under betald föräldraledighet hänger ihop med pappors psykiska hälsa efter att de fått barn.",
+        "Tidigare forskning har visat att föräldraledighet i sig kan värna den psykiska hälsan hos såväl mammor som pappor i tiden efter förlossningen. Den aktuella studien lägger till en pusselbit: att även nivån på ersättningen kan spela roll."
+      ]
+    },
+    {
+      "rubrik": "Sambandet höll även när forskarna räknade bort andra faktorer",
+      "stycken": [
+        "Forskarna tog hänsyn till pappornas tidigare psykiska hälsa, deras inkomst och deras ställning på arbetsmarknaden. Sambandet blev då svagare men fanns kvar. Enligt forskarna tyder det på att det ekonomiska stödet under ledigheten kan ha betydelse för pappornas mående, utöver deras ekonomi och hälsa före barnets födelse.",
+        "Studien bygger på nationella registeruppgifter om 210 285 män som blev pappa för första gången, med barn födda i Sverige under åren 2007 till 2011. Forskarna jämförde grupper med olika ersättningsnivåer och följde hur mycket psykiatrisk vård och hur många läkemedel papporna använde det första året efter barnets födelse."
+      ]
+    },
+    {
+      "rubrik": "Arbetsmarknaden påverkar också",
+      "stycken": [
+        "Forskarna pekar på ett möjligt dilemma i den svenska föräldraförsäkringen. Rätten till den högsta ersättningen hänger ihop med sysselsättning och inkomst före barnets födelse, och de faktorerna är i sin tur kopplade till hälsa. Socioekonomiska skillnader kan därför delvis förklara sambandet.",
+        "Sammantaget talar resultaten enligt forskarna för att både ersättningsnivån och föräldrarnas situation på arbetsmarknaden kan påverka pappors psykiska hälsa. Bättre mående efter ett barns födelse kan därför kräva mer än ändringar i föräldraförsäkringen. Även arbetsvillkor, trygga anställningar och ojämlik tillgång till förmåner behöver vägas in.",
+        "Forskarna påpekar också att pappor ofta tjänar mer än mammor. Ett stort inkomstbortfall kan öka den ekonomiska stressen i hushållet och göra det svårare att dela jämlikt på omsorgen om barnet, vilket i sin tur kan påverka papporna negativt. Enligt forskarna är kopplingen mellan generösa förmåner och tidigare inkomst inte unik för Sverige, och i länder med striktare villkor kan skillnaderna vara ännu större."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Så gjordes studien",
+    "punkter": [
+      "210 285 förstagångspappor ingick i studien",
+      "Barnen föddes i Sverige mellan 2007 och 2011",
+      "Forskarna använde nationella registerdata",
+      "Genomförd vid Stockholms universitet och Karolinska Institutet",
+      "Publicerad i Nature Communications",
+      "Finansierad av Vetenskapsrådet och Forte"
+    ]
+  },
+  "varfor": "Studien ger ny kunskap om hur föräldraförsäkringen kan hänga ihop med pappors psykiska hälsa under barnets första år. Den bygger på ett mycket stort material från svenska register. Resultaten kan hjälpa beslutsfattare att se hur ekonomiskt stöd, arbetsvillkor och anställningstrygghet tillsammans påverkar nyblivna föräldrars mående.",
+  "taggar": [
+    "arbetsmarknad",
+    "föräldraledighet",
+    "psykisk hälsa",
+    "pappor",
+    "folkhälsa"
+  ],
+  "beskrivning": "Pappor med högre föräldraersättning använde mindre psykiatrisk vård under barnets första år, visar en studie från Stockholms universitet och KI.",
+  "kalla": {
+    "id": "su",
+    "namn": "Stockholms universitet",
+    "url": "https://www.mynewsdesk.com/se/su/pressreleases/nyblivna-pappor-med-hoegre-foeraeldraersaettning-har-baettre-psykisk-haelsa-3467073",
+    "kandidatUrl": "https://www.mynewsdesk.com/se/su/pressreleases/nyblivna-pappor-med-hoegre-foeraeldraersaettning-har-baettre-psykisk-haelsa-3467073",
+    "hem": "https://www.su.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-20T06:16:00.000Z",
+    "rubrik": "Nyblivna pappor med högre föräldraersättning har bättre psykisk hälsa"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:55:07.084Z",
+  "uppdaterad": "2026-11-25T23:55:07.084Z",
+  "bild": null,
+  "bildmotiv": "an empty pram parked on a gravel path in a Swedish park in late autumn, fallen leaves, a wooden bench nearby",
+  "bildalt": "En tom barnvagn står parkerad på en grusgång i en park på hösten",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.54,
+    "tillit": 0.95,
+    "total": 53
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:55:07.084Z",
+    "anmarkningar": [
+      "overdrift: Källan talar om samband som \"kan ha betydelse\" och bara för pappor. Formuleringen \"påverkar\" antyder ett säkrare orsakssamband och vidgar det till alla nyblivna föräldrar. Rollen för beslutsfattare är artikelns egen tolkning. Detta är en mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

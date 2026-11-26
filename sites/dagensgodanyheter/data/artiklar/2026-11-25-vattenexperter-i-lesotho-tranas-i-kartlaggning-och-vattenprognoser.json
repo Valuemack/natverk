@@ -1,0 +1,93 @@
+{
+  "id": "fb2400159784",
+  "slug": "vattenexperter-i-lesotho-tranas-i-kartlaggning-och-vattenprognoser",
+  "kategori": "utrikes",
+  "vinjett": "Vattenförvaltning",
+  "rubrik": "Experter i Lesotho tränas i nya verktyg för att kartlägga och prognosticera vatten",
+  "seorubrik": "Lesotho utbildar experter i vattenkartläggning och prognoser",
+  "ingress": "Ett trettiotal vattenexperter i Lesotho har tränats i satellitbaserad kartläggning och vattenprognoser med hjälp av den amerikanska geologiska myndigheten USGS. Målet är bättre förvaltning av ett vattensystem som även försörjer stora delar av Sydafrika.",
+  "avsnitt": [
+    {
+      "rubrik": "En vecka av praktisk träning i Maseru",
+      "stycken": [
+        "Mellan den 23 och 30 september 2026 höll amerikanska vattenexperter en workshop i Lesothos huvudstad Maseru. Där deltog omkring 30 yrkesverksamma från 11 organisationer. Bland dem fanns landets vattenmyndighet, Lesotho Highlands Development Authority, energi- och gruvministeriet, vatten- och avloppsbolaget samt National University of Lesotho.",
+        "Träningen leddes av hydrologen Tyler King från USGS och vatteningenjören Ian Maycumber från U.S. Bureau of Reclamation. Insatsen ingår i det amerikanska utrikesdepartementets program Ambassador's Water Experts Program. Kursen handlade om verktyg som USGS kallar Super Intelligence, förkortat SI, och hur de kan användas för geografisk analys, fjärranalys av vatten och vattenprognoser."
+      ]
+    },
+    {
+      "rubrik": "Lesotho är regionens vattentorn",
+      "stycken": [
+        "Lesotho brukar beskrivas som södra Afrikas vattentorn. Via Lesotho Highlands Water Project leds vatten genom en rad tunnlar till Sydafrika. Enligt USGS täcker systemet ungefär 60 procent av vattenbehovet i regionen kring Johannesburg och Pretoria. Samma system har också stor potential för vattenkraft.",
+        "Därför är vattenprognoser särskilt viktiga i landet. Två stora reservoarer förser överföringssystemet till Sydafrika med vatten. Maycumber fokuserade på prognoser, medan King visade vad satellitdata kan ge vattenförvaltare, bland annat mätningar av vattenkvalitet och vattentemperatur."
+      ]
+    },
+    {
+      "rubrik": "Deltagarna byggde egna verktyg av egna data",
+      "stycken": [
+        "Deltagarna arbetade direkt med data från sina egna myndigheter. Resultatet blev bland annat kartor för planering av vattenkraft, produkter för nationell övervakning av vattenflöden och vattenkvalitet, översiktspaneler för att följa våtmarker och verktyg för att konvertera data.",
+        "Under fältbesök, bland annat vid byn Ha Tsiu i distriktet Thaba-Tseka och nära Mohale-reservoaren, samlade grupperna in observationer med mobila kartverktyg. Övningarna visade att avancerade analysverktyg är beroende av pålitliga mätningar på marken."
+      ]
+    },
+    {
+      "rubrik": "Bättre samarbete mellan myndigheter",
+      "stycken": [
+        "Workshopen tog också upp ett vanligt hinder: att data är utspridda hos myndigheter som ofta arbetar var för sig trots gemensamt ansvar för vattnet. Deltagarna enades om praktiska steg för att dela data bättre, som en grund för framtida samarbete.",
+        "King och Maycumber träffade även höga regeringstjänstemän, lokala forskare och medier. Deltagarna planerar att fortsätta använda verktygen och arbetssätten i den löpande övervakningen."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Workshopen i Lesotho",
+    "punkter": [
+      "Tid: 23–30 september 2026 i Maseru",
+      "Deltagare: omkring 30 personer från 11 organisationer",
+      "Arrangörer: USGS och U.S. Bureau of Reclamation inom Ambassador's Water Experts Program",
+      "Lesotho Highlands Water Project täcker cirka 60 procent av vattenbehovet kring Johannesburg och Pretoria",
+      "Fältbesök vid Ha Tsiu i Thaba-Tseka och nära Mohale-reservoaren"
+    ]
+  },
+  "varfor": "Lesothos vatten påverkar miljontals människor långt utanför landets gränser. Enligt USGS kan bättre analysverktyg stödja landets långsiktiga arbete med torka, översvämningar och utbyggd vattenkraft. När myndigheterna dessutom delar data med varandra blir det lättare att fatta gemensamma beslut om vattnet.",
+  "taggar": [
+    "vatten",
+    "lesotho",
+    "fjärranalys",
+    "vattenkraft",
+    "internationellt samarbete"
+  ],
+  "beskrivning": "Ett trettiotal vattenexperter i Lesotho har tränats i satellitanalys och vattenprognoser för att bättre förvalta södra Afrikas vattentorn.",
+  "kalla": {
+    "id": "usgs",
+    "namn": "USGS",
+    "url": "https://www.usgs.gov/international-programs/news/usgs-leverages-si-science-diplomacy-mission-lesotho",
+    "hem": "https://www.usgs.gov",
+    "typ": "myndighet",
+    "publicerad": "2026-11-23T20:00:00.000Z",
+    "rubrik": "USGS leverages SI in science diplomacy mission to Lesotho"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:56:20.915Z",
+  "uppdaterad": "2026-11-25T22:56:20.915Z",
+  "bild": null,
+  "bildmotiv": "a hydrology field station with a river gauge and data logger beside a mountain river in green southern African highlands, overcast",
+  "bildalt": "En reservoar omgiven av berg i Lesothos högland",
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.4,
+    "tillit": 0.94,
+    "total": 57
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:56:20.915Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att systemet täcker cirka 60 procent av vattenbehovet i regionen kring Johannesburg och Pretoria, inte stora delar av Sydafrika. Formuleringen är något bredare än källan.",
+      "overdrift: Källan nämner inget antal människor. Påståendet är en rimlig slutsats utifrån Johannesburg–Pretoria-regionens storlek, men det står inte i källan.",
+      "overdrift: Källan säger att deltagarna 'identified practical steps' (identifierade), inte att de enades om dem. Lätt förstärkning.",
+      "overdrift: Källan beskriver datadelning som en grund för framtida samarbete. Att det blir lättare att fatta gemensamma beslut är artikelns egen slutsats."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

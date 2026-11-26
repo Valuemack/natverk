@@ -1,0 +1,39 @@
+---
+// De vanligaste namnen i Sverige som saknar egen namnsdag – egen sammanställning av SCB-data mot namnlängden.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import { SITE, UPPDATERAD, UTAN_NAMNSDAG, VARIANTER, SCB_KALLA, tal, dagText, namnHref } from "../site.js";
+
+const variant = new Map(VARIANTER.map((v) => [v.namn, v]));
+const topp = UTAN_NAMNSDAG.slice(0, 200);
+const summa = UTAN_NAMNSDAG.reduce((s, x) => s + x.antal, 0);
+const [f, a, b] = topp;
+const fragor = [
+  { fraga: "Vilket är det vanligaste namnet utan namnsdag?", svar: `${f.namn}, som ${tal(f.antal)} personer i Sverige har som tilltalsnamn (SCB 2020). Därefter kommer ${a.namn} (${tal(a.antal)}) och ${b.namn} (${tal(b.antal)}).` },
+  { fraga: "När har man namnsdag om namnet inte finns i almanackan?", svar: "Den 1 januari är gemensam namnsdag för alla namn som saknas i almanackan. Är namnet en stavningsvariant av ett almanacksnamn, till exempel Thomas av Tomas, kan man också fira på det namnets dag." },
+  { fraga: "Hur många bär ett namn utan namnsdag?", svar: `De ${UTAN_NAMNSDAG.length} vanligaste tilltalsnamnen som saknas i almanackan bärs tillsammans av ${tal(summa)} personer. Det är vår egen sammanställning av SCB:s namnstatistik för 2020 mot namnlängden.` },
+];
+---
+<Layout site={SITE} titel={`Namn utan namnsdag – de 200 vanligaste (SCB 2020)`}
+  beskrivning={`${f.namn}, ${a.namn} och ${b.namn} är de vanligaste namnen i Sverige som saknar namnsdag. Se topp 200 och vilken dag de kan firas.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/" }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Vanligaste namnen utan namnsdag</h1>
+  <p class="svar">Det vanligaste namnet utan egen namnsdag är <strong>{f.namn}</strong> med {tal(f.antal)} bärare, följt av {a.namn} och {b.namn}. Alla namn som saknas i almanackan har gemensam namnsdag den <a href="/1-januari/">1 januari</a>. Stavningsvarianter kan också firas på huvudnamnets dag.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th>Kan firas</th></tr></thead>
+    <tbody>{topp.map((x, i) => {
+      const v = variant.get(x.namn);
+      return <tr><td class="num">{i + 1}</td>
+        <td>{v ? <a href={`/namn/${v.slug}/`}>{x.namn}</a> : x.namn}</td>
+        <td class="num">{tal(x.antal)}</td>
+        <td>{v ? <>{dagText(v.huvud.datum)} (<a href={namnHref(v.huvud.namn)}>{v.huvud.namn}</a>)</> : "1 januari"}</td></tr>;
+    })}</tbody>
+  </table></div>
+  <p class="kalla">Källa: egen sammanställning av {SCB_KALLA}, tilltalsnamn 31 december 2020, jämfört med namnlängden enligt Isof. Ett namn räknas som stavningsvariant när det bara skiljer sig i stavningen (t.ex. th/t, c/k, ph/f) från ett namn i almanackan.</p>
+  <Annons plats="utan-1" />
+  <Faq fragor={fragor} />
+</Layout>

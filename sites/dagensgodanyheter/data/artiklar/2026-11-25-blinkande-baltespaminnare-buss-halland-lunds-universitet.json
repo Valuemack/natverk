@@ -1,0 +1,121 @@
+{
+  "id": "60a3b7e4f731",
+  "slug": "blinkande-baltespaminnare-buss-halland-lunds-universitet",
+  "kategori": "inrikes",
+  "vinjett": "Trafiksäkerhet",
+  "rubrik": "Blinkande lampa i bussen fick fler resenärer att spänna fast bältet i Halland",
+  "seorubrik": "Blinkande bälteslampa i buss ökade bältesanvändning",
+  "ingress": "Andelen resenärer som använde bälte i en buss i Halland steg från fyra till 24 procent efter att en blinkande bältespåminnare installerats. Försöket har gjorts av forskare vid Lunds universitet och kan visa en väg till säkrare bussresor.",
+  "avsnitt": [
+    {
+      "rubrik": "Röd lampa lyser tills bältet är fastspänt",
+      "stycken": [
+        "Försöket genomfördes i en av Hallandstrafikens bussar på linje 400, som går mellan Halmstad och Hyltebruk. Bussen fick ett system som känner av om en plats är upptagen och om bältet sitter på. Sitter en resenär utan bälte blinkar en röd lampa på ryggstödet framför. Lampan släcks när bältet spänns fast.",
+        "Forskarna mätte bältesanvändningen vid tre tillfällen under 2026, en gång före och två gånger efter installationen. Totalt gjordes 589 observationer av resenärer. Före installationen använde ungefär fyra procent bälte. Vid den första mätningen efteråt hade andelen stigit till 24 procent, och vid den sista mätningen låg den på tolv procent, alltså fortfarande högre än innan.",
+        "Enligt forskarna är resultatet lovande. De påpekar samtidigt att försöket bara omfattade en buss och att mer forskning behövs innan man kan säga säkert att det var påminnaren som orsakade ökningen."
+      ]
+    },
+    {
+      "rubrik": "De flesta resenärer gillade påminnaren",
+      "stycken": [
+        "Forskarna intervjuade 41 resenärer om hur de upplevde systemet. Nio av tio hade lagt märke till att lampan blinkade medan de åkte, och hela 82 procent tyckte om tekniken.",
+        "Studien visar också att det gick att bygga in tekniken i en befintlig buss och att den fungerade väl under hela försöksperioden. Försöket väckte även nya frågor, bland annat om hur påminnelserna ska utformas, hur systemet ska underhållas och hur det kan kombineras med andra insatser. Enligt forskarna får tekniken störst effekt om den införs tillsammans med information och kontroller av att resenärerna faktiskt använder bältet."
+      ]
+    },
+    {
+      "rubrik": "Samarbete krävs för ett brett införande",
+      "stycken": [
+        "En enkät och intervjuer med regionernas trafikorganisationer visar att bältesanvändning ses som en viktig trafiksäkerhetsfråga. Många som beställer trafik saknar dock löpande kunskap om hur många resenärer som använder bälte, och det finns en osäkerhet om hur de själva kan bidra. Här kan bältespåminnare vara ett verktyg, enligt forskarna.",
+        "För att tekniken ska spridas krävs samverkan mellan trafikbeställare, trafikföretag, busstillverkare och teknikleverantörer. Forskarna pekar på att gemensamma branschkrav för bussar, som Bus Nordic, kan omfatta bältespåminnare. Krav kan också komma från europeiska säkerhetsprogram som Euro NCAP, som i sin tur kan påverka internationella fordonsregler.",
+        "Resultaten redovisas i två rapporter från K2, Nationellt kunskapscentrum för kollektiv mobilitet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Försöket i korthet",
+    "punkter": [
+      "Plats: Hallandstrafikens linje 400 mellan Halmstad och Hyltebruk",
+      "Bältesanvändning: cirka 4 procent före, 24 och sedan 12 procent efter installationen",
+      "589 resenärsobservationer vid tre mättillfällen under 2026",
+      "41 resenärer intervjuades, 82 procent var positiva",
+      "Medverkande: Lunds universitet och Hallandstrafiken, tillsammans med Sveriges Bussföretag, Holmbergs Safety System samt Nobina Sverige",
+      "Förstudien finansierades av Trafikverkets Skyltfonden"
+    ]
+  },
+  "varfor": "Buss är ett säkert färdsätt, men vid en allvarlig olycka har bältet stor betydelse för resenärerna. Tidigare undersökningar visar att få bussresenärer använder bälte, särskilt i linjetrafik. Försöket visar att en enkel påminnelse i rätt ögonblick kan öka användningen, att tekniken går att installera i befintliga bussar och att resenärerna tar emot den positivt.",
+  "taggar": [
+    "trafiksäkerhet",
+    "kollektivtrafik",
+    "buss",
+    "säkerhetsbälte"
+  ],
+  "beskrivning": "Andelen bussresenärer med bälte steg från 4 till 24 procent i Halland efter att en blinkande påminnare installerats, visar forskning från Lunds universitet.",
+  "kalla": {
+    "id": "lu",
+    "namn": "Lunds universitet",
+    "url": "https://www.lu.se/artikel/fler-anvande-balte-efter-forsok-med-blinkande-paminnare-i-bussen",
+    "hem": "https://www.lu.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-25T11:29:54.000Z",
+    "rubrik": "Fler använde bälte efter försök med blinkande påminnare i bussen"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:02:23.723Z",
+  "uppdaterad": "2026-11-25T23:02:23.723Z",
+  "bild": {
+    "fil": "/bilder/blinkande-baltespaminnare-buss-halland-lunds-universitet.webp",
+    "og": "/bilder/blinkande-baltespaminnare-buss-halland-lunds-universitet.jpg",
+    "liten": "/bilder/blinkande-baltespaminnare-buss-halland-lunds-universitet-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: bussäten med säkerhetsbälten och en liten röd påminnarlampa på ryggstödet",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "Interior of a modern regional bus with rows of seats fitted with seat belts and a small red indicator light on the seatback, soft daylight through windows",
+    "skapad": "2026-11-26T00:08:29.708Z",
+    "anvandning": {
+      "input_tokens": 254,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 254
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1178
+    },
+    "kostnadUSD": 0.02899,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "Interior of a modern regional bus with rows of seats fitted with seat belts and a small red indicator light on the seatback, soft daylight through windows",
+  "bildalt": "Bussäten med säkerhetsbälten och en liten röd påminnarlampa på ryggstödet",
+  "poang": {
+    "positiv": 0.8,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 71
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:02:23.723Z",
+    "anmarkningar": [
+      "overdrift: Forskaren betonar att försöket bara omfattade en buss och att mer forskning behövs för att uttala sig om effektsamband. Att försöket 'visar' detta är säkrare än källan. Ordet 'enkel' finns inte heller i källan.",
+      "overdrift: Källan säger att tekniken behöver införas tillsammans med informationsinsatser och kontroller 'för större genomslag', inte att effekten då blir störst.",
+      "overdrift: Källan säger 'fungerade väl under försöksperioden'. Tillägget 'hela' är en mindre förstärkning.",
+      "overdrift: Källan säger 'uppmärksammad trafiksäkerhetsfråga'. Skillnaden är liten."
+    ]
+  },
+  "rattelser": [],
+  "bildsok": [
+    "bus seat belt",
+    "coach bus interior seats"
+  ],
+  "bildbeslut": "bild"
+}

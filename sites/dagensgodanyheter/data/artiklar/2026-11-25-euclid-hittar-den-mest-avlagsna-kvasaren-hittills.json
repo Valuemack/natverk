@@ -1,0 +1,118 @@
+{
+  "id": "ad8f98e7f6d8",
+  "slug": "euclid-hittar-den-mest-avlagsna-kvasaren-hittills",
+  "kategori": "vetenskap",
+  "vinjett": "Rymden",
+  "rubrik": "Euclid hittar den mest avlägsna kvasaren hittills – ljus från 13,1 miljarder år sedan",
+  "seorubrik": "Euclid hittar mest avlägsna kvasaren hittills",
+  "ingress": "Europas rymdteleskop Euclid har slagit sitt eget rekord. Kvasaren J1504+6252 syns som den såg ut bara 630 miljoner år efter big bang och är den första som bekräftats bortom rödförskjutning 8.",
+  "avsnitt": [
+    {
+      "rubrik": "Ett svart hål på 360 miljoner solmassor",
+      "stycken": [
+        "En kvasar är den lysande kärnan i en galax där gas faller in i ett supermassivt svart hål och frigör enorma mängder energi. Under den korta fasen kan galaxkärnan lysa starkare än hela resten av galaxen.",
+        "Den nya rekordhållaren har fått smeknamnet Dún Aonghasa, efter ett förhistoriskt fort på en klippa på ön Inis Mór vid Irlands atlantkust. Mätningar med rymdteleskopet James Webb visar att det svarta hålet i dess centrum väger ungefär lika mycket som 360 miljoner solar.",
+        "Rödförskjutningen är uppmätt till 8,13. Det betyder att ljuset lämnade kvasaren för omkring 13,1 miljarder år sedan, när universum bara var ungefär fem procent så gammalt som i dag. Därmed flyttar Euclid sitt eget rekord, som presenterades för bara några månader sedan, ytterligare 40 miljoner år bakåt i tiden."
+      ]
+    },
+    {
+      "rubrik": "Hittad bland miljontals objekt",
+      "stycken": [
+        "Kvasaren upptäcktes i ungefär 18 månaders observationer, där den syntes som en liten röd prick bland miljontals andra ljuskällor. För att bekräfta fyndet riktades flera andra instrument mot samma punkt: Keck-observatoriet och Large Binocular Telescope på marken samt rymdteleskopen Hubble och James Webb.",
+        "Fyndet är långt ifrån ensamt. På ett och ett halvt år har Euclid presenterat 31 mycket gamla kvasarer, varav tolv ligger bortom rödförskjutning 7. Det är mer än en fördubbling av hur många som var kända på det avståndet. Tidigare kartläggningar behövde 15 år för att över huvud taget nå förbi den gränsen."
+      ]
+    },
+    {
+      "rubrik": "En gåta för teorierna",
+      "stycken": [
+        "Dún Aonghasa sticker ut på ett annat sätt också. Till skillnad från andra avlägsna kvasarer drar det svarta hålet i sig materia i en ganska långsam takt. För att ändå ha hunnit bli så tungt måste det ha vuxit i mycket snabba perioder ännu tidigare. Det sätter press på modellerna för hur de första stora svarta hålen bildades.",
+        "Euclid sköts upp 2023 för att studera det mörka universum. Kombinationen av känslig infraröd avbildning och en mycket stor del av himlen gör teleskopet ovanligt bra på att hitta sällsynta och avlägsna objekt. Så långt bort som rödförskjutning 8 väntas ändå högst några tiotal kvasarer i hela kartläggningen."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Kvasaren i korthet",
+    "punkter": [
+      "Namn: J1504+6252, smeknamn Dún Aonghasa",
+      "Rödförskjutning: 8,13 – den första kvasaren bortom 8",
+      "Ljuset är cirka 13,1 miljarder år gammalt",
+      "Svart hål på omkring 360 miljoner solmassor",
+      "Studien: J. Wolf m.fl., Astronomy & Astrophysics, 24 november 2026"
+    ]
+  },
+  "varfor": "De första miljarderna år efter big bang är perioden då de första stjärnorna och galaxerna tände ljuset i ett mörkt universum. Varje ny kvasar så långt bort ger forskarna en ledtråd till hur snabbt de största svarta hålen kunde växa, och visar att Euclid fungerar som ett effektivt verktyg för att leta efter dem.",
+  "taggar": [
+    "rymden",
+    "esa",
+    "euclid",
+    "svarta hål",
+    "astronomi"
+  ],
+  "beskrivning": "Euclid har hittat den mest avlägsna kvasaren hittills: ett svart hål på 360 miljoner solmassor, sett 630 miljoner år efter big bang.",
+  "kalla": {
+    "id": "esa-top",
+    "namn": "ESA (toppnyheter)",
+    "url": "https://www.esa.int/articles/about-us/directorates/science/euclid/euclid-breaks-own-quasar-record-by-40-million-years",
+    "hem": "https://www.esa.int",
+    "typ": "rymd",
+    "publicerad": "2026-11-24T08:00:00.000Z",
+    "rubrik": "Euclid breaks own quasar record by 40 million years"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:31:00.000Z",
+  "uppdaterad": "2026-11-25T10:31:00.000Z",
+  "bild": {
+    "fil": "/bilder/euclid-hittar-den-mest-avlagsna-kvasaren-hittills.webp",
+    "og": "/bilder/euclid-hittar-den-mest-avlagsna-kvasaren-hittills.jpg",
+    "liten": "/bilder/euclid-hittar-den-mest-avlagsna-kvasaren-hittills-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: en stor teleskopspegel i ett renrum",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a single round silver telescope mirror resting on a padded test stand in an optics laboratory, protective covers and measuring tools nearby, nobody present",
+    "skapad": "2026-11-26T00:08:03.997Z",
+    "anvandning": {
+      "input_tokens": 251,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 251
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1175
+    },
+    "kostnadUSD": 0.028975,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a single round silver telescope mirror resting on a padded test stand in an optics laboratory, protective covers and measuring tools nearby, nobody present",
+  "bildalt": "En stor teleskopspegel i ett renrum",
+  "poang": {
+    "positiv": 0.85,
+    "betydelse": 0.56,
+    "tillit": 0.97,
+    "total": 76
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:31:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildsok": [
+    "Euclid space telescope",
+    "Euclid spacecraft clean room"
+  ],
+  "bildRymd": true,
+  "bildbeslut": "bild"
+}

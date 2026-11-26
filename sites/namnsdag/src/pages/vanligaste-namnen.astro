@@ -1,0 +1,140 @@
+---
+// Lång guidesida: Vanligaste namnen i Sverige. Utbyggd 2026-11-25 från listan över almanackans vanligaste namn
+// (topp 150 behålls). Källor: SCB:s statistikdatabas (CC0) – tilltalsnamn och förnamn 2000/2020, topplistor 1999–2021.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import "../styles/sajt.css";
+import { SITE, ALLA_NAMN, UTAN_NAMNSDAG, SCB_KALLA, SCB_TOTALT, tal, barare, dagText, dagHref, namnHref, lista } from "../site.js";
+import { ALLA_SCB, BEFOLKNING, BEF_SENAST, tilltal, MEDELALDER } from "../lib/statistik.js";
+
+const PUBLICERAD = "2026-11-22";
+const UPPDATERAD = "2026-11-25";
+
+// Almanackans namn (befintlig lista, topp 150).
+const rang = ALLA_NAMN.filter((n) => barare(n) > 0).sort((a, b) => barare(b) - barare(a));
+const topp = rang.slice(0, 150);
+const kv = rang.filter((n) => (n.scb.tilltal2020.K ?? 0) > (n.scb.tilltal2020.M ?? 0))[0];
+const ma = rang.filter((n) => (n.scb.tilltal2020.M ?? 0) > (n.scb.tilltal2020.K ?? 0))[0];
+const okning = ALLA_NAMN.filter((n) => n.scb?.tilltal2000 >= 100 && barare(n) > 0)
+  .map((n) => ({ n, d: barare(n) - n.scb.tilltal2000 })).sort((a, b) => b.d - a.d)[0];
+
+// Hela befolkningen 2020, varje stavning för sig.
+const K20 = tilltal("K").slice(0, 20), M20 = tilltal("M").slice(0, 20);
+const alla = Object.entries(ALLA_SCB).map(([n, a]) => ({ n, t: a[0] + a[1], f: a[2] + a[3], t0: a[4] })).filter((x) => x.t > 0).sort((a, b) => b.t - a.t);
+const ettan = alla[0];
+const andelTopp100 = alla.slice(0, 100).reduce((s, x) => s + x.t, 0) / SCB_TOTALT.personer;
+// SCB:s topplistor (liknande stavningar sammanslagna), första och sista året.
+const F = Math.min(...Object.keys(BEFOLKNING.K).map(Number));
+const bef = (kon, ar) => BEFOLKNING[kon][ar].slice(0, 10);
+// Förändring 2000–2020 bland namn med minst 5 000 bärare något av åren.
+const forandring = alla.filter((x) => x.t0 && Math.max(x.t, x.t0) >= 5000 && !x.n.includes(" ")).map((x) => ({ ...x, d: x.t - x.t0 }));
+const upp = [...forandring].sort((a, b) => b.d - a.d).slice(0, 8);
+const ned = [...forandring].sort((a, b) => a.d - b.d).slice(0, 8);
+const fornamnTopp = [...alla].sort((a, b) => b.f - a.f).slice(0, 10);
+const utan = UTAN_NAMNSDAG.slice(0, 10);
+const alder = (n) => { const m = MEDELALDER[n]; return m ? (m.nK >= m.nM ? m.K : m.M) : null; };
+const komma = (x) => (x == null ? "–" : String(x).replace(".", ","));
+const topp40 = [...K20, ...M20];
+const over40 = topp40.filter((x) => (alder(x.namn) ?? 0) >= 40).length;
+const procent = (x) => `${Math.round(x * 100)} %`;
+
+const avsnitt = [
+  { id: "topp", rubrik: "De vanligaste namnen i Sverige" },
+  { id: "sammanslagna", rubrik: "Topplistan med stavningar sammanslagna" },
+  { id: "forandring", rubrik: `Så har toppen förändrats sedan ${F}` },
+  { id: "okat", rubrik: "Namn som ökat och minskat mest sedan 2000" },
+  { id: "fornamn", rubrik: "Vanligaste förnamnen, med andranamn" },
+  { id: "utan", rubrik: "Vanliga namn som saknar namnsdag" },
+  { id: "almanackan", rubrik: "Vanligaste namnen med namnsdag – topp 150" },
+];
+
+const fragor = [
+  { fraga: "Vilket är det vanligaste namnet i Sverige?", svar: `${ettan.n} är det vanligaste tilltalsnamnet med ${tal(ettan.t)} bärare (SCB, 31 december 2020). Därefter kommer ${alla[1].n} (${tal(alla[1].t)}) och ${alla[2].n} (${tal(alla[2].t)}).` },
+  { fraga: "Vilka är de vanligaste mansnamnen i Sverige?", svar: `${lista(M20.slice(0, 5).map((x) => x.namn))} är de vanligaste tilltalsnamnen bland män 2020. ${M20[0].namn} bärs av ${tal(M20[0].antal)} män.` },
+  { fraga: "Vilka är de vanligaste kvinnonamnen i Sverige?", svar: `${lista(K20.slice(0, 5).map((x) => x.namn))} är de vanligaste tilltalsnamnen bland kvinnor 2020. ${K20[0].namn} bärs av ${tal(K20[0].antal)} kvinnor.` },
+  { fraga: "Vilket namn med namnsdag är vanligast?", svar: `${rang[0].namn}, med ${tal(barare(rang[0]))} bärare av tilltalsnamnet (SCB 2020). Namnsdagen är den ${dagText(rang[0].datum)}.` },
+  { fraga: "Vilka kvinno- och mansnamn i almanackan är vanligast?", svar: `Vanligast bland kvinnor är ${kv.namn} (${tal(barare(kv))}, ${dagText(kv.datum)}) och bland män ${ma.namn} (${tal(barare(ma))}, ${dagText(ma.datum)}).` },
+  okning && { fraga: "Vilket almanacksnamn har ökat mest sedan 2000?", svar: `${okning.n.namn} har ökat med ${tal(okning.d)} bärare, från ${tal(okning.n.scb.tilltal2000)} år 2000 till ${tal(barare(okning.n))} år 2020.` },
+  { fraga: "Vilket är det vanligaste förnamnet om man räknar alla förnamn?", svar: `${fornamnTopp[0].n}. ${tal(fornamnTopp[0].f)} personer har ${fornamnTopp[0].n} någonstans bland sina förnamn, men bara ${tal(fornamnTopp[0].t)} använder det som tilltalsnamn.` },
+].filter(Boolean);
+
+const titel = "Vanligaste namnen i Sverige – topp 20 kvinnor och män";
+const beskrivning = `${ettan.n}, ${alla[1].n} och ${alla[2].n} är de vanligaste namnen i Sverige. Topp 20 för kvinnor och män, förändringen sedan 2000 och almanackans 150 vanligaste namn (SCB).`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Vanligaste namnen i Sverige"
+  svar={`Det vanligaste namnet i Sverige är <strong>${ettan.n}</strong>, som ${tal(ettan.t)} personer har som tilltalsnamn. Vanligast bland män är <strong>${M20[0].namn}</strong> med ${tal(M20[0].antal)} bärare. Därefter kommer ${alla[2].n} och ${alla[3].n}. De 100 vanligaste namnen bärs av ${procent(andelTopp100)} av befolkningen. Siffrorna gäller 31 december 2020 enligt SCB.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Vanligaste namnen", href: "/vanligaste-namnen/" }]}
+  publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Sök antal bärare för alla namn" },
+    { namn: "Pojknamn", href: "/pojknamn/", text: "Populäraste namnen bland nyfödda pojkar" },
+    { namn: "Flicknamn", href: "/flicknamn/", text: "Populäraste namnen bland nyfödda flickor" },
+    { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/", text: "De 200 vanligaste namnen som saknas i almanackan" },
+    { namn: "Alla namn A–Ö", href: "/alla-namn/", text: "Alla namn i almanackan" },
+  ]}
+  kallor={[
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn med minst 10 bärare (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "tilltalsnamn 2000 och 2020, CC0", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn, de 10 och 100 vanligaste (BE0001T06AR)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001T06AR/", text: `topplistor ${F}–${BEF_SENAST}, liknande stavningar sammanslagna, CC0`, datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Förnamn med minst 10 bärare (BE0001FNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001FNamn10/", text: "förnamn 2020, CC0", datum: "2026-11-25" },
+    { namn: "SCB – Namnstatistik", url: "https://www.scb.se/hitta-statistik/sverige-i-siffror/namnsok/", text: "SCB:s namnstatistik upphörde 2024", datum: "2026-11-25" },
+    { namn: "Isof – Alla namn i almanackan", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/alla-namn-i-almanackan", text: "namnlängden", datum: "2026-11-22" },
+  ]}>
+
+  <h2 id="topp">De vanligaste namnen i Sverige</h2>
+  <p>Tabellen visar de 20 vanligaste tilltalsnamnen för kvinnor och män bland alla folkbokförda den 31 december 2020. Tilltalsnamn är det förnamn man använder i vardagen. Här räknas varje stavning för sig, så Thomas och Tomas är två olika namn.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Kvinnor</th><th class="num">Antal</th><th>Män</th><th class="num">Antal</th></tr></thead>
+    <tbody>{K20.map((x, i) => <tr><td class="num">{i + 1}</td><td>{x.namn}</td><td class="num">{tal(x.antal)}</td><td>{M20[i].namn}</td><td class="num">{tal(M20[i].antal)}</td></tr>)}</tbody>
+  </table></div>
+  <p>{ettan.n} har varit Sveriges vanligaste namn länge, men antalet minskar. År 2000 hade {tal(ettan.t0)} personer {ettan.n} som tilltalsnamn. Medelåldern bland dem som heter {ettan.n} är {String(MEDELALDER[ettan.n]?.K).replace(".", ",")} år. Av de 40 namnen i tabellen har {over40} en medelålder på 40 år eller mer bland bärarna. Dagens populära barnnamn är fler och delas av färre, så de tar sig sällan upp i toppen för hela befolkningen. Vill du se ett visst namn, sök i <a href="/hur-manga-heter/">hur många heter</a>.</p>
+
+  <h2 id="sammanslagna">Topplistan med stavningar sammanslagna</h2>
+  <p>SCB har också publicerat topplistor där namn med liknande stavning slagits ihop. Det ger en annan ordning för män, eftersom flera vanliga mansnamn skrivs på olika sätt. Listan gäller 31 december {BEF_SENAST}, det sista år SCB redovisade.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Kvinnor</th><th class="num">Antal</th><th>Män</th><th class="num">Antal</th></tr></thead>
+    <tbody>{bef("K", BEF_SENAST).map(([n, x], i) => <tr><td class="num">{i + 1}</td><td>{n}</td><td class="num">{tal(x)}</td><td>{bef("M", BEF_SENAST)[i][0]}</td><td class="num">{tal(bef("M", BEF_SENAST)[i][1])}</td></tr>)}</tbody>
+  </table></div>
+  <p>Thomas kommer med här, eftersom Thomas och Tomas räknas tillsammans. Karl, som i den vanliga statistiken delas med Carl, stiger också. I den sammanslagna listan ligger även Mohammad bland de 15 vanligaste mansnamnen. När SCB slutade med namnstatistiken 2024 tog Skatteverket över. Skatteverket räknar varje stavning för sig.</p>
+
+  <h2 id="forandring">Så har toppen förändrats sedan {F}</h2>
+  <p>Jämför man SCB:s topplistor för {F} och {BEF_SENAST} har toppen bytts ut långsamt. Förändringen syns mest bland männen:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Kvinnor {F}</th><th>Kvinnor {BEF_SENAST}</th><th>Män {F}</th><th>Män {BEF_SENAST}</th></tr></thead>
+    <tbody>{bef("K", F).map(([n], i) => <tr><td class="num">{i + 1}</td><td>{n}</td><td>{bef("K", BEF_SENAST)[i][0]}</td><td>{bef("M", F)[i][0]}</td><td>{bef("M", BEF_SENAST)[i][0]}</td></tr>)}</tbody>
+  </table></div>
+  <p>{bef("M", F)[0][0]} var vanligast bland män {F} men har tappat flera placeringar. {bef("K", F)[0][0]} har däremot legat etta bland kvinnor under hela perioden. Namn som Ulla och Inger, som fanns på topp 10 {F}, har försvunnit från toppen eftersom de främst bärs av äldre.</p>
+
+  <h2 id="okat">Namn som ökat och minskat mest sedan 2000</h2>
+  <p>Vi har jämfört antalet bärare av varje tilltalsnamn år 2000 och 2020. Bland namn med minst 5 000 bärare har dessa ökat mest:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">2000</th><th class="num">2020</th><th class="num">Förändring</th><th class="num">Medelålder</th></tr></thead>
+    <tbody>{upp.map((x) => <tr><td>{x.n}</td><td class="num">{tal(x.t0)}</td><td class="num">{tal(x.t)}</td><td class="num">+{tal(x.d)}</td><td class="num">{komma(alder(x.n))}</td></tr>)}</tbody>
+  </table></div>
+  <p>Den låga medelåldern visar att ökningen kommer från barn och unga som fått namnen under 2000- och 2010-talen. Omvänt minskar namn som främst bärs av äldre, när få barn får dem. Där är medelåldern betydligt högre:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">2000</th><th class="num">2020</th><th class="num">Förändring</th><th class="num">Medelålder</th></tr></thead>
+    <tbody>{ned.map((x) => <tr><td>{x.n}</td><td class="num">{tal(x.t0)}</td><td class="num">{tal(x.t)}</td><td class="num">{tal(x.d)}</td><td class="num">{komma(alder(x.n))}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="fornamn">Vanligaste förnamnen, med andranamn</h2>
+  <p>Räknar man alla förnamn, inte bara tilltalsnamnet, ändras listan kraftigt. Många har namn som Maria, Elisabeth och Margareta som andra- eller tredjenamn.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Har namnet bland förnamnen</th><th class="num">Som tilltalsnamn</th></tr></thead>
+    <tbody>{fornamnTopp.map((x, i) => <tr><td class="num">{i + 1}</td><td>{x.n}</td><td class="num">{tal(x.f)}</td><td class="num">{tal(x.t)}</td></tr>)}</tbody>
+  </table></div>
+  <p>{fornamnTopp[0].n} är alltså det vanligaste förnamnet i Sverige, trots att {ettan.n} är vanligast som tilltalsnamn.</p>
+
+  <h2 id="utan">Vanliga namn som saknar namnsdag</h2>
+  <p>Flera av de vanligaste namnen finns inte i almanackan, oftast för att almanackan har en annan stavning. De tio vanligaste är {lista(utan.map((x) => `${x.namn} (${tal(x.antal)})`))}. Thomas kan till exempel firas på Tomas-dagen, och Carl på Karl-dagen. Alla namn som saknas i almanackan har gemensam namnsdag den <a href="/1-januari/">1 januari</a>. Se hela listan över <a href="/namn-utan-namnsdag/">namn utan namnsdag</a>.</p>
+
+  <h2 id="almanackan">Vanligaste namnen med namnsdag – topp 150</h2>
+  <p>Vanligast av almanackans namn är <strong>{rang[0].namn}</strong> med {tal(barare(rang[0]))} bärare, namnsdag <a href={dagHref(rang[0].datum)}>{dagText(rang[0].datum)}</a>. Därefter kommer {rang[1].namn} och {rang[2].namn}. Tabellen visar de 150 vanligaste namnen i almanackan, med antal bärare 2020 och 2000.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th>Namnsdag</th><th class="num">Tilltalsnamn 2020</th><th class="num">2000</th></tr></thead>
+    <tbody>{topp.map((n, i) => <tr><td class="num">{i + 1}</td><td><a href={namnHref(n.namn)}>{n.namn}</a></td>
+      <td><a href={dagHref(n.datum)}>{dagText(n.datum)}</a></td><td class="num">{tal(barare(n))}</td>
+      <td class="num">{n.scb.tilltal2000 ? tal(n.scb.tilltal2000) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: {SCB_KALLA}. Tilltalsnamn bland folkbokförda 31 december. Namnlängden enligt Isof.</p>
+  <Annons plats="vanligaste-1" />
+</Guide>

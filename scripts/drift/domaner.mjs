@@ -7,6 +7,7 @@ export const HUVUD = [
   ["parkeringar.nu", "parkeringar"], ["pollenläget.se", "pollenlaget"], ["badstränder.se", "badstrander"], ["simhallar.se", "simhallar"],
   ["lekplatserna.nu", "lekplatserna"],
   ["dagensbensinpris.se", "dagensbensinpris"], ["jourapotek.se", "jourapotek"],
+  ["dagensgodanyheter.se", "dagensgodanyheter"], ["namnsdagsidag.se", "namnsdag"],
 ].map(([namn, projekt]) => ({ namn, ascii: domainToASCII(namn), projekt }));
 
 // DNS-uppslag via Cloudflares offentliga DNS-over-HTTPS (inga nycklar).

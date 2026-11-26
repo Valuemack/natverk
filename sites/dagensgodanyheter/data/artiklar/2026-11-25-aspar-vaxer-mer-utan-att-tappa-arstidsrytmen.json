@@ -1,0 +1,82 @@
+{
+  "id": "37c78a29eb5e",
+  "slug": "aspar-vaxer-mer-utan-att-tappa-arstidsrytmen",
+  "kategori": "miljo",
+  "vinjett": "Skog",
+  "rubrik": "Ny metod får aspar att växa mer – utan att tappa vinterhärdigheten",
+  "seorubrik": "Ny metod får aspar att växa mer och klara vintern",
+  "ingress": "Forskare vid Umeå Plant Science Centre har fått aspar att växa sig högre och bilda mer ved, samtidigt som träden fortfarande slutar växa och gör sig redo för vintern när dagarna blir kortare.",
+  "avsnitt": [
+    {
+      "rubrik": "Tillväxt mot överlevnad",
+      "stycken": [
+        "Lövträd i norr måste pricka rätt i tiden. När hösten kommer och dagarna krymper slutar de växa och bildar knoppar som skyddar nästa års skott under vintern. Det är nödvändigt för att överleva kylan, men det begränsar också hur länge träden kan växa varje år.",
+        "Redan under sin doktorandtid upptäckte docent Maria E. Eriksson, som har lett studien, tillsammans med kollegor att aspar som bildar mer av växthormonet gibberellin växer mer, bildar mer biomassa och får längre vedfibrer. Problemet var att de träden inte reagerade som de skulle på kortare dagar och därför fick svårt att ställa om till vinter."
+      ]
+    },
+    {
+      "rubrik": "Trädets inre klocka styr hormonet",
+      "stycken": [
+        "Lösningen blev att koppla hormonproduktionen till trädets biologiska klocka. Precis som människor har växter en inre klocka som samordnar processer med dygnet, och hos träd hjälper den också till att anpassa tillväxten efter årstiden.",
+        "Forskarna använde en promotor, en bit dna som bestämmer när och var en gen är aktiv. Den valda promotorn styr normalt en gen för celldelning och blir mindre aktiv när dagarna blir kortare. I genetiskt modifierade aspar fick den styra gibberellinproduktionen, så att hormonet främst bildas där och när träden växer aktivt."
+      ]
+    },
+    {
+      "rubrik": "Växte mer i långa dagar",
+      "stycken": [
+        "I kontrollerade försök blev de modifierade asparna högre och bildade mer biomassa i stammen än vanliga träd så länge dagarna var långa. När dagarna kortades slutade de växa och bildade knoppar, och efter en period med vinterlika förhållanden började de växa igen.",
+        "Nu vill forskarna förstå bättre hur klockan och växthormonerna samverkar. De hoppas också kunna pröva träden i fält för att se om resultaten håller även under naturliga förhållanden. Studien är publicerad i Journal of Experimental Botany med Manuela Jurca som försteförfattare."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Studien",
+    "punkter": [
+      "Forskare vid Umeå Plant Science Centre och Umeå universitet",
+      "Genetiskt modifierade aspar med mer av växthormonet gibberellin",
+      "Hormonet styrs av trädets biologiska klocka",
+      "Träden växte mer men behöll sin årstidsrytm i kontrollerade försök",
+      "Publicerad i Journal of Experimental Botany, 2026"
+    ]
+  },
+  "varfor": "Snabbväxande träd som ändå klarar nordiska vintrar kan ge mer biomassa från samma yta. Metoden visar att det går att öka tillväxten utan att offra trädets naturliga anpassning till årstiderna, något som tidigare försök inte klarade. Fältförsök får visa om resultaten håller i verkligheten.",
+  "taggar": [
+    "skog",
+    "växtforskning",
+    "umeå universitet",
+    "biomassa"
+  ],
+  "beskrivning": "Forskare i Umeå har fått aspar att växa mer genom att koppla ett tillväxthormon till trädens biologiska klocka.",
+  "kalla": {
+    "id": "umu",
+    "namn": "Umeå universitet",
+    "url": "https://www.umu.se/nyheter/ny-metod-okar-aspens-tillvaxt-utan-att-stora-arstidsrytmen_4274972",
+    "hem": "https://www.umu.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-23T15:05:15.000Z",
+    "rubrik": "Ny metod ökar aspens tillväxt utan att störa årstidsrytmen"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:56:00.000Z",
+  "uppdaterad": "2026-11-25T10:56:00.000Z",
+  "bild": null,
+  "bildmotiv": "a stand of young European aspen trees (Populus tremula) with grey-green bark and yellowing leaves in a Swedish forest research plot, late October",
+  "bildalt": "Unga aspar med gula höstlöv i en svensk skog",
+  "poang": {
+    "positiv": 0.65,
+    "betydelse": 0.38,
+    "tillit": 0.95,
+    "total": 61
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:56:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

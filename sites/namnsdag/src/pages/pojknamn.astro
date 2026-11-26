@@ -1,0 +1,130 @@
+---
+// Lång guidesida: Pojknamn – populära och klassiska. Topplistor och medelålder ur SCB (CC0, 1998–2022),
+// nyare toppnamn från Skatteverket (2025) och Isof (2023), namnlagen från riksdagen.se. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import NamnsdagCell from "../components/NamnsdagCell.astro";
+import { SITE, tal, lista } from "../site.js";
+import { NYFODDA, NYF_AR, NYF_SENAST, MEDELALDER, NYARE, ettor, tilltal, placering, nykomlingar, namnsdagFor } from "../lib/statistik.js";
+
+const PUBLICERAD = "2026-11-25";
+const K = "M";
+const S = NYF_SENAST, T = S - 10;
+const L = NYFODDA[K][S];
+const topp30 = L.slice(0, 30).map(([n, x], i) => ({ n, x, plats: i + 1, fore: placering(NYFODDA[K][T], n) }));
+const ettan = ettor(K);
+const flestEtta = [...ettan].sort((a, b) => b.ar.length - a.ar.length)[0];
+const flestTopp10 = Object.entries(NYF_AR.reduce((r, ar) => { for (const [n] of NYFODDA[K][ar].slice(0, 10)) r[n] = (r[n] ?? 0) + 1; return r; }, {}))
+  .sort((a, b) => b[1] - a[1]).slice(0, 6);
+const klassiker = tilltal(K).slice(0, 12).map((x) => ({ ...x, alder: MEDELALDER[x.namn]?.[K] }));
+const tillbaka = L.filter(([n]) => (MEDELALDER[n]?.[K] ?? 0) >= 37).slice(0, 8).map(([n, x]) => ({ n, x, alder: MEDELALDER[n][K], alla: MEDELALDER[n].nM }));
+const nya = nykomlingar(K, T, S).slice(0, 12);
+const ute = NYFODDA[K][T].slice(0, 60).filter(([n]) => !L.some(([m]) => m === n)).slice(0, 10).map(([n]) => n);
+const yngst = Object.entries(MEDELALDER).filter(([, v]) => v[K] && v.nM >= 5000).sort((a, b) => a[1][K] - b[1][K]).slice(0, 5).map(([n, v]) => `${n} (${String(v[K]).replace(".", ",")} år)`);
+const nd = L.map(([n]) => namnsdagFor(n));
+const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d).length;
+const saknasNamn = L.filter((_, i) => !nd[i]).slice(0, 8).map(([n]) => n);
+const sum = (xs) => xs.reduce((s, [, x]) => s + x, 0);
+const top10Nu = sum(L.slice(0, 10)), top10Da = sum(NYFODDA[K][NYF_AR[0]].slice(0, 10));
+const ar = (n) => String(n).replace(".", ",");
+
+const avsnitt = [
+  { id: "2025", rubrik: "Populäraste pojknamnen 2025" },
+  { id: "topp", rubrik: `Topp 30 pojknamn bland nyfödda ${S}` },
+  { id: "ettor", rubrik: "Pojknamnen som varit etta sedan 1998" },
+  { id: "klassiska", rubrik: "Klassiska pojknamn" },
+  { id: "nya", rubrik: "Nya och försvunna pojknamn" },
+  { id: "namnsdag", rubrik: "Har pojknamnet namnsdag?" },
+  { id: "valja", rubrik: "Att välja pojknamn" },
+];
+
+const fragor = [
+  { fraga: "Vilket är det populäraste pojknamnet?", svar: `Noah var det vanligaste tilltalsnamnet bland nyfödda pojkar 2025, enligt Skatteverket, följt av ${lista(NYARE[2025].M.slice(1))}. Noah låg etta även 2020, 2021 och 2023.` },
+  { fraga: `Hur många pojkar fick namnet William ${S}?`, svar: `${tal(L[0][1])} pojkar fick ${L[0][0]} som tilltalsnamn ${S}, enligt SCB. Det gjorde ${L[0][0]} till årets vanligaste pojknamn det året.` },
+  { fraga: "Vilket pojknamn har legat etta flest gånger?", svar: `${flestEtta.namn} har varit årets vanligaste pojknamn ${flestEtta.ar.length} gånger mellan ${NYF_AR[0]} och ${S}, enligt SCB. ${flestTopp10[0][0]} är också det namn som legat flest år på topp 10 (${flestTopp10[0][1]} av ${NYF_AR.length} år).` },
+  { fraga: "Vilka är de mest klassiska pojknamnen?", svar: `Bland alla män i Sverige är ${lista(klassiker.slice(0, 5).map((x) => x.namn))} vanligast som tilltalsnamn (SCB 2020). Medelåldern bland bärarna är ${ar(klassiker[0].alder)} år för ${klassiker[0].namn}.` },
+  { fraga: "Har alla pojknamn namnsdag?", svar: `Nej. Av de 100 vanligaste pojknamnen ${S} har ${egen} en egen dag i almanackan och ${variant} kan firas på ett närbesläktat namns dag. ${saknas} saknar namnsdag, till exempel ${lista(saknasNamn.slice(0, 3))}. De har gemensam namnsdag den 1 januari.` },
+  { fraga: "Hur lång tid har man på sig att ge barnet ett namn?", svar: "Enligt lagen om personnamn ska ansökan om barnets förnamn göras inom tre månader från födelsen. Skatteverket prövar och registrerar namnet." },
+];
+
+const titel = "Pojknamn – populära och klassiska pojknamn (topp 100)";
+const beskrivning = `Populäraste pojknamnen: Noah, Hugo och Liam toppar 2025. Topp 30 bland nyfödda, alla ettor sedan 1998, klassiska pojknamn med medelålder och vilka som har namnsdag.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Pojknamn – populära och klassiska"
+  svar={`De populäraste pojknamnen 2025 var <strong>${lista(NYARE[2025].M)}</strong>, enligt Skatteverket. ${S} låg ${L[0][0]} etta med ${tal(L[0][1])} nyfödda, enligt SCB. Bland alla män i Sverige är <strong>${klassiker[0].namn}</strong> det vanligaste tilltalsnamnet, med ${tal(klassiker[0].antal)} bärare och en medelålder på ${ar(klassiker[0].alder)} år.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Pojknamn", href: "/pojknamn/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Flicknamn", href: "/flicknamn/", text: "Populära och klassiska flicknamn" },
+    { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Sök antal bärare för alla namn" },
+    { namn: "Vanligaste namnen i Sverige", href: "/vanligaste-namnen/", text: "Topplistor för hela befolkningen" },
+    { namn: "Ovanliga namn", href: "/ovanliga-namn/", text: "Almanackans ovanliga namn och deras betydelse" },
+    { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/", text: "Vanliga namn som saknas i almanackan" },
+  ]}
+  kallor={[
+    { namn: "SCB, Statistikdatabasen – Nyfödda, de 100 vanligaste tilltalsnamnen (BE0001T05AR)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001D/BE0001T05AR/", text: `topplistor ${NYF_AR[0]}–${S}, CC0`, datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn efter medelålder (BE0001T08AR)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001T08AR/", text: "medelålder per namn 2020, CC0", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn med minst 10 bärare (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "antal män per namn 2020, CC0", datum: "2026-11-25" },
+    { namn: "Skatteverket – Namn på nyfödda inklusive olika topplistor", url: "https://skatteverket.se/4.7da1d2e118be03f8e4f5b9d.html", text: "topp 5 för 2025 och metod", datum: "2026-11-25" },
+    { namn: "Isof – Förnamn", url: "https://www.isof.se/namn/personnamn/lar-dig-mer-om-personnamn-i-sverige/fornamn", text: "toppnamn 2023 och namnmodets cykler", datum: "2026-11-25" },
+    { namn: "SCB – Namnstatistik", url: "https://www.scb.se/hitta-statistik/sverige-i-siffror/namnsok/", text: "SCB:s namnstatistik upphörde 2024", datum: "2026-11-25" },
+    { namn: "Lag (2016:1013) om personnamn", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20161013-om-personnamn_sfs-2016-1013/", text: "26–28 §§ om förnamn", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="2025">Populäraste pojknamnen 2025</h2>
+  <p>Enligt Skatteverket var <strong>{lista(NYARE[2025].M)}</strong> de fem vanligaste tilltalsnamnen bland pojkar födda 2025. Noah har därmed hållit sig i toppen i flera år. Isof anger att Noah också var vanligast 2023, före Hugo och Walter. Enligt SCB låg Noah etta både 2020 och 2021.</p>
+  <p>Skatteverket tog över namnstatistiken när SCB slutade producera den 2024. Myndigheterna räknar inte på samma sätt. SCB har i sina topplistor slagit ihop namn med liknande stavning, medan Skatteverket räknar varje stavning för sig. Det är en anledning till att placeringarna kan skilja sig något mellan åren. Skatteverket publicerar siffrorna för ett år i mitten av juni året efter, eftersom föräldrarna har tre månader på sig att anmäla namnet.</p>
+
+  <h2 id="topp">Topp 30 pojknamn bland nyfödda {S}</h2>
+  <p>Den senaste fullständiga topplistan från SCB gäller pojkar födda {S}. Tabellen visar antal pojkar som fick namnet som tilltalsnamn, placeringen tio år tidigare och vilken dag namnet har namnsdag.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Pojkar {S}</th><th class="num">Plats {T}</th><th>Namnsdag</th></tr></thead>
+    <tbody>{topp30.map((r) => <tr><td class="num">{r.plats}</td><td>{r.n}</td><td class="num">{tal(r.x)}</td><td class="num">{r.fore ?? "–"}</td><NamnsdagCell namn={r.n} /></tr>)}</tbody>
+  </table></div>
+  <p>Ett streck i kolumnen för {T} betyder att namnet inte fanns bland de 100 vanligaste det året. Namnen ligger tätt: skillnaden mellan plats ett och plats tio var bara {tal(L[0][1] - L[9][1])} pojkar.</p>
+  <h3>Namnen sprids på fler</h3>
+  <p>Toppnamnen är mindre dominerande än förr. År {NYF_AR[0]} fick {tal(top10Da)} pojkar något av de tio vanligaste namnen. År {S} var det {tal(top10Nu)}. Föräldrar väljer alltså från en bredare uppsättning namn, och även ett namn på topp 10 bärs av relativt få i varje årskull.</p>
+
+  <h2 id="ettor">Pojknamnen som varit etta sedan 1998</h2>
+  <p>{ettan.length} namn har legat etta i SCB:s statistik mellan {NYF_AR[0]} och {S}. {flestEtta.namn} är det namn som toppat flest gånger.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Antal år</th><th>År som etta</th></tr></thead>
+    <tbody>{ettan.map((e) => <tr><td>{e.namn}</td><td class="num">{e.ar.length}</td><td>{e.ar.join(", ")}</td></tr>)}</tbody>
+  </table></div>
+  <p>Räknar man hur många år ett namn legat på topp 10 är ordningen en annan: {lista(flestTopp10.map(([n, x]) => `${n} (${x} år)`))}. Av de {NYF_AR.length} åren i statistiken har alltså några namn legat på topp 10 nästan varje år.</p>
+
+  <h2 id="klassiska">Klassiska pojknamn</h2>
+  <p>Ser man på alla män i Sverige, inte bara de nyfödda, är bilden helt annorlunda. De vanligaste tilltalsnamnen är namn som var populära under 1900-talets mitt. SCB:s statistik över medelålder visar hur gamla bärarna är i genomsnitt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Män 2020</th><th class="num">Medelålder</th><th>Namnsdag</th></tr></thead>
+    <tbody>{klassiker.map((x, i) => <tr><td class="num">{i + 1}</td><td>{x.namn}</td><td class="num">{tal(x.antal)}</td><td class="num">{x.alder ? ar(x.alder) : "–"}</td><NamnsdagCell namn={x.namn} /></tr>)}</tbody>
+  </table></div>
+  <p>Som jämförelse har de mest typiska namnen för dagens barn en medelålder på omkring tio år, till exempel {lista(yngst)}.</p>
+  <h3>Klassiker som kommit tillbaka</h3>
+  <p>Isof beskriver namnmodet som cykler på tre generationer, eller ungefär 80–100 år. Det syns i statistiken. Flera namn på topplistan för nyfödda har en hög medelålder bland alla bärare. Det betyder att namnet var vanligt för länge sedan och nu ges till barn igen:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Pojkar {S}</th><th class="num">Alla med namnet</th><th class="num">Medelålder</th></tr></thead>
+    <tbody>{tillbaka.map((x) => <tr><td>{x.n}</td><td class="num">{tal(x.x)}</td><td class="num">{tal(x.alla)}</td><td class="num">{ar(x.alder)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Nils är det tydligaste exemplet. Namnet låg på plats {placering(L, "Nils")} bland nyfödda {S} och på plats fyra 2025, samtidigt som medelåldern bland alla som heter Nils är över 50 år.</p>
+
+  <h2 id="nya">Nya och försvunna pojknamn</h2>
+  <p>Jämför man topplistan {S} med {T} har flera namn kommit in bland de 100 vanligaste. Här är de nya namnen som fick flest pojkar {S}:</p>
+  <p>{lista(nya.map(([n, x]) => `${n} (${tal(x)})`))}.</p>
+  <p>Samtidigt har namn som var vanliga för tio år sedan fallit ur topp 100, bland annat {lista(ute)}. Bland nykomlingarna finns både äldre svenska namn som Frans, Ture och Folke och korta namn som Ted och Vide.</p>
+
+  <h2 id="namnsdag">Har pojknamnet namnsdag?</h2>
+  <p>Almanackan hinner inte med namnmodet. Av de 100 vanligaste pojknamnen {S} har {egen} en egen dag i almanackan. Ytterligare {variant} är stavningsvarianter av ett almanacksnamn, till exempel Oscar av Oskar och Lucas av Lukas, och kan firas på den dagen. {saknas} namn saknar helt namnsdag, bland dem {lista(saknasNamn)}.</p>
+  <p>Den som saknar namnsdag har gemensam namnsdag den <a href="/1-januari/">1 januari</a>. Almanackan ändras också ibland. Liam, Noah och William fanns inte med när den nuvarande längden kom 2001. William fick namnsdag 2011, och Noa kom in 2022. Från 2027 kommer bland annat Mio och Vilgot in. Se <a href="/nya-namn/">nya namn i almanackan</a>.</p>
+
+  <h2 id="valja">Att välja pojknamn</h2>
+  <p>Några saker att tänka på när ni väljer namn:</p>
+  <ul>
+    <li><strong>Tidsgräns.</strong> Enligt lagen om personnamn ska ansökan om barnets förnamn göras inom tre månader från födelsen. Varje barn ska få ett eller flera förnamn.</li>
+    <li><strong>Prövning.</strong> Skatteverket prövar namnet. Ett förnamn får inte godkännas om det kan väcka anstöt, kan antas leda till obehag för den som ska bära det eller av annan anledning är olämpligt som förnamn.</li>
+    <li><strong>Hur vanligt är det?</strong> Sök på <a href="/hur-manga-heter/">hur många som heter</a> ett namn för att se hur vanligt det är i hela befolkningen, och kolla topplistan ovan för hur vanligt det är bland jämnåriga.</li>
+    <li><strong>Stavningen.</strong> Valter och Walter, Oskar och Oscar räknas som olika namn hos Skatteverket. Stavningen avgör också om namnet har en egen namnsdag.</li>
+    <li><strong>Flera förnamn.</strong> Enligt Isof är det vanligast att ha två förnamn. Isof påpekar att andranamnen bidrar till att äldre namn lever kvar och kan komma tillbaka när trenden vänder.</li>
+  </ul>
+  <p>Letar du efter flicknamn finns motsvarande listor på sidan <a href="/flicknamn/">flicknamn</a>.</p>
+</Guide>

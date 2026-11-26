@@ -1,0 +1,29 @@
+---
+import Tidning from "../components/Tidning.astro";
+import { ARTIKLAR, datumText } from "../lib/artiklar.js";
+const rattade = ARTIKLAR.filter((a) => a.rattelser?.length).flatMap((a) => a.rattelser.map((r) => ({ a, r }))).sort((x, y) => (y.r.datum > x.r.datum ? 1 : -1));
+---
+<Tidning titel="Rättelsepolicy – så rättar vi fel"
+  beskrivning="Hittat ett fel i en artikel på Dagens goda nyheter? Så rättar vi sakfel, hur rättelser redovisas och hur du anmäler ett fel."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Rättelser", href: "/rattelser/" }]}>
+  <div class="textsida">
+    <h1 class="sidrubrik">Rättelsepolicy</h1>
+    <p class="sidingress">Alla artiklar faktagranskas mot källan före publicering. Om ett fel ändå slinker igenom rättar vi det snabbt och öppet.</p>
+
+    <h2>Så rättar vi</h2>
+    <ul>
+      <li><strong>Sakfel</strong> (fel siffra, namn, plats, datum eller slutsats) rättas i artikeln. Längst ner i artikeln står vad som var fel och när det rättades, och datumet "Uppdaterad" ändras.</li>
+      <li><strong>Om källan själv ändrar</strong> sin uppgift uppdaterar vi artikeln och skriver det.</li>
+      <li><strong>Om en nyhet visar sig vara fel i grunden</strong> – till exempel om källan drar tillbaka den – avpublicerar vi inte i tysthet. Artikeln får en tydlig notis överst om vad som har hänt.</li>
+      <li>Stavfel och språkliga förbättringar rättas utan notis.</li>
+    </ul>
+
+    <h2>Anmäl ett fel</h2>
+    <p>Skriv till oss via <a href="/kontakt/">kontaktsidan</a>. Ange vilken artikel det gäller och vad som är fel, gärna med en länk till en källa. Vi svarar så snart vi kan.</p>
+
+    <h2>Gjorda rättelser</h2>
+    {rattade.length ? (
+      <ul>{rattade.map(({ a, r }) => <li><a href={a.href}>{a.rubrik}</a> – {datumText(r.datum)}: {r.text}</li>)}</ul>
+    ) : <p>Inga rättelser har behövts hittills.</p>}
+  </div>
+</Tidning>

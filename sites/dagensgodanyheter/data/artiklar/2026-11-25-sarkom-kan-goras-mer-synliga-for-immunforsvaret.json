@@ -1,0 +1,82 @@
+{
+  "id": "c3e2b9557e23",
+  "slug": "sarkom-kan-goras-mer-synliga-for-immunforsvaret",
+  "kategori": "halsa",
+  "vinjett": "Cancerforskning",
+  "rubrik": "Forskare vid KI hittar sätt att göra sarkom synligare för immunförsvaret",
+  "seorubrik": "KI-forskare gör sarkom synligare för immunförsvaret",
+  "ingress": "Immunterapi har hittills haft svag effekt mot sarkom. En ny avhandling från Karolinska Institutet visar i laboratoriemodeller hur tumörcellerna kan förändras så att kroppens T-celler lättare hittar och angriper dem.",
+  "avsnitt": [
+    {
+      "rubrik": "En ovanlig och svårbehandlad cancer",
+      "stycken": [
+        "Sarkom är en liten men mycket varierad grupp av cancersjukdomar. De kan uppstå i till exempel skelett, muskler och fettvävnad, och när sjukdomen har spridit sig finns det få behandlingar att välja mellan.",
+        "Immunterapi, som hjälper kroppens eget försvar att angripa cancer, har förbättrat behandlingen av flera andra cancersjukdomar. Vid sarkom fungerar den ofta sämre. En förklaring är att T-cellerna, immunförsvarets angripare, ofta inte lyckas tränga in i tumörvävnaden och inte heller känner igen cancercellerna som främmande."
+      ]
+    },
+    {
+      "rubrik": "Att förändra tumören först",
+      "stycken": [
+        "Doktoranden Mireia Cruz De los Santos har i sin avhandling prövat en annan väg: att förändra cancercellerna själva, så att immunförsvaret får lättare att göra sitt jobb. Hennes resultat visar att flera olika mekanismer i sarkomcellerna avgör hur framgångsrikt kroppens försvar blir.",
+        "Genom att påverka vilka gener som är aktiva i cellerna fick forskarna, i experimentella modeller, fler T-celler att tränga in i tumören. T-cellerna blev också bättre på att döda cancercellerna. När läkemedel kombinerades med strålbehandling i låg dos kunde kontakten mellan T-celler och tumörceller förbättras.",
+        "I en annan delstudie väckte forskarna liv i ett slags inbyggt larm i tumörcellerna, ett system som i vanliga fall signalerar fara till immunförsvaret. Då blev det lättare för patienternas egna T-celler att upptäcka och angripa cancercellerna i laboratoriet."
+      ]
+    },
+    {
+      "rubrik": "Långt kvar till patienterna",
+      "stycken": [
+        "Studierna är främst experimentella, och mer forskning behövs innan metoderna kan prövas på patienter. Avhandlingen pekar också ut tumöregenskaper som i framtiden kan hjälpa läkare att förutsäga vilka patienter som svarar på behandling. De markörerna behöver först bekräftas i större patientgrupper.",
+        "Avhandlingen försvaras den 27 november 2026 vid Biomedicum i Solna."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om forskningen",
+    "punkter": [
+      "Doktorsavhandling vid Karolinska Institutet",
+      "Gäller sarkom, cancer i bland annat skelett, muskler och fett",
+      "Resultaten kommer från laboratoriemodeller, inte från behandling av patienter",
+      "Disputation 27 november 2026"
+    ]
+  },
+  "varfor": "Patienter med spridd sarkom har i dag få behandlingsalternativ. Om tumörer kan göras mer mottagliga för immunterapi skulle en behandlingsform som redan hjälper många andra cancerpatienter på sikt kunna fungera även här, och det öppnar för nya kombinationer av behandlingar att pröva.",
+  "taggar": [
+    "cancer",
+    "immunterapi",
+    "karolinska institutet",
+    "forskning"
+  ],
+  "beskrivning": "En avhandling från KI visar i laboratoriet hur sarkomceller kan förändras så att immunförsvarets T-celler lättare angriper dem.",
+  "kalla": {
+    "id": "ki",
+    "namn": "Karolinska Institutet",
+    "url": "https://nyheter.ki.se/nya-satt-att-gora-sarkom-mer-synliga-for-immunforsvaret",
+    "hem": "https://ki.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-22T23:00:00.000Z",
+    "rubrik": "Nya sätt att göra sarkom mer synliga för immunförsvaret"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:51:00.000Z",
+  "uppdaterad": "2026-11-25T10:51:00.000Z",
+  "bild": null,
+  "bildmotiv": "cell culture flasks and a fluorescence microscope on a laboratory bench, soft blue light",
+  "bildalt": "Odlingsflaskor och ett fluorescensmikroskop i ett laboratorium",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 53
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:51:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

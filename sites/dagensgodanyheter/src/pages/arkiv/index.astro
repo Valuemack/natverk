@@ -1,0 +1,15 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import { ARTIKLAR, isoDag } from "../../lib/artiklar.js";
+
+const MANADER = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+const manader = [...new Set(ARTIKLAR.map((a) => isoDag(a.publicerad).slice(0, 7)))].sort().reverse()
+  .map((m) => ({ m, namn: `${MANADER[Number(m.slice(5, 7)) - 1]} ${m.slice(0, 4)}`, antal: ARTIKLAR.filter((a) => isoDag(a.publicerad).startsWith(m)).length }));
+---
+<Tidning titel="Arkiv – alla goda nyheter månad för månad"
+  beskrivning={`Arkivet med alla ${ARTIKLAR.length} positiva nyheter på Dagens goda nyheter, ordnade efter månad.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Arkiv", href: "/arkiv/" }]}>
+  <h1 class="sidrubrik">Arkiv</h1>
+  <p class="sidingress">Alla {ARTIKLAR.length} artiklar, månad för månad.</p>
+  <div class="knapprad">{manader.map((x) => <a href={`/arkiv/${x.m}/`}>{x.namn} ({x.antal})</a>)}</div>
+</Tidning>

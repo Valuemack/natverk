@@ -1,0 +1,37 @@
+---
+import Tidning from "../components/Tidning.astro";
+import { SITE } from "../site.js";
+import { organisationLd } from "../lib/ld.js";
+import { KATEGORIER } from "../lib/kategorier.js";
+import { ARTIKLAR } from "../lib/artiklar.js";
+import { AKTIVA } from "../../scripts/kallor.mjs";
+---
+<Tidning titel="Om Dagens goda nyheter – positiva nyheter från källan"
+  beskrivning="Dagens goda nyheter visar att världen blir bättre – med positiva nyheter från Sverige och hela världen, skrivna utifrån förstahandskällor och faktagranskade."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Om oss", href: "/om/" }]} jsonld={[organisationLd()]}>
+  <div class="textsida">
+    <h1 class="sidrubrik">Om Dagens goda nyheter</h1>
+    <p class="sidingress">Världen blir bättre – här är beviset, varje morgon. Dagens goda nyheter berättar om framstegen i Sverige och resten av världen som sällan når förstasidorna: sakligt, med källan länkad och utan att skriva om andra tidningars artiklar.</p>
+
+    <h2>Varför goda nyheter?</h2>
+    <p>Nyheter handlar mest om det som går fel, eftersom olyckor och kriser händer plötsligt medan framsteg sker långsamt. Därför tror många att världen blir sämre, fast mätningarna över lång tid oftast visar motsatsen: fler barn överlever sin första tid, fler kan läsa, fler har el och rent vatten, och ny teknik gör energin renare. Det betyder inte att allt är bra. Det betyder att problem går att lösa – och att det är värt att berätta när det händer.</p>
+    <p>Vi påstår inte att allt blir bättre överallt, hela tiden. Vi visar det som faktiskt har blivit bättre, med data och källa, och vi skriver lika sakligt om en god nyhet som om vilken nyhet som helst.</p>
+
+    <h2 id="varlden-i-siffror">Världen i siffror</h2>
+    <p>På förstasidan visar vi varje dag en siffra om hur världen har förändrats på lång sikt. Siffrorna kommer från etablerade statistikkällor som Our World in Data, Gapminder, FN-organen, Världsbanken och SCB. Vi anger alltid källan och vilket år siffran gäller, och vi jämför bara mått som är mätta på samma sätt över tid. Hittar du ett fel? Hör av dig via <a href="/kontakt/">kontaktsidan</a>.</p>
+
+    <h2>Vad vi gör</h2>
+    <p>Varje natt går vi igenom nya pressmeddelanden och nyheter från {AKTIVA.length} förstahandskällor: svenska myndigheter, universitet och forskningsinstitut, rymdorganisationer, FN-organ, EU och ideella organisationer. De mest positiva och betydelsefulla nyheterna blir artiklar i nio avdelningar: {KATEGORIER.map((k) => k.namn).join(", ")}. Hittills har vi publicerat {ARTIKLAR.length} artiklar.</p>
+
+    <h2 id="redaktionen">Redaktionen</h2>
+    <p>Varje artikel faktagranskas mot källtexten innan den publiceras. Redaktionen bestämmer reglerna för vilka nyheter som väljs, hur de skrivs och kontrolleras, och ansvarar för rättelser. Exakt hur det går till beskriver vi i vår <a href="/redaktionell-policy/">redaktionella policy</a>.</p>
+
+    <h2 id="agare">Ägare och finansiering</h2>
+    {SITE.utgivare
+      ? <p>Dagens goda nyheter ges ut av {SITE.utgivare}. Sajten är fristående och finansieras med annonser. Ingen artikel är sponsrad, och ingen källa betalar för att synas.</p>
+      : <p>Dagens goda nyheter är en fristående sajt som drivs av en privat utgivare och finansieras med annonser. Ingen artikel är sponsrad, och ingen källa betalar för att synas. Sajten är inte knuten till någon myndighet, tidning eller organisation som vi hänvisar till.</p>}
+
+    <h2>Kontakt</h2>
+    <p>Tips, frågor och felanmälningar tas emot via <a href="/kontakt/">kontaktsidan</a>.</p>
+  </div>
+</Tidning>

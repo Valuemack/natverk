@@ -1,0 +1,122 @@
+---
+// Sajtens egen tidningslayout (core-layouten är byggd för katalogsajter). SEO-hjälparna kommer från @natverk/core.
+import "../styles/tidning.css";
+import { abs, kortaBesk } from "@natverk/core/seo.js";
+import { SITE } from "../site.js";
+import { KATEGORIER } from "../lib/kategorier.js";
+import { ORDBILD_SVG } from "../lib/logga.js";
+import { breadcrumbLd } from "../lib/ld.js";
+import { dagText, versal, NU, klockslag, nummer, argang, SENAST_UPPDATERAD } from "../lib/artiklar.js";
+
+const { titel: titelRa, beskrivning: beskRa, sokvag = Astro.url.pathname, smulor = [], jsonld = [], noindex = false,
+  ogTyp = "website", ogBild = "/og-standard.jpg", aktiv = null, startsida = false, artikel = null } = Astro.props;
+const canonical = abs(SITE, sokvag);
+const titel = String(titelRa).replace(/­/g, "");
+const beskrivning = kortaBesk(beskRa);
+const allaLd = [...(smulor.length > 1 ? [breadcrumbLd(smulor)] : []), ...jsonld];
+const robots = noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+const idag = versal(dagText(NU));
+const uppdaterad = SENAST_UPPDATERAD ? klockslag(SENAST_UPPDATERAD) : null;
+---
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titel}</title>
+    <meta name="description" content={beskrivning} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    <meta property="og:type" content={ogTyp} />
+    <meta property="og:site_name" content={SITE.namn} />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:title" content={titel} />
+    <meta property="og:description" content={beskrivning} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={abs(SITE, ogBild)} />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    {artikel && <meta property="article:published_time" content={artikel.publicerad} />}
+    {artikel && <meta property="article:modified_time" content={artikel.uppdaterad ?? artikel.publicerad} />}
+    {artikel && <meta property="article:section" content={artikel.kat.namn} />}
+    {artikel?.taggar?.map((t) => <meta property="article:tag" content={t} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#fbf9f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151514" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/logo-512.png" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.namn} – RSS`} href="/rss.xml" />
+    <script is:inline>try{var t=localStorage.getItem("tema");if(t)document.documentElement.dataset.tema=t}catch(e){}</script>
+    {allaLd.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+  </head>
+  <body>
+    <a class="hoppa" href="#innehall">Till innehållet</a>
+    <header class="huvud">
+      <div class="ram huvud-rad">
+        <span>Goda nyheter från Sverige och världen</span>
+        <span class="lankar">
+          <a href="/arkiv/">Arkiv</a>
+          <a href="/om/">Om oss</a>
+          <button class="temaknapp" type="button" aria-label="Växla mellan mörkt och ljust läge" data-temaknapp>Mörkt/ljust</button>
+        </span>
+      </div>
+      <div class="ram namnhuvud">
+        <a class="logga" href="/" aria-label={`${SITE.namn} – till förstasidan`}>
+          {startsida
+            ? <h1><span class="visuellt-dold">{SITE.namn}</span><Fragment set:html={ORDBILD_SVG} /></h1>
+            : <span class="logga-namn"><Fragment set:html={ORDBILD_SVG} /></span>}
+        </a>
+        <p class="tagline">{SITE.tagline}</p>
+      </div>
+      <div class="ram">
+        <p class="utgava">
+          <span>{idag}{uppdaterad && <> · Uppdaterad {uppdaterad}</>}</span>
+          <span>Årgång {argang()} · Nr {nummer()}</span>
+        </p>
+      </div>
+      <nav class="flikar" aria-label="Avdelningar">
+        <ul class="ram">
+          <li><a href="/" aria-current={startsida ? "page" : undefined}>Förstasidan</a></li>
+          {KATEGORIER.map((k) => <li><a href={`/${k.slug}/`} aria-current={aktiv === k.slug ? "page" : undefined}>{k.namn}</a></li>)}
+        </ul>
+      </nav>
+    </header>
+    <main id="innehall" class="ram">
+      {smulor.length > 1 && (
+        <nav class="smulor" aria-label="Brödsmulor">
+          <ol>
+            {smulor.map((s, i) => <li>{i < smulor.length - 1 ? <a href={s.href}>{s.namn}</a> : <span aria-current="page">{s.namn}</span>}</li>)}
+          </ol>
+        </nav>
+      )}
+      <slot />
+    </main>
+    <footer class="fot">
+      <div class="ram fot-rutnat">
+        <div>
+          <a class="logga" href="/" aria-label={`${SITE.namn} – till förstasidan`}><Fragment set:html={ORDBILD_SVG} /></a>
+          <p class="fot-text">Världen blir bättre på fler sätt än nyhetsflödet visar. Vi berättar om framstegen – från Sverige och hela världen – med egna ord utifrån förstahandskällor: myndigheter, lärosäten, forskningsinstitut och internationella organisationer. Varje artikel faktagranskas mot källan innan den publiceras. Källan länkas alltid.</p>
+        </div>
+        <nav aria-label="Kategorier i sidfoten">
+          <h2 class="fot-rubrik">Avdelningar</h2>
+          <ul>{KATEGORIER.map((k) => <li><a href={`/${k.slug}/`}>{k.namn}</a></li>)}</ul>
+        </nav>
+        <nav aria-label="Om sajten">
+          <h2 class="fot-rubrik">Om sajten</h2>
+          <ul>
+            <li><a href="/glada-nyheter-idag/">Glada nyheter idag</a></li>
+            <li><a href="/positiva-nyheter/">Veckans positiva nyheter</a></li>
+            <li><a href="/arkiv/">Arkiv</a></li>
+            {SITE.sidfot.map((m) => <li><a href={m.href}>{m.namn}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+      <div class="ram fot-botten">
+        <p>© {NU.getFullYear()} {SITE.organisation}. Fristående nyhetssajt – inte knuten till någon myndighet, tidning eller organisation som vi hänvisar till.</p>
+      </div>
+    </footer>
+    <script is:inline>
+      document.querySelector("[data-temaknapp]")?.addEventListener("click",function(){var r=document.documentElement,m=matchMedia("(prefers-color-scheme: dark)").matches,n=(r.dataset.tema||(m?"mork":"ljus"))==="mork"?"ljus":"mork";r.dataset.tema=n;try{localStorage.setItem("tema",n)}catch(e){}});
+    </script>
+  </body>
+</html>

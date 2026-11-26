@@ -1,0 +1,127 @@
+---
+import Tidning from "../components/Tidning.astro";
+import Kort from "../components/Kort.astro";
+import Siffror from "../components/Siffror.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../site.js";
+import { KATEGORIER } from "../lib/kategorier.js";
+import { ARTIKLAR, efterLasvarde, iKategori, senaste, NU, dagText, klockslag, isoDag, datumText } from "../lib/artiklar.js";
+import { organisationLd, websiteLd, samlingLd } from "../lib/ld.js";
+import { AKTIVA } from "../../scripts/kallor.mjs";
+
+// Förstasidan sorteras efter läsvärde (positiv, betydelse, källans tillit och färskhet).
+// Huvudnyheten är den mest läsvärda nyheten som har en riktig bild; finns ingen blir den en ren textetta.
+// Förstasidan domineras alltid av det senaste dygnet: dygnets artiklar först (efter läsvärde), sedan veckans övriga.
+const veckan = senaste(24 * 7);
+const dygnet = senaste(24);
+const urval = [...efterLasvarde(dygnet), ...efterLasvarde((veckan.length >= 7 ? veckan : ARTIKLAR).filter((a) => !dygnet.includes(a)))];
+const huvud = urval.find((a) => a.harBild) ?? urval[0];
+const resten = urval.filter((a) => a !== huvud);
+const underHuvud = resten.slice(0, 2);
+const puffar = resten.slice(2, 8);
+// Två stora puffar och en rad med fyra mindre (utan bild) – som en tidningsetta, inte ett jämnt rutnät.
+const STORLEKAR = ["stor", "stor", "liten", "liten", "liten", "liten"];
+const visade = new Set([huvud, ...underHuvud, ...puffar].filter(Boolean).map((a) => a.slug));
+const mestLasvart = efterLasvarde(veckan.length >= 5 ? veckan : ARTIKLAR).slice(0, 5);
+const notiser = ARTIKLAR.filter((a) => a !== huvud).slice(0, 6);
+const idag = isoDag(NU);
+// I varje avdelning står en artikel med bild först (den stora puffen), annars den senaste.
+const avdelningar = KATEGORIER.map((k) => {
+  const lista = iKategori(k.slug).filter((a) => !visade.has(a.slug)).slice(0, 4);
+  const medBild = lista.findIndex((a) => a.harBild);
+  if (medBild > 0) lista.unshift(...lista.splice(medBild, 1));
+  return { k, artiklar: lista };
+}).filter((r) => r.artiklar.length);
+// Mest text, som i en tidning: huvudnyheten har alltid bild, därefter har högst var tredje puff bild (minst två
+// textpuffar mellan två bilder). Puffarna direkt under huvudnyheten, notiserna och "Mest läsvärt" är alltid text.
+let puffNr = 0;
+let senasteBild = -3;
+const bildPa = (a, storlek) => {
+  const nr = puffNr++;
+  if (storlek === "liten" || !a.harBild || nr - senasteBild < 3) return false;
+  senasteBild = nr;
+  return true;
+};
+// Artiklar med bild tar de stora puffplatserna (ordningen inom raden är annars läsvärdesordningen).
+const puffOrdning = [...puffar.filter((a) => a.harBild).slice(0, 2), ...puffar.filter((a) => !puffar.filter((b) => b.harBild).slice(0, 2).includes(a))];
+const puffVisning = puffOrdning.map((a, i) => ({ a, storlek: STORLEKAR[i] ?? "liten" })).map((p) => ({ ...p, bild: bildPa(p.a, p.storlek) }));
+const avdVisning = avdelningar.map(({ k, artiklar }) => ({ k, kort: artiklar.map((a, i) => ({ a, storlek: i === 0 ? "normal" : "liten", ingress: i === 0 })).map((p) => ({ ...p, bild: bildPa(p.a, p.storlek) })) }));
+const titel = "Dagens goda nyheter – positiva nyheter från Sverige och världen";
+const beskrivning = `Goda nyheter ${dagText(NU)}: ${huvud ? huvud.rubrik : "framsteg inom vetenskap, miljö och hälsa"}. Världen blir bättre – här är beviset, från förstahandskällor.`;
+---
+<Tidning titel={titel} beskrivning={beskrivning} startsida ogBild={huvud?.ogBild}
+  jsonld={[organisationLd(), websiteLd(), samlingLd({ namn: SITE.namn, beskrivning: SITE.beskrivning, href: "/", artiklar: urval })]}>
+
+  {huvud ? (
+    <div class="etta">
+      <section class="etta-mitt" aria-label="Huvudnyheter">
+        <Kort a={huvud} storlek="huvud" rubrikNiva="h2" ladda="eager" />
+        {underHuvud.length > 0 && (
+          <div class="puffar under-huvud">
+            {underHuvud.map((a) => <Kort a={a} storlek="normal" visaBild={false} />)}
+          </div>
+        )}
+      </section>
+
+      <section class="etta-senaste" aria-labelledby="senaste-rubrik">
+        <h2 class="spalt-rubrik" id="senaste-rubrik">Senaste</h2>
+        <ol class="notiser">
+          {notiser.map((a) => (
+            <li style={`--kat:${a.kat.farg}`}>
+              <time datetime={a.publicerad}>{isoDag(a.publicerad) === idag ? klockslag(a.publicerad) : datumText(a.publicerad)} · <span class="vinjett">{a.kat.kort}</span></time>
+              <h3><a href={a.href}>{a.rubrik}</a></h3>
+              <p>{a.beskrivning.length > 110 ? a.beskrivning.slice(0, a.beskrivning.lastIndexOf(" ", 106)) + " …" : a.beskrivning}</p>
+            </li>
+          ))}
+        </ol>
+        <a class="spalt-lank" href="/arkiv/">Alla nyheter i arkivet →</a>
+      </section>
+
+      <div class="etta-hoger">
+        <aside class="lasvart" aria-labelledby="lasvart-rubrik">
+          <h2 class="spalt-rubrik" id="lasvart-rubrik">Mest läsvärt</h2>
+          <ol>
+            {mestLasvart.map((a) => (
+              <li style={`--kat:${a.kat.farg}`}>
+                <div><span class="vinjett">{a.kat.kort}</span><a href={a.href}>{a.rubrik}</a></div>
+              </li>
+            ))}
+          </ol>
+          <p class="forklaring">Rangordnat efter hur positiv och betydelsefull nyheten är, hur pålitlig källan är och hur färsk den är. <a href="/redaktionell-policy/#lasvarde">Så räknar vi</a></p>
+        </aside>
+        <Siffror />
+      </div>
+    </div>
+  ) : (
+    <section class="info"><h2>Inga artiklar än</h2><p>De första goda nyheterna publiceras i natt.</p></section>
+  )}
+
+  {puffar.length > 0 && (
+    <section class="sektion" aria-labelledby="fler-rubrik">
+      <h2 class="sektion-rubrik" id="fler-rubrik">Fler goda nyheter <small><a href="/glada-nyheter-idag/">Dagens alla goda nyheter →</a></small></h2>
+      <div class="puffar">{puffVisning.map((p) => <Kort a={p.a} storlek={p.storlek} visaBild={p.bild} />)}</div>
+    </section>
+  )}
+
+  <Annons plats="start-1" />
+
+  {avdVisning.map(({ k, kort }) => (
+    <section class="avdelning" style={`--kat:${k.farg}`} aria-labelledby={`avd-${k.slug}`}>
+      <h2 class="sektion-rubrik" id={`avd-${k.slug}`}><a href={`/${k.slug}/`}>{k.namn}</a> <small><a href={`/${k.slug}/`}>Hela avdelningen →</a></small></h2>
+      <div class="puffar avdelning-rad">
+        {kort.map((p) => <Kort a={p.a} storlek={p.storlek} visaIngress={p.ingress} visaBild={p.bild} />)}
+      </div>
+    </section>
+  ))}
+
+  <section class="info" aria-labelledby="om-rubrik">
+    <h2 id="om-rubrik">Världen blir bättre – och vi visar hur</h2>
+    <p>Nyhetsflödet domineras av det som går fel. Men mätningarna över lång tid visar ofta motsatsen: andelen barn som dör före fem års ålder har mer än halverats sedan 1990, nio av tio människor har tillgång till el och solpaneler har blivit 99,9 procent billigare sedan 1970-talet. Varje natt läser vi pressmeddelanden och rapporter från {AKTIVA.length} förstahandskällor – myndigheter, universitet, forskningsinstitut, rymdorganisationer och FN-organ – och berättar om framstegen med egna ord. Varje text faktagranskas mot källan innan den publiceras. Vi skriver aldrig om andra tidningars artiklar, och källan länkas alltid.</p>
+    <div class="knapprad">
+      <a href="/om/">Om Dagens goda nyheter</a>
+      <a href="/redaktionell-policy/">Redaktionell policy</a>
+      <a href="/kallor/">Alla källor</a>
+      <a href="/positiva-nyheter/">Veckans positiva nyheter</a>
+    </div>
+  </section>
+</Tidning>

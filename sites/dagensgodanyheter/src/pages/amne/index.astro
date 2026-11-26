@@ -1,0 +1,12 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import { AMNEN, MIN_AMNE } from "../../lib/artiklar.js";
+---
+<Tidning titel="Ämnen – goda nyheter efter ämne"
+  beskrivning="Alla ämnen på Dagens goda nyheter: positiva nyheter om rymden, förnybar energi, biologisk mångfald, cancerforskning och mycket mer."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Ämnen", href: "/amne/" }]} noindex={AMNEN.length < 3}>
+  <h1 class="sidrubrik">Ämnen</h1>
+  <p class="sidingress">Ämnen som har minst {MIN_AMNE} artiklar får en egen sida. Fler tillkommer när nyheterna blir fler.</p>
+  {AMNEN.length ? <div class="knapprad">{AMNEN.map((x) => <a href={`/amne/${x.slug}/`}>{x.namn} ({x.artiklar.length})</a>)}</div>
+    : <p>Inga ämnen har tillräckligt många artiklar än. Bläddra i <a href="/arkiv/">arkivet</a> under tiden.</p>}
+</Tidning>

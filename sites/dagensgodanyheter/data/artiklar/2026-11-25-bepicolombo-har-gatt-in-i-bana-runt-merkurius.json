@@ -1,0 +1,96 @@
+{
+  "id": "cb28d8e7a107",
+  "slug": "bepicolombo-har-gatt-in-i-bana-runt-merkurius",
+  "kategori": "vetenskap",
+  "vinjett": "Rymden",
+  "rubrik": "BepiColombo i bana runt Merkurius – trots ett oväntat avbrott",
+  "seorubrik": "BepiColombo har gått in i bana runt Merkurius",
+  "ingress": "Efter åtta års resa har den europeisk-japanska rymdsonden BepiColombo gått in i en stabil bana runt Merkurius. Bromsmanövern avbröts i förtid av ett programfel, men banan räckte och planen har redan anpassats.",
+  "avsnitt": [
+    {
+      "rubrik": "En bromsning som tog slut för tidigt",
+      "stycken": [
+        "Den 21 november klockan 18.24 UTC, när sonden passerade bara 635 kilometer ovanför Merkurius yta, startade dess fyra raketmotorer. Bränningen skulle pågå i 37 minuter och sakta ner farkosten tillräckligt för att planetens dragningskraft skulle hålla kvar den.",
+        "Under manövern var kontakten med jorden planerat bruten. När signalen kom tillbaka via ESA:s antenn i New Norcia i Australien såg flygledningen på ESA:s kontrollcenter ESOC i Darmstadt att sonden hade avbrutit bränningen själv och gått in i felsäkert läge, ett skyddsläge där allt som inte är nödvändigt stängs av.",
+        "Analysen visade att manövern hade gett ungefär 77 procent av den planerade hastighetsändringen. Omkring klockan ett på natten lokal tid kunde teamet för banberäkningar bekräfta att sonden ändå fångats in i bana runt planeten."
+      ]
+    },
+    {
+      "rubrik": "Ett programfel bakom avbrottet",
+      "stycken": [
+        "ESA arbetar tillsammans med huvudtillverkaren Airbus och den japanska rymdorganisationen JAXA med att utreda felet. Det har spårats till programvaran för styrning av farkostens riktning och motorer.",
+        "Konsekvenserna blev små. Sonden ligger nu i en bana med ett varv på 75 timmar i stället för de planerade 58. Resten av sekvensen var från början gjord för att tåla överraskningar och har redan räknats om, utan att några extra bränningar behövs."
+      ]
+    },
+    {
+      "rubrik": "Första gången vid en annan planet",
+      "stycken": [
+        "BepiColombo är också den första farkost som gått in i bana runt en annan planet med så kallad svag infångning. Tekniken går ut på att komma fram med låg hastighet, och den har tidigare bara använts av vissa farkoster på väg till månen. För att bromsa in under resan har sonden använt elektrisk framdrivning med solkraft och flugit förbi planeter nio gånger.",
+        "Nästa steg är att de två forskningssonderna skiljs åt den 9 december: ESA:s Mercury Planetary Orbiter och JAXA:s Mio. Mios solskydd släpps den 16 december, och den europeiska sonden ska nå sin slutliga bana i mars 2027. Forskningen börjar i april 2027."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "BepiColombo",
+    "punkter": [
+      "Samarbete mellan ESA och JAXA",
+      "Resan till Merkurius tog åtta år, med nio förbiflygningar",
+      "Bana: ett varv på 75 timmar i stället för planerade 58",
+      "Sonderna separeras 9 december 2026",
+      "Forskningen startar i april 2027 med ett team på nästan 600 personer"
+    ]
+  },
+  "varfor": "Att uppdraget klarade ett oväntat fel utan att resten av planen påverkas visar hur robust manövern var upplagd. Efter åtta års resa och årtionden av förberedelser är målet nu nära: snart kan nästan 600 forskare börja studera Merkurius inre, yta och rymden runt planeten.",
+  "taggar": [
+    "rymden",
+    "esa",
+    "merkurius",
+    "bepicolombo",
+    "jaxa"
+  ],
+  "beskrivning": "BepiColombo har gått in i en stabil bana runt Merkurius efter åtta års resa, trots att bromsmanövern avbröts av ett programfel.",
+  "kalla": {
+    "id": "esa-top",
+    "namn": "ESA (toppnyheter)",
+    "url": "https://www.esa.int/articles/about-us/directorates/operations/bepicolombo-safely-in-mercury-orbit-despite-unexpected-challenge",
+    "hem": "https://www.esa.int",
+    "typ": "rymd",
+    "publicerad": "2026-11-23T18:00:00.000Z",
+    "rubrik": "BepiColombo safely in Mercury orbit despite unexpected challenge"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:36:00.000Z",
+  "uppdaterad": "2026-11-25T10:36:00.000Z",
+  "bild": {
+    "fil": "/bilder/bepicolombo-har-gatt-in-i-bana-runt-merkurius.webp",
+    "og": "/bilder/bepicolombo-har-gatt-in-i-bana-runt-merkurius.jpg",
+    "liten": "/bilder/bepicolombo-har-gatt-in-i-bana-runt-merkurius-640.webp",
+    "bredd": 1280,
+    "hojd": 720,
+    "alt": "Kratrar på Merkurius yta, fotograferade av NASA:s rymdsond Messenger",
+    "fotograf": "NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington",
+    "licens": "Public domain (NASA)",
+    "licensUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "kallaUrl": "https://images.nasa.gov/details/PIA10942",
+    "kalla": "NASA Image and Video Library"
+  },
+  "bildmotiv": "the cratered grey surface of the planet Mercury seen from orbit, harsh sunlight and long shadows",
+  "bildalt": "Kratrar på Merkurius yta, fotograferade av NASA:s rymdsond Messenger",
+  "poang": {
+    "positiv": 0.61,
+    "betydelse": 0.48,
+    "tillit": 0.97,
+    "total": 63
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:36:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

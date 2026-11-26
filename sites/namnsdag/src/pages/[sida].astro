@@ -1,0 +1,138 @@
+---
+// En sida per kalenderdag (/3-januari/, 366 st) och per månad (/januari/, 12 st).
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import {
+  SITE, AR, IDAG, UPPDATERAD, MANADER, DAGAR, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
+  nastaDatum, kommandeAr, fore, efter, FASTA_DAGAR, UTAN_NAMN, barare, tal, delMmdd, mmddAv, veckodag, SCB_KALLA, NAMN_KALLA,
+} from "../site.js";
+
+export function getStaticPaths() {
+  const dagar = DAGAR.map((k) => ({ params: { sida: dagHref(k).slice(1, -1) }, props: { typ: "dag", k } }));
+  const manader = MANADER.map((m, i) => ({ params: { sida: m }, props: { typ: "manad", m: i + 1 } }));
+  return [...dagar, ...manader];
+}
+const { typ, k, m } = Astro.props;
+const versal = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+let titel, beskrivning, smulor, fragor, data;
+if (typ === "dag") {
+  const { m: mn } = delMmdd(k);
+  const namn = namnPaDag(k);
+  const senare = kommandeNamnPaDag(k);
+  const nasta = nastaDatum(k);
+  const ar = kommandeAr(k, 6);
+  const fast = FASTA_DAGAR[k];
+  const utan = UTAN_NAMN[k];
+  const namnText = namn.length ? lista(namn.map((n) => n.namn)) : null;
+  const dt = dagText(k);
+  const toppen = [...namn].sort((a, b) => barare(b) - barare(a));
+  const sammanlagt = namn.reduce((s, n) => s + barare(n), 0);
+  data = { k, mn, namn, senare, nasta, ar, fast, utan, namnText, dt, toppen, sammanlagt };
+  titel = namnText
+    ? `Namnsdag ${dt}: ${namnText}${senare.length ? ` (från ${senare[0].fran} även ${lista(senare.map((n) => n.namn))})` : ""}`
+    : `Namnsdag ${dt} – ingen namnsdag, ${utan?.split(" –")[0].toLowerCase()}`;
+  beskrivning = namnText
+    ? `Vem har namnsdag ${dt}? ${namnText}.${sammanlagt ? ` ${tal(sammanlagt)} personer i Sverige bär namnen som tilltalsnamn.` : ""} ✓ Veckodag ${AR}–${AR + 5} ✓ Dagen före och efter.`
+    : `${dt} har ingen namnsdag i den svenska almanackan – dagen är ${utan?.split(" –")[0].toLowerCase()}. Se namnsdagarna dagen före och efter.`;
+  smulor = [{ namn: "Namnsdag idag", href: "/" }, { namn: versal(MANADER[mn - 1]), href: manadHref(mn) }, { namn: dt, href: dagHref(k) }];
+  fragor = [
+    { fraga: `Vem har namnsdag ${dt}?`, svar: namnText ? `${namnText} har namnsdag den ${dt}.${senare.length ? ` Från ${senare[0].fran} har även ${lista(senare.map((n) => n.namn))} namnsdag den dagen.` : ""}` : `Ingen. ${versal(dt)} saknar namn i almanackan eftersom dagen är ${utan?.toLowerCase()}.` },
+    nasta && { fraga: `Vilken veckodag är ${dt} ${nasta.getUTCFullYear()}?`, svar: `${versal(dt)} ${nasta.getUTCFullYear()} är en ${veckodag(nasta)}.${ar[1] ? ` År ${ar[1].ar} infaller dagen på en ${ar[1].dag}.` : ""}` },
+    toppen[0] && barare(toppen[0]) > 0 && { fraga: `Hur många heter ${toppen[0].namn}?`, svar: `${tal(barare(toppen[0]))} personer i Sverige hade ${toppen[0].namn} som tilltalsnamn i slutet av 2020, enligt SCB.` },
+    fast && { fraga: `Vad mer händer ${dt}?`, svar: `${versal(dt)} är ${fast}.` },
+  ].filter(Boolean);
+} else {
+  const dagar = DAGAR.filter((kk) => delMmdd(kk).m === m).map((kk) => ({ k: kk, namn: namnPaDag(kk), senare: kommandeNamnPaDag(kk) }));
+  const allaNamn = dagar.flatMap((d) => d.namn);
+  const storst = [...allaNamn].sort((a, b) => barare(b) - barare(a))[0];
+  const mnamn = MANADER[m - 1];
+  data = { dagar, allaNamn, storst, mnamn };
+  titel = `Namnsdagar i ${mnamn} ${AR} – alla ${allaNamn.length} namn dag för dag`;
+  beskrivning = `Alla namnsdagar i ${mnamn}: ${allaNamn.length} namn från ${dagar.find((d) => d.namn.length).namn[0].namn} till ${dagar.findLast((d) => d.namn.length).namn.at(-1).namn}. ✓ Veckodag ${AR} ✓ Antal bärare enligt SCB.`;
+  smulor = [{ namn: "Namnsdag idag", href: "/" }, { namn: versal(mnamn), href: manadHref(m) }];
+  fragor = [
+    { fraga: `Hur många har namnsdag i ${mnamn}?`, svar: `I ${mnamn} har ${allaNamn.length} namn namnsdag i den svenska almanackan.${storst ? ` Vanligast av dem är ${storst.namn} med ${tal(barare(storst))} bärare (SCB 2020), namnsdag ${dagText(storst.datum)}.` : ""}` },
+  ];
+}
+const forraM = typ === "manad" ? ((m + 10) % 12) + 1 : null;
+const nastaM = typ === "manad" ? (m % 12) + 1 : null;
+const idagK = mmddAv(IDAG);
+---
+<Layout site={SITE} titel={valjTitel(`${titel} | namnsdagsidag.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  {typ === "dag" ? (
+    <>
+      <h1>Namnsdag {data.dt}</h1>
+      <p class="svar">{data.namnText
+        ? <>Den {data.dt} har <strong>{data.namnText}</strong> namnsdag.</>
+        : <>Den {data.dt} finns inget namn i almanackan – dagen är {data.utan?.toLowerCase()}.</>}
+        {data.nasta && <> Nästa gång är {veckodag(data.nasta)} {data.dt} {data.nasta.getUTCFullYear()}.</>}
+        {data.sammanlagt > 0 && <> Sammanlagt {tal(data.sammanlagt)} personer i Sverige har {data.namn.length > 1 ? "namnen" : "namnet"} som tilltalsnamn.</>}
+        {data.fast && <> Dagen är också {data.fast}.</>}</p>
+
+      {data.namn.length > 0 && <>
+        <h2>{data.namn.length > 1 ? "Namnen" : "Namnet"} den {data.dt}</h2>
+        <div class="tabell"><table>
+          <thead><tr><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">2000</th><th class="num">Förnamn totalt 2020</th></tr></thead>
+          <tbody>{data.namn.map((n) => (
+            <tr><td><a href={namnHref(n.namn)}>{n.namn}</a></td>
+              <td class="num">{barare(n) ? tal(barare(n)) : "färre än 10"}</td>
+              <td class="num">{n.scb?.tilltal2000 ? tal(n.scb.tilltal2000) : "–"}</td>
+              <td class="num">{n.scb?.fornamn2020 ? tal((n.scb.fornamn2020.K ?? 0) + (n.scb.fornamn2020.M ?? 0)) : "–"}</td></tr>
+          ))}</tbody>
+        </table></div>
+        <p class="kalla">"Tilltalsnamn" är det namn man kallas, "förnamn totalt" räknar alla som har namnet bland sina förnamn. Källa: {SCB_KALLA}. Folkbokförda 31 december respektive år.</p>
+      </>}
+
+      {data.senare.length > 0 && <p><strong>Nytt namn:</strong> från {data.senare[0].fran} får även {lista(data.senare.map((n) => n.namn))} namnsdag den {data.dt} (Namnlängdskommitténs beslut 2025). Se <a href="/nya-namn/">alla nya namn</a>.</p>}
+
+      <h2>Vilken veckodag är {data.dt}?</h2>
+      <div class="tabell"><table>
+        <thead><tr><th>År</th><th>Veckodag</th></tr></thead>
+        <tbody>{data.ar.map((x) => <tr><td>{x.ar}</td><td>{x.dag}</td></tr>)}</tbody>
+      </table></div>
+
+      <Annons plats="dag-1" />
+
+      <h2>Dagen före och efter</h2>
+      <ul class="veckan">
+        {[fore(data.k), data.k, efter(data.k)].map((kk) => {
+          const ns = namnPaDag(kk);
+          return <li aria-current={kk === data.k ? "page" : undefined}><span class="vd">{kk === data.k ? dagText(kk) : <a href={dagHref(kk)}>{dagText(kk)}</a>}</span>
+            <span>{ns.length ? ns.map((n, j) => <>{j > 0 && ", "}<a href={namnHref(n.namn)}>{n.namn}</a></>) : <em>{UTAN_NAMN[kk]?.split(" –")[0]}</em>}</span></li>;
+        })}
+      </ul>
+      <p><a href={manadHref(data.mn)}>Alla namnsdagar i {MANADER[data.mn - 1]}</a> · <a href="/">Namnsdag idag</a></p>
+    </>
+  ) : (
+    <>
+      <h1>Namnsdagar i {data.mnamn}</h1>
+      <p class="svar">I {data.mnamn} har <strong>{data.allaNamn.length} namn</strong> namnsdag.{data.storst && <> Vanligast är <a href={namnHref(data.storst.namn)}>{data.storst.namn}</a> ({dagText(data.storst.datum)}) med {tal(barare(data.storst))} bärare.</>}</p>
+      <div class="tabell"><table class="manadstabell">
+        <thead><tr><th>Datum</th><th>Veckodag {AR}</th><th>Namnsdag</th></tr></thead>
+        <tbody>{data.dagar.map((d) => {
+          const { m: mm, d: dd } = delMmdd(d.k);
+          const dt = new Date(Date.UTC(AR, mm - 1, dd));
+          const finns = dt.getUTCMonth() === mm - 1;
+          return <tr class={d.k === idagK ? "idag-rad" : undefined}>
+            <td><a href={dagHref(d.k)}>{dagText(d.k)}</a></td>
+            <td>{finns ? veckodag(dt) : "(bara skottår)"}</td>
+            <td>{d.namn.length ? d.namn.map((n, j) => <>{j > 0 && ", "}<a href={namnHref(n.namn)}>{n.namn}</a></>) : <em>{UTAN_NAMN[d.k]?.split(" –")[0]}</em>}
+              {d.senare.length > 0 && <small> (från {d.senare[0].fran}: {d.senare.map((n) => n.namn).join(", ")})</small>}</td>
+          </tr>;
+        })}</tbody>
+      </table></div>
+      <p class="kalla">Namnlängden enligt {NAMN_KALLA.utgivare}. Antal bärare: SCB 2020.</p>
+      <Annons plats="manad-1" />
+      <div class="lank-rad">
+        <a href={manadHref(forraM)}>← {MANADER[forraM - 1]}</a>
+        <a href={manadHref(nastaM)}>{MANADER[nastaM - 1]} →</a>
+      </div>
+      <div class="lank-rad">{MANADER.map((mm, i) => <a href={manadHref(i + 1)} aria-current={i + 1 === m ? "page" : undefined}>{versal(mm)}</a>)}</div>
+    </>
+  )}
+  <Faq fragor={fragor} />
+</Layout>

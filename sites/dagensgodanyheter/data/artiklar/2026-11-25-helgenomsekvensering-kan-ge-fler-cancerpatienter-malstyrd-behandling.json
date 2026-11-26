@@ -1,0 +1,83 @@
+{
+  "id": "28a6757f28cd",
+  "slug": "helgenomsekvensering-kan-ge-fler-cancerpatienter-malstyrd-behandling",
+  "kategori": "halsa",
+  "vinjett": "Cancerforskning",
+  "rubrik": "Helgenomanalys visar att fler cancerpatienter kan ha nytta av befintliga läkemedel",
+  "seorubrik": "Helgenomanalys kan ge fler cancerpatienter rätt läkemedel",
+  "ingress": "Var femte primärtumör och var fjärde metastaserande cancer bär förändringar i dna som redan godkända målstyrda läkemedel riktar sig mot. Det visar en stor analys från University of Cambridge av över 17 000 tumörer.",
+  "avsnitt": [
+    {
+      "rubrik": "Godkännanden följer organ, inte dna",
+      "stycken": [
+        "Målstyrda läkemedel angriper specifika genetiska fel som driver en tumör. De godkänns efter kliniska prövningar som oftast gäller en viss tumörtyp, och då gäller godkännandet bara den cancern. Ett läkemedel som fungerar mot en förändring i äggstockscancer kan alltså inte användas mot samma förändring i bukspottkörtelcancer utan nya prövningar.",
+        "För ovanliga cancerformer kan det ta många år att samla tillräckligt många patienter till sådana prövningar. Forskarna menar därför att vården varje år kan gå miste om många tillfällen att matcha patienter med rätt behandling."
+      ]
+    },
+    {
+      "rubrik": "Över 17 000 tumörgenom",
+      "stycken": [
+        "Teamet analyserade helgenomdata från omkring 11 000 primärtumörer i det brittiska 100 000 Genomes Project och omkring 6 000 metastaserande tumörer från nederländska Hartwig Medical Foundation. De letade efter förändringar som är kopplade till läkemedel som godkänts av den amerikanska läkemedelsmyndigheten FDA, och efter förändringar kopplade till läkemedel som fortfarande prövas.",
+        "Resultatet: 19 procent av primärtumörerna och 26 procent av de metastaserande tumörerna bar en förändring som ett godkänt målstyrt läkemedel riktar sig mot. Mer än hälften av dessa förändringar satt dock i andra cancertyper än dem som läkemedlen är godkända för.",
+        "I stället för att leta efter enskilda mutationer sökte forskarna också efter mönster av dna-skador i hela arvsmassan. Sådana mönster kan avslöja att grundläggande system i cellen inte fungerar, till exempel ett av cellens mest exakta sätt att reparera dna. Fördelen med helgenomsekvensering är att ett och samma test kan hitta många olika sorters avvikelser."
+      ]
+    },
+    {
+      "rubrik": "Nästa steg är nya prövningar",
+      "stycken": [
+        "Forskarna betonar att alla läkemedel inte passar för andra cancertyper och att alla patienter därför inte direkt kan få nytta av dem. Det behövs kliniska prövningar för att visa om fynden leder till bättre resultat för patienterna, och om helgenomsekvensering är kostnadseffektivt. Studien publicerades i The Lancet Oncology, med professor Serena Nik-Zainal vid University of Cambridge som seniorförfattare."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Studien i siffror",
+    "punkter": [
+      "Över 17 000 tumörer analyserades med helgenomsekvensering",
+      "19 procent av primärtumörerna hade en förändring med godkänt målläkemedel",
+      "26 procent av de metastaserande tumörerna hade det",
+      "Mer än hälften satt i cancertyper där läkemedlet inte är godkänt",
+      "Publicerad i The Lancet Oncology, november 2026"
+    ]
+  },
+  "varfor": "Resultaten pekar på var nya kliniska prövningar kan göra störst nytta. Om läkemedel som redan finns kan prövas mot fler cancerformer utifrån tumörens dna kan fler patienter, särskilt med ovanliga cancerformer, på sikt få tillgång till målstyrd behandling snabbare än om helt nya läkemedel måste tas fram.",
+  "taggar": [
+    "cancer",
+    "genetik",
+    "forskning",
+    "läkemedel",
+    "cambridge"
+  ],
+  "beskrivning": "En analys av 17 000 tumörer visar att var femte cancer bär dna-förändringar som befintliga målstyrda läkemedel riktar sig mot.",
+  "kalla": {
+    "id": "cambridge",
+    "namn": "University of Cambridge",
+    "url": "https://www.cam.ac.uk/research/news/whole-genome-screening-identifies-opportunities-for-more-patients-to-benefit-from-existing-therapies",
+    "hem": "https://www.cam.ac.uk",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T00:01:00.000Z",
+    "rubrik": "Whole genome screening identifies opportunities for more patients to benefit from existing therapies"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T10:46:00.000Z",
+  "uppdaterad": "2026-11-25T10:46:00.000Z",
+  "bild": null,
+  "bildmotiv": "rows of DNA sequencing machines and sample plates in a bright genomics laboratory",
+  "bildalt": "Sekvenseringsmaskiner och provplattor i ett genetiklaboratorium",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.38,
+    "tillit": 0.93,
+    "total": 58
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T10:46:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

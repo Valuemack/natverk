@@ -1,0 +1,22 @@
+---
+// Puff: vinjett, rubrik, ingress och datum – med bild bara när artikeln har en riktig bild.
+// storlek: "huvud" (förstasidans huvudnyhet), "stor", "normal" eller "liten". Utan bild blir puffen ren text.
+import { datumText } from "../lib/artiklar.js";
+const { a, storlek = "normal", rubrikNiva = "h3", ladda = "lazy", visaIngress = true, visaBild = true } = Astro.props;
+const Rubrik = rubrikNiva;
+const medBild = visaBild && a.harBild && storlek !== "liten";
+const stor = storlek === "huvud" || storlek === "stor";
+const bild = stor ? a.bildUrl : a.bildLiten;
+const [b, h] = stor ? [1280, 720] : [640, 360];
+---
+<article class:list={["kort", `kort-${storlek}`, { huvudnyhet: storlek === "huvud", "utan-bild": !medBild }]} style={`--kat:${a.kat.farg}`}>
+  {medBild && (
+    <a href={a.href} class="kort-bild-lank" tabindex="-1" aria-hidden="true">
+      <img src={bild} alt="" width={b} height={h} loading={ladda} decoding="async" fetchpriority={ladda === "eager" ? "high" : undefined} />
+    </a>
+  )}
+  <a class="vinjett" href={`/${a.kategori}/`}>{a.kat.kort}{a.vinjett && a.vinjett.toLowerCase() !== a.kat.kort.toLowerCase() ? ` · ${a.vinjett}` : ""}</a>
+  <Rubrik class="kort-rubrik"><a href={a.href}>{a.rubrik}</a></Rubrik>
+  {visaIngress && <p class="kort-ingress">{a.ingress}</p>}
+  <p class="meta"><time datetime={a.publicerad}>{datumText(a.publicerad)}</time> · {a.lasminuter} min · Källa: {a.kalla.namn}</p>
+</article>

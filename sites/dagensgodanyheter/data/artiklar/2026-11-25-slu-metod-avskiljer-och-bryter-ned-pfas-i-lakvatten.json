@@ -1,0 +1,88 @@
+{
+  "id": "48c6dc6adec4",
+  "slug": "slu-metod-avskiljer-och-bryter-ned-pfas-i-lakvatten",
+  "kategori": "miljo",
+  "vinjett": "Vattenrening",
+  "rubrik": "SLU-forskning visar hur PFAS i lakvatten kan avskiljas och brytas ned",
+  "seorubrik": "Ny SLU-metod avskiljer och bryter ned PFAS i lakvatten",
+  "ingress": "En kombination av reningstekniker kan avskilja stora delar av PFAS i lakvatten från avfallsanläggningar och sedan bryta ned merparten till ofarliga ämnen. Det visar ny forskning från SLU, som har prövat metoden i fältskala vid Hovgården utanför Uppsala.",
+  "avsnitt": [
+    {
+      "rubrik": "Evighetskemikalier hamnar i avfallets lakvatten",
+      "stycken": [
+        "PFAS är en stor grupp kemikalier som människan har framställt. De har använts i industrin och i vardagsprodukter sedan mitten av 1900-talet. Ämnena bryts inte ned i naturen och sprids lätt med vatten, och därför kallas de ofta evighetskemikalier. Enligt SLU utgör de ett globalt hot mot tillgången på dricksvatten.",
+        "I slutändan hamnar mycket av samhällets PFAS i reningsverk eller i anläggningar för avfall. Där saknas i dag ofta möjlighet att ta hand om ämnena i lakvattnet, alltså det vatten som rinner genom och från avfallet. Det EU-finansierade projektet LIFE SOuRCE vill lösa just det problemet. Från Sverige deltar bland andra SLU, Statens geotekniska institut och Uppsala Vatten och Avfall."
+      ]
+    },
+    {
+      "rubrik": "Skum, ström och våtmark i tre steg",
+      "stycken": [
+        "I sitt doktorsarbete vid SLU har Oscar Liljeström prövat en rening i tre steg vid Hovgårdens avfallsanläggning. Först används skumfraktionering. Luft blåses in i botten av en behållare med lakvatten, och bubblorna drar med sig PFAS upp till ytan där ämnena samlas i ett skum.",
+        "Skummet tas sedan om hand och behandlas med elektrokemisk oxidation, där elektrisk ström bryter ned PFAS. Upp till 88 procent av allt PFAS i skummet omvandlades till ofarliga ämnen, nämligen fluoridjoner och koldioxid. I ett sista steg leddes en del av det renade vattnet genom en anlagd våtmark, som visade sig kunna binda en del av de PFAS-ämnen som fanns kvar.",
+        "Enligt Oscar Liljeström visar resultaten att PFAS går att bryta ned, och han bedömer att processen kan förbättras ytterligare."
+      ]
+    },
+    {
+      "rubrik": "Långa kedjor lättare att fånga än korta",
+      "stycken": [
+        "Det spelar stor roll om PFAS-ämnena har långa eller korta kolkedjor. I de första försöken med skumfraktionering avskildes 98 procent av de långkedjiga ämnena, men bara 14 procent av de kortkedjiga. När forskarna tillsatte tensider, ytaktiva ämnen, steg andelen avskilda kortkedjiga ämnen till upp till 67 procent.",
+        "Forskarna tror att tillsatsen av tensider kan finjusteras mer. Samtidigt konstaterar de att vatten som främst är förorenat med kortkedjiga PFAS är klart svårare att rena."
+      ]
+    },
+    {
+      "rubrik": "Anläggningen behåller utrustningen",
+      "stycken": [
+        "Skumfraktioneringen beskrivs som en mogen teknik som redan kan användas i stor skala där problemen främst gäller långkedjiga PFAS. Ett tecken på det är att Hovgården har beslutat att behålla utrustningen efter att projektet avslutats. Anläggningen ska nu pröva den på delar av sin lakvattenrening."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Så renades lakvattnet",
+    "punkter": [
+      "Platsen: Hovgårdens avfallsanläggning utanför Uppsala",
+      "Projekt: EU-finansierade LIFE SOuRCE",
+      "Upp till 88 procent av PFAS i skummet bröts ned till fluoridjoner och koldioxid",
+      "98 procent av långkedjiga PFAS avskildes med skumfraktionering",
+      "Kortkedjiga PFAS: från 14 till upp till 67 procent med tillsatta tensider",
+      "Forskningen är del av Oscar Liljeströms doktorsarbete vid SLU"
+    ]
+  },
+  "varfor": "PFAS bryts inte ned av sig självt och hotar dricksvattnet, och avfallsanläggningar saknar ofta sätt att ta hand om ämnena. Studien visar att de inte bara kan fångas upp utan också förstöras. Att Hovgården behåller utrustningen tyder på att delar av tekniken redan är redo för praktisk användning.",
+  "taggar": [
+    "pfas",
+    "vattenrening",
+    "avfall",
+    "miljögifter"
+  ],
+  "beskrivning": "Forskning från SLU visar att PFAS i lakvatten kan avskiljas och brytas ned i tre steg. Metoden har testats vid Hovgården utanför Uppsala.",
+  "kalla": {
+    "id": "slu",
+    "namn": "SLU",
+    "url": "https://www.slu.se/nyheter/2026/11/sa-kan-pfas-separeras-fran-lakvatten-och-sedan-forstoras",
+    "hem": "https://www.slu.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T07:26:06.000Z",
+    "rubrik": "Så kan PFAS separeras från lakvatten och sedan förstöras"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:57:43.059Z",
+  "uppdaterad": "2026-11-25T22:57:43.059Z",
+  "bild": null,
+  "bildmotiv": "a waste management facility with leachate treatment tanks and a small constructed wetland in the Swedish countryside under an overcast sky",
+  "bildalt": "Avfallsanläggning med behållare för rening av lakvatten och en anlagd våtmark",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 55
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:57:43.059Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

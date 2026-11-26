@@ -1,0 +1,90 @@
+{
+  "id": "c37dc4cc6c3f",
+  "slug": "eth-zurich-firade-171-ar-ansvarsfull-ai",
+  "kategori": "vetenskap",
+  "vinjett": "Forskning och AI",
+  "rubrik": "ETH Zürich firade 171 år med fokus på ansvarsfull AI och självständigt tänkande",
+  "seorubrik": "ETH Zürich 171 år: fokus på ansvarsfull AI",
+  "ingress": "Över 650 forskare, företagsledare och beslutsfattare samlades den 21 november när ETH Zürich firade sin 171:a födelsedag. I fokus stod hur artificiell intelligens kan utvecklas ansvarsfullt och hur skolor kan stärka elevers förmåga att tänka själva.",
+  "avsnitt": [
+    {
+      "rubrik": "Starkare grund i matematik och språk",
+      "stycken": [
+        "Rektor Günther Dissertori, som tar över som ETH:s ordförande i januari, hälsade gästerna välkomna. Han beskrev sin tid som rektor som präglad av en kraftig acceleration, framför allt driven av AI.",
+        "Enligt Dissertori ger tekniken forskningen tusentals nya möjligheter. Problemet uppstår när människor låter maskinerna tänka åt dem, eftersom svaren kommer snabbare och bekvämare. Han uppmanade därför skolor och universitet att främja självständigt tänkande och att stärka kärnämnen som matematik och språk. Matematiken hjälper oss att se strukturer, dra logiska slutsatser och bygga modeller, medan språket enligt honom är ett verktyg för att lära sig tänka mer precist."
+      ]
+    },
+    {
+      "rubrik": "Öppen språkmodell lyftes fram som exempel",
+      "stycken": [
+        "Huvudtalet hölls av Guy Parmelin, Schweiz förbundspresident och chef för departementet för ekonomi, utbildning och forskning. Han efterlyste en ansvarsfull och öppen utveckling av AI.",
+        "Som exempel nämnde han Apertus, en språkmodell som ETH Zürich har tagit fram tillsammans med EPFL. Modellen visar enligt Parmelin att artificiell intelligens kan utvecklas på ett sätt som är öppet, flerspråkigt och transparent. Han betonade också att ett universitets betydelse inte bara mäts i publiceringar och patent, utan i människor som tar ansvar med kunskap, gott omdöme och mod."
+      ]
+    },
+    {
+      "rubrik": "Avgående ordförande hyllades för sitt arbete",
+      "stycken": [
+        "Dagen blev också ett avsked för ETH:s ordförande Joël Mesot. Parmelin tackade honom för att ha lett universitetet genom pandemin, internationella kriser och stora tekniska förändringar. Michael Hengartner, ordförande för ETH-styrelsen, framhöll att över 200 avknoppningsföretag har startats från ETH Zürich under Mesots tid, och lyfte hans arbete med det schweiziska AI-initiativet.",
+        "I sitt avskedstal beskrev Mesot universitetet som ett Schweiz i miniatyr, med en kultur av demokratiskt deltagande, djup och gemensam klokskap. Han tackade professorer, personal och studenter. Studentkårens ordförande Mauro Albertini talade samtidigt om den oro många studenter känner inför en arbetsmarknad som förändras snabbt."
+      ]
+    },
+    {
+      "rubrik": "Hedersdoktorer inom kemi och biomekanik",
+      "stycken": [
+        "Enligt tradition delade ETH Zürich ut hedersdoktorat. Den franska kemisten Odile Eisenstein belönades för sina bidrag till förståelsen av molekylers struktur, bindningar och egenskaper med hjälp av beräkningskemi. Walter Herzog, professor vid University of Calgary, hedrades för sina insatser inom biomekanik för muskler och skelett samt biomedicinsk teknik.",
+        "Två personer utsågs också till hedersrådsledamöter: Pius Baschera, professor emeritus i entreprenörskap vid ETH, och Pascale Vonmont, chef för Gebert Rüf-stiftelsen, för sitt arbete med vetenskapsbaserad innovation."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "ETH-dagen 2026",
+    "punkter": [
+      "Datum: 21 november 2026",
+      "ETH Zürich fyllde 171 år",
+      "Över 650 gäster deltog",
+      "Över 200 avknoppningsföretag under Joël Mesots tid som ordförande",
+      "Günther Dissertori blir ny ordförande i januari",
+      "Hedersdoktorer: Odile Eisenstein och Walter Herzog"
+    ]
+  },
+  "varfor": "Ett av Europas ledande tekniska universitet lyfte fram att AI bör utvecklas öppet och ansvarsfullt, med språkmodellen Apertus som exempel. Samtidigt betonades att människors egen förmåga att tänka måste stärkas, inte ersättas. Hedersdoktoraten visar också hur grundforskning i kemi och biomekanik uppmärksammas.",
+  "taggar": [
+    "artificiell intelligens",
+    "universitet",
+    "forskning",
+    "schweiz"
+  ],
+  "beskrivning": "ETH Zürich firade 171 år med över 650 gäster. Fokus låg på ansvarsfull AI, självständigt tänkande och nya hedersdoktorer inom kemi och biomekanik.",
+  "kalla": {
+    "id": "eth",
+    "namn": "ETH Zürich",
+    "url": "https://ethz.ch/en/news-and-events/eth-news/news/2026/11/ethh-day-highlights-ai-and-joel-mesots-departure.html",
+    "hem": "https://ethz.ch",
+    "typ": "larosate",
+    "publicerad": "2026-11-21T16:00:00.000Z",
+    "rubrik": "ETH Day highlights AI and Joël Mesot’s departure"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:59:47.377Z",
+  "uppdaterad": "2026-11-25T22:59:47.377Z",
+  "bild": null,
+  "bildmotiv": "an empty university lecture hall with wooden benches, a large chalkboard and laptops on the desks, soft daylight from tall windows",
+  "bildalt": "ETH Zürichs huvudbyggnad i Zürich en klar höstdag",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.93,
+    "total": 48
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:59:47.377Z",
+    "anmarkningar": [
+      "overdrift: Källan beskriver inte forskningen som grundforskning. Herzogs utmärkelse gäller bland annat biomedicinsk teknik, som är tillämpad. Det är en mindre tolkning utöver källan."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

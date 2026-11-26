@@ -1,0 +1,114 @@
+{
+  "id": "bcb104517ad2",
+  "slug": "genetisk-information-kan-forbattra-riskbedomning-prostatacancer",
+  "kategori": "halsa",
+  "vinjett": "Prostatacancer",
+  "rubrik": "Genetisk riskprofil kan ge mer träffsäker bedömning av prostatacancer vid PSA-test",
+  "seorubrik": "Genetisk riskprofil kan förbättra PSA-test för prostatacancer",
+  "ingress": "Ärftlig information kan komplettera PSA-provet och skilja ut män med högre och lägre risk för allvarlig prostatacancer. Det visar en studie från Karolinska Institutet med drygt 59 000 deltagare som följts i omkring tio år.",
+  "avsnitt": [
+    {
+      "rubrik": "Samma PSA-värde kan dölja olika risk",
+      "stycken": [
+        "PSA är ett protein från prostatan som kan mätas i blodet. Ett förhöjt värde kan tyda på prostatacancer, men det kan också bero på andra förändringar i körteln. Därför är det svårt att med enbart PSA avgöra om en man har en godartad förändring, en lågaggressiv cancer eller en cancer som är kliniskt betydelsefull och sannolikt kräver behandling.",
+        "Forskarna ville ta reda på om ärftlig risk kan ge en mer nyanserad bild. Resultaten tyder på att det går. Bland män med ett PSA-värde mellan 1 och 3 ng/ml var risken att få kliniskt betydelsefull prostatacancer inom tio år 3,0 procent för dem med lägst genetisk risk. För dem med högst genetisk risk var den 9,4 procent. Gruppen med högst genetisk risk hade också större risk att dö av sjukdomen."
+      ]
+    },
+    {
+      "rubrik": "Tusentals män följdes i ett decennium",
+      "stycken": [
+        "Underlaget utgörs av 59 067 män mellan 50 och 69 år, samtliga deltagare i STHLM3-studien, en stor befolkningsbaserad undersökning i Stockholm. Under åren 2012 till 2015 fick de lämna prover för PSA och flera andra biomarkörer, och därefter spårades deras hälsa via svenska register till och med slutet av 2023.",
+        "Den genetiska risken mättes på två sätt. Dels noterades om pappa eller bror hade haft prostatacancer. Dels beräknades en polygen riskpoäng, PRS, där 232 ärftliga genetiska varianter med koppling till prostatacancer vägs samman. Måttet ingår i Stockholm3-testet och förändras inte under livet, till skillnad från PSA.",
+        "PSA-värdet i sig hade stor betydelse, i linje med tidigare forskning. Om PSA låg under 1 ng/ml uppgick tioårsrisken till 0,5 procent. Låg värdet i intervallet 1 till 3 ng/ml steg risken till 5,9 procent, och för män med 3 ng/ml eller mer var den 21 procent."
+      ]
+    },
+    {
+      "rubrik": "Kan ge mer individuell uppföljning",
+      "stycken": [
+        "Enligt forskarna skulle genetisk information kunna bidra till att uppföljningen efter ett PSA-test anpassas mer efter den enskilde. Den kan till exempel hjälpa till att hitta män som behöver undersökas tidigare, medan män med låg risk möjligen kan testas mer sällan. Forskarna bedömer att genetiken framför allt gör nytta som ett tillägg hos män vars PSA ligger på 1 ng/ml eller högre, eftersom risken var låg vid mycket låga värden även när det fanns ärftlighet.",
+        "Forskarna understryker att fler studier behövs för att utveckla och pröva hur sådana modeller kan användas i praktiken. Studien har också begränsningar. Genetiska data saknades för en del deltagare, PRS analyserades inte vid PSA under 1 ng/ml och deltagarna hade främst skandinavisk eller europeisk bakgrund. Sedan studien inleddes har dessutom en nyare och förbättrad riskpoäng tagits fram som inte kunde utvärderas här."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om studien",
+    "punkter": [
+      "Utförd vid Karolinska Institutet, publicerad i JAMA Network Open den 25 november 2026",
+      "59 067 män i åldern 50–69 år från STHLM3-studien i Stockholm",
+      "Testade 2012–2015 och följda till slutet av 2023",
+      "Den genetiska riskpoängen bygger på 232 ärftliga varianter",
+      "Vid PSA 1–3 ng/ml: tioårsrisk 3,0 procent vid lägst och 9,4 procent vid högst genetisk risk"
+    ]
+  },
+  "varfor": "PSA-provet har svårt att skilja ofarliga förändringar från cancer som kräver behandling. Studien tyder på att ärftlig information kan sortera män med samma PSA-värde i grupper med tydligt olika risk. Det kan på sikt bana väg för en uppföljning där den som har högre risk undersöks tidigare och den med låg risk slipper onödiga prover, men fler studier behövs först.",
+  "taggar": [
+    "prostatacancer",
+    "genetik",
+    "cancerforskning",
+    "karolinska institutet"
+  ],
+  "beskrivning": "Studie från Karolinska Institutet med 59 067 män visar att genetisk information kan komplettera PSA-provet och skilja ut högre och lägre risk för prostatacancer.",
+  "kalla": {
+    "id": "ki",
+    "namn": "Karolinska Institutet",
+    "url": "https://nyheter.ki.se/genetisk-information-kan-forbattra-bedomningen-av-risken-for-prostatacancer",
+    "hem": "https://ki.se",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T23:00:00.000Z",
+    "rubrik": "Genetisk information kan förbättra bedömningen av risken för prostatacancer"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:05:11.230Z",
+  "uppdaterad": "2026-11-25T23:05:11.230Z",
+  "bild": {
+    "fil": "/bilder/genetisk-information-kan-forbattra-riskbedomning-prostatacancer.webp",
+    "og": "/bilder/genetisk-information-kan-forbattra-riskbedomning-prostatacancer.jpg",
+    "liten": "/bilder/genetisk-information-kan-forbattra-riskbedomning-prostatacancer-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: blodprovsrör i ett laboratorium, där prover kan analyseras för PSA och genetiska riskmarkörer",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "Blood sample tubes in a rack on a laboratory bench next to a DNA sequencing machine, soft clinical lighting",
+    "skapad": "2026-11-26T00:08:57.865Z",
+    "anvandning": {
+      "input_tokens": 245,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 245
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1169
+    },
+    "kostnadUSD": 0.028945,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "Blood sample tubes in a rack on a laboratory bench next to a DNA sequencing machine, soft clinical lighting",
+  "bildalt": "Blodprovsrör i ett laboratorium, där prover kan analyseras för PSA och genetiska riskmarkörer",
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.5,
+    "tillit": 0.95,
+    "total": 65
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:05:11.230Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att ISUP-grad 2 eller högre är mer benägen att växa, sprida sig och kräva behandling än låggradig cancer. Det är en jämförelse, inte ett påstående om att behandling sannolikt krävs. Liten förstärkning.",
+      "overdrift: Källan säger att genetisk risk 'framför allt kan vara relevant som komplement'. 'Gör nytta' är något säkrare formulerat. Mindre överdrift.",
+      "overdrift: Källan säger att personer med låg risk 'möjligtvis' kan glesa ut PSA-testningen. 'Slipper onödiga prover' är något starkare, men meningen inleds med 'kan på sikt' och avslutas med att fler studier behövs. Mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

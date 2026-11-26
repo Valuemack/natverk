@@ -1,0 +1,105 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import Kort from "../../components/Kort.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { ARTIKLAR, relaterade, datumTid, datumText, AMNE_SLUGAR, hubbSlug, hubbarFor, sidtitel } from "../../lib/artiklar.js";
+import { nyhetsartikelLd } from "../../lib/ld.js";
+
+export function getStaticPaths() {
+  return ARTIKLAR.map((a) => ({ params: { kategori: a.kategori, slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const smulor = [{ namn: "Start", href: "/" }, { namn: a.kat.namn, href: `/${a.kategori}/` }, { namn: a.rubrik, href: a.href }];
+const fler = relaterade(a, 3);
+const hubbar = hubbarFor(a);
+const andrad = a.uppdaterad && a.uppdaterad.slice(0, 16) !== a.publicerad.slice(0, 16);
+const b = a.bild;
+const ai = a.produktion?.metod?.startsWith("ai");
+---
+<Tidning titel={sidtitel(a)} beskrivning={a.beskrivning} smulor={smulor} ogTyp="article" ogBild={a.ogBild}
+  aktiv={a.kategori} artikel={a} jsonld={[nyhetsartikelLd(a)]}>
+  <article class="artikel" style={`--kat:${a.kat.farg}`}>
+    <header class="artikel-huvud">
+      <a class="vinjett" href={`/${a.kategori}/`}>{a.kat.namn}</a>{a.vinjett && <span class="vinjett vinjett-tillagg"> · {a.vinjett}</span>}
+      <h1>{a.rubrik}</h1>
+      <p class="ingress">{a.ingress}</p>
+      <div class="byline">
+        <span>Av <strong><a href="/om/#redaktionen">redaktionen</a></strong> · <a href="/redaktionell-policy/#faktakontroll">faktagranskad mot källan</a></span>
+        <span>Publicerad <time datetime={a.publicerad}>{datumTid(a.publicerad)}</time></span>
+        {andrad && <span>Uppdaterad <time datetime={a.uppdaterad}>{datumTid(a.uppdaterad)}</time></span>}
+        <span>{a.lasminuter} min läsning</span>
+      </div>
+    </header>
+
+    {a.harBild && (
+      <figure class="huvudbild">
+        <img src={a.bildUrl} alt={b.alt ?? ""} width="1280" height="720" fetchpriority="high" decoding="async" />
+        <figcaption>
+          {b.illustration
+            ? <>Illustration: Dagens goda nyheter</>
+            : <>{b.alt}. Foto: {b.fotograf}, {b.licensUrl ? <a href={b.licensUrl} rel="license nofollow">{b.licens}</a> : b.licens}{b.kallaUrl && <>, via <a href={b.kallaUrl} rel="nofollow">{b.kalla}</a></>}.</>}
+        </figcaption>
+      </figure>
+    )}
+
+    <div class="brodtext">
+      {a.avsnitt.map((s, i) => (
+        <>
+          <h2>{s.rubrik}</h2>
+          {s.stycken.map((p) => <p>{p}</p>)}
+          {i === 0 && (
+            <aside class="faktaruta" aria-labelledby="fakta-rubrik">
+              <h2 id="fakta-rubrik">{a.faktaruta.rubrik}</h2>
+              <ul>{a.faktaruta.punkter.map((p) => <li>{p}</li>)}</ul>
+            </aside>
+          )}
+        </>
+      ))}
+
+      <section class="varfor" aria-labelledby="varfor-rubrik">
+        <h2 id="varfor-rubrik">Varför det spelar roll</h2>
+        <p>{a.varfor}</p>
+      </section>
+    </div>
+
+    {a.kategori === "halsa" && (
+      <p class="ruta-rad"><strong>Om din egen hälsa:</strong> Artikeln beskriver forskning eller beslut och är inget medicinskt råd. Har du frågor om din hälsa – kontakta vården eller läs mer på <a href="https://www.1177.se/" rel="nofollow">1177.se</a>. Ring 1177 för sjukvårdsrådgivning dygnet runt, och 112 vid akut fara.</p>
+    )}
+    {a.kategori === "ekonomi" && (
+      <p class="ruta-rad"><strong>Inga investeringsråd:</strong> Artikeln återger fakta från källan. Den är ingen rekommendation att köpa eller sälja värdepapper eller andra tillgångar.</p>
+    )}
+
+    {a.rattelser?.length > 0 && (
+      <section aria-labelledby="rattelse-rubrik">
+        <h2 id="rattelse-rubrik" class="visuellt-dold">Rättelser</h2>
+        {a.rattelser.map((r) => <p class="rattelse"><strong>Rättelse {datumText(r.datum)}:</strong> {r.text}</p>)}
+      </section>
+    )}
+
+    <section class="kallruta" aria-labelledby="kalla-rubrik">
+      <h2 id="kalla-rubrik">Källa</h2>
+      <p><a href={a.kalla.url} rel="noopener">{a.kalla.rubrik || a.kalla.namn}</a> – {a.kalla.namn}{a.kalla.publicerad && <>, publicerad {datumText(a.kalla.publicerad)}</>}.</p>
+      {a.ovrigaKallor?.length > 0 && <p>Samma nyhet finns också hos: {a.ovrigaKallor.map((k, i) => <>{i > 0 && ", "}<a href={k.url} rel="noopener">{k.namn}</a></>)}.</p>}
+      <p class="meta">Artikeln är skriven med egna ord utifrån källan ovan och kontrollerad mot källtexten före publicering. Läs originalet för alla detaljer. <a href="/redaktionell-policy/">Så arbetar vi</a> · <a href="/rattelser/">Hittat ett fel?</a></p>
+    </section>
+
+    {a.taggar?.length > 0 && (
+      <ul class="taggar" aria-label="Ämnen">
+        {a.taggar.map((t) => <li>{AMNE_SLUGAR.has(hubbSlug(t)) ? <a href={`/amne/${hubbSlug(t)}/`}>{t}</a> : <span>{t}</span>}</li>)}
+      </ul>
+    )}
+    <nav class="mer-om" aria-label="Mer om ämnet">
+      <span>Mer från </span><a href={`/${a.kategori}/`}>{a.kat.namn}</a>
+      {hubbar.map((h) => <>{" · "}<a href={`/amne/${h.slug}/`}>Goda nyheter om {h.namn}</a></>)}
+    </nav>
+  </article>
+
+  <Annons plats="artikel-1" />
+
+  {fler.length > 0 && (
+    <section class="sektion" aria-labelledby="fler-rubrik">
+      <h2 class="sektion-rubrik" id="fler-rubrik">Fler goda nyheter</h2>
+      <div class="rutnat">{fler.map((x) => <Kort a={x} />)}</div>
+    </section>
+  )}
+</Tidning>

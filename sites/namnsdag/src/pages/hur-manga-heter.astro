@@ -1,0 +1,210 @@
+---
+// Lång guidesida + verktyg: "Hur många heter …?" Söker i SCB:s namnstatistik (alla tilltals- och förnamn med
+// minst 10 bärare, 31 december 2020, CC0). Fakta om tilltalsnamn/förnamn från Isof, om SCB och Skatteverket
+// från respektive webbplats, lästa 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import { SITE, SCB_TOTALT, tal, namnHref, dagText, dagHref, lista } from "../site.js";
+import { ALLA_SCB, almanacka, BEFOLKNING, BEF_SENAST, placering, MEDELALDER } from "../lib/statistik.js";
+
+const PUBLICERAD = "2026-11-25";
+const UPPDATERAD = "2026-11-25"; // SCB-datan ändras inte längre (statistiken upphörde 2024).
+const E = Object.entries(ALLA_SCB);
+const tt = (a) => a[0] + a[1], fn = (a) => a[2] + a[3];
+const tilltalsnamn = E.filter(([, a]) => tt(a) > 0);
+const fornamn = E.filter(([, a]) => fn(a) > 0);
+const rang = [...tilltalsnamn].sort((a, b) => tt(b[1]) - tt(a[1]));
+const topp = (i) => [...tilltalsnamn].filter(([, a]) => a[i] > a[1 - i]).sort((a, b) => b[1][i] - a[1][i]).slice(0, 10);
+const toppK = topp(0), toppM = topp(1);
+const forst = rang[0];
+const flestForn = [...fornamn].sort((a, b) => fn(b[1]) - fn(a[1]))[0];
+
+// Hur många namn har hur många bärare?
+const BAND = [[10000, Infinity, "10 000 eller fler"], [1000, 9999, "1 000–9 999"], [100, 999, "100–999"], [10, 99, "10–99"]];
+const band = BAND.map(([lo, hi, text]) => {
+  const xs = tilltalsnamn.filter(([, a]) => tt(a) >= lo && tt(a) <= hi);
+  return { text, namn: xs.length, personer: xs.reduce((s, [, a]) => s + tt(a), 0) };
+});
+const bindestreck = rang.filter(([n]) => n.includes("-"));
+const bsA = bindestreck.slice(0, 5).map(([n]) => MEDELALDER[n]?.K).filter(Boolean);
+const bsAlder = [Math.floor(Math.min(...bsA)), Math.ceil(Math.max(...bsA))];
+const proc = (x, av) => `${Math.round((100 * x) / av)} %`;
+
+// Samma namn, olika stavning (SCB räknar varje stavning för sig i de här tabellerna).
+const PAR = [["Karl", "Carl"], ["Oskar", "Oscar"], ["Tomas", "Thomas"], ["Kristina", "Christina"], ["Elisabet", "Elisabeth"], ["Lea", "Leah"], ["Noa", "Noah"]];
+const par = PAR.map((xs) => xs.map((n) => ({ n, x: tt(ALLA_SCB[n] ?? [0, 0]) })));
+
+// Namn som oftast är sidonamn: många har dem bland förnamnen, få använder dem som tilltalsnamn.
+const sido = fornamn.filter(([, a]) => fn(a) >= 20000).map(([n, a]) => ({ n, f: fn(a), t: tt(a), andel: tt(a) / fn(a) }))
+  .sort((a, b) => a.andel - b.andel).slice(0, 8);
+// Namn som bärs av både kvinnor och män (minst 10 % av vardera, minst 1 000 bärare).
+const bada = tilltalsnamn.filter(([, a]) => tt(a) >= 1000 && Math.min(a[0], a[1]) / tt(a) >= 0.1)
+  .sort((a, b) => tt(b[1]) - tt(a[1])).slice(0, 8);
+
+const EXEMPEL = ["Anna", "Lars", "Maria", "Mohammad", "Alice", "Noah", "Kim", "Ture"];
+const mohPlats = placering(BEFOLKNING.M[BEF_SENAST], "Mohammad");
+const mohAntal = BEFOLKNING.M[BEF_SENAST][mohPlats - 1][1];
+const fakta = (n) => { const a = ALLA_SCB[n]; return a ? tt(a) : 0; };
+
+const avsnitt = [
+  { id: "sok", rubrik: "Sök: hur många heter …?" },
+  { id: "lasa", rubrik: "Tilltalsnamn eller förnamn – så läser du siffrorna" },
+  { id: "2020", rubrik: "Varför siffrorna gäller 2020" },
+  { id: "olika", rubrik: "Hur många olika förnamn finns det i Sverige?" },
+  { id: "vanligast", rubrik: "Vanligaste tilltalsnamnen" },
+  { id: "stavning", rubrik: "Samma namn, olika stavning" },
+  { id: "sidonamn", rubrik: "Namn som oftast är andranamn" },
+  { id: "bada", rubrik: "Namn som bärs av både kvinnor och män" },
+];
+
+const fragor = [
+  { fraga: "Hur många heter Anna i Sverige?", svar: `${tal(fakta("Anna"))} kvinnor hade Anna som tilltalsnamn den 31 december 2020, enligt SCB. Det gör Anna till Sveriges vanligaste tilltalsnamn. Räknar man alla förnamn har ${tal(fn(ALLA_SCB.Anna))} personer namnet.` },
+  { fraga: "Vilket är det vanligaste namnet i Sverige?", svar: `Som tilltalsnamn är ${forst[0]} vanligast med ${tal(tt(forst[1]))} bärare (SCB 2020). Räknar man alla förnamn, även andranamn, är ${flestForn[0]} vanligast med ${tal(fn(flestForn[1]))} bärare.` },
+  { fraga: "Hur många olika förnamn finns det i Sverige?", svar: `SCB redovisar ${tal(tilltalsnamn.length)} olika tilltalsnamn och ${tal(fornamn.length)} olika förnamn med minst tio bärare 2020. Räknar man även namn med färre bärare finns omkring 200 000 förnamnsformer, enligt Isof.` },
+  { fraga: "Varför hittar jag inte mitt namn?", svar: "SCB:s tabeller visar bara namn med minst tio bärare, och varje stavning räknas för sig. Har namnet färre bärare eller en ovanlig stavning kan du söka i Skatteverkets namnsökning, som visar förnamn och efternamn." },
+  { fraga: "Var finns de senaste siffrorna?", svar: "SCB slutade producera namnstatistik 2024. Skatteverket har i dag en sökning för hur många som har ett visst förnamn eller efternamn, som uppdateras en gång i veckan, och topplistor över nyföddas namn." },
+  { fraga: "Vad är skillnaden mellan förnamn och tilltalsnamn?", svar: "Tilltalsnamnet är det förnamn man använder i vardagen. Övriga förnamn kallas sidonamn. Den som heter Anna Maria och kallas Anna räknas alltså med under Anna som tilltalsnamn och under både Anna och Maria som förnamn." },
+];
+
+const titel = `Hur många heter …? Sök bland ${tal(tilltalsnamn.length)} namn (SCB)`;
+const beskrivning = `Hur många heter som du? Sök bland ${tal(tilltalsnamn.length)} tilltalsnamn och ${tal(fornamn.length)} förnamn i SCB:s namnstatistik. Antal kvinnor och män, förändring sedan 2000 och namnsdag.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Hur många heter …?"
+  svar={`Skriv ett förnamn i sökrutan så ser du hur många i Sverige som har det som <strong>tilltalsnamn</strong> och bland sina <strong>förnamn</strong>, uppdelat på kvinnor och män. Siffrorna kommer från SCB och gäller 31 december 2020. Vanligast är ${forst[0]} med ${tal(tt(forst[1]))} bärare. Totalt finns ${tal(tilltalsnamn.length)} tilltalsnamn med minst tio bärare.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Hur många heter", href: "/hur-manga-heter/" }]}
+  publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Vanligaste namnen i Sverige", href: "/vanligaste-namnen/", text: "Topplistor för kvinnor och män" },
+    { namn: "Pojknamn", href: "/pojknamn/", text: "Populära och klassiska pojknamn" },
+    { namn: "Flicknamn", href: "/flicknamn/", text: "Populära och klassiska flicknamn" },
+    { namn: "Ovanliga namn", href: "/ovanliga-namn/", text: "Almanackans ovanligaste namn och vad de betyder" },
+    { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/", text: "Vanliga namn som saknas i almanackan" },
+  ]}
+  kallor={[
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn med minst 10 bärare (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "tilltalsnamn 2000 och 2020 per kön, CC0", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Förnamn med minst 10 bärare (BE0001FNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001FNamn10/", text: "förnamn 2020 per kön, CC0", datum: "2026-11-25" },
+    { namn: "SCB – Namnstatistik", url: "https://www.scb.se/hitta-statistik/sverige-i-siffror/namnsok/", text: "att SCB slutade producera namnstatistik 2024", datum: "2026-11-25" },
+    { namn: "Skatteverket – Sök hur många som har ett visst namn", url: "https://skatteverket.se/privat/folkbokforing/namn/bytaefternamn/sokhurmangasomharettvisstnamn.4.515a6be615c637b9aa413027.html", text: "aktuell sökning på förnamn och efternamn", datum: "2026-11-25" },
+    { namn: "Isof – Förnamn", url: "https://www.isof.se/namn/personnamn/lar-dig-mer-om-personnamn-i-sverige/fornamn", text: "tilltalsnamn och sidonamn, antal förnamn per person", datum: "2026-11-25" },
+    { namn: "Isof – Namnsdagar i almanackan", url: "https://www.isof.se/namn/personnamn/namnsdagar-i-almanackan", text: "omkring 200 000 förnamnsformer", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="sok">Sök: hur många heter …?</h2>
+  <form class="sokruta" id="raknare" role="search" onsubmit="return false">
+    <label for="raknare-namn">Skriv ett förnamn</label>
+    <div class="rad">
+      <input id="raknare-namn" name="namn" autocomplete="off" placeholder="t.ex. Anna eller Mohammad" />
+      <button class="knapp" type="submit">Visa antal</button>
+    </div>
+    <output for="raknare-namn" aria-live="polite"><noscript>Sökningen kräver JavaScript. Se tabellerna nedan.</noscript></output>
+  </form>
+  <p>Sökningen skiljer på stavning, precis som SCB. Skriver du Thomas får du bara Thomas, men verktyget föreslår liknande stavningar som Tomas. Några exempel ur datan:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Förnamn 2020</th><th>Namnsdag</th></tr></thead>
+    <tbody>{EXEMPEL.map((n) => { const a = ALLA_SCB[n]; const alm = almanacka(n); return (
+      <tr><td>{alm ? <a href={namnHref(alm.namn)}>{n}</a> : n}</td><td class="num">{tal(tt(a))}</td><td class="num">{tal(fn(a))}</td>
+        <td>{alm ? <a href={dagHref(alm.datum)}>{dagText(alm.datum)}</a> : "saknas (1 januari)"}</td></tr>); })}</tbody>
+  </table></div>
+
+  <h2 id="lasa">Tilltalsnamn eller förnamn – så läser du siffrorna</h2>
+  <p>Svaret på hur många som heter något beror på vad man räknar. Isof beskriver det så här: det förnamn man använder i vardagen kallas <strong>tilltalsnamn</strong>, och övriga förnamn kallas sidonamn. Det vanligaste i Sverige är att ha två förnamn, därefter tre och sedan ett. Nästan nio av tio har mer än ett förnamn.</p>
+  <p>Verktyget visar därför två siffror. <strong>Tilltalsnamn</strong> svarar på hur många som faktiskt kallas Anna. <strong>Förnamn</strong> räknar alla som har Anna någonstans bland sina förnamn, även som andra eller tredje namn. Den andra siffran är alltid minst lika stor, och för vissa namn mycket större. Siffrorna avser folkbokförda personer den 31 december 2020, och bara namn med minst tio bärare redovisas.</p>
+  <h3>Kvinnor och män</h3>
+  <p>SCB delar upp varje namn efter kön. De flesta namn bärs nästan bara av det ena könet, men en del är vanliga hos båda (se längre ned). I tabellerna på den här sidan räknas ett namn som kvinno- eller mansnamn efter vilket kön som har flest bärare.</p>
+
+  <h2 id="2020">Varför siffrorna gäller 2020</h2>
+  <p>SCB:s statistikdatabas har tabeller över alla tilltalsnamn och förnamn med minst tio bärare för åren 1999–2020. SCB meddelar att myndigheten från och med 2024 slutar producera namnstatistik, för att prioritera annan statistik. Ingen ny publicering är planerad. Tabellerna är öppna data (CC0), och det är dem vi använder.</p>
+  <p>Vill du ha dagsaktuella siffror hänvisar SCB till <strong>Skatteverket</strong>. Skatteverkets namnsökning visar hur många folkbokförda som har ett visst förnamn eller efternamn och uppdateras en gång i veckan. Den söker exakt på den stavning du skriver. Den skiljer inte på tilltalsnamn och sidonamn. Skatteverket publicerar också topplistor över nyföddas namn, se <a href="/pojknamn/">pojknamn</a> och <a href="/flicknamn/">flicknamn</a>.</p>
+  <p>För de flesta namn har siffrorna inte ändrats mycket sedan 2020. Namn som är populära bland nyfödda ökar dock varje år, medan namn som främst bärs av äldre minskar.</p>
+
+  <h2 id="olika">Hur många olika förnamn finns det i Sverige?</h2>
+  <p>SCB redovisar {tal(tilltalsnamn.length)} olika tilltalsnamn och {tal(fornamn.length)} olika förnamn med minst tio bärare. Tillsammans har {tal(SCB_TOTALT.personer)} personer ett tilltalsnamn i tabellen. Räknar man även mycket ovanliga namn är antalet förnamnsformer enligt Isof omkring 200 000. Vi har delat in tilltalsnamnen efter hur många som bär dem:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Antal bärare</th><th class="num">Antal namn</th><th class="num">Personer</th><th class="num">Andel av personerna</th></tr></thead>
+    <tbody>{band.map((b) => <tr><td>{b.text}</td><td class="num">{tal(b.namn)}</td><td class="num">{tal(b.personer)}</td><td class="num">{proc(b.personer, SCB_TOTALT.personer)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Fördelningen är mycket skev. Bara {band[0].namn} namn har minst 10 000 bärare, men de täcker {proc(band[0].personer, SCB_TOTALT.personer)} av alla personer. Samtidigt har {tal(band[3].namn)} namn mellan tio och 99 bärare. Har du ett sådant namn delar du det med högst ett hundratal personer i hela landet.</p>
+
+  <h3>Dubbelnamn med bindestreck</h3>
+  <p>Ett tilltalsnamn kan också bestå av två namn med bindestreck. SCB redovisar {tal(bindestreck.length)} sådana tilltalsnamn med minst tio bärare. Vanligast är {lista(bindestreck.slice(0, 5).map(([n, a]) => `${n} (${tal(tt(a))})`))}. De fem vanligaste bärs bara av kvinnor, och medelåldern bland bärarna är mellan {bsAlder[0]} och {bsAlder[1]} år. Bindestrecksnamnen var alltså främst ett mode under 1900-talets mitt.</p>
+
+  <h2 id="vanligast">Vanligaste tilltalsnamnen</h2>
+  <p>Här är de tio vanligaste tilltalsnamnen för kvinnor och män 2020. Hela listan, utvecklingen sedan 1999 och de vanligaste namnen med namnsdag finns på sidan <a href="/vanligaste-namnen/">vanligaste namnen i Sverige</a>.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Kvinnor</th><th class="num">Antal</th><th>Män</th><th class="num">Antal</th></tr></thead>
+    <tbody>{toppK.map(([n, a], i) => <tr><td class="num">{i + 1}</td><td>{n}</td><td class="num">{tal(a[0])}</td><td>{toppM[i][0]}</td><td class="num">{tal(toppM[i][1][1])}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="stavning">Samma namn, olika stavning</h2>
+  <p>I SCB:s namntabeller är varje stavning ett eget namn. Det gör stor skillnad för vissa namn. Lägger man ihop stavningarna blir siffrorna högre:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stavning</th><th class="num">Tilltalsnamn</th><th>Stavning</th><th class="num">Tilltalsnamn</th><th class="num">Sammanlagt</th></tr></thead>
+    <tbody>{par.map(([a, b]) => <tr><td>{a.n}</td><td class="num">{tal(a.x)}</td><td>{b.n}</td><td class="num">{tal(b.x)}</td><td class="num">{tal(a.x + b.x)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Ett tydligt exempel är profeten Muhammeds namn, som skrivs på många sätt. Mohammad har {tal(fakta("Mohammad"))} bärare, Mohamed {tal(fakta("Mohamed"))}, Mohammed {tal(fakta("Mohammed"))} och Muhammad {tal(fakta("Muhammad"))}. Var för sig är de mindre vanliga än namn som Johan eller Erik. I sina topplistor slår SCB ihop liknande stavningar, och där låg Mohammad på plats {mohPlats} bland män {BEF_SENAST} med {tal(mohAntal)} bärare. Därför kan siffrorna i topplistorna skilja sig från sökningen här.</p>
+  <p>För namnsdagen spelar stavningen också roll. Almanackan har oftast en stavning per namn, till exempel Tomas och Karl. Den som heter Thomas eller Carl kan fira på samma dag. Se <a href="/namn-utan-namnsdag/">namn utan namnsdag</a>.</p>
+
+  <h2 id="sidonamn">Namn som oftast är andranamn</h2>
+  <p>Vissa namn finns hos väldigt många, men nästan bara som andra- eller tredjenamn. Det syns när man jämför förnamn med tilltalsnamn:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Har namnet bland förnamnen</th><th class="num">Använder det som tilltalsnamn</th><th class="num">Andel</th></tr></thead>
+    <tbody>{sido.map((x) => <tr><td>{x.n}</td><td class="num">{tal(x.f)}</td><td class="num">{tal(x.t)}</td><td class="num">{Math.round(x.andel * 100)} %</td></tr>)}</tbody>
+  </table></div>
+  <p>Det är namn som många har fått som andra- eller tredjenamn, men som få kallas för i vardagen. Därför syns de knappt i listor över tilltalsnamn. Det vanligaste förnamnet totalt är {flestForn[0]}, som {tal(fn(flestForn[1]))} personer har någonstans bland sina förnamn.</p>
+
+  <h2 id="bada">Namn som bärs av både kvinnor och män</h2>
+  <p>De flesta svenska förnamn bärs nästan bara av ett kön. Några namn har många bärare av båda. Här är de vanligaste namnen där minst var tionde bärare är av det andra könet:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Kvinnor</th><th class="num">Män</th></tr></thead>
+    <tbody>{bada.map(([n, a]) => <tr><td>{n}</td><td class="num">{tal(a[0])}</td><td class="num">{tal(a[1])}</td></tr>)}</tbody>
+  </table></div>
+  <p>Kim är det vanligaste av dem, med både flest män och flest kvinnor i gruppen. Sök på ett namn ovan för att se fördelningen för just det namnet.</p>
+
+  <script is:inline slot="skript">
+    (() => {
+      const f = document.getElementById("raknare");
+      if (!f) return;
+      const ut = f.querySelector("output"), falt = f.namn;
+      const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+      const dagText = (k) => `${Number(k.slice(3))} ${MN[Number(k.slice(0, 2)) - 1]}`;
+      const tal = (x) => Number(x).toLocaleString("sv-SE");
+      const nyckel = (n) => { const c = n[0].toLowerCase(); return c === "å" ? "aa" : c === "ä" ? "ae" : c === "ö" ? "oe" : /[a-z]/.test(c) ? c : "ovr"; };
+      const norm = (s) => s.toLowerCase().replace(/chr/g, "kr").replace(/th/g, "t").replace(/ph/g, "f").replace(/ck/g, "k").replace(/c(?![eiy])/g, "k").replace(/w/g, "v").replace(/z/g, "s").replace(/h$/, "").replace(/(.)\1/g, "$1");
+      const ALT = { c: ["k"], k: ["c"], w: ["v"], v: ["w"], z: ["s"], s: ["z"] };
+      const cache = {};
+      const del = async (k) => (cache[k] ??= fetch(`/data/namn/${k}.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+      let alm;
+      const almanacka = async () => (alm ??= fetch("/data/namnsdagar.json").then((r) => r.json()).catch(() => ({ namn: [] })));
+      const visa = async () => {
+        const q = falt.value.trim();
+        if (!q) { ut.textContent = ""; return; }
+        const namn = q.charAt(0).toUpperCase() + q.slice(1).toLowerCase();
+        const k = nyckel(namn);
+        const delar = [k, ...(ALT[k] ?? [])];
+        const data = Object.assign({}, ...(await Promise.all(delar.map(del))));
+        const summa = (n) => data[n][0] + data[n][1] + data[n][2] + data[n][3];
+        const träff = Object.keys(data).filter((n) => n.toLowerCase() === q.toLowerCase()).sort((a, b) => summa(b) - summa(a))[0];
+        const lika = Object.keys(data).filter((n) => n.toLowerCase() !== q.toLowerCase() && norm(n) === norm(q) && data[n][0] + data[n][1] > 0).sort((a, b) => (data[b][0] + data[b][1]) - (data[a][0] + data[a][1])).slice(0, 4);
+        const likaText = lika.length ? ` Liknande stavning: ${lika.map((n) => `${n} (${tal(data[n][0] + data[n][1])})`).join(", ")}.` : "";
+        if (!träff) {
+          const forslag = Object.keys(data).filter((n) => n.toLowerCase().startsWith(q.toLowerCase())).sort((a, b) => (data[b][0] + data[b][1]) - (data[a][0] + data[a][1])).slice(0, 6);
+          ut.innerHTML = `<strong>${namn.replace(/</g, "")}</strong> finns inte i SCB:s tabeller. Namnet har troligen färre än tio bärare, eller en annan stavning.${likaText}${forslag.length ? ` Menar du ${forslag.join(", ")}?` : ""}`;
+          return;
+        }
+        const [tk, tm, fk, fm, t2000, plats] = data[träff];
+        const t = tk + tm, fn = fk + fm;
+        const kon = tk && tm ? ` (${tal(tk)} kvinnor och ${tal(tm)} män)` : tk ? " (kvinnor)" : tm ? " (män)" : "";
+        const andring = t && t2000 ? ` År 2000 var de ${tal(t2000)}.` : "";
+        const a = await almanacka();
+        const n = a.namn.find((x) => x[0] === träff);
+        const dag = n ? (n[4] ? ` Namnet saknas i almanackan men kan firas på ${n[4]}-dagen den <a href="/namn/${n[1]}/">${dagText(n[2])}</a>.` : ` Namnsdag: <a href="/namn/${n[1]}/">${dagText(n[2])}</a>.`) : " Namnet saknas i almanackan och har gemensam namnsdag den <a href=\"/1-januari/\">1 januari</a>.";
+        ut.innerHTML = t
+          ? `<strong>${tal(t)}</strong> personer har <strong>${träff}</strong> som tilltalsnamn${kon}, plats ${tal(plats)} i Sverige. ${tal(fn)} har ${träff} bland sina förnamn.${andring}${dag}${likaText}`
+          : `<strong>${träff}</strong> används nästan aldrig som tilltalsnamn, men ${tal(fn)} personer har det bland sina förnamn.${dag}${likaText}`;
+      };
+      let timer;
+      falt.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(visa, 250); });
+      f.addEventListener("submit", (e) => { e.preventDefault(); visa(); });
+    })();
+  </script>
+</Guide>

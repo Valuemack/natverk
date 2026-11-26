@@ -1,0 +1,33 @@
+---
+import Layout from "@natverk/core/Layout.astro";
+import "../styles/sajt.css";
+import { SITE, UPPDATERAD, NAMN_KALLA, SCB_KALLA, SCB_TOTALT, ALLA_NAMN, VARIANTER, UTAN_NAMN, AR, tal } from "../site.js";
+const antal = ALLA_NAMN.filter((n) => !n.fran || n.fran <= AR).length;
+const nya = ALLA_NAMN.length - antal;
+---
+<Layout site={SITE} titel="Om namnsdagsidag.se – källor och metod"
+  beskrivning="Varifrån namnsdagarna och namnstatistiken på namnsdagsidag.se kommer, hur sidorna uppdateras och hur stavningsvarianter räknas fram."
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Om namnsdagsidag.se</h1>
+  <p class="svar">namnsdagsidag.se visar vem som har namnsdag idag och varje annan dag, när {tal(antal)} namn har namnsdag och hur många i Sverige som bär dem. Sajten är en oberoende tjänst. Den är inte knuten till Svenska Akademien, Institutet för språk och folkminnen (Isof) eller SCB.</p>
+
+  <h2 id="kallor">Källor</h2>
+  <ul>
+    <li><strong>Namnlängden</strong> – namnen och deras datum – kommer från {NAMN_KALLA.utgivare}: <a href={NAMN_KALLA.url} rel="nofollow">{NAMN_KALLA.url}</a> (hämtad {NAMN_KALLA.hamtad}). {nya > 0 && <>De {nya} namn som tillkommer 2027 enligt Namnlängdskommitténs beslut 2025 är märkta "från 2027" och räknas inte som namnsdagar förrän då.</>}</li>
+    <li><strong>Namnstatistik</strong> – antal bärare, utveckling och nyfödda – kommer från {SCB_KALLA}. SCB:s data får fritt återanvändas (CC0). Tilltalsnamn avser folkbokförda 31 december 2020, totalt {tal(SCB_TOTALT.namn)} olika tilltalsnamn. Nyfödda avser 1998–2022. SCB uppdaterar inte längre de här tabellerna, därför anges alltid årtalet. Topplistorna för nyfödda (1998–2022) och för hela befolkningen (1999–2021) kommer från samma databas; där har SCB slagit ihop liknande stavningar.</li>
+    <li><strong>Nyare toppnamn</strong> – de vanligaste namnen bland nyfödda 2023 och 2025 – kommer från Isof respektive Skatteverket, som tog över namnstatistiken när SCB slutade 2024.</li>
+    <li><strong>Namnens betydelse</strong> på sidan om <a href="/ovanliga-namn/">ovanliga namn</a> kommer från svenska Wikipedias artiklar om respektive namn, och namnens ursprung från Isof. Vi anger bara betydelser som står i källan.</li>
+    <li><strong>Flaggdagar och helgdagar</strong> på datumsidorna följer förordningen (1982:270) om allmänna flaggdagar och lagen (1989:253) om allmänna helgdagar.</li>
+  </ul>
+
+  <h2>Metod</h2>
+  <ul>
+    <li>Startsidan byggs om varje natt. Om du besöker den efter midnatt innan nästa bygge rättar ett litet skript dagen utifrån svensk tid.</li>
+    <li>{Object.keys(UTAN_NAMN).length} dagar saknar namn i almanackan (till exempel juldagen och midsommardagen). Den 1 januari är gemensam namnsdag för alla namn som inte finns i almanackan.</li>
+    <li>De {VARIANTER.length} stavningsvarianterna (t.ex. Thomas, Carl, Oscar) är namn med minst 1 000 bärare som bara skiljer sig i stavningen från ett almanacksnamn. Vi skriver att de <em>kan</em> firas på huvudnamnets dag – det är en sedvänja, inget officiellt beslut.</li>
+    <li>Kalenderfilerna (.ics) innehåller en årligen återkommande heldagshändelse och fungerar i Google Kalender, Apple Kalender och Outlook.</li>
+  </ul>
+
+  <h2 id="kontakt">Kontakt</h2>
+  <p>Hittar du ett fel? Hör av dig så rättar vi det.</p>
+</Layout>

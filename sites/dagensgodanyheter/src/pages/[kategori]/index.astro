@@ -1,0 +1,67 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import Kort from "../../components/Kort.astro";
+import Rad from "../../components/Rad.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { KATEGORIER } from "../../lib/kategorier.js";
+import { iKategori, efterLasvarde, senaste, AMNEN } from "../../lib/artiklar.js";
+import { samlingLd } from "../../lib/ld.js";
+
+export function getStaticPaths() {
+  return KATEGORIER.map((k) => ({ params: { kategori: k.slug }, props: { k } }));
+}
+const { k } = Astro.props;
+const alla = iKategori(k.slug);
+const veckan = alla.filter((a) => senaste(24 * 7).includes(a));
+const topp = efterLasvarde(veckan.length ? veckan : alla).slice(0, 3);
+const toppSet = new Set(topp.map((a) => a.slug));
+// Den största puffen får en artikel med bild om någon finns (sorteringen är stabil, så läsvärdet styr annars).
+const toppVisning = [...topp].sort((a, b) => Number(b.harBild) - Number(a.harBild));
+const ovriga = alla.filter((a) => !toppSet.has(a.slug)).slice(0, 60);
+const amnen = AMNEN.filter((x) => x.artiklar.some((a) => a.kategori === k.slug)).slice(0, 12);
+const namnLiten = k.namn.toLowerCase();
+const titel = `Goda nyheter: ${k.namn} – positiva nyheter idag`;
+const beskrivning = `Positiva nyheter om ${namnLiten}: ${alla[0] ? alla[0].rubrik : k.ingress}`;
+// En kategori utan artiklar är en tunn sida: noindex tills den har innehåll.
+const tunn = alla.length < 2;
+---
+<Tidning titel={titel} beskrivning={beskrivning} aktiv={k.slug} noindex={tunn}
+  smulor={[{ namn: "Start", href: "/" }, { namn: k.namn, href: `/${k.slug}/` }]}
+  ogBild={topp.find((a) => a.harBild)?.ogBild ?? `/delning/${k.slug}.jpg`}
+  jsonld={[samlingLd({ namn: `Goda nyheter: ${k.namn}`, beskrivning: k.ingress, href: `/${k.slug}/`, artiklar: alla })]}>
+  <div style={`--kat:${k.farg}`}>
+    <header class="sidhuvud">
+      <p class="vinjett">Avdelning</p>
+      <h1 class="sidrubrik">{k.namn}</h1>
+      <p class="sidingress">{k.ingress}</p>
+    </header>
+
+    {topp.length > 0 ? (
+      <section class="sektion" aria-label={`Mest läsvärt inom ${namnLiten}`}>
+        <h2 class="sektion-rubrik">Mest läsvärt just nu</h2>
+        <div class="puffar">{toppVisning.map((a, i) => <Kort a={a} storlek={i === 0 ? "stor" : "liten"} ladda={i === 0 ? "eager" : "lazy"} />)}</div>
+      </section>
+    ) : (
+      <p class="info">Här publiceras goda nyheter inom {namnLiten} så snart de finns. Under tiden: <a href="/">se dagens goda nyheter</a>.</p>
+    )}
+
+    <Annons plats="kategori-1" />
+
+    {ovriga.length > 0 && (
+      <section class="sektion" aria-labelledby="senaste-kat">
+        <h2 class="sektion-rubrik" id="senaste-kat">Senaste inom {namnLiten}</h2>
+        <ul class="lista">{ovriga.map((a) => <Rad a={a} visaKat={false} />)}</ul>
+      </section>
+    )}
+
+    {amnen.length > 0 && (
+      <section class="sektion" aria-labelledby="amnen-kat">
+        <h2 class="sektion-rubrik" id="amnen-kat">Ämnen</h2>
+        <div class="knapprad">{amnen.map((x) => <a href={`/amne/${x.slug}/`}>{x.namn} ({x.artiklar.length})</a>)}</div>
+      </section>
+    )}
+
+    {k.slug === "halsa" && <p class="ruta-rad">Artiklarna om hälsa beskriver forskning och beslut – de är inga medicinska råd. Frågor om din egen hälsa: <a href="https://www.1177.se/" rel="nofollow">1177.se</a> eller ring 1177.</p>}
+    {k.slug === "ekonomi" && <p class="ruta-rad">Ekonomi & börs innehåller bara fakta från officiella källor. Vi ger aldrig investeringsråd eller rekommendationer om att köpa eller sälja.</p>}
+  </div>
+</Tidning>

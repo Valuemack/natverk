@@ -1,0 +1,164 @@
+---
+// Lång guidesida: Namnsdag – historia, almanackan och firandet. Siffrorna räknas ur sajtens egen data
+// (namnlängden enligt Isof, SCB:s tilltalsnamn 2020). Fakta granskade mot Isof, Svenska Akademien och Wikipedia 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import {
+  SITE, AR, ALLA_NAMN, ANDRINGAR, UTAN_NAMN, DAGAR, namnPaDag, dagText, dagHref, namnHref, lista, barare, tal, giltigt,
+} from "../site.js";
+
+const PUBLICERAD = "2026-11-25";
+const nu = ALLA_NAMN.filter((n) => giltigt(n, AR));
+const nya = ALLA_NAMN.filter((n) => n.fran && n.fran > AR);
+const antalNu = nu.length, antalSen = ALLA_NAMN.length;
+const nyaAr = nya[0]?.fran ?? 2027;
+
+// Fördelning: hur många namn har varje dag?
+const perDag = DAGAR.map((k) => ({ k, namn: namnPaDag(k, AR) }));
+const fordelning = [0, 1, 2, 3].map((x) => ({ x, dagar: perDag.filter((d) => d.namn.length === x).length }));
+// Den "största" och "minsta" namnsdagen räknat i antal bärare av namnen (SCB 2020).
+const medBarare = perDag.filter((d) => d.namn.length).map((d) => ({ ...d, b: d.namn.reduce((s, n) => s + barare(n), 0) }));
+const storst = [...medBarare].sort((a, b) => b.b - a.b).slice(0, 5);
+const minst = [...medBarare].sort((a, b) => a.b - b.b).slice(0, 3);
+const andelBarare = nu.reduce((s, n) => s + barare(n), 0);
+
+// Ändringar sedan 2001, per år.
+const andrAr = [...new Set(ANDRINGAR.map((a) => a.ar))].sort((a, b) => a - b);
+const tillagda = ANDRINGAR.filter((a) => a.nytt && a.ar <= AR).length;
+const borttagna = ANDRINGAR.filter((a) => a.bort && a.ar <= AR).length;
+
+const UTAN = Object.entries(UTAN_NAMN).map(([k, v]) => ({ k, namn: v.split(" –")[0] }));
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en namnsdag?" },
+  { id: "historia", rubrik: "Namnsdagens historia" },
+  { id: "almanackan", rubrik: "Almanackan och namnlängderna 1901–2001" },
+  { id: "vem", rubrik: "Vem bestämmer vilka namn som finns i almanackan?" },
+  { id: "andringar", rubrik: `Ändringar sedan 2001 och nya namn ${nyaAr}` },
+  { id: "siffror", rubrik: "Namnlängden i siffror" },
+  { id: "utan-namn", rubrik: "Dagar utan namn och den 1 januari" },
+  { id: "flaggdagar", rubrik: "Namnsdagar som är flaggdagar" },
+  { id: "fira", rubrik: "Så firar man namnsdag" },
+];
+
+const fragor = [
+  { fraga: "Vad är en namnsdag?", svar: "En namnsdag är den dag i almanackan som hör till ett visst förnamn. Den som bär namnet kan fira dagen ungefär som en födelsedag. Traditionen kommer från medeltidens helgonkalendrar." },
+  { fraga: "Vem bestämmer namnsdagarna i Sverige?", svar: "Namnlängden förvaltas av Namnlängdskommittén, där Svenska Akademien, Vetenskapsakademien, Vitterhetsakademien och Institutet för språk och folkminnen (Isof) ingår. Den nuvarande längden började användas 2001." },
+  { fraga: "Hur många namn finns i almanackan?", svar: `Namnlängden har ${antalNu} namn ${AR}. Från ${nyaAr} blir det ${antalSen}, när ${lista(nya.map((n) => n.namn))} kommer in.` },
+  { fraga: "När började man fira namnsdag i Sverige?", svar: "Det finns uppgifter om namnsdagsfirande i borgerliga kretsar redan på 1600-talet. Under 1800-talet var namnsdagen på många håll ett större firande än födelsedagen, enligt Isof." },
+  { fraga: "Vad gör man om namnet saknas i almanackan?", svar: "Den 1 januari är gemensam namnsdag för alla namn som saknas i namnlängden. Många väljer också att fira på dagen för ett närbesläktat namn, till exempel Thomas på Tomas-dagen." },
+  { fraga: "Är namnsdagar flaggdagar?", svar: "Tre namnsdagar är allmänna flaggdagar: kungens namnsdag den 28 januari (Karl), kronprinsessans den 12 mars (Viktoria) och drottningens den 8 augusti (Silvia)." },
+  { fraga: "Firar man namnsdag i Finland?", svar: "Ja. Seden kom till städerna i sydvästra Finland på 1700-talet via tyska handelsfamiljer. Enligt Isof lever traditionen bland protestantiska länder särskilt i Sverige och Finland." },
+];
+
+const titel = "Namnsdag – historia, almanackan och hur man firar";
+const beskrivning = `Vad är en namnsdag? Historien från helgonkalendern till namnlängden 2001, vem som bestämmer namnen, alla ändringar och de ${antalSen} namnen i almanackan från ${nyaAr}.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Namnsdag – historia, almanackan och firandet"
+  svar={`En <strong>namnsdag</strong> är den dag i almanackan som hör till ett förnamn. Seden kommer från medeltidens helgonkalendrar. Den svenska namnlängden har ${antalNu} namn ${AR} och ${antalSen} från ${nyaAr}. Den nuvarande längden har använts sedan <strong>2001</strong> och förvaltas av Namnlängdskommittén, där Svenska Akademien och Isof ingår.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Om namnsdagar", href: "/namnsdag/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Namnsdag idag", href: "/", text: "Vem har namnsdag idag och resten av veckan" },
+    { namn: "Alla namn A–Ö", href: "/alla-namn/", text: `Alla ${antalSen} namn och deras datum` },
+    { namn: `Nya namn i almanackan ${nyaAr}`, href: "/nya-namn/", text: "Alla ändringar sedan 2011" },
+    { namn: "Grattis på namnsdagen", href: "/grattis-pa-namnsdagen/", text: "Hälsningar och idéer för firandet" },
+    { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/", text: "Vanliga namn som saknas i almanackan" },
+  ]}
+  kallor={[
+    { namn: "Isof – Namnsdagar i almanackan", url: "https://www.isof.se/namn/personnamn/namnsdagar-i-almanackan", text: "namnlängdernas historia, Namnlängdskommittén, principerna för nya namn och namnen 2027", datum: "2026-11-25" },
+    { namn: "Isof – Tideräkning och almanackor", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/tiderakning-och-almanackor", text: "almanacksprivilegiet 1749 och almanackan i hemmen", datum: "2026-11-25" },
+    { namn: "Isof – Namnsdagar", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/namnsdagar", text: "firandet på 1800-talet, kungliga namnsdagar och flaggdagar", datum: "2026-11-25" },
+    { namn: "Isof – Alla namn i almanackan", url: "https://www.isof.se/utforska/kunskapsbanker/lar-dig-mer-om-arets-namn-och-handelser/alla-namn-i-almanackan", text: "namnlängden som sajtens data bygger på", datum: "2026-11-22" },
+    { namn: "Svenska Akademien – Almanackan", url: "https://www.svenskaakademien.se/svenska-akademien/almanackan", text: "Akademiens almanacka och utökade namnlängd", datum: "2026-11-25" },
+    { namn: "Wikipedia – Namnsdag", url: "https://sv.wikipedia.org/wiki/Namnsdag", text: "seden i Norden, Tyskland och Finland", datum: "2026-11-25" },
+    { namn: "Förordning (1982:270) om allmänna flaggdagar", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982270-om-allmanna-flaggdagar_sfs-1982-270/" },
+    { namn: "SCB, Statistikdatabasen – tilltalsnamn 2020 (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "antal bärare per namn, CC0", datum: "2026-11-22" },
+  ]}>
+
+  <h2 id="vad">Vad är en namnsdag?</h2>
+  <p>En namnsdag är den dag på året som hör till ett visst förnamn i almanackan. Den som heter <a href={namnHref("Anna")}>Anna</a> har namnsdag den {dagText("12-09")}, och den som heter <a href={namnHref("Lars")}>Lars</a> den {dagText("08-10")}. Listan över alla namn och deras dagar kallas <strong>namnlängden</strong>. Den svenska namnlängden har {antalNu} namn {AR}. De flesta dagar har två namn, ett som oftast bärs av kvinnor och ett som oftast bärs av män.</p>
+  <p>Namnsdagen är ingen helgdag och ger ingen ledighet. Den är en privat merkedag, ungefär som en födelsedag men utan åldern. Skillnaden är att alla med samma namn firar samma dag, och att dagen syns för alla som tittar i almanackan. Därför är det enkelt för kollegor, vänner och släkt att komma ihåg den. Vill du veta vilken dag ett namn har kan du söka på <a href="/">startsidan</a> eller bläddra i <a href="/alla-namn/">alla namn från A till Ö</a>.</p>
+
+  <h2 id="historia">Namnsdagens historia</h2>
+  <p>Namnsdagarna har sina rötter i de katolska och ortodoxa helgonkalendrarna. Där hade varje helgon en festdag, ofta den dag då helgonet dog. Den som var döpt efter ett helgon firade helgonets dag. Enligt Isof fortsatte Sverige och Finland att ha namnsdagar även efter reformationen, när helgonen inte längre firades. Med tiden fick almanackan också namn som inte hörde till något helgon, först kungliga namn som Gustav Adolf.</p>
+  <p>Seden att fira sin namnsdag kom till Norden främst via Tyskland. Det finns uppgifter om borgerligt namnsdagsfirande i högreståndskretsar i Sverige redan på 1600-talet. Från mitten av 1700-talet började tryckta almanackor nå hem även på landsbygden. Med dem följde namnlängderna från medeltidens kalendrar, och namnen blev kända för de flesta. Bönderna använde dessutom vissa namnsdagar som märkesdagar för när till exempel potatisen skulle sättas eller rågen skördas.</p>
+  <h3>Större än födelsedagen</h3>
+  <p>Enligt Isof var namnsdagen länge mycket vanligare att fira än födelsedagen. På 1800-talet var namnsdagsfirandet på många håll i landet större. Kungliga namnsdagar firades allmänt in på slutet av 1800-talet, och i städerna hölls Oscarsbaler och Karlsbaler för societeten. Firandet hade många drag som senare kom att förknippas med födelsedagen, och dagen var särskilt viktig för barnen.</p>
+
+  <h2 id="almanackan">Almanackan och namnlängderna 1901–2001</h2>
+  <p>År 1749 fick Kungliga Vetenskapsakademien ensamrätt att ge ut almanackor i Sverige. Akademien bestämde därmed också vilka namn som skulle stå i almanackan. Ensamrätten upphörde 1972, och från 1973 var det åter fritt att ge ut almanackor. Det ledde till att flera olika namnlängder användes samtidigt under några decennier.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Namnlängd</th><th>Namn per dag</th></tr></thead>
+    <tbody>
+      <tr><td>1749</td><td>Vetenskapsakademien får ensamrätt på almanackan</td><td>1</td></tr>
+      <tr><td>1901</td><td>Ny längd: många helgonnamn tas bort, fler kvinnonamn kommer in</td><td>1</td></tr>
+      <tr><td>1972–1973</td><td>Ensamrätten upphör, fler förlag ger ut almanackor</td><td>–</td></tr>
+      <tr><td>1986</td><td>Roland Otterbjörks längd för ett stort almanacksförlag</td><td>3</td></tr>
+      <tr><td>1993</td><td>Ny längd som tar mer hänsyn till hur vanliga namnen är</td><td>2</td></tr>
+      <tr><td>2001</td><td>Gemensam längd efter Svenska Akademiens initiativ</td><td>1–2 (en dag 3)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>1901: färre helgon, fler kvinnonamn</h3>
+  <p>Namnlängden från 1901 rensade bort många helgonnamn och tog in fler kvinnonamn. Den hade fortfarande bara ett namn per dag. Den här längden levde kvar länge, och den användes parallellt med 1986 års längd, bland annat av Svenska Akademien.</p>
+  <h3>1986 och 1993: tre och två namn per dag</h3>
+  <p>När ensamrätten försvann gav ett stort almanacksförlag Roland Otterbjörk i uppdrag att göra en ny längd. Den hade tre namn per dag och började användas 1986. Redan 1993 kom en ny längd med två namn per dag, som tog mer hänsyn till vilka namn som faktiskt var vanliga. Olika almanackor kunde nu visa olika namn samma dag.</p>
+  <h3>2001: en gemensam namnlängd</h3>
+  <p>De många parallella längderna skapade enligt Isof förvirring. År 1996 bildades därför en arbetsgrupp på initiativ av Svenska Akademien. I den fanns almanacksutgivare, akademierna, Svenska kyrkan, folklivs- och namnforskare och språkvårdare. Gruppens längd började användas 2001, och det är den som i grunden gäller i dag.</p>
+
+  <h2 id="vem">Vem bestämmer vilka namn som finns i almanackan?</h2>
+  <p>Namnlängden förvaltas av <strong>Namnlängdskommittén</strong>. I den sitter representanter för Svenska Akademien, Kungl. Vetenskapsakademien, Kungl. Vitterhetsakademien och Institutet för språk och folkminnen (Isof). Kommittén gör bara mindre förändringar i 2001 års längd.</p>
+  <p>Enligt Isof finns två principer för att ett nytt namn ska komma in. Namnet ska användas i Sverige. Det ska också ha någon typ av samhörighet med ett namn som redan står i almanackan, och som står ensamt på sin dag. Samhörigheten kan vara språklig eller kulturell i vid mening. Det förklarar varför nya namn hamnar bredvid ett befintligt namn i stället för att få en egen dag. <a href={namnHref("Olle")}>Olle</a> står till exempel bredvid Olof den {dagText("07-29")}, <a href={namnHref("Henry")}>Henry</a> bredvid Henrik den {dagText("01-19")} och <a href={namnHref("Maja")}>Maja</a> bredvid Maria den {dagText("02-28")}. Isof skriver också att befintliga namn inte längre ska tas bort.</p>
+  <h3>Svenska Akademiens utökade namnlängd</h3>
+  <p>Utöver den vanliga namnlängden har Svenska Akademien en utökad namnlista med fler namn. Där får närbesläktade former samma dag som huvudnamnet. Akademien nämner som exempel att inte bara Gunnar och Gunder, utan också Gunde och Günther, kan fira namnsdag den 9 januari. Den utökade listan står inte i vanliga almanackor.</p>
+
+  <h2 id="andringar">Ändringar sedan 2001 och nya namn {nyaAr}</h2>
+  <p>Sedan 2001 har {tillagda} namn kommit in och {borttagna} tagits bort, enligt sajtens sammanställning av kommitténs beslut. Det stämmer med Isofs uppgift om femton nya och tre borttagna namn. Från {nyaAr} kommer {nya.length} namn till: {lista(nya.map((n) => `${n.namn} (${dagText(n.datum)})`))}. Då har namnlängden {antalSen} namn.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Gäller från</th><th>Nya namn</th><th>Borttagna</th></tr></thead>
+    <tbody>{andrAr.map((a) => {
+      const r = ANDRINGAR.filter((x) => x.ar === a);
+      return <tr><td>{a}</td><td>{lista(r.filter((x) => x.nytt).map((x) => x.nytt))}</td><td>{lista(r.filter((x) => x.bort).map((x) => x.bort)) || "–"}</td></tr>;
+    })}</tbody>
+  </table></div>
+  <p>Regina är ett exempel på hur det kan gå. Namnet togs bort 2011 men kom tillbaka 2022, nu på den 12 mars bredvid Viktoria. Alla ändringar med datum finns på sidan <a href="/nya-namn/">nya namn i almanackan</a>.</p>
+
+  <h2 id="siffror">Namnlängden i siffror</h2>
+  <p>Vi har räknat på namnlängden och SCB:s statistik över tilltalsnamn. Isof anger att längden har 310 namn som oftast bärs av kvinnor och 317 som oftast bärs av män. Så här fördelar sig namnen över årets 366 dagar {AR}:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn på dagen</th><th class="num">Antal dagar</th></tr></thead>
+    <tbody>{fordelning.map((f) => <tr><td>{f.x === 0 ? "Inget namn" : f.x === 1 ? "Ett namn" : `${f.x} namn`}</td><td class="num">{f.dagar}</td></tr>)}</tbody>
+  </table></div>
+  <p>Den enda dagen med tre namn är den {dagText("01-06")}, trettondedag jul, då de tre vise männen {lista(namnPaDag("01-06").map((n) => n.namn))} har namnsdag.</p>
+  <h3>Den största och minsta namnsdagen</h3>
+  <p>Räknar man ihop hur många som har dagens namn som tilltalsnamn blir vissa dagar mycket större än andra. Almanackans namn bärs sammanlagt av {tal(andelBarare)} personer, mer än hälften av alla folkbokförda med tilltalsnamn. De fem största dagarna:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Dag</th><th>Namn</th><th class="num">Bärare 2020</th></tr></thead>
+    <tbody>{storst.map((d) => <tr><td><a href={dagHref(d.k)}>{dagText(d.k)}</a></td><td>{lista(d.namn.map((n) => n.namn))}</td><td class="num">{tal(d.b)}</td></tr>)}</tbody>
+  </table></div>
+  <p>I andra änden finns dagar vars namn nästan ingen bär i dag: {lista(minst.map((d) => `${lista(d.namn.map((n) => n.namn))} (${dagText(d.k)})`))}. Där har färre än tio personer namnet som tilltalsnamn, eller så redovisar SCB inga siffror alls. Fler sådana namn finns bland <a href="/ovanliga-namn/">almanackans ovanliga namn</a>.</p>
+
+  <h2 id="utan-namn">Dagar utan namn och den 1 januari</h2>
+  <p>Några dagar saknar namn. Det är dagar som redan har en kyrklig eller kalendarisk betydelse:</p>
+  <ul>{UTAN.map((u) => <li><a href={dagHref(u.k)}>{dagText(u.k)}</a> – {u.namn}</li>)}</ul>
+  <p>Den 1 januari är <strong>gemensam namnsdag för alla namn som saknas i almanackan</strong>. Isof förklarar varför alla namn inte kan stå med: en tryckt almanacka har plats för ett eller två namn per dag, medan det finns omkring 200 000 olika förnamnsformer i Sverige. Många firar i stället på dagen för ett närbesläktat namn. Den som heter Thomas kan fira på Tomas-dagen, och den som heter Carl på Karl-dagen. Se <a href="/namn-utan-namnsdag/">vanliga namn utan namnsdag</a> och vilken dag de kan firas.</p>
+
+  <h2 id="flaggdagar">Namnsdagar som är flaggdagar</h2>
+  <p>Tre namnsdagar är allmänna flaggdagar enligt förordningen om allmänna flaggdagar. Då flaggar myndigheter, och många privatpersoner gör detsamma:</p>
+  <ul>
+    <li><a href={dagHref("01-28")}>28 januari</a> – kungens namnsdag (Karl)</li>
+    <li><a href={dagHref("03-12")}>12 mars</a> – kronprinsessans namnsdag (Viktoria)</li>
+    <li><a href={dagHref("08-08")}>8 augusti</a> – drottningens namnsdag (Silvia)</li>
+  </ul>
+  <p>Kungliga namnsdagar har alltså en lång historia. På 1800-talet var de stora folkliga festdagar, och flaggdagarna är det som lever kvar av det i dag.</p>
+
+  <h2 id="fira">Så firar man namnsdag</h2>
+  <p>Det finns inga fasta regler för hur en namnsdag ska firas, och de flesta gör det enklare än en födelsedag. Några vanliga sätt att uppmärksamma dagen:</p>
+  <ul>
+    <li><strong>Säg grattis.</strong> Ett "grattis på namnsdagen" i ett sms, ett kort eller vid fikabordet räcker långt. Se <a href="/grattis-pa-namnsdagen/">hälsningar och idéer</a>.</li>
+    <li><strong>Bjud på fika.</strong> Kaffe och kaka på jobbet eller hemma är ett enkelt sätt att markera dagen.</li>
+    <li><strong>En liten gåva.</strong> Blommor, en bok eller något hemgjort passar bättre än en stor present.</li>
+    <li><strong>Lägg in dagen i kalendern.</strong> Varje namnsida har en kalenderfil, och här finns <a href="/namnsdagar.ics">alla namnsdagar som kalenderfil</a> för mobilen.</li>
+  </ul>
+  <p>För barn kan namnsdagen vara en extra festdag mitt i året. Den som har flera förnamn kan välja vilken dag den vill fira, eller fira flera gånger.</p>
+</Guide>

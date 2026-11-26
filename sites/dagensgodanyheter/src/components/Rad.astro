@@ -1,0 +1,17 @@
+---
+// Listrad (avdelningar, arkiv, ämnen). Liten bild till höger bara om artikeln har en riktig bild.
+import { datumTid } from "../lib/artiklar.js";
+const { a, rubrikNiva = "h3", visaKat = true } = Astro.props;
+const Rubrik = rubrikNiva;
+---
+<li style={`--kat:${a.kat.farg}`}>
+  <a class:list={["rad", { "med-bild": a.harBild }]} href={a.href}>
+    <div>
+      {visaKat && <span class="vinjett">{a.kat.kort}</span>}
+      <Rubrik class="kort-rubrik">{a.rubrik}</Rubrik>
+      <p class="kort-ingress">{a.ingress}</p>
+      <p class="meta"><time datetime={a.publicerad}>{datumTid(a.publicerad)}</time> · Källa: {a.kalla.namn}</p>
+    </div>
+    {a.harBild && <img src={a.bildLiten} alt="" width="640" height="360" loading="lazy" decoding="async" />}
+  </a>
+</li>

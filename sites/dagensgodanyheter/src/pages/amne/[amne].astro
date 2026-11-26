@@ -1,0 +1,23 @@
+---
+import Tidning from "../../components/Tidning.astro";
+import Rad from "../../components/Rad.astro";
+import { AMNEN, versal } from "../../lib/artiklar.js";
+import { samlingLd } from "../../lib/ld.js";
+
+// Bara ämnen med minst tre artiklar får en sida (se MIN_AMNE).
+export function getStaticPaths() {
+  return AMNEN.map((x) => ({ params: { amne: x.slug }, props: { x } }));
+}
+const { x } = Astro.props;
+const namn = versal(x.namn);
+---
+<Tidning titel={`Goda nyheter om ${x.namn} – positiva nyheter`}
+  beskrivning={`${x.artiklar.length} positiva nyheter om ${x.namn}. Senast: ${x.artiklar[0].rubrik}`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Ämnen", href: "/amne/" }, { namn, href: `/amne/${x.slug}/` }]}
+  ogBild={x.artiklar[0].ogBild}
+  jsonld={[samlingLd({ namn: `Goda nyheter om ${x.namn}`, beskrivning: `Positiva nyheter om ${x.namn}`, href: `/amne/${x.slug}/`, artiklar: x.artiklar })]}>
+  <p class="vinjett" style="margin-top:1.2rem">Ämne</p>
+  <h1 class="sidrubrik" style="margin-top:.1rem">Goda nyheter om {x.namn}</h1>
+  <p class="sidingress">{x.artiklar.length} artiklar om {x.namn}, senaste först. Alla bygger på förstahandskällor som länkas i varje artikel.</p>
+  <ul class="lista">{x.artiklar.map((a) => <Rad a={a} rubrikNiva="h2" />)}</ul>
+</Tidning>

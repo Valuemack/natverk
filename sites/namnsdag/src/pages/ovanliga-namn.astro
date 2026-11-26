@@ -1,0 +1,162 @@
+---
+// Lång guidesida: Ovanliga namn och namnens betydelse. Antal bärare ur SCB (CC0, 2000/2020, nyfödda 2022),
+// namnens ursprung enligt Isof (Förnamn) och betydelser enligt svenska Wikipedias namnartiklar, lästa 2026-11-25.
+// Regel: bara betydelser som står i källan; osäkra tolkningar markeras som osäkra.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import { SITE, ALLA_NAMN, AR, tal, lista, dagText, dagHref, namnHref, barare, giltigt } from "../site.js";
+import { ALLA_SCB } from "../lib/statistik.js";
+
+const PUBLICERAD = "2026-11-25";
+const fn = (n) => { const a = ALLA_SCB[n]; return a ? a[2] + a[3] : 0; };
+const enkla = ALLA_NAMN.filter((n) => giltigt(n, AR) && !n.namn.includes(" "));
+const ovanligast = [...enkla].sort((a, b) => barare(a) - barare(b) || fn(a.namn) - fn(b.namn)).slice(0, 20);
+const under100 = enkla.filter((n) => barare(n) < 100).length;
+const ater = enkla.filter((n) => (n.scb?.tilltal2000 ?? 0) > 0 && n.scb.tilltal2000 < 1500 && barare(n) >= 1000 && barare(n) >= 2 * n.scb.tilltal2000)
+  .sort((a, b) => barare(b) / b.scb.tilltal2000 - barare(a) / a.scb.tilltal2000).slice(0, 10);
+const NY = 2022;
+const ingaNyfodda = enkla.filter((n) => barare(n) >= 10000 && !(n.scb?.nyfodda?.[NY] > 0)).sort((a, b) => barare(b) - barare(a)).slice(0, 12);
+const alla = Object.entries(ALLA_SCB).filter(([, a]) => a[0] + a[1] > 0);
+const smaNamn = alla.filter(([, a]) => a[0] + a[1] < 100).length;
+
+const WP = "https://sv.wikipedia.org/wiki/";
+// Betydelser enligt respektive artikel på svenska Wikipedia (lästa 2026-11-25).
+const BETYDELSE_OVANLIGA = [
+  { namn: "Holmfrid", text: "Fornnordiskt, av holme och frid (skön, älskad). Ursprungligen ett kvinnonamn.", url: `${WP}Holmfrid` },
+  { namn: "Ingemund", text: "Fornnordiskt, av gudanamnet Ing och -mund, beskyddare.", url: `${WP}Ingemund` },
+  { namn: "Engelbrekt", text: "Tyskt ursprung, troligen med betydelsen anglernas ljus.", url: `${WP}Engelbrekt_(namn)` },
+  { namn: "Gudmar", text: "Fornsvenskt, av Gud och ett ord för berömd.", url: `${WP}Gudmar` },
+  { namn: "Anselm", text: "Tyskt, Guds hjälm.", url: `${WP}Anselm` },
+  { namn: "Baltsar", text: "Bibliskt, via hebreiska av akkadiska Bel-sarra-usur, Baal skydde konungen.", url: `${WP}Baltsar` },
+  { namn: "Åslög", text: "Fornnordiskt, lovad åt gudarna.", url: `${WP}%C3%85sl%C3%B6g` },
+  { namn: "Volmar", text: "Tyskt, troligen sidoform av Folkmar: folk och berömd.", url: `${WP}Volmar` },
+  { namn: "Gotthard", text: "Forntyskt, av Gud och hård.", url: `${WP}Gotthard` },
+  { namn: "Botvid", text: "Fornnordiskt, av bot (bättring) och vidh (skog, träd).", url: `${WP}Botvid` },
+  { namn: "Desideria", text: "Latinskt, den önskade.", url: `${WP}Desideria` },
+  { namn: "Severin", text: "Av latinets severus, allvarsam eller sträng.", url: `${WP}Severin` },
+  { namn: "Ansgar", text: "Forntyskt, av Gud och spjut.", url: `${WP}Ansgar_(namn)` },
+  { namn: "Frideborg", text: "Tyskt, av frid och borg (beskydd).", url: `${WP}Frideborg` },
+  { namn: "Magnhild", text: "Nordiskt, styrka i strid.", url: `${WP}Magnhild` },
+  { namn: "Hervor", text: "Fornnordiskt, av her (krigshär) och vor (försiktig).", url: `${WP}Hervor` },
+  { namn: "Esaias", text: "Grekisk form av hebreiska Yesha'yahu, Herren hjälper.", url: `${WP}Esaias` },
+  { namn: "Hemming", text: "Omtvistad betydelse, möjligen av isländskans hamr, gestalt.", url: `${WP}Hemming` },
+];
+const BETYDELSE_VANLIGA = [
+  { namn: "Anna", text: "Grekisk form av hebreiska Hanna, nåd eller den benådade.", url: `${WP}Anna` },
+  { namn: "Erik", text: "Fornnordiskt, av ett förled för ensam eller alltid och ett efterled för härskare.", url: `${WP}Erik` },
+  { namn: "Lars", text: "Kortform av latinets Laurentius, den lagerkrönte.", url: `${WP}Lars` },
+  { namn: "Karl", text: "Urgermanskt, samma ord som karl, fri man.", url: `${WP}Karl` },
+  { namn: "Olof", text: "Nordiskt, ättling.", url: `${WP}Olof` },
+  { namn: "Astrid", text: "Nordiskt, av as (gud) och frid (skön, älskad).", url: `${WP}Astrid` },
+  { namn: "Ingrid", text: "Nordiskt, av gudanamnet Ing och frid (skön, älskad).", url: `${WP}Ingrid` },
+  { namn: "Sigrid", text: "Fornnordiskt, av seger och frid.", url: `${WP}Sigrid` },
+  { namn: "Elsa", text: "Svensk kortform av Elisabet, av hebreiska, Gud är fullkomlighet.", url: `${WP}Elsa` },
+  { namn: "Alice", text: "Fransk och engelsk form av tyska Adelheid, ädel och ljus.", url: `${WP}Alice` },
+  { namn: "William", text: "Engelsk form av Wilhelm, av vilja och hjälm.", url: `${WP}William` },
+  { namn: "Hugo", text: "Tyskt, kortform av Hubert, av håg (förstånd, tanke).", url: `${WP}Hugo` },
+  { namn: "Saga", text: "Fornnordiskt, hon som ser, sierska.", url: `${WP}Saga_(namn)` },
+];
+const alm = new Map(ALLA_NAMN.map((n) => [n.namn, n]));
+
+const avsnitt = [
+  { id: "ovanligast", rubrik: "Almanackans ovanligaste namn" },
+  { id: "betydelse", rubrik: "Vad betyder de ovanliga namnen?" },
+  { id: "ursprung", rubrik: "Varifrån kommer svenska förnamn?" },
+  { id: "vanliga", rubrik: "Vad betyder vanliga namn?" },
+  { id: "ater", rubrik: "Ovanliga namn som blivit vanliga" },
+  { id: "forsvinner", rubrik: "Vanliga namn som nästan inga barn får" },
+  { id: "valja", rubrik: "Att välja ett ovanligt namn" },
+];
+
+const fragor = [
+  { fraga: "Vilket är det ovanligaste namnet i almanackan?", svar: `${lista(ovanligast.slice(0, 3).map((n) => n.namn))} hör till de ovanligaste. Färre än tio personer har dem som tilltalsnamn, men ${lista(ovanligast.slice(0, 3).filter((n) => fn(n.namn)).map((n) => `${n.namn} finns bland förnamnen hos ${tal(fn(n.namn))}`))} (SCB 2020).` },
+  { fraga: "Vad betyder namnet Anna?", svar: "Anna är den grekiska formen av det hebreiska namnet Hanna och brukar tolkas som nåd eller den benådade." },
+  { fraga: "Vad betyder namnet Erik?", svar: "Erik är ett fornnordiskt namn. Efterledet betyder härskare eller kung. Förledet tolkas som ensam eller alltid." },
+  { fraga: "Hur många har ett ovanligt namn?", svar: `${tal(smaNamn)} av de ${tal(alla.length)} tilltalsnamn som SCB redovisar har färre än 100 bärare. Namn med färre än tio bärare finns inte med i statistiken alls.` },
+  { fraga: "Vilka gamla namn har kommit tillbaka?", svar: `Bland almanackans namn har till exempel ${lista(ater.slice(0, 4).map((n) => n.namn))} ökat kraftigt sedan 2000, enligt SCB. Isof beskriver namnmodet som cykler på 80–100 år.` },
+  { fraga: "Får man ge sitt barn vilket namn som helst?", svar: "Nej. Enligt lagen om personnamn godkänns inte ett förnamn som kan väcka anstöt, kan leda till obehag för bäraren eller av annan anledning är olämpligt. Skatteverket prövar namnet." },
+];
+
+const titel = "Ovanliga namn i almanackan – och vad namnen betyder";
+const beskrivning = "Almanackans ovanligaste namn enligt SCB, vad namn som Holmfrid, Åslög och Botvid betyder, varifrån svenska förnamn kommer och gamla namn som blivit vanliga igen.";
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Ovanliga namn och namnens betydelse"
+  svar={`Almanackans ovanligaste namn är bland andra <strong>${lista(ovanligast.slice(0, 4).map((n) => n.namn))}</strong>. Färre än tio personer i Sverige har dem som tilltalsnamn (SCB 2020). Många ovanliga almanacksnamn är fornnordiska. Holmfrid betyder till exempel holme och frid, och Åslög lovad åt gudarna. Totalt har ${under100} av almanackans namn färre än 100 bärare.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Ovanliga namn", href: "/ovanliga-namn/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Se hur ovanligt ett namn är" },
+    { namn: "Alla namn A–Ö", href: "/alla-namn/", text: "Alla namn i almanackan" },
+    { namn: "Namnsdagens historia", href: "/namnsdag/", text: "Från helgonkalender till namnlängd" },
+    { namn: "Pojknamn", href: "/pojknamn/", text: "Populära och klassiska pojknamn" },
+    { namn: "Flicknamn", href: "/flicknamn/", text: "Populära och klassiska flicknamn" },
+  ]}
+  kallor={[
+    { namn: "Isof – Förnamn", url: "https://www.isof.se/namn/personnamn/lar-dig-mer-om-personnamn-i-sverige/fornamn", text: "förnamnens ursprung, runstensnamn och namnmodets cykler", datum: "2026-11-25" },
+    { namn: "Wikipedia – artiklar om respektive förnamn", url: "https://sv.wikipedia.org/wiki/Kategori:F%C3%B6rnamn", text: "namnens betydelse; varje namn i tabellerna länkar till sin artikel", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn och förnamn med minst 10 bärare", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "antal bärare 2000 och 2020, CC0", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Nyfödda efter tilltalsnamn (BE0001Nyfodda)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001D/BE0001Nyfodda/", text: `nyfödda per namn till och med ${NY}, CC0`, datum: "2026-11-22" },
+    { namn: "Lag (2016:1013) om personnamn", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20161013-om-personnamn_sfs-2016-1013/", text: "28 § om vilka förnamn som godkänns", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="ovanligast">Almanackans ovanligaste namn</h2>
+  <p>Alla namn i almanackan är inte vanliga. Många kom in för hundratals år sedan, och vissa bärs i dag av nästan ingen. Tabellen visar de 20 namn i almanackan som har minst antal bärare som tilltalsnamn. SCB redovisar bara namn med minst tio bärare, så "under 10" betyder att namnet är ännu ovanligare. Kolumnen förnamn räknar alla som har namnet någonstans bland sina förnamn.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Namnsdag</th><th class="num">Tilltalsnamn 2020</th><th class="num">Förnamn 2020</th></tr></thead>
+    <tbody>{ovanligast.map((n) => <tr><td><a href={namnHref(n.namn)}>{n.namn}</a></td><td><a href={dagHref(n.datum)}>{dagText(n.datum)}</a></td>
+      <td class="num">{barare(n) ? tal(barare(n)) : "under 10"}</td><td class="num">{fn(n.namn) ? tal(fn(n.namn)) : "under 10"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Flera av namnen lever alltså kvar som andra- eller tredjenamn, även när nästan ingen använder dem i vardagen. Totalt har {under100} av almanackans {enkla.length} namn färre än 100 bärare som tilltalsnamn. Isof skriver att befintliga namn inte längre tas bort ur almanackan, så de här namnen kommer att stå kvar.</p>
+
+  <h2 id="betydelse">Vad betyder de ovanliga namnen?</h2>
+  <p>Många av almanackans ovanliga namn är fornnordiska eller kommer från helgon och bibliska personer. Betydelserna nedan är hämtade från artiklarna om respektive namn på svenska Wikipedia. Namnforskare är inte alltid överens, och där källan anger att tolkningen är osäker skriver vi det.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Ursprung och betydelse</th><th>Namnsdag</th></tr></thead>
+    <tbody>{BETYDELSE_OVANLIGA.map((b) => { const n = alm.get(b.namn); return (
+      <tr><td><a href={b.url} rel="noopener">{b.namn}</a></td><td>{b.text}</td><td>{n ? <a href={namnHref(n.namn)}>{dagText(n.datum)}</a> : "–"}</td></tr>); })}</tbody>
+  </table></div>
+  <p>Några ovanliga namn saknar känd betydelse. Tiburtius är ett romerskt släktnamn efter staden Tibur, dagens Tivoli. Olaus är en latinsk form av Olof. För dem anger källan ursprunget, men ingen egen betydelse.</p>
+
+  <h2 id="ursprung">Varifrån kommer svenska förnamn?</h2>
+  <p>Isof beskriver hur de svenska förnamnen kommit till i flera lager:</p>
+  <ul>
+    <li><strong>Inhemska namn</strong> med förhistoriskt ursprung, som Erik och Ingrid. De äldsta är kända från runstenar. Holmfrid, i dag ett av almanackans ovanligaste namn, är ett av de fem vanligaste kvinnonamnen på runstenar från vikingatiden.</li>
+    <li><strong>Kristna namn från medeltiden</strong>, som Katerina, Kristina, Margareta, Niklas, Peter och Johan.</li>
+    <li><strong>Bibliska namn</strong>. Gamla testamentets namn som Sara och Abraham började användas på 1500-talet. Maria blev populärt från 1600-talet.</li>
+    <li><strong>Tyska namn</strong> under 1500-talet och i början av 1900-talet, till exempel Greta, Herman och Irma.</li>
+    <li><strong>Franska namn</strong> under 1700-talet, som Louise, Emil och Eugen.</li>
+    <li><strong>Engelska namn</strong> i två vågor: på 1800-talet, som Harry, och efter andra världskriget.</li>
+  </ul>
+  <p>De flesta namn är alltså lånade och anpassade till svenskan. Det förklarar varför samma namn ofta finns i flera former, som Elisabet och dess kortform Elsa.</p>
+
+  <h2 id="vanliga">Vad betyder vanliga namn?</h2>
+  <p>Också de vanligaste namnen har en historia. Här är betydelsen av några av de mest burna namnen, enligt samma källa:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Ursprung och betydelse</th><th class="num">Tilltalsnamn 2020</th></tr></thead>
+    <tbody>{BETYDELSE_VANLIGA.map((b) => { const n = alm.get(b.namn); return (
+      <tr><td><a href={b.url} rel="noopener">{b.namn}</a></td><td>{b.text}</td><td class="num">{n ? tal(barare(n)) : "–"}</td></tr>); })}</tbody>
+  </table></div>
+  <p>Maria och Noa är exempel på mycket vanliga namn där källan anger ursprunget men inte någon säker betydelse. Maria är den grekiska och latinska formen av arameiskans Mariam, och Noa är namnet på bibelns Noak.</p>
+
+  <h2 id="ater">Ovanliga namn som blivit vanliga</h2>
+  <p>Ett namn som är ovanligt i dag kan vara vanligt om några decennier. Isof beskriver hur namnmodet växlar i cykler på tre generationer, eller 80–100 år. Bland almanackans namn har de här ökat mest i förhållande till hur ovanliga de var år 2000:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">2000</th><th class="num">2020</th><th class="num">Nyfödda {NY}</th></tr></thead>
+    <tbody>{ater.map((n) => <tr><td><a href={namnHref(n.namn)}>{n.namn}</a></td><td class="num">{tal(n.scb.tilltal2000)}</td><td class="num">{tal(barare(n))}</td><td class="num">{tal(n.scb.nyfodda?.[NY] ?? 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>{ater[0].namn} är det tydligaste exemplet: från {tal(ater[0].scb.tilltal2000)} bärare år 2000 till {tal(barare(ater[0]))} år 2020. Isof påpekar också att andranamnen hjälper gamla namn att överleva, så att de kan komma tillbaka när trenden vänder.</p>
+
+  <h2 id="forsvinner">Vanliga namn som nästan inga barn får</h2>
+  <p>Omvänt finns det namn som bärs av tiotusentals personer men som nästan inte ges till nyfödda längre. För de här almanacksnamnen med minst 10 000 bärare redovisar SCB inga nyfödda med namnet som tilltalsnamn {NY}. SCB visar bara namn som minst två barn fått, så färre än två fick namnet:</p>
+  <p>{lista(ingaNyfodda.map((n) => `${n.namn} (${tal(barare(n))})`))}.</p>
+  <p>Om cykeln på 80–100 år stämmer kan några av dem bli populära igen mot slutet av seklet. Precis så har det gått för namn som Astrid och Nils, som är vanliga både bland äldre och bland dagens barn. Se <a href="/flicknamn/">flicknamn</a> och <a href="/pojknamn/">pojknamn</a> för fler exempel.</p>
+
+  <h2 id="valja">Att välja ett ovanligt namn</h2>
+  <p>Ett ovanligt namn kan vara ett sätt att ge barnet något eget. Några saker är bra att känna till:</p>
+  <ul>
+    <li><strong>Prövningen.</strong> Skatteverket prövar alla förnamn. Enligt lagen om personnamn godkänns inte ett namn som kan väcka anstöt, kan antas leda till obehag för den som ska bära det eller av annan anledning är olämpligt som förnamn.</li>
+    <li><strong>Hur ovanligt?</strong> {tal(smaNamn)} av de {tal(alla.length)} tilltalsnamn som SCB redovisar har färre än 100 bärare. Sök i <a href="/hur-manga-heter/">hur många heter</a> för att se hur många som har ett visst namn.</li>
+    <li><strong>Namnsdag.</strong> Ett namn från almanackan ger en egen namnsdag, även om få bär det. Alla namn som saknas i almanackan har gemensam namnsdag den <a href="/1-januari/">1 januari</a>.</li>
+    <li><strong>Som andranamn.</strong> Ett ovanligt släktnamn kan också ges som andranamn. Holmfrid och Engelbrekt finns till exempel betydligt oftare bland förnamnen än som tilltalsnamn.</li>
+  </ul>
+</Guide>

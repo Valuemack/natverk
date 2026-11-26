@@ -1,0 +1,135 @@
+---
+// Lång guidesida: Flicknamn – populära och klassiska. Topplistor och medelålder ur SCB (CC0, 1998–2022),
+// nyare toppnamn från Skatteverket (2025) och Isof (2023), namnlagen från riksdagen.se. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import "../styles/sajt.css";
+import NamnsdagCell from "../components/NamnsdagCell.astro";
+import { SITE, tal, lista, ALLA_NAMN, AR, dagText, namnHref } from "../site.js";
+import { NYFODDA, NYF_AR, NYF_SENAST, MEDELALDER, NYARE, ettor, tilltal, placering, nykomlingar, namnsdagFor } from "../lib/statistik.js";
+
+const PUBLICERAD = "2026-11-25";
+const K = "K";
+const S = NYF_SENAST, T = S - 10;
+const L = NYFODDA[K][S];
+const topp30 = L.slice(0, 30).map(([n, x], i) => ({ n, x, plats: i + 1, fore: placering(NYFODDA[K][T], n) }));
+const ettan = ettor(K);
+const flestEtta = [...ettan].sort((a, b) => b.ar.length - a.ar.length)[0];
+const flestTopp10 = Object.entries(NYF_AR.reduce((r, ar) => { for (const [n] of NYFODDA[K][ar].slice(0, 10)) r[n] = (r[n] ?? 0) + 1; return r; }, {}))
+  .sort((a, b) => b[1] - a[1]).slice(0, 4);
+const vanligast = tilltal(K).slice(0, 12).map((x) => ({ ...x, alder: MEDELALDER[x.namn]?.[K] }));
+const aldst = Object.entries(MEDELALDER).filter(([, v]) => v[K] && v.nK >= 20000).sort((a, b) => b[1][K] - a[1][K]).slice(0, 4);
+const tillbaka = L.filter(([n]) => (MEDELALDER[n]?.[K] ?? 0) >= 35).slice(0, 8).map(([n, x]) => ({ n, x, alder: MEDELALDER[n][K], alla: MEDELALDER[n].nK }));
+const nya = nykomlingar(K, T, S).slice(0, 12);
+const ute = NYFODDA[K][T].slice(0, 60).filter(([n]) => !L.some(([m]) => m === n)).slice(0, 10).map(([n]) => n);
+const nd = L.map(([n]) => namnsdagFor(n));
+const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d).length;
+const saknasNamn = L.filter((_, i) => !nd[i]).slice(0, 8).map(([n]) => n);
+const nya2027 = ALLA_NAMN.filter((n) => n.fran && n.fran > AR && (n.scb?.tilltal2020?.K ?? 0) > (n.scb?.tilltal2020?.M ?? 0));
+const sum = (xs) => xs.reduce((t, [, x]) => t + x, 0);
+const top10Nu = sum(L.slice(0, 10)), top10Da = sum(NYFODDA[K][NYF_AR[0]].slice(0, 10));
+const top100Nu = sum(L), top100Da = sum(NYFODDA[K][NYF_AR[0]]);
+const yngst = Object.entries(MEDELALDER).filter(([, v]) => v[K] && v.nK >= 5000).sort((a, b) => a[1][K] - b[1][K]).slice(0, 5);
+const ar = (n) => String(n).replace(".", ",");
+const alice = ettan.find((e) => e.namn === "Alice");
+
+const avsnitt = [
+  { id: "2025", rubrik: "Populäraste flicknamnen 2025" },
+  { id: "topp", rubrik: `Topp 30 flicknamn bland nyfödda ${S}` },
+  { id: "ettor", rubrik: "Från Emma till Vera: ettorna sedan 1998" },
+  { id: "klassiska", rubrik: "Klassiska flicknamn" },
+  { id: "nya", rubrik: "Nya flicknamn på topplistan" },
+  { id: "namnsdag", rubrik: "Flicknamn och namnsdag" },
+  { id: "valja", rubrik: "Tänk på det här när ni väljer flicknamn" },
+];
+
+const fragor = [
+  { fraga: "Vilket är det populäraste flicknamnet?", svar: `Vera var det vanligaste tilltalsnamnet bland flickor födda 2025, enligt Skatteverket, följt av ${lista(NYARE[2025].K.slice(1))}. Vera låg etta för första gången 2023, enligt Isof.` },
+  { fraga: "Vilket flicknamn har legat etta flest gånger?", svar: `${flestEtta.namn} var årets vanligaste flicknamn ${flestEtta.ar.length} gånger mellan ${NYF_AR[0]} och ${S}, enligt SCB, senast ${flestEtta.ar.at(-1)}.` },
+  { fraga: `Hur många flickor fick namnet ${L[0][0]} ${S}?`, svar: `${tal(L[0][1])} flickor fick ${L[0][0]} som tilltalsnamn ${S}. Det var första gången ${L[0][0]} låg etta i SCB:s statistik.` },
+  { fraga: "Vilka är de vanligaste kvinnonamnen i Sverige?", svar: `Bland alla kvinnor är ${lista(vanligast.slice(0, 5).map((x) => x.namn))} vanligast som tilltalsnamn (SCB 2020). ${vanligast[0].namn} bärs av ${tal(vanligast[0].antal)} kvinnor.` },
+  { fraga: "Vilka flicknamn får namnsdag 2027?", svar: `Från 2027 får ${lista(nya2027.map((n) => `${n.namn} (${dagText(n.datum)})`))} namnsdag, enligt Namnlängdskommitténs beslut.` },
+  { fraga: "Hur lång tid har man på sig att ge barnet ett namn?", svar: "Ansökan om barnets förnamn ska göras inom tre månader från födelsen, enligt lagen om personnamn. Skatteverket prövar namnet." },
+];
+
+const titel = "Flicknamn – populära och klassiska flicknamn (topp 100)";
+const beskrivning = `Populäraste flicknamnen: Vera, Astrid och Alice toppar 2025. Topp 30 bland nyfödda, alla ettor sedan 1998, klassiska flicknamn med medelålder och nya namnsdagar 2027.`;
+---
+<Guide site={SITE} titel={titel} beskrivning={beskrivning} h1="Flicknamn – populära och klassiska"
+  svar={`De populäraste flicknamnen 2025 var <strong>${lista(NYARE[2025].K)}</strong>, enligt Skatteverket. Vera har legat etta sedan 2023. Enligt SCB var ${L[0][0]} vanligast ${S}, och ${alice.namn} låg etta ${alice.ar.length} år mellan ${alice.ar[0]} och ${alice.ar.at(-1)}. Bland alla kvinnor i Sverige är <strong>${vanligast[0].namn}</strong> vanligast, med ${tal(vanligast[0].antal)} bärare.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Flicknamn", href: "/flicknamn/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Pojknamn", href: "/pojknamn/", text: "Populära och klassiska pojknamn" },
+    { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Sök antal bärare för alla namn" },
+    { namn: "Vanligaste namnen i Sverige", href: "/vanligaste-namnen/", text: "Topplistor för hela befolkningen" },
+    { namn: "Nya namn i almanackan", href: "/nya-namn/", text: "Namnen som får namnsdag 2027" },
+    { namn: "Ovanliga namn", href: "/ovanliga-namn/", text: "Almanackans ovanliga namn och deras betydelse" },
+  ]}
+  kallor={[
+    { namn: "SCB, Statistikdatabasen – Nyfödda, de 100 vanligaste tilltalsnamnen (BE0001T05AR)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001D/BE0001T05AR/", text: `topplistor ${NYF_AR[0]}–${S}, CC0`, datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn efter medelålder (BE0001T08AR)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001T08AR/", text: "medelålder per namn 2020, CC0", datum: "2026-11-25" },
+    { namn: "SCB, Statistikdatabasen – Tilltalsnamn med minst 10 bärare (BE0001TNamn10)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0001__BE0001G/BE0001TNamn10/", text: "antal kvinnor per namn 2020, CC0", datum: "2026-11-25" },
+    { namn: "Skatteverket – Namn på nyfödda inklusive olika topplistor", url: "https://skatteverket.se/4.7da1d2e118be03f8e4f5b9d.html", text: "topp 5 för 2025 och metod", datum: "2026-11-25" },
+    { namn: "Isof – Förnamn", url: "https://www.isof.se/namn/personnamn/lar-dig-mer-om-personnamn-i-sverige/fornamn", text: "toppnamn 2023 och namnmodets cykler", datum: "2026-11-25" },
+    { namn: "Isof – Namnsdagar i almanackan", url: "https://www.isof.se/namn/personnamn/namnsdagar-i-almanackan", text: "de nya namnen 2027", datum: "2026-11-25" },
+    { namn: "Lag (2016:1013) om personnamn", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-20161013-om-personnamn_sfs-2016-1013/", text: "26–28 §§ om förnamn", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="2025">Populäraste flicknamnen 2025</h2>
+  <p>Skatteverkets statistik för flickor födda 2025 har <strong>{lista(NYARE[2025].K)}</strong> som de fem vanligaste tilltalsnamnen. Vera har tagit över efter en lång period då Alice dominerade. Enligt Isof låg Vera etta för första gången 2023, före Elsa och Alma.</p>
+  <p>Siffrorna för 2023 och senare kommer från Skatteverket, som tog över namnstatistiken när SCB slutade 2024. Skatteverket räknar varje stavning för sig, medan SCB:s topplistor slog ihop liknande stavningar. Lea och Leah räknas därför som ett namn i SCB:s lista nedan, men som två namn hos Skatteverket.</p>
+
+  <h2 id="topp">Topp 30 flicknamn bland nyfödda {S}</h2>
+  <p>SCB:s sista fullständiga topplista gäller flickor födda {S}. Här är de 30 vanligaste namnen, hur många flickor som fick dem och var de låg tio år tidigare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Flickor {S}</th><th class="num">Plats {T}</th><th>Namnsdag</th></tr></thead>
+    <tbody>{topp30.map((r) => <tr><td class="num">{r.plats}</td><td>{r.n}</td><td class="num">{tal(r.x)}</td><td class="num">{r.fore ?? "–"}</td><NamnsdagCell namn={r.n} /></tr>)}</tbody>
+  </table></div>
+  <p>Toppen är jämn. Bara {tal(L[0][1] - L[9][1])} flickor skilde mellan etta och tia. Namn med ett streck i kolumnen för {T} fanns inte bland de 100 vanligaste då, och har alltså vuxit snabbt.</p>
+  <h3>Fler namn att välja mellan</h3>
+  <p>Toppnamnen samlar färre flickor än förr. År {NYF_AR[0]} fick {tal(top10Da)} flickor något av de tio vanligaste namnen, och år {S} var det {tal(top10Nu)}. Även hela topp 100 krympte, från {tal(top100Da)} till {tal(top100Nu)} flickor. Det säger något om hur namnvalen har blivit mer spridda: dagens toppnamn är populära, men långt ifrån så dominerande som Emma var kring millennieskiftet.</p>
+
+  <h2 id="ettor">Från Emma till Vera: ettorna sedan 1998</h2>
+  <p>Mellan {NYF_AR[0]} och {S} har {ettan.length} olika namn varit årets vanligaste flicknamn enligt SCB:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Antal år</th><th>År som etta</th></tr></thead>
+    <tbody>{ettan.map((e) => <tr><td>{e.namn}</td><td class="num">{e.ar.length}</td><td>{e.ar.join(", ")}</td></tr>)}</tbody>
+  </table></div>
+  <p>Kring millennieskiftet var Emma och Julia de stora namnen. Alice tog över 2009 och låg etta i {alice.ar.length} av de följande {S - 2009 + 1} åren. Därefter kom Astrid {S} och Vera från 2023. Räknar man år på topp 10 ligger {lista(flestTopp10.map(([n, x]) => `${n} (${x} år)`))} i topp.</p>
+  <h3>Emma, då och nu</h3>
+  <p>Emma visar hur ett modenamn också blir ett vanligt namn i hela befolkningen. Namnet var etta bland nyfödda sju år mellan {NYF_AR[0]} och 2006, och i dag är Emma ett av de tio vanligaste kvinnonamnen i Sverige med {tal(vanligast.find((x) => x.namn === "Emma")?.antal ?? 0)} bärare. Medelåldern bland dem som heter Emma är {ar(MEDELALDER.Emma.K)} år.</p>
+
+  <h2 id="klassiska">Klassiska flicknamn</h2>
+  <p>Bland alla kvinnor i Sverige dominerar namn som var populära för flera generationer sedan. Tabellen visar de vanligaste tilltalsnamnen och bärarnas medelålder enligt SCB.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Kvinnor 2020</th><th class="num">Medelålder</th><th>Namnsdag</th></tr></thead>
+    <tbody>{vanligast.map((x, i) => <tr><td class="num">{i + 1}</td><td>{x.namn}</td><td class="num">{tal(x.antal)}</td><td class="num">{x.alder ? ar(x.alder) : "–"}</td><NamnsdagCell namn={x.namn} /></tr>)}</tbody>
+  </table></div>
+  <p>Bland namn med minst 20 000 bärare har {lista(aldst.map(([n, v]) => `${n} (${ar(v.K)} år)`))} högst medelålder. Inget av dem fanns bland de 100 vanligaste namnen för nyfödda {S}. I andra änden har {lista(yngst.map(([n, v]) => `${n} (${ar(v.K)} år)`))} lägst medelålder bland namn med minst 5 000 bärare. Det är namn som nästan bara bärs av barn och tonåringar.</p>
+  <h3>Mormors namn tillbaka</h3>
+  <p>Isof beskriver hur namnmodet växlar i cykler på ungefär 80–100 år, och många namn som var populära runt 1900 kom tillbaka under 2000-talet. Bland flicknamnen syns det tydligt. De här namnen fanns på topplistan för nyfödda {S}, trots att medelåldern bland alla bärare är hög:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Flickor {S}</th><th class="num">Alla med namnet</th><th class="num">Medelålder</th></tr></thead>
+    <tbody>{tillbaka.map((x) => <tr><td>{x.n}</td><td class="num">{tal(x.x)}</td><td class="num">{tal(x.alla)}</td><td class="num">{ar(x.alder)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Astrid är det mest slående exemplet: årets vanligaste flicknamn {S} och tvåa 2025, men samtidigt ett namn där många bärare är äldre.</p>
+
+  <h2 id="nya">Nya flicknamn på topplistan</h2>
+  <p>Mellan {T} och {S} tog sig många nya namn in bland de 100 vanligaste. De som fick flest flickor {S} var:</p>
+  <p>{lista(nya.map(([n, x]) => `${n} (${tal(x)})`))}.</p>
+  <p>Samtidigt har flera namn som var vanliga {T} fallit ur topp 100, bland dem {lista(ute)}. Många av de nya namnen är korta, som Mila, Luna, Alba och Lo.</p>
+
+  <h2 id="namnsdag">Flicknamn och namnsdag</h2>
+  <p>Av de 100 vanligaste flicknamnen {S} har {egen} en egen dag i almanackan. {variant} till är stavningsvarianter av ett almanacksnamn och kan firas på det namnets dag, till exempel Leah på Lea-dagen. {saknas} saknar namnsdag, bland dem {lista(saknasNamn)}. Den som saknar namnsdag kan fira den <a href="/1-januari/">1 januari</a>, som är gemensam namnsdag för alla namn som inte finns i almanackan.</p>
+  <h3>Nya namnsdagar 2027</h3>
+  <p>Namnlängdskommittén lägger ibland till namn som blivit vanliga. Från 2027 får {nya2027.length} flicknamn namnsdag: {nya2027.map((n, i) => <>{i > 0 && (i === nya2027.length - 1 ? " och " : ", ")}<a href={namnHref(n.namn)}>{n.namn}</a> ({dagText(n.datum)})</>)}. Eira fanns redan bland de 100 vanligaste flicknamnen {S}. Tidigare tillägg är bland andra Maja och Cornelia 2022, Saga och Ronja 2018 och Emmy och Jasmine 2015. Hela listan finns på sidan <a href="/nya-namn/">nya namn i almanackan</a>.</p>
+
+  <h2 id="valja">Tänk på det här när ni väljer flicknamn</h2>
+  <ul>
+    <li><strong>Tre månader.</strong> Ansökan om barnets förnamn ska göras inom tre månader från födelsen, enligt lagen om personnamn. Barnet ska ha minst ett förnamn.</li>
+    <li><strong>Skatteverket prövar namnet.</strong> Ett förnamn godkänns inte om det kan väcka anstöt, kan leda till obehag för barnet eller av annan anledning är olämpligt.</li>
+    <li><strong>Vanligt eller ovanligt?</strong> Vart och ett av de tio vanligaste namnen gavs till {tal(L[9][1])}–{tal(L[0][1])} flickor födda {S}. Sök i <a href="/hur-manga-heter/">hur många heter</a> för att se hela befolkningen, eller hitta inspiration bland <a href="/ovanliga-namn/">almanackans ovanliga namn</a>.</li>
+    <li><strong>Stavning och namnsdag.</strong> Klara har namnsdag men Clara är en variant, och Vilma och Wilma räknas som olika namn i statistiken.</li>
+  </ul>
+  <p>Söker du namn till en pojke finns listorna på sidan <a href="/pojknamn/">pojknamn</a>.</p>
+</Guide>

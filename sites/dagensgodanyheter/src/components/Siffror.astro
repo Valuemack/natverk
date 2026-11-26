@@ -1,0 +1,20 @@
+---
+// Rutan "Världen i siffror": dagens belagda datapunkt med källa och årtal. Visas inte alls om datan saknas.
+import { dagensSiffra } from "../lib/siffror.js";
+const { forskjut = 0, bred = false, rubrikNiva = "h2" } = Astro.props;
+const p = dagensSiffra(undefined, forskjut);
+const Rubrik = rubrikNiva;
+---
+{p && (
+  <aside class:list={["siffror", { "siffror-bredd": bred }]} aria-labelledby={`siffror-${forskjut}`}>
+    <Rubrik class="spalt-rubrik" id={`siffror-${forskjut}`}>Världen i siffror <small>{p.omrade === "sverige" ? "Sverige" : "Hela världen"}</small></Rubrik>
+    <div class:list={{ "siffror-bred": bred }}>
+      <p class="siffror-tal">{p.siffra}</p>
+      <div>
+        <p class="siffror-rubrik">{p.rubrik}</p>
+        <p class="siffror-text">{p.text}</p>
+        <p class="meta">Källa: <a href={p.kalla.url} rel="noopener">{p.kalla.namn}</a> · {p.ar} · <a href="/om/#varlden-i-siffror">Om siffrorna</a></p>
+      </div>
+    </div>
+  </aside>
+)}

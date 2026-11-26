@@ -1,0 +1,64 @@
+---
+import Tidning from "../components/Tidning.astro";
+import { AKTIVA } from "../../scripts/kallor.mjs";
+---
+<Tidning titel="Redaktionell policy – källor och faktakontroll"
+  beskrivning="Så arbetar Dagens goda nyheter: förstahandskällor, hur artiklarna skrivs, faktakontroll mot källtexten, bilder, läsvärde och rättelser."
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Redaktionell policy", href: "/redaktionell-policy/" }]}>
+  <div class="textsida">
+    <h1 class="sidrubrik">Redaktionell policy</h1>
+    <p class="sidingress">Dagens goda nyheter publicerar bara positiva och hoppfulla nyheter. Här beskriver vi öppet hur nyheterna väljs, hur de skrivs och hur vi kontrollerar dem.</p>
+
+    <h2 id="kallor">Bara förstahandskällor</h2>
+    <p>Varje artikel bygger på en namngiven förstahandskälla: en myndighet, ett universitet eller forskningsinstitut, en rymdorganisation, ett FN-organ, EU eller en ideell organisation med egen verksamhet. Just nu bevakar vi {AKTIVA.length} källor, och hela listan finns på sidan <a href="/kallor/">Källor</a>.</p>
+    <ul>
+      <li><strong>Vi skriver aldrig om andra tidningars eller nyhetsbyråers artiklar.</strong> Andra mediers texter används inte som underlag.</li>
+      <li>Källan länkas alltid i artikeln, med namn och publiceringsdatum, så att du kan läsa originalet.</li>
+      <li>Utrikesnyheter hämtas från internationella förstahandskällor, till exempel WHO, ESA, NASA och Europeiska kommissionen.</li>
+      <li>Vi hämtar källornas öppna flöden (RSS), respekterar deras robots.txt och gör högst ett anrop per sekund.</li>
+    </ul>
+
+    <h2 id="lasvarde">Hur nyheterna väljs: läsvärde</h2>
+    <p>Varje natt får alla nya kandidater en poäng. Poängen väger ihop fyra saker:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Del</th><th>Vikt</th><th>Vad den mäter</th></tr></thead>
+      <tbody>
+        <tr><td>Positiv</td><td>35 %</td><td>Hur tydligt nyheten handlar om ett framsteg, en lösning eller en förbättring.</td></tr>
+        <tr><td>Betydelse</td><td>25 %</td><td>Hur många som berörs och hur stor förändringen är.</td></tr>
+        <tr><td>Färskhet</td><td>20 %</td><td>Hur ny nyheten är. Värdet halveras efter 36 timmar.</td></tr>
+        <tr><td>Källans tillit</td><td>20 %</td><td>Myndigheter och lärosäten väger tyngst, därefter organisationer och företag.</td></tr>
+      </tbody>
+    </table></div>
+    <p>En automatisk bedömning görs först av hur positiv och betydelsefull en nyhet är. Reklam, tävlingar, personalnyheter, partipolitik och nyheter om enskilda privatpersoner sorteras bort. Startsidan och "Mest läsvärt" sorteras efter samma poäng, räknat på nytt vid varje publicering.</p>
+
+    <h2 id="ai">Så skrivs artiklarna</h2>
+    <p>Artiklarna skrivs med stöd av språkmodeller och granskas i flera steg:</p>
+    <ol>
+      <li><strong>Källtexten hämtas</strong> direkt från förstahandskällan.</li>
+      <li><strong>Artikeln skrivs</strong> på svenska med egna ord: rubrik, ingress, mellanrubriker, faktaruta och "Varför det spelar roll". Bara uppgifter som står i källtexten får användas.</li>
+      <li><strong>Maskinella kontroller</strong> stoppar artiklar som är för korta eller långa, saknar faktaruta, innehåller citat som inte står ordagrant i källan eller har längre stycken kopierade från källan.</li>
+      <li><strong id="faktakontroll">Faktakontroll:</strong> en andra, separat körning jämför varje påstående i artikeln med källtexten och letar efter fel, påhittade uppgifter, överdrifter, citat och råd. En underkänd artikel publiceras inte.</li>
+    </ol>
+    <p>Vi anger inga påhittade skribentnamn.</p>
+
+    <h2 id="byline">Byline</h2>
+    <p id="etik">Artiklarna signeras "redaktionen" och inte av en enskild reporter. Det är redaktionen som ansvarar för urvalet, reglerna och rättelserna.</p>
+
+    <h2>Det här gör vi aldrig</h2>
+    <ul>
+      <li>Hittar på citat eller återger uttalanden som inte finns i källan.</li>
+      <li>Ger medicinska råd. Hälsonyheter beskriver forskning och beslut och hänvisar till <a href="https://www.1177.se/" rel="nofollow">1177</a> för frågor om den egna hälsan.</li>
+      <li>Ger investeringsråd. Ekonomi & börs innehåller bara fakta från officiella källor.</li>
+      <li>Överdriver. Står det "tyder på" eller "i djurförsök" i källan skriver vi det också.</li>
+      <li>Publicerar en artikel utan källa.</li>
+      <li>Tar betalt för att publicera en nyhet. Inga artiklar är sponsrade.</li>
+    </ul>
+
+    <h2 id="bilder">Bilder</h2>
+    <p>Vi använder i första hand fria bilder, till exempel från NASA (public domain). Fotograf och licens står under varje bild.</p>
+    <p>Finns ingen fri bild som passar kan artikeln få en tecknad illustration i illustrativt syfte. Den märks alltid <strong>"Illustration"</strong> under bilden. En illustration visar ämnet – ett laboratorium, ett landskap, en djurart eller en teknik – och aldrig verkliga, namngivna personer. Den iscensätter inte heller den verkliga händelsen som om den vore fotograferad. Saknas bild publiceras artikeln utan bild.</p>
+
+    <h2>Fel och rättelser</h2>
+    <p>Trots kontrollerna kan fel slinka igenom. Sakfel rättas så fort vi får veta om dem, och rättelsen redovisas öppet i artikeln. Läs vår <a href="/rattelser/">rättelsepolicy</a>.</p>
+  </div>
+</Tidning>

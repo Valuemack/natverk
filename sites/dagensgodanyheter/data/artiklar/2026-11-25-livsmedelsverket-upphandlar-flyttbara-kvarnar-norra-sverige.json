@@ -1,0 +1,86 @@
+{
+  "id": "657293189a9c",
+  "slug": "livsmedelsverket-upphandlar-flyttbara-kvarnar-norra-sverige",
+  "kategori": "inrikes",
+  "vinjett": "Livsmedelsberedskap",
+  "rubrik": "Livsmedelsverket köper flyttbara kvarnar till Sveriges nordligaste län",
+  "seorubrik": "Flyttbara kvarnar ska stärka beredskapen i norra Sverige",
+  "ingress": "Livsmedelsverket har inlett en upphandling av flyttbara kvarnar till de nordligaste länen. Där byggs nu spannmålslager, men regionen saknar kvarnar. Kvarnarna ska göra det möjligt att mala lagrad spannmål till mjöl om en kris eller ett krig skulle drabba landet.",
+  "avsnitt": [
+    {
+      "rubrik": "Kvarnar ska göra lagrad spannmål till mat",
+      "stycken": [
+        "Sverige bygger just nu upp spannmålslager i de nordligaste länen. Spannmål i ett lager blir dock inte mat av sig själv. Den måste först malas, och i regionen finns i dag inga kvarnar.",
+        "För att lösa det har Livsmedelsverket gått ut med en förfrågan om att köpa in flyttbara kvarnar. Det framgår av ett pressmeddelande från myndigheten. Enligt Isak Bergdahl, beredskapshandläggare på Livsmedelsverket, behövs en lösning för hur spannmålen ska kunna bli mjöl."
+      ]
+    },
+    {
+      "rubrik": "Fem kvarnar köps in i flera steg",
+      "stycken": [
+        "I ett första skede köper staten en modulär kvarn som klarar att mala finare mjöl. Våren 2027 planerar Livsmedelsverket att upphandla ytterligare fyra kvarnar av ett enklare slag, som mal fullkornsmjöl.",
+        "Båda typerna går att flytta. Därmed kan de ställas upp där de gör mest nytta om läget blir allvarligt. När alla kvarnar är på plats ska de tillsammans kunna producera så mycket mjöl och övriga produkter av spannmål att det täcker omkring hälften av regionbefolkningens behov av energi och näring. Myndigheten påpekar att resten av maten måste säkras genom andra åtgärder."
+      ]
+    },
+    {
+      "rubrik": "Kvarnarna ska också göra nytta i vardagen",
+      "stycken": [
+        "Samtidigt som upphandlingen pågår tar Livsmedelsverket fram ett upplägg för hur kvarnarna ska användas i praktiken. Det omfattar bland annat utbildning och övningar.",
+        "En del av tanken är att kvarnarna inte ska stå oanvända i väntan på en kris. I fredstid kan de bidra till den regionala livsmedelstillverkningen, i samarbete med lokala aktörer.",
+        "Satsningen är en av flera som myndigheten gör för att stärka Sveriges livsmedelsberedskap. Enligt Isak Bergdahl är lagren viktiga, men det viktigaste är att företag, kommuner och andra verksamheter blir tåligare och kan fortsätta fungera under svåra förhållanden. Ju bättre förberedda de är, desto mindre behöver lagren användas."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Kvarnarna i korthet",
+    "punkter": [
+      "Upphandlas av Livsmedelsverket för de nordligaste länen, där kvarnar saknas i dag",
+      "Första steget: en modulär kvarn som mal finare mjöl",
+      "Våren 2027: upphandling av fyra enklare fullkornskvarnar",
+      "Alla kvarnar är flyttbara",
+      "Fullt utbyggt: ungefär hälften av regionens behov av energi och näring från spannmålsprodukter",
+      "Kvarnarna ska även kunna användas i fredstid för regional livsmedelstillverkning"
+    ]
+  },
+  "varfor": "Ett spannmålslager hjälper bara om spannmålen kan bli mat, och i de nordligaste länen saknas i dag kvarnar. De flyttbara kvarnarna fyller den luckan och kan på sikt täcka ungefär hälften av regionens behov av energi och näring. Eftersom de också kan användas i fredstid kan de samtidigt stärka den lokala livsmedelsproduktionen.",
+  "taggar": [
+    "mat och jordbruk",
+    "livsmedelsberedskap",
+    "spannmål",
+    "krisberedskap"
+  ],
+  "beskrivning": "Livsmedelsverket upphandlar flyttbara kvarnar till Sveriges nordligaste län, där spannmålslager byggs men kvarnar saknas. Fem kvarnar köps i etapper.",
+  "kalla": {
+    "id": "livsmedelsverket",
+    "namn": "Livsmedelsverket",
+    "url": "https://www.livsmedelsverket.se/om-oss/press/pressmeddelanden/livsmedelsverket-upphandlar-flyttbara-kvarnar-for-battre-beredskap-i-de-nordligaste-lanen",
+    "kandidatUrl": "https://www.livsmedelsverket.se/om-oss/press/pressmeddelanden/livsmedelsverket-upphandlar-flyttbara-kvarnar-for-battre-beredskap-i-de-nordligaste-lanen",
+    "hem": "https://www.livsmedelsverket.se",
+    "typ": "myndighet",
+    "publicerad": "2026-11-23T08:54:44.000Z",
+    "rubrik": "Livsmedelsverket upphandlar flyttbara kvarnar för bättre beredskap i de nordligaste länen"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:52:50.141Z",
+  "uppdaterad": "2026-11-25T23:52:50.141Z",
+  "bild": null,
+  "bildmotiv": "A compact mobile grain mill machine grinding wheat into flour inside a simple farm building, with sacks of grain nearby",
+  "bildalt": "En flyttbar kvarn som mal vete till mjöl, med säckar med spannmål bredvid",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.4,
+    "tillit": 0.95,
+    "total": 54
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:52:50.141Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att myndigheten har gått ut med en förfrågan om att upphandla kvarnar. Att upphandlingen redan är inledd, och rubrikens ”köper”, är något starkare än källan. Mindre överdrift.",
+      "overdrift: Att kvarnarna ”fyller luckan” är en egen värdering. Källan betonar att kvarnarna bara räcker till ungefär hälften av behovet och att andra åtgärder behövs. Mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

@@ -1,0 +1,42 @@
+---
+// Förändringar i namnlängden: nya namn 2027 och tidigare ändringar.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import { SITE, UPPDATERAD, ANDRINGAR, ALLA_NAMN, AR, dagText, dagHref, namnHref, tal, barare, lista } from "../site.js";
+
+const ar = [...new Set(ANDRINGAR.map((a) => a.ar))].sort((a, b) => b - a);
+const senaste = ar[0];
+const nyaSenaste = ANDRINGAR.filter((a) => a.ar === senaste && a.nytt);
+const harSida = new Set(ALLA_NAMN.map((n) => n.namn));
+const bararMap = new Map(ALLA_NAMN.map((n) => [n.namn, barare(n)]));
+const fragor = [
+  { fraga: `Vilka nya namn kommer i almanackan ${senaste}?`, svar: `Från ${senaste} får ${nyaSenaste.length} nya namn namnsdag: ${lista(nyaSenaste.map((a) => `${a.nytt} (${dagText(a.datum)})`))}.` },
+  { fraga: "Hur ofta ändras namnlängden?", svar: `Namnlängden ses över ungefär vart tionde år. De senaste ändringarna gäller från ${ar.slice(0, 3).join(", ")}.` },
+];
+---
+<Layout site={SITE} titel={`Nya namn i almanackan ${senaste} – ${nyaSenaste.length} namn får namnsdag`}
+  beskrivning={`Vilka namn får namnsdag från ${senaste}? Alla ${nyaSenaste.length} nya namn med datum, och tidigare ändringar i namnlängden sedan ${ar.at(-1)}.`}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Nya namn", href: "/nya-namn/" }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Nya namn i almanackan {senaste}</h1>
+  <p class="svar">Från {senaste} får <strong>{nyaSenaste.length} nya namn</strong> namnsdag: {lista(nyaSenaste.map((a) => a.nytt))}. {nyaSenaste.some((a) => a.bort) ? <>Några ersätter äldre namn, se tabellen.</> : <>Inga befintliga namn tas bort.</>} Ändringen bygger på Namnlängdskommitténs beslut 2025.</p>
+  {ar.map((a) => {
+    const rader = ANDRINGAR.filter((x) => x.ar === a);
+    return <>
+      <h2>Ändringar från {a}</h2>
+      <div class="tabell"><table>
+        <thead><tr><th>Datum</th><th>Nytt namn</th><th>Borttaget</th><th class="num">Bärare 2020</th></tr></thead>
+        <tbody>{rader.map((x) => <tr>
+          <td><a href={dagHref(x.datum)}>{dagText(x.datum)}</a></td>
+          <td>{x.nytt ? (harSida.has(x.nytt) ? <a href={namnHref(x.nytt)}>{x.nytt}</a> : x.nytt) : "–"}</td>
+          <td>{x.bort ?? "–"}</td>
+          <td class="num">{x.nytt && bararMap.get(x.nytt) ? tal(bararMap.get(x.nytt)) : "–"}</td>
+        </tr>)}</tbody>
+      </table></div>
+    </>;
+  })}
+  <p class="kalla">Källa: Institutet för språk och folkminnen (Isof), namnlängden och Namnlängdskommitténs beslut. Antal bärare: SCB, tilltalsnamn 31 december 2020.</p>
+  <Faq fragor={fragor} />
+</Layout>

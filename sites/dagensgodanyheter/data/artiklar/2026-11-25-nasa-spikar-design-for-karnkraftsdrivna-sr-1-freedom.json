@@ -1,0 +1,121 @@
+{
+  "id": "e26889b0ba74",
+  "slug": "nasa-spikar-design-for-karnkraftsdrivna-sr-1-freedom",
+  "kategori": "teknik",
+  "vinjett": "Rymden",
+  "rubrik": "Nasa spikar nyckeldelar av SR-1 Freedom, den kärnkraftsdrivna farkosten mot Mars",
+  "seorubrik": "Nasa:s kärnkraftsdrivna SR-1 Freedom tar form inför Mars",
+  "ingress": "Nasa har fastställt viktiga delar av designen för SR-1 Freedom, den första fissionsdrivna rymdfarkosten som ska lämna jordens omloppsbana. Farkosten ska skjutas upp sent 2028 och för första gången visa kärnkraftsdriven elektrisk framdrivning i djuprymden.",
+  "avsnitt": [
+    {
+      "rubrik": "Från tidigt koncept till bestämd farkost",
+      "stycken": [
+        "I oktober samlades experter från Nasa, det amerikanska energidepartementet DOE och industrin vid Nasa:s Glenn Research Center i Cleveland för en stor granskning av uppdraget. Där fattades flera beslut som flyttar SR-1 Freedom från ett tidigt koncept mot en fastställd konstruktion.",
+        "Konceptet presenterades i mars av Nasa:s chef Jared Isaacman vid myndighetens evenemang Ignition. Målet var då att ta fram en fissionsdriven farkost i tid till nästa uppskjutningsfönster mot Mars.",
+        "Farkosten ska använda både kärnkraft och solkraft för att frakta kapseln SkyFall till Mars. Kapseln bär tre helikoptrar av en ny generation. Enligt Nasa ska de undersöka Mars geologi och klimathistoria, utforska ny terräng och leta efter spår av is under ytan."
+      ]
+    },
+    {
+      "rubrik": "Kortare bom och reaktorn närmare farkosten",
+      "stycken": [
+        "En viktig ändring är att bommen som skiljer reaktorn från farkostens huvuddel görs kortare än i de första illustrationerna. Huvuddelen kallas Power and Propulsion Element. En kortare bom ger lägre vikt, enklare montering och en mer strömlinjeformad konstruktion.",
+        "Experter från Nasa och DOE har också kommit fram till att förbättrad strålskärmning och design gör att reaktorn kan sitta närmare resten av farkosten. Det förenklar sammansättningen, samtidigt som elektroniken och SkyFall fortfarande får det strålskydd de behöver.",
+        "Farkosten får dessutom större antenner för X-bandet, så att data kan skickas hem till jorden över de stora avstånden. Andra frågor utreds fortfarande, bland annat hur många radiatorpaneler farkosten ska ha, vilken effekt kraftmodulen ska ge och hur länge reaktorn ska vara i drift."
+      ]
+    },
+    {
+      "rubrik": "Kontrakt för att leda bort värmen",
+      "stycken": [
+        "Nasa har gett Johns Hopkins University:s Applied Physics Laboratory ett kontrakt värt 39,3 miljoner dollar. Laboratoriet ska konstruera, bygga och testa systemet som för bort överskottsvärme från kärnkraftsmodulen, och även ta fram hårdvaran som ska flyga.",
+        "Företaget Advanced Cooling Technologies är strategisk partner och levererar värmerör och radiatorer i kompositmaterial. Enligt Nasa lägger arbetet också en industriell grund för framtida kärnkraftssystem med hög effekt."
+      ]
+    },
+    {
+      "rubrik": "Reaktorn ska startas två gånger under resan",
+      "stycken": [
+        "Nasa har också bestämt hur uppdraget ska genomföras. När farkosten har lämnat jordens omloppsbana startas reaktorn och effekten höjs gradvis. Reaktorn går under en första period och skickar data om hur den presterar, innan den stängs av. Därefter tar solpanelerna över under färden mot Mars.",
+        "När SkyFall har levererats till en bana runt Mars startas reaktorn igen för att samla mer data om hur farkosten fungerar i djuprymden."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "SR-1 Freedom i korthet",
+    "punkter": [
+      "Första fissionsdrivna farkosten som ska lämna jordens omloppsbana",
+      "Planerad uppskjutning: sent 2028",
+      "Designgranskning i oktober vid Glenn Research Center i Cleveland",
+      "Last: kapseln SkyFall med tre helikoptrar till Mars",
+      "Kontrakt på 39,3 miljoner dollar till Johns Hopkins Applied Physics Laboratory",
+      "Samarbete mellan Nasa, energidepartementet DOE och industrin"
+    ]
+  },
+  "varfor": "Enligt Nasa kommer framtida rymdfarkoster och verksamhet på andra himlakroppar att kräva betydligt mer energi än dagens system kan ge, särskilt där solljuset är svagt eller saknas. SR-1 Freedom ska visa att fissionskraft kan driva långa uppdrag. Erfarenheterna ska också bana väg för pålitlig energiförsörjning till Nasa:s planerade månbas och för resor längre ut i solsystemet.",
+  "taggar": [
+    "rymden",
+    "mars",
+    "kärnkraft",
+    "rymdteknik"
+  ],
+  "beskrivning": "Nasa har fastställt nyckeldelar av SR-1 Freedom, första fissionsdrivna farkosten bortom jordens omloppsbana. Start planeras sent 2028.",
+  "kalla": {
+    "id": "nasa",
+    "namn": "NASA",
+    "url": "https://www.nasa.gov/general/nasa-locks-in-sr1-freedom-mission-architecture/",
+    "kandidatUrl": "https://www.nasa.gov/general/nasa-locks-in-sr1-freedom-mission-architecture",
+    "hem": "https://www.nasa.gov",
+    "typ": "rymd",
+    "publicerad": "2026-11-24T21:04:32.000Z",
+    "rubrik": "Teams Lock in Mission Architecture for NASA’s SR-1 Freedom"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:51:11.989Z",
+  "uppdaterad": "2026-11-25T23:51:11.989Z",
+  "bild": {
+    "fil": "/bilder/nasa-spikar-design-for-karnkraftsdrivna-sr-1-freedom.webp",
+    "og": "/bilder/nasa-spikar-design-for-karnkraftsdrivna-sr-1-freedom.jpg",
+    "liten": "/bilder/nasa-spikar-design-for-karnkraftsdrivna-sr-1-freedom-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: radiatorpanel med värmerör testas i ett renrum för rymdfarkoster",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a large composite radiator panel with heat pipes mounted on a test stand inside a bright spacecraft clean room",
+    "skapad": "2026-11-26T00:09:04.599Z",
+    "anvandning": {
+      "input_tokens": 244,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 244
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1168
+    },
+    "kostnadUSD": 0.02894,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a large composite radiator panel with heat pipes mounted on a test stand inside a bright spacecraft clean room",
+  "bildalt": "Radiatorpanel med värmerör testas i ett renrum för rymdfarkoster",
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.5,
+    "tillit": 0.97,
+    "total": 65
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:51:11.989Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildRymd": true,
+  "bildbeslut": "bild"
+}

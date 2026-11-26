@@ -1,0 +1,120 @@
+{
+  "id": "4c5750f40241",
+  "slug": "overskott-sol-och-vindel-kan-driva-industri-och-datacenter",
+  "kategori": "teknik",
+  "vinjett": "Förnybar energi",
+  "rubrik": "Överskott av sol- och vindel kan driva industri och datacenter, visar MIT-studie",
+  "seorubrik": "Överskott av sol- och vindel kan driva industri – MIT",
+  "ingress": "Forskare vid MIT och Georgia Tech har kartlagt när och hur länge sol- och vindkraft kan ge mer el än nätet hinner använda eller lagra. Överskottet återkommer så regelbundet att industrier och datacenter skulle kunna planera för att ta vara på det.",
+  "avsnitt": [
+    {
+      "rubrik": "Upp till tio procent mer el än nätet kan ta emot",
+      "stycken": [
+        "Forskarna har undersökt framtida elsystem i USA där sol- och vindkraften byggts ut så mycket att 80 procent av elen till kunderna kommer från förnybara källor. De räknade på olika blandningar av sol och vind i system som är utformade för att möta efterfrågan till låg kostnad.",
+        "Resultatet visar att sol- och vindparker i sådana system kan producera upp till tio procent mer el än vad som går att använda direkt eller lagra. Om ingen tar hand om den elen går den förlorad.",
+        "Slutsatsen håller även när energilagring som batterier är billig, enligt forskarna även vid kostnader som är en tiopotens lägre än dagens batterikostnader. Mönstret ser dessutom i stort sett likadant ut över hela USA, i många olika framtidsscenarier."
+      ]
+    },
+    {
+      "rubrik": "Överskottet kommer vår och höst, mitt på dagen",
+      "stycken": [
+        "Modellen visar också när överskotten troligen uppstår. Störst är de på våren, medan mindre mängder finns från mitten till slutet av hösten. Perioderna varar vanligen sju till tolv timmar i sträck, ligger oftast från mitt på dagen in på eftermiddagen och kan ibland pågå flera dagar.",
+        "För att komma fram till detta använde forskarna en energisystemmodell som kan simulera hur kombinationer av vind, sol och lagring fungerar timme för timme under årtionden. De matade in 40 års väderdata med extremväder och svängningar i sol och vind över hela landet, tillsammans med kostnader för olika slags lagring och regionala mönster för elförbrukning.",
+        "Enligt forskarna gör det att varaktigheten sju till tolv timmar återkommer i många olika tänkbara elsystem att den kan bli ett lämpligt riktmärke för dem som utvecklar ny teknik och planerar elsystem."
+      ]
+    },
+    {
+      "rubrik": "Stål, gödsel och AI-träning kan dra nytta",
+      "stycken": [
+        "Eftersom överskotten går att förutse kan vissa industriprocesser schemaläggas för att använda elen. Forskarna nämner ljusbågsugnar i stålproduktion och kvarnar som maler råvaror. Elen skulle också kunna användas för att tillverka produkter som främst behövs under vår, sommar och höst, som gödsel och betong, eller för flexibel databehandling som träning av AI-modeller.",
+        "Forskarna medger att det kan vara svårare att köra industriprocesser i omgångar än hela tiden. Förutsägbarheten underlättar dock, och de pekar på möjligheter som maskiner med lägre investeringskostnad eller utrustning som delas mellan flera tillverkningsplatser.",
+        "Studien är publicerad i tidskriften Joule. Som nästa steg vill forskarna undersöka vad det kostar att bygga upp den infrastruktur, utrustning och teknik som kan dra nytta av överskotten."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om studien",
+    "punkter": [
+      "Utförd av forskare vid MIT och Georgia Tech, publicerad i Joule",
+      "Scenarier där 80 procent av USA:s el kommer från förnybara källor",
+      "Sol och vind kan ge upp till 10 procent mer el än nätet kan använda eller lagra",
+      "Överskottsperioder varar oftast 7–12 timmar, främst på våren",
+      "Modellen bygger på 40 års väderdata från hela USA",
+      "Möjliga användare: stålverk, råvarukvarnar, gödsel- och betongtillverkning samt AI-träning"
+    ]
+  },
+  "varfor": "Studien visar att el som annars skulle gå till spillo kan bli en förutsägbar resurs i ett elsystem med mycket sol och vind. Eftersom elbehovet växer, bland annat för datacenter, kan kunskapen hjälpa teknikutvecklare och planerare att redan nu utforma processer som tar vara på överskottet. Enligt forskarna skulle det på sikt kunna sänka en del av kostnaderna för omställningen till fossilfri energi.",
+  "taggar": [
+    "förnybar energi",
+    "solkraft",
+    "vindkraft",
+    "industri",
+    "elsystem"
+  ],
+  "beskrivning": "Forskare vid MIT visar att sol- och vindkraft kan ge förutsägbart elöverskott på vår och höst, som kan driva stålverk, gödseltillverkning och AI-träning.",
+  "kalla": {
+    "id": "mit",
+    "namn": "MIT News",
+    "url": "https://news.mit.edu/2026/excess-renewable-energy-could-power-new-industrial-processes-1124",
+    "hem": "https://news.mit.edu",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T16:30:00.000Z",
+    "rubrik": "What if excess renewable energy could power new industrial processes?"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T22:53:56.842Z",
+  "uppdaterad": "2026-11-25T22:53:56.842Z",
+  "bild": {
+    "fil": "/bilder/overskott-sol-och-vindel-kan-driva-industri-och-datacenter.webp",
+    "og": "/bilder/overskott-sol-och-vindel-kan-driva-industri-och-datacenter.jpg",
+    "liten": "/bilder/overskott-sol-och-vindel-kan-driva-industri-och-datacenter-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: solpaneler och vindkraftverk i ett öppet landskap en solig vårdag",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a large solar farm with rows of panels and wind turbines behind them under a bright spring midday sky",
+    "skapad": "2026-11-26T00:08:37.541Z",
+    "anvandning": {
+      "input_tokens": 244,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 244
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1168
+    },
+    "kostnadUSD": 0.02894,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "a large solar farm with rows of panels and wind turbines behind them under a bright spring midday sky",
+  "bildalt": "Solpaneler och vindkraftverk i ett öppet landskap en solig vårdag",
+  "poang": {
+    "positiv": 0.7,
+    "betydelse": 0.6,
+    "tillit": 0.93,
+    "total": 69
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T22:53:56.842Z",
+    "anmarkningar": [
+      "overdrift: Källan talar om övergången till 'low-carbon energy resources', alltså koldioxidsnål energi, inte fossilfri. Det är en mindre förskjutning. Formuleringen bör vara 'koldioxidsnål energi'."
+    ]
+  },
+  "rattelser": [],
+  "bildsok": [
+    "wind farm and solar park",
+    "wind turbines solar panels"
+  ],
+  "bildbeslut": "bild"
+}

@@ -1,0 +1,87 @@
+{
+  "id": "181d014adfc7",
+  "slug": "tre-metoder-minskade-kvicksilverranga-i-museiskap-etnografiska-museet",
+  "kategori": "kultur",
+  "vinjett": "Kulturarv",
+  "rubrik": "Tre metoder minskade kvicksilverånga i museiskåp – studie på Etnografiska museet",
+  "seorubrik": "Kvicksilverånga i museiskåp minskade – Etnografiska museet",
+  "ingress": "Kolfilter i tyg, vädring och regelbunden dammtorkning sänkte halterna av kvicksilverånga i skåp med gamla bekämpningsmedel. Det visar en studie av Riksantikvarieämbetet och Svenska Miljöinstitutet på Etnografiska museet.",
+  "avsnitt": [
+    {
+      "rubrik": "Alla tre metoderna gav effekt på kvicksilver",
+      "stycken": [
+        "I museers samlingar finns föremål som en gång behandlats med bekämpningsmedel. Rester av gifterna kan finnas kvar och avges till luften i de skåp där föremålen förvaras. För att ta reda på hur exponeringen kan minskas testade forskare tre olika metoder i skåp med kontaminerade föremål på Etnografiska museet.",
+        "Den första metoden gick ut på att hänga upp tyger med aktivt kol, som fångar molekyler ur luften. Den andra var att vädra ut skåpen när lokalerna var tomma. Den tredje var att löpande torka bort damm.",
+        "Enligt forskarna fungerade alla tre metoderna mot kvicksilverånga. Någon av dem stack inte ut som tydligt bättre än de andra."
+      ]
+    },
+    {
+      "rubrik": "Luften i museerna under gränsvärdena",
+      "stycken": [
+        "Studien mätte bland annat DDT, klorföreningar och tungmetaller som kvicksilver. Halterna av skadliga ämnen i luften låg under, eller långt under, gränsvärdena i de undersökta museimiljöerna.",
+        "För andra luftburna ämnen än kvicksilver var nivåerna redan så låga innan försöket att det enligt forskarna är svårt att statistiskt säkerställa vilken effekt metoderna hade på dem."
+      ]
+    },
+    {
+      "rubrik": "Dammet på hyllorna kräver försiktighet",
+      "stycken": [
+        "Studien visade samtidigt mycket höga halter av DDT i dammet på skåpens hyllor. Därför betonar Riksantikvarieämbetet att anställda och forskare som hanterar föremålen direkt, eller riskerar att virvla upp damm, behöver använda skyddsutrustning.",
+        "Resultaten finns nu publicerade i rapporten Clean Air, Preserved Heritage: Tackling Airborne Pesticides in Museums. Enligt Riksantikvarieämbetet behövs mer forskning inom området.",
+        "Arbetet hör till forskningsfältet heritage science, som kombinerar naturvetenskap, humaniora och teknik för att öka och sprida kunskap om kulturarvet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om studien",
+    "punkter": [
+      "Genomförd på Etnografiska museet av Riksantikvarieämbetet och Svenska Miljöinstitutet",
+      "Testade metoder: tyger med aktivt kol, vädring av skåp och löpande dammtorkning",
+      "Alla tre metoderna hade effekt på kvicksilverånga",
+      "Uppmätta ämnen: bland annat DDT, klorföreningar och tungmetaller som kvicksilver",
+      "Luftburna halter låg under eller långt under gränsvärdena",
+      "Mycket höga halter av DDT hittades i dammet på hyllorna"
+    ]
+  },
+  "varfor": "Många museer förvarar föremål som behandlats med gifter, och personalen behöver kunna arbeta säkert med dem. Studien visar att luften i de undersökta miljöerna höll sig under gränsvärdena och att flera metoder kan sänka halterna av kvicksilverånga. Samtidigt ger den tydlig kunskap om var riskerna finns kvar, nämligen i dammet.",
+  "taggar": [
+    "kulturarv",
+    "museer",
+    "bekämpningsmedel",
+    "arbetsmiljö"
+  ],
+  "beskrivning": "Kolfilter, vädring och dammtorkning sänkte halterna av kvicksilverånga i museiskåp, visar en studie på Etnografiska museet från Riksantikvarieämbetet.",
+  "kalla": {
+    "id": "raa",
+    "namn": "Riksantikvarieämbetet",
+    "url": "https://www.raa.se/nyheter/2026/11/ny-studie-om-luftburna-bekampningsmedel-i-museimiljoer/",
+    "kandidatUrl": "https://www.raa.se/nyheter/2026/11/ny-studie-om-luftburna-bekampningsmedel-i-museimiljoer",
+    "hem": "https://www.raa.se",
+    "typ": "myndighet",
+    "publicerad": "2026-11-16T08:35:53.000Z",
+    "rubrik": "Studie om luftburna bekämpningsmedel i museimiljöer"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T23:48:14.508Z",
+  "uppdaterad": "2026-11-25T23:48:14.508Z",
+  "bild": null,
+  "bildmotiv": "Wooden museum storage cabinets with open doors, ethnographic artifacts on shelves and a small air sampling device inside, in a dim storeroom.",
+  "bildalt": "Öppet förvaringsskåp i ett museimagasin med etnografiska föremål på hyllorna och en luftprovtagare.",
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.48,
+    "tillit": 0.95,
+    "total": 50
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-25T23:48:14.508Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att studien visade mycket höga halter av DDT i dammet på skåpshyllorna. Att studien ger 'tydlig kunskap' om var riskerna finns, som om dammet vore den enda kvarvarande risken, är en något starkare slutsats än källan drar.",
+      "overdrift: Källan säger inte hur många museer som har kontaminerade föremål. Påståendet är rimlig allmänbildning men mindre belagt än det låter."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

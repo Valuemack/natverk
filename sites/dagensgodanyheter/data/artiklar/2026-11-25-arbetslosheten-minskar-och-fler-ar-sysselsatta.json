@@ -1,0 +1,82 @@
+{
+  "id": "7e458cae00aa",
+  "slug": "arbetslosheten-minskar-och-fler-ar-sysselsatta",
+  "kategori": "ekonomi",
+  "vinjett": "Arbetsmarknad",
+  "rubrik": "Arbetslösheten minskar – 69 000 färre arbetslösa än för ett år sedan",
+  "seorubrik": "Arbetslösheten minskar: 69 000 färre arbetslösa enligt SCB",
+  "ingress": "Arbetsmarknaden visade flera positiva tecken i oktober. Enligt SCB:s arbetskraftsundersökning var 440 000 personer arbetslösa, 69 000 färre än i oktober förra året, och sysselsättningen fortsätter att öka.",
+  "avsnitt": [
+    {
+      "rubrik": "Färre arbetslösa, även bland långtidsarbetslösa",
+      "stycken": [
+        "I oktober 2026 var arbetslösheten 7,7 procent bland personer i åldern 15 till 74 år, utan säsongrensning. Det är 1,2 procentenheter lägre än samma månad i fjol. Bland män sjönk arbetslösheten till 7,4 procent, och bland kvinnor låg den på 8,1 procent.",
+        "Även antalet långtidsarbetslösa, alltså de som sökt jobb i minst 27 veckor, minskade. De var 138 000, vilket är 37 000 färre än ett år tidigare.",
+        "Säsongrensade och utjämnade siffror, som gör det lättare att jämföra månader med varandra, pekar åt samma håll. Där sjönk antalet arbetslösa till 500 000 och arbetslösheten till 8,6 procent. Även bland unga mellan 15 och 24 år minskade både antalet och andelen arbetslösa jämfört med de närmaste månaderna."
+      ]
+    },
+    {
+      "rubrik": "Fler i arbete",
+      "stycken": [
+        "Antalet sysselsatta uppgick till 5 267 000 personer i oktober, och sysselsättningsgraden var 68,8 procent. I de säsongrensade siffrorna var 5 318 000 personer sysselsatta, motsvarande 69,5 procent, vilket är en ökning både i antal och andel jämfört med månaderna runt omkring.",
+        "Ökningen syns framför allt bland tidsbegränsat anställda. De var 673 000, en ökning med 77 000 personer på ett år. Antalet anställda totalt var 4 749 000."
+      ]
+    },
+    {
+      "rubrik": "Så görs undersökningen",
+      "stycken": [
+        "Arbetskraftsundersökningarna, AKU, bygger på intervjuer med ett urval av befolkningen och redovisas varje månad av SCB. Siffrorna är skattningar med en viss osäkerhet, och därför redovisar SCB både råa månadssiffror och säsongrensade och utjämnade serier."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "AKU oktober 2026",
+    "punkter": [
+      "Arbetslösa 15–74 år: 440 000 (7,7 procent)",
+      "69 000 färre arbetslösa än i oktober 2025",
+      "Långtidsarbetslösa: 138 000, en minskning med 37 000",
+      "Sysselsatta: 5 267 000",
+      "Tidsbegränsat anställda: 673 000, en ökning med 77 000"
+    ]
+  },
+  "varfor": "Fler i arbete betyder att fler har egen inkomst och att färre fastnar i lång arbetslöshet. Att långtidsarbetslösheten minskar är särskilt viktigt, eftersom det ofta är svårare att komma tillbaka ju längre man har varit utan jobb. Siffrorna är statistik och ingen prognos för hur det går framåt.",
+  "taggar": [
+    "arbetsmarknad",
+    "arbetslöshet",
+    "scb",
+    "sysselsättning"
+  ],
+  "beskrivning": "SCB: 440 000 arbetslösa i oktober, 69 000 färre än för ett år sedan. Även långtidsarbetslösheten minskar och fler är sysselsatta.",
+  "kalla": {
+    "id": "scb",
+    "namn": "SCB",
+    "url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/arbetsmarknad/utbud-av-arbetskraft/arbetskraftsundersokningarna-aku/pong/statistiknyhet/arbetskraftsundersokningarna-aku-oktober-2026",
+    "hem": "https://www.scb.se",
+    "typ": "statistik",
+    "publicerad": "2026-11-20T07:00:00.000Z",
+    "rubrik": "Positiva tecken på arbetsmarknaden"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-25T11:06:00.000Z",
+  "uppdaterad": "2026-11-25T11:06:00.000Z",
+  "bild": null,
+  "bildmotiv": "a modern Swedish industrial workshop with machines, workbenches and fresh timber in morning light",
+  "bildalt": "En verkstadshall med maskiner och arbetsbänkar i morgonljus",
+  "poang": {
+    "positiv": 0.45,
+    "betydelse": 0.46,
+    "tillit": 0.98,
+    "total": 49
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5 (exempelartikel skriven i utvecklingssessionen)",
+    "granskningsmodell": "manuell kontroll mot källtexten",
+    "granskad": "2026-11-25T11:06:00.000Z",
+    "anmarkningar": [
+      "Exempelartikel från uppstarten: varje uppgift är kontrollerad mot förstahandskällan innan publicering. Maskinkontrollen (längd, citat, kopierad text, råd) är godkänd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

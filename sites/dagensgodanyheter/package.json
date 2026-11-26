@@ -1,0 +1,21 @@
+{
+  "name": "dagensgodanyheter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "hamta": "node scripts/hamta.mjs",
+    "skriv": "node scripts/skriv.mjs",
+    "grafik": "node scripts/grafik.mjs",
+    "bilder": "node scripts/bildsatt.mjs",
+    "test": "node --test \"tester/*.test.mjs\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0",
+    "@astrojs/sitemap": "^3.7.6",
+    "@natverk/core": "*",
+    "astro": "^7.4.13"
+  }
+}

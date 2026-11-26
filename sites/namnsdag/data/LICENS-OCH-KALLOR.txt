@@ -1,0 +1,57 @@
+KÄLLOR OCH LICENSER – sites/namnsdag (namnsdagsidag.se)
+=========================================================
+
+1. NAMNLÄNGDEN (data/namnlangd.json)
+   Källa:   Institutet för språk och folkminnen (Isof), "Alla namn i namnlängden"
+            https://www.isof.se/ (sidan med hela namnlängden, URL i namnlangd.json -> kalla.url)
+   Hämtad:  se namnlangd.json -> kalla.hamtad. Skript: scripts/01-namnlangd.mjs
+            (1 anrop, generisk User-Agent, robots.txt respekterad, >1 s mellan anrop).
+   Kontroll: jämförd mot Wikipedias lista "Lista över namnsdagar i Sverige" (endast korskontroll,
+            ingen text eller data kopierad därifrån). Enda skillnaderna var stavningar
+            (Brita/Britta, Veronica/Veronika) – Isofs stavning används.
+   Tillägg 2027 och ändringshistorik 2011–2027 (FRAN_2027, ANDRINGAR i skriptet) är
+            sammanställda för hand från Namnlängdskommitténs beslut 2025 och tidigare ändringar.
+
+   RÄTTSLIGT LÄGE – MÅSTE KLARGÖRAS FÖRE PUBLICERING:
+   - Svenska Akademiens ensamrätt till almanackan upphörde 1972. Namnlängden publiceras öppet
+     av en statlig myndighet (Isof), och ett namn + datum är fakta.
+   - Det är ändå oklart om listan som helhet skyddas som sammanställning ("katalogskydd",
+     upphovsrättslagen 49 §) eller av upphovsrätt. Isof anger ingen öppen licens för listan.
+   - Rekommendation: fråga Isof (namn@isof.se) och Namnlängdskommittén/Svenska Akademien om
+     återgivning av hela namnlängden på en reklamfinansierad webbplats är tillåten.
+   - Datan ligger isolerat i data/namnlangd.json och kan bytas ut utan kodändringar
+     (format: { kalla, namn: [{ namn, datum: "MM-DD", fran?, varianter? }], utanNamn, andringar }).
+   - Sajten använder inte Svenska Akademiens namn eller logotyp som identitet; sidfoten anger att
+     sajten är oberoende.
+
+2. NAMNSTATISTIK (data/scb.json)
+   Källa:   SCB, Statistikdatabasen, PxWeb API v1 (api.scb.se/OV0104/v1/doris/sv/ssd/BE/BE0001/)
+   Tabeller: BE0001TNamn10 (tilltalsnamn 2000/2010/2020, kön), BE0001FNamn10 (förnamn 2020),
+            BE0001Nyfodda (nyfödda efter tilltalsnamn 1998–2022).
+   Licens:  CC0 – fri återanvändning. Källan anges ändå under varje tabell.
+   Skript:  scripts/02-scb.mjs (POST-frågor, >1,1 s mellan anrop).
+   Obs:     SCB uppdaterar inte längre dessa tabeller (senast 2020 resp. 2022) – årtal visas alltid.
+   Egen bearbetning: "vanligaste namn utan namnsdag" och stavningsvarianter (t.ex. Thomas -> Tomas)
+            är vår sammanställning av SCB-data mot namnlängden. Regel: normaliserad stavning
+            (chr->kr, th->t, ph->f, ck->k, c->k, w->v, slut-h) lika med ett almanacksnamn,
+            minst 1 000 bärare. Formulering på sajten: "kan firas på", aldrig att det är officiellt.
+
+2b. TOPPLISTOR OCH SÖKDATA (data/scb-topp.json, data/scb-alla.json) – tillagt 2026-11-25
+   Källa:   SCB, Statistikdatabasen (CC0). Skript: scripts/03-scb-topplistor.mjs.
+   Tabeller: BE0001T05AR (nyfödda, topp 100 per år och kön 1998–2022), BE0001T06AR (folkbokförda,
+            topp 100 1999–2021), BE0001TNamn10 (alla tilltalsnamn 2000 och 2020), BE0001FNamn10
+            (alla förnamn 2020), BE0001T08AR (medelålder 2020, sparas för namn med minst 100 bärare).
+   Obs:     I topplistorna har SCB slagit ihop namn med liknande stavning (t.ex. Lea/Leah, Tomas/Thomas).
+            I Namn10-tabellerna räknas varje stavning för sig. Sidorna anger vilket som gäller.
+   Obs:     SCB slutade producera namnstatistik 2024 och hänvisar till Skatteverket. Topp 5 för 2025
+            (Skatteverket) och topp 3 för 2023 (Isof) är inskrivna för hand i src/lib/statistik.js -> NYARE.
+   Används: /hur-manga-heter/ (sökfiler /data/namn/<bokstav>.json), /pojknamn/, /flicknamn/,
+            /vanligaste-namnen/, /ovanliga-namn/.
+
+3. FLAGGDAGAR OCH HELGDAGAR (src/site.js -> FASTA_DAGAR)
+   Förordning (1982:270) om allmänna flaggdagar, lag (1989:253) om allmänna helgdagar.
+   Författningstext är inte upphovsrättsskyddad (URL 9 §).
+
+4. UPPDATERING
+   npm run data  (kör scripts/run-all.mjs). Startsidan och llms.txt beror på dagens datum
+   och måste byggas om varje natt; övriga sidor ändras bara när datan ändras.

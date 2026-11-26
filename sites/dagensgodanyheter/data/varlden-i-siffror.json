@@ -1,0 +1,336 @@
+{
+  "beskrivning": "Belagda datapunkter för rutan Världen i siffror. Kontrollerade mot källans data 2026-11-25. Visas en per dag i tur och ordning.",
+  "kontrollerad": "2026-11-25",
+  "punkter": [
+    {
+      "rubrik": "Barnadödligheten har mer än halverats",
+      "siffra": "−60 %",
+      "text": "Andelen barn som dör före fem års ålder har minskat från 9,4 % år 1990 till 3,7 % år 2024 i världen.",
+      "ar": "1990–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (UN IGME, Gapminder)",
+        "url": "https://ourworldindata.org/grapher/child-mortality"
+      }
+    },
+    {
+      "rubrik": "Den globala livslängden har ökat med 27 år",
+      "siffra": "+27 år",
+      "text": "Den förväntade livslängden vid födseln i världen har ökat från 46,4 år 1950 till 73,2 år 2023.",
+      "ar": "1950–2023",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (FN, World Population Prospects)",
+        "url": "https://ourworldindata.org/grapher/life-expectancy"
+      }
+    },
+    {
+      "rubrik": "Extrem fattigdom har minskat kraftigt",
+      "siffra": "−76 %",
+      "text": "Andelen av världens befolkning som lever på under 3 dollar per dag (köpkraftsjusterat, 2021 års priser) har minskat från 43,4 % år 1990 till 10,5 % år 2023.",
+      "ar": "1990–2023",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (Världsbanken, PIP)",
+        "url": "https://ourworldindata.org/grapher/share-of-population-in-extreme-poverty"
+      }
+    },
+    {
+      "rubrik": "Medellivslängden har ökat med 8–10 år sedan 1970",
+      "siffra": "+8,5 / +10,3 år",
+      "text": "Medellivslängden i Sverige har ökat från 72,20 till 82,52 år för män och från 77,06 till 85,55 år för kvinnor mellan 1970 och 2025.",
+      "ar": "1970–2025",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "SCB",
+        "url": "https://www.scb.se/hitta-statistik/sverige-i-siffror/manniskorna-i-sverige/medellivslangd-i-sverige/"
+      }
+    },
+    {
+      "rubrik": "Fler vuxna kan läsa och skriva",
+      "siffra": "88 %",
+      "text": "Andelen läs- och skrivkunniga i världen har ökat från uppskattningsvis 36 % år 1950 till 88 % år 2024.",
+      "ar": "1950–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (UNESCO m.fl.)",
+        "url": "https://ourworldindata.org/grapher/cross-country-literacy-rates"
+      }
+    },
+    {
+      "rubrik": "Färre flickor står utanför grundskolan",
+      "siffra": "−42 %",
+      "text": "Antalet flickor i grundskoleålder som inte går i skolan har minskat från 66,7 miljoner år 2000 till 38,9 miljoner år 2025.",
+      "ar": "2000–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (UNESCO Institute for Statistics)",
+        "url": "https://ourworldindata.org/grapher/girls-and-boys-who-are-out-of-primary-secondary-school"
+      }
+    },
+    {
+      "rubrik": "Världens befolkning går allt längre i skolan",
+      "siffra": "8,8 år",
+      "text": "Det genomsnittliga antalet skolår bland vuxna i världen har ökat från 3,0 år 1950 till 8,8 år 2020.",
+      "ar": "1950–2020",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (Barro & Lee; Lee & Lee)",
+        "url": "https://ourworldindata.org/grapher/mean-years-of-schooling-long-run"
+      }
+    },
+    {
+      "rubrik": "Andelen högutbildade har fördubblats",
+      "siffra": "32 %",
+      "text": "Andelen 25–65-åringar i Sverige med minst tre års eftergymnasial utbildning har ökat från 16 % år 2000 till 32 % år 2025.",
+      "ar": "2000–2025",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "SCB",
+        "url": "https://www.scb.se/hitta-statistik/sverige-i-siffror/utbildning-jobb-och-pengar/utbildningsnivan-i-sverige/"
+      }
+    },
+    {
+      "rubrik": "De flesta barn får grundvaccin",
+      "siffra": "85 %",
+      "text": "Andelen ettåringar i världen som fått tre doser vaccin mot difteri, stelkramp och kikhosta har ökat från 20 % år 1980 till 85 % år 2025.",
+      "ar": "1980–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO och UNICEF)",
+        "url": "https://ourworldindata.org/grapher/global-vaccination-coverage"
+      }
+    },
+    {
+      "rubrik": "Andelen undernärda har minskat",
+      "siffra": "−35 %",
+      "text": "Andelen av världens befolkning som är undernärd har minskat från 12,7 % år 2000 till 8,2 % år 2024, enligt FAO.",
+      "ar": "2000–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (FAO)",
+        "url": "https://ourworldindata.org/grapher/prevalence-of-undernourishment"
+      }
+    },
+    {
+      "rubrik": "Nio av tio har tillgång till dricksvatten",
+      "siffra": "91,5 %",
+      "text": "Andelen av världens befolkning som har tillgång till minst en grundläggande dricksvattenkälla har ökat från 81,6 % år 2000 till 91,5 % år 2024.",
+      "ar": "2000–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO/UNICEF JMP)",
+        "url": "https://ourworldindata.org/grapher/population-using-at-least-basic-drinking-water"
+      }
+    },
+    {
+      "rubrik": "Spädbarnsdödligheten har minskat med 91 %",
+      "siffra": "−91 %",
+      "text": "I Sverige har spädbarnsdödligheten minskat från 22 dödsfall per 1 000 levande födda år 1950 till 2,0 per 1 000 år 2024.",
+      "ar": "1950–2024",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (UN IGME)",
+        "url": "https://ourworldindata.org/grapher/infant-mortality"
+      }
+    },
+    {
+      "rubrik": "Säker sanitet når allt fler",
+      "siffra": "58,5 %",
+      "text": "Andelen av världens befolkning som använder säkert hanterade sanitetslösningar har ökat från 31,3 % år 2000 till 58,5 % år 2024.",
+      "ar": "2000–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO/UNICEF JMP)",
+        "url": "https://ourworldindata.org/grapher/share-using-safely-managed-sanitation"
+      }
+    },
+    {
+      "rubrik": "Fler har tillgång till el",
+      "siffra": "91,9 %",
+      "text": "Andelen av världens befolkning med tillgång till elektricitet har ökat från 78,2 % år 2000 till 91,9 % år 2024.",
+      "ar": "2000–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (Världsbanken)",
+        "url": "https://ourworldindata.org/grapher/share-of-the-population-with-access-to-electricity"
+      }
+    },
+    {
+      "rubrik": "Renare matlagning i fler hem",
+      "siffra": "75 %",
+      "text": "Andelen av världens befolkning som främst lagar mat med rena bränslen och tekniker har ökat från 47 % år 2000 till 75 % år 2024.",
+      "ar": "2000–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO)",
+        "url": "https://ourworldindata.org/grapher/access-to-clean-fuels-and-technologies-for-cooking"
+      }
+    },
+    {
+      "rubrik": "Lägre koldioxidutsläpp per svensk",
+      "siffra": "−44 %",
+      "text": "Sveriges fossila koldioxidutsläpp per person har minskat från 6,7 ton år 1990 till 3,8 ton år 2025.",
+      "ar": "1990–2025",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (Global Carbon Budget)",
+        "url": "https://ourworldindata.org/grapher/co-emissions-per-capita"
+      }
+    },
+    {
+      "rubrik": "Solpaneler har blivit 99,9 % billigare",
+      "siffra": "−99,9 %",
+      "text": "Priset på solcellsmoduler har sjunkit från 132 dollar per watt år 1975 till 0,12 dollar per watt år 2025, i fasta 2025 års priser.",
+      "ar": "1975–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (IRENA m.fl.)",
+        "url": "https://ourworldindata.org/grapher/solar-pv-prices"
+      }
+    },
+    {
+      "rubrik": "Vindkraft på land har blivit mycket billigare",
+      "siffra": "−71 %",
+      "text": "Den genomsnittliga produktionskostnaden för el från landbaserad vindkraft har sjunkit från 0,114 till 0,033 dollar per kWh mellan 2010 och 2025, i fasta 2025 års priser.",
+      "ar": "2010–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (IRENA)",
+        "url": "https://ourworldindata.org/grapher/levelized-cost-of-energy"
+      }
+    },
+    {
+      "rubrik": "En tredjedel av världens el är förnybar",
+      "siffra": "33,8 %",
+      "text": "Andelen av världens elproduktion som kommer från förnybara källor har ökat från 18,7 % år 2000 till 33,8 % år 2025.",
+      "ar": "2000–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (Ember m.fl.)",
+        "url": "https://ourworldindata.org/grapher/electricity-mix?frequency=annual&metric=share_of_generation&source=renewables"
+      }
+    },
+    {
+      "rubrik": "Sju av tio kilowattimmar är förnybara",
+      "siffra": "71 %",
+      "text": "Andelen av Sveriges elproduktion som kommer från förnybara källor har ökat från 51 % år 1990 till 71 % år 2025.",
+      "ar": "1990–2025",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (Ember m.fl.)",
+        "url": "https://ourworldindata.org/grapher/electricity-mix?frequency=annual&metric=share_of_generation&source=renewables"
+      }
+    },
+    {
+      "rubrik": "Ozonnedbrytande ämnen nästan utfasade",
+      "siffra": "−99 %",
+      "text": "Den globala förbrukningen av ozonnedbrytande ämnen har minskat från 1,3 miljoner ODP-ton år 1986 till cirka 16 600 ODP-ton år 2021, efter Montrealprotokollet.",
+      "ar": "1986–2021",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (FN:s miljöprogram UNEP)",
+        "url": "https://ourworldindata.org/grapher/consumption-of-ozone-depleting-substances"
+      }
+    },
+    {
+      "rubrik": "Färre dör i naturkatastrofer",
+      "siffra": "−90 %",
+      "text": "Dödstalen i naturkatastrofer per 100 000 invånare har minskat med mer än 90 % under det senaste seklet. Äldre data är ofullständiga, så minskningen kan vara underskattad.",
+      "ar": "1900-talet–2020-talet",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (EM-DAT)",
+        "url": "https://ourworldindata.org/natural-disasters"
+      }
+    },
+    {
+      "rubrik": "Skyddade havsområden har ökat",
+      "siffra": "14 %",
+      "text": "Andelen av ländernas havsområden som är skyddade har ökat från 6,8 % år 2013 till 14,0 % år 2024.",
+      "ar": "2013–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (UNEP-WCMC och IUCN via Världsbanken)",
+        "url": "https://ourworldindata.org/grapher/marine-protected-areas"
+      }
+    },
+    {
+      "rubrik": "Mödradödligheten har minskat med 98 %",
+      "siffra": "−98 %",
+      "text": "I Sverige har mödradödligheten minskat från 188 dödsfall per 100 000 levande födda år 1900 till 4,5 per 100 000 år 2020.",
+      "ar": "1900–2020",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (UN MMEIG m.fl.)",
+        "url": "https://ourworldindata.org/grapher/maternal-mortality"
+      }
+    },
+    {
+      "rubrik": "Dödsfallen i aids har minskat med 70 %",
+      "siffra": "−70 %",
+      "text": "Antalet aidsrelaterade dödsfall i världen har minskat från 2,1 miljoner år 2004, toppåret, till omkring 628 000 år 2024.",
+      "ar": "2004–2024",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (UNAIDS)",
+        "url": "https://ourworldindata.org/grapher/deaths-from-aids-un"
+      }
+    },
+    {
+      "rubrik": "Poliofallen har minskat med 99 %",
+      "siffra": "−99 %",
+      "text": "Det uppskattade antalet fall av förlamande polio i världen har minskat från omkring 368 000 år 1980 till 3 752 år 2023.",
+      "ar": "1980–2023",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO)",
+        "url": "https://ourworldindata.org/grapher/number-of-estimated-paralytic-polio-cases-by-world-region"
+      }
+    },
+    {
+      "rubrik": "Guineamasken är nära utrotning",
+      "siffra": "10 fall",
+      "text": "Antalet rapporterade fall av guineamasksjuka hos människor har minskat från 623 579 år 1990 till 10 år 2025.",
+      "ar": "1990–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (WHO)",
+        "url": "https://ourworldindata.org/grapher/number-of-reported-guinea-worm-dracunculiasis-cases"
+      }
+    },
+    {
+      "rubrik": "Tobaksbruket bland män har halverats",
+      "siffra": "−54 %",
+      "text": "Andelen vuxna män i Sverige som röker eller använder annan tobak, till exempel snus, har minskat från 55,8 % år 2000 till 25,9 % år 2024 (åldersstandardiserat).",
+      "ar": "2000–2024",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (WHO)",
+        "url": "https://ourworldindata.org/grapher/share-of-men-who-are-smoking"
+      }
+    },
+    {
+      "rubrik": "Fler kvinnor i världens parlament",
+      "siffra": "27,2 %",
+      "text": "Andelen platser i nationella parlament som innehas av kvinnor har ökat från 11,7 % år 1997 till 27,2 % år 2025.",
+      "ar": "1997–2025",
+      "omrade": "varlden",
+      "kalla": {
+        "namn": "Our World in Data (IPU via Världsbanken)",
+        "url": "https://ourworldindata.org/grapher/share-of-women-in-parliament-ipu"
+      }
+    },
+    {
+      "rubrik": "Svenskarna går nästan tre gånger så länge i skolan",
+      "siffra": "11,9 år",
+      "text": "Det genomsnittliga antalet skolår bland vuxna i Sverige har ökat från 4,3 år 1900 till 11,9 år 2020.",
+      "ar": "1900–2020",
+      "omrade": "sverige",
+      "kalla": {
+        "namn": "Our World in Data (Barro & Lee; Lee & Lee)",
+        "url": "https://ourworldindata.org/grapher/mean-years-of-schooling-long-run"
+      }
+    }
+  ]
+}

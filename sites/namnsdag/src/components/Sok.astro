@@ -1,0 +1,49 @@
+---
+// Verktyget "När har … namnsdag?": söker bland almanackans namn och vanliga stavningsvarianter.
+// Datalistan ger förslag direkt; själva svaret slås upp i /data/namnsdagar.json.
+import { ALLA_NAMN, VARIANTER } from "../site.js";
+const { rubrik = "När har ditt namn namnsdag?" } = Astro.props;
+const alla = [...ALLA_NAMN.map((n) => n.namn), ...VARIANTER.map((v) => v.namn)].sort((a, b) => a.localeCompare(b, "sv"));
+---
+<form class="sokruta" id="namnsok" role="search" action="/alla-namn/" onsubmit="return false">
+  <label for="namnfalt">{rubrik}</label>
+  <div class="rad">
+    <input id="namnfalt" name="namn" list="namnlista" autocomplete="off" placeholder="Skriv ett förnamn, t.ex. Ture" />
+    <button class="knapp" type="submit">Visa namnsdag</button>
+  </div>
+  <datalist id="namnlista">{alla.map((n) => <option value={n} />)}</datalist>
+  <output for="namnfalt" aria-live="polite"></output>
+</form>
+<script is:inline>
+  (() => {
+    const f = document.getElementById("namnsok");
+    if (!f) return;
+    const ut = f.querySelector("output"), falt = f.namn;
+    const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+    const dagText = (k) => `${Number(k.slice(3))} ${MN[Number(k.slice(0, 2)) - 1]}`;
+    const dagHref = (k) => `/${Number(k.slice(3))}-${MN[Number(k.slice(0, 2)) - 1]}/`;
+    const norm = (s) => s.trim().toLowerCase().normalize("NFC");
+    let data;
+    const ladda = async () => (data ??= await (await fetch("/data/namnsdagar.json")).json());
+    const visa = async (skickad) => {
+      const q = norm(falt.value);
+      if (!q) { ut.textContent = ""; return; }
+      const d = await ladda();
+      const traff = d.namn.find((n) => norm(n[0]) === q);
+      if (traff) {
+        const [namn, slug, k, ar, huvud] = traff;
+        ut.innerHTML = huvud
+          ? `<strong>${namn}</strong> saknas i almanackan men kan firas på <a href="/namn/${slug}/">${huvud}-dagen den ${dagText(k)}</a>.`
+          : `<strong>${namn}</strong> har namnsdag <a href="${dagHref(k)}">${dagText(k)}</a>${ar ? ` (från ${ar})` : ""}. <a href="/namn/${slug}/">Mer om namnet ${namn} →</a>`;
+        if (skickad) location.href = `/namn/${slug}/`;
+        return;
+      }
+      const forslag = d.namn.filter((n) => norm(n[0]).startsWith(q)).slice(0, 8);
+      ut.innerHTML = forslag.length
+        ? `Menar du ${forslag.map((n) => `<a href="/namn/${n[1]}/">${n[0]}</a>`).join(", ")}?`
+        : skickad ? `${falt.value.trim()} finns inte i almanackan. Alla namn som saknas där har gemensam namnsdag den <a href="/1-januari/">1 januari</a>.` : "";
+    };
+    falt.addEventListener("input", () => visa(false));
+    f.addEventListener("submit", (e) => { e.preventDefault(); visa(true); });
+  })();
+</script>
