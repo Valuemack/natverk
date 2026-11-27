@@ -12,7 +12,7 @@ export function GET() {
     "",
     `> ${SITE.beskrivning}`,
     "",
-    `Uppdaterad: ${UPPDATERAD}. Oberoende tjänst, inte knuten till Svenska Akademien, Isof eller SCB. Drivs av samma ägare som Posta Brev (postabrev.se), som namn- och datumsidorna länkar till för gratulationsbrev.`,
+    `Uppdaterad: ${UPPDATERAD}. Oberoende tjänst, inte knuten till Svenska Akademien, Isof eller SCB.`,
     "",
     "## Namnsdagar de närmaste sju dagarna",
     ...Array.from({ length: 7 }, (_, i) => dag(plusDagar(IDAG, i))),

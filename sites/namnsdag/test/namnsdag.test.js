@@ -113,19 +113,12 @@ test("bygget: SEO-grunder på varje indexerad sida", { skip: !sidor.length && "i
     if (!sida?.dateModified) fel.push(`WebPage/dateModified: ${rel}`);
     if (rel !== "/index.html" && !typer.includes("BreadcrumbList")) fel.push(`BreadcrumbList: ${rel}`);
     if (rel === "/index.html" && !ld.some((x) => x.potentialAction?.["@type"] === "SearchAction")) fel.push("SearchAction saknas på startsidan");
-    for (const m of h.matchAll(/<a [^>]*href="https:\/\/postabrev\.se\/skapa-brev[^"]*"[^>]*>/g)) {
-      if (!/rel="sponsored noopener"/.test(m[0]) || !/utm_source=namnsdagaridag&amp;utm_medium=referral&amp;utm_campaign=namnsdag/.test(m[0])) { fel.push(`postabrev-länk: ${rel}`); break; }
-    }
+    // Ägarens beslut 2026-11-27: ingen länk till postabrev.se förrän sajten har egen trafik.
+    if (/postabrev\.se/.test(h)) fel.push(`länk till postabrev.se: ${rel}`);
   }
   assert.deepEqual(fel.slice(0, 20), [], `${fel.length} fel`);
 });
 
-test("bygget: knapp till postabrev.se på namn-, datum- och startsidan", { skip: !sidor.length && "ingen dist" }, () => {
-  for (const f of ["index.html", "namn/linus/index.html", "26-november/index.html", "namn/liam/index.html"]) {
-    assert.match(html(join(DIST, f)), /href="https:\/\/postabrev\.se\/skapa-brev\?utm_source=namnsdagaridag/, f);
-  }
-  assert.match(html(join(DIST, "om/index.html")), /samma ägare som/);
-});
 
 test("bygget: inga språkfel och inget Event-schema", { skip: !sidor.length && "ingen dist" }, () => {
   const MAN = "Januari|Februari|Mars|April|Maj|Juni|Juli|Augusti|September|Oktober|November|December";

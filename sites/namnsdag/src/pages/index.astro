@@ -11,7 +11,6 @@ import {
   lista, plusDagar, veckodag, iso, barare, tal, UTAN_NAMN, helgnamn, ANTAL_NU, ANTAL_SEN, NYA_AR, beskriv, konAndel, kalenderHref, KALENDER_AR,
 } from "../site.js";
 import Sok from "../components/Sok.astro";
-import BrevKnapp from "../components/BrevKnapp.astro";
 import DagSkript from "../components/DagSkript.astro";
 import { nyfodda, trend, medelalder, scb, ursprung } from "../lib/namndata.js";
 
@@ -79,7 +78,6 @@ const titel = idagText
     <p class="kort-status" aria-live="polite"></p>
   </section>
 
-  {idagText && <BrevKnapp namn={idagText} falt="brevnamn" />}
 
   <p class="svar" data-falt="svar">Idag, {datumrad}, {idagText ? <>har <strong>{idagText}</strong> namnsdag.</> : <>finns inget namn i almanackan.</>}
     {" "}Imorgon, {veckodag(imorgonDt)} {dagText(imorgonK)}, har {imorgonText ?? "ingen"} namnsdag.</p>

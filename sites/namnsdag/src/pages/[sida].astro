@@ -3,7 +3,6 @@
 import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
-import BrevKnapp from "../components/BrevKnapp.astro";
 import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import {
@@ -128,7 +127,6 @@ const idagK = mmddAv(IDAG);
         <li><span class="etikett">Till nyårsafton</span><span class="stor">{data.ned?.nyar ?? "–"}</span><span>dagar</span></li>
       </ul>
 
-      {data.namn.length > 0 && <BrevKnapp namn={data.namnText} />}
 
       {data.ett && SAMMANSLAGNA.has(data.ett.namn) ? <>
         <h2>Om namnet {data.ett.namn}</h2>

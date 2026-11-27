@@ -9,7 +9,6 @@ import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import "../../../styles/sajt.css";
 import NyfoddaDiagram from "../../../components/NyfoddaDiagram.astro";
 import Gratulationskort from "../../../components/Gratulationskort.astro";
-import BrevKnapp from "../../../components/BrevKnapp.astro";
 import { NAMNSIDOR, startDatum, sidNamn } from "../../../lib/namnsidor.js";
 import {
   SITE, AR, UPPDATERAD, MANADER, ANDRINGAR, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
@@ -128,7 +127,6 @@ const h1 = utan ? `När har ${namn} namnsdag?` : typ === "variant" ? `${namn} na
 
   <Gratulationskort namn={namn} datum={utan ? "1 januari – gemensam namnsdag" : typ === "variant" ? `${dt} (${n.namn}-dagen)` : dt}
     url={`/namn/${slug}/`} ics={`/namn/${slug}/kalender.ics`} icsNamn={`namnsdag-${slug}.ics`} />
-  <BrevKnapp namn={namn} />
 
   {typ === "variant" && huvudBarare > 0 && t2020 > huvudBarare && <p>Det finns fler som heter {namn} ({tal(t2020)}) än {n.namn} ({tal(huvudBarare)}) – men det är {n.namn} som står i almanackan.</p>}
   {ny && <p><strong>Nytt namn {n.fran}:</strong> Namnlängdskommittén beslutade i januari 2025 att {namn} ska in i almanackan från {n.fran}. Läs mer om <a href="/namnsdagar-2027/">namnsdagarna 2027</a> och <a href="/nya-namn/">alla nya namn i almanackan</a>.</p>}
