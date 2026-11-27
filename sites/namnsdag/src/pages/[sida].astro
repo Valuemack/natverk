@@ -3,15 +3,15 @@
 import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
-import BrevKnapp from "../components/BrevKnapp.astro";
 import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import {
   SITE, AR, IDAG, UPPDATERAD, MANADER, DAGAR, SAMMANSLAGNA, ALLA_NAMN, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
   nastaDatum, kommandeAr, fore, efter, FASTA_DAGAR, UTAN_NAMN, helgnamn, barare, tal, delMmdd, mmddAv, veckodag, SCB_KALLA, NAMN_KALLA,
-  isoVecka, beskriv, procent, kalenderHref, genitiv,
+  isoVecka, beskriv, procent, kalenderHref, genitiv, konAndel, UTAN_VARIANT,
 } from "../site.js";
-import { fnDagar, fodda, nedrakning, rorligaPa, handelser, FN_KALLA, FODDA_KALLA } from "../lib/dagdata.js";
+import { fnDagar, fodda, nedrakning, rorligaPa, handelser, historia, helgWiki, FN_KALLA, FODDA_KALLA } from "../lib/dagdata.js";
+import { scb, ursprung, kandaPersoner, sammaNamn, harEgenSida, WIKI_HAMTAD, PERS_HAMTAD, WDN_HAMTAD } from "../lib/namndata.js";
 
 export function getStaticPaths() {
   const dagar = DAGAR.map((k) => ({ params: { sida: dagHref(k).slice(1, -1) }, props: { typ: "dag", k } }));
@@ -40,7 +40,7 @@ if (typ === "dag") {
   const rorliga = rorligaPa(k);
   const vecka = nasta ? isoVecka(nasta).vecka : null;
   const ett = namn.length === 1 ? namn[0] : null;
-  data = { k, mn, namn, senare, nasta, ar, fast, utan, namnText, dt, toppen, sammanlagt, fn, fodd, ned, rorliga, vecka, ett };
+  data = { k, mn, namn, senare, nasta, ar, fast, utan, namnText, dt, toppen, sammanlagt, fn, fodd, ned, rorliga, vecka, ett, hist: historia(k), helgW: utan ? helgWiki(k) : null };
   const fodda1 = fodd?.fodda?.find((x) => /svensk/i.test(x.beskr)) ?? fodd?.fodda?.[0];
   titel = ett
     ? valjTitel(`${versal(dt)}: ${ett.namn} har namnsdag – temadagar och födda`, `${versal(dt)}: ${ett.namn} har namnsdag`)
@@ -108,7 +108,7 @@ const forraM = typ === "manad" ? ((m + 10) % 12) + 1 : null;
 const nastaM = typ === "manad" ? (m % 12) + 1 : null;
 const idagK = mmddAv(IDAG);
 ---
-<Layout site={SITE} titel={valjTitel(`${titel} | dagensnamnsdagar.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), ...extraLd]} uppdaterad={UPPDATERAD}
+<Layout site={SITE} titel={valjTitel(`${titel} | namnsdagaridag.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), ...extraLd]} uppdaterad={UPPDATERAD}
   ogBild={ogBild} sidtyp={typ === "manad" ? "CollectionPage" : "WebPage"}>
   {typ === "dag" ? (
     <>
@@ -128,14 +128,20 @@ const idagK = mmddAv(IDAG);
         <li><span class="etikett">Till nyårsafton</span><span class="stor">{data.ned?.nyar ?? "–"}</span><span>dagar</span></li>
       </ul>
 
-      {data.namn.length > 0 && <BrevKnapp namn={data.namnText} />}
 
-      {data.ett && SAMMANSLAGNA.has(data.ett.namn) ? <>
-        <h2>Om namnet {data.ett.namn}</h2>
+      {data.helgW && <>
+        <h2>Varför har ingen namnsdag den {data.dt}?</h2>
+        <p>Den {data.dt} saknar namn i almanackan – dagen är {helgnamn(data.utan)}. Det gäller sju dagar om året, alla kyrkliga högtider eller kalenderdagar.{data.k === "01-01" && <> I stället är nyårsdagen gemensam namnsdag för alla namn som saknas i almanackan – till exempel {UTAN_VARIANT.filter((x) => harEgenSida(x.namn)).slice(0, 3).map((x, i, a) => <>{i > 0 && (i === a.length - 1 ? " och " : ", ")}<a href={`/namn/${x.slug}/`}>{x.namn}</a></>)}. Se <a href="/namn-utan-namnsdag/">alla vanliga namn utan namnsdag</a>.</>}</p>
+        <blockquote class="citat" cite={data.helgW.url}><p>{data.helgW.text}</p></blockquote>
+        <p class="kalla">Citat ur artikeln <a href={data.helgW.url} rel="noopener">{data.helgW.titel}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {FODDA_KALLA.hamtad}.</p>
+      </>}
+
+      {data.ett && SAMMANSLAGNA.has(data.ett.namn) && !scb(data.ett.namn) ? <>
+        <h2 id={data.ett.slug}>Om namnet {data.ett.namn}</h2>
         <p>Den enda som har namnsdag den {data.dt} är <strong>{data.ett.namn}</strong>. Namnet finns inte i SCB:s namnstatistik, eftersom SCB räknar varje förnamn för sig.{data.delar.length > 0 && <> Delarna har egna namnsdagar: {data.delar.map((d, i) => <>{i > 0 && (i === data.delar.length - 1 ? " och " : ", ")}<a href={namnHref(d.namn)}>{d.namn}</a> den <a href={dagHref(d.datum)}>{dagText(d.datum)}</a>{barare(d) > 0 && <> ({tal(barare(d))} har det som tilltalsnamn, SCB 2020)</>}</>)}.</>}</p>
       </> : data.ett ? <>
         <h2>Namnsdag den {data.dt}</h2>
-        <p>Den enda som har namnsdag den {data.dt} är <a href={namnHref(data.ett.namn)}><strong>{data.ett.namn}</strong></a>{barare(data.ett) > 0 && <>, ett namn som {tal(barare(data.ett))} personer i Sverige har som tilltalsnamn (SCB 2020)</>}. Betydelse, statistik och kända personer med namnet finns på sidan om <a href={namnHref(data.ett.namn)}>namnet {data.ett.namn}</a>.</p>
+        <p>Den enda som har namnsdag den {data.dt} är <a href={namnHref(data.ett.namn)}><strong>{data.ett.namn}</strong></a>{barare(data.ett) > 0 && <>, ett namn som {tal(barare(data.ett))} personer i Sverige har som tilltalsnamn (SCB 2020)</>}.{!SAMMANSLAGNA.has(data.ett.namn) && <> Betydelse, statistik och kända personer med namnet finns på sidan om <a href={namnHref(data.ett.namn)}>namnet {data.ett.namn}</a>.</>}</p>
       </> : data.namn.length > 0 && <>
         <h2>{data.namn.length > 1 ? "Namnen" : "Namnet"} den {data.dt}</h2>
         <div class="tabell"><table>
@@ -150,6 +156,16 @@ const idagK = mmddAv(IDAG);
         {data.sammanlagt > 0 && <p>Sammanlagt {tal(data.sammanlagt)} personer i Sverige har något av namnen som tilltalsnamn{data.toppen[0] && barare(data.toppen[0]) > 0 && <>, flest {data.toppen[0].namn} ({procent(barare(data.toppen[0]), data.sammanlagt)} procent)</>}.</p>}
         <p class="kalla">"Tilltalsnamn" är det namn man kallas, "förnamn totalt" räknar alla som har namnet bland sina förnamn. Källa: {SCB_KALLA}. Folkbokförda 31 december respektive år; 2020 är SCB:s senaste namnstatistik.</p>
       </>}
+
+      {data.namn.filter((n) => SAMMANSLAGNA.has(n.namn) && scb(n.namn)).map((n) => { const s = scb(n.namn), u = ursprung(n.namn), p = kandaPersoner(n.namn, 5), f = sammaNamn(n.namn), kon = s.tilltal ? konAndel(s.K, s.M) : null; return <>
+        <h2 id={n.slug}>Om namnet {n.namn}</h2>
+        <p>{s.tilltal > 0 ? <>{tal(s.tilltal)} personer i Sverige har {n.namn} som tilltalsnamn{kon && <> ({kon})</>}</> : <>Färre än 10 personer i Sverige har {n.namn} som tilltalsnamn</>}{s.fornamn > s.tilltal && <>, och {tal(s.fornamn)} har det bland sina förnamn</>} (SCB 2020).{s.t2000 > 0 && <> År 2000 hade {tal(s.t2000)} personer {n.namn} som tilltalsnamn.</>}{f.length > 0 && <> Wikidata räknar {lista(f.slice(0, 4).map((x) => `${x.namn}${x.antal ? ` (${tal(x.antal)})` : ""}`))} som samma namn.</>}</p>
+        {u && <><blockquote class="citat" cite={u.url}><p>{u.ursprung}</p></blockquote>
+        <p class="kalla">Citat ur artikeln <a href={u.url} rel="noopener">{u.titel}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {WIKI_HAMTAD}.</p></>}
+        {p.length > 0 && <><ul class="personer">{p.map((x) => <li><a href={x.url} rel="noopener">{x.titel}</a>{x.beskr && <> – {x.beskr}</>}</li>)}</ul>
+        <p class="kalla">Kända personer med förnamnet {n.namn} som har en artikel på svenska Wikipedia, enligt Wikidata (CC0), hämtad {PERS_HAMTAD}.</p></>}
+        <p class="kalla">Antal: {SCB_KALLA}, folkbokförda 31 december 2020.{f.length > 0 && ` Samma namn: Wikidata (CC0), hämtad ${WDN_HAMTAD}.`}</p>
+      </>; })}
 
       {data.senare.length > 0 && <p><strong>Nytt namn:</strong> från {data.senare[0].fran} får även {lista(data.senare.map((n) => n.namn))} namnsdag den {data.dt} (Namnlängdskommitténs beslut 2025). Se <a href="/namnsdagar-2027/">namnsdagarna 2027</a>.</p>}
 
@@ -172,6 +188,12 @@ const idagK = mmddAv(IDAG);
         <h2>Födda den {data.dt}</h2>
         <ul class="fodda">{data.fodd.fodda.map((x) => <li><span class="ar">{x.ar}</span> {x.namn}, {x.beskr}</li>)}</ul>
         <p class="kalla">Urval ur avsnittet Födda i artikeln <a href={data.fodd.url} rel="noopener">{data.dt}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {FODDA_KALLA.hamtad}. I första hand svenska personer.</p>
+      </>}
+
+      {data.hist.length > 0 && <>
+        <h2>Det hände den {data.dt}</h2>
+        <ul class="fodda">{data.hist.map((x) => <li><span class="ar">{x.ar}</span> {x.text}</li>)}</ul>
+        <p class="kalla">Urval ur avsnittet Händelser i artikeln <a href={data.fodd?.url ?? `https://sv.wikipedia.org/wiki/${encodeURIComponent(data.dt.replace(/ /g, "_"))}`} rel="noopener">{data.dt}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {FODDA_KALLA.hamtad}. Texten återges ordagrant.</p>
       </>}
 
       <h2>Vilken veckodag är {data.dt}?</h2>

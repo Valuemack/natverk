@@ -1,4 +1,4 @@
-KÄLLOR OCH LICENSER – sites/namnsdag (dagensnamnsdagar.se)
+KÄLLOR OCH LICENSER – sites/namnsdag (namnsdagaridag.se)
 =========================================================
 
 1. NAMNLÄNGDEN (data/namnlangd.json)
@@ -74,6 +74,30 @@ KÄLLOR OCH LICENSER – sites/namnsdag (dagensnamnsdagar.se)
    Källa:   Svenska Wikipedia, datumartiklarna ("26 november"), avsnittet Födda. Skript: scripts/07-wikipedia-datum.mjs.
    Licens:  CC BY-SA 4.0 – källa och licens anges under listan på varje datumsida. Upp till 8 per dag,
             i första hand svenska. Namn och beskrivning återges som i artikeln.
+
+2f2. HÄNDELSER PER DAG OCH HELGDAGARNAS INLEDNING (data/wikipedia-datum.json) – tillagt 2026-11-27
+   Källa:   Svenska Wikipedia, datumartiklarnas avsnitt Händelser (upp till 8 per dag, i första hand svenska),
+            och inledningen (högst två meningar) till artiklarna om de sju helgdagar som saknar namn i
+            almanackan, via Wikipedias REST-API. Skript: scripts/07-wikipedia-datum.mjs (--helg hämtar bara inledningarna).
+   Licens:  CC BY-SA 4.0 – återges ordagrant med källa och licens på datumsidan.
+
+2h. SAMMA NAMN I ANDRA FORMER (data/wikidata-namn.json) – tillagt 2026-11-27
+   Källa:   Wikidata, förnamnsobjekt: egenskapen P460 (sägs vara detsamma som) och P407 (språk).
+            Skript: scripts/10-wikidata-namn.mjs.
+   Licens:  CC0 1.0. Visas bara former som har minst 10 bärare i Sverige (SCB 2020) eller finns i almanackan.
+
+2i. NAMNSDAG I ANDRA LÄNDER (data/wikidata-namnsdagar.json) – tillagt 2026-11-27
+   Källa:   Wikidata, förnamnsobjekt: egenskapen P1750 (namnsdag) med kvalifikatorn P17 (land).
+            Skript: scripts/12-wikidata-namnsdagar.mjs (två SPARQL-frågor + etiketter via wbgetentities).
+   Licens:  CC0 1.0. Bara det Wikidata anger per namn visas, med egen text. Inga hela almanackor kopieras
+            (de finska, norska och danska namnlängderna skyddas av databasrätt).
+   Kontroll: Wikidatas svenska datum stämmer med vår namnlängd i 541 fall; avvikelserna gäller nästan bara
+            namn som inte står i namnlängden. Stickprov på 10 datum (Norge, Finland, Tjeckien, Slovakien, Polen,
+            Spanien, Estland) mot källa: alla stämde (listas i filen, fältet stickprov).
+   Uteslutet: Frankrike och Luxemburg (bygger på Nominis, anger ofta bara ett mindre helgon, t.ex. Catherine
+            24 mars i stället för 25 november) och Tyskland (ingen gemensam kalender, gick inte att verifiera).
+            Påståenden med sluttid (P582) eller rangen deprecated tas inte med. Enskilda fel datum kan läggas i
+            data/wikidata-namnsdagar-uteslut.json ("Namn|Land|mm-dd").
 
 2g. FN:S INTERNATIONELLA DAGAR (data/fn-dagar.json) – tillagt 2026-11-26
    Källa:   Förenta nationerna, https://www.un.org/en/observances/list-days-weeks. Skript: scripts/08-fn-dagar.mjs.

@@ -20,11 +20,11 @@ export const SITE = {
   tagline: "Vem har namnsdag idag?",
   tjanstText: "Oberoende namnsdagskalender · Namnlängden enligt Isof · Namnstatistik från SCB",
   kallor: ["Institutet för språk och folkminnen (namnlängden)", "SCB:s statistikdatabas (namnstatistik, CC0)"],
-  namn: "Dagens namnsdagar",
-  visningsnamn: "dagensnamnsdagar.se",
-  url: "https://dagensnamnsdagar.se",
+  namn: "Namnsdagar idag",
+  visningsnamn: "namnsdagaridag.se",
+  url: "https://namnsdagaridag.se",
   beskrivning: "Vem har namnsdag idag? Alla namnsdagar i den svenska almanackan dag för dag, när varje namn har namnsdag och hur många som bär namnet enligt SCB.",
-  organisation: "dagensnamnsdagar.se",
+  organisation: "namnsdagaridag.se",
   farg: "#7a2e5a",
   meny: [
     { namn: "Idag", href: "/" },
@@ -35,7 +35,7 @@ export const SITE = {
     { namn: "Om namnsdagar", href: "/namnsdag/" },
   ],
   sidfot: [
-    { namn: "Om dagensnamnsdagar.se", href: "/om/" },
+    { namn: "Om namnsdagaridag.se", href: "/om/" },
     { namn: "Källor och metod", href: "/om/#kallor" },
     { namn: "Integritet och cookies", href: "/om/#integritet" },
   ],
@@ -56,7 +56,7 @@ export const dagText = (k) => { const { m, d } = delMmdd(k); return `${d} ${MANA
 /** URL för en dag: /3-januari/ */
 export const dagHref = (k) => { const { m, d } = delMmdd(k); return `/${d}-${MANADER[m - 1]}/`; };
 export const manadHref = (m) => `/${MANADER[m - 1]}/`;
-export const namnHref = (n) => (SAMMANSLAGNA.has(n) ? dagHref(SAMMANSLAGNA.get(n)) : `/namn/${SLUG_AV.get(n) ?? slug(n)}/`);
+export const namnHref = (n) => (SAMMANSLAGNA.has(n) ? `${dagHref(SAMMANSLAGNA.get(n))}#${SLUG_AV.get(n) ?? slug(n)}` : `/namn/${SLUG_AV.get(n) ?? slug(n)}/`);
 
 // ---------- Namnlängden ----------
 /** Alla namn, även de som tillkommer senare (fran = första året). */
@@ -69,9 +69,11 @@ const unikSlug = (namn) => {
 };
 export const ALLA_NAMN = NL.namn.map((n) => ({ ...n, slug: unikSlug(n.namn), scb: SCB.namn[n.namn] ?? null }));
 const SLUG_AV = new Map(ALLA_NAMN.map((n) => [n.namn, n.slug]));
-/** Almanacksnamn som SCB inte redovisar alls (varken som tilltalsnamn eller förnamn) får ingen egen namnsida –
- *  sidan skulle bli tunn. De visas på sin datumsida i stället, och den gamla adressen 301-omdirigeras dit. */
-export const SAMMANSLAGNA = new Map(ALLA_NAMN.filter((n) => !SCB_ALLA[n.namn]).map((n) => [n.namn, n.datum]));
+/** Almanacksnamn utan egen namnsida – sidan skulle bli tunn. De visas i ett eget avsnitt (#slug) på sin datumsida,
+ *  och den gamla adressen 301-omdirigeras dit. Gäller namn som SCB inte redovisar alls och namn med högst två datablock. */
+// Dessutom almanacksnamn med högst två unika datablock (beräknas av scripts/11-omdirigeringar.mjs före bygget).
+const SAMMAN_FIL = (() => { try { return lasData("sammanslagna.json").namn ?? {}; } catch { return {}; } })();
+export const SAMMANSLAGNA = new Map(ALLA_NAMN.filter((n) => !SCB_ALLA[n.namn] || SAMMAN_FIL[n.namn]).map((n) => [n.namn, n.datum]));
 export const NAMN_KALLA = NL.kalla;
 export const ANDRINGAR = NL.andringar;
 export const UTAN_NAMN = NL.utanNamn;

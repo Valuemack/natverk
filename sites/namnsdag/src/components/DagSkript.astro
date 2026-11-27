@@ -30,7 +30,6 @@
       satt("namn", n0.length ? lista(n0.map(lank)) : (d.utan[i0.k] || "Ingen namnsdag"));
       satt("korttext", n0.length ? "Grattis" : rub[0]);
       satt("kortrad", n0.length ? `har namnsdag ${rub[0].toLowerCase()}: ${lista(n0.map(lank))}` : `Ingen har namnsdag i almanackan ${rub[0].toLowerCase()}.`);
-      falt("brevnamn").forEach((el) => { el.textContent = n0.length ? `Gratulera ${lista(n0.map((x) => x[0]))} med ett riktigt brev` : "Skicka ett riktigt brev"; });
       satt("kortnamn", n0.length ? lista(n0.map((x) => x[0])) + "!" : (d.utan[i0.k] || "Ingen namnsdag"));
       satt("svar", `${rub[0]}, ${VD[i0.t.getUTCDay()]} ${txt(i0.t)} ${i0.t.getUTCFullYear()}, ${n0.length ? `har <strong>${lista(n0.map((x) => x[0]))}</strong> namnsdag.` : "finns inget namn i almanackan."} ${rub[1]}, ${VD[i1.t.getUTCDay()]} ${txt(i1.t)}, har ${n1.length ? lista(n1.map((x) => x[0])) : "ingen"} namnsdag.`);
       satt("imorgon", n1.length ? `${lista(n1.map(lank))} <span>(${VD[i1.t.getUTCDay()]} ${txt(i1.t)})</span>` : `ingen namnsdag <span>(${VD[i1.t.getUTCDay()]} ${txt(i1.t)})</span>`);

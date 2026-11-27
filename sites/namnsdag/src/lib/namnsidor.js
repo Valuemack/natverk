@@ -1,11 +1,12 @@
 // Gemensamt för namnsidorna och deras kalenderfiler: vilka sidor som finns.
 import { ALLA_NAMN, SAMMANSLAGNA, VARIANTER, UTAN_VARIANT, nastaDatum, datum, delMmdd, IDAG, iso } from "../site.js";
+import { OMDIRIGERADE } from "./namndata.js";
 
 export const NAMNSIDOR = [
   ...ALLA_NAMN.filter((n) => !SAMMANSLAGNA.has(n.namn)).map((n) => ({ slug: n.slug, typ: "namn", n })),
-  ...VARIANTER.map((v) => ({ slug: v.slug, typ: "variant", v, n: v.huvud })),
+  ...VARIANTER.filter((v) => !OMDIRIGERADE.has(v.namn)).map((v) => ({ slug: v.slug, typ: "variant", v, n: v.huvud })),
   // Namn utan namnsdag och utan almanacksform: gemensam namnsdag 1 januari.
-  ...UTAN_VARIANT.map((v) => ({ slug: v.slug, typ: "utan", v, n: { namn: v.namn, datum: "01-01" } })),
+  ...UTAN_VARIANT.filter((v) => !OMDIRIGERADE.has(v.namn)).map((v) => ({ slug: v.slug, typ: "utan", v, n: { namn: v.namn, datum: "01-01" } })),
 ];
 /** Visningsnamnet för en namnsida. */
 export const sidNamn = (s) => (s.typ === "namn" ? s.n.namn : s.v.namn);
@@ -21,7 +22,7 @@ export function ics(namn, n, url) {
   const start = startDatum(n);
   const d = (dt) => iso(dt).replaceAll("-", "");
   const rader = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//dagensnamnsdagar.se//Namnsdag//SV", "CALSCALE:GREGORIAN",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//namnsdagaridag.se//Namnsdag//SV", "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
     `UID:namnsdag-${encodeURIComponent(namn.toLowerCase())}@namnsdagsidag.se`,
     `DTSTAMP:${d(IDAG)}T000000Z`,

@@ -3,7 +3,7 @@ import { SITE, IDAG, DAGAR, namnPaDag, kommandeNamnPaDag, delMmdd, dagHref, iso,
 
 export function GET() {
   const d = (dt) => iso(dt).replaceAll("-", "");
-  const rader = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//dagensnamnsdagar.se//Namnsdagar//SV", "CALSCALE:GREGORIAN",
+  const rader = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//namnsdagaridag.se//Namnsdagar//SV", "CALSCALE:GREGORIAN",
     "X-WR-CALNAME:Namnsdagar", "X-WR-TIMEZONE:Europe/Stockholm"];
   for (const k of DAGAR) {
     const { m, d: dd } = delMmdd(k);

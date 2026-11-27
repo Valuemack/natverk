@@ -1,4 +1,4 @@
-/* Sajtspecifika komponenter för dagensnamnsdagar.se (temat ligger i packages/core/src/bas.css). */
+/* Sajtspecifika komponenter för namnsdagaridag.se (temat ligger i packages/core/src/bas.css). */
 .idag { display: grid; gap: .4rem; background: var(--yta); border: 1px solid #e6d7df; border-top: 6px solid var(--farg);
   border-radius: 6px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
 .idag .datumrad { color: var(--dampad); font-size: .95rem; }
@@ -171,15 +171,6 @@
 .kodruta { width: 100%; box-sizing: border-box; font: .85rem/1.4 ui-monospace, Consolas, monospace; padding: .6rem; border: 1px solid var(--linje); border-radius: 6px; background: var(--yta); color: var(--text); }
 .kopierad { color: var(--dampad); font-size: .9rem; }
 
-/* Gratulera med brev (postabrev.se) */
-.brevruta { display: flex; gap: .9rem; align-items: center; margin: 1.2rem 0; padding: 1rem 1.1rem; background: var(--yta); border: 1px solid var(--linje); border-left: 5px solid var(--farg); border-radius: 10px; }
-.brevikon { flex: none; color: var(--farg); }
-.brevrubrik { margin: 0 0 .35rem; }
-.brevrubrik .knapp { white-space: normal; text-align: left; }
-.brevtext { margin: 0; font-size: .92rem; color: var(--dampad); }
-.brevtext small { display: block; margin-top: .2rem; font-size: .82rem; }
-@media (max-width: 480px) { .brevikon { display: none; } }
-
 /* Tillgänglighet: tryckytor minst 44 px och tydligt fokus */
 .knapp, button.knapp, a.knapp { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 header.topp nav a, footer.botten nav a, .smulor a { display: inline-flex; align-items: center; min-height: 44px; }
@@ -193,3 +184,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 /* Betydelser på sidan om nya namn */
 .betydelser dt { font-weight: 700; margin-top: .75rem; }
 .betydelser dd { margin: .25rem 0 0; }
+
+/* Rad som en omdirigering pekar på */
+tr:target { background: color-mix(in srgb, currentColor 12%, transparent); }
+tr[id] { scroll-margin-top: 5rem; }

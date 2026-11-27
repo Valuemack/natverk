@@ -1,0 +1,5265 @@
+{
+ "kalla": "Wikidata, egenskapen P1750 (namnsdag) med kvalifikatorn P17 (land), förnamnsobjekt",
+ "licens": "CC0 1.0 (Wikidata)",
+ "hamtad": "2026-11-27",
+ "kontrollSverige": {
+  "stammer": 541,
+  "avviker": 16,
+  "not": "Wikidatas svenska datum jämförda med vår namnlängd; avvikelserna är nästan bara namn som inte står i namnlängden"
+ },
+ "uteslutnaLander": [
+  "Frankrike",
+  "Luxemburg",
+  "Tyskland"
+ ],
+ "stickprov": [
+  {
+   "namn": "Viggo",
+   "land": "Norge",
+   "datum": "06-15",
+   "kalla": "https://snl.no/Viggo"
+  },
+  {
+   "namn": "Ella",
+   "land": "Norge",
+   "datum": "02-19",
+   "kalla": "https://snl.no/Ella"
+  },
+  {
+   "namn": "Lars",
+   "land": "Norge",
+   "datum": "08-10",
+   "kalla": "https://snl.no/Lars_-_mannsnamn"
+  },
+  {
+   "namn": "Johan",
+   "land": "Norge",
+   "datum": "08-29",
+   "kalla": "https://snl.no/Johan_-_mannsnamn"
+  },
+  {
+   "namn": "Nova",
+   "land": "Finland",
+   "datum": "09-12",
+   "kalla": "https://fi.wikipedia.org/wiki/Nova_(nimi) (finlandssvenska kalendern sedan 2020)"
+  },
+  {
+   "namn": "Anna",
+   "land": "Tjeckien",
+   "datum": "07-26",
+   "kalla": "https://cs.wikipedia.org/wiki/Anna"
+  },
+  {
+   "namn": "Daniel",
+   "land": "Slovakien",
+   "datum": "07-21",
+   "kalla": "https://sk.wikipedia.org/wiki/Daniel_(prvé_meno)"
+  },
+  {
+   "namn": "Klara",
+   "land": "Polen",
+   "datum": "08-12",
+   "kalla": "https://www.deon.pl/imieniny/imie,1653,klara.html"
+  },
+  {
+   "namn": "Gabriel",
+   "land": "Spanien",
+   "datum": "09-29",
+   "kalla": "https://es.wikipedia.org/wiki/29_de_septiembre"
+  },
+  {
+   "namn": "Marek",
+   "land": "Estland",
+   "datum": "04-25",
+   "kalla": "https://www.behindthename.com/namedays/country/estonia"
+  }
+ ],
+ "namn": {
+  "Tatiana": [
+   {
+    "land": "Finland",
+    "datum": "01-12",
+    "wikidata": "Q1317239",
+    "ref": "https://nominis.cef.fr/"
+   },
+   {
+    "land": "Spanien",
+    "datum": "01-25",
+    "wikidata": "Q1317239",
+    "ref": null
+   }
+  ],
+  "Daniel": [
+   {
+    "land": "Norge",
+    "datum": "12-11",
+    "wikidata": "Q14516546",
+    "ref": "https://nominis.cef.fr/"
+   },
+   {
+    "land": "Slovakien",
+    "datum": "07-21",
+    "wikidata": "Q14516546",
+    "ref": "https://www.culture.gov.sk/wp-content/uploads/2020/03/Oficialne-kalendarium_cely-rok_aktualizovane-po-18.-11.-2020.pdf"
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "12-17",
+    "wikidata": "Q14516546",
+    "ref": null
+   }
+  ],
+  "Barbara": [
+   {
+    "land": "Lettland",
+    "datum": "12-04",
+    "wikidata": "Q153957",
+    "ref": "https://nominis.cef.fr/"
+   },
+   {
+    "land": "Norge",
+    "datum": "12-04",
+    "wikidata": "Q153957",
+    "ref": "https://nominis.cef.fr/"
+   }
+  ],
+  "Gabriel": [
+   {
+    "land": "Norge",
+    "datum": "03-26",
+    "wikidata": "Q4925914",
+    "ref": null
+   },
+   {
+    "land": "Spanien",
+    "datum": "09-29",
+    "wikidata": "Q4925914",
+    "ref": "http://www.lasprovincias.es/sociedad/santoral-viernes-septiembre-20170928215651-nt.html"
+   }
+  ],
+  "Anne": [
+   {
+    "land": "Norge",
+    "datum": "07-26",
+    "wikidata": "Q564684",
+    "ref": "https://nominis.cef.fr/"
+   }
+  ],
+  "Marek": [
+   {
+    "land": "Estland",
+    "datum": "04-25",
+    "wikidata": "Q17520946",
+    "ref": "https://www.culture.gov.sk/wp-content/uploads/2020/03/Oficialne-kalendarium_cely-rok_aktualizovane-po-18.-11.-2020.pdf"
+   },
+   {
+    "land": "Slovakien",
+    "datum": "04-25",
+    "wikidata": "Q17520946",
+    "ref": "https://www.culture.gov.sk/wp-content/uploads/2020/03/Oficialne-kalendarium_cely-rok_aktualizovane-po-18.-11.-2020.pdf"
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "04-25",
+    "wikidata": "Q17520946",
+    "ref": "https://www.culture.gov.sk/wp-content/uploads/2020/03/Oficialne-kalendarium_cely-rok_aktualizovane-po-18.-11.-2020.pdf"
+   }
+  ],
+  "Rasmus": [
+   {
+    "land": "Estland",
+    "datum": "10-24",
+    "wikidata": "Q1785744",
+    "ref": "https://www.behindthename.com/namedays/country/estonia"
+   },
+   {
+    "land": "Norge",
+    "datum": "06-03",
+    "wikidata": "Q1785744",
+    "ref": null
+   }
+  ],
+  "Martin": [
+   {
+    "land": "Slovakien",
+    "datum": "11-11",
+    "wikidata": "Q18002399",
+    "ref": "https://nominis.cef.fr/"
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "11-11",
+    "wikidata": "Q18002399",
+    "ref": "https://nominis.cef.fr/"
+   }
+  ],
+  "Ella": [
+   {
+    "land": "Lettland",
+    "datum": "03-07",
+    "wikidata": "Q988912",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-19",
+    "wikidata": "Q988912",
+    "ref": "https://snl.no/Ella"
+   }
+  ],
+  "Simon": [
+   {
+    "land": "Cypern",
+    "datum": "05-10",
+    "wikidata": "Q25711755",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-10",
+    "wikidata": "Q25711755",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "10-28",
+    "wikidata": "Q4117588",
+    "ref": "https://nominis.cef.fr/"
+   }
+  ],
+  "Klara": [
+   {
+    "land": "Norge",
+    "datum": "08-12",
+    "wikidata": "Q18199028",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-11",
+    "wikidata": "Q18199028",
+    "ref": "https://www.deon.pl/imieniny/imie,1653,klara.html"
+   },
+   {
+    "land": "Polen",
+    "datum": "08-12",
+    "wikidata": "Q18199028",
+    "ref": "http://miastodzieci.pl/imiona/klara/"
+   }
+  ],
+  "Gerda": [
+   {
+    "land": "Lettland",
+    "datum": "03-17",
+    "wikidata": "Q1009647",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-23",
+    "wikidata": "Q1009647",
+    "ref": null
+   }
+  ],
+  "Helga": [
+   {
+    "land": "Lettland",
+    "datum": "10-09",
+    "wikidata": "Q1035107",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "09-30",
+    "wikidata": "Q1035107",
+    "ref": null
+   }
+  ],
+  "Noomi": [
+   {
+    "land": "Finland",
+    "datum": "01-04",
+    "wikidata": "Q104151045",
+    "ref": null
+   }
+  ],
+  "Lova": [
+   {
+    "land": "Finland",
+    "datum": "08-25",
+    "wikidata": "Q104175560",
+    "ref": null
+   }
+  ],
+  "Ilona": [
+   {
+    "land": "Finland",
+    "datum": "10-09",
+    "wikidata": "Q1051881",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "03-18",
+    "wikidata": "Q1051881",
+    "ref": null
+   }
+  ],
+  "Ingela": [
+   {
+    "land": "Finland",
+    "datum": "01-23",
+    "wikidata": "Q10535464",
+    "ref": null
+   }
+  ],
+  "Josefin": [
+   {
+    "land": "Finland",
+    "datum": "03-19",
+    "wikidata": "Q10540926",
+    "ref": null
+   }
+  ],
+  "Fabian": [
+   {
+    "land": "Norge",
+    "datum": "01-20",
+    "wikidata": "Q10546861",
+    "ref": null
+   }
+  ],
+  "Lillemor": [
+   {
+    "land": "Finland",
+    "datum": "02-08",
+    "wikidata": "Q10561840",
+    "ref": null
+   }
+  ],
+  "Morgan": [
+   {
+    "land": "Finland",
+    "datum": "06-14",
+    "wikidata": "Q1058731",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-08",
+    "wikidata": "Q1058731",
+    "ref": null
+   }
+  ],
+  "Peder": [
+   {
+    "land": "Norge",
+    "datum": "08-01",
+    "wikidata": "Q10622039",
+    "ref": null
+   }
+  ],
+  "Aurora": [
+   {
+    "land": "Lettland",
+    "datum": "03-05",
+    "wikidata": "Q1066178",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-30",
+    "wikidata": "Q1066178",
+    "ref": null
+   }
+  ],
+  "Elsa": [
+   {
+    "land": "Norge",
+    "datum": "04-17",
+    "wikidata": "Q1077181",
+    "ref": null
+   }
+  ],
+  "Christel": [
+   {
+    "land": "Norge",
+    "datum": "03-15",
+    "wikidata": "Q1078264",
+    "ref": null
+   }
+  ],
+  "Christer": [
+   {
+    "land": "Norge",
+    "datum": "03-15",
+    "wikidata": "Q1078504",
+    "ref": null
+   }
+  ],
+  "Kari": [
+   {
+    "land": "Finland",
+    "datum": "01-11",
+    "wikidata": "Q1333594",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "11-25",
+    "wikidata": "Q1333594",
+    "ref": null
+   }
+  ],
+  "Jon": [
+   {
+    "land": "Norge",
+    "datum": "06-24",
+    "wikidata": "Q13501137",
+    "ref": null
+   }
+  ],
+  "Erland": [
+   {
+    "land": "Norge",
+    "datum": "06-14",
+    "wikidata": "Q1355252",
+    "ref": null
+   }
+  ],
+  "Per": [
+   {
+    "land": "Norge",
+    "datum": "06-29",
+    "wikidata": "Q13582800",
+    "ref": null
+   }
+  ],
+  "Mark": [
+   {
+    "land": "Italien",
+    "datum": "04-25",
+    "wikidata": "Q13610143",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "04-25",
+    "wikidata": "Q13610143",
+    "ref": null
+   }
+  ],
+  "Hedvig": [
+   {
+    "land": "Norge",
+    "datum": "10-15",
+    "wikidata": "Q13648620",
+    "ref": null
+   }
+  ],
+  "Tim": [
+   {
+    "land": "Norge",
+    "datum": "02-22",
+    "wikidata": "Q1369663",
+    "ref": null
+   }
+  ],
+  "Evelyn": [
+   {
+    "land": "Norge",
+    "datum": "10-03",
+    "wikidata": "Q1381706",
+    "ref": null
+   }
+  ],
+  "Ragnhild": [
+   {
+    "land": "Norge",
+    "datum": "05-17",
+    "wikidata": "Q1390292",
+    "ref": null
+   }
+  ],
+  "Tove": [
+   {
+    "land": "Norge",
+    "datum": "11-02",
+    "wikidata": "Q1393316",
+    "ref": null
+   }
+  ],
+  "Monica": [
+   {
+    "land": "Norge",
+    "datum": "05-04",
+    "wikidata": "Q14013933",
+    "ref": null
+   }
+  ],
+  "Marlene": [
+   {
+    "land": "Norge",
+    "datum": "12-08",
+    "wikidata": "Q1402673",
+    "ref": null
+   }
+  ],
+  "Liv": [
+   {
+    "land": "Norge",
+    "datum": "10-02",
+    "wikidata": "Q1403590",
+    "ref": null
+   }
+  ],
+  "Yngve": [
+   {
+    "land": "Norge",
+    "datum": "02-11",
+    "wikidata": "Q1408019",
+    "ref": null
+   }
+  ],
+  "Sanna": [
+   {
+    "land": "Finland",
+    "datum": "08-11",
+    "wikidata": "Q1440465",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-16",
+    "wikidata": "Q1440465",
+    "ref": null
+   }
+  ],
+  "Mariana": [
+   {
+    "land": "Tjeckien",
+    "datum": "09-08",
+    "wikidata": "Q14437342",
+    "ref": null
+   }
+  ],
+  "Willy": [
+   {
+    "land": "Norge",
+    "datum": "05-28",
+    "wikidata": "Q1459646",
+    "ref": null
+   }
+  ],
+  "Sandra": [
+   {
+    "land": "Lettland",
+    "datum": "09-15",
+    "wikidata": "Q1474819",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-17",
+    "wikidata": "Q1474819",
+    "ref": null
+   }
+  ],
+  "Janne": [
+   {
+    "land": "Norge",
+    "datum": "07-21",
+    "wikidata": "Q1477134",
+    "ref": null
+   }
+  ],
+  "Ulf": [
+   {
+    "land": "Norge",
+    "datum": "04-11",
+    "wikidata": "Q1481253",
+    "ref": null
+   }
+  ],
+  "Natalie": [
+   {
+    "land": "Norge",
+    "datum": "12-27",
+    "wikidata": "Q14899148",
+    "ref": null
+   }
+  ],
+  "Susanne": [
+   {
+    "land": "Norge",
+    "datum": "07-16",
+    "wikidata": "Q14936686",
+    "ref": null
+   }
+  ],
+  "Sophie": [
+   {
+    "land": "Norge",
+    "datum": "11-29",
+    "wikidata": "Q14942517",
+    "ref": null
+   }
+  ],
+  "Nina": [
+   {
+    "land": "Norge",
+    "datum": "04-04",
+    "wikidata": "Q1508902",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "10-24",
+    "wikidata": "Q1508902",
+    "ref": null
+   }
+  ],
+  "Hedda": [
+   {
+    "land": "Finland",
+    "datum": "10-15",
+    "wikidata": "Q15106926",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "10-15",
+    "wikidata": "Q15106926",
+    "ref": null
+   }
+  ],
+  "Rita": [
+   {
+    "land": "Cypern",
+    "datum": "01-25",
+    "wikidata": "Q98544746",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "09-01",
+    "wikidata": "Q98544746",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "01-25",
+    "wikidata": "Q98544746",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "09-01",
+    "wikidata": "Q98544746",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "11-28",
+    "wikidata": "Q1094218",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-27",
+    "wikidata": "Q1094218",
+    "ref": null
+   }
+  ],
+  "Daniela": [
+   {
+    "land": "Lettland",
+    "datum": "12-30",
+    "wikidata": "Q1096053",
+    "ref": null
+   }
+  ],
+  "Johan": [
+   {
+    "land": "Norge",
+    "datum": "08-29",
+    "wikidata": "Q10989273",
+    "ref": null
+   }
+  ],
+  "Julius": [
+   {
+    "land": "Norge",
+    "datum": "04-12",
+    "wikidata": "Q1102114",
+    "ref": null
+   }
+  ],
+  "Marina": [
+   {
+    "land": "Cypern",
+    "datum": "07-17",
+    "wikidata": "Q98205845",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "07-17",
+    "wikidata": "Q98205845",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "07-22",
+    "wikidata": "Q1120708",
+    "ref": null
+   }
+  ],
+  "Lily": [
+   {
+    "land": "Norge",
+    "datum": "09-16",
+    "wikidata": "Q11264166",
+    "ref": null
+   }
+  ],
+  "Lana": [
+   {
+    "land": "Lettland",
+    "datum": "09-28",
+    "wikidata": "Q1127765",
+    "ref": null
+   }
+  ],
+  "Leona": [
+   {
+    "land": "Finland",
+    "datum": "09-28",
+    "wikidata": "Q1129205",
+    "ref": null
+   }
+  ],
+  "Linda": [
+   {
+    "land": "Lettland",
+    "datum": "08-21",
+    "wikidata": "Q1136594",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "05-13",
+    "wikidata": "Q1136594",
+    "ref": null
+   }
+  ],
+  "Dagmar": [
+   {
+    "land": "Norge",
+    "datum": "09-27",
+    "wikidata": "Q1157241",
+    "ref": null
+   }
+  ],
+  "Dagny": [
+   {
+    "land": "Finland",
+    "datum": "09-12",
+    "wikidata": "Q1157346",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "09-11",
+    "wikidata": "Q1157346",
+    "ref": null
+   }
+  ],
+  "Robin": [
+   {
+    "land": "Norge",
+    "datum": "06-07",
+    "wikidata": "Q1158139",
+    "ref": null
+   }
+  ],
+  "Jonathan": [
+   {
+    "land": "Norge",
+    "datum": "03-29",
+    "wikidata": "Q1158394",
+    "ref": null
+   }
+  ],
+  "Henry": [
+   {
+    "land": "Norge",
+    "datum": "09-18",
+    "wikidata": "Q1158477",
+    "ref": null
+   }
+  ],
+  "Kurt": [
+   {
+    "land": "Norge",
+    "datum": "11-26",
+    "wikidata": "Q1158489",
+    "ref": null
+   }
+  ],
+  "Jesper": [
+   {
+    "land": "Norge",
+    "datum": "05-09",
+    "wikidata": "Q1158511",
+    "ref": null
+   }
+  ],
+  "Fritz": [
+   {
+    "land": "Norge",
+    "datum": "10-10",
+    "wikidata": "Q1158596",
+    "ref": null
+   }
+  ],
+  "Jack": [
+   {
+    "land": "Norge",
+    "datum": "07-25",
+    "wikidata": "Q1159009",
+    "ref": null
+   }
+  ],
+  "Lucia": [
+   {
+    "land": "Norge",
+    "datum": "12-13",
+    "wikidata": "Q1160640",
+    "ref": null
+   },
+   {
+    "land": "Slovakien",
+    "datum": "12-13",
+    "wikidata": "Q1160640",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "12-13",
+    "wikidata": "Q1160640",
+    "ref": null
+   }
+  ],
+  "Theodor": [
+   {
+    "land": "Norge",
+    "datum": "11-09",
+    "wikidata": "Q1165126",
+    "ref": null
+   }
+  ],
+  "Mariann": [
+   {
+    "land": "Estland",
+    "datum": "09-08",
+    "wikidata": "Q1165172",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "11-21",
+    "wikidata": "Q1165172",
+    "ref": null
+   }
+  ],
+  "Elvis": [
+   {
+    "land": "Lettland",
+    "datum": "10-29",
+    "wikidata": "Q1174817",
+    "ref": null
+   }
+  ],
+  "Ronny": [
+   {
+    "land": "Norge",
+    "datum": "08-09",
+    "wikidata": "Q117599",
+    "ref": null
+   }
+  ],
+  "Elma": [
+   {
+    "land": "Lettland",
+    "datum": "09-30",
+    "wikidata": "Q11857524",
+    "ref": null
+   }
+  ],
+  "Else": [
+   {
+    "land": "Norge",
+    "datum": "04-17",
+    "wikidata": "Q11857606",
+    "ref": null
+   }
+  ],
+  "Elias": [
+   {
+    "land": "Norge",
+    "datum": "07-12",
+    "wikidata": "Q11878157",
+    "ref": null
+   }
+  ],
+  "Pirjo": [
+   {
+    "land": "Finland",
+    "datum": "10-07",
+    "wikidata": "Q11888201",
+    "ref": null
+   }
+  ],
+  "Embla": [
+   {
+    "land": "Norge",
+    "datum": "07-01",
+    "wikidata": "Q11967313",
+    "ref": null
+   }
+  ],
+  "Gabriela": [
+   {
+    "land": "Lettland",
+    "datum": "03-22",
+    "wikidata": "Q11971424",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "03-08",
+    "wikidata": "Q11971424",
+    "ref": null
+   }
+  ],
+  "Juni": [
+   {
+    "land": "Finland",
+    "datum": "10-30",
+    "wikidata": "Q11979547",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-01",
+    "wikidata": "Q11979547",
+    "ref": null
+   }
+  ],
+  "Gunnar": [
+   {
+    "land": "Norge",
+    "datum": "01-09",
+    "wikidata": "Q120416",
+    "ref": null
+   }
+  ],
+  "Elena": [
+   {
+    "land": "Cypern",
+    "datum": "05-21",
+    "wikidata": "Q56449170",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-21",
+    "wikidata": "Q56449170",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "08-18",
+    "wikidata": "Q1209486",
+    "ref": null
+   }
+  ],
+  "Jan": [
+   {
+    "land": "Norge",
+    "datum": "09-24",
+    "wikidata": "Q12173670",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "06-24",
+    "wikidata": "Q12173670",
+    "ref": null
+   }
+  ],
+  "Ludvig": [
+   {
+    "land": "Norge",
+    "datum": "08-25",
+    "wikidata": "Q12233911",
+    "ref": null
+   }
+  ],
+  "Patricia": [
+   {
+    "land": "Norge",
+    "datum": "03-05",
+    "wikidata": "Q1231089",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "07-02",
+    "wikidata": "Q1231089",
+    "ref": null
+   }
+  ],
+  "Tanja": [
+   {
+    "land": "Norge",
+    "datum": "06-13",
+    "wikidata": "Q12338797",
+    "ref": null
+   }
+  ],
+  "Bo": [
+   {
+    "land": "Norge",
+    "datum": "10-05",
+    "wikidata": "Q1234223",
+    "ref": null
+   }
+  ],
+  "William": [
+   {
+    "land": "Norge",
+    "datum": "05-28",
+    "wikidata": "Q12344159",
+    "ref": null
+   }
+  ],
+  "Mats": [
+   {
+    "land": "Norge",
+    "datum": "02-24",
+    "wikidata": "Q12370008",
+    "ref": null
+   }
+  ],
+  "Hugo": [
+   {
+    "land": "Lettland",
+    "datum": "11-17",
+    "wikidata": "Q1242555",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "04-01",
+    "wikidata": "Q1242555",
+    "ref": null
+   }
+  ],
+  "Jonny": [
+   {
+    "land": "Norge",
+    "datum": "06-26",
+    "wikidata": "Q1247280",
+    "ref": null
+   }
+  ],
+  "Richard": [
+   {
+    "land": "Norge",
+    "datum": "02-07",
+    "wikidata": "Q1249148",
+    "ref": null
+   }
+  ],
+  "Ivar": [
+   {
+    "land": "Norge",
+    "datum": "01-31",
+    "wikidata": "Q127069",
+    "ref": null
+   }
+  ],
+  "Torkel": [
+   {
+    "land": "Norge",
+    "datum": "11-12",
+    "wikidata": "Q12719075",
+    "ref": null
+   }
+  ],
+  "Tommy": [
+   {
+    "land": "Norge",
+    "datum": "12-21",
+    "wikidata": "Q1272055",
+    "ref": null
+   }
+  ],
+  "Albertina": [
+   {
+    "land": "Finland",
+    "datum": "04-24",
+    "wikidata": "Q12784143",
+    "ref": null
+   }
+  ],
+  "Edit": [
+   {
+    "land": "Norge",
+    "datum": "10-31",
+    "wikidata": "Q12788170",
+    "ref": null
+   }
+  ],
+  "Kristian": [
+   {
+    "land": "Norge",
+    "datum": "05-14",
+    "wikidata": "Q12794332",
+    "ref": null
+   }
+  ],
+  "Liza": [
+   {
+    "land": "Cypern",
+    "datum": "04-24",
+    "wikidata": "Q98550200",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-24",
+    "wikidata": "Q98550200",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "11-19",
+    "wikidata": "Q12794966",
+    "ref": null
+   }
+  ],
+  "Vilhelm": [
+   {
+    "land": "Norge",
+    "datum": "05-28",
+    "wikidata": "Q12805716",
+    "ref": null
+   }
+  ],
+  "Angelika": [
+   {
+    "land": "Lettland",
+    "datum": "07-31",
+    "wikidata": "Q12898721",
+    "ref": null
+   }
+  ],
+  "Einar": [
+   {
+    "land": "Norge",
+    "datum": "09-26",
+    "wikidata": "Q1305819",
+    "ref": null
+   }
+  ],
+  "Sigurd": [
+   {
+    "land": "Norge",
+    "datum": "12-23",
+    "wikidata": "Q1315397",
+    "ref": null
+   }
+  ],
+  "Tekla": [
+   {
+    "land": "Lettland",
+    "datum": "01-31",
+    "wikidata": "Q1317613",
+    "ref": null
+   }
+  ],
+  "Elise": [
+   {
+    "land": "Norge",
+    "datum": "04-17",
+    "wikidata": "Q1330670",
+    "ref": null
+   }
+  ],
+  "Rebecca": [
+   {
+    "land": "Norge",
+    "datum": "10-01",
+    "wikidata": "Q503607",
+    "ref": null
+   }
+  ],
+  "Åke": [
+   {
+    "land": "Norge",
+    "datum": "05-08",
+    "wikidata": "Q508894",
+    "ref": null
+   }
+  ],
+  "Gunborg": [
+   {
+    "land": "Finland",
+    "datum": "09-21",
+    "wikidata": "Q52126221",
+    "ref": null
+   }
+  ],
+  "Anton": [
+   {
+    "land": "Norge",
+    "datum": "01-17",
+    "wikidata": "Q5401576",
+    "ref": null
+   }
+  ],
+  "Mio": [
+   {
+    "land": "Finland",
+    "datum": "02-04",
+    "wikidata": "Q5411451",
+    "ref": null
+   }
+  ],
+  "Emma": [
+   {
+    "land": "Lettland",
+    "datum": "06-02",
+    "wikidata": "Q541194",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "01-23",
+    "wikidata": "Q541194",
+    "ref": null
+   }
+  ],
+  "Svetlana": [
+   {
+    "land": "Lettland",
+    "datum": "09-28",
+    "wikidata": "Q54483354",
+    "ref": null
+   }
+  ],
+  "Harriet": [
+   {
+    "land": "Norge",
+    "datum": "08-22",
+    "wikidata": "Q5486209",
+    "ref": null
+   }
+  ],
+  "Aina": [
+   {
+    "land": "Lettland",
+    "datum": "10-08",
+    "wikidata": "Q553109",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-27",
+    "wikidata": "Q553109",
+    "ref": null
+   }
+  ],
+  "Ann": [
+   {
+    "land": "Norge",
+    "datum": "08-13",
+    "wikidata": "Q558067",
+    "ref": null
+   }
+  ],
+  "Maria": [
+   {
+    "land": "Cypern",
+    "datum": "08-15",
+    "wikidata": "Q56449214",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "11-21",
+    "wikidata": "Q56449214",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "08-15",
+    "wikidata": "Q56449214",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-21",
+    "wikidata": "Q56449214",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-25",
+    "wikidata": "Q325872",
+    "ref": null
+   }
+  ],
+  "Annie": [
+   {
+    "land": "Norge",
+    "datum": "08-13",
+    "wikidata": "Q566893",
+    "ref": null
+   }
+  ],
+  "Annika": [
+   {
+    "land": "Lettland",
+    "datum": "04-10",
+    "wikidata": "Q567094",
+    "ref": null
+   }
+  ],
+  "Anna": [
+   {
+    "land": "Cypern",
+    "datum": "07-25",
+    "wikidata": "Q56886804",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "12-09",
+    "wikidata": "Q56886804",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "07-25",
+    "wikidata": "Q56886804",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-09",
+    "wikidata": "Q56886804",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "07-26",
+    "wikidata": "Q666578",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-26",
+    "wikidata": "Q666578",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "07-26",
+    "wikidata": "Q666578",
+    "ref": null
+   },
+   {
+    "land": "Ungern",
+    "datum": "07-26",
+    "wikidata": "Q666578",
+    "ref": null
+   }
+  ],
+  "Ansgar": [
+   {
+    "land": "Norge",
+    "datum": "02-03",
+    "wikidata": "Q569694",
+    "ref": null
+   }
+  ],
+  "Allan": [
+   {
+    "land": "Norge",
+    "datum": "09-08",
+    "wikidata": "Q2616573",
+    "ref": null
+   }
+  ],
+  "Gunhild": [
+   {
+    "land": "Finland",
+    "datum": "11-01",
+    "wikidata": "Q2634697",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "01-30",
+    "wikidata": "Q2634697",
+    "ref": null
+   }
+  ],
+  "Charlotte": [
+   {
+    "land": "Norge",
+    "datum": "04-27",
+    "wikidata": "Q264002",
+    "ref": null
+   }
+  ],
+  "Edgar": [
+   {
+    "land": "Norge",
+    "datum": "11-16",
+    "wikidata": "Q2660560",
+    "ref": null
+   }
+  ],
+  "Dag": [
+   {
+    "land": "Norge",
+    "datum": "09-11",
+    "wikidata": "Q2696851",
+    "ref": null
+   }
+  ],
+  "Alf": [
+   {
+    "land": "Norge",
+    "datum": "01-03",
+    "wikidata": "Q2698865",
+    "ref": null
+   }
+  ],
+  "Åse": [
+   {
+    "land": "Norge",
+    "datum": "05-02",
+    "wikidata": "Q271245",
+    "ref": null
+   }
+  ],
+  "Julia": [
+   {
+    "land": "Tjeckien",
+    "datum": "12-10",
+    "wikidata": "Q2737173",
+    "ref": null
+   }
+  ],
+  "Peter": [
+   {
+    "land": "Norge",
+    "datum": "06-29",
+    "wikidata": "Q2793400",
+    "ref": null
+   },
+   {
+    "land": "Slovakien",
+    "datum": "06-29",
+    "wikidata": "Q2793400",
+    "ref": null
+   }
+  ],
+  "Severin": [
+   {
+    "land": "Norge",
+    "datum": "10-23",
+    "wikidata": "Q2800528",
+    "ref": null
+   }
+  ],
+  "Ernst": [
+   {
+    "land": "Norge",
+    "datum": "03-02",
+    "wikidata": "Q292691",
+    "ref": null
+   }
+  ],
+  "Olga": [
+   {
+    "land": "Cypern",
+    "datum": "07-11",
+    "wikidata": "Q30080971",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "07-11",
+    "wikidata": "Q30080971",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "08-11",
+    "wikidata": "Q38038024",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-30",
+    "wikidata": "Q38038024",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "07-11",
+    "wikidata": "Q38038024",
+    "ref": null
+   }
+  ],
+  "Turid": [
+   {
+    "land": "Norge",
+    "datum": "01-08",
+    "wikidata": "Q30088356",
+    "ref": null
+   }
+  ],
+  "Viola": [
+   {
+    "land": "Lettland",
+    "datum": "05-04",
+    "wikidata": "Q301657",
+    "ref": null
+   }
+  ],
+  "Tony": [
+   {
+    "land": "Norge",
+    "datum": "01-17",
+    "wikidata": "Q15238167",
+    "ref": null
+   }
+  ],
+  "Harald": [
+   {
+    "land": "Norge",
+    "datum": "05-17",
+    "wikidata": "Q1530266",
+    "ref": null
+   }
+  ],
+  "Hilda": [
+   {
+    "land": "Lettland",
+    "datum": "12-17",
+    "wikidata": "Q15303198",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-15",
+    "wikidata": "Q15303198",
+    "ref": null
+   }
+  ],
+  "Franciska": [
+   {
+    "land": "Lettland",
+    "datum": "01-11",
+    "wikidata": "Q15304142",
+    "ref": null
+   }
+  ],
+  "Solveig": [
+   {
+    "land": "Norge",
+    "datum": "09-01",
+    "wikidata": "Q1533508",
+    "ref": null
+   }
+  ],
+  "Reidar": [
+   {
+    "land": "Norge",
+    "datum": "07-28",
+    "wikidata": "Q1537661",
+    "ref": null
+   }
+  ],
+  "Tore": [
+   {
+    "land": "Norge",
+    "datum": "10-19",
+    "wikidata": "Q1548096",
+    "ref": null
+   }
+  ],
+  "Nikola": [
+   {
+    "land": "Bulgarien",
+    "datum": "12-06",
+    "wikidata": "Q15501913",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "12-06",
+    "wikidata": "Q15501913",
+    "ref": null
+   }
+  ],
+  "Gudrun": [
+   {
+    "land": "Norge",
+    "datum": "11-24",
+    "wikidata": "Q1553074",
+    "ref": null
+   }
+  ],
+  "Gudmund": [
+   {
+    "land": "Norge",
+    "datum": "03-16",
+    "wikidata": "Q1557742",
+    "ref": null
+   }
+  ],
+  "Dana": [
+   {
+    "land": "Lettland",
+    "datum": "04-08",
+    "wikidata": "Q1559603",
+    "ref": null
+   }
+  ],
+  "Lars": [
+   {
+    "land": "Norge",
+    "datum": "08-10",
+    "wikidata": "Q15635262",
+    "ref": null
+   }
+  ],
+  "Marit": [
+   {
+    "land": "Norge",
+    "datum": "07-20",
+    "wikidata": "Q1566153",
+    "ref": null
+   }
+  ],
+  "Inga": [
+   {
+    "land": "Estland",
+    "datum": "10-05",
+    "wikidata": "Q1568006",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "12-28",
+    "wikidata": "Q1568006",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-17",
+    "wikidata": "Q1568006",
+    "ref": null
+   }
+  ],
+  "Julie": [
+   {
+    "land": "Norge",
+    "datum": "04-12",
+    "wikidata": "Q15725563",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "12-10",
+    "wikidata": "Q15725563",
+    "ref": null
+   }
+  ],
+  "Hanna": [
+   {
+    "land": "Lettland",
+    "datum": "12-15",
+    "wikidata": "Q15729076",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "01-05",
+    "wikidata": "Q15729076",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "07-26",
+    "wikidata": "Q15729076",
+    "ref": null
+   }
+  ],
+  "Josef": [
+   {
+    "land": "Norge",
+    "datum": "03-19",
+    "wikidata": "Q15730712",
+    "ref": null
+   }
+  ],
+  "Karl": [
+   {
+    "land": "Norge",
+    "datum": "01-28",
+    "wikidata": "Q15731830",
+    "ref": null
+   }
+  ],
+  "Pål": [
+   {
+    "land": "Norge",
+    "datum": "01-25",
+    "wikidata": "Q15732803",
+    "ref": null
+   }
+  ],
+  "Alvar": [
+   {
+    "land": "Polen",
+    "datum": "02-19",
+    "wikidata": "Q15831157",
+    "ref": null
+   }
+  ],
+  "Jim": [
+   {
+    "land": "Norge",
+    "datum": "07-25",
+    "wikidata": "Q15868042",
+    "ref": null
+   }
+  ],
+  "Lisa": [
+   {
+    "land": "Norge",
+    "datum": "09-02",
+    "wikidata": "Q1588186",
+    "ref": null
+   }
+  ],
+  "Petter": [
+   {
+    "land": "Norge",
+    "datum": "06-29",
+    "wikidata": "Q15897204",
+    "ref": null
+   }
+  ],
+  "Laila": [
+   {
+    "land": "Finland",
+    "datum": "03-05",
+    "wikidata": "Q15914763",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "03-02",
+    "wikidata": "Q15914763",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-27",
+    "wikidata": "Q15914763",
+    "ref": null
+   }
+  ],
+  "Helge": [
+   {
+    "land": "Norge",
+    "datum": "09-30",
+    "wikidata": "Q1602361",
+    "ref": null
+   }
+  ],
+  "Jason": [
+   {
+    "land": "Cypern",
+    "datum": "04-29",
+    "wikidata": "Q98545517",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-29",
+    "wikidata": "Q98545517",
+    "ref": null
+   }
+  ],
+  "Stephanie": [
+   {
+    "land": "Cypern",
+    "datum": "12-27",
+    "wikidata": "Q98550842",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-27",
+    "wikidata": "Q98550842",
+    "ref": null
+   }
+  ],
+  "Rafael": [
+   {
+    "land": "Cypern",
+    "datum": "04-21",
+    "wikidata": "Q98557279",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "11-08",
+    "wikidata": "Q98557279",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-21",
+    "wikidata": "Q98557279",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-08",
+    "wikidata": "Q98557279",
+    "ref": null
+   }
+  ],
+  "David": [
+   {
+    "land": "Cypern",
+    "datum": "11-01",
+    "wikidata": "Q98557345",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "12-13",
+    "wikidata": "Q98557345",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-01",
+    "wikidata": "Q98557345",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-13",
+    "wikidata": "Q98557345",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-30",
+    "wikidata": "Q18057751",
+    "ref": null
+   }
+  ],
+  "Monika": [
+   {
+    "land": "Cypern",
+    "datum": "06-15",
+    "wikidata": "Q98557407",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "06-15",
+    "wikidata": "Q98557407",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "10-06",
+    "wikidata": "Q18177153",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "05-21",
+    "wikidata": "Q18177153",
+    "ref": null
+   }
+  ],
+  "Leon": [
+   {
+    "land": "Cypern",
+    "datum": "04-15",
+    "wikidata": "Q98467842",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-15",
+    "wikidata": "Q98467842",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-28",
+    "wikidata": "Q37080",
+    "ref": null
+   }
+  ],
+  "Albert": [
+   {
+    "land": "Norge",
+    "datum": "04-24",
+    "wikidata": "Q577011",
+    "ref": null
+   }
+  ],
+  "Ragna": [
+   {
+    "land": "Finland",
+    "datum": "07-15",
+    "wikidata": "Q578453",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "05-25",
+    "wikidata": "Q578453",
+    "ref": null
+   }
+  ],
+  "Henrik": [
+   {
+    "land": "Norge",
+    "datum": "10-20",
+    "wikidata": "Q594279",
+    "ref": null
+   }
+  ],
+  "Line": [
+   {
+    "land": "Norge",
+    "datum": "05-13",
+    "wikidata": "Q5965663",
+    "ref": null
+   }
+  ],
+  "Malena": [
+   {
+    "land": "Finland",
+    "datum": "07-22",
+    "wikidata": "Q5990536",
+    "ref": null
+   }
+  ],
+  "Erna": [
+   {
+    "land": "Lettland",
+    "datum": "09-12",
+    "wikidata": "Q599668",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-02",
+    "wikidata": "Q599668",
+    "ref": null
+   }
+  ],
+  "Ines": [
+   {
+    "land": "Finland",
+    "datum": "08-29",
+    "wikidata": "Q6028525",
+    "ref": null
+   }
+  ],
+  "Kevin": [
+   {
+    "land": "Norge",
+    "datum": "10-11",
+    "wikidata": "Q605834",
+    "ref": null
+   }
+  ],
+  "Leo": [
+   {
+    "land": "Lettland",
+    "datum": "11-06",
+    "wikidata": "Q606764",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-28",
+    "wikidata": "Q606764",
+    "ref": null
+   }
+  ],
+  "Alexandra": [
+   {
+    "land": "Cypern",
+    "datum": "04-21",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "07-17",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "08-30",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-21",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "07-17",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "08-30",
+    "wikidata": "Q67757040",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "04-21",
+    "wikidata": "Q6081128",
+    "ref": null
+   }
+  ],
+  "Izabella": [
+   {
+    "land": "Lettland",
+    "datum": "09-13",
+    "wikidata": "Q6101522",
+    "ref": null
+   }
+  ],
+  "Samuel": [
+   {
+    "land": "Norge",
+    "datum": "02-21",
+    "wikidata": "Q629347",
+    "ref": null
+   }
+  ],
+  "Judit": [
+   {
+    "land": "Norge",
+    "datum": "12-10",
+    "wikidata": "Q6303198",
+    "ref": null
+   }
+  ],
+  "Marie": [
+   {
+    "land": "Norge",
+    "datum": "03-25",
+    "wikidata": "Q632104",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "09-12",
+    "wikidata": "Q632104",
+    "ref": null
+   }
+  ],
+  "Hans": [
+   {
+    "land": "Norge",
+    "datum": "06-24",
+    "wikidata": "Q632842",
+    "ref": null
+   }
+  ],
+  "Sigrid": [
+   {
+    "land": "Finland",
+    "datum": "06-19",
+    "wikidata": "Q634916",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-12",
+    "wikidata": "Q634916",
+    "ref": null
+   }
+  ],
+  "Kai": [
+   {
+    "land": "Norge",
+    "datum": "10-14",
+    "wikidata": "Q634940",
+    "ref": null
+   }
+  ],
+  "Kim": [
+   {
+    "land": "Norge",
+    "datum": "03-20",
+    "wikidata": "Q637123",
+    "ref": null
+   }
+  ],
+  "Doris": [
+   {
+    "land": "Norge",
+    "datum": "08-07",
+    "wikidata": "Q3094766",
+    "ref": null
+   }
+  ],
+  "Hana": [
+   {
+    "land": "Tjeckien",
+    "datum": "08-15",
+    "wikidata": "Q3126650",
+    "ref": null
+   }
+  ],
+  "Jarl": [
+   {
+    "land": "Norge",
+    "datum": "01-24",
+    "wikidata": "Q3199628",
+    "ref": null
+   }
+  ],
+  "Louise": [
+   {
+    "land": "Norge",
+    "datum": "08-25",
+    "wikidata": "Q3215140",
+    "ref": null
+   }
+  ],
+  "Sigfrid": [
+   {
+    "land": "Norge",
+    "datum": "06-12",
+    "wikidata": "Q329006",
+    "ref": null
+   }
+  ],
+  "Marika": [
+   {
+    "land": "Lettland",
+    "datum": "07-22",
+    "wikidata": "Q3293081",
+    "ref": null
+   }
+  ],
+  "Torborg": [
+   {
+    "land": "Finland",
+    "datum": "09-19",
+    "wikidata": "Q33101446",
+    "ref": null
+   }
+  ],
+  "Naima": [
+   {
+    "land": "Estland",
+    "datum": "01-24",
+    "wikidata": "Q3335197",
+    "ref": null
+   }
+  ],
+  "Margit": [
+   {
+    "land": "Norge",
+    "datum": "07-20",
+    "wikidata": "Q3354086",
+    "ref": null
+   }
+  ],
+  "Elna": [
+   {
+    "land": "Lettland",
+    "datum": "09-30",
+    "wikidata": "Q3354095",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-19",
+    "wikidata": "Q3354095",
+    "ref": null
+   }
+  ],
+  "Hildur": [
+   {
+    "land": "Norge",
+    "datum": "01-18",
+    "wikidata": "Q3354101",
+    "ref": null
+   }
+  ],
+  "Borghild": [
+   {
+    "land": "Norge",
+    "datum": "12-02",
+    "wikidata": "Q3354141",
+    "ref": null
+   }
+  ],
+  "Tom": [
+   {
+    "land": "Norge",
+    "datum": "12-21",
+    "wikidata": "Q3354498",
+    "ref": null
+   }
+  ],
+  "Agneta": [
+   {
+    "land": "Lettland",
+    "datum": "01-26",
+    "wikidata": "Q3354746",
+    "ref": null
+   }
+  ],
+  "Inger": [
+   {
+    "land": "Norge",
+    "datum": "02-26",
+    "wikidata": "Q3358452",
+    "ref": null
+   }
+  ],
+  "Fritiof": [
+   {
+    "land": "Norge",
+    "datum": "10-10",
+    "wikidata": "Q3366325",
+    "ref": null
+   }
+  ],
+  "Beata": [
+   {
+    "land": "Norge",
+    "datum": "03-08",
+    "wikidata": "Q338015",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "03-08",
+    "wikidata": "Q338015",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "06-29",
+    "wikidata": "Q338015",
+    "ref": null
+   }
+  ],
+  "Anders": [
+   {
+    "land": "Norge",
+    "datum": "11-30",
+    "wikidata": "Q8843357",
+    "ref": null
+   }
+  ],
+  "Bodil": [
+   {
+    "land": "Norge",
+    "datum": "06-17",
+    "wikidata": "Q889848",
+    "ref": null
+   }
+  ],
+  "Ingrid": [
+   {
+    "land": "Norge",
+    "datum": "02-10",
+    "wikidata": "Q903741",
+    "ref": null
+   }
+  ],
+  "Lydia": [
+   {
+    "land": "Norge",
+    "datum": "12-13",
+    "wikidata": "Q904455",
+    "ref": null
+   }
+  ],
+  "Dina": [
+   {
+    "land": "Lettland",
+    "datum": "02-24",
+    "wikidata": "Q905581",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-30",
+    "wikidata": "Q905581",
+    "ref": null
+   }
+  ],
+  "Manuel": [
+   {
+    "land": "Cypern",
+    "datum": "12-25",
+    "wikidata": "Q98497161",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "12-26",
+    "wikidata": "Q98497161",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-25",
+    "wikidata": "Q98497161",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-26",
+    "wikidata": "Q98497161",
+    "ref": null
+   }
+  ],
+  "Holger": [
+   {
+    "land": "Norge",
+    "datum": "03-30",
+    "wikidata": "Q1624466",
+    "ref": null
+   }
+  ],
+  "Emilie": [
+   {
+    "land": "Norge",
+    "datum": "01-23",
+    "wikidata": "Q16275679",
+    "ref": null
+   }
+  ],
+  "Gunn": [
+   {
+    "land": "Norge",
+    "datum": "01-09",
+    "wikidata": "Q16276082",
+    "ref": null
+   }
+  ],
+  "Herman": [
+   {
+    "land": "Norge",
+    "datum": "01-29",
+    "wikidata": "Q16276646",
+    "ref": null
+   }
+  ],
+  "Katarina": [
+   {
+    "land": "Norge",
+    "datum": "11-25",
+    "wikidata": "Q16277703",
+    "ref": null
+   }
+  ],
+  "Valter": [
+   {
+    "land": "Norge",
+    "datum": "10-12",
+    "wikidata": "Q16282332",
+    "ref": null
+   }
+  ],
+  "Marita": [
+   {
+    "land": "Finland",
+    "datum": "08-15",
+    "wikidata": "Q1633400",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "03-25",
+    "wikidata": "Q1633400",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-27",
+    "wikidata": "Q1633400",
+    "ref": null
+   }
+  ],
+  "Anja": [
+   {
+    "land": "Norge",
+    "datum": "07-10",
+    "wikidata": "Q16419555",
+    "ref": null
+   }
+  ],
+  "Camilla": [
+   {
+    "land": "Norge",
+    "datum": "08-12",
+    "wikidata": "Q16422363",
+    "ref": null
+   }
+  ],
+  "Nanna": [
+   {
+    "land": "Norge",
+    "datum": "04-04",
+    "wikidata": "Q16422888",
+    "ref": null
+   }
+  ],
+  "Nils": [
+   {
+    "land": "Lettland",
+    "datum": "06-19",
+    "wikidata": "Q16423038",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-06",
+    "wikidata": "Q16423038",
+    "ref": null
+   }
+  ],
+  "Thomas": [
+   {
+    "land": "Cypern",
+    "datum": "10-06",
+    "wikidata": "Q98266723",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "10-06",
+    "wikidata": "Q98266723",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-21",
+    "wikidata": "Q16428906",
+    "ref": null
+   }
+  ],
+  "Viktor": [
+   {
+    "land": "Norge",
+    "datum": "02-25",
+    "wikidata": "Q16430022",
+    "ref": null
+   }
+  ],
+  "Linn": [
+   {
+    "land": "Norge",
+    "datum": "05-13",
+    "wikidata": "Q4583654",
+    "ref": null
+   }
+  ],
+  "Erling": [
+   {
+    "land": "Norge",
+    "datum": "06-19",
+    "wikidata": "Q472066",
+    "ref": null
+   }
+  ],
+  "Artur": [
+   {
+    "land": "Norge",
+    "datum": "08-28",
+    "wikidata": "Q4801582",
+    "ref": null
+   }
+  ],
+  "Sebastian": [
+   {
+    "land": "Norge",
+    "datum": "01-20",
+    "wikidata": "Q4844560",
+    "ref": null
+   }
+  ],
+  "Agne": [
+   {
+    "land": "Lettland",
+    "datum": "01-21",
+    "wikidata": "Q48718365",
+    "ref": null
+   }
+  ],
+  "Fred": [
+   {
+    "land": "Norge",
+    "datum": "11-14",
+    "wikidata": "Q913073",
+    "ref": null
+   }
+  ],
+  "Brita": [
+   {
+    "land": "Norge",
+    "datum": "07-23",
+    "wikidata": "Q918013",
+    "ref": null
+   }
+  ],
+  "Britt": [
+   {
+    "land": "Norge",
+    "datum": "07-23",
+    "wikidata": "Q920566",
+    "ref": null
+   }
+  ],
+  "Anita": [
+   {
+    "land": "Lettland",
+    "datum": "04-10",
+    "wikidata": "Q925678",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-10",
+    "wikidata": "Q925678",
+    "ref": null
+   }
+  ],
+  "Knut": [
+   {
+    "land": "Norge",
+    "datum": "01-07",
+    "wikidata": "Q943881",
+    "ref": null
+   }
+  ],
+  "Leonard": [
+   {
+    "land": "Norge",
+    "datum": "11-06",
+    "wikidata": "Q948418",
+    "ref": null
+   }
+  ],
+  "My": [
+   {
+    "land": "Finland",
+    "datum": "02-04",
+    "wikidata": "Q956487",
+    "ref": null
+   }
+  ],
+  "Eugenia": [
+   {
+    "land": "Finland",
+    "datum": "06-16",
+    "wikidata": "Q962602",
+    "ref": null
+   }
+  ],
+  "Helene": [
+   {
+    "land": "Norge",
+    "datum": "05-21",
+    "wikidata": "Q971710",
+    "ref": null
+   }
+  ],
+  "Emilia": [
+   {
+    "land": "Cypern",
+    "datum": "05-22",
+    "wikidata": "Q97303762",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-22",
+    "wikidata": "Q97303762",
+    "ref": null
+   }
+  ],
+  "Sture": [
+   {
+    "land": "Norge",
+    "datum": "10-27",
+    "wikidata": "Q973575",
+    "ref": null
+   }
+  ],
+  "Idun": [
+   {
+    "land": "Norge",
+    "datum": "01-31",
+    "wikidata": "Q3417064",
+    "ref": null
+   }
+  ],
+  "Ragnvald": [
+   {
+    "land": "Norge",
+    "datum": "08-21",
+    "wikidata": "Q3417518",
+    "ref": null
+   }
+  ],
+  "Reidun": [
+   {
+    "land": "Norge",
+    "datum": "07-28",
+    "wikidata": "Q3433340",
+    "ref": null
+   }
+  ],
+  "Tindra": [
+   {
+    "land": "Finland",
+    "datum": "04-20",
+    "wikidata": "Q3441935",
+    "ref": null
+   }
+  ],
+  "Ada": [
+   {
+    "land": "Lettland",
+    "datum": "07-08",
+    "wikidata": "Q346047",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-04",
+    "wikidata": "Q346047",
+    "ref": null
+   }
+  ],
+  "Adam": [
+   {
+    "land": "Cypern",
+    "datum": "12-13",
+    "wikidata": "Q97958847",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-13",
+    "wikidata": "Q97958847",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-24",
+    "wikidata": "Q347181",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "12-24",
+    "wikidata": "Q347181",
+    "ref": null
+   }
+  ],
+  "Frans": [
+   {
+    "land": "Norge",
+    "datum": "10-04",
+    "wikidata": "Q3480175",
+    "ref": null
+   }
+  ],
+  "Magnhild": [
+   {
+    "land": "Finland",
+    "datum": "11-05",
+    "wikidata": "Q3480262",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "05-29",
+    "wikidata": "Q3480262",
+    "ref": null
+   }
+  ],
+  "Alfred": [
+   {
+    "land": "Norge",
+    "datum": "01-03",
+    "wikidata": "Q3480335",
+    "ref": null
+   }
+  ],
+  "Orvar": [
+   {
+    "land": "Finland",
+    "datum": "07-06",
+    "wikidata": "Q3480949",
+    "ref": null
+   }
+  ],
+  "Ingegerd": [
+   {
+    "land": "Finland",
+    "datum": "01-23",
+    "wikidata": "Q3481175",
+    "ref": null
+   }
+  ],
+  "Irina": [
+   {
+    "land": "Finland",
+    "datum": "04-05",
+    "wikidata": "Q35004028",
+    "ref": null
+   }
+  ],
+  "Arnold": [
+   {
+    "land": "Norge",
+    "datum": "12-01",
+    "wikidata": "Q3623461",
+    "ref": null
+   }
+  ],
+  "Carlos": [
+   {
+    "land": "Spanien",
+    "datum": "11-04",
+    "wikidata": "Q364753",
+    "ref": null
+   }
+  ],
+  "August": [
+   {
+    "land": "Norge",
+    "datum": "08-28",
+    "wikidata": "Q370731",
+    "ref": null
+   }
+  ],
+  "Adrian": [
+   {
+    "land": "Norge",
+    "datum": "03-04",
+    "wikidata": "Q372250",
+    "ref": null
+   }
+  ],
+  "Adriana": [
+   {
+    "land": "Lettland",
+    "datum": "02-22",
+    "wikidata": "Q374807",
+    "ref": null
+   }
+  ],
+  "Iris": [
+   {
+    "land": "Norge",
+    "datum": "05-24",
+    "wikidata": "Q378867",
+    "ref": null
+   }
+  ],
+  "Eva": [
+   {
+    "land": "Cypern",
+    "datum": "03-25",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "09-11",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "12-13",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "03-25",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "09-11",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-13",
+    "wikidata": "Q64412279",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "09-12",
+    "wikidata": "Q829665",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "12-24",
+    "wikidata": "Q829665",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "12-24",
+    "wikidata": "Q829665",
+    "ref": null
+   }
+  ],
+  "Ida": [
+   {
+    "land": "Lettland",
+    "datum": "02-03",
+    "wikidata": "Q644599",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "09-04",
+    "wikidata": "Q644599",
+    "ref": null
+   }
+  ],
+  "Diana": [
+   {
+    "land": "Norge",
+    "datum": "12-30",
+    "wikidata": "Q645412",
+    "ref": null
+   },
+   {
+    "land": "Slovakien",
+    "datum": "07-01",
+    "wikidata": "Q645412",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "01-04",
+    "wikidata": "Q645412",
+    "ref": null
+   }
+  ],
+  "Ingmar": [
+   {
+    "land": "Norge",
+    "datum": "12-22",
+    "wikidata": "Q645672",
+    "ref": null
+   }
+  ],
+  "Arne": [
+   {
+    "land": "Norge",
+    "datum": "08-04",
+    "wikidata": "Q645757",
+    "ref": null
+   }
+  ],
+  "Irma": [
+   {
+    "land": "Lettland",
+    "datum": "10-13",
+    "wikidata": "Q647872",
+    "ref": null
+   }
+  ],
+  "Alice": [
+   {
+    "land": "Tjeckien",
+    "datum": "01-15",
+    "wikidata": "Q650689",
+    "ref": null
+   }
+  ],
+  "Lena": [
+   {
+    "land": "Cypern",
+    "datum": "05-21",
+    "wikidata": "Q97932922",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-21",
+    "wikidata": "Q97932922",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "02-21",
+    "wikidata": "Q654581",
+    "ref": null
+   }
+  ],
+  "Ina": [
+   {
+    "land": "Lettland",
+    "datum": "05-12",
+    "wikidata": "Q655722",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "06-27",
+    "wikidata": "Q655722",
+    "ref": null
+   }
+  ],
+  "Ingeborg": [
+   {
+    "land": "Norge",
+    "datum": "09-14",
+    "wikidata": "Q656590",
+    "ref": null
+   }
+  ],
+  "Alma": [
+   {
+    "land": "Lettland",
+    "datum": "02-25",
+    "wikidata": "Q656870",
+    "ref": null
+   },
+   {
+    "land": "Österrike",
+    "datum": "05-23",
+    "wikidata": "Q656870",
+    "ref": null
+   }
+  ],
+  "Vanja": [
+   {
+    "land": "Norge",
+    "datum": "01-22",
+    "wikidata": "Q6584408",
+    "ref": null
+   }
+  ],
+  "Vera": [
+   {
+    "land": "Lettland",
+    "datum": "09-17",
+    "wikidata": "Q659189",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-04",
+    "wikidata": "Q659189",
+    "ref": null
+   }
+  ],
+  "Jana": [
+   {
+    "land": "Estland",
+    "datum": "08-15",
+    "wikidata": "Q665407",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "12-15",
+    "wikidata": "Q665407",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "05-24",
+    "wikidata": "Q665407",
+    "ref": null
+   }
+  ],
+  "Josephine": [
+   {
+    "land": "Norge",
+    "datum": "03-19",
+    "wikidata": "Q666954",
+    "ref": null
+   }
+  ],
+  "Harry": [
+   {
+    "land": "Norge",
+    "datum": "08-22",
+    "wikidata": "Q668885",
+    "ref": null
+   }
+  ],
+  "Marcin": [
+   {
+    "land": "Polen",
+    "datum": "11-11",
+    "wikidata": "Q6757191",
+    "ref": null
+   }
+  ],
+  "Christopher": [
+   {
+    "land": "Cypern",
+    "datum": "05-09",
+    "wikidata": "Q97823922",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-09",
+    "wikidata": "Q97823922",
+    "ref": null
+   }
+  ],
+  "Ingvar": [
+   {
+    "land": "Norge",
+    "datum": "09-25",
+    "wikidata": "Q1663464",
+    "ref": null
+   }
+  ],
+  "Jonas": [
+   {
+    "land": "Norge",
+    "datum": "03-29",
+    "wikidata": "Q16646115",
+    "ref": null
+   }
+  ],
+  "Tina": [
+   {
+    "land": "Norge",
+    "datum": "02-22",
+    "wikidata": "Q1670074",
+    "ref": null
+   }
+  ],
+  "Jakob": [
+   {
+    "land": "Norge",
+    "datum": "07-25",
+    "wikidata": "Q16747395",
+    "ref": null
+   }
+  ],
+  "Astrid": [
+   {
+    "land": "Norge",
+    "datum": "04-13",
+    "wikidata": "Q167755",
+    "ref": null
+   }
+  ],
+  "Aleksandra": [
+   {
+    "land": "Azerbajdzjan",
+    "datum": "02-17",
+    "wikidata": "Q16799796",
+    "ref": null
+   },
+   {
+    "land": "Azerbajdzjan",
+    "datum": "04-21",
+    "wikidata": "Q16799796",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "04-23",
+    "wikidata": "Q16799796",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "09-11",
+    "wikidata": "Q16799796",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "11-08",
+    "wikidata": "Q16799796",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-17",
+    "wikidata": "Q16799796",
+    "ref": null
+   }
+  ],
+  "Jane": [
+   {
+    "land": "Norge",
+    "datum": "07-21",
+    "wikidata": "Q1682564",
+    "ref": null
+   }
+  ],
+  "Lasse": [
+   {
+    "land": "Norge",
+    "datum": "08-10",
+    "wikidata": "Q16871876",
+    "ref": null
+   }
+  ],
+  "Katja": [
+   {
+    "land": "Finland",
+    "datum": "11-25",
+    "wikidata": "Q1736622",
+    "ref": null
+   }
+  ],
+  "May": [
+   {
+    "land": "Norge",
+    "datum": "05-07",
+    "wikidata": "Q1746523",
+    "ref": null
+   }
+  ],
+  "Mia": [
+   {
+    "land": "Norge",
+    "datum": "07-13",
+    "wikidata": "Q1747696",
+    "ref": null
+   }
+  ],
+  "Tord": [
+   {
+    "land": "Norge",
+    "datum": "09-10",
+    "wikidata": "Q1750352",
+    "ref": null
+   }
+  ],
+  "Markus": [
+   {
+    "land": "Norge",
+    "datum": "04-25",
+    "wikidata": "Q17520949",
+    "ref": null
+   }
+  ],
+  "Georgios": [
+   {
+    "land": "Cypern",
+    "datum": "04-23",
+    "wikidata": "Q17523722",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "11-03",
+    "wikidata": "Q17523722",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-23",
+    "wikidata": "Q17523722",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-03",
+    "wikidata": "Q17523722",
+    "ref": null
+   }
+  ],
+  "Elisabeth": [
+   {
+    "land": "Norge",
+    "datum": "11-19",
+    "wikidata": "Q17524931",
+    "ref": null
+   }
+  ],
+  "Ove": [
+   {
+    "land": "Norge",
+    "datum": "10-30",
+    "wikidata": "Q1760107",
+    "ref": null
+   }
+  ],
+  "Ylva": [
+   {
+    "land": "Norge",
+    "datum": "04-11",
+    "wikidata": "Q1760268",
+    "ref": null
+   }
+  ],
+  "Tomasz": [
+   {
+    "land": "Polen",
+    "datum": "09-22",
+    "wikidata": "Q17644435",
+    "ref": null
+   }
+  ],
+  "Stina": [
+   {
+    "land": "Norge",
+    "datum": "12-05",
+    "wikidata": "Q1770143",
+    "ref": null
+   }
+  ],
+  "Siri": [
+   {
+    "land": "Norge",
+    "datum": "06-12",
+    "wikidata": "Q1772342",
+    "ref": null
+   }
+  ],
+  "Maud": [
+   {
+    "land": "Norge",
+    "datum": "06-22",
+    "wikidata": "Q1781876",
+    "ref": null
+   }
+  ],
+  "Ola": [
+   {
+    "land": "Norge",
+    "datum": "07-29",
+    "wikidata": "Q1782345",
+    "ref": null
+   }
+  ],
+  "Julian": [
+   {
+    "land": "Norge",
+    "datum": "02-16",
+    "wikidata": "Q17856012",
+    "ref": null
+   }
+  ],
+  "Kjell": [
+   {
+    "land": "Norge",
+    "datum": "07-11",
+    "wikidata": "Q1785936",
+    "ref": null
+   }
+  ],
+  "Kristoffer": [
+   {
+    "land": "Norge",
+    "datum": "12-18",
+    "wikidata": "Q1789415",
+    "ref": null
+   }
+  ],
+  "Jenny": [
+   {
+    "land": "Norge",
+    "datum": "06-26",
+    "wikidata": "Q3807899",
+    "ref": null
+   }
+  ],
+  "Irene": [
+   {
+    "land": "Norge",
+    "datum": "04-05",
+    "wikidata": "Q389528",
+    "ref": null
+   }
+  ],
+  "Agnes": [
+   {
+    "land": "Norge",
+    "datum": "01-21",
+    "wikidata": "Q394431",
+    "ref": null
+   }
+  ],
+  "Tilde": [
+   {
+    "land": "Estland",
+    "datum": "03-14",
+    "wikidata": "Q3991321",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "03-14",
+    "wikidata": "Q3991321",
+    "ref": null
+   }
+  ],
+  "Edmund": [
+   {
+    "land": "Norge",
+    "datum": "11-16",
+    "wikidata": "Q401836",
+    "ref": null
+   }
+  ],
+  "Aino": [
+   {
+    "land": "Finland",
+    "datum": "05-10",
+    "wikidata": "Q406044",
+    "ref": null
+   }
+  ],
+  "Berta": [
+   {
+    "land": "Lettland",
+    "datum": "09-03",
+    "wikidata": "Q4092653",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "08-31",
+    "wikidata": "Q4092653",
+    "ref": null
+   }
+  ],
+  "Johanna": [
+   {
+    "land": "Finland",
+    "datum": "07-21",
+    "wikidata": "Q4120836",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "12-15",
+    "wikidata": "Q4120836",
+    "ref": null
+   }
+  ],
+  "Joanna": [
+   {
+    "land": "Polen",
+    "datum": "02-02",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "02-04",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "03-01",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "03-28",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "03-31",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "04-28",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "05-12",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "05-24",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "05-25",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "05-26",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "05-30",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "06-27",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "07-09",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "07-23",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-08",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-12",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-17",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-21",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-24",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "08-26",
+    "wikidata": "Q4248351",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "11-09",
+    "wikidata": "Q4248351",
+    "ref": null
+   }
+  ],
+  "Enar": [
+   {
+    "land": "Finland",
+    "datum": "11-17",
+    "wikidata": "Q42947669",
+    "ref": null
+   }
+  ],
+  "Laura": [
+   {
+    "land": "Lettland",
+    "datum": "04-18",
+    "wikidata": "Q429948",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "01-15",
+    "wikidata": "Q429948",
+    "ref": null
+   }
+  ],
+  "Sonja": [
+   {
+    "land": "Norge",
+    "datum": "11-29",
+    "wikidata": "Q4327105",
+    "ref": null
+   }
+  ],
+  "Asta": [
+   {
+    "land": "Norge",
+    "datum": "04-13",
+    "wikidata": "Q4347255",
+    "ref": null
+   }
+  ],
+  "Toini": [
+   {
+    "land": "Finland",
+    "datum": "01-12",
+    "wikidata": "Q4353926",
+    "ref": null
+   }
+  ],
+  "Amanda": [
+   {
+    "land": "Lettland",
+    "datum": "10-26",
+    "wikidata": "Q453722",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "10-26",
+    "wikidata": "Q453722",
+    "ref": null
+   }
+  ],
+  "Rigmor": [
+   {
+    "land": "Norge",
+    "datum": "02-07",
+    "wikidata": "Q4569413",
+    "ref": null
+   }
+  ],
+  "Gunvor": [
+   {
+    "land": "Norge",
+    "datum": "04-03",
+    "wikidata": "Q6978835",
+    "ref": null
+   }
+  ],
+  "Selma": [
+   {
+    "land": "Norge",
+    "datum": "02-21",
+    "wikidata": "Q713759",
+    "ref": null
+   }
+  ],
+  "Antonio": [
+   {
+    "land": "Spanien",
+    "datum": "06-13",
+    "wikidata": "Q7141520",
+    "ref": null
+   }
+  ],
+  "Arvid": [
+   {
+    "land": "Norge",
+    "datum": "04-01",
+    "wikidata": "Q717011",
+    "ref": null
+   }
+  ],
+  "Mary": [
+   {
+    "land": "Norge",
+    "datum": "08-15",
+    "wikidata": "Q734578",
+    "ref": null
+   }
+  ],
+  "Petra": [
+   {
+    "land": "Norge",
+    "datum": "08-01",
+    "wikidata": "Q740790",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "08-17",
+    "wikidata": "Q740790",
+    "ref": null
+   }
+  ],
+  "Gustav": [
+   {
+    "land": "Norge",
+    "datum": "06-06",
+    "wikidata": "Q746076",
+    "ref": null
+   }
+  ],
+  "Sigvard": [
+   {
+    "land": "Norge",
+    "datum": "04-02",
+    "wikidata": "Q7513347",
+    "ref": null
+   }
+  ],
+  "Birger": [
+   {
+    "land": "Norge",
+    "datum": "10-21",
+    "wikidata": "Q773057",
+    "ref": null
+   }
+  ],
+  "Stella": [
+   {
+    "land": "Cypern",
+    "datum": "11-26",
+    "wikidata": "Q97960571",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-26",
+    "wikidata": "Q97960571",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "12-25",
+    "wikidata": "Q773765",
+    "ref": null
+   }
+  ],
+  "Michaela": [
+   {
+    "land": "Tjeckien",
+    "datum": "10-19",
+    "wikidata": "Q776529",
+    "ref": null
+   }
+  ],
+  "Elina": [
+   {
+    "land": "Cypern",
+    "datum": "05-21",
+    "wikidata": "Q97932923",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-21",
+    "wikidata": "Q97932923",
+    "ref": null
+   }
+  ],
+  "Alexis": [
+   {
+    "land": "Cypern",
+    "datum": "03-17",
+    "wikidata": "Q97932952",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "08-30",
+    "wikidata": "Q97932949",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "03-17",
+    "wikidata": "Q97932952",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "08-30",
+    "wikidata": "Q97932949",
+    "ref": null
+   }
+  ],
+  "Alex": [
+   {
+    "land": "Cypern",
+    "datum": "08-30",
+    "wikidata": "Q97933419",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "08-30",
+    "wikidata": "Q97933419",
+    "ref": null
+   }
+  ],
+  "Sophia": [
+   {
+    "land": "Cypern",
+    "datum": "09-17",
+    "wikidata": "Q97959398",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "09-17",
+    "wikidata": "Q97959398",
+    "ref": null
+   }
+  ],
+  "Lina": [
+   {
+    "land": "Cypern",
+    "datum": "03-25",
+    "wikidata": "Q98560521",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "11-26",
+    "wikidata": "Q97960908",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "03-25",
+    "wikidata": "Q98560521",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-26",
+    "wikidata": "Q97960908",
+    "ref": null
+   }
+  ],
+  "Mona": [
+   {
+    "land": "Cypern",
+    "datum": "06-15",
+    "wikidata": "Q98557409",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "06-15",
+    "wikidata": "Q98557409",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "05-04",
+    "wikidata": "Q2419834",
+    "ref": null
+   }
+  ],
+  "Filippa": [
+   {
+    "land": "Cypern",
+    "datum": "04-19",
+    "wikidata": "Q98558003",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "04-19",
+    "wikidata": "Q98558003",
+    "ref": null
+   }
+  ],
+  "Viktoria": [
+   {
+    "land": "Cypern",
+    "datum": "11-11",
+    "wikidata": "Q98558017",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-11",
+    "wikidata": "Q98558017",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-25",
+    "wikidata": "Q18328177",
+    "ref": null
+   }
+  ],
+  "Nora": [
+   {
+    "land": "Cypern",
+    "datum": "05-21",
+    "wikidata": "Q98559512",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-21",
+    "wikidata": "Q98559512",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "06-12",
+    "wikidata": "Q250267",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "04-14",
+    "wikidata": "Q250267",
+    "ref": null
+   }
+  ],
+  "Antonia": [
+   {
+    "land": "Cypern",
+    "datum": "01-17",
+    "wikidata": "Q98560143",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "01-17",
+    "wikidata": "Q98560143",
+    "ref": null
+   }
+  ],
+  "Andrea": [
+   {
+    "land": "Cypern",
+    "datum": "11-30",
+    "wikidata": "Q97961704",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-30",
+    "wikidata": "Q97961704",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-03",
+    "wikidata": "Q493293",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "09-26",
+    "wikidata": "Q18177321",
+    "ref": null
+   }
+  ],
+  "Natalia": [
+   {
+    "land": "Cypern",
+    "datum": "08-26",
+    "wikidata": "Q98101338",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "08-26",
+    "wikidata": "Q98101338",
+    "ref": null
+   }
+  ],
+  "Anastasia": [
+   {
+    "land": "Cypern",
+    "datum": "01-22",
+    "wikidata": "Q98437820",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "01-22",
+    "wikidata": "Q98437820",
+    "ref": null
+   }
+  ],
+  "Jill": [
+   {
+    "land": "Norge",
+    "datum": "02-16",
+    "wikidata": "Q1798473",
+    "ref": null
+   }
+  ],
+  "Vidar": [
+   {
+    "land": "Norge",
+    "datum": "12-29",
+    "wikidata": "Q1799009",
+    "ref": null
+   }
+  ],
+  "Abraham": [
+   {
+    "land": "Norge",
+    "datum": "12-20",
+    "wikidata": "Q17997608",
+    "ref": null
+   }
+  ],
+  "Mina": [
+   {
+    "land": "Norge",
+    "datum": "07-05",
+    "wikidata": "Q1800085",
+    "ref": null
+   }
+  ],
+  "Patrick": [
+   {
+    "land": "Irland",
+    "datum": "03-17",
+    "wikidata": "Q18002623",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "03-05",
+    "wikidata": "Q18002623",
+    "ref": null
+   }
+  ],
+  "Pauline": [
+   {
+    "land": "Norge",
+    "datum": "03-22",
+    "wikidata": "Q18009833",
+    "ref": null
+   }
+  ],
+  "Rudolf": [
+   {
+    "land": "Norge",
+    "datum": "03-27",
+    "wikidata": "Q18028491",
+    "ref": null
+   }
+  ],
+  "Otto": [
+   {
+    "land": "Norge",
+    "datum": "11-04",
+    "wikidata": "Q18029644",
+    "ref": null
+   }
+  ],
+  "Annette": [
+   {
+    "land": "Norge",
+    "datum": "12-09",
+    "wikidata": "Q18071263",
+    "ref": null
+   }
+  ],
+  "Bernt": [
+   {
+    "land": "Norge",
+    "datum": "08-20",
+    "wikidata": "Q18086583",
+    "ref": null
+   }
+  ],
+  "Eivor": [
+   {
+    "land": "Finland",
+    "datum": "01-12",
+    "wikidata": "Q1809284",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "10-24",
+    "wikidata": "Q1809284",
+    "ref": null
+   }
+  ],
+  "Eskil": [
+   {
+    "land": "Norge",
+    "datum": "09-15",
+    "wikidata": "Q1809942",
+    "ref": null
+   }
+  ],
+  "Magnus": [
+   {
+    "land": "Norge",
+    "datum": "04-16",
+    "wikidata": "Q18109457",
+    "ref": null
+   }
+  ],
+  "Ruben": [
+   {
+    "land": "Norge",
+    "datum": "11-28",
+    "wikidata": "Q18114894",
+    "ref": null
+   }
+  ],
+  "Edvin": [
+   {
+    "land": "Norge",
+    "datum": "03-11",
+    "wikidata": "Q18115390",
+    "ref": null
+   }
+  ],
+  "Yvonne": [
+   {
+    "land": "Norge",
+    "datum": "08-08",
+    "wikidata": "Q18115587",
+    "ref": null
+   }
+  ],
+  "Edvard": [
+   {
+    "land": "Norge",
+    "datum": "03-18",
+    "wikidata": "Q18130926",
+    "ref": null
+   }
+  ],
+  "Karin": [
+   {
+    "land": "Norge",
+    "datum": "08-02",
+    "wikidata": "Q1814118",
+    "ref": null
+   }
+  ],
+  "Oskar": [
+   {
+    "land": "Norge",
+    "datum": "08-05",
+    "wikidata": "Q18145769",
+    "ref": null
+   }
+  ],
+  "Konrad": [
+   {
+    "land": "Norge",
+    "datum": "11-26",
+    "wikidata": "Q18156186",
+    "ref": null
+   }
+  ],
+  "Alfons": [
+   {
+    "land": "Lettland",
+    "datum": "11-22",
+    "wikidata": "Q18180801",
+    "ref": null
+   }
+  ],
+  "Maja": [
+   {
+    "land": "Norge",
+    "datum": "05-07",
+    "wikidata": "Q18184581",
+    "ref": null
+   }
+  ],
+  "Mathias": [
+   {
+    "land": "Norge",
+    "datum": "02-24",
+    "wikidata": "Q1818817",
+    "ref": null
+   }
+  ],
+  "Terese": [
+   {
+    "land": "Norge",
+    "datum": "04-26",
+    "wikidata": "Q18192715",
+    "ref": null
+   }
+  ],
+  "Silvia": [
+   {
+    "land": "Cypern",
+    "datum": "11-05",
+    "wikidata": "Q98596486",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-05",
+    "wikidata": "Q98596486",
+    "ref": null
+   }
+  ],
+  "Egon": [
+   {
+    "land": "Norge",
+    "datum": "11-05",
+    "wikidata": "Q987902",
+    "ref": null
+   }
+  ],
+  "Emil": [
+   {
+    "land": "Norge",
+    "datum": "01-23",
+    "wikidata": "Q989320",
+    "ref": null
+   }
+  ],
+  "Filip": [
+   {
+    "land": "Norge",
+    "datum": "05-01",
+    "wikidata": "Q998338",
+    "ref": null
+   }
+  ],
+  "Oliwer": [
+   {
+    "land": "Polen",
+    "datum": "01-12",
+    "wikidata": "Q18051949",
+    "ref": null
+   },
+   {
+    "land": "Polen",
+    "datum": "07-21",
+    "wikidata": "Q18051949",
+    "ref": null
+   }
+  ],
+  "Gilbert": [
+   {
+    "land": "Polen",
+    "datum": "02-04",
+    "wikidata": "Q1675463",
+    "ref": null
+   },
+   {
+    "land": "Österrike",
+    "datum": "08-06",
+    "wikidata": "Q1675463",
+    "ref": null
+   }
+  ],
+  "Olivia": [
+   {
+    "land": "Cypern",
+    "datum": "05-29",
+    "wikidata": "Q98544722",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "09-17",
+    "wikidata": "Q98544722",
+    "ref": null
+   },
+   {
+    "land": "Estland",
+    "datum": "04-16",
+    "wikidata": "Q632264",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "05-29",
+    "wikidata": "Q632264",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "05-29",
+    "wikidata": "Q98544722",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "09-17",
+    "wikidata": "Q98544722",
+    "ref": null
+   },
+   {
+    "land": "Spanien",
+    "datum": "02-03",
+    "wikidata": "Q632264",
+    "ref": null
+   },
+   {
+    "land": "Spanien",
+    "datum": "06-10",
+    "wikidata": "Q632264",
+    "ref": null
+   },
+   {
+    "land": "Österrike",
+    "datum": "03-05",
+    "wikidata": "Q632264",
+    "ref": null
+   }
+  ],
+  "Neo": [
+   {
+    "land": "Finland",
+    "datum": "09-12",
+    "wikidata": "Q28751241",
+    "ref": null
+   }
+  ],
+  "Sofi": [
+   {
+    "land": "Cypern",
+    "datum": "09-17",
+    "wikidata": "Q98534781",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "09-17",
+    "wikidata": "Q98534781",
+    "ref": null
+   }
+  ],
+  "Angela": [
+   {
+    "land": "Cypern",
+    "datum": "03-25",
+    "wikidata": "Q98545401",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "11-08",
+    "wikidata": "Q98545401",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "03-25",
+    "wikidata": "Q98545401",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-08",
+    "wikidata": "Q98545401",
+    "ref": null
+   }
+  ],
+  "Isak": [
+   {
+    "land": "Norge",
+    "datum": "12-19",
+    "wikidata": "Q18198729",
+    "ref": null
+   }
+  ],
+  "Kasper": [
+   {
+    "land": "Norge",
+    "datum": "05-09",
+    "wikidata": "Q18199995",
+    "ref": null
+   }
+  ],
+  "Lea": [
+   {
+    "land": "Norge",
+    "datum": "06-28",
+    "wikidata": "Q18202125",
+    "ref": null
+   }
+  ],
+  "Veronika": [
+   {
+    "land": "Estland",
+    "datum": "08-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Kroatien",
+    "datum": "02-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Kroatien",
+    "datum": "07-09",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Lettland",
+    "datum": "02-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Litauen",
+    "datum": "01-13",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "02-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Slovakien",
+    "datum": "02-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "02-07",
+    "wikidata": "Q18218258",
+    "ref": null
+   },
+   {
+    "land": "Österrike",
+    "datum": "02-04",
+    "wikidata": "Q18218258",
+    "ref": null
+   }
+  ],
+  "Lisbeth": [
+   {
+    "land": "Norge",
+    "datum": "11-19",
+    "wikidata": "Q1827880",
+    "ref": null
+   }
+  ],
+  "Leif": [
+   {
+    "land": "Norge",
+    "datum": "10-09",
+    "wikidata": "Q18338322",
+    "ref": null
+   }
+  ],
+  "Celine": [
+   {
+    "land": "Norge",
+    "datum": "02-21",
+    "wikidata": "Q18338336",
+    "ref": null
+   }
+  ],
+  "Malin": [
+   {
+    "land": "Norge",
+    "datum": "07-22",
+    "wikidata": "Q18369928",
+    "ref": null
+   }
+  ],
+  "Aron": [
+   {
+    "land": "Norge",
+    "datum": "04-01",
+    "wikidata": "Q18410868",
+    "ref": null
+   }
+  ],
+  "Hjalmar": [
+   {
+    "land": "Norge",
+    "datum": "01-16",
+    "wikidata": "Q18428430",
+    "ref": null
+   }
+  ],
+  "Vilma": [
+   {
+    "land": "Lettland",
+    "datum": "08-31",
+    "wikidata": "Q18510601",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "01-07",
+    "wikidata": "Q18510601",
+    "ref": null
+   }
+  ],
+  "Marija": [
+   {
+    "land": "Lettland",
+    "datum": "07-22",
+    "wikidata": "Q18603722",
+    "ref": null
+   }
+  ],
+  "Henning": [
+   {
+    "land": "Norge",
+    "datum": "05-22",
+    "wikidata": "Q18607880",
+    "ref": null
+   }
+  ],
+  "Ester": [
+   {
+    "land": "Italien",
+    "datum": "07-01",
+    "wikidata": "Q18638241",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "05-24",
+    "wikidata": "Q18638241",
+    "ref": null
+   }
+  ],
+  "Ethel": [
+   {
+    "land": "Estland",
+    "datum": "12-16",
+    "wikidata": "Q187309",
+    "ref": null
+   }
+  ],
+  "Bruno": [
+   {
+    "land": "Lettland",
+    "datum": "09-09",
+    "wikidata": "Q1874605",
+    "ref": null
+   }
+  ],
+  "Eleonora": [
+   {
+    "land": "Lettland",
+    "datum": "02-21",
+    "wikidata": "Q18759077",
+    "ref": null
+   }
+  ],
+  "Vibeke": [
+   {
+    "land": "Norge",
+    "datum": "10-12",
+    "wikidata": "Q488363",
+    "ref": null
+   }
+  ],
+  "Roger": [
+   {
+    "land": "Norge",
+    "datum": "01-04",
+    "wikidata": "Q4925304",
+    "ref": null
+   }
+  ],
+  "John": [
+   {
+    "land": "Grekland",
+    "datum": "01-07",
+    "wikidata": "Q4925477",
+    "ref": null
+   }
+  ],
+  "Paul": [
+   {
+    "land": "Norge",
+    "datum": "01-25",
+    "wikidata": "Q4925623",
+    "ref": null
+   }
+  ],
+  "Andreas": [
+   {
+    "land": "Cypern",
+    "datum": "11-30",
+    "wikidata": "Q4926263",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-30",
+    "wikidata": "Q4926263",
+    "ref": null
+   }
+  ],
+  "Fredrik": [
+   {
+    "land": "Norge",
+    "datum": "11-14",
+    "wikidata": "Q4926491",
+    "ref": null
+   }
+  ],
+  "Stefan": [
+   {
+    "land": "Norge",
+    "datum": "12-26",
+    "wikidata": "Q4927128",
+    "ref": null
+   }
+  ],
+  "Michael": [
+   {
+    "land": "Cypern",
+    "datum": "11-08",
+    "wikidata": "Q22809771",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "11-08",
+    "wikidata": "Q22809771",
+    "ref": null
+   },
+   {
+    "land": "Ryssland",
+    "datum": "11-21",
+    "wikidata": "Q4927524",
+    "ref": null
+   }
+  ],
+  "Robert": [
+   {
+    "land": "Norge",
+    "datum": "06-07",
+    "wikidata": "Q4927937",
+    "ref": null
+   }
+  ],
+  "Tobias": [
+   {
+    "land": "Norge",
+    "datum": "09-20",
+    "wikidata": "Q4928115",
+    "ref": null
+   }
+  ],
+  "Erika": [
+   {
+    "land": "Norge",
+    "datum": "05-18",
+    "wikidata": "Q4962499",
+    "ref": null
+   }
+  ],
+  "Martina": [
+   {
+    "land": "Tjeckien",
+    "datum": "07-17",
+    "wikidata": "Q4963627",
+    "ref": null
+   }
+  ],
+  "Bjarne": [
+   {
+    "land": "Norge",
+    "datum": "06-18",
+    "wikidata": "Q782509",
+    "ref": null
+   }
+  ],
+  "Henrietta": [
+   {
+    "land": "Norge",
+    "datum": "09-18",
+    "wikidata": "Q783677",
+    "ref": null
+   }
+  ],
+  "Bella": [
+   {
+    "land": "Lettland",
+    "datum": "09-03",
+    "wikidata": "Q792453",
+    "ref": null
+   }
+  ],
+  "Gerhard": [
+   {
+    "land": "Norge",
+    "datum": "07-19",
+    "wikidata": "Q7996169",
+    "ref": null
+   }
+  ],
+  "Barbro": [
+   {
+    "land": "Norge",
+    "datum": "12-04",
+    "wikidata": "Q807877",
+    "ref": null
+   }
+  ],
+  "Inge": [
+   {
+    "land": "Norge",
+    "datum": "12-17",
+    "wikidata": "Q8085241",
+    "ref": null
+   }
+  ],
+  "Minna": [
+   {
+    "land": "Lettland",
+    "datum": "10-14",
+    "wikidata": "Q8095855",
+    "ref": null
+   }
+  ],
+  "Bengt": [
+   {
+    "land": "Norge",
+    "datum": "03-21",
+    "wikidata": "Q817199",
+    "ref": null
+   }
+  ],
+  "Berit": [
+   {
+    "land": "Norge",
+    "datum": "10-07",
+    "wikidata": "Q820698",
+    "ref": null
+   }
+  ],
+  "Margareta": [
+   {
+    "land": "Norge",
+    "datum": "07-20",
+    "wikidata": "Q8274988",
+    "ref": null
+   }
+  ],
+  "Ivan": [
+   {
+    "land": "Norge",
+    "datum": "01-22",
+    "wikidata": "Q830350",
+    "ref": null
+   }
+  ],
+  "Melissa": [
+   {
+    "land": "Norge",
+    "datum": "07-13",
+    "wikidata": "Q830357",
+    "ref": null
+   }
+  ],
+  "Sara": [
+   {
+    "land": "Spanien",
+    "datum": "10-09",
+    "wikidata": "Q833345",
+    "ref": null
+   }
+  ],
+  "Magdalena": [
+   {
+    "land": "Tjeckien",
+    "datum": "07-22",
+    "wikidata": "Q842544",
+    "ref": null
+   }
+  ],
+  "Christina": [
+   {
+    "land": "Cypern",
+    "datum": "07-24",
+    "wikidata": "Q84472200",
+    "ref": null
+   },
+   {
+    "land": "Cypern",
+    "datum": "12-25",
+    "wikidata": "Q84472200",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "07-24",
+    "wikidata": "Q84472200",
+    "ref": null
+   },
+   {
+    "land": "Grekland",
+    "datum": "12-25",
+    "wikidata": "Q84472200",
+    "ref": null
+   }
+  ],
+  "Tuula": [
+   {
+    "land": "Finland",
+    "datum": "05-14",
+    "wikidata": "Q18761018",
+    "ref": null
+   }
+  ],
+  "Ulrika": [
+   {
+    "land": "Lettland",
+    "datum": "03-14",
+    "wikidata": "Q18924998",
+    "ref": null
+   }
+  ],
+  "Margot": [
+   {
+    "land": "Norge",
+    "datum": "08-15",
+    "wikidata": "Q1895358",
+    "ref": null
+   }
+  ],
+  "Miriam": [
+   {
+    "land": "Norge",
+    "datum": "07-05",
+    "wikidata": "Q1938195",
+    "ref": null
+   }
+  ],
+  "Heidi": [
+   {
+    "land": "Norge",
+    "datum": "06-04",
+    "wikidata": "Q1938638",
+    "ref": null
+   }
+  ],
+  "Finn": [
+   {
+    "land": "Norge",
+    "datum": "10-16",
+    "wikidata": "Q1940938",
+    "ref": null
+   }
+  ],
+  "Evald": [
+   {
+    "land": "Norge",
+    "datum": "10-03",
+    "wikidata": "Q19655475",
+    "ref": null
+   }
+  ],
+  "Bertil": [
+   {
+    "land": "Norge",
+    "datum": "08-24",
+    "wikidata": "Q19687104",
+    "ref": null
+   }
+  ],
+  "Gerd": [
+   {
+    "land": "Norge",
+    "datum": "03-23",
+    "wikidata": "Q19688437",
+    "ref": null
+   }
+  ],
+  "Malva": [
+   {
+    "land": "Lettland",
+    "datum": "06-10",
+    "wikidata": "Q19689481",
+    "ref": null
+   }
+  ],
+  "Marielle": [
+   {
+    "land": "Norge",
+    "datum": "08-15",
+    "wikidata": "Q19689490",
+    "ref": null
+   }
+  ],
+  "Samira": [
+   {
+    "land": "Norge",
+    "datum": "05-16",
+    "wikidata": "Q1971074",
+    "ref": null
+   }
+  ],
+  "Lennart": [
+   {
+    "land": "Norge",
+    "datum": "11-06",
+    "wikidata": "Q19760064",
+    "ref": null
+   }
+  ],
+  "Glenn": [
+   {
+    "land": "Norge",
+    "datum": "03-26",
+    "wikidata": "Q19802199",
+    "ref": null
+   }
+  ],
+  "Elin": [
+   {
+    "land": "Norge",
+    "datum": "07-31",
+    "wikidata": "Q19833184",
+    "ref": null
+   }
+  ],
+  "Georg": [
+   {
+    "land": "Norge",
+    "datum": "04-23",
+    "wikidata": "Q1985538",
+    "ref": null
+   }
+  ],
+  "Ari": [
+   {
+    "land": "Finland",
+    "datum": "03-04",
+    "wikidata": "Q1986394",
+    "ref": null
+   }
+  ],
+  "Sivert": [
+   {
+    "land": "Norge",
+    "datum": "04-02",
+    "wikidata": "Q19869345",
+    "ref": null
+   }
+  ],
+  "Tora": [
+   {
+    "land": "Norge",
+    "datum": "10-19",
+    "wikidata": "Q19967624",
+    "ref": null
+   }
+  ],
+  "Siv": [
+   {
+    "land": "Norge",
+    "datum": "09-06",
+    "wikidata": "Q19967662",
+    "ref": null
+   }
+  ],
+  "Freja": [
+   {
+    "land": "Finland",
+    "datum": "05-06",
+    "wikidata": "Q20000391",
+    "ref": null
+   }
+  ],
+  "Nova": [
+   {
+    "land": "Finland",
+    "datum": "09-12",
+    "wikidata": "Q20000782",
+    "ref": null
+   }
+  ],
+  "Veronica": [
+   {
+    "land": "Norge",
+    "datum": "02-04",
+    "wikidata": "Q20020",
+    "ref": null
+   }
+  ],
+  "Stig": [
+   {
+    "land": "Norge",
+    "datum": "09-13",
+    "wikidata": "Q2003540",
+    "ref": null
+   }
+  ],
+  "Ellinor": [
+   {
+    "land": "Estland",
+    "datum": "07-08",
+    "wikidata": "Q20551665",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "07-11",
+    "wikidata": "Q20551665",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "04-14",
+    "wikidata": "Q20551665",
+    "ref": null
+   }
+  ],
+  "Valborg": [
+   {
+    "land": "Norge",
+    "datum": "05-01",
+    "wikidata": "Q20726370",
+    "ref": null
+   }
+  ],
+  "Torleif": [
+   {
+    "land": "Norge",
+    "datum": "11-27",
+    "wikidata": "Q20800272",
+    "ref": null
+   }
+  ],
+  "Betty": [
+   {
+    "land": "Norge",
+    "datum": "03-08",
+    "wikidata": "Q2090092",
+    "ref": null
+   }
+  ],
+  "Signe": [
+   {
+    "land": "Lettland",
+    "datum": "09-11",
+    "wikidata": "Q2096893",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "08-23",
+    "wikidata": "Q2096893",
+    "ref": null
+   }
+  ],
+  "Rune": [
+   {
+    "land": "Norge",
+    "datum": "06-02",
+    "wikidata": "Q2097234",
+    "ref": null
+   }
+  ],
+  "Nancy": [
+   {
+    "land": "Norge",
+    "datum": "04-04",
+    "wikidata": "Q2102316",
+    "ref": null
+   }
+  ],
+  "Oliver": [
+   {
+    "land": "Estland",
+    "datum": "05-22",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Finland",
+    "datum": "05-29",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Kroatien",
+    "datum": "07-01",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "08-03",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Slovakien",
+    "datum": "07-07",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Tjeckien",
+    "datum": "10-02",
+    "wikidata": "Q2110096",
+    "ref": null
+   },
+   {
+    "land": "Österrike",
+    "datum": "07-11",
+    "wikidata": "Q2110096",
+    "ref": null
+   }
+  ],
+  "Eilert": [
+   {
+    "land": "Norge",
+    "datum": "04-18",
+    "wikidata": "Q21146616",
+    "ref": null
+   }
+  ],
+  "Johannes": [
+   {
+    "land": "Norge",
+    "datum": "06-24",
+    "wikidata": "Q2117521",
+    "ref": null
+   }
+  ],
+  "Ragnar": [
+   {
+    "land": "Norge",
+    "datum": "05-25",
+    "wikidata": "Q2127308",
+    "ref": null
+   }
+  ],
+  "Rolf": [
+   {
+    "land": "Norge",
+    "datum": "08-27",
+    "wikidata": "Q2163153",
+    "ref": null
+   }
+  ],
+  "Ronja": [
+   {
+    "land": "Norge",
+    "datum": "02-12",
+    "wikidata": "Q2165982",
+    "ref": null
+   }
+  ],
+  "Roy": [
+   {
+    "land": "Norge",
+    "datum": "11-03",
+    "wikidata": "Q2170752",
+    "ref": null
+   }
+  ],
+  "Frank": [
+   {
+    "land": "Norge",
+    "datum": "10-04",
+    "wikidata": "Q220546",
+    "ref": null
+   }
+  ],
+  "Fatima": [
+   {
+    "land": "Norge",
+    "datum": "02-18",
+    "wikidata": "Q221839",
+    "ref": null
+   }
+  ],
+  "Bernhard": [
+   {
+    "land": "Norge",
+    "datum": "08-20",
+    "wikidata": "Q221978",
+    "ref": null
+   }
+  ],
+  "Ellen": [
+   {
+    "land": "Norge",
+    "datum": "05-21",
+    "wikidata": "Q2235472",
+    "ref": null
+   }
+  ],
+  "Jens": [
+   {
+    "land": "Norge",
+    "datum": "09-24",
+    "wikidata": "Q2246251",
+    "ref": null
+   }
+  ],
+  "Jeanette": [
+   {
+    "land": "Norge",
+    "datum": "04-21",
+    "wikidata": "Q2300098",
+    "ref": null
+   }
+  ],
+  "Pia": [
+   {
+    "land": "Norge",
+    "datum": "12-12",
+    "wikidata": "Q2300138",
+    "ref": null
+   }
+  ],
+  "Joakim": [
+   {
+    "land": "Norge",
+    "datum": "03-20",
+    "wikidata": "Q2307004",
+    "ref": null
+   }
+  ],
+  "Jannike": [
+   {
+    "land": "Norge",
+    "datum": "04-21",
+    "wikidata": "Q2360788",
+    "ref": null
+   }
+  ],
+  "Tage": [
+   {
+    "land": "Norge",
+    "datum": "09-20",
+    "wikidata": "Q2387848",
+    "ref": null
+   }
+  ],
+  "Thea": [
+   {
+    "land": "Norge",
+    "datum": "04-26",
+    "wikidata": "Q2415656",
+    "ref": null
+   }
+  ],
+  "Benjamin": [
+   {
+    "land": "Norge",
+    "datum": "08-30",
+    "wikidata": "Q2424149",
+    "ref": null
+   }
+  ],
+  "Ulla": [
+   {
+    "land": "Lettland",
+    "datum": "10-30",
+    "wikidata": "Q2475096",
+    "ref": null
+   },
+   {
+    "land": "Norge",
+    "datum": "07-04",
+    "wikidata": "Q2475096",
+    "ref": null
+   }
+  ],
+  "Dan": [
+   {
+    "land": "Norge",
+    "datum": "12-11",
+    "wikidata": "Q2487038",
+    "ref": null
+   }
+  ],
+  "Viggo": [
+   {
+    "land": "Norge",
+    "datum": "06-15",
+    "wikidata": "Q2524028",
+    "ref": null
+   }
+  ],
+  "Ronald": [
+   {
+    "land": "Norge",
+    "datum": "08-09",
+    "wikidata": "Q2532287",
+    "ref": null
+   }
+  ]
+ }
+}

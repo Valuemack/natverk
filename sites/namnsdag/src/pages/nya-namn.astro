@@ -25,7 +25,7 @@ const fragor = [
   { fraga: `Vilka nya namn kommer i almanackan ${senaste}?`, svar: `Från ${senaste} får ${nyaSenaste.length} nya namn namnsdag: ${lista(nyaSenaste.map((a) => `${a.nytt} (${dagText(a.datum)})`))}.` },
   summaNya > 0 && { fraga: `Hur många heter de nya namnen från ${senaste}?`, svar: `${tal(summaNya)} personer i Sverige hade något av de ${nyaSenaste.length} nya namnen som tilltalsnamn i slutet av 2020 (SCB)${nyfAr ? `, och ${tal(nyfSumma)} nyfödda fick något av dem ${nyfAr}` : ""}.` },
   utv.length > 0 && { fraga: "Blir ett namn vanligare när det kommer in i almanackan?", svar: `Inte nödvändigtvis. Av ${utv.length} namn som lagts till sedan ${ar.at(-1)} har ${okat} fått fler nyfödda och ${utv.length - okat} färre, jämfört med året innan de kom in (SCB, nyfödda till och med ${utv[0].sist.ar}).` },
-  { fraga: "Hur ofta ändras namnlängden?", svar: `Namnlängden ses över ungefär vart tionde år. De senaste ändringarna gäller från ${ar.slice(0, 3).join(", ")}.` },
+  { fraga: "Hur ofta ändras namnlängden?", svar: `Oregelbundet, med några års mellanrum. Sedan ${ar.at(-1)} har namnlängden ändrats ${ar.length} gånger, med ändringar från ${lista([...ar].reverse().map(String))}.` },
 ];
 ---
 <Layout site={SITE} titel={`Nya namn i almanackan ${senaste} – ${nyaSenaste.length} namn får namnsdag`}

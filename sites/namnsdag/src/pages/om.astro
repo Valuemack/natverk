@@ -7,11 +7,11 @@ import { FN_KALLA, FODDA_KALLA } from "../lib/dagdata.js";
 const antal = ALLA_NAMN.filter((n) => !n.fran || n.fran <= AR).length;
 const nya = ALLA_NAMN.length - antal;
 ---
-<Layout site={SITE} titel="Om dagensnamnsdagar.se – källor och metod"
-  beskrivning="Varifrån namnsdagarna, namnstatistiken och fakta på dagensnamnsdagar.se kommer (Isof, SCB, Wikipedia, Wikidata, FN), hur sidorna uppdateras och vilka licenser som gäller."
+<Layout site={SITE} titel="Om namnsdagaridag.se – källor och metod"
+  beskrivning="Varifrån namnsdagarna, namnstatistiken och fakta på namnsdagaridag.se kommer (Isof, SCB, Wikipedia, Wikidata, FN), hur sidorna uppdateras och vilka licenser som gäller."
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
-  <h1>Om dagensnamnsdagar.se</h1>
-  <p class="svar">dagensnamnsdagar.se visar vem som har namnsdag idag och varje annan dag, när {tal(antal)} namn har namnsdag och hur många i Sverige som bär dem. Sajten är en oberoende tjänst. Den är inte knuten till Svenska Akademien, Institutet för språk och folkminnen (Isof) eller SCB. Sajten hette tidigare namnsdagsidag.se.</p>
+  <h1>Om namnsdagaridag.se</h1>
+  <p class="svar">namnsdagaridag.se visar vem som har namnsdag idag och varje annan dag, när {tal(antal)} namn har namnsdag och hur många i Sverige som bär dem. Sajten är en oberoende tjänst. Den är inte knuten till Svenska Akademien, Institutet för språk och folkminnen (Isof) eller SCB. Sajten hette tidigare namnsdagsidag.se.</p>
 
   <h2 id="kallor">Källor</h2>
   <ul>
@@ -35,11 +35,9 @@ const nya = ALLA_NAMN.length - antal;
     <li>Kalenderfilerna (.ics) innehåller en årligen återkommande heldagshändelse och fungerar i Google Kalender, Apple Kalender och Outlook.</li>
   </ul>
 
-  <h2 id="agare">Vem står bakom sajten?</h2>
-  <p>dagensnamnsdagar.se drivs av samma ägare som <a href="https://postabrev.se/" rel="noopener">Posta Brev</a>, en tjänst där man skriver brev på nätet som sedan skrivs ut och skickas med posten. På namn- och datumsidorna finns därför en knapp för att gratulera med ett riktigt brev via Posta Brev. Länkarna är märkta som kommersiella (<code>rel="sponsored"</code>) och påverkar inte vilka namn, datum eller siffror som visas – allt innehåll här bygger på källorna ovan.</p>
 
   <h2 id="integritet">Integritet och cookies</h2>
-  <p>dagensnamnsdagar.se kräver ingen inloggning och sparar inga personuppgifter om dig i egna system. Namnsökningen, barnnamnsfiltret och gratulationskortet körs helt i din webbläsare – det du skriver skickas inte till oss. Widgeten för andra sajter sätter inga kakor.</p>
+  <p>namnsdagaridag.se kräver ingen inloggning och sparar inga personuppgifter om dig i egna system. Namnsökningen, barnnamnsfiltret och gratulationskortet körs helt i din webbläsare – det du skriver skickas inte till oss. Widgeten för andra sajter sätter inga kakor.</p>
   <h3>Annonser och cookies</h3>
   <p>Sajten finansieras med annonser från Google AdSense. Google och dess partner kan använda cookies för att visa och mäta annonser, och – om du samtycker – för att anpassa dem efter dina intressen. Du väljer själv i samtyckesrutan som visas vid första besöket och kan när som helst ändra ditt val via länken "Cookieinställningar" längst ner på sidan. Läs mer om hur Google använder data: <a href="https://policies.google.com/technologies/partner-sites" rel="nofollow noopener">policies.google.com/technologies/partner-sites</a>.</p>
   <h3>Statistik</h3>

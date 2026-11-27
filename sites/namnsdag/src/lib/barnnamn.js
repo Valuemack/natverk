@@ -1,7 +1,7 @@
 // Underlag för verktyget "Hitta barnnamn": alla namn som minst 10 nyfödda fick under 2018–2022
 // (SCB, nyfödda efter tilltalsnamn), med kön, trend och namnsdag.
 import { ALLA_NAMN, UTAN_NAMNSDAG } from "../site.js";
-import { NYF_ALLA_AR, nyfodda } from "./namndata.js";
+import { NYF_ALLA_AR, nyfodda, harEgenSida } from "./namndata.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -19,7 +19,7 @@ export const BARNNAMN = Object.entries(NYF.namn).map(([namn, d]) => {
   return {
     namn, K, M, fore,
     trend: fore ? Math.round(((K + M - fore) / fore) * 100) : null,
-    slug: a?.slug ?? u?.slug ?? null,
+    slug: harEgenSida(namn) ? (a?.slug ?? u?.slug ?? null) : null,
     datum: a?.datum ?? u?.huvud?.datum ?? null,
     typ: a ? "egen" : u?.huvud ? "variant" : null,
   };

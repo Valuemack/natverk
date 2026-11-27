@@ -6,10 +6,11 @@ import { faqLd } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import { SITE, UPPDATERAD, ALLA_NAMN, VARIANTER, AR, dagText, namnHref, tal, barare } from "../site.js";
+import { utanHref } from "../lib/namndata.js";
 
 const poster = [
   ...ALLA_NAMN.map((n) => ({ namn: n.namn, href: namnHref(n.namn), dag: dagText(n.datum), fran: n.fran })),
-  ...VARIANTER.map((v) => ({ namn: v.namn, href: `/namn/${v.slug}/`, dag: dagText(v.huvud.datum), se: v.huvud.namn })),
+  ...VARIANTER.map((v) => ({ namn: v.namn, href: utanHref(v), dag: dagText(v.huvud.datum), se: v.huvud.namn })),
 ].sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
 const grupper = new Map();
 for (const p of poster) { const b = p.namn[0].toUpperCase(); if (!grupper.has(b)) grupper.set(b, []); grupper.get(b).push(p); }

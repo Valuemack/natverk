@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node scripts/09-og-bilder.mjs",
+    "prebuild": "node scripts/11-omdirigeringar.mjs && node scripts/09-og-bilder.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "data": "node scripts/run-all.mjs",

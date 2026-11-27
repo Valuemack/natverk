@@ -105,7 +105,7 @@ const allaLd = [...grund, ...(smulor.length > 1 ? [breadcrumbLd(site, smulor)] :
         )}
         {site.kallor?.length > 0 && <p class="kallor-rad"><strong>Datakällor:</strong> {site.kallor.join(" · ")}</p>}
         <p>{site.sidfotText}</p>
-        <p>© {new Date().getFullYear()} {site.organisation}. Oberoende tjänst – inte ansluten till någon myndighet. Drivs av samma ägare som <a href="/om/#agare">Posta Brev</a>.</p>
+        <p>© {new Date().getFullYear()} {site.organisation}. Oberoende tjänst – inte ansluten till någon myndighet.</p>
       </div>
     </footer>
     <slot name="skript" />

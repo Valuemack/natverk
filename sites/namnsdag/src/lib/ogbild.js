@@ -12,7 +12,7 @@ const FLAGGOR = ["#7a2e5a", "#e9a6c4", "#d9a441", "#b56a92"];
 /** Teckenstorlek som får texten att rymmas på ~1 040 px bredd. */
 const storlek = (text, max, faktor) => Math.round(Math.min(max, 1040 / Math.max(1, [...text].length * faktor)));
 
-export const FOT = "dagensnamnsdagar.se";
+export const FOT = "namnsdagaridag.se";
 
 export async function ogPng({ ovan = "", stor, under = "", fot = FOT }) {
   const s = storlek(stor, 150, 0.56);

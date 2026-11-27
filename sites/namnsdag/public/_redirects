@@ -1,10 +1,349 @@
+# Skapad av scripts/11-omdirigeringar.mjs – ändra inte för hand.
 # 301 för sidor som slagits ihop (ägarens regel 2026-11-27: inga tunna sidor, ingen noindex).
-# Integritet och cookies är nu ett avsnitt på Om-sidan.
+
+# Integritet och cookies är ett avsnitt på Om-sidan.
 /integritet /om/ 301
 /integritet/ /om/ 301
 # "Namnsdag imorgon" fanns redan på startsidan och på morgondagens datumsida.
 /namnsdag-imorgon / 301
 /namnsdag-imorgon/ / 301
-# Gustav Adolf saknas i SCB:s statistik (dubbelnamn) – namnet visas på sin datumsida.
-/namn/gustav-adolf /6-november/ 301
-/namn/gustav-adolf/* /6-november/ 301
+
+# Almanacksnamn utan egen sida – ett avsnitt på datumsidan.
+# Anselm: under 50 bärare, inga nyfödda eller kända personer
+/namn/anselm /4-februari/#anselm 301
+/namn/anselm/ /4-februari/#anselm 301
+/namn/anselm/kalender.ics /4-februari/#anselm 301
+# Baltsar: under 50 bärare, inga nyfödda eller kända personer
+/namn/baltsar /6-januari/#baltsar 301
+/namn/baltsar/ /6-januari/#baltsar 301
+/namn/baltsar/kalender.ics /6-januari/#baltsar 301
+# Bartolomeus: 2 datablock
+/namn/bartolomeus /24-augusti/#bartolomeus 301
+/namn/bartolomeus/ /24-augusti/#bartolomeus 301
+/namn/bartolomeus/kalender.ics /24-augusti/#bartolomeus 301
+# Frideborg: 2 datablock
+/namn/frideborg /12-januari/#frideborg 301
+/namn/frideborg/ /12-januari/#frideborg 301
+/namn/frideborg/kalender.ics /12-januari/#frideborg 301
+# Gustav Adolf: saknas i SCB:s statistik
+/namn/gustav-adolf /6-november/#gustav-adolf 301
+/namn/gustav-adolf/ /6-november/#gustav-adolf 301
+/namn/gustav-adolf/kalender.ics /6-november/#gustav-adolf 301
+# Hervor: 2 datablock
+/namn/hervor /1-april/#hervor 301
+/namn/hervor/ /1-april/#hervor 301
+/namn/hervor/kalender.ics /1-april/#hervor 301
+# Holmfrid: 2 datablock
+/namn/holmfrid /30-mars/#holmfrid 301
+/namn/holmfrid/ /30-mars/#holmfrid 301
+/namn/holmfrid/kalender.ics /30-mars/#holmfrid 301
+# Ingemund: 2 datablock
+/namn/ingemund /2-april/#ingemund 301
+/namn/ingemund/ /2-april/#ingemund 301
+/namn/ingemund/kalender.ics /2-april/#ingemund 301
+# Majvor: 2 datablock
+/namn/majvor /8-juni/#majvor 301
+/namn/majvor/ /8-juni/#majvor 301
+/namn/majvor/kalender.ics /8-juni/#majvor 301
+# Solbritt: 1 datablock
+/namn/solbritt /4-juni/#solbritt 301
+/namn/solbritt/ /4-juni/#solbritt 301
+/namn/solbritt/kalender.ics /4-juni/#solbritt 301
+# Tiburtius: under 50 bärare, inga nyfödda eller kända personer
+/namn/tiburtius /14-april/#tiburtius 301
+/namn/tiburtius/ /14-april/#tiburtius 301
+/namn/tiburtius/kalender.ics /14-april/#tiburtius 301
+# Volmar: 2 datablock
+/namn/volmar /18-april/#volmar 301
+/namn/volmar/ /18-april/#volmar 301
+/namn/volmar/kalender.ics /18-april/#volmar 301
+# Åslög: under 50 bärare, inga nyfödda eller kända personer
+/namn/aslog /12-september/#aslog 301
+/namn/aslog/ /12-september/#aslog 301
+/namn/aslog/kalender.ics /12-september/#aslog 301
+
+# Namn utan namnsdag som inte klarar kvalitetsgrinden (minst 4 unika datablock) eller inte är namn (71 st).
+# Abdi: 3 datablock
+/namn/abdi /namn-utan-namnsdag/#abdi 301
+/namn/abdi/ /namn-utan-namnsdag/#abdi 301
+/namn/abdi/kalender.ics /namn-utan-namnsdag/#abdi 301
+# Abdirahman: 2 datablock
+/namn/abdirahman /namn-utan-namnsdag/#abdirahman 301
+/namn/abdirahman/ /namn-utan-namnsdag/#abdirahman 301
+/namn/abdirahman/kalender.ics /namn-utan-namnsdag/#abdirahman 301
+# Abdullahi: 3 datablock
+/namn/abdullahi /namn-utan-namnsdag/#abdullahi 301
+/namn/abdullahi/ /namn-utan-namnsdag/#abdullahi 301
+/namn/abdullahi/kalender.ics /namn-utan-namnsdag/#abdullahi 301
+# Amer: 3 datablock
+/namn/amer /namn-utan-namnsdag/#amer 301
+/namn/amer/ /namn-utan-namnsdag/#amer 301
+/namn/amer/kalender.ics /namn-utan-namnsdag/#amer 301
+# Amin: 3 datablock
+/namn/amin /namn-utan-namnsdag/#amin 301
+/namn/amin/ /namn-utan-namnsdag/#amin 301
+/namn/amin/kalender.ics /namn-utan-namnsdag/#amin 301
+# Ammar: 3 datablock
+/namn/ammar /namn-utan-namnsdag/#ammar 301
+/namn/ammar/ /namn-utan-namnsdag/#ammar 301
+/namn/ammar/kalender.ics /namn-utan-namnsdag/#ammar 301
+# Anas: 3 datablock
+/namn/anas /namn-utan-namnsdag/#anas 301
+/namn/anas/ /namn-utan-namnsdag/#anas 301
+/namn/anas/kalender.ics /namn-utan-namnsdag/#anas 301
+# Ann-Charlott: 2 datablock
+/namn/ann-charlott /namn-utan-namnsdag/#ann-charlott 301
+/namn/ann-charlott/ /namn-utan-namnsdag/#ann-charlott 301
+/namn/ann-charlott/kalender.ics /namn-utan-namnsdag/#ann-charlott 301
+# Ann-Katrin: 3 datablock
+/namn/ann-katrin /namn-utan-namnsdag/#ann-katrin 301
+/namn/ann-katrin/ /namn-utan-namnsdag/#ann-katrin 301
+/namn/ann-katrin/kalender.ics /namn-utan-namnsdag/#ann-katrin 301
+# Anna-Carin: 2 datablock
+/namn/anna-carin /namn-utan-namnsdag/#anna-carin 301
+/namn/anna-carin/ /namn-utan-namnsdag/#anna-carin 301
+/namn/anna-carin/kalender.ics /namn-utan-namnsdag/#anna-carin 301
+# Anna-Greta: 3 datablock
+/namn/anna-greta /namn-utan-namnsdag/#anna-greta 301
+/namn/anna-greta/ /namn-utan-namnsdag/#anna-greta 301
+/namn/anna-greta/kalender.ics /namn-utan-namnsdag/#anna-greta 301
+# Anne-Charlotte: 3 datablock
+/namn/anne-charlotte /namn-utan-namnsdag/#anne-charlotte 301
+/namn/anne-charlotte/ /namn-utan-namnsdag/#anne-charlotte 301
+/namn/anne-charlotte/kalender.ics /namn-utan-namnsdag/#anne-charlotte 301
+# Bilal: 3 datablock
+/namn/bilal /namn-utan-namnsdag/#bilal 301
+/namn/bilal/ /namn-utan-namnsdag/#bilal 301
+/namn/bilal/kalender.ics /namn-utan-namnsdag/#bilal 301
+# Billy: 2 datablock
+/namn/billy /namn-utan-namnsdag/#billy 301
+/namn/billy/ /namn-utan-namnsdag/#billy 301
+/namn/billy/kalender.ics /namn-utan-namnsdag/#billy 301
+# Britt-Inger: 3 datablock
+/namn/britt-inger /namn-utan-namnsdag/#britt-inger 301
+/namn/britt-inger/ /namn-utan-namnsdag/#britt-inger 301
+/namn/britt-inger/kalender.ics /namn-utan-namnsdag/#britt-inger 301
+# Britt-Mari: 1 datablock
+/namn/britt-mari /namn-utan-namnsdag/#britt-mari 301
+/namn/britt-mari/ /namn-utan-namnsdag/#britt-mari 301
+/namn/britt-mari/kalender.ics /namn-utan-namnsdag/#britt-mari 301
+# Claes-Göran: 3 datablock
+/namn/claes-goran /namn-utan-namnsdag/#claes-goran 301
+/namn/claes-goran/ /namn-utan-namnsdag/#claes-goran 301
+/namn/claes-goran/kalender.ics /namn-utan-namnsdag/#claes-goran 301
+# Dragan: 3 datablock
+/namn/dragan /namn-utan-namnsdag/#dragan 301
+/namn/dragan/ /namn-utan-namnsdag/#dragan 301
+/namn/dragan/kalender.ics /namn-utan-namnsdag/#dragan 301
+# Emmelie: 3 datablock
+/namn/emmelie /namn-utan-namnsdag/#emmelie 301
+/namn/emmelie/ /namn-utan-namnsdag/#emmelie 301
+/namn/emmelie/kalender.ics /namn-utan-namnsdag/#emmelie 301
+# Engla: 3 datablock
+/namn/engla /namn-utan-namnsdag/#engla 301
+/namn/engla/ /namn-utan-namnsdag/#engla 301
+/namn/engla/kalender.ics /namn-utan-namnsdag/#engla 301
+# Enya: 2 datablock
+/namn/enya /namn-utan-namnsdag/#enya 301
+/namn/enya/ /namn-utan-namnsdag/#enya 301
+/namn/enya/kalender.ics /namn-utan-namnsdag/#enya 301
+# Eva-Britt: 2 datablock
+/namn/eva-britt /namn-utan-namnsdag/#eva-britt 301
+/namn/eva-britt/ /namn-utan-namnsdag/#eva-britt 301
+/namn/eva-britt/kalender.ics /namn-utan-namnsdag/#eva-britt 301
+# Eva-Lotta: 2 datablock
+/namn/eva-lotta /namn-utan-namnsdag/#eva-lotta 301
+/namn/eva-lotta/ /namn-utan-namnsdag/#eva-lotta 301
+/namn/eva-lotta/kalender.ics /namn-utan-namnsdag/#eva-lotta 301
+# Fadi: 2 datablock
+/namn/fadi /namn-utan-namnsdag/#fadi 301
+/namn/fadi/ /namn-utan-namnsdag/#fadi 301
+/namn/fadi/kalender.ics /namn-utan-namnsdag/#fadi 301
+# Fadumo: 2 datablock
+/namn/fadumo /namn-utan-namnsdag/#fadumo 301
+/namn/fadumo/ /namn-utan-namnsdag/#fadumo 301
+/namn/fadumo/kalender.ics /namn-utan-namnsdag/#fadumo 301
+# Farah: 3 datablock
+/namn/farah /namn-utan-namnsdag/#farah 301
+/namn/farah/ /namn-utan-namnsdag/#farah 301
+/namn/farah/kalender.ics /namn-utan-namnsdag/#farah 301
+# Gull-Britt: 1 datablock
+/namn/gull-britt /namn-utan-namnsdag/#gull-britt 301
+/namn/gull-britt/ /namn-utan-namnsdag/#gull-britt 301
+/namn/gull-britt/kalender.ics /namn-utan-namnsdag/#gull-britt 301
+# Gunbritt: 1 datablock
+/namn/gunbritt /namn-utan-namnsdag/#gunbritt 301
+/namn/gunbritt/ /namn-utan-namnsdag/#gunbritt 301
+/namn/gunbritt/kalender.ics /namn-utan-namnsdag/#gunbritt 301
+# Gunn: 3 datablock, stavningsvariant av Gun
+/namn/gunn /namn/gun/ 301
+/namn/gunn/ /namn/gun/ 301
+/namn/gunn/kalender.ics /namn/gun/ 301
+# Hala: 3 datablock
+/namn/hala /namn-utan-namnsdag/#hala 301
+/namn/hala/ /namn-utan-namnsdag/#hala 301
+/namn/hala/kalender.ics /namn-utan-namnsdag/#hala 301
+# Hamid: 2 datablock
+/namn/hamid /namn-utan-namnsdag/#hamid 301
+/namn/hamid/ /namn-utan-namnsdag/#hamid 301
+/namn/hamid/kalender.ics /namn-utan-namnsdag/#hamid 301
+# Huda: 3 datablock
+/namn/huda /namn-utan-namnsdag/#huda 301
+/namn/huda/ /namn-utan-namnsdag/#huda 301
+/namn/huda/kalender.ics /namn-utan-namnsdag/#huda 301
+# Ismail: 3 datablock
+/namn/ismail /namn-utan-namnsdag/#ismail 301
+/namn/ismail/ /namn-utan-namnsdag/#ismail 301
+/namn/ismail/kalender.ics /namn-utan-namnsdag/#ismail 301
+# Jaana: 2 datablock
+/namn/jaana /namn-utan-namnsdag/#jaana 301
+/namn/jaana/ /namn-utan-namnsdag/#jaana 301
+/namn/jaana/kalender.ics /namn-utan-namnsdag/#jaana 301
+# Jan-Olov: 2 datablock
+/namn/jan-olov /namn-utan-namnsdag/#jan-olov 301
+/namn/jan-olov/ /namn-utan-namnsdag/#jan-olov 301
+/namn/jan-olov/kalender.ics /namn-utan-namnsdag/#jan-olov 301
+# Jan-Åke: 3 datablock
+/namn/jan-ake /namn-utan-namnsdag/#jan-ake 301
+/namn/jan-ake/ /namn-utan-namnsdag/#jan-ake 301
+/namn/jan-ake/kalender.ics /namn-utan-namnsdag/#jan-ake 301
+# Jari: 1 datablock
+/namn/jari /namn-utan-namnsdag/#jari 301
+/namn/jari/ /namn-utan-namnsdag/#jari 301
+/namn/jari/kalender.ics /namn-utan-namnsdag/#jari 301
+# Jerker: 3 datablock
+/namn/jerker /namn-utan-namnsdag/#jerker 301
+/namn/jerker/ /namn-utan-namnsdag/#jerker 301
+/namn/jerker/kalender.ics /namn-utan-namnsdag/#jerker 301
+# Juha: 3 datablock
+/namn/juha /namn-utan-namnsdag/#juha 301
+/namn/juha/ /namn-utan-namnsdag/#juha 301
+/namn/juha/kalender.ics /namn-utan-namnsdag/#juha 301
+# Karl-Johan: 3 datablock
+/namn/karl-johan /namn-utan-namnsdag/#karl-johan 301
+/namn/karl-johan/ /namn-utan-namnsdag/#karl-johan 301
+/namn/karl-johan/kalender.ics /namn-utan-namnsdag/#karl-johan 301
+# Kjell-Åke: 2 datablock
+/namn/kjell-ake /namn-utan-namnsdag/#kjell-ake 301
+/namn/kjell-ake/ /namn-utan-namnsdag/#kjell-ake 301
+/namn/kjell-ake/kalender.ics /namn-utan-namnsdag/#kjell-ake 301
+# Lars-Gunnar: 3 datablock
+/namn/lars-gunnar /namn-utan-namnsdag/#lars-gunnar 301
+/namn/lars-gunnar/ /namn-utan-namnsdag/#lars-gunnar 301
+/namn/lars-gunnar/kalender.ics /namn-utan-namnsdag/#lars-gunnar 301
+# Li: 3 datablock
+/namn/li /namn-utan-namnsdag/#li 301
+/namn/li/ /namn-utan-namnsdag/#li 301
+/namn/li/kalender.ics /namn-utan-namnsdag/#li 301
+# Lise-Lott: 1 datablock
+/namn/lise-lott /namn-utan-namnsdag/#lise-lott 301
+/namn/lise-lott/ /namn-utan-namnsdag/#lise-lott 301
+/namn/lise-lott/kalender.ics /namn-utan-namnsdag/#lise-lott 301
+# Malak: 3 datablock
+/namn/malak /namn-utan-namnsdag/#malak 301
+/namn/malak/ /namn-utan-namnsdag/#malak 301
+/namn/malak/kalender.ics /namn-utan-namnsdag/#malak 301
+# Malgorzata: 1 datablock
+/namn/malgorzata /namn-utan-namnsdag/#malgorzata 301
+/namn/malgorzata/ /namn-utan-namnsdag/#malgorzata 301
+/namn/malgorzata/kalender.ics /namn-utan-namnsdag/#malgorzata 301
+# Md: förkortning av Mohammed
+/namn/md /namn/mohammed/ 301
+/namn/md/ /namn/mohammed/ 301
+/namn/md/kalender.ics /namn/mohammed/ 301
+# Mhd: förkortning av Mohammed
+/namn/mhd /namn/mohammed/ 301
+/namn/mhd/ /namn/mohammed/ 301
+/namn/mhd/kalender.ics /namn/mohammed/ 301
+# Milad: 3 datablock
+/namn/milad /namn-utan-namnsdag/#milad 301
+/namn/milad/ /namn-utan-namnsdag/#milad 301
+/namn/milad/kalender.ics /namn-utan-namnsdag/#milad 301
+# Muna: 2 datablock
+/namn/muna /namn-utan-namnsdag/#muna 301
+/namn/muna/ /namn-utan-namnsdag/#muna 301
+/namn/muna/kalender.ics /namn-utan-namnsdag/#muna 301
+# Pawel: 3 datablock
+/namn/pawel /namn-utan-namnsdag/#pawel 301
+/namn/pawel/ /namn-utan-namnsdag/#pawel 301
+/namn/pawel/kalender.ics /namn-utan-namnsdag/#pawel 301
+# Pekka: 2 datablock
+/namn/pekka /namn-utan-namnsdag/#pekka 301
+/namn/pekka/ /namn-utan-namnsdag/#pekka 301
+/namn/pekka/kalender.ics /namn-utan-namnsdag/#pekka 301
+# Per-Anders: 3 datablock
+/namn/per-anders /namn-utan-namnsdag/#per-anders 301
+/namn/per-anders/ /namn-utan-namnsdag/#per-anders 301
+/namn/per-anders/kalender.ics /namn-utan-namnsdag/#per-anders 301
+# Per-Arne: 3 datablock
+/namn/per-arne /namn-utan-namnsdag/#per-arne 301
+/namn/per-arne/ /namn-utan-namnsdag/#per-arne 301
+/namn/per-arne/kalender.ics /namn-utan-namnsdag/#per-arne 301
+# Per-Ola: 3 datablock
+/namn/per-ola /namn-utan-namnsdag/#per-ola 301
+/namn/per-ola/ /namn-utan-namnsdag/#per-ola 301
+/namn/per-ola/kalender.ics /namn-utan-namnsdag/#per-ola 301
+# Per-Åke: 3 datablock
+/namn/per-ake /namn-utan-namnsdag/#per-ake 301
+/namn/per-ake/ /namn-utan-namnsdag/#per-ake 301
+/namn/per-ake/kalender.ics /namn-utan-namnsdag/#per-ake 301
+# Raija: 2 datablock
+/namn/raija /namn-utan-namnsdag/#raija 301
+/namn/raija/ /namn-utan-namnsdag/#raija 301
+/namn/raija/kalender.ics /namn-utan-namnsdag/#raija 301
+# Rania: 3 datablock
+/namn/rania /namn-utan-namnsdag/#rania 301
+/namn/rania/ /namn-utan-namnsdag/#rania 301
+/namn/rania/kalender.ics /namn-utan-namnsdag/#rania 301
+# Reza: 3 datablock
+/namn/reza /namn-utan-namnsdag/#reza 301
+/namn/reza/ /namn-utan-namnsdag/#reza 301
+/namn/reza/kalender.ics /namn-utan-namnsdag/#reza 301
+# Sahar: 2 datablock
+/namn/sahar /namn-utan-namnsdag/#sahar 301
+/namn/sahar/ /namn-utan-namnsdag/#sahar 301
+/namn/sahar/kalender.ics /namn-utan-namnsdag/#sahar 301
+# Samer: 3 datablock
+/namn/samer /namn-utan-namnsdag/#samer 301
+/namn/samer/ /namn-utan-namnsdag/#samer 301
+/namn/samer/kalender.ics /namn-utan-namnsdag/#samer 301
+# Seija: 2 datablock
+/namn/seija /namn-utan-namnsdag/#seija 301
+/namn/seija/ /namn-utan-namnsdag/#seija 301
+/namn/seija/kalender.ics /namn-utan-namnsdag/#seija 301
+# Sirpa: 2 datablock
+/namn/sirpa /namn-utan-namnsdag/#sirpa 301
+/namn/sirpa/ /namn-utan-namnsdag/#sirpa 301
+/namn/sirpa/kalender.ics /namn-utan-namnsdag/#sirpa 301
+# Solvig: 1 datablock
+/namn/solvig /namn-utan-namnsdag/#solvig 301
+/namn/solvig/ /namn-utan-namnsdag/#solvig 301
+/namn/solvig/kalender.ics /namn-utan-namnsdag/#solvig 301
+# Sven-Olof: 3 datablock
+/namn/sven-olof /namn-utan-namnsdag/#sven-olof 301
+/namn/sven-olof/ /namn-utan-namnsdag/#sven-olof 301
+/namn/sven-olof/kalender.ics /namn-utan-namnsdag/#sven-olof 301
+# Sven-Åke: 3 datablock
+/namn/sven-ake /namn-utan-namnsdag/#sven-ake 301
+/namn/sven-ake/ /namn-utan-namnsdag/#sven-ake 301
+/namn/sven-ake/kalender.ics /namn-utan-namnsdag/#sven-ake 301
+# Teo: 3 datablock
+/namn/teo /namn-utan-namnsdag/#teo 301
+/namn/teo/ /namn-utan-namnsdag/#teo 301
+/namn/teo/kalender.ics /namn-utan-namnsdag/#teo 301
+# Timo: 3 datablock
+/namn/timo /namn-utan-namnsdag/#timo 301
+/namn/timo/ /namn-utan-namnsdag/#timo 301
+/namn/timo/kalender.ics /namn-utan-namnsdag/#timo 301
+# Tuula: 3 datablock
+/namn/tuula /namn-utan-namnsdag/#tuula 301
+/namn/tuula/ /namn-utan-namnsdag/#tuula 301
+/namn/tuula/kalender.ics /namn-utan-namnsdag/#tuula 301
+# Van: 2 datablock
+/namn/van /namn-utan-namnsdag/#van 301
+/namn/van/ /namn-utan-namnsdag/#van 301
+/namn/van/kalender.ics /namn-utan-namnsdag/#van 301
+# Zoran: 3 datablock
+/namn/zoran /namn-utan-namnsdag/#zoran 301
+/namn/zoran/ /namn-utan-namnsdag/#zoran 301
+/namn/zoran/kalender.ics /namn-utan-namnsdag/#zoran 301

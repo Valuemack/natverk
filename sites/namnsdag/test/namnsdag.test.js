@@ -102,8 +102,8 @@ test("bygget: SEO-grunder på varje indexerad sida", { skip: !sidor.length && "i
     if (h1 !== 1) fel.push(`${h1} h1: ${rel}`);
     const nivaer = [...kropp.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]));
     for (let i = 1; i < nivaer.length; i++) if (nivaer[i] > nivaer[i - 1] + 1) { fel.push(`hoppar h${nivaer[i - 1]}→h${nivaer[i]}: ${rel}`); break; }
-    if (!/<link rel="canonical" href="https:\/\/dagensnamnsdagar\.se\//.test(h)) fel.push(`canonical: ${rel}`);
-    const bild = h.match(/<meta property="og:image" content="https:\/\/dagensnamnsdagar\.se(\/[^"]+)"/)?.[1];
+    if (!/<link rel="canonical" href="https:\/\/namnsdagaridag\.se\//.test(h)) fel.push(`canonical: ${rel}`);
+    const bild = h.match(/<meta property="og:image" content="https:\/\/namnsdagaridag\.se(\/[^"]+)"/)?.[1];
     if (!bild || !existsSync(join(DIST, bild))) fel.push(`og:image saknas: ${rel} (${bild})`);
     if (!/name="twitter:card" content="summary_large_image"/.test(h)) fel.push(`twitter:card: ${rel}`);
     const ld = [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
@@ -113,18 +113,8 @@ test("bygget: SEO-grunder på varje indexerad sida", { skip: !sidor.length && "i
     if (!sida?.dateModified) fel.push(`WebPage/dateModified: ${rel}`);
     if (rel !== "/index.html" && !typer.includes("BreadcrumbList")) fel.push(`BreadcrumbList: ${rel}`);
     if (rel === "/index.html" && !ld.some((x) => x.potentialAction?.["@type"] === "SearchAction")) fel.push("SearchAction saknas på startsidan");
-    for (const m of h.matchAll(/<a [^>]*href="https:\/\/postabrev\.se\/skapa-brev[^"]*"[^>]*>/g)) {
-      if (!/rel="sponsored noopener"/.test(m[0]) || !/utm_source=dagensnamnsdagar&amp;utm_medium=referral&amp;utm_campaign=namnsdag/.test(m[0])) { fel.push(`postabrev-länk: ${rel}`); break; }
-    }
   }
   assert.deepEqual(fel.slice(0, 20), [], `${fel.length} fel`);
-});
-
-test("bygget: knapp till postabrev.se på namn-, datum- och startsidan", { skip: !sidor.length && "ingen dist" }, () => {
-  for (const f of ["index.html", "namn/linus/index.html", "26-november/index.html", "namn/liam/index.html"]) {
-    assert.match(html(join(DIST, f)), /href="https:\/\/postabrev\.se\/skapa-brev\?utm_source=dagensnamnsdagar/, f);
-  }
-  assert.match(html(join(DIST, "om/index.html")), /samma ägare som/);
 });
 
 test("bygget: inga språkfel och inget Event-schema", { skip: !sidor.length && "ingen dist" }, () => {
@@ -160,5 +150,32 @@ test("bygget: ingen noindex och inga tunna sidor kvar bakom 301", { skip: !sidor
     const h = html(p);
     for (const k of kallor) if (h.includes(`href="${k}"`)) { fel.push(`intern länk till omdirigerad ${k}: ${p.slice(DIST.length)}`); break; }
   }
+  assert.deepEqual(fel.slice(0, 15), [], `${fel.length} fel`);
+});
+
+test("bygget: ingen indexerad sida är tunn (minst 350 ord i huvudinnehållet)", { skip: !sidor.length && "ingen dist" }, () => {
+  const fel = [];
+  for (const p of sidor) {
+    if (/widget[\\/]idag/.test(p)) continue; // iframe-widget, canonical till startsidan
+    const h = html(p);
+    const main = (h.match(/<main[\s\S]*?<\/main>/) ?? [h])[0].replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ");
+    const ord = main.split(/\s+/).filter((w) => /\p{L}/u.test(w)).length;
+    if (ord < 350) fel.push(`${ord} ord: ${p.slice(DIST.length).replace(/\\/g, "/")}`);
+  }
+  assert.deepEqual(fel.slice(0, 20), [], `${fel.length} tunna sidor`);
+});
+
+test("bygget: 301-mål med ankare finns på målsidan, och omdirigerade namn har ingen egen sida", { skip: !sidor.length && "ingen dist" }, () => {
+  const fel = [];
+  const regler = readFileSync(join(ROT, "public/_redirects"), "utf8").split(/\r?\n/).filter((r) => r && !r.startsWith("#")).map((r) => r.split(/\s+/));
+  const cache = new Map();
+  for (const [fran, till] of regler) {
+    if (/\*/.test(fran)) fel.push(`dynamisk regel (Cloudflare tillåter bara 100): ${fran}`);
+    const [sokvag, ankare] = till.split("#");
+    if (!ankare) continue;
+    const h = cache.get(sokvag) ?? cache.set(sokvag, html(join(DIST, sokvag, "index.html"))).get(sokvag);
+    if (!h.includes(`id="${ankare}"`)) fel.push(`ankare saknas: ${till}`);
+  }
+  assert.ok(regler.length <= 2000, `${regler.length} regler (max 2 000 statiska)`);
   assert.deepEqual(fel.slice(0, 15), [], `${fel.length} fel`);
 });

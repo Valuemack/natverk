@@ -7,11 +7,11 @@ import "../../styles/sajt.css";
 import { SITE, UPPDATERAD, beskriv } from "../../site.js";
 
 const kod = (tema) => `<iframe src="${SITE.url}/widget/idag/${tema ? "?tema=mork" : ""}" title="Namnsdag idag" width="300" height="110" style="border:0;max-width:100%" loading="lazy"></iframe>
-<p style="font-size:12px;margin:4px 0 0"><a href="${SITE.url}/">Namnsdag idag</a> från dagensnamnsdagar.se</p>`;
+<p style="font-size:12px;margin:4px 0 0"><a href="${SITE.url}/">Namnsdag idag</a> från namnsdagaridag.se</p>`;
 const fragor = [
-  { fraga: "Kostar widgeten något?", svar: "Nej. Widgeten är gratis för alla, även på kommersiella sajter. Den enda förutsättningen är att länken till dagensnamnsdagar.se under rutan får vara kvar." },
+  { fraga: "Kostar widgeten något?", svar: "Nej. Widgeten är gratis för alla, även på kommersiella sajter. Den enda förutsättningen är att länken till namnsdagaridag.se under rutan får vara kvar." },
   { fraga: "Uppdateras namnet automatiskt?", svar: "Ja. Widgeten visar alltid dagens namnsdag i svensk tid. Den byggs om varje natt och rättar sig själv i besökarens webbläsare om sidan skulle vara cachad från en tidigare dag." },
-  { fraga: "Sätter widgeten kakor eller spårar besökare?", svar: "Nej. Widgeten är en statisk sida utan kakor, annonser eller spårning. Den hämtar bara namnsdagslistan från dagensnamnsdagar.se." },
+  { fraga: "Sätter widgeten kakor eller spårar besökare?", svar: "Nej. Widgeten är en statisk sida utan kakor, annonser eller spårning. Den hämtar bara namnsdagslistan från namnsdagaridag.se." },
 ];
 ---
 <Layout site={SITE} titel="Gratis namnsdagswidget – dagens namnsdag på din sajt"
@@ -33,6 +33,20 @@ const fragor = [
     <p><button type="button" class="knapp" data-kopiera={`kod${i}`}>Kopiera koden</button> <span class="kopierad" aria-live="polite"></span></p>
   </>)}
   <p>Bredden kan ändras fritt (minst cirka 220 pixlar). Länken under rutan ska vara kvar – det är så widgeten kan vara gratis.</p>
+
+  <h2>Vad visar widgeten?</h2>
+  <p>Rutan visar veckodag och datum och vilka som har namnsdag, enligt almanackans namnlängd. På de sju dagar som saknar namn i almanackan – till exempel juldagen och kyndelsmässodagen – står dagens namn i stället. I rutan finns en länk till namnsdagaridag.se, där varje namn har en egen sida med betydelse, statistik och kända personer.</p>
+
+  <h2>Så lägger du in widgeten</h2>
+  <p>Koden är en vanlig iframe, så den fungerar i de flesta publiceringsverktyg som tillåter egen HTML:</p>
+  <ul>
+    <li><strong>WordPress:</strong> lägg till blocket "Anpassad HTML" och klistra in koden.</li>
+    <li><strong>Wix:</strong> välj Lägg till → Bädda in kod → HTML-inbäddning och klistra in koden.</li>
+    <li><strong>Squarespace:</strong> lägg till ett kodblock (Code) och klistra in koden.</li>
+    <li><strong>Google Sites:</strong> välj Infoga → Bädda in → Bädda in kod.</li>
+    <li><strong>Intranät och SharePoint:</strong> webbdelen för inbäddning fungerar om namnsdagaridag.se finns bland de tillåtna domänerna för iframes. Det ställer webbplatsens administratör in.</li>
+  </ul>
+  <p>Fungerar inte iframes alls på din plattform kan du länka till <a href="/">startsidan</a> i stället, eller hämta <a href="/data/namnsdagar.json">namnsdagarna som JSON</a> och visa dem själv.</p>
 
   <h2>Andra sätt att använda namnsdagarna</h2>
   <ul>

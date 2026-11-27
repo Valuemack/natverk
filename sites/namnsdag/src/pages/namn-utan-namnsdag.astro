@@ -6,9 +6,23 @@ import Annons from "@natverk/core/Annons.astro";
 import { faqLd } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
-import { SITE, UPPDATERAD, UTAN_NAMNSDAG, VARIANTER, UTAN_VARIANT, SCB_KALLA, MIN_BARARE, tal, dagText, namnHref, beskriv, procent } from "../site.js";
+import { SITE, UPPDATERAD, UTAN_NAMNSDAG, VARIANTER, UTAN_VARIANT, SCB_KALLA, MIN_BARARE, ANTAL_NU, ANDRINGAR, tal, dagText, dagHref, namnHref, beskriv, procent, lista } from "../site.js";
+import { utanHref, harEgenSida, delnamn, sammaNamn, nyfodda, OMDIRIGERADE, WDN_HAMTAD, NYF_KALLA } from "../lib/namndata.js";
 
 const summa = UTAN_NAMNSDAG.reduce((s, x) => s + x.antal, 0);
+// Vilken dag kan namnet firas? Stavningsvariant → almanacksnamnets dag; dubbelnamn → delarnas dagar;
+// samma namn i annan form enligt Wikidata → den formens dag; annars den gemensamma namnsdagen 1 januari.
+const firas = (x) => {
+  if (x.huvud) return { typ: "variant", poster: [{ namn: x.huvud.namn, datum: x.huvud.datum }] };
+  const delar = delnamn(x.namn);
+  if (delar.length) return { typ: "delar", poster: delar };
+  const former = sammaNamn(x.namn).filter((f) => f.datum).slice(0, 2);
+  if (former.length) return { typ: "wikidata", poster: former };
+  return null;
+};
+const nyf22 = (namn) => nyfodda(namn).at(-1)?.x ?? 0;
+const andringsAr = [...new Set(ANDRINGAR.map((a) => a.ar))].sort((a, b) => a - b);
+const medDag = UTAN_NAMNSDAG.filter((x) => firas(x)).length;
 const [f, a, b] = UTAN_VARIANT;
 const fragor = [
   { fraga: "Vilket är det vanligaste namnet utan namnsdag?", svar: `${UTAN_NAMNSDAG[0].namn}, som ${tal(UTAN_NAMNSDAG[0].antal)} personer i Sverige har som tilltalsnamn (SCB 2020), men det kan firas på ${UTAN_NAMNSDAG[0].huvud?.namn}-dagen. Vanligast helt utan almanacksform är ${f.namn} (${tal(f.antal)}), ${a.namn} och ${b.namn}.` },
@@ -19,20 +33,26 @@ const fragor = [
 <Layout site={SITE} titel={`Namn utan namnsdag – alla ${UTAN_NAMNSDAG.length} vanliga namn (SCB 2020)`}
   beskrivning={beskriv(`${UTAN_NAMNSDAG.length} vanliga namn saknar namnsdag i almanackan, bland dem ${f.namn}, ${a.namn} och ${b.namn}.`, "Se vilken dag varje namn kan firas.", "✓ Antal bärare", "✓ Stavningsvarianter")}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/" }]}
-  jsonld={[faqLd(fragor), datasetLd({ namn: "Vanliga namn utan namnsdag i Sverige 2020", beskrivning: "Alla tilltalsnamn med minst 1 000 bärare i Sverige 2020 enligt SCB som saknas i den svenska almanackan, med antal bärare, andel kvinnor och vilken dag namnet kan firas.", sokvag: "/namn-utan-namnsdag/", tid: "2020", nyckelord: ["namnsdag saknas"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] }), itemListLd("Namn utan namnsdag", UTAN_NAMNSDAG.map((x) => ({ namn: x.namn, href: `/namn/${x.slug}/` })))]} uppdaterad={UPPDATERAD}>
+  jsonld={[faqLd(fragor), datasetLd({ namn: "Vanliga namn utan namnsdag i Sverige 2020", beskrivning: "Alla tilltalsnamn med minst 1 000 bärare i Sverige 2020 enligt SCB som saknas i den svenska almanackan, med antal bärare, andel kvinnor och vilken dag namnet kan firas.", sokvag: "/namn-utan-namnsdag/", tid: "2020", nyckelord: ["namnsdag saknas"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] }), itemListLd("Namn utan namnsdag", UTAN_NAMNSDAG.filter((x) => harEgenSida(x.namn)).map((x) => ({ namn: x.namn, href: utanHref(x) })))]} uppdaterad={UPPDATERAD}>
   <h1>Namn utan namnsdag</h1>
   <p class="svar"><strong>{tal(UTAN_NAMNSDAG.length)} tilltalsnamn</strong> med minst {tal(MIN_BARARE)} bärare saknas i almanackan – sammanlagt {tal(summa)} personer. {tal(VARIANTER.length)} av dem är stavningsvarianter (som Thomas och Carl) som kan firas på almanacksnamnets dag. De övriga {tal(UTAN_VARIANT.length)}, till exempel {f.namn}, {a.namn} och {b.namn}, har gemensam namnsdag den <a href="/1-januari/">1 januari</a>.</p>
   <div class="tabell"><table>
-    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th>Kan firas</th></tr></thead>
-    <tbody>{UTAN_NAMNSDAG.map((x, i) => (
-      <tr><td class="num">{i + 1}</td>
-        <td><a href={`/namn/${x.slug}/`}>{x.namn}</a></td>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th class="num">Nyfödda 2022</th><th>Kan firas</th></tr></thead>
+    <tbody>{UTAN_NAMNSDAG.map((x, i) => { const f = firas(x); return (
+      <tr id={x.slug}><td class="num">{i + 1}</td>
+        <td>{harEgenSida(x.namn) ? <a href={utanHref(x)}>{x.namn}</a> : <strong>{x.namn}</strong>}</td>
         <td class="num">{tal(x.antal)}</td>
         <td class="num">{procent(x.kvinnor, x.antal)} %</td>
-        <td>{x.huvud ? <>{dagText(x.huvud.datum)} (<a href={namnHref(x.huvud.namn)}>{x.huvud.namn}</a>)</> : "1 januari"}</td></tr>
-    ))}</tbody>
+        <td class="num">{nyf22(x.namn) ? tal(nyf22(x.namn)) : "–"}</td>
+        <td>{f ? <>{f.poster.map((y, j) => <>{j > 0 && ", "}<a href={dagHref(y.datum)}>{dagText(y.datum)}</a> ({y.namn})</>)}{f.typ === "delar" ? " – delarnas dagar" : f.typ === "wikidata" ? " – samma namn enligt Wikidata" : ""}, eller 1 januari</> : "1 januari"}</td></tr>
+    ); })}</tbody>
   </table></div>
   <p class="kalla">Källa: egen sammanställning av {SCB_KALLA}, tilltalsnamn 31 december 2020 (SCB:s senaste namnstatistik), jämfört med namnlängden enligt Isof. Ett namn räknas som stavningsvariant när det bara skiljer sig i stavningen (t.ex. th/t, c/k, ph/f, dubbelteckning) från ett almanacksnamn som oftast bärs av samma kön.</p>
+  <h2 id="varfor">Varför saknas vanliga namn i almanackan?</h2>
+  <p>Almanackans namnlängd har {ANTAL_NU} namn, och varje dag har plats för bara några få. Listan ändras bara när Namnlängdskommittén beslutar det – sedan {andringsAr[0]} har det skett {andringsAr.length} gånger, med ändringar från {lista(andringsAr.map(String))}. Nya namn kommer därför in i almanackan långt efter att de blivit vanliga, och många namn med tusentals bärare saknar fortfarande egen dag. Se <a href="/nya-namn/">alla ändringar i almanackan</a>.</p>
+  <p>Den 1 januari är gemensam namnsdag för alla namn som saknas. Många kan dessutom firas en annan dag: {tal(VARIANTER.length)} namn är stavningsvarianter av ett almanacksnamn, dubbelnamn som Lars-Erik har delar som står i almanackan, och för andra namn räknar Wikidata en form som finns i almanackan som samma namn (till exempel Liam och William). I tabellen ovan har {tal(medDag)} av de {tal(UTAN_NAMNSDAG.length)} namnen en sådan dag. Det är sedvänja, ingen officiell namnsdag.</p>
+  <p class="kalla">Samma namn i annan form: Wikidata (CC0), hämtad {WDN_HAMTAD}. Nyfödda: {NYF_KALLA}.</p>
+
   <Annons plats="utan-1" />
   <Faq fragor={fragor} />
 </Layout>

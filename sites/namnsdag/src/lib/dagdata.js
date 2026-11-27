@@ -66,3 +66,8 @@ export function rorligaPa(k) {
   const varjeAr = (namn) => per.every((x) => x.h.some((h) => h.namn === namn));
   return per.flatMap((x) => x.h.filter((h) => !varjeAr(h.namn)).map((h) => ({ ar: x.y, namn: h.namn, typ: h.typ })));
 }
+
+/** Historiska händelser på datumet enligt svenska Wikipedia (avsnittet Händelser): [{ ar, text }]. */
+export const historia = (k) => FODDA.dagar[k]?.handelser ?? [];
+/** Inledningen till Wikipedias artikel om helgdagen, för dagar utan namn i almanackan: { titel, url, text } eller null. */
+export const helgWiki = (k) => FODDA.dagar[k]?.helg ?? null;
