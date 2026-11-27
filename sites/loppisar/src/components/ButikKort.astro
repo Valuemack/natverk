@@ -1,0 +1,42 @@
+---
+// En butik i sin helhet: används på kommun- och länssidan för butiker som inte har en egen sida
+// (och i små kommuner, där kommunsidan är butikens enda sida). Ankaret (e.ankare) är målet för gamla URL:er.
+import OppetNu from "@natverk/core/katalog/OppetNu.astro";
+import Oppettider from "@natverk/core/katalog/Oppettider.astro";
+import { adressRad, veckoSammanfattning, telLank, kartLank } from "@natverk/core/katalog.js";
+import { kategori, tidKalla, timmarVecka, forstaVersal } from "../lib/butik.js";
+import { riktigaTider } from "../grind.js";
+import { domainToUnicode } from "node:url";
+const { enhet: e, rubrik = "h3", visaKommun = false } = Astro.props;
+const R = rubrik;
+const vs = veckoSammanfattning(e.oppettider);
+const kalla = tidKalla(e);
+const tim = timmarVecka(e);
+const webbText = (() => {
+  try { const u = new URL(e.webb); return (domainToUnicode(u.hostname).replace(/^www\./, "") + u.pathname).replace(/\/$/, ""); } catch { return e.webb; }
+})();
+---
+<section class="butik" id={e.ankare}>
+  <R class="namn">{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</R>
+  <p class="rad">{kategori(e)}{e.kedja && e.kedja !== e.namn && <> · {e.kedja}</>}{e.typ && kategori(e) !== e.typ && <> · {e.typ}</>}</p>
+  <OppetNu enhet={e} />
+  <dl class="fakta">
+    {(adressRad(e) || e.ort) && <><dt>Adress</dt><dd>{adressRad(e) || e.ort}{visaKommun && e.kommun !== e.ort && <> ({e.kommun} kommun)</>}{e.stadsdel && <>, {e.stadsdel}</>} · <a href={kartLank(e)} rel="nofollow noopener" target="_blank">vägbeskrivning</a></dd></>}
+    {vs && <><dt>Öppet</dt><dd>{vs}{tim != null && <> ({tim} timmar i veckan)</>}</dd></>}
+    {!vs && e.oppettider_text && <><dt>Öppettider</dt><dd>{e.oppettider_text}</dd></>}
+    {vs && e.oppettider_text && /jämna|udda|vecka|säsong|sommar|vinter|maj|juni|juli|augusti|sept/i.test(e.oppettider_text) && <><dt>Enligt källan</dt><dd>{e.oppettider_text}</dd></>}
+    {e.telefon && <><dt>Telefon</dt><dd><a href={telLank(e.telefon)}>{e.telefon}</a></dd></>}
+    {e.webb && <><dt>Webbplats</dt><dd><a href={e.webb} rel="nofollow noopener" target="_blank">{webbText}</a></dd></>}
+    {(e.sortiment ?? []).length > 0 && <><dt>Sortiment</dt><dd>{e.sortiment.map(forstaVersal).join(", ")}</dd></>}
+    {e.valgorenhet && <><dt>Välgörenhet</dt><dd>Ja – överskottet går till {e.organisation ?? e.kedja ?? "organisationens ändamål"}</dd></>}
+    {kalla && <><dt>Källa</dt><dd>{kalla.url ? <a href={kalla.url} rel="nofollow noopener" target="_blank">{kalla.namn}</a> : kalla.namn}{kalla.hamtad && <>, hämtad {kalla.hamtad}</>}</dd></>}
+  </dl>
+  {riktigaTider(e) && <details class="vecka-detalj"><summary>Öppettider dag för dag</summary><Oppettider oppettider={e.oppettider} /></details>}
+  {e.egenSida && <p><a href={e.href}>Mer om {e.namn}: helgdagstider och närmaste alternativ →</a></p>}
+</section>
+<style>
+  .butik { border-top: 1px solid var(--linje); padding: .6rem 0 .2rem; }
+  .butik .namn { margin: .2rem 0; font-size: 1.1rem; }
+  .butik .rad { margin: 0 0 .3rem; color: var(--dampad); }
+  .vecka-detalj summary { cursor: pointer; color: var(--farg); }
+</style>

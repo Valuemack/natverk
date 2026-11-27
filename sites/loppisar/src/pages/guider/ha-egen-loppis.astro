@@ -1,0 +1,138 @@
+---
+// Guide: ha en egen loppis – tillstånd och regler. Källor: Polisen (offentlig plats, avgifter, nyhet okt 2026),
+// ordningslagen 1993:1617, Trafikverket (skyltar), Livsmedelsverkets Kontrollwiki, Skatteverket (förening och moms),
+// HFD 2013 ref. 56, spellagen 2018:1138, spelförordningen 2018:1475 och regeringens prisbasbelopp. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const PBB = { 2026: 59200, 2027: 59600 };
+const kr = (n, d = 0) => `${n.toFixed(d).replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")} kr`;
+const lotter = Object.entries(PBB).map(([ar, b]) => ({ ar, insats: b / 4000, forening: b / 6, alla: b / 60 }));
+
+const avsnitt = [
+  { id: "plats", rubrik: "Var ska loppisen vara?" },
+  { id: "polisen", rubrik: "När behövs tillstånd från Polisen?" },
+  { id: "skyltar", rubrik: "Skyltar längs vägen" },
+  { id: "fika", rubrik: "Kaffe och hembakat" },
+  { id: "lotteri", rubrik: "Lotteri på loppisen" },
+  { id: "forening", rubrik: "Loppis i föreningens regi" },
+  { id: "salja", rubrik: "Vad du inte bör sälja" },
+  { id: "planera", rubrik: "Planera dagen" },
+];
+const fragor = [
+  { fraga: "Behöver man tillstånd för att ha loppis?", svar: "Ställer du ut bord, skyltar eller tält på offentlig plats, till exempel en gata eller ett torg, behövs tillstånd från Polisen. Ordningslagen kräver också tillstånd för marknader även på annan mark, och Polisen skriver att en loppis eller marknad som allmänheten bjuds in till kräver tillstånd. Är du osäker, fråga Polisen eller kommunen." },
+  { fraga: "Vad kostar tillstånd för loppis?", svar: "Polisens avgift är 990 kronor för att använda offentlig plats och 990 kronor för en offentlig tillställning som en marknad. En marknad på offentlig plats prövas båda gångerna och kostar då 1 980 kronor. Kommunen kan ta ut en egen avgift för marken." },
+  { fraga: "Får man sätta upp loppisskyltar vid vägen?", svar: "Inte inom vägområdet, som normalt omfattar vägbanan, diket och 3–5 meter utanför. Utanför det behövs markägarens tillstånd och ibland bygglov eller länsstyrelsens tillstånd. Trafikverket tar bort felplacerade skyltar." },
+  { fraga: "Får man sälja hembakat på loppisen?", svar: "En privatperson som säljer fika vid enstaka tillfällen räknas normalt inte som livsmedelsföretag och behöver inte registrera sig. Sker försäljningen regelbundet, ungefär en eller två dagar i månaden eller oftare, kan registrering krävas. Kommunen avgör." },
+  { fraga: "Får man ha lotteri på en loppis?", svar: `Ja, ett enkelt lotteri med varuvinster får ordnas utan licens i samband med tillställningen. En lott får 2026 kosta högst ${kr(PBB[2026] / 4000, 2)}, och högsta vinsten får vara värd ${kr(PBB[2026] / 60)} – eller ${kr(PBB[2026] / 6)} om en allmännyttig förening ordnar lotteriet.` },
+];
+---
+<Guide site={SITE} titel="Ha en egen loppis – tillstånd, skyltar och regler"
+  beskrivning="Vill du ha garageloppis, bakluckeloppis eller föreningsloppis? Polisens tillstånd och avgifter, regler för skyltar, fika och lotteri – och vad du inte bör sälja."
+  h1="Ha en egen loppis – tillstånd, skyltar och regler"
+  svar={`På egen tomt behöver en vanlig förrådsrensning sällan tillstånd. Ställer du ut bord eller skyltar på <strong>gata, torg eller annan offentlig plats</strong> krävs tillstånd från Polisen (990 kronor), och en <strong>marknad</strong> som allmänheten bjuds in till kan kräva tillstånd var den än hålls. Skyltar får aldrig sättas upp i vägområdet. Fika vid enstaka tillfällen kräver ingen registrering, och ett lotteri med varuvinster får ordnas utan licens.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Ha en egen loppis", href: "/guider/ha-egen-loppis/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Skatt när du säljer privat", href: "/guider/skatt-salja-privat/", text: "50 000-kronorsregeln" },
+    { namn: "Begagnade leksaker och barnprodukter", href: "/guider/begagnade-barnprodukter/", text: "Vad du inte bör sälja" },
+    { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/", text: "Vad gäller när någon klagar?" },
+    { namn: "Loppisar nära dig", href: "/", text: "Se vilka loppisar som har öppet" },
+  ]}
+  kallor={[
+    { namn: "Polisen – Använda offentlig plats, sök tillstånd", url: "https://polisen.se/tjanster-tillstand/tillstand-ansok/offentlig-plats/", text: "när tillstånd krävs, kommunens yttrande (granskad 17 juni 2026)", datum: "2026-11-27" },
+    { namn: "Polisen – Avgifter för tillstånd", url: "https://polisen.se/tjanster-tillstand/tillstand-ansok/avgifter-for-tillstand/", text: "990 kr och 360 kr (granskad 31 oktober 2025)", datum: "2026-11-27" },
+    { namn: "Polisen – Behöver ditt evenemang ha tillstånd?", url: "https://polisen.se/aktuellt/nyheter/nord/2026/oktober/behover-ditt-evenemang-ha-tillstand/", text: "loppis och marknad (5 oktober 2026)", datum: "2026-11-27" },
+    { namn: "Ordningslag (1993:1617)", url: "https://lagen.nu/1993:1617", text: "1 kap. 2 §, 2 kap. 3–5 §§, 3 kap. 1 och 19 §§", datum: "2026-11-27" },
+    { namn: "Trafikverket – Egna skyltar påverkar trafiksäkerhet och vägunderhåll", url: "https://www.trafikverket.se/om-oss/nyheter/lansnyheter/orebro/2025/egna-skyltar-paverkar-trafiksakerhet-och-vagunderhall/", text: "vägområdet, 50 meter, borttagning (10 juni 2025)", datum: "2026-11-27" },
+    { namn: "Trafikverket – Skyltar i vägområdet", url: "https://www.trafikverket.se/skyltar-i-vagomradet/", text: "tillstånd enligt väglagen (uppdaterad 13 april 2026)", datum: "2026-11-27" },
+    { namn: "Livsmedelsverket Kontrollwiki – Livsmedelsföretag, livsmedelsföretagare och livsmedelsanläggning", url: "https://kontrollwiki.livsmedelsverket.se/artikel/107", text: "kontinuitet och organisation (uppdaterad 13 januari 2026)", datum: "2026-11-27" },
+    { namn: "Skatteverket – Ideell förening, moms", url: "https://www.skatteverket.se/foreningar/driva/ideellforening/moms.4.18e1b10334ebe8bc80003909.html", text: "momsbefrielse och 120 000 kr", datum: "2026-11-27" },
+    { namn: "Högsta förvaltningsdomstolen, HFD 2013 ref. 56", url: "https://lagen.nu/dom/hfd/2013:56", text: "föreningsloppis med skänkta varor skattefri", datum: "2026-11-27" },
+    { namn: "Spellag (2018:1138), 3 kap. 4–5 §§ och 6 kap. 9–10 §§", url: "https://lagen.nu/2018:1138", text: "lotterier utan licens och registreringslotterier", datum: "2026-11-27" },
+    { namn: "Regeringen – Prisbasbelopp för 2026 och 2027", url: "https://regeringen.se/pressmeddelanden/2026/09/prisbasbeloppfor-2027-faststallt/", text: "59 200 kr (2026) och 59 600 kr (2027)", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="plats">Var ska loppisen vara?</h2>
+  <p>Platsen avgör vilka regler som gäller. Det finns i praktiken tre sorters privata loppisar:</p>
+  <ul>
+    <li><strong>Garage- eller gårdsloppis på egen tomt.</strong> Du säljer dina egna saker på din egen mark. Det är den enklaste formen.</li>
+    <li><strong>Loppis på gata, torg eller i en park.</strong> Det räknas som offentlig plats om marken är allmän plats i detaljplanen eller används för allmän trafik.</li>
+    <li><strong>Bakluckeloppis eller marknad med många säljare.</strong> Ofta på en parkering eller en idrottsplats, och ofta annonserad för allmänheten. En parkering kan vara offentlig plats om den används för allmän trafik.</li>
+  </ul>
+  <p>Ordningslagen räknar marknader och mässor som offentliga tillställningar. Vid en marknad som du bjuder in allmänheten till spelar det alltså roll vad som händer på platsen, inte bara vem som äger marken.</p>
+
+  <h2 id="polisen">När behövs tillstånd från Polisen?</h2>
+  <p>Ordningslagen har två regler som berör loppisar:</p>
+  <ol>
+    <li><strong>Använda offentlig plats.</strong> Vill du ställa ut bord, ställningar, tält eller skyltar på offentlig plats inom detaljplanerat område krävs tillstånd. Polisen frågar ofta kommunen innan beslut. Tillfällig och obetydlig användning som inte stör någon annan kräver däremot inget tillstånd. En bärkasse på en parkbänk är inte en loppis.</li>
+    <li><strong>Offentlig tillställning.</strong> En marknad på offentlig plats kräver tillstånd. Lagen kräver också tillstånd för marknader och liknande tillställningar på andra platser, men Polisen kan undanta vissa typer. I en nyhet från oktober 2026 skriver Polisen att en loppis eller marknad som allmänheten bjuds in till kräver tillstånd.</li>
+  </ol>
+  <p>Var en enkel garageloppis går över till att räknas som marknad avgörs från fall till fall, och myndigheterna har ingen fast gräns. Ju fler säljare, desto mer annonsering och desto större publik, desto troligare är det att tillstånd krävs. Fråga Polisen i förväg om du planerar något större.</p>
+  <p>Polisens avgifter, som inte betalas tillbaka vid avslag:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ansökan</th><th class="num">Avgift</th></tr></thead>
+    <tbody>
+      <tr><td>Använda offentlig plats</td><td class="num">990 kr</td></tr>
+      <tr><td>Offentlig tillställning, till exempel marknad</td><td class="num">990 kr</td></tr>
+      <tr><td>Marknad på offentlig plats (båda prövningarna)</td><td class="num">1 980 kr</td></tr>
+      <tr><td>Insamling av pengar på offentlig plats</td><td class="num">360 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p>Kommunen kan dessutom ta ut en egen avgift för att du använder marken. Sök i god tid, eftersom väntetiderna är längst under våren och sommaren när de flesta loppisar ordnas. Polisen kan kräva att stånd och skyltar som satts upp utan tillstånd tas bort.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="skyltar">Skyltar längs vägen</h2>
+  <p>Skylten vid vägkorsningen är det som lockar folk till en gårdsloppis. Den är också det som oftast blir fel. Trafikverket har tydliga regler:</p>
+  <ul>
+    <li>Egna skyltar får <strong>inte sättas upp inom vägområdet</strong>. Det omfattar normalt vägbanan, diket och 3–5 meter utanför.</li>
+    <li>Utanför vägområdet behöver du markägarens tillstånd, och i vissa fall bygglov.</li>
+    <li>Utanför detaljplanerat område krävs normalt länsstyrelsens tillstånd för reklamliknande skyltar inom 50 meter från vägområdet.</li>
+    <li>Tillstånd att sätta skylt i vägområdet söks hos väghållaren, men Trafikverket skriver att det är ovanligt att det beviljas.</li>
+    <li>Felplacerade skyltar tas bort av Trafikverkets entreprenör. Skyltar som är hela sparas och kan hämtas inom skälig tid.</li>
+  </ul>
+  <p>Inom tätort är det kommunen som bestämmer. Ett praktiskt råd är att be en granne vid avfarten om lov att sätta skylten på deras tomt, och att ta bort den samma dag.</p>
+
+  <h2 id="fika">Kaffe och hembakat</h2>
+  <p>Kaffe och kakor hör till loppisen. Livsmedelsverkets vägledning till kommunerna säger att den som säljer mat räknas som livsmedelsföretag först när försäljningen har både en viss kontinuitet och en viss grad av organisation. Försäljning vid enstaka tillfällen har inte den kontinuiteten, även om den återkommer varje år. Som riktmärke anges ungefär tre eller fyra dagar i följd, eller en eller två dagar i månaden eller oftare.</p>
+  <p>Den som säljer fika en lördag på sin gårdsloppis behöver därför normalt inte registrera sig hos kommunen. En förening som har kafé varje vecka kan behöva det. Kommunens livsmedelskontroll gör bedömningen. Ingen får någonsin sälja mat som inte är säker, så håll mjölk och grädde kalla och märk kakor som innehåller nötter.</p>
+
+  <h2 id="lotteri">Lotteri på loppisen</h2>
+  <p>Ett lotteri kräver normalt licens, men spellagen har undantag som passar en loppis. Vid en offentlig nöjestillställning, eller en tillställning för ett allmännyttigt ändamål, får ett lotteri med <strong>bara varuvinster</strong> ordnas utan licens, inom en kommun. En allmännyttig förening får göra detsamma vid sina egna tillställningar. Gränserna räknas i prisbasbelopp:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Högsta pris per lott</th><th class="num">Högsta vinst, allmännyttig förening</th><th class="num">Högsta vinst, övriga</th></tr></thead>
+    <tbody>{lotter.map((x) => <tr><td>{x.ar}</td><td class="num">{kr(x.insats, 2)}</td><td class="num">{kr(x.forening)}</td><td class="num">{kr(x.alla)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Beloppen är våra uträkningar ur lagens bråktal (en fyratusendel, en sjättedel och en sextiondel av prisbasbeloppet). En allmännyttig förening får ha den högre vinstgränsen vid en tillställning som den själv ordnar. Ett lotteri utan insats, där deltagarna inte betalar något, kräver ingen licens alls. Den som vill ha större lotterier under längre tid kan, som allmännyttig förening, registrera ett lotteri hos kommunen för upp till fem år.</p>
+
+  <h2 id="forening">Loppis i föreningens regi</h2>
+  <p>Många loppisar drivs av idrottsföreningar, scoutkårer och församlingar. För dem gäller några särskilda regler:</p>
+  <ul>
+    <li><strong>Moms:</strong> en ideell förening är befriad från moms om den inte är skattskyldig för inkomstskatt, eller om omsättningen är högst 120 000 kronor per år. Lotter och medlemsavgifter är aldrig momspliktiga.</li>
+    <li><strong>Inkomstskatt:</strong> en allmännyttig ideell förening är skattefri för inkomster från verksamhet som av hävd använts för att finansiera ideellt arbete, och loppmarknader nämns i lagens förarbeten. Högsta förvaltningsdomstolen fann 2013 att en idrottsförening som sålde skänkta saker på tisdagskvällar, främst med ideella krafter, inte behövde betala skatt på drygt en halv miljon kronor om året.</li>
+    <li><strong>Gränsen:</strong> butiksliknande försäljning med dagliga öppettider och anställd personal omfattas inte av undantaget. Det är en anledning till att de stora välgörenhetskedjorna i dag tar ut moms.</li>
+  </ul>
+
+  <h2 id="salja">Vad du inte bör sälja</h2>
+  <p>Myndigheterna avråder från att sälja vissa begagnade saker, även privat:</p>
+  <ul>
+    <li><strong>Mjuka plastleksaker från före 2013</strong> och leksaker som luktar starkt eller känns klibbiga, enligt Kemikalieinspektionen.</li>
+    <li><strong>Trasiga elprodukter</strong> och elprylar med skadad sladd. Elsäkerhetsverket råder säljaren att berätta om kända fel.</li>
+    <li><strong>Bilbarnstolar och cykelhjälmar</strong> med okänd historik, eftersom en tidigare krock eller ett slag inte syns.</li>
+  </ul>
+  <p>De stora välgörenhetsbutikerna tar inte emot bilbarnstolar och hjälmar av samma skäl. Mer om detta finns i guiden om <a href="/guider/begagnade-barnprodukter/">begagnade leksaker och barnprodukter</a>.</p>
+
+  <h2 id="planera">Planera dagen</h2>
+  <ol>
+    <li>Bestäm plats och kontrollera om den är offentlig plats. Sök tillstånd i god tid om det behövs.</li>
+    <li>Prismärk i förväg. Runda priser och en låda med "allt för 10 kronor" gör det lättare att handla.</li>
+    <li>Ha växel och en Swish-skylt. Många handlar för små belopp.</li>
+    <li>Sätt bara skyltar där du har lov, och ta ner dem samma dag.</li>
+    <li>Bestäm vad som händer med det som blir kvar. Ring i förväg till en <a href="/">second hand-butik nära dig</a>. Många hämtar större mängder gratis, men alla tar inte emot allt.</li>
+  </ol>
+  <Faq fragor={fragor} />
+</Guide>

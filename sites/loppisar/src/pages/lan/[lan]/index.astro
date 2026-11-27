@@ -1,8 +1,104 @@
 ---
-import KatalogLan from "@natverk/core/katalog/KatalogLan.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../../../site.js";
+// Länssida: alla kommuner i länet med antal butiker, välgörenhet och helgöppet, söndagsöppna butiker och
+// – för kommuner utan egen sida (grinden i src/grind.js) – deras butiker i sin helhet. Ingen FAQ-markup.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { besk, valjTitel } from "@natverk/core/seo.js";
+import { rakna, invanarePer, talText, FOLK_SVERIGE, FOLKMANGD_AR, adressRad } from "@natverk/core/katalog.js";
+import ButikKort from "../../../components/ButikKort.astro";
+import Karta from "../../../components/Karta.astro";
+import OmUppgifterna from "../../../components/OmUppgifterna.astro";
+import { ORG } from "../../../lib/organisationer.js";
+import { kategori, sondagsoppen, lordagsoppen, organisationer, listaText } from "../../../lib/butik.js";
+import { riktigaTider } from "../../../grind.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
 
 export const getStaticPaths = () => KAT.lan.map((l) => ({ params: { lan: l.slug }, props: { lan: l } }));
-const { lan } = Astro.props;
+const { lan: l } = Astro.props;
+const E = l.kommuner.flatMap((k) => k.enheter);
+const n = E.length;
+const valg = E.filter((e) => e.valgorenhet);
+const sondag = E.filter(sondagsoppen), lordag = E.filter(lordagsoppen);
+const storst = [...l.kommuner].sort((a, b) => b.enheter.length - a.enheter.length);
+const utanSida = l.kommuner.filter((k) => !k.harSida);
+const orgs = organisationer(E);
+const kategorier = rakna(E, kategori);
+const allaN = KAT.enheter.length;
+const perLan = invanarePer(l.folk, n), perRiket = invanarePer(FOLK_SVERIGE, allaN);
+const lanRang = [...KAT.lan].filter((x) => x.folk).sort((a, b) => b.antal / b.folk - a.antal / a.folk);
+const rang = lanRang.indexOf(l) + 1;
+const andelSondag = Math.round((100 * sondag.length) / Math.max(1, E.filter(riktigaTider).length));
+const rikSondag = Math.round((100 * KAT.enheter.filter(sondagsoppen).length) / KAT.enheter.filter(riktigaTider).length);
+const utan = l.kommuner.filter((k) => !k.enheter.some(sondagsoppen));
+
+const titel = valjTitel(`Loppis i ${l.namn} – ${n} second hand-butiker per kommun`, `Loppis i ${l.namn} – ${n} butiker`, `Loppis i ${l.kortnamn}`);
+const beskrivning = besk(`Alla ${n} loppisar och second hand-butiker i ${l.namn}, kommun för kommun.`, `✓ ${l.kommuner.length} kommuner`, sondag.length > 0 && `✓ ${sondag.length} söndagsöppna`, `✓ ${valg.length} välgörenhet`, "✓ Karta", "Uppdateras varje natt.");
+const fragor = [
+  { fraga: `Hur många loppisar finns det i ${l.namn}?`, svar: `Vi listar ${n} loppisar och second hand-butiker i ${l.kommuner.length} av länets kommuner. Flest har ${storst[0].namn} (${storst[0].enheter.length})${storst[1] ? `, följt av ${storst[1].namn} (${storst[1].enheter.length})` : ""}.` },
+  { fraga: `Vilka loppisar har öppet på söndag i ${l.namn}?`, svar: sondag.length ? `${sondag.length} butiker har ordinarie söndagsöppet, ${andelSondag} procent av dem med kända tider (i hela landet ${rikSondag} procent). ${utan.length ? `I ${utan.length} kommuner saknas söndagsöppet helt.` : ""}` : `Ingen butik i ${l.namn} har ordinarie söndagsöppet enligt våra uppgifter.` },
+  orgs[0] && { fraga: `Vilka välgörenhetsorganisationer har second hand i ${l.namn}?`, svar: `${listaText(orgs.slice(0, 6).map(([k, c]) => `${ORG[k]?.namn ?? k} (${c})`))}. Totalt drivs ${valg.length} av ${n} butiker för välgörenhet.` },
+  perLan && perRiket && { fraga: `Har ${l.namn} många loppisar per invånare?`, svar: `I ${l.namn} går det en butik på ungefär ${talText(perLan)} invånare, mot en på ${talText(perRiket)} i hela landet. Det ger plats ${rang} av ${lanRang.length} län.` },
+].filter(Boolean);
 ---
-<KatalogLan site={SITE} kat={KAT} lan={lan} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} />
+<Layout site={SITE} titel={titel} beskrivning={beskrivning} smulor={[{ namn: "Start", href: "/" }, { namn: l.kortnamn, href: l.href }]} uppdaterad={UPPDATERAD}>
+  <h1>Loppisar och second hand i {l.namn}</h1>
+  <p class="svar"><strong>Loppis i {l.namn}:</strong> vi listar <strong>{n} butiker</strong> för begagnat i {l.kommuner.length} kommuner, varav {valg.length} drivs för välgörenhet. {sondag.length > 0 ? <><strong>{sondag.length}</strong> har öppet på söndagar och {lordag.length} på lördagar.</> : <>Ingen har ordinarie söndagsöppet; {lordag.length} har öppet på lördagar.</>} Flest finns i {storst[0].namn} ({storst[0].enheter.length}).</p>
+
+  <h2 id="kommuner">Loppisar per kommun i {l.namn}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Butiker</th><th class="num">Välgörenhet</th><th class="num">Lördag</th><th class="num">Söndag</th>{perLan && <th class="num">Invånare per butik</th>}</tr></thead>
+    <tbody>{l.kommuner.map((k) => <tr>
+      <td><a href={k.href}>{k.namn}</a></td>
+      <td class="num">{k.enheter.length}</td>
+      <td class="num">{k.enheter.filter((e) => e.valgorenhet).length}</td>
+      <td class="num">{k.enheter.filter(lordagsoppen).length}</td>
+      <td class="num">{k.enheter.filter(sondagsoppen).length}</td>
+      {perLan && <td class="num">{k.folk ? talText(invanarePer(k.folk, k.enheter.length)) : "–"}</td>}
+    </tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Lördag/söndag = antal butiker med ordinarie öppettider den dagen. Invånare per butik = folkmängd 31 december {FOLKMANGD_AR} (SCB) delat med antalet butiker. Kommuner som saknas i tabellen har ingen loppis eller second hand-butik i våra källor.</p>
+
+  {perLan && perRiket && <p>I {l.namn} går det en butik på ungefär {talText(perLan)} invånare. I hela Sverige är siffran {talText(perRiket)}, så länet ligger på plats {rang} av {lanRang.length} län räknat per invånare.</p>}
+
+  <Annons plats="lan-1" />
+
+  <h2 id="karta">Karta över loppisarna i {l.namn}</h2>
+  <Karta punkter={E.map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.href, rad: [e.kommun, adressRad(e)].filter(Boolean).join(" · ") }))} />
+
+  {sondag.length > 0 && <>
+    <h2 id="sondag">Loppis öppet på söndag i {l.namn}</h2>
+    <p>{sondag.length} av länets butiker har ordinarie söndagsöppet – {andelSondag} procent av dem med kända tider, mot {rikSondag} procent i hela landet.{utan.length > 0 && <> I {listaText(utan.slice(0, 8).map((k) => k.namn))}{utan.length > 8 ? ` och ${utan.length - 8} kommuner till` : ""} finns ingen söndagsöppen butik.</>}</p>
+    <ul class="kolumner">{sondag.map((e) => <li><a href={e.href}>{e.namn}</a>, {e.kommun}</li>)}</ul>
+  </>}
+
+  {orgs.length > 0 && <>
+    <h2 id="organisationer">Välgörenhetsbutiker i {l.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Organisation</th><th class="num">Butiker</th><th>Överskottet går till</th></tr></thead>
+      <tbody>{orgs.map(([k, c]) => <tr><td>{ORG[k]?.namn ?? k}</td><td class="num">{c}</td><td>{ORG[k]?.andamal ?? "–"}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Ändamålen enligt organisationernas egna webbplatser, hämtade 2026-11-27. Se också <a href="/guider/valgorenhet-vart-gar-pengarna/">vem som driver butikerna och vart pengarna går</a>.</p>
+  </>}
+
+  <h2 id="typer">Sorters butiker i {l.namn}</h2>
+  <ul>{kategorier.map(([c, x]) => <li>{c}: {x}</li>)}</ul>
+
+  {utanSida.length > 0 && <>
+    <h2 id="sma-kommuner">Loppis i {listaText(utanSida.map((k) => k.namn))}</h2>
+    <p>Här finns {utanSida.length === 1 ? "kommunen" : `de ${utanSida.length} kommuner`} i {l.namn} som har en eller två butiker med få uppgifter. Butikerna visas här med alla uppgifter vi har.</p>
+    {utanSida.map((k) => <>
+      <h3 id={k.slug}>Loppis i {k.namn} <small>({k.enheter.length === 1 ? "1 butik" : `${k.enheter.length} butiker`})</small></h3>
+      {k.enheter.map((e) => <ButikKort enhet={e} rubrik="h4" />)}
+    </>)}
+  </>}
+
+  <h2 id="storst">Flest loppisar i {l.namn}</h2>
+  <div class="kort">{storst.filter((k) => k.harSida).slice(0, 6).map((k) => <a href={k.href}><strong>Loppis i {k.namn}</strong><small>{k.enheter.length} butiker · {k.enheter.filter(sondagsoppen).length} söndagsöppna</small></a>)}</div>
+
+  <Faq fragor={fragor} />
+  <OmUppgifterna enheter={E} plats={l.namn} />
+  <p class="kalla">{KALLA}</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

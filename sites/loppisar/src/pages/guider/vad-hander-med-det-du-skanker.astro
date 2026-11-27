@@ -1,0 +1,103 @@
+---
+// Guide: vad händer med det du skänker? Källor: Myrorna (hantering, hållbarhetsrapport 2023 och 2025), Erikshjälpen
+// (miljöuppdrag 2025), Röda Korset (årsberättelse 2025), Stockholms och Göteborgs Stadsmission, Björkåfrihet, Artikel2, PMU,
+// Naturvårdsverket (textilavfall, separat insamling) och IVL. Granskad 2026-11-27. Procenttal från 2023 för Myrorna är markerade.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const fragor = [
+  { fraga: "Säljs kläderna man skänker i Sverige?", svar: "En del. Hos Erikshjälpen återanvändes 25 procent av gåvorna i Sverige 2025 och ytterligare 26 procent i Europa. Hos Myrorna såldes 25 procent av textilen i de egna butikerna 2023, medan 60 procent exporterades för återanvändning och återvinning." },
+  { fraga: "Varför exporteras skänkta kläder?", svar: "Organisationerna får in betydligt mer än de egna butikerna säljer – hos Myrorna såldes en fjärdedel av textilen i Sverige 2023. Exporten går till sorteringsföretag, främst i Europa, där kläderna sorteras för återanvändning eller återvinning. IVL konstaterar att återanvändning ger lägst klimatpåverkan även om den sker i ett annat land." },
+  { fraga: "Vad händer med det som inte går att sälja?", svar: "Det materialåtervinns om det går och energiåtervinns annars. Hos Erikshjälpen gick 7 procent till materialåtervinning, 39 procent till energiåtervinning och 3 procent till deponi 2025. Trasiga saker ska helst inte skänkas alls." },
+  { fraga: "Tjänar organisationerna pengar på exporten?", svar: "Det skiljer sig. Erikshjälpen skriver att exporten via partner som Human Bridge inte ger någon intäkt. Björkåfrihet och Artikel2 säljer textil av lägre kvalitet till köpare, Artikel2 bara inom EU." },
+];
+---
+<Guide site={SITE} titel="Vad händer med kläderna och sakerna du skänker?"
+  beskrivning="Hur mycket av det du skänker till Myrorna, Erikshjälpen, Röda Korset och Stadsmissionen säljs i Sverige, exporteras eller återvinns? Organisationernas egna siffror."
+  h1="Vad händer med kläderna och sakerna du skänker till second hand?"
+  svar={`Bara en del säljs i butiken där du lämnade det. Hos <strong>Erikshjälpen</strong> återanvändes 25 procent av gåvorna i Sverige och 26 procent i Europa 2025, medan resten material- eller energiåtervanns. Hos <strong>Myrorna</strong> såldes en fjärdedel av textilen i de egna butikerna 2023 och 60 procent exporterades för återanvändning och återvinning. Det som inte går att sälja blir nytt material eller energi.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vad händer med det du skänker?", href: "/guider/vad-hander-med-det-du-skanker/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={[
+    { id: "vagen", rubrik: "Gåvans väg: från påsen till fyra flöden" },
+    { id: "siffror", rubrik: "Siffrorna organisation för organisation" },
+    { id: "export", rubrik: "Exporten: vart och varför?" },
+    { id: "ovrigt", rubrik: "Möbler, porslin och prylar" },
+    { id: "kommunen", rubrik: "Kommunens textilinsamling sedan 2025" },
+    { id: "hjalp", rubrik: "Så gör din gåva mest nytta" },
+  ]}
+  relaterat={[
+    { namn: "Vad tar second hand-butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Organisation för organisation" },
+    { namn: "Second hand och miljön", href: "/guider/second-hand-miljo/", text: "Vad ett begagnat köp sparar" },
+    { namn: "Vem driver butikerna?", href: "/guider/valgorenhet-vart-gar-pengarna/", text: "Och vart går pengarna?" },
+    { namn: "Välgörenhetsbutiker", href: "/valgorenhet/", text: "Alla butiker i Sverige" },
+  ]}
+  kallor={[
+    { namn: "Myrorna – Så hanterar vi det som lämnas in", url: "https://www.myrorna.se/om-myrorna/sa-hanterar-vi-det-som-lamnas-in/", text: "tre sorteringsanläggningar, fyra flöden, 30 ton per dag", datum: "2026-11-27" },
+    { namn: "Myrorna – Hållbarhetsrapport 2023", url: "https://www.myrorna.se/app/uploads/hallbarhetsrapport-2023.pdf", text: "fördelning textil och inredning, exportländer (s. 15 och 40–41)", datum: "2026-11-27" },
+    { namn: "Myrorna – Hållbarhetsrapport 2025", url: "https://www.myrorna.se/artiklar/myrornas-hallbarhetsrapport-2025/", text: "insamlade mängder 2025 (publicerad 11 maj 2026)", datum: "2026-11-27" },
+    { namn: "Erikshjälpen – Vårt miljöuppdrag", url: "https://erikshjalpen.se/om-erikshjalpen-second-hand/vara-uppdrag/vart-miljouppdrag/", text: "fördelning 2025, 11,4 miljoner föremål (publicerad 25 maj 2026)", datum: "2026-11-27" },
+    { namn: "Röda Korset – Årsberättelse 2025", url: "https://www.rodakorset.se/siteassets/bilder/om-oss/seminarier/260428_rk_ab_2025_webb2.pdf", text: "textilexport 853 och 456 ton", datum: "2026-11-27" },
+    { namn: "Stockholms Stadsmission – Skänk kläder och prylar", url: "https://www.stadsmissionen.se/ge-stod/skank-klader-och-prylar", text: "lagret i Västerhaninge, 65 ton per vecka, Humana, Remake", datum: "2026-11-27" },
+    { namn: "Göteborgs Stadsmission – Att skänka", url: "https://www.stadsmissionen.org/second-hand/att-skanka/", text: "prislapp, kilopris, Tradera, Remake", datum: "2026-11-27" },
+    { namn: "Björkåfrihet – Vad händer med din gåva", url: "https://bjorkafrihet.se/insamling/vad-hander-med-din-gava/", text: "3 000 kg prylar och 3 000 kg textil per dag (16 januari 2026)", datum: "2026-11-27" },
+    { namn: "Artikel2 – Vanliga frågor", url: "https://artikel2.se/faq-vanliga-fragor-och-svar/", text: "över 90 procent, prioritetsordning, försäljning inom EU", datum: "2026-11-27" },
+    { namn: "PMU – Gåvomottagning", url: "https://pmu.se/secondhand/gavomottagning/", datum: "2026-11-27" },
+    { namn: "Naturvårdsverket – Textilavfall", url: "https://www.naturvardsverket.se/amnesomraden/avfall/avfallslag/textilavfall", text: "60–70 / 20–30 / 7–10 procent, 7–9 kg per person (granskad 2 december 2025)", datum: "2026-11-27" },
+    { namn: "Naturvårdsverket – Krav på separat insamling av textilavfall", url: "https://www.naturvardsverket.se/vagledning-och-stod/avfall/krav-pa-separat-insamling-av-textilavfall/", text: "granskad 6 november 2025", datum: "2026-11-27" },
+    { namn: "IVL Svenska Miljöinstitutet – Återanvändning av textil viktigast för klimatet", url: "https://www.ivl.se/english/ivl/press/press-releases/2025-01-17-reuse-of-textiles-is-most-important-for-the-climate---wherever-in-the-world-it-takes-place.html", text: "17 januari 2025", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="vagen">Gåvans väg: från påsen till fyra flöden</h2>
+  <p>När du lämnar en kasse i en second hand-butik eller en insamlingsbox börjar en kedja som de flesta inte ser. Hos de stora organisationerna går gåvorna inte direkt ut på hyllan. De körs först till en sorteringsanläggning, där personal går igenom allt för hand.</p>
+  <p>Myrorna beskriver flödet tydligast. Allt som lämnas in går till någon av tre sorteringsanläggningar, i Tagene, Norrköping och Botkyrka. Där delas det upp i fyra flöden:</p>
+  <ol>
+    <li><strong>Butik</strong> – det som går att sälja i Sverige. Säsongsvaror sparas tills rätt säsong.</li>
+    <li><strong>Export</strong> – hela saker som det inte finns avsättning för här.</li>
+    <li><strong>Materialåtervinning</strong> – det som kan bli nytt material.</li>
+    <li><strong>Energiåtervinning</strong> – det som inte kan användas på något annat sätt och därför eldas.</li>
+  </ol>
+  <p>Myrorna samlar in omkring 30 ton per dag i över 120 kommuner. Stockholms Stadsmission tar emot cirka 65 ton gåvor i veckan, som sorteras och prissätts på lagret i Västerhaninge. Björkåfrihet sorterar ungefär 3 000 kilo prylar och lika mycket textil varje dag i Göteborg. Det är mängder som ingen enskild butik skulle kunna sälja.</p>
+
+  <h2 id="siffror">Siffrorna organisation för organisation</h2>
+  <p>Organisationerna redovisar olika mycket. Här är de siffror de själva har publicerat:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Organisation</th><th>Återanvänds i Sverige</th><th>Återanvänds utomlands</th><th>Materialåtervinning</th><th>Energiåtervinning och deponi</th><th>År</th></tr></thead>
+    <tbody>
+      <tr><td>Erikshjälpen (alla gåvor)</td><td>25 %</td><td>26 % (Europa)</td><td>7 %</td><td>39 % + 3 % deponi</td><td>2025</td></tr>
+      <tr><td>Myrorna (textil, 5 088 ton)</td><td>25 %</td><td colspan="2">60 % exporteras för återanvändning och återvinning</td><td>15 %</td><td>2023</td></tr>
+      <tr><td>Myrorna (inredning, 3 848 ton)</td><td>46 %</td><td>4 %</td><td colspan="2">42 % material- och energiåtervinning</td><td>2023 (+ 8 % deponi)</td></tr>
+      <tr><td>Artikel2 (textil)</td><td colspan="2">Över 90 % återanvänds eller återvinns</td><td>22 %</td><td>–</td><td>2023</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Organisationernas egna rapporter och webbplatser. Myrornas fördelning för 2025 har vi inte kunnat läsa i rapporten, därför visas 2023.</p>
+  <p>Några saker sticker ut. Hos Myrorna ökade andelen textil som såldes i de egna butikerna från 13 procent 2022 till 25 procent 2023. Av den textil Myrorna exporterade återanvändes knappt 80 procent, drygt 15 procent materialåtervanns och drygt 4 procent förbrändes. Erikshjälpen sålde vidare över 11 miljoner föremål under 2025 och tar emot ungefär 8 500 ton gåvor om året, möbler oräknade.</p>
+  <p>Stockholms och Göteborgs Stadsmission, Röda Korset, PMU och Hela Människan publicerar ingen fördelning i procent. Stockholms Stadsmission skriver att textil som inte går att använda exporteras via Humana för återanvändning och återvinning, och att en del sys om till varor under det egna märket Remake. Göteborgs Stadsmission säljer det mesta med prislapp, en del till kilopris eller på Tradera, och låter osåld textil bli Remake-produkter eller delas ut i den sociala verksamheten. PMU skriver att det som inte går att sälja lämnas till återvinning.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="export">Exporten: vart och varför?</h2>
+  <p>Att skänkta kläder skickas utomlands kan kännas fel, men det är ofta det bästa alternativet för miljön. IVL Svenska Miljöinstitutet kom 2025 fram till att återanvändning har lägst klimatpåverkan, oavsett om den sker i Europa eller i andra delar av världen. Skillnaden mellan materialåtervinning och förbränning var däremot liten.</p>
+  <p>Myrornas textilexport gick 2023 främst till Lettland, Litauen, Polen och Tjeckien, via sorteringsföretaget Fretex International. Myrorna skriver att trasig textil och trasig inredning inte exporteras. Erikshjälpens export går till partner som Human Bridge och Friend to Friend och ger ingen intäkt. Artikel2 säljer bara till köpare inom EU, men konstaterar att en mindre del till slut hamnar utanför EU.</p>
+  <p>Röda Korsets textilexport minskade från 853 ton till 456 ton under 2025. Organisationen förklarar det med det nya ansvaret för kommunerna att samla in textilavfall.</p>
+
+  <h2 id="ovrigt">Möbler, porslin och prylar</h2>
+  <p>För annat än textil är andelen som säljs i Sverige högre. Av det Myrorna samlade in i form av inredning och möbler 2023 såldes 46 procent i de egna butikerna, medan bara 4 procent exporterades. Men 42 procent gick till material- eller energiåtervinning och 8 procent till deponi. Erikshjälpen anger att det som läggs på deponi är keramik, glas och kakel, som inte går att återvinna.</p>
+  <p>Därför ber alla organisationerna om hela, rena och fungerande saker. Kantstött porslin, möbler med trasiga beslag och elektronik som inte fungerar blir annars avfall som organisationen måste ta hand om. Under 2025 samlade Myrorna in 3 997 ton textil och 3 989 ton inredning och möbler, alltså ungefär lika mycket av varje.</p>
+
+  <h2 id="kommunen">Kommunens textilinsamling sedan 2025</h2>
+  <p>Sedan 1 januari 2025 är alla i Sverige skyldiga att sortera ut textilavfall, och kommunerna ska samla in det. Det har ändrat vad som bör hamna i second hand-påsen. Det hela och rena ska till second hand. Det slitna och trasiga ska till kommunens insamling, och strumpor, underkläder och textil med mögel ska i restavfallet.</p>
+  <p>Före reformen hamnade 7–9 kilo textil per person och år i restavfallet eller på återvinningscentralen och eldades upp, enligt Naturvårdsverket. Nästan hälften av det hade kunnat användas längre. Av den textil som samlas in och sorteras förbereds enligt Naturvårdsverket 60–70 procent för återanvändning, 20–30 procent materialåtervinns och 7–10 procent energiåtervinns.</p>
+
+  <h2 id="hjalp">Så gör din gåva mest nytta</h2>
+  <ul>
+    <li><strong>Skänk det du själv skulle kunna köpa.</strong> Det som är helt, rent och fungerar har störst chans att säljas i Sverige.</li>
+    <li><strong>Sortera bort det trasiga själv.</strong> Lämna det i kommunens textilinsamling eller på återvinningscentralen, så slipper organisationen ta hand om det.</li>
+    <li><strong>Säsongen spelar mindre roll.</strong> Myrorna lägger säsongsvaror på lager tills de passar, så vinterjackan kan skänkas även i maj.</li>
+    <li><strong>Kolla vad butiken tar emot</strong> innan du lämnar möbler och elektronik. Se <a href="/guider/skanka-mobler-och-saker/">jämförelsen av vad butikerna tar emot</a>.</li>
+    <li><strong>Lämna under öppettid</strong>, aldrig utanför en stängd dörr. Hitta närmaste <a href="/valgorenhet/">välgörenhetsbutik</a>.</li>
+  </ul>
+  <Faq fragor={fragor} />
+</Guide>

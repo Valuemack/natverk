@@ -1,0 +1,24 @@
+---
+// Rutan "Om uppgifterna": var datan på sidan kommer ifrån, hur gammal den är och hur urvalet görs – räknat på sidans egna butiker.
+import { rakna } from "@natverk/core/katalog.js";
+import { KALLNAMN } from "../lib/butik.js";
+import { riktigaTider } from "../grind.js";
+const { enheter, plats } = Astro.props;
+const n = enheter.length;
+const perKalla = rakna(enheter, (e) => KALLNAMN[e.kvalitet?.oppettider] ? e.kvalitet.oppettider : (e.kallor?.[0]?.kalla ?? null))
+  .map(([k, c]) => [KALLNAMN[k] ?? k, c]);
+const medTider = enheter.filter(riktigaTider).length;
+const datum = [...new Set(enheter.flatMap((e) => (e.kallor ?? []).map((k) => k.hamtad)).filter(Boolean))].sort();
+const sista = datum.at(-1);
+---
+<aside class="metod" id="om-uppgifterna">
+  <h2>Om uppgifterna</h2>
+  <p>Sidan bygger på {n === 1 ? "en butik" : `${n} butiker`} i {plats}. Öppettider finns för {medTider} av dem. Uppgifterna kommer från:</p>
+  <ul>{perKalla.map(([k, c]) => <li>{k}: {c} {c === 1 ? "butik" : "butiker"}</li>)}</ul>
+  <p>Organisationernas egna butikslistor går före OpenStreetMap när båda finns. En butik från OpenStreetMap som tillhör en organisation vars hela lista vi hämtar, men som inte finns i listan, tas bort som troligen stängd. Tiderna är ordinarie veckotider: helgdagar, lov och sommaruppehåll kan ge andra tider, så ring gärna innan du åker långt.{sista && <> Senast hämtat {sista}.</>}</p>
+  <p>Butiker med öppettider, adress och minst två andra uppgifter (telefon, egen butikssida eller sortiment) får en egen sida. Övriga visas i sin helhet här. Sajten är oberoende och inte ansluten till någon av organisationerna. <a href="/om/#kallor">Mer om källor och metod</a>.</p>
+</aside>
+<style>
+  .metod { background: var(--yta); border: 1px solid var(--linje); border-left: 4px solid var(--farg); border-radius: 8px; padding: .4rem 1.1rem .6rem; margin: 1.4rem 0; }
+  .metod h2 { margin-top: .6rem; }
+</style>

@@ -1,0 +1,121 @@
+---
+// Guide: vad tar second hand-butikerna emot? Bygger på organisationernas egna sidor om gåvor (src/lib/organisationer.js,
+// hämtade 2026-11-27), Naturvårdsverkets vägledning om textilavfall och vårt eget butiksregister (antal butiker per organisation).
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { ORG, HAMTAT } from "../../lib/organisationer.js";
+import { organisationer } from "../../lib/butik.js";
+import { SITE, KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const antal = Object.fromEntries(organisationer(KAT.enheter));
+const ORDNING = ["Röda Korset", "Erikshjälpen Second Hand", "Myrorna", "PMU Second Hand", "Stockholms Stadsmission", "Göteborgs Stadsmission", "Artikel2", "Björkåfrihet"];
+// Jämförelse: J = tar emot, N = tar inte emot, ? = framgår inte av organisationens sida.
+const RADER = [
+  { sak: "Kläder, skor och textil", v: ["J", "J", "J", "?", "J", "J", "J", "J"] },
+  { sak: "Glas, porslin och husgeråd", v: ["J", "J", "J", "?", "J", "J", "J", "J"] },
+  { sak: "Möbler", v: ["Mindre, fråga först", "J", "Större butiker", "J", "Små i butik", "Alingsås, Alelyckan", "Bara Kista", "Inte stora"] },
+  { sak: "Soffor", v: ["?", "?", "?", "?", "N", "N", "?", "?"] },
+  { sak: "Madrasser och sängar", v: ["?", "?", "?", "?", "N", "N", "?", "N"] },
+  { sak: "Vitvaror", v: ["N", "N", "?", "?", "N", "N", "?", "N"] },
+  { sak: "Tjock-tv", v: ["N", "N", "N", "N", "N", "N", "?", "N"] },
+  { sak: "Fungerande småelektronik", v: ["J", "J", "J", "J", "?", "?", "J", "?"] },
+  { sak: "Bilbarnstolar", v: ["N", "N", "?", "N", "N", "?", "?", "N"] },
+  { sak: "Hjälmar och flytvästar", v: ["N", "N", "?", "N", "N", "?", "?", "Nej (flytvästar)"] },
+  { sak: "Uppslagsverk", v: ["N", "N", "N", "N", "?", "?", "N", "N"] },
+  { sak: "Pianon", v: ["?", "N", "N", "N", "?", "N", "?", "?"] },
+  { sak: "Gratis hämtning", v: ["Vissa butiker", "Ja, boka", "Ja, boka", "Vid större mängder", "?", "Större mängder", "?", "Nej"] },
+];
+const T = { J: "Ja", "J*": "Ja, fråga först", N: "Nej", "?": "–" };
+const fragor = [
+  { fraga: "Vilka second hand-butiker tar emot möbler?", svar: "Erikshjälpen och PMU tar emot möbler. Myrorna tar emot möbler i de större butikerna, och Röda Korset tar emot mindre möbler – ring först. Stockholms Stadsmission tar emot små möbler i butikerna och större på fyra återvinningscentraler. Göteborgs Stadsmission tar emot möbler i Alingsås och på Alelyckan." },
+  { fraga: "Vilka hämtar möbler gratis?", svar: "Erikshjälpen hämtar gratis efter bokning hos den lokala butiken, och Myrornabilen hämtar gratis efter bokning. De flesta PMU-butiker hämtar gratis vid större mängder, till exempel dödsbon. Vissa Röda Korset-butiker hämtar. Björkåfrihet hämtar inte." },
+  { fraga: "Var kan man skänka en soffa?", svar: "Stockholms Stadsmission tar inte emot soffor, Göteborgs Stadsmission inte stora soffor, hörn- eller bäddsoffor, och Björkåfrihet inte stora, otympliga möbler. Övriga organisationer anger inget generellt nej, så ring den lokala Erikshjälpen-, PMU- eller Myrornabutiken och fråga. Säljer ingen, lämna soffan på återvinningscentralen – många har en återbruksdel." },
+  { fraga: "Kan man skänka trasiga kläder?", svar: "Nej, organisationerna vill ha hela och rena kläder. Sedan 1 januari 2025 ska slitna och trasiga textilier lämnas i kommunens insamling av textilavfall. Strumpor, underkläder och textil med mögel eller skadedjur går dock till restavfallet." },
+  { fraga: "Tar second hand emot bilbarnstolar?", svar: "Nej. Röda Korset, Erikshjälpen, PMU, Björkåfrihet och Stockholms Stadsmission tar inte emot bilbarnstolar, eftersom det inte går att se om stolen har varit med om en krock." },
+];
+---
+<Guide site={SITE} titel="Skänka möbler och saker – vad tar second hand-butikerna emot?"
+  beskrivning="Vilka second hand-butiker tar emot möbler, soffor, elektronik och bilbarnstolar, och vilka hämtar gratis? Röda Korset, Erikshjälpen, Myrorna, PMU och Stadsmissionen jämförda."
+  h1="Skänka möbler, kläder och saker – vad tar second hand-butikerna emot?"
+  svar={`Alla stora välgörenhetsbutiker tar emot <strong>hela och rena</strong> kläder, husgeråd, böcker och leksaker. Möbler tar Erikshjälpen och PMU emot, liksom Myrornas större butiker och Röda Korset om du frågar först. <strong>Erikshjälpen och Myrorna hämtar gratis</strong> efter bokning, och de flesta PMU-butiker vid större mängder. De flesta säger nej till bilbarnstolar, tjock-tv och uppslagsverk, och trasig textil går sedan 2025 till kommunens insamling.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vad tar second hand emot?", href: "/guider/skanka-mobler-och-saker/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={[
+    { id: "jamfor", rubrik: "Jämförelse: vem tar emot vad?" },
+    { id: "organisationer", rubrik: "Organisation för organisation" },
+    { id: "textil", rubrik: "Trasig textil och kommunens insamling" },
+    { id: "mobler", rubrik: "Möbler: så lyckas du" },
+    { id: "dodsbo", rubrik: "Dödsbo och flytt" },
+    { id: "tips", rubrik: "Packa och lämna" },
+  ]}
+  relaterat={[
+    { namn: "Vad händer med det du skänker?", href: "/guider/vad-hander-med-det-du-skanker/", text: "Butik, export eller återvinning" },
+    { namn: "Vem driver butikerna?", href: "/guider/valgorenhet-vart-gar-pengarna/", text: "Vart pengarna går" },
+    { namn: "Välgörenhetsbutiker i Sverige", href: "/valgorenhet/", text: "Alla butiker per organisation" },
+    { namn: "Loppisar nära dig", href: "/", text: "Hitta närmaste butik" },
+  ]}
+  kallor={[
+    ...ORDNING.map((k) => ({ namn: ORG[k].kalla.namn, url: ORG[k].kalla.url, datum: HAMTAT })),
+    { namn: "Myrorna – Myrornabilen", url: "https://www.myrorna.se/artiklar/nyhet-myrornabilen/", text: "gratis hämtning (16 oktober 2026)", datum: HAMTAT },
+    { namn: "Naturvårdsverket – Krav på separat insamling av textilavfall", url: "https://www.naturvardsverket.se/vagledning-och-stod/avfall/krav-pa-separat-insamling-av-textilavfall/", text: "från 1 januari 2025, undantag från 1 oktober 2025 (granskad 6 november 2025)", datum: HAMTAT },
+    { namn: "Röda Korset – Textilavfall eller återbruk? Så sorterar du rätt", url: "https://www.rodakorset.se/second-hand/artiklar/textilavfall-eller-aterbruk-sa-har-sorterar-du-ratt/", text: "3 februari 2025", datum: HAMTAT },
+    { namn: "loppisar.nu – butiksregistret", text: "antal butiker per organisation, uppdateras varje natt" },
+  ]}>
+
+  <h2 id="jamfor">Jämförelse: vem tar emot vad?</h2>
+  <p>Tabellen bygger på vad varje organisation själv skriver om gåvor. Ett streck betyder att organisationen inte tar upp saken på sin sida, inte att den säger nej. "Fråga först" betyder att det beror på butiken.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Sak</th>{ORDNING.map((k) => <th>{ORG[k].namn.replace(/ \(f\.d\..*\)/, "").replace(" Second Hand", "")}</th>)}</tr></thead>
+    <tbody>{RADER.map((r) => <tr><td>{r.sak}</td>{r.v.map((v) => <td>{T[v] ?? v}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Organisationernas egna sidor, hämtade {HAMTAT}. Lokala butiker kan göra undantag, så ring vid stora gåvor.</p>
+
+  <h2 id="organisationer">Organisation för organisation</h2>
+  {ORDNING.map((k) => { const o = ORG[k]; return <>
+    <h3>{o.namn}{antal[k] ? <small> – {antal[k]} butiker i vårt register</small> : null}</h3>
+    <p>{o.driver} {o.andamal}</p>
+    <ul>
+      <li><strong>Tar emot:</strong> {o.tar}</li>
+      <li><strong>Tar inte emot:</strong> {o.tarInte}</li>
+      {o.hamtning && <li><strong>Hämtning:</strong> {o.hamtning}</li>}
+    </ul>
+  </>; })}
+  <p>Hela Människan och Lindra Second Hand anger inga gemensamma regler för gåvor på sina webbplatser. Där bestämmer varje butik själv, så kontakta den butik du vill lämna till.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="textil">Trasig textil och kommunens insamling</h2>
+  <p>Den viktigaste regeln är densamma hos alla: det du skänker ska vara <strong>helt och rent</strong>. Det som inte går att sälja kostar organisationerna pengar att bli av med.</p>
+  <p>Sedan <strong>1 januari 2025</strong> måste alla, även hushåll, sortera ut textilavfall, och kommunerna ansvarar för att samla in det. Det bygger på EU:s avfallsdirektiv och den svenska avfallsförordningen. Naturvårdsverkets vägledning ger tre fall:</p>
+  <ol>
+    <li><strong>Hela och rena kläder och hemtextil</strong> skänks till second hand.</li>
+    <li><strong>Slitna, trasiga eller fläckiga textilier</strong> lämnas i kommunens textilinsamling, om skicket inte gör det mycket svårt att återanvända eller återvinna dem. Kommunen kan bestämma att även sådant ska sorteras ut.</li>
+    <li><strong>Strumpor, underkläder och textil med mögel eller skadedjur</strong> är undantagna sedan 1 oktober 2025 och går till restavfallet.</li>
+  </ol>
+  <p>Röda Korset ger samma råd: skänk det hela och rena, lämna det slitna i kommunens insamling och släng det som är kraftigt nedsmutsat. Kläder, hemtextil, gardiner, textilväskor och accessoarer av textil omfattas.</p>
+
+  <h2 id="mobler">Möbler: så lyckas du</h2>
+  <p>Möbler är det som oftast blir nekat, eftersom de tar plats och är svåra att sälja om de inte är i gott skick. Några mönster går igen hos organisationerna:</p>
+  <ul>
+    <li><strong>Stoppade möbler och sängar</strong> är svårast. Stockholms Stadsmission tar inte emot soffor, sängar, madrasser eller sänggavlar, Göteborgs Stadsmission inte stora soffor eller använda madrasser, och Björkåfrihet inte madrasser, sänggavlar eller stora möbler.</li>
+    <li><strong>Spånskiva och isärplockat</strong> nekas ofta. Stockholms Stadsmission tar inte emot möbler i spånskiva eller garderober, och Göteborgs Stadsmission tar inte emot isärplockade möbler.</li>
+    <li><strong>Kontorsmöbler</strong> tar varken PMU eller Göteborgs Stadsmission emot.</li>
+    <li><strong>Massiva trämöbler, stolar, bord och byråer</strong> i gott skick är det som oftast går att skänka.</li>
+  </ul>
+  <p>Fotografera möbeln och skicka bilden till butiken innan du kör dit. Det sparar en resa.</p>
+
+  <h2 id="dodsbo">Dödsbo och flytt</h2>
+  <p>Vid ett dödsbo är det ofta mycket på en gång. Myrorna tar emot dödsbon och har Myrornabilen, som hämtar gratis efter bokning. De flesta PMU-butiker hämtar gratis vid större mängder. Erikshjälpen hämtar gratis efter bokning hos den lokala butiken, men någon behöver vara hemma. Göteborgs Stadsmission hämtar större mängder via insamlingscentralen. Boka i god tid, för hämtningarna är populära.</p>
+  <p>Sortera i förväg i fyra högar: säljbart, kommunens textilinsamling, återvinningscentralen och farligt avfall. Det som är värdefullt, som silver, konst och smycken, bör värderas innan det skänks. Läs guiden om <a href="/guider/silverstamplar-guldstamplar/">silver- och guldstämplar</a>.</p>
+
+  <h2 id="tips">Packa och lämna</h2>
+  <ul>
+    <li><strong>Lämna under öppettid.</strong> PMU skriver uttryckligen att du aldrig ska ställa saker utanför butiken. Det blir förstört av regn eller tas av någon annan. Se öppettiderna för butikerna i din kommun på loppisar.nu.</li>
+    <li><strong>Packa per sort</strong>, som Erikshjälpen ber om: kläder för sig, porslin inslaget för sig.</li>
+    <li><strong>Insamlingsboxar</strong> finns för kläder och små saker. Myrorna har över 300 boxar och platser på återvinningscentraler, och kläder kan skickas gratis via PostNord-ombud.</li>
+    <li><strong>Elprylar</strong> ska fungera och ha sladden kvar.</li>
+    <li><strong>Böcker</strong> tar de flesta emot, men inte uppslagsverk, och Björkåfrihet tar inte heller emot bokklubbsböcker.</li>
+  </ul>
+  <Faq fragor={fragor} />
+</Guide>

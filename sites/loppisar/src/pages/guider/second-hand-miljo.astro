@@ -1,0 +1,105 @@
+---
+// Guide: second hand och miljön. Källor: Naturvårdsverket (textilkonsumtion, granskad 28 sep 2026; textilavfall),
+// IVL (pressmeddelanden 17 jan och 28 maj 2025), Blocket/Vend Second Hand Effect Report 2025 (29 sep 2026),
+// Myrorna och Erikshjälpen (klimatsiffror 2025), EU-kommissionen (textilstrategin, avfallsdirektivet 2025/1892) och
+// regeringens uppdrag till Naturvårdsverket om producentansvar. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { talText } from "@natverk/core/katalog.js";
+import { SITE, KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const n = KAT.enheter.length;
+const KONSUMTION = [{ ar: 2000, kg: "10,7" }, { ar: 2024, kg: "13,6" }, { ar: 2025, kg: "15,2" }];
+const fragor = [
+  { fraga: "Hur mycket kläder köper svenskarna?", svar: "15,2 kilo nya kläder och hemtextil per person under 2025 enligt Naturvårdsverket, en ökning med 12 procent från året innan och samma nivå som 2022. År 2000 var siffran 10,7 kilo." },
+  { fraga: "Hur mycket sparar man på att köpa begagnat?", svar: "IVL har räknat ut att den som köper begagnat i stället för nytt sparar cirka 80 kilo koldioxidekvivalenter per år, ungefär en fjärdedel av en svensks klimatpåverkan från kläder. Att använda ett plagg dubbelt så länge minskar dess klimatpåverkan med nästan hälften enligt Naturvårdsverket." },
+  { fraga: "Ersätter ett begagnat köp verkligen ett nytt?", svar: "Inte alltid. I Blocket och Vends rapport för 2025 ersatte i genomsnitt 40 procent av de begagnade köpen ett nyköp. Klimatnyttan finns bara när det begagnade köpet ersätter något nytt." },
+  { fraga: "Var uppstår klimatpåverkan från kläder?", svar: "Ungefär 80 procent uppstår i produktionen, enligt Naturvårdsverket. En t-tröja i bomull ger 2–5 kilo koldioxidekvivalenter och kräver 1 500–2 500 liter vatten." },
+];
+---
+<Guide site={SITE} titel="Second hand och miljön – vad sparar ett begagnat köp?"
+  beskrivning="Hur mycket klimatpåverkan sparar second hand? Naturvårdsverkets statistik om textil, IVL:s beräkningar, Blocket-rapporten och vad som händer med EU:s nya regler."
+  h1="Second hand och miljön – vad sparar det att köpa begagnat?"
+  svar={`Svenskarna köpte <strong>15,2 kilo nya kläder och hemtextil per person</strong> 2025, och omkring 80 procent av klimatpåverkan uppstår redan när plaggen tillverkas. Enligt IVL sparar den som köper begagnat i stället för nytt <strong>cirka 80 kilo koldioxidekvivalenter per år</strong>, ungefär en fjärdedel av klimatpåverkan från ens kläder. Nyttan uppstår bara när det begagnade köpet ersätter ett nytt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Second hand och miljön", href: "/guider/second-hand-miljo/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={[
+    { id: "konsumtion", rubrik: "Hur mycket textil köper vi?" },
+    { id: "produktion", rubrik: "Var uppstår klimatpåverkan?" },
+    { id: "spara", rubrik: "Vad sparar ett begagnat köp?" },
+    { id: "ersatter", rubrik: "Det avgörande: ersätter köpet något nytt?" },
+    { id: "mobler", rubrik: "Möbler, elektronik och sport" },
+    { id: "avfall", rubrik: "Textil i soporna" },
+    { id: "eu", rubrik: "Nya regler: producentansvar för textil" },
+  ]}
+  relaterat={[
+    { namn: "Vad händer med det du skänker?", href: "/guider/vad-hander-med-det-du-skanker/", text: "Sortering, export och återvinning" },
+    { namn: "Vad tar second hand-butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Skänka rätt" },
+    { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/", text: "Reklamation" },
+    { namn: "Loppisar nära dig", href: "/", text: `${talText(n)} butiker i Sverige` },
+  ]}
+  kallor={[
+    { namn: "Naturvårdsverket – Textilkonsumtion", url: "https://www.naturvardsverket.se/data-och-statistik/textil/textilkonsumtion/", text: "kilo per person och år (granskad 28 september 2026)", datum: "2026-11-27" },
+    { namn: "Naturvårdsverket – Textilkonsumtionen ökar igen (pressmeddelande)", url: "https://www.naturvardsverket.se/om-oss/aktuellt/nyheter-och-pressmeddelanden/2026/september/textilkonsumtionen-okar-igen/", text: "30 september 2026", datum: "2026-11-27" },
+    { namn: "Naturvårdsverket – Textilavfall", url: "https://www.naturvardsverket.se/amnesomraden/avfall/avfallslag/textilavfall", text: "80 procent i produktionen, t-tröjan, 7–9 kg i restavfall, plockanalys 2016 (granskad 2 december 2025)", datum: "2026-11-27" },
+    { namn: "IVL – Återanvändning, uthyrning eller reparation", url: "https://www.ivl.se/english/ivl/press/press-releases/2025-05-28-reuse-rental-or-repair---the-environmental-benefits-of-circulating-clothes.html", text: "80 kg CO2e per år (28 maj 2025)", datum: "2026-11-27" },
+    { namn: "IVL – Återanvändning av textil viktigast för klimatet", url: "https://www.ivl.se/english/ivl/press/press-releases/2025-01-17-reuse-of-textiles-is-most-important-for-the-climate---wherever-in-the-world-it-takes-place.html", text: "17 januari 2025", datum: "2026-11-27" },
+    { namn: "Vend och Blocket – Second Hand Effect Report 2025", url: "https://via.tt.se/pressmeddelande/4570156/the-nordic-circular-economy-in-action-vend-marketplaces-facilitate-672000-tonnes-of-avoided-emissions?publisherId=3235399", text: "beräkningar av Vaayu, publicerad 29 september 2026", datum: "2026-11-27" },
+    { namn: "Blocket – En tredjedel av allt som säljs på Blocket är redan använt", url: "https://via.tt.se/pressmeddelande/4570212/en-tredjedel-av-allt-som-saljs-pa-blocket-ar-redan-anvant-och-bade-svenska-folket-och-deras-planbocker-gillar-det?publisherId=3237134", datum: "2026-11-27" },
+    { namn: "Myrorna – Hållbarhetsrapport 2025", url: "https://www.myrorna.se/artiklar/myrornas-hallbarhetsrapport-2025/", text: "15 736 ton CO2e (publicerad 11 maj 2026)", datum: "2026-11-27" },
+    { namn: "Erikshjälpen – Vårt miljöuppdrag", url: "https://erikshjalpen.se/om-erikshjalpen-second-hand/vara-uppdrag/vart-miljouppdrag/", text: "10 250 ton CO2 (publicerad 25 maj 2026)", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – EU:s textilstrategi", url: "https://environment.ec.europa.eu/strategy/textiles-strategy_en", text: "5 miljoner ton, 12 kg per person", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Det reviderade avfallsdirektivet träder i kraft", url: "https://environment.ec.europa.eu/news/revised-waste-framework-directive-enters-force-2025-10-16_en", text: "direktiv (EU) 2025/1892, 16 oktober 2025", datum: "2026-11-27" },
+    { namn: "Regeringen – Uppdrag till Naturvårdsverket om producentansvar för textil", url: "https://regeringen.se/regeringsuppdrag/2025/12/uppdrag-till-naturvardsverket-att-inratta-ett-system-for-utokat-producentansvar-for-textil-enligt-eus-avfallsdirektiv/", text: "KN2025/01819", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="konsumtion">Hur mycket textil köper vi?</h2>
+  <p>Naturvårdsverket räknar varje år ut hur mycket nya kläder och hemtextil som kommer ut på den svenska marknaden. Siffran är nettoinflödet – det som förs in i landet minus det som förs ut – delat på antalet invånare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Kilo nya kläder och hemtextil per person</th></tr></thead>
+    <tbody>{KONSUMTION.map((x) => <tr><td>{x.ar}</td><td class="num">{x.kg}</td></tr>)}</tbody>
+  </table></div>
+  <p>Efter en tydlig nedgång 2023 har konsumtionen stigit två år i rad. Ökningen till 2025 var 12 procent, och nivån är tillbaka där den var 2022. Naturvårdsverket påpekar att privatpersoners egen import via e-handel inte fångas helt i statistiken, så den verkliga siffran kan vara något högre.</p>
+
+  <h2 id="produktion">Var uppstår klimatpåverkan?</h2>
+  <p>Den största delen av ett plaggs miljöpåverkan har redan uppstått när det hänger i butiken. Enligt Naturvårdsverket kommer ungefär <strong>80 procent av klimatpåverkan från produktionen</strong>, det vill säga när fibrerna tas fram och tyget och plagget tillverkas.</p>
+  <p>Naturvårdsverket ger ett konkret exempel. En t-tröja av bomull ger 2–5 kilo koldioxidekvivalenter och kräver 1 500–2 500 liter vatten och 0,5–1 kilo kemikalier. Myndighetens slutsats är att användningstiden är det viktigaste: <strong>använder du ett plagg dubbelt så länge minskar dess klimatpåverkan med nästan 50 procent.</strong> Det är precis det second hand gör. Plagget får ett andra liv i stället för att ett nytt tillverkas.</p>
+
+  <h2 id="spara">Vad sparar ett begagnat köp?</h2>
+  <p>IVL Svenska Miljöinstitutet har räknat på hur olika sätt att förlänga klädernas liv påverkar klimatet. Resultatet, som publicerades i maj 2025, är att den som köper begagnat i stället för nytt sparar cirka <strong>80 kilo koldioxidekvivalenter per år</strong>. Det motsvarar ungefär 25 procent av en genomsnittlig svensks klimatpåverkan från kläder. Att reparera ger ungefär hälften så stor effekt.</p>
+  <p>Organisationerna gör egna beräkningar för sin försäljning:</p>
+  <ul>
+    <li><strong>Myrorna</strong> uppger att kundernas köp av kläder, skor och hemtextil under 2025 sparade 15 736 ton koldioxidekvivalenter, 1 751 ton kemikalier och 3,7 miljarder liter vatten.</li>
+    <li><strong>Erikshjälpen</strong> uppger att sålda vuxenkläder sparade cirka 10 250 ton koldioxid 2025, med Naturskyddsföreningens schabloner som grund.</li>
+  </ul>
+  <p>Siffrorna bygger på antaganden om hur mycket varje sålt plagg ersätter, och de går därför inte att jämföra direkt med varandra. Myrornas tidigare rapport räknade till exempel med 9 kilo koldioxidekvivalenter per plagg.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="ersatter">Det avgörande: ersätter köpet något nytt?</h2>
+  <p>Ett begagnat köp hjälper klimatet bara om det ersätter något som annars hade köpts nytt. Köper du tre begagnade tröjor du inte behöver blir nyttan liten. Därför frågar Blocket och dess moderbolag Vend varje år sina användare om köpet ersatte ett nyköp.</p>
+  <p>I rapporten för 2025 ersatte i genomsnitt <strong>40 procent</strong> av köpen ett nyköp. I 2023 års rapport var andelen 50 procent i Sverige. Enligt Blocket hade 31 procent av det som såldes där redan haft minst en tidigare ägare innan säljaren köpte det. Varorna går alltså vidare i flera led.</p>
+
+  <h2 id="mobler">Möbler, elektronik och sport</h2>
+  <p>Kläder är det mest omskrivna, men för begagnathandeln som helhet är möblerna störst. I Blocket och Vends rapport för 2025 stod den svenska marknadsplatsen för cirka 104 000 ton undvikna utsläpp netto. Fördelningen per kategori:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kategori på Blocket</th><th class="num">Andel av undvikna utsläpp</th><th class="num">Ton CO2e</th></tr></thead>
+    <tbody>
+      <tr><td>Möbler och inredning</td><td class="num">46,6 %</td><td class="num">48 469</td></tr>
+      <tr><td>Elektronik och hem</td><td class="num">22,4 %</td><td class="num">23 277</td></tr>
+      <tr><td>Sport och friluftsliv</td><td class="num">13,1 %</td><td class="num">13 653</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Beräkningarna är gjorda av företaget Vaayu åt Vend. Det är Blockets egna siffror, inte en oberoende granskning.</p>
+  <p>Hyllor och byråer, vitvaror, sängar och madrasser samt bord och stolar gav störst besparing per affär. För hela koncernen, med marknadsplatser i alla nordiska länder, blev det 672 000 ton och nästan 40 kilo per affär. En stor möbel ersätter mycket material, och därför gör ett begagnat skåp mer nytta än en begagnad t-tröja.</p>
+
+  <h2 id="avfall">Textil i soporna</h2>
+  <p>Fram till 2024 slängdes stora mängder textil med hushållsavfallet. Enligt Naturvårdsverket hamnade 7–9 kilo per person och år i restavfallet eller på återvinningscentralen och eldades upp. En plockanalys från 2016 visade 7,6 kilo per person, totalt omkring 72 000 ton. Det var ungefär dubbelt så mycket som lämnades till återanvändning, och nästan hälften hade kunnat användas längre. Sedan 1 januari 2025 ska textilavfall sorteras ut och samlas in av kommunerna.</p>
+  <p>I hela EU slängs enligt EU-kommissionen omkring 5 miljoner ton kläder per år, cirka 12 kilo per person. Textil är det område som har fjärde störst påverkan på miljö och klimat, efter mat, boende och resor.</p>
+
+  <h2 id="eu">Nya regler: producentansvar för textil</h2>
+  <p>EU:s reviderade avfallsdirektiv trädde i kraft den 16 oktober 2025. Det kräver att alla medlemsländer inför <strong>producentansvar för textil och skor</strong>. De som säljer kläder ska då betala för insamling, sortering och återvinning, med högre avgifter för plagg som är svåra att återanvända. Sverige har gett Naturvårdsverket i uppdrag att ta fram systemet. Förslagen till lagändringar skulle lämnas i september 2026 och slutrapporten i november 2026.</p>
+  <p>Producentansvaret ändrar inte vad du som konsument bör göra. Det mest effektiva är fortfarande att använda det du har länge, köpa begagnat när du behöver något och lämna det hela till second hand. Hitta en butik bland våra <a href="/">{talText(n)} loppisar och second hand-butiker</a>.</p>
+  <Faq fragor={fragor} />
+</Guide>

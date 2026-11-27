@@ -3,7 +3,6 @@
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import { faqLd } from "@natverk/core/seo.js";
 import { slug, rakna } from "@natverk/core/katalog.js";
 import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
 
@@ -16,7 +15,7 @@ const fragor = [
 ---
 <Layout site={SITE} titel={`Second hand för välgörenhet – ${valg.length} butiker i Sverige`}
   beskrivning={`${valg.length} second hand-butiker där överskottet går till välgörenhet: ${kedjor.slice(0, 4).map(([k]) => k).join(", ")} m.fl. ✓ Öppettider ✓ Per kommun.`}
-  smulor={[{ namn: "Start", href: "/" }, { namn: "Välgörenhet", href: "/valgorenhet/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Välgörenhet", href: "/valgorenhet/" }]} uppdaterad={UPPDATERAD}>
   <h1>Second hand som går till välgörenhet</h1>
   <p class="svar">Vi listar <strong>{valg.length} butiker</strong> där överskottet går till välgörande ändamål, fördelade på {kedjor.length} organisationer.</p>
   <div class="tabell"><table>

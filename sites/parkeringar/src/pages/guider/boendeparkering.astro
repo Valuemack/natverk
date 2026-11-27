@@ -1,0 +1,153 @@
+---
+// Lång guide: boendeparkering i storstäderna. Källor: Stockholms stad, Göteborgs Stad, Malmö stad, Uppsala kommun, Västerås stad,
+// Örebro kommun, Linköpings kommun och LKP (Lund), via data/kommuntaxor.json och kompletterande hämtningar. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "pris", rubrik: "Vad boendeparkering kostar per månad" },
+  { id: "vem", rubrik: "Vem får boendeparkering?" },
+  { id: "tjanstebil", rubrik: "Förmånsbil, leasingbil och lånad bil" },
+  { id: "ansoka", rubrik: "Så ansöker du" },
+  { id: "omrade", rubrik: "Boendeområdet: var tillståndet gäller" },
+  { id: "maxtid", rubrik: "Hur länge får bilen stå?" },
+  { id: "stader", rubrik: "Stad för stad" },
+];
+
+const fragor = [
+  { fraga: "Vad kostar boendeparkering i Stockholm?", svar: "I Stockholms taxeområde 1–3 kostar boendeparkering 90 kr per dygn eller 1 600 kr för 30 dygn. I taxa 4 kostar det 35 kr per dygn eller 500 kr, och i taxa 5 20 kr per dygn eller 300 kr. Ansökan kostar 300 kr. Motorcykel betalar en fjärdedel." },
+  { fraga: "Ingår parkeringen i tillståndet?", svar: "Oftast inte. I Stockholm, Malmö, Uppsala, Västerås och Örebro ger tillståndet rätt till en lägre taxa, men du betalar parkeringen i en app eller automat. I Göteborg och Linköping betalar du i stället en månadsavgift som faktureras." },
+  { fraga: "Kan jag få boendeparkering med förmånsbil?", svar: "Ja, i de flesta storstäder. Du behöver ett intyg från arbetsgivaren. Stockholm kräver ett undertecknat intyg från företaget, Göteborg en lönespecifikation med bilförmån eller ett tjänstebilsintyg, och Örebro ett intyg om att du får använda bilen privat och parkera den vid bostaden." },
+  { fraga: "Hur länge får bilen stå på boendeparkering?", svar: "Det skiljer sig mellan städerna. I Stockholm, Linköping och Örebro gäller högst sju dygn på samma plats. I Malmö ska bilen flyttas var sjunde dag. Uppsala tillåter tio dagar och Göteborg 14 dagar. Under servicetider och tillfälliga förbud måste bilen flyttas oavsett." },
+  { fraga: "Får jag boendeparkering om jag bor i ett nybyggt hus?", svar: "Ofta inte. I Stockholm kan den som bor i hus med bygglov från 1 juli 2025 inte få boendeparkering. I Örebro gäller det bygglov efter 4 februari 2016. I Malmö och Uppsala är adresser där huset har krav på egna parkeringsplatser undantagna." },
+];
+---
+<Guide site={SITE} titel="Boendeparkering – pris och regler i storstäderna"
+  beskrivning="Boendeparkering i Stockholm, Göteborg, Malmö, Uppsala, Västerås, Örebro och Linköping: pris per månad, vem som får, förmånsbil och hur länge bilen får stå."
+  h1="Boendeparkering i storstäderna: pris, villkor och regler"
+  svar={`Boendeparkering får du om du är <strong>folkbokförd i ett boendeparkeringsområde</strong> och äger bilen eller har den som förmånsbil. Priset varierar kraftigt: från <strong>300 kr per månad i Stockholms ytterstad till 1 600 kr i innerstaden</strong>, och från 305 till 1 010 kr i Göteborg. Tillståndet gäller bara på skyltade platser i ditt område, och bilen måste flyttas efter 7–14 dagar beroende på stad.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Boendeparkering", href: "/guider/boendeparkering/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkera på gatan natt och helg", href: "/guider/parkera-pa-gatan/", text: "Servicedagar och 24-timmarsregeln" },
+    { namn: "Parkeringsappar jämförda", href: "/guider/parkeringsappar/", text: "Avgifter och var de gäller" },
+    { namn: "Billig parkering", href: "/guider/billig-parkering/", text: "Timme och dygn i landets städer" },
+    { namn: "Parkeringshus", href: "/parkeringshus/", text: "Garage med pris och öppettider" },
+    { namn: "Parkering i Stockholm", href: "/stockholm/", text: "Taxor och parkeringar" },
+  ]}
+  kallor={[
+    { namn: "Stockholms stad – Boendeparkering", url: "https://parkering.stockholm/boendeparkering/", text: "avgifter per taxeområde, område, nybyggda hus", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Ansök om boendeparkering", url: "https://parkering.stockholm/boendeparkering/ansok-om-boendeparkering/", text: "villkor, tjänstefordon, leasing, 300 kr, sju dygn", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Taxeområden och avgifter", url: "https://parkering.stockholm/betala-parkering/taxeomraden-avgifter/", text: "taxa 1–5", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Regler för boendeparkering", url: "https://goteborg.se/wps/portal?uri=gbglnk%3Agbg.page.0689d999-80a3-4ea1-834f-d71d331437c9", text: "villkor, tjänstefordon, 14 dagar, områdesbokstav", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Avgift för boendeparkering", url: "https://goteborg.se/wps/portal?uri=gbglnk%3A20120702-154225", text: "taxa 4–9 för 2026, betalning", datum: "2026-11-27" },
+    { namn: "Malmö stad – Betala och parkera med boendeparkering", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Boendeparkering/Betala-och-parkera-med-boendeparkering.html", text: "taxa A–E, flytta var sjunde dag", datum: "2026-11-27" },
+    { namn: "Malmö stad – Detta krävs för att du ska få boendeparkering", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Boendeparkering/Detta-kravs-for-att-du-ska-fa-boendeparkering.html", text: "villkor, 320 kr per år", datum: "2026-11-27" },
+    { namn: "Uppsala kommun – Boendeparkering", url: "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/boendeparkering/", text: "pris, tio dagar, brukarintyg", datum: "2026-11-27" },
+    { namn: "Västerås stad – Parkeringstillstånd för boende", url: "https://www.vasteras.se/trafik-och-gator/parkera-i-vasteras/parkeringstillstand/parkeringstillstand-for-boende.html", text: "gul och blå zon, villkor", datum: "2026-11-27" },
+    { namn: "Örebro kommun – Boendeparkering", url: "https://www.orebro.se/bygga-bo--trafik/trafik--gator/parkering/boendeparkering.html", text: "600 kr per 30 dagar, 250 kr ansökan, villkor", datum: "2026-11-27" },
+    { namn: "Linköpings kommun – Boendeparkering", url: "https://www.linkoping.se/stadsplanering-och-trafik/parkering/boendeparkering/", text: "420 kr/mån, sju dygn, områden", datum: "2026-11-27" },
+    { namn: "LKP AB – Boendeparkering", url: "https://lkpab.se/hyra-p-plats/boendeparkering/", text: "priser i Lund", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="pris">Vad boendeparkering kostar per månad</h2>
+  <p>Boendeparkering är en rabatterad taxa för den som bor i ett område med avgiftsbelagd gatuparkering. Priset bestäms av kommunen och skiljer sig mycket mellan städerna, och ofta också mellan områden i samma stad. Så här ser det ut i november 2026:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th class="num">Per månad (30 dagar)</th><th>Andra perioder</th><th>Ansökan</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm, taxa 1–3</td><td class="num">1 600 kr</td><td>90 kr/dygn</td><td>300 kr</td></tr>
+      <tr><td>Stockholm, taxa 4</td><td class="num">500 kr</td><td>35 kr/dygn</td><td>300 kr</td></tr>
+      <tr><td>Stockholm, taxa 5</td><td class="num">300 kr</td><td>20 kr/dygn</td><td>300 kr</td></tr>
+      <tr><td>Göteborg, taxa 4–9</td><td class="num">305–1 010 kr</td><td>Hela kalendermånader</td><td>Anges inte</td></tr>
+      <tr><td>Malmö, taxa A–E</td><td class="num">450–1 200 kr</td><td>225–600 kr/7 dygn</td><td>320 kr/år</td></tr>
+      <tr><td>Uppsala</td><td class="num">400 kr</td><td>20 kr/dygn, 4 400 kr/år</td><td>Anges inte</td></tr>
+      <tr><td>Västerås, gul zon</td><td class="num">525 kr</td><td>11 kr/tim</td><td>Gratis</td></tr>
+      <tr><td>Västerås, blå zon</td><td class="num">450 kr</td><td>7 kr/tim</td><td>Gratis</td></tr>
+      <tr><td>Örebro, zon 2 och 3</td><td class="num">600 kr</td><td>–</td><td>250 kr</td></tr>
+      <tr><td>Linköping</td><td class="num">420 kr</td><td>–</td><td>Anges inte</td></tr>
+      <tr><td>Lund (LKP), de flesta områden</td><td class="num">378 kr</td><td>18 kr/dygn, 90 kr/vecka</td><td>Anges inte</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: kommunernas webbplatser och LKP, hämtade 27 november 2026. Göteborgs taxor gäller från 1 januari 2026 och räknas upp varje år med konsumentprisindex plus 2,5 procent.</p>
+  <p>Ett exempel: i Stockholms innerstad kostar ett år med 30-dagarsbiljetter cirka 19 500 kr (12,2 perioder à 1 600 kr). Samma år kostar 4 400 kr i Uppsala och 5 040 kr i Linköping. I Stockholm lönar sig 30-dagarsbiljetten om bilen står på gatan mer än 17 dygn av 30, eftersom 18 dygn à 90 kr blir 1 620 kr.</p>
+  <p>Observera skillnaden i modell. I Stockholm, Malmö, Uppsala, Västerås och Örebro ger tillståndet bara rätt till den lägre taxan. Du betalar fortfarande parkeringen själv i en app eller automat, och väljer då boendetaxan eller områdets zonkod. I Göteborg och Linköping är det en månadsavgift som faktureras i efterskott.</p>
+
+  <h2 id="vem">Vem får boendeparkering?</h2>
+  <p>Grundkraven är nästan desamma i alla storstäder:</p>
+  <ul>
+    <li><strong>Folkbokföring i området.</strong> Du ska vara folkbokförd på en adress inom ett boendeparkeringsområde. Uppsala och Göteborg behandlar inte ansökan innan folkbokföringen har ändrats.</li>
+    <li><strong>Bilen ska vara din.</strong> Du ska stå som ägare i vägtrafikregistret, eller som brukare i Uppsala. Undantag finns för tjänstebil och leasing, se nästa avsnitt.</li>
+    <li><strong>Bilen ska vara i trafik.</strong> Avställda fordon och fordon med körförbud godtas inte. Göteborg, Malmö och Linköping sätter en gräns på 3,5 ton.</li>
+    <li><strong>Ett tillstånd per person.</strong> Det anger alla städer utom Uppsala, vars sida inte tar upp frågan. Stockholm ger dessutom ett tillstånd för en motorcykel eller moped klass I.</li>
+  </ul>
+  <p>Nybyggda hus är ofta undantagna, eftersom fastighetsägaren då ska ordna parkering. I Stockholm får den som bor i hus med bygglov från 1 juli 2025 inte boendeparkering. I Norra Djurgårdsstaden, Hagastaden och Annedal finns ingen boendeparkering på gatan alls. Örebro undantar hus med bygglov efter 4 februari 2016. Malmö och Uppsala undantar adresser med krav på egna parkeringsplatser.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="tjanstebil">Förmånsbil, leasingbil och lånad bil</h2>
+  <p>Står bilen inte på dig behöver du ett intyg. Kraven skiljer sig:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th>Förmånsbil eller firmabil</th><th>Privatleasing och lånad bil</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm</td><td>Undertecknat intyg från företaget, skickas med e-post</td><td>Leasingavtal. Lånad bil: intyg från ägaren, lån 30–90 dagar. Lånad firmabil godtas inte.</td></tr>
+      <tr><td>Göteborg</td><td>Lönespecifikation med bilförmån eller tjänstebilsintyg</td><td>Intyg om leasingavtal</td></tr>
+      <tr><td>Malmö</td><td>Förmånsbil som anställd eller egenföretagare ger rätt till särskilt tillstånd</td><td>Anges inte</td></tr>
+      <tr><td>Uppsala</td><td>Brukarintyg underskrivet av arbetsgivaren. Eget företag: registreringsbevis från Bolagsverket.</td><td>Brukarintyg från ägaren</td></tr>
+      <tr><td>Västerås</td><td>Intyg från arbetsgivaren om privat användning</td><td>Hyr- eller leasingavtal. Familjemedlems bil godtas.</td></tr>
+      <tr><td>Örebro</td><td>Arbetsgivarintyg om privat användning och parkering vid bostaden</td><td>Leasingavtal. Lånad bil: 30–120 dagar, en gång per år.</td></tr>
+      <tr><td>Linköping</td><td>Ansökan på pappersblankett</td><td>Lånad bil: pappersblankett</td></tr>
+    </tbody>
+  </table></div>
+  <p>Hyrbil godtas i Stockholm med hyresavtal från ett auktoriserat bolag. Göteborg ger tillfälligt tillstånd för hyrbil när din egen bil står på verkstad.</p>
+
+  <h2 id="ansoka">Så ansöker du</h2>
+  <ol>
+    <li><strong>Kontrollera adressen.</strong> Göteborg och Malmö har tjänster där du ser om din adress ingår.</li>
+    <li><strong>Ansök i kommunens e-tjänst</strong> med BankID. I Stockholm gäller tillståndet direkt via e-tjänsten, medan en pappersansökan tar upp till tio dagar. Linköping beviljar direkt i e-tjänsten och tar cirka fem arbetsdagar på papper. Uppsala och Örebro anger upp till tio arbetsdagar, Örebro upp till 20 under sommaren.</li>
+    <li><strong>Bifoga intyg</strong> om bilen inte är din.</li>
+    <li><strong>Betala.</strong> I de flesta städer väljer du boendetaxan i appen eller automaten. I Göteborg betalar du faktura eller autogiro senast den 27:e månaden efter. Linköping fakturerar i slutet av varje månad.</li>
+  </ol>
+  <p>Tillståndet följer bilen. Byter du bil måste du ansöka på nytt i Uppsala. I Stockholm förlängs tillståndet till årsskiftet och därefter ett år i taget. Örebros tillstånd gäller tolv månader, och ingen påminnelse skickas, så ansök senast tio dagar innan det går ut.</p>
+
+  <h2 id="omrade">Boendeområdet: var tillståndet gäller</h2>
+  <p>Tillståndet gäller bara i ditt eget område och bara där det är skyltat för boende. Alla gator i ett område är inte skyltade. Står du på en vanlig avgiftsplats betalar du besökstaxa.</p>
+  <ul>
+    <li><strong>Stockholm:</strong> skylten anger området, till exempel "Boende Va". Vissa gator i innerstaden tillåter boendeparkering bara kvällar, nätter och helger. Boende i Gamla stan får även parkera i Södermalm, Kungsholmen, City, Östermalm och Vasastan.</li>
+    <li><strong>Göteborg:</strong> varje område har en bokstav. Tillståndet gäller på din bokstav och din taxa eller högre taxanummer, så taxa 5 gäller även på 6 och 7. Skylten "n" betyder nattparkering enligt tiderna på tilläggstavlan.</li>
+    <li><strong>Malmö:</strong> det ska finnas en tilläggsskylt med din områdeskod. En gata kan ligga i två områden, så kontrollera vilken sida som har din kod.</li>
+    <li><strong>Västerås:</strong> boendetaxan gäller bara där skylten säger "boende". Annars gäller besökstaxa.</li>
+  </ul>
+  <p>Tillståndet garanterar ingen plats. Malmö skriver att parkering sker i mån av plats, och Örebro att tillståndet inte ger någon garanterad plats.</p>
+
+  <h2 id="maxtid">Hur länge får bilen stå?</h2>
+  <p>Boendeparkering är inte ett förråd. Alla städer utom Västerås anger en längsta tid på samma plats:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th>Längsta tid på samma plats</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm</td><td>7 dygn</td></tr>
+      <tr><td>Malmö</td><td>Flytta var sjunde dag, även om du betalat 30 dygn</td></tr>
+      <tr><td>Linköping</td><td>7 dygn</td></tr>
+      <tr><td>Örebro</td><td>7 dagar</td></tr>
+      <tr><td>Uppsala</td><td>10 dagar i följd</td></tr>
+      <tr><td>Göteborg</td><td>14 dagar i följd</td></tr>
+      <tr><td>Västerås</td><td>Anges inte på kommunens sida</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Servicedagar gäller fortfarande.</strong> Tillståndet ger inget undantag från förbud för gatustädning, snöröjning eller vägarbeten. Stockholm skriver att det är förbjudet att parkera på gatan under servicetider. Göteborg och Uppsala skriver att tillståndet inte gäller vid tillfälliga förbud, och Malmö att bilen ska flyttas vid till exempel miljöparkering. Läs skylten varje gång du ställer bilen. Mer om städnätter finns i <a href="/guider/parkera-pa-gatan/">guiden om att parkera på gatan</a>.</p>
+
+  <h2 id="stader">Stad för stad</h2>
+  <p><strong>Stockholm.</strong> Dyrast i landet i innerstaden. Ansökan kostar 300 kr och faktureras. Från 1 september 2026 skickas fakturor som tidigare gick med post till digital brevlåda hos Kivra. Motorcykel betalar en fjärdedel av bilpriset.</p>
+  <p><strong>Göteborg.</strong> Sex taxor från 305 kr (taxa 9) till 1 010 kr (taxa 4) i månaden. Du betalar alltid hel kalendermånad, även om tillståndet startar mitt i månaden. Betalar du för sent upphör tillståndet, och går ärendet till inkasso sägs det upp. Utan vald taxa blir det områdets högsta.</p>
+  <p><strong>Malmö.</strong> Du köper 7 eller 30 dygn i appen eller automaten och väljer områdets zonkod. Årsavgiften för tillståndet är 320 kr och betalas vid ansökan och förlängning.</p>
+  <p><strong>Uppsala.</strong> Avgift tas ut vardagar klockan 8–24. Lördagar, söndagar, röda dagar och dag före röd dag är gratis. Betala med EasyPark, Parkster, Mobill, ePARK eller i automat. Priset är detsamma oavsett betalsätt.</p>
+  <p><strong>Västerås.</strong> Gul zon i bland annat City och Vasastaden, blå zon i Karlsdal. Den som bott i zonen minst sex månader för arbete eller studier utan att vara folkbokförd där kan få tillstånd i högst sex månader.</p>
+  <p><strong>Örebro.</strong> Boendeparkering finns bara i zon 2 och 3. Priset höjdes från 420 till 600 kr den 1 maj 2025. Ansökningsavgiften på 250 kr betalas inte tillbaka, inte ens vid avslag.</p>
+  <p><strong>Linköping.</strong> Sju områden: Gottfridsberg, Hejdegården, Ramshäll, Tannefors med Råberga, Vasastaden, norra Vimanshäll och Östra Valla. Den som bor i andra stadsdelar hänvisas till privata parkeringsbolag.</p>
+  <p>Saknas boendeparkering där du bor är ett hyrt garage eller en plats i ett <a href="/parkeringshus/">parkeringshus</a> alternativet. Det kostar oftast mer, men bilen kan stå kvar utan flyttkrav.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

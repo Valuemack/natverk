@@ -1,0 +1,177 @@
+---
+// Lång guide: parkera på gatan natt och helg. Källor: trafikförordningen (1998:1276) 3 kap. 49 a, 51, 74–75 §§, 10 kap. 1 §,
+// 11 kap. 9 § och 13 kap. 8 §, vägmärkesförordningen (2007:90) C35–C38 och T6, lagen (1989:253) om allmänna helgdagar,
+// förordningen (1982:198) om flyttning av fordon, TSFS 2024:57, lagen och förordningen om felparkeringsavgift,
+// Stockholms stad, Göteborgs Stad och Malmö stad. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "regeln", rubrik: "24-timmarsregeln och var den gäller" },
+  { id: "dagar", rubrik: "Vardag, dag före helgdag och helgdag" },
+  { id: "rakna", rubrik: "Så räknar du de 24 timmarna" },
+  { id: "servicetid", rubrik: "Städnätter, servicetider och miljöparkering" },
+  { id: "datum", rubrik: "Datumparkering och udda eller jämna datum" },
+  { id: "sondag", rubrik: "Vad gäller på söndagar och röda dagar?" },
+  { id: "natt", rubrik: "På natten: lyktor och tunga fordon" },
+  { id: "avsluta", rubrik: "Flytta bilen och avsluta parkeringen" },
+  { id: "undantag", rubrik: "Lagliga undantag" },
+];
+
+const fragor = [
+  { fraga: "Hur länge får man parkera på gatan?", svar: "Där inget annat är skyltat får du parkera högst 24 timmar i följd på vardagar, utom vardag före sön- och helgdag. Det står i 3 kap. 49 a § trafikförordningen och gäller på kommunens gator och allmänna platser i tättbebyggt område och på allmänna vägar. Skyltar med kortare tid eller förbud går före." },
+  { fraga: "Gäller 24-timmarsregeln på helgen?", svar: "Nej, inte på lördagar, söndagar och helgdagar. Lördagen är en vardag före söndag och undantas därför, liksom till exempel midsommarafton, julafton och nyårsafton. Lagen säger däremot inte uttryckligen hur timmarna på helgen ska räknas när bilen stått sedan fredagen." },
+  { fraga: "Gäller städnatten även på helgdagar?", svar: "Ja, om skylten anger en veckodag. Enligt vägmärkesförordningen gäller en reglering som anger en viss veckodag den dagen även om det är en helgdag. Stockholms stad skriver att parkeringsförbudet under servicetid gäller även på helgdag och dag före helgdag." },
+  { fraga: "Hur fungerar datumparkering?", svar: "Märket datumparkering betyder att du inte får parkera på jämna datum på den sida av gatan som har jämna adressnummer, och inte på udda datum på den sida som har udda nummer. Utan tilläggstavla gäller förbudet hela dygnet. Därför ska bilen stå på udda sidan på ett jämnt datum." },
+  { fraga: "Måste man ha lyktorna tända när bilen står parkerad på natten?", svar: "Enligt 3 kap. 74 § trafikförordningen ska parkerings- och baklyktor vara tända i mörker när bilen står på vägen. Kravet gäller inte om gatan är så väl belyst att bilen syns tydligt, eller om bilen står utanför körbanan och vägrenen. På en gata med högst 50 km/h räcker det för en vanlig personbil med lyktorna mot vägens mitt." },
+  { fraga: "Får kommunen flytta min bil om den står kvar för länge?", svar: "Ja, om bilen står i strid mot parkeringsreglerna och har stått på samma plats i minst tre dygn, eller om den försvårar till exempel städning eller snöröjning. Det står i förordningen om flyttning av fordon. I Stockholm kostar en flytt av en personbil 2 750 kronor inom ett dygn och 3 450 kronor om den sker direkt, plus förvaring." },
+];
+---
+<Guide site={SITE} titel="Parkera på gatan – 24-timmarsregeln, natt och helg"
+  beskrivning="Hur länge får bilen stå på gatan? 24-timmarsregeln, vilka dagar som räknas, städnätter och servicetider, datumparkering och vad som gäller på söndagar."
+  h1="Parkera på gatan natt och helg – 24-timmarsregeln, städnätter och röda dagar"
+  svar={`Parkera på gatan får du i högst <strong>24 timmar i följd på vardagar</strong>, utom vardag före sön- och helgdag, där inget annat är skyltat. Det står i 3 kap. 49 a § trafikförordningen. Regeln gäller alltså inte lördagar, söndagar och helgdagar. Skyltar går alltid före: anger en skylt städnatt eller servicetid en viss veckodag, är det parkeringsförbud då, även om det är en helgdag.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Parkera på gatan", href: "/guider/parkera-pa-gatan/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "P-skiva", href: "/guider/p-skiva/", text: "Så ställer du skivan och läser skylten" },
+    { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/", text: "Avstånd och förbud i trafikförordningen" },
+    { namn: "Boendeparkering i storstäderna", href: "/guider/boendeparkering/", text: "Tillstånd, priser och regler" },
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Gata mot privat mark" },
+    { namn: "Gratis parkering", href: "/gratis-parkering/", text: "Platser utan avgift" },
+  ]}
+  kallor={[
+    { namn: "Trafikförordning (1998:1276), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "3 kap. 49 a § (24 timmar), 51 §, 74–75 §§ (lyktor), 10 kap. 1 §, 11 kap. 9 § och 13 kap. 8 § (ändrad t.o.m. SFS 2026:1052)", datum: "2026-11-27" },
+    { namn: "Vägmärkesförordning (2007:90), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/vagmarkesforordning-200790_sfs-2007-90/", text: "märkena C35–C38 och E19, tavlan T6 tidsangivelse", datum: "2026-11-27" },
+    { namn: "Lag (1989:253) om allmänna helgdagar, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1989253-om-allmanna-helgdagar_sfs-1989-253/", text: "vilka dagar som är helgdagar och när de infaller", datum: "2026-11-27" },
+    { namn: "Förordning (1982:198) om flyttning av fordon i vissa fall, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982198-om-flyttning-av-fordon-i_sfs-1982-198/", text: "flytt efter tre dygn eller när bilen försvårar renhållning och snöröjning", datum: "2026-11-27" },
+    { namn: "Transportstyrelsens föreskrifter om parkeringsanmärkningar och felparkeringsavgift (TSFS 2024:57)", url: "https://transportstyrelsen.se/TSFS/TSFS%202024_57.pdf", text: "överträdelsekoderna 21 (24 timmar) och 37 (datumparkering)", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Stanna och parkera (broschyr TS 2015:11)", url: "https://www.transportstyrelsen.se/globalassets/global/publikationer-och-rapporter/vag/trafikant/produkter/stanna-och-parkera-a5-webb.pdf", text: "24-timmarsregeln, datumparkering och att förbudsmärken gäller hela dygnet", datum: "2026-11-27" },
+    { namn: "Lag (1976:206) och förordning (1976:1128) om felparkeringsavgift, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-19761128-om-felparkeringsavgift_sfs-1976-1128/", text: "beloppsramen 75–1 300 kronor och ny anmärkning per kalenderdygn", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Servicetider", url: "https://parkering.stockholm/parkeringsregler/servicetider/", text: "vad servicetid är och att förbudet gäller även på helgdag (uppdaterad 19 februari 2026)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkering på helger", url: "https://parkering.stockholm/parkeringsregler/parkering-pa-helger/", text: "parenteser, röda siffror och dagar före helgdag (uppdaterad 22 december 2025)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "1 100 kronor vid parkeringsförbud och tunga fordon 22–06 (uppdaterad 10 december 2024)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Fordonsflytt", url: "https://parkering.stockholm/felparkering/fordonsflytt/", text: "priser för flytt och förvaring (uppdaterad 26 augusti 2025)", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Parkera på gatan", url: "https://goteborg.se/wps/portal/start/trafik-och-resor/parkering/parkeringsregler/parkera-pa-gatan", text: "24 timmar på gata utan skyltning, servicetid är parkeringsförbud", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Felparkering", url: "https://goteborg.se/wps/portal/start/parkeringstillstand-och-parkeringsplatser/parkeringsregler/felparkering?uri=gbglnk:gbg.page.761a197c-6cd0-486d-977d-98744016cb75", text: "600, 850 och 1 100 kronor", datum: "2026-11-27" },
+    { namn: "Malmö stad – Miljöparkering", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Miljoparkering.html", text: "förbud några timmar en gång i månaden, även helger (uppdaterad 12 augusti 2024)", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkeringsanmärkning", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html", text: "600 kronor för mer än 24 timmar, 800 kronor vid parkeringsförbud", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="regeln">24-timmarsregeln och var den gäller</h2>
+  <p>Grundregeln står i 3 kap. 49 a § trafikförordningen. Ett fordon får parkeras högst 24 timmar i följd på vardagar, utom vardag före sön- och helgdag. Regeln gäller på två slags platser:</p>
+  <ul>
+    <li>allmänna platser i tättbebyggt område där kommunen är huvudman, alltså vanliga gator, torg och kommunala parkeringar, och</li>
+    <li>vägområdet för allmänna vägar.</li>
+  </ul>
+  <p>Regeln behöver inga skyltar. Göteborgs Stad sammanfattar det så att du på en gata utan särskild skyltning kan stå upp till 24 timmar i följd. Den gäller däremot inte på tomtmark, till exempel en butiksparkering. Där bestämmer markägaren. Sätter markägaren upp en vanlig P-skylt utan andra villkor, betyder den enligt vägmärkesförordningen samma sak: högst 24 timmar i följd på vardagar utom vardag före sön- och helgdag.</p>
+  <p>Kommunen kan ändra regeln med lokala trafikföreskrifter. Enligt 10 kap. 1 § får den både tillåta avvikelser från 24-timmarsregeln och sätta egna tidsgränser, avgifter och förbud. En skylt med kortare tid går alltså före. Regeln ger heller aldrig rätt att stå där andra regler förbjuder det, till exempel nära en korsning.</p>
+  <p>Står bilen för länge får du en parkeringsbot med kod 21 enligt Transportstyrelsens föreskrifter. Malmö tar 600 kronor för att ha parkerat längre tid än 24 timmar.</p>
+
+  <h2 id="dagar">Vardag, dag före helgdag och helgdag</h2>
+  <p>Hela regeln hänger på tre slags dagar. Helgdagarna står i lagen om allmänna helgdagar. Alla andra dagar är vardagar. Bland vardagarna är de som infaller dagen före en söndag eller helgdag en egen grupp.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Dag</th><th>Typ</th><th>24-timmarsregeln</th><th>Siffror på skylten</th></tr></thead>
+    <tbody>
+      <tr><td>Måndag–fredag i en vanlig vecka</td><td>Vardag</td><td>Gäller</td><td>Svarta eller vita, utan parentes</td></tr>
+      <tr><td>Lördag</td><td>Vardag före söndag</td><td>Gäller inte</td><td>Inom parentes</td></tr>
+      <tr><td>Midsommarafton, julafton, nyårsafton</td><td>Vardag före helgdag (om de inte är söndag)</td><td>Gäller inte</td><td>Inom parentes</td></tr>
+      <tr><td>Dagen före trettondedag jul, långfredagen, första maj, Kristi himmelsfärdsdag, nationaldagen och alla helgons dag</td><td>Vardag före helgdag, när den är en vardag</td><td>Gäller inte</td><td>Inom parentes</td></tr>
+      <tr><td>Söndag</td><td>Helgdag</td><td>Gäller inte</td><td>Röda</td></tr>
+      <tr><td>Nyårsdagen, trettondedag jul, långfredagen, annandag påsk, Kristi himmelsfärdsdag, första maj, nationaldagen, midsommardagen, alla helgons dag, juldagen, annandag jul</td><td>Helgdag</td><td>Gäller inte</td><td>Röda</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: lagen om allmänna helgdagar, vägmärkesförordningen tavla T6 och Stockholms stad.</p>
+  <p>Julafton, midsommarafton och nyårsafton är alltså inte helgdagar enligt lagen. De är vardagar före en helgdag. Midsommardagen och alla helgons dag är däremot helgdagar fast de alltid infaller på en lördag. Den lördagen gäller de röda siffrorna.</p>
+  <p>Påsken ger det längsta uppehållet. Skärtorsdagen är vardag före helgdag, långfredagen är helgdag, påskafton är vardag före söndag, påskdagen är söndag och annandag påsk är helgdag. Från skärtorsdagen till och med annandag påsk, fem dygn i rad, gäller alltså inte 24-timmarsregeln.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="rakna">Så räknar du de 24 timmarna</h2>
+  <p>Inom en vanlig arbetsvecka är det enkelt. Bilen får stå samma klockslag nästa dag.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Du parkerar</th><th>Flytta senast</th></tr></thead>
+    <tbody>
+      <tr><td>Måndag 08.00</td><td>Tisdag 08.00</td></tr>
+      <tr><td>Tisdag 19.30</td><td>Onsdag 19.30</td></tr>
+      <tr><td>Onsdag 23.00</td><td>Torsdag 23.00</td></tr>
+    </tbody>
+  </table></div>
+  <p>Över en helg är det svårare. Förordningen säger att regeln gäller på vardagar, men inte uttryckligen hur timmar på lördag och söndag ska räknas. Det finns två sätt att läsa den:</p>
+  <ul>
+    <li><strong>Bara vanliga vardagar räknas.</strong> Parkerar du fredag 13.00 har bilen stått 11 timmar när fredagen slutar. Helgen räknas inte, och du har 13 timmar kvar på måndagen. Då får bilen stå till måndag 13.00.</li>
+    <li><strong>Regeln gäller igen på måndagen, och då räknas hela tiden.</strong> Bilen har då stått i mer än 24 timmar i följd redan när måndagen börjar.</li>
+  </ul>
+  <p>Vi har inte hittat något besked från Transportstyrelsen eller kommunerna om vilket sätt som gäller. Vill du inte riskera en bot: flytta bilen innan måndagen börjar om den har stått sedan fredagen eller lördagen.</p>
+  <p>Regeln gäller bara en sak, att bilen står parkerad i följd. Den säger inget om hur länge du får ha bilen i ett visst område. Står en skylt med kortare tid, till exempel 2 tim, är det den som gäller under skyltens tider.</p>
+
+  <h2 id="servicetid">Städnätter, servicetider och miljöparkering</h2>
+  <p>Städnätter och servicetider är lokala parkeringsförbud. De gäller i ett par timmar, oftast en gång i veckan eller i månaden, så att kommunen kan städa, ploga och laga gatan. Förbudet skyltas med märket för parkeringsförbud och en tilläggstavla med dag och tid. Kommunerna kallar det olika saker:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th>Namn</th><th>Vad staden skriver</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/stockholm/">Stockholm</a></td><td>Servicetid</td><td>Gatustädning, snöröjning, byte av belysning, rensning av brunnar och mindre gatuarbeten. Förbudet gäller även helgdag och dag före helgdag. Veckodag och tid står på skyltarna, och en karta visar tiderna per gata.</td></tr>
+      <tr><td><a href="/goteborg/">Göteborg</a></td><td>Servicetid, i folkmun städtid eller soptid</td><td>Parkeringsförbud under servicetiden. Det som står på skylten gäller, vare sig det är vardag, helg eller storhelg.</td></tr>
+      <tr><td><a href="/malmo/">Malmö</a></td><td>Miljöparkering</td><td>Förbud under några timmar en gång i månaden. Bostadsgator städas helst på dagen och affärsgator på kvällen. Gäller även helger och röda dagar.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Stockholms stad, Göteborgs Stad och Malmö stad.</p>
+  <p>Två regler i vägmärkesförordningen avgör hur du läser skylten. Står en veckodag utskriven, till exempel Onsdag, gäller förbudet den dagen även om det är en helgdag. Sträcker sig tiden över midnatt, till exempel 22–06, gäller timmarna efter midnatt nästa dag. Onsdag 22–06 betyder alltså från onsdag kväll till torsdag morgon.</p>
+  <p>Att stå kvar under servicetiden ger en bot för parkeringsförbud: 1 100 kronor i Stockholm, 850 kronor i Göteborg och 800 kronor i Malmö. Försvårar bilen städning eller snöröjning får kommunen dessutom flytta den, enligt förordningen om flyttning av fordon.</p>
+
+  <h2 id="datum">Datumparkering och udda eller jämna datum</h2>
+  <p>Datumparkering är ett äldre sätt att ordna städningen, och märket finns kvar i vägmärkesförordningen. Det finns tre varianter:</p>
+  <ul>
+    <li><strong>C38, datumparkering:</strong> förbud att parkera på jämna datum på den sida av gatan som har jämna adressnummer, och på udda datum på sidan med udda nummer. Den 14:e ska bilen alltså stå på udda sidan.</li>
+    <li><strong>C36:</strong> förbud att parkera på udda datum på den sida där märket sitter.</li>
+    <li><strong>C37:</strong> förbud att parkera på jämna datum på den sida där märket sitter.</li>
+  </ul>
+  <p>Utan tilläggstavla gäller förbudet hela dygnet, från 00 till 24. Ofta begränsar en tavla det till en del av dygnet. Fällan ligger vid midnatt. Ställer du bilen på udda sidan sent den 14:e blir det fel när den 15:e börjar. Transportstyrelsens föreskrifter har en egen kod för det, 37: fel sida av vägen vid datumparkering.</p>
+
+  <h2 id="sondag">Vad gäller på söndagar och röda dagar?</h2>
+  <ul>
+    <li><strong>24-timmarsregeln gäller inte.</strong> Den gäller bara vanliga vardagar.</li>
+    <li><strong>Tidsgränser och avgifter gäller bara med röda siffror.</strong> Har tilläggstavlan bara svarta siffror och siffror inom parentes, gäller villkoren inte på sön- och helgdagar. Saknar tavlan tider helt, gäller villkoren dygnet runt alla dagar.</li>
+    <li><strong>Servicetid med veckodag gäller ändå.</strong> Står det till exempel Måndag 00–06 gäller förbudet även när måndagen är annandag påsk.</li>
+    <li><strong>Förbuden i trafikförordningen gäller alltid.</strong> Avståndet till korsningar och övergångsställen bryr sig inte om vilken dag det är. De finns i guiden <a href="/guider/parkeringsregler/">var får man inte parkera</a>.</li>
+  </ul>
+  <p>Ett exempel: en avgiftsskylt med 9–19 svart och (9–15) inom parentes. Då betalar du måndag–fredag 9–19 och lördag 9–15. På söndag och på röda dagar är det gratis, eftersom röda siffror saknas.</p>
+
+  <h2 id="natt">På natten: lyktor och tunga fordon</h2>
+  <p>Enligt 3 kap. 74 § trafikförordningen ska parkerings- och baklyktor vara tända i mörker, skymning och gryning när bilen står på vägen. Det finns tre lättnader:</p>
+  <ul>
+    <li>Inga lyktor behövs om gatan är så väl belyst att bilen syns tydligt på tillräckligt avstånd.</li>
+    <li>Inga lyktor behövs om bilen står utanför körbanan och vägrenen, till exempel på en parkeringsplats.</li>
+    <li>För ett fordon på högst sex meter och två meter, längs kanten där gränsen är högst 50 km/h, räcker lyktorna mot vägens mitt.</li>
+  </ul>
+  <p>På en mörk landsväg måste du alltså ha parkeringsljus tänt om bilen står på vägen. På en upplyst stadsgata behövs det normalt inte.</p>
+  <p>Kommuner kan också förbjuda tunga fordon att stå på gatan nattetid. Stockholm ger 1 100 kronor för ett fordon över 3,5 ton som står parkerat mellan 22.00 och 06.00 där det inte är tillåtet. Kör du husbil eller lastbil, kontrollera kommunens lokala föreskrifter.</p>
+
+  <h2 id="avsluta">Flytta bilen och avsluta parkeringen</h2>
+  <p>24 timmar räknas för en uppställning i följd. När du flyttar bilen börjar en ny parkering. Förordningen anger inget minsta avstånd, men att rulla bilen en meter kan vara svårt att bevisa i efterhand.</p>
+  <p>Glömmer du bilen kan det bli dyrt på tre sätt:</p>
+  <ul>
+    <li><strong>Fler lappar.</strong> Enligt lagen om felparkeringsavgift får en ny anmärkning skrivas för varje påbörjat kalenderdygn. Det ska gå minst sex timmar mellan lapparna, och de får bli högst fem för samma fel.</li>
+    <li><strong>Flytt efter tre dygn.</strong> Står bilen fel och har stått på samma plats i minst tre dygn får kommunen flytta den, enligt förordningen om flyttning av fordon.</li>
+    <li><strong>Kostnaden för flytten.</strong> I Stockholm kostar flytt av en bil upp till 3,5 ton 2 750 kronor inom ett dygn och 3 450 kronor om den sker direkt. Förvaringen kostar 150 kronor per dygn de första tio dygnen.</li>
+  </ul>
+  <p>På en avgiftsplats avslutar du parkeringen i appen eller automaten när du kör. Det påverkar bara avgiften, inte 24-timmarsregeln.</p>
+
+  <h2 id="undantag">Lagliga undantag</h2>
+  <p>Enligt 11 kap. 9 § trafikförordningen gäller inte 24-timmarsregeln och kommunens förbud för fordon som används i vissa uppdrag, bland annat:</p>
+  <ul>
+    <li>parkeringsövervakning, polis, tull, kustbevakning och räddningstjänst,</li>
+    <li>brådskande arbete av läkare, sjuksköterska, barnmorska, veterinär och personal inom hemsjukvården,</li>
+    <li>transport av sjuka eller rörelsehindrade,</li>
+    <li>eftersök av vilt efter en viltolycka.</li>
+  </ul>
+  <p>Undantagen gäller bara när omständigheterna kräver det och föraren är särskilt försiktig.</p>
+  <p>Ett parkeringstillstånd för rörelsehindrade förlänger tidsgränser som en lokal trafikföreskrift sätter. Där en skylt tillåter minst tre men mindre än 24 timmar får du stå i 24 timmar. Förordningen räknar inte upp den allmänna 24-timmarsregeln bland det tillståndet ger.</p>
+  <p>Har bilen gått sönder på en plats där den inte får stå, säger 3 kap. 51 § att du ska se till att den flyttas så snart som möjligt.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

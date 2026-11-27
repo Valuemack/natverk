@@ -1,0 +1,21 @@
+---
+// Tabell med parkeringar. Varje rad har ett ankare (e.ankare) så att gamla URL:er och interna länkar kan peka hit,
+// även för parkeringar som inte har en egen sida. Parkeringar med egen sida länkas.
+import { TYP, prisText, platser } from "../fakta.js";
+import { adressRad } from "@natverk/core/katalog.js";
+const { enheter, visaKommun = false } = Astro.props;
+const ovrigt = (e) => [e.extra?.laddplatser > 0 && `${e.extra.laddplatser} laddplatser`, e.extra?.handikapplatser > 0 && `${e.extra.handikapplatser} HCP`,
+  e.extra?.hojdbegransning && `höjd ${String(e.extra.hojdbegransning).replace(".", ",")} m`, e.kedja].filter(Boolean).join(" · ");
+---
+<div class="tabell"><table class="rader">
+  <thead><tr><th>Parkering</th><th>Typ</th><th>Pris</th><th class="num">Platser</th><th>Övrigt</th></tr></thead>
+  <tbody>{enheter.map((e) => (
+    <tr id={e.ankare}>
+      <td>{e.egenSida ? <a href={e.href}>{e.namn}</a> : <strong>{e.namn}</strong>}<br /><small>{adressRad(e) || e.ort || ""}{visaKommun && e.kommun && ` (${e.kommun})`}</small></td>
+      <td>{TYP[e.typ] ?? "Parkering"}</td>
+      <td>{prisText(e) ?? "–"}</td>
+      <td class="num">{platser(e) ?? "–"}</td>
+      <td><small>{ovrigt(e) || "–"}</small></td>
+    </tr>
+  ))}</tbody>
+</table></div>

@@ -1,0 +1,144 @@
+---
+// Guide: silver- och guldstämplar. Källor: lag (1999:779) och förordning (1999:780) om handel med ädelmetallarbeten,
+// förordning (1987:423) 13–14 §§ (årsbeteckning sedan 1759), SOU 2026:14 Ädelmetallutredningen, Hallmarking Conventions
+// landprofil för Sverige, Swedac (STAFS 2025:7), MFA Bostons CAMEO (nysilver) och Nationalmuseum (GAB). Granskad 2026-11-27.
+// Årsbokstavstabellen är vår uträkning ur regeln i 1987 års förordning, inte en officiell tabell.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const BOKST = "ABCDEFGHIKLMNOPQRSTUVXYZ".split("");
+const arsbokstav = (ar) => { const i = ar - 1759, omg = Math.floor(i / 24) + 1; return `${BOKST[i % 24]}${omg > 1 ? omg : ""}`; };
+const serier = Array.from({ length: 12 }, (_, i) => { const start = 1759 + i * 24; return { omg: i + 1, start, slut: start + 23, forst: arsbokstav(start), sist: arsbokstav(start + 23) }; });
+const exempel = [1900, 1925, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2026].map((ar) => ({ ar, b: arsbokstav(ar) }));
+const fragor = [
+  { fraga: "Hur ser man om något är äkta silver?", svar: "Leta efter stämplar: en halt som 925, 830 eller 800, gärna tillsammans med tre kronor och S, en namnstämpel, ett stadsmärke och en årsbokstav. Står det nysilver, alpacka eller EPNS är det inte silver. Ett osäkert föremål kan provas av en guldsmed eller ett kontrollorgan." },
+  { fraga: "Vad betyder tre kronor på silver?", svar: "Det är den svenska kontrollstämpeln, lilla riksvapnet i en trepassformad sköld, som har använts sedan 1754. Följt av ett S betyder den att ett kontrollorgan har provat att silverhalten stämmer. Sedan 1986 års lag är kontrollstämplingen frivillig." },
+  { fraga: "Vilket år är silvret tillverkat?", svar: "Svenskt silver har ofta en årsbokstav, en bokstav följd av en siffra. Serien började 1759 med A, och siffran anger vilken omgång av alfabetet det är. Till exempel betyder A10 år 1975 och C12 år 2025 enligt vår uträkning." },
+  { fraga: "Vad betyder 18K och 14K på guld?", svar: "Karat anger guldhalten i tjugofjärdedelar. 18 karat motsvarar 750 tusendelar och 14 karat ungefär 585 tusendelar. I Sverige får guld säljas som guld från 375 tusendelar, vilket motsvarar 9 karat." },
+  { fraga: "Är nysilver äkta silver?", svar: "Nej. Nysilver, alpacka och German silver är en legering av koppar, nickel och oftast zink utan silver. EPNS betyder att nysilver har försilvrats med ett tunt lager silver." },
+];
+---
+<Guide site={SITE} titel="Silverstämplar och guldstämplar – så läser du dem"
+  beskrivning="Är loppisfyndet äkta silver? Så läser du tre kronor, årsbokstaven, stadsmärket och halten 925 eller 830 – med tabell över årsbokstäverna och vad nysilver och EPNS betyder."
+  h1="Silverstämplar och guldstämplar – så läser du dem på loppisfyndet"
+  svar={`Svenskt silver har traditionellt fyra stämplar: <strong>tillverkarens namnstämpel, stadsmärket, kontrollstämpeln tre kronor med S och en årsbokstav</strong>. Halten anges i tusendelar, till exempel 830 eller 925, och silver får säljas som silver från 800. Årsbokstäverna började med A år 1759. Siffran efter bokstaven anger omgången, så A10 är 1975. <strong>Nysilver, alpacka och EPNS är inte silver.</strong>`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Silverstämplar och guldstämplar", href: "/guider/silverstamplar-guldstamplar/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={[
+    { id: "fyra", rubrik: "De fyra svenska stämplarna" },
+    { id: "halt", rubrik: "Halten: 925, 830, 750 …" },
+    { id: "kronor", rubrik: "Tre kronor – kontrollstämpeln" },
+    { id: "ar", rubrik: "Årsbokstäverna" },
+    { id: "inte", rubrik: "Det som inte är silver" },
+    { id: "lagen", rubrik: "Vad säger lagen i dag?" },
+    { id: "loppis", rubrik: "Så gör du på loppisen" },
+  ]}
+  relaterat={[
+    { namn: "Skatt när du säljer privat", href: "/guider/skatt-salja-privat/", text: "Ärvt silver och smycken" },
+    { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/", text: "Om det inte var äkta" },
+    { namn: "Antikvariat och loppisar nära dig", href: "/", text: "Alla butiker i Sverige" },
+    { namn: "Vad tar butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Innan du skänker ett dödsbo" },
+  ]}
+  kallor={[
+    { namn: "Lag (1999:779) om handel med ädelmetallarbeten", url: "https://data.riksdagen.se/dokument/sfs-1999-779.text", text: "1, 3, 5, 6, 8 och 9 §§", datum: "2026-11-27" },
+    { namn: "Förordning (1999:780) om handel med ädelmetallarbeten", url: "https://data.riksdagen.se/dokument/sfs-1999-780.text", text: "2, 18 och 19 §§", datum: "2026-11-27" },
+    { namn: "Förordning (1987:423) om handel med ädelmetallarbeten (upphävd 2000)", url: "https://data.riksdagen.se/dokument/sfs-1987-423.text", text: "13–14 §§, ortsmärke och årsbeteckning sedan 1759", datum: "2026-11-27" },
+    { namn: "SOU 2026:14 Ädelmetallutredningen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/statens-offentliga-utredningar/adelmetallutredningen_heb314/html/", text: "kontrollstämpeln sedan 1754, 1986 års lag, statistik 2025, provmetoder", datum: "2026-11-27" },
+    { namn: "Hallmarking Convention – Sweden, country profile", url: "https://hallmarkingconvention.org/en/country-profile/sweden", text: "lagliga halter (uppdaterad 31 oktober 2019)", datum: "2026-11-27" },
+    { namn: "Swedac – STAFS 2025:7", url: "https://regelverk.swedac.se/foreskrifter/swedac/stafs-2025-7.pdf", text: "avgift för namnstämpel från 2026", datum: "2026-11-27" },
+    { namn: "Museum of Fine Arts Boston, CAMEO – German silver", url: "https://cameo.mfa.org/wiki/German_silver", text: "nysilver utan silver", datum: "2026-11-27" },
+    { namn: "Nationalmuseum – Guldsmedsaktiebolaget (GAB)", url: "https://collection.nationalmuseum.se/en/artists/artist/1224/", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="fyra">De fyra svenska stämplarna</h2>
+  <p>Vänd på skeden, ringen eller ljusstaken. På svenskt silver och guld sitter oftast en rad med små stämplar, och lagen kallar dem ansvarsstämplar. Det finns fyra:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stämpel</th><th>Vad den visar</th><th>Exempel</th></tr></thead>
+    <tbody>
+      <tr><td>Namnstämpel</td><td>Vem som tillverkade eller importerade föremålet. Namnstämplarna registreras hos Swedac.</td><td>Initialer, ett firmanamn eller till exempel GAB för Guldsmedsaktiebolaget</td></tr>
+      <tr><td>Finhaltsstämpel</td><td>Hur många tusendelar ädel metall föremålet innehåller</td><td>925, 830, 750</td></tr>
+      <tr><td>Ortsmärke (stadsstämpel)</td><td>Orten där föremålet tillverkades, eller importörens hemort</td><td>Ett märke för staden</td></tr>
+      <tr><td>Årsbeteckning</td><td>Tillverkningsåret</td><td>En bokstav och en siffra, till exempel G8</td></tr>
+    </tbody>
+  </table></div>
+  <p>Till detta kommer <strong>kontrollstämpeln</strong>, tre kronor, som visar att ett oberoende organ har provat halten. Tillsammans gör stämplarna att ett svenskt silverföremål ofta går att knyta till en verkstad, en stad och ett år.</p>
+
+  <h2 id="halt">Halten: 925, 830, 750 …</h2>
+  <p>Halten anges i tusendelar. 925 betyder att 925 av 1 000 delar är silver. Enligt lagen får ett föremål kallas silver om halten är minst 800 tusendelar, guld från 375 tusendelar och platina från 850 tusendelar. En liten avvikelse nedåt tillåts. De halter som är tillåtna att stämpla i Sverige är:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Metall</th><th>Halter (tusendelar)</th><th>Lägst för att få kallas metallen</th></tr></thead>
+    <tbody>
+      <tr><td>Silver</td><td>999, 990, 958, 925, 835, 830, 800</td><td>800</td></tr>
+      <tr><td>Guld</td><td>999, 990, 916, 800, 750, 585, 417, 375</td><td>375</td></tr>
+      <tr><td>Platina</td><td>999, 990, 950, 900, 850</td><td>850</td></tr>
+      <tr><td>Palladium</td><td>999, 990, 950, 850, 500</td><td>500</td></tr>
+    </tbody>
+  </table></div>
+  <p>På äldre svenskt silver är <strong>830</strong> vanligt, och på modernt silver och smycken <strong>925</strong> (sterling). För guld används ofta karat, som anger guldet i tjugofjärdedelar: <strong>18 karat motsvarar 750</strong>, och 14 karat motsvarar ungefär 583, som stämplas 585.</p>
+
+  <h2 id="kronor">Tre kronor – kontrollstämpeln</h2>
+  <p>Kontrollstämpeln är lilla riksvapnet, tre kronor i en trepassformad sköld. Den har använts sedan 1754 och kallas i statens utredning från 2026 för landets äldsta konsumentmärke. Efter kronorna kommer en bokstav: <strong>S för silver</strong> och P för platina. Kontrollstämpeln får inte flyttas från ett föremål till ett annat.</p>
+  <p>Fram till 1986 års lag var kontrollen obligatorisk och sköttes av en statlig provningsanstalt. Mellan 1974 och 1986 fanns två varianter av skölden, rund för svensktillverkat och oval för importerat. Med lagen från 1986 blev kontrollstämplingen frivillig, och den ovala importstämpeln försvann. I dag finns ett enda ackrediterat kontrollorgan i Sverige, RISE. Kontrollstämpeln användes 53 935 gånger under 2025, det lägsta antalet som har registrerats.</p>
+  <p>Saknas tre kronor betyder det alltså inte att föremålet är oäkta, särskilt inte om det är tillverkat efter 1980-talet. Men en kontrollstämpel på ett äldre föremål är ett starkt tecken på att halten stämmer.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="ar">Årsbokstäverna</h2>
+  <p>Årsbeteckningen är det som gör svenskt silver så lätt att datera. Enligt den äldre förordningen om ädelmetallarbeten består den av en bokstav och en siffra. Bokstäverna är de 24 i alfabetet utan J, W, Å, Ä och Ö: A B C D E F G H I K L M N O P Q R S T U V X Y Z. Siffran anger vilken omgång av bokstavsserien som pågår sedan år 1759.</p>
+  <p>Varje omgång täcker alltså 24 år. Den första serien hade ingen siffra, och från 1783 började den andra omgången med A2. Tabellen är vår uträkning ur den regeln:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Omgång</th><th>År</th><th>Från</th><th>Till</th></tr></thead>
+    <tbody>{serier.map((s) => <tr><td>{s.omg}</td><td>{s.start}–{s.slut}</td><td>{s.forst}</td><td>{s.sist}</td></tr>)}</tbody>
+  </table></div>
+  <p>Några exempel: {exempel.map((x, i) => <>{i > 0 && ", "}{x.ar} = <strong>{x.b}</strong></>)}.</p>
+  <div class="arsrakna">
+    <label for="ars-in">Skriv en årsbokstav (t.ex. G8) eller ett år:</label>
+    <input id="ars-in" type="text" maxlength="4" autocomplete="off" placeholder="G8" />
+    <p id="ars-ut" aria-live="polite" class="kalla"></p>
+  </div>
+  <p class="kalla">Tabellen och räknaren bygger på regeln i förordning (1987:423) 14 § och startåret 1759. Den är inte jämförd med en officiell tabell. I dag är årsbeteckningen frivillig, och i en enkät 2026 svarade 59 procent av företagen att de använder den.</p>
+
+  <h2 id="inte">Det som inte är silver</h2>
+  <p>På loppisen finns mycket som ser ut som silver men inte är det:</p>
+  <ul>
+    <li><strong>Nysilver, alpacka och German silver</strong> är samma sak, en legering av koppar, nickel och oftast zink. Den innehåller inget silver alls, trots namnet.</li>
+    <li><strong>EPNS</strong> står för electroplated nickel silver, alltså nysilver med ett tunt lager silver ovanpå. Det förekommer ofta på bestick och serveringsfat.</li>
+    <li><strong>Pläterat och förgyllt</strong> har bara ett ytskikt av ädel metall. Statens utredning nämner som ett vanligt bedrägeri att pläterade varor stämplas och säljs som massiv ädelmetall.</li>
+  </ul>
+  <p>Lagen förbjuder märken som lätt kan förväxlas med ädelmetallstämplar på varor som inte är ädelmetall. En vara med lägre halt får säga att den innehåller metallen, men det ska framgå att halten är lägre.</p>
+
+  <h2 id="lagen">Vad säger lagen i dag?</h2>
+  <p>Gällande lag är från 1999 och gäller sedan 1 januari 2000. Den innehåller några saker som kan överraska:</p>
+  <ul>
+    <li><strong>Silver behöver inte stämplas.</strong> Lagens krav på namnstämpel och finhaltsstämpel gäller guld och platina, inte silver.</li>
+    <li><strong>Guld och platina som väger under ett gram</strong> behöver inga stämplar alls.</li>
+    <li><strong>Antikviteter undantas.</strong> Lagen gäller inte föremål med uppenbart antikvariskt värde.</li>
+    <li><strong>Om ett föremål har svenskt ortsmärke eller svensk årsbeteckning</strong> måste det också ha en namnstämpel.</li>
+  </ul>
+  <p>En statlig utredning föreslog 2026 nya regler från 1 januari 2028, bland annat sanktionsavgifter och att den tillåtna avvikelsen nedåt i halt ska tas bort. Förslagen är inte beslutade.</p>
+
+  <h2 id="loppis">Så gör du på loppisen</h2>
+  <ol>
+    <li><strong>Ta med en lupp.</strong> Stämplarna är ofta bara någon millimeter stora.</li>
+    <li><strong>Leta efter halten först.</strong> 925, 830, 800 eller tre kronor med S betyder silver. Står det nysilver, alpacka, EPNS eller ingenting är det troligen inte massivt.</li>
+    <li><strong>Läs årsbokstaven</strong> med tabellen ovan för att se hur gammalt föremålet är.</li>
+    <li><strong>Jämför vikten</strong> med ett föremål du vet är av silver. Statens utredning påpekar att enkla syra- och repprov bara ger en ungefärlig uppfattning om halten.</li>
+    <li><strong>Är det värdefullt</strong>, låt en guldsmed eller ett auktionshus titta på det innan du säljer. Se också hur <a href="/guider/skatt-salja-privat/">skatten fungerar</a> om du säljer ärvt silver.</li>
+  </ol>
+  <Faq fragor={fragor} />
+  <script is:inline slot="skript">
+    (() => {
+      const B = "ABCDEFGHIKLMNOPQRSTUVXYZ", inp = document.getElementById("ars-in"), ut = document.getElementById("ars-ut");
+      if (!inp) return;
+      inp.addEventListener("input", () => {
+        const v = inp.value.trim().toUpperCase();
+        let t = "";
+        if (/^\d{4}$/.test(v)) { const y = +v, i = y - 1759; t = i < 0 ? "Årsbokstäverna började 1759." : `${y} = ${B[i % 24]}${Math.floor(i / 24) + 1 > 1 ? Math.floor(i / 24) + 1 : ""}`; }
+        else { const m = /^([A-Z])(\d{0,2})$/.exec(v); if (m) { const b = B.indexOf(m[1]); t = b < 0 ? `${m[1]} används inte som årsbokstav.` : `${v} = år ${1759 + (Math.max(1, +m[2] || 1) - 1) * 24 + b}`; } }
+        ut.textContent = t;
+      });
+    })();
+  </script>
+</Guide>

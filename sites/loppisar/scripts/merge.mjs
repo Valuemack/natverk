@@ -326,8 +326,10 @@ const stats = {
   excluded: excluded.reduce((m, e) => { const k = e.reason.replace(/:.*finns inte.*/, ': kedjebutik saknas i kedjans lista'); m[k] = (m[k] || 0) + 1; return m; }, {}),
   sources: sourceMeta,
 };
-fs.writeFileSync(path.join(DATA, 'butiker.json'), JSON.stringify(out, null, 1) + '\n');
-fs.writeFileSync(path.join(DATA, 'excluded.json'), JSON.stringify(excluded, null, 1) + '\n');
+// E-postadresser sparas aldrig i repot. Repot är publikt, och många adresser tillhör privatpersoner.
+const utanEpost = (k, v) => (k === 'epost' ? undefined : v);
+fs.writeFileSync(path.join(DATA, 'butiker.json'), JSON.stringify(out, utanEpost, 1) + '\n');
+fs.writeFileSync(path.join(DATA, 'excluded.json'), JSON.stringify(excluded, utanEpost, 1) + '\n');
 fs.writeFileSync(path.join(DATA, 'stats.json'), JSON.stringify(stats, null, 1) + '\n');
 console.log(`butiker.json: ${stats.total} stores, ${stats.with_hours} with hours (${Math.round(100 * stats.with_hours / stats.total)}%), ${stats.kommuner_covered}/290 kommuner, ${excluded.length} excluded`);
 console.log('per kedja:', stats.per_kedja);

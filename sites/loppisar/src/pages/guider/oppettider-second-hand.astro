@@ -1,0 +1,153 @@
+---
+// Dataguide: öppettider för loppisar och second hand. Alla siffror räknas fram vid bygget ur data/butiker.json
+// (organisationernas egna butikslistor och OpenStreetMap), så de följer med när datan uppdateras varje natt.
+// Inga siffror är inskrivna för hand. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { DAGAR, DAGNAMN, tolkaIntervall, sentOppet, talText, lanKortnamn } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD } from "../../site.js";
+import { riktigaTider } from "../../grind.js";
+import { ORG, orgNyckel } from "../../lib/organisationer.js";
+import { kategori, timmarVecka, dagarOppet } from "../../lib/butik.js";
+
+const PUBLICERAD = "2026-11-27";
+const E = KAT.enheter, T = E.filter(riktigaTider), nT = T.length;
+const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
+const pass = (e, d) => tolkaIntervall(e.oppettider[d]) ?? [];
+const kl = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}.${String(m % 60).padStart(2, "0")}`;
+const vanligast = (arr) => { const m = new Map(); arr.forEach((x) => m.set(x, (m.get(x) ?? 0) + 1)); return [...m].sort((a, b) => b[1] - a[1])[0]?.[0]; };
+const median = (arr) => { const s = [...arr].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
+
+const perDag = DAGAR.map((d) => {
+  const o = T.filter((e) => pass(e, d).length);
+  const opp = o.map((e) => pass(e, d)[0][0]), stang = o.map((e) => pass(e, d).at(-1)[1]);
+  return { d, namn: DAGNAMN[d], n: o.length, p: pct(o.length, nT), opp: vanligast(opp), stang: vanligast(stang), langd: median(o.map((e) => pass(e, d).reduce((s, [a, b]) => s + b - a, 0))) };
+});
+const D = Object.fromEntries(perDag.map((x) => [x.d, x]));
+const toppDag = [...perDag].sort((a, b) => b.n - a.n)[0];
+const dagFord = [1, 2, 3, 4, 5, 6, 7].map((k) => ({ k, n: T.filter((e) => dagarOppet(e) === k).length }));
+const timmar = T.map(timmarVecka);
+const tMed = median(timmar), tP10 = [...timmar].sort((a, b) => a - b)[Math.floor(nT * 0.1)], tP90 = [...timmar].sort((a, b) => a - b)[Math.floor(nT * 0.9)];
+const sent = T.filter(sentOppet);
+const mondagStangt = nT - D.mon.n;
+const lorSon = T.filter((e) => pass(e, "sat").length && pass(e, "sun").length).length;
+const sondagEj = T.filter((e) => !pass(e, "sun").length).length;
+
+const orgRader = [...new Map(T.map((e) => [orgNyckel(e) ?? null, 0])).keys()].filter(Boolean).map((k) => {
+  const x = T.filter((e) => orgNyckel(e) === k);
+  return { k, namn: ORG[k]?.namn ?? k, n: x.length, lor: pct(x.filter((e) => pass(e, "sat").length).length, x.length), son: pct(x.filter((e) => pass(e, "sun").length).length, x.length), tim: median(x.map(timmarVecka)) };
+}).filter((r) => r.n >= 4).sort((a, b) => b.n - a.n);
+const ovriga = T.filter((e) => !orgNyckel(e));
+const ovrigaSon = pct(ovriga.filter((e) => pass(e, "sun").length).length, ovriga.length);
+const orgSonMax = [...orgRader].sort((a, b) => b.son - a.son)[0];
+const orgSonNoll = orgRader.filter((r) => r.son === 0).map((r) => r.namn);
+
+const katRader = [...new Set(T.map(kategori))].map((k) => { const x = T.filter((e) => kategori(e) === k); return { k, n: x.length, son: pct(x.filter((e) => pass(e, "sun").length).length, x.length), tim: median(x.map(timmarVecka)) }; }).sort((a, b) => b.n - a.n);
+
+const lanRader = KAT.lan.map((l) => { const x = l.kommuner.flatMap((k) => k.enheter).filter(riktigaTider); return { l, n: x.length, lor: pct(x.filter((e) => pass(e, "sat").length).length, x.length), son: pct(x.filter((e) => pass(e, "sun").length).length, x.length) }; }).filter((r) => r.n >= 5).sort((a, b) => b.son - a.son);
+const sentKommuner = [...new Map(sent.map((e) => [e.kommun, KAT.kommuner.find((k) => k.namn === e.kommun)])).values()].filter(Boolean).sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
+
+const fragor = [
+  { fraga: "När öppnar second hand-butikerna?", svar: `Vanligast är att butikerna öppnar kl. ${kl(D.tue.opp)} på vardagar och kl. ${kl(D.sat.opp)} på lördagar. På vardagar stänger de flesta kl. ${kl(D.tue.stang)} och på lördagar kl. ${kl(D.sat.stang)}. Siffrorna gäller de ${talText(nT)} butiker där vi har öppettider.` },
+  { fraga: "Har loppisar öppet på söndagar?", svar: `Bara ${D.sun.p} procent av butikerna med kända öppettider har öppet på söndagar, jämfört med ${D.sat.p} procent på lördagar. Söndagsöppet är vanligast hos ${orgSonMax.namn}.` },
+  { fraga: "Har second hand öppet på måndagar?", svar: `${talText(mondagStangt)} av ${talText(nT)} butiker (${pct(mondagStangt, nT)} procent) har stängt på måndagar. Måndag är den vardag då minst antal butiker har öppet.` },
+  { fraga: "Finns det loppisar som har öppet på kvällen?", svar: `${sent.length} butiker har öppet till kl. 20 eller senare minst en vardag. De flesta stänger mellan kl. 17 och 18.` },
+  { fraga: "Gäller öppettiderna på helgdagar?", svar: "Tiderna vi visar är de ordinarie veckotiderna från källan. Kring helgdagar, jul och sommar ändrar många butiker sina tider, så kontrollera butikens egen sida före en längre resa." },
+];
+---
+<Guide site={SITE} titel="Öppettider för second hand och loppisar – när har de öppet?"
+  beskrivning={`När öppnar second hand-butikerna, och vilka har öppet på söndagar? Statistik från ${talText(nT)} loppisar och second hand-butiker: vanligaste tider per veckodag, söndagsöppet per kedja och län, och kvällsöppet.`}
+  h1="Öppettider för second hand – när har loppisarna öppet?"
+  svar={`Den typiska second hand-butiken öppnar <strong>kl. ${kl(D.tue.opp)} och stänger kl. ${kl(D.tue.stang)} på vardagar</strong>, och på lördagar har den öppet <strong>kl. ${kl(D.sat.opp)}–${kl(D.sat.stang)}</strong>. ${toppDag.namn} är dagen då flest har öppet. Bara <strong>${D.sun.p} procent har öppet på söndagar</strong>, och ${pct(mondagStangt, nT)} procent har stängt på måndagar. Siffrorna gäller ${talText(nT)} butiker med kända öppettider.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Öppettider för second hand", href: "/guider/oppettider-second-hand/" }]}
+  publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-27" avsnitt={[
+    { id: "veckodag", rubrik: "Öppet per veckodag" },
+    { id: "dagar", rubrik: "Hur många dagar i veckan?" },
+    { id: "sondag", rubrik: "Söndagsöppet" },
+    { id: "kedjor", rubrik: "Skillnader mellan organisationerna" },
+    { id: "lan", rubrik: "Skillnader mellan länen" },
+    { id: "kvall", rubrik: "Kvällsöppet" },
+    { id: "tips", rubrik: "Tips innan du åker" },
+    { id: "metod", rubrik: "Så har vi räknat" },
+  ]}
+  relaterat={[
+    { namn: "Loppisar nära dig", href: "/", text: "Se vilka som har öppet nu" },
+    { namn: "Vad tar butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Lämna saker under öppettid" },
+    { namn: "Ha en egen loppis", href: "/guider/ha-egen-loppis/", text: "Tillstånd, skyltar och regler" },
+    { namn: "Källor och metod", href: "/om/", text: "Var uppgifterna kommer från" },
+  ]}
+  kallor={[
+    { namn: "loppisar.nu – butiksdata", url: "https://loppisar.nu/om/", text: `${talText(E.length)} butiker, varav ${talText(nT)} med öppettider`, datum: "2026-11-27" },
+    { namn: "OpenStreetMap – opening_hours", url: "https://wiki.openstreetmap.org/wiki/Key:opening_hours", text: "© OpenStreetMap-bidragsgivare, ODbL", datum: "2026-11-27" },
+    { namn: "Röda Korset – butikssök", url: "https://www.rodakorset.se/second-hand/", datum: "2026-11-27" },
+    { namn: "Erikshjälpen – våra butiker", url: "https://erikshjalpen.se/vara-butiker/", datum: "2026-11-27" },
+    { namn: "Myrorna – butiker", url: "https://www.myrorna.se/", datum: "2026-11-27" },
+    { namn: "PMU Second Hand – butiker", url: "https://pmu.se/secondhand/", datum: "2026-11-27" },
+  ]}>
+
+  <p>Den här guiden bygger på öppettiderna för de {talText(nT)} butiker i vår katalog där källan anger ordinarie tider. Det är {pct(nT, E.length)} procent av de {talText(E.length)} loppisar och second hand-butiker vi listar. Siffrorna räknas om varje gång sidan byggs, så de följer med när butikerna ändrar sina tider.</p>
+
+  <h2 id="veckodag">Öppet per veckodag</h2>
+  <p>Tabellen visar hur stor andel av butikerna som har öppet varje dag, vilken öppnings- och stängningstid som är vanligast och hur länge en butik som har öppet den dagen typiskt håller öppet.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Dag</th><th>Har öppet</th><th>Vanligast öppnar</th><th>Vanligast stänger</th><th>Typisk öppettid</th></tr></thead>
+    <tbody>{perDag.map((x) => <tr data-dag={x.d}><td>{x.namn}</td><td>{x.p} % ({talText(x.n)})</td><td>{x.opp != null ? kl(x.opp) : "–"}</td><td>{x.stang != null ? kl(x.stang) : "–"}</td><td>{x.langd != null ? `${String(Math.round(x.langd / 30) / 2).replace(".", ",")} timmar` : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Mönstret är tydligt. Tisdag till torsdag är de stora vardagarna, och {toppDag.namn.toLowerCase()} är den dag då flest har öppet. Fredagen är något svagare. Måndagen sticker ut åt andra hållet, eftersom {pct(mondagStangt, nT)} procent av butikerna har stängt då.</p>
+  <p>Lördagen är kortare än vardagarna men nästan lika vanlig. {D.sat.p} procent har öppet, och den vanligaste tiden är kl. {kl(D.sat.opp)}–{kl(D.sat.stang)}. Vill du hinna gå runt i flera butiker på en lördag lönar det sig att börja tidigt.</p>
+
+  <h2 id="dagar">Hur många dagar i veckan?</h2>
+  <p>Butikerna skiljer sig mycket åt. Den typiska butiken har öppet <strong>{tMed} timmar i veckan</strong>. En tiondel har öppet {tP10} timmar eller mindre, ofta små loppisar som håller öppet några eftermiddagar. En tiondel har öppet {tP90} timmar eller mer, och då är det oftast stora varuhus i städerna.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Dagar med öppet per vecka</th><th>Antal butiker</th><th>Andel</th></tr></thead>
+    <tbody>{dagFord.map((x) => <tr><td>{x.k}</td><td>{talText(x.n)}</td><td>{pct(x.n, nT)} %</td></tr>)}</tbody>
+  </table></div>
+  <p>{talText(dagFord[6].n)} butiker har öppet alla sju dagar. Samtidigt har {talText(dagFord[0].n + dagFord[1].n + dagFord[2].n)} butiker öppet tre dagar eller färre. Hör en butik till den gruppen kan det vara bra att kontrollera tiden innan du åker, särskilt på landsbygden där närmaste alternativ kan ligga långt bort.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="sondag">Söndagsöppet</h2>
+  <p>Söndagen är den stora skillnaden mellan second hand och vanlig handel. Bara <strong>{talText(D.sun.n)} av {talText(nT)} butiker ({D.sun.p} procent)</strong> har öppet på söndagar. {talText(lorSon)} butiker har öppet både lördag och söndag. Den som har söndagsöppet håller oftast öppet kl. {kl(D.sun.opp)}–{kl(D.sun.stang)}.</p>
+  <p>Söndagsöppet är inte jämnt fördelat. Stora butiker i städerna har det oftare, och det beror mest på vilken organisation som driver butiken. {orgSonNoll.length > 0 && <>Bland de stora organisationerna har {orgSonNoll.join(", ").replace(/, ([^,]*)$/, " och $1")} inga butiker med ordinarie söndagsöppet i vår data. </>}På varje kommunsida finns en lista över vilka butiker som har öppet på söndagar och, om ingen har det, var närmaste söndagsöppna butik ligger.</p>
+
+  <h2 id="kedjor">Skillnader mellan organisationerna</h2>
+  <p>De ideella organisationerna har ofta liknande tider i alla sina butiker. Därför säger organisationen ganska mycket om när en butik har öppet. Tabellen visar organisationer med minst fyra butiker med kända tider.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Organisation</th><th>Butiker med tider</th><th>Lördagsöppet</th><th>Söndagsöppet</th><th>Typiskt timmar/vecka</th></tr></thead>
+    <tbody>
+      {orgRader.map((r) => <tr><td>{r.namn}</td><td>{r.n}</td><td>{r.lor} %</td><td>{r.son} %</td><td>{r.tim}</td></tr>)}
+      <tr><td>Övriga butiker</td><td>{talText(ovriga.length)}</td><td>{pct(ovriga.filter((e) => pass(e, "sat").length).length, ovriga.length)} %</td><td>{ovrigaSon} %</td><td>{median(ovriga.map(timmarVecka))}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tabellen visar att stora varuhus i städerna, som Myrornas och stadsmissionernas, har långa tider och ofta söndagsöppet. Organisationer med många mindre butiker på mindre orter, som Röda Korset, har oftare kortare tider och öppet färre dagar. Det säger inget om utbudet, bara om när du kan komma dit.</p>
+  <p>Även typen av butik spelar roll. Loppisar och privata second hand-butiker har oftare söndagsöppet än antikvariat:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av butik</th><th>Butiker med tider</th><th>Söndagsöppet</th><th>Typiskt timmar/vecka</th></tr></thead>
+    <tbody>{katRader.map((r) => <tr><td>{r.k}</td><td>{r.n}</td><td>{r.son} %</td><td>{r.tim}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="lan">Skillnader mellan länen</h2>
+  <p>Andelen med söndagsöppet varierar mellan länen. Län med stora städer och många stora varuhus ligger högre. Tabellen gäller län med minst fem butiker med kända tider, sorterade efter andel söndagsöppet.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th>Butiker med tider</th><th>Lördagsöppet</th><th>Söndagsöppet</th></tr></thead>
+    <tbody>{lanRader.map((r) => <tr><td><a href={r.l.href}>{lanKortnamn(r.l.namn)}</a></td><td>{r.n}</td><td>{r.lor} %</td><td>{r.son} %</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="kvall">Kvällsöppet</h2>
+  <p>Kvällsöppet är ovanligt. Bara <strong>{sent.length} butiker</strong> har öppet till kl. 20 eller senare minst en vardag. De flesta stänger kl. 17 eller 18, så den som arbetar dagtid hinner sällan till en second hand-butik en vanlig vardag. {sentKommuner.length > 0 && <>Butiker med kvällsöppet finns i {sentKommuner.map((k, i) => <>{i > 0 && (i === sentKommuner.length - 1 ? " och " : ", ")}<a href={k.href}>{k.namn}</a></>)}.</>}</p>
+
+  <h2 id="tips">Tips innan du åker</h2>
+  <ul>
+    <li><strong>Undvik måndagar.</strong> {pct(mondagStangt, nT)} procent av butikerna har stängt.</li>
+    <li><strong>Kom tidigt på lördagen.</strong> Lördagen är kort, och många stänger redan kl. {kl(D.sat.stang)}.</li>
+    <li><strong>Planera söndagen.</strong> Bara var {Math.round(100 / Math.max(D.sun.p, 1))}:e butik har öppet. Se kommunsidans lista över söndagsöppna butiker.</li>
+    <li><strong>Kontrollera helgdagar och sommar.</strong> Tiderna här är ordinarie veckotider. Kring jul, nyår, påsk och midsommar ändrar många butiker sina tider, och vissa har sommarstängt.</li>
+    <li><strong>Ska du lämna saker?</strong> Gåvomottagningen kan ha andra tider än butiken. Läs <a href="/guider/skanka-mobler-och-saker/">vad butikerna tar emot</a>.</li>
+  </ul>
+
+  <h2 id="metod">Så har vi räknat</h2>
+  <p>Öppettiderna kommer från organisationernas egna butikslistor och från OpenStreetMap, där frivilliga lägger in tider. Vi räknar bara med butiker där källan anger ordinarie tider för minst en dag. Butiker som bara skriver "enligt överenskommelse" eller saknar tider är inte med. Med "vanligast öppnar" menar vi den tid som flest butiker anger. "Typisk öppettid" och "typiskt timmar per vecka" är medianen, alltså värdet i mitten när alla butiker sorteras. En butik med lunchstängt räknas som öppen från första öppning till sista stängning, men timmarna räknas utan pausen.</p>
+  <p>Små loppisar som bara har öppet några helger om året finns sällan i källorna, så siffrorna beskriver främst de permanenta butikerna. Ser du en tid som är fel kan du rätta den i OpenStreetMap eller hos organisationen. Läs mer under <a href="/om/">källor och metod</a>.</p>
+  <Faq fragor={fragor} />
+</Guide>

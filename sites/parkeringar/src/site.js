@@ -21,7 +21,10 @@ export const TYP = {
 const taxaRader = (t) => (t ? t.split(/\s*[|;]\s*/).map((x) => x.replace(/:\s*$/, "").trim()).filter((x) => x && x.length > 2) : []);
 export const krTim = (v) => (v === 0 ? "gratis" : `${String(v).replace(".", ",")} kr/tim`);
 // OSM anger maxtid på engelska ("2 hours", "7 days").
-const maxTid = (s) => String(s).replace(/(\d+)\s*hours?/i, (m, n) => `${n} ${n === "1" ? "timme" : "timmar"}`).replace(/(\d+)\s*days?/i, (m, n) => `${n} ${n === "1" ? "dygn" : "dygn"}`).replace(/(\d+)\s*min(utes)?/i, "$1 minuter");
+const maxTid = (s) => String(s)
+  .replace(/(\d+)\s*(?:hours?|timmar|timme|tim)\b/gi, (m, n) => `${n} ${n === "1" ? "timme" : "timmar"}`)
+  .replace(/(\d+)\s*days?\b/gi, "$1 dygn").replace(/(\d+)\s*weeks?\b/gi, (m, n) => `${n} ${n === "1" ? "vecka" : "veckor"}`)
+  .replace(/(\d+)\s*min(?:utes)?\b/gi, "$1 minuter");
 // Ordinarie timpris för bil: första timtaxan i taxetexten (operatörerna listar ordinarie taxa först). MC-, boende- och abonnemangstaxor räknas inte,
 // annars blir "4 kr/tim" (MC) parkeringens pris. Hittas inget timpris används källans värde.
 const ANNAN_TAXA = /^(?:besöksparkering\s+)?(?:mc|motorcykel|motorvärmar\w*|boende|boendeparkering|hyresgäst\w*|abonnemang|månadskort)\b/i;
@@ -45,18 +48,42 @@ export function timpris(taxa, kalla) {
 export const arGratis =(e) => e.extra?.avgift === false || e.extra?.taxa_per_timme === 0;
 
 import { flygplatsFor } from "./flygplatser.js";
+import { harEgenSida, kommunHarSida, platser } from "./grind.js";
+import { readFileSync, existsSync } from "node:fs";
+
+const lasJson = (fil, reserv) => (existsSync(fil) ? JSON.parse(readFileSync(fil, "utf8")) : reserv);
+/** Verifierade uppgifter (operatörens eller kommunens egen sida, med källa och datum) för de mest sökta anläggningarna. */
+export const VERIFIERADE = new Map(lasJson("data/verifierade-anlaggningar.json", []).map((v) => [v.id, v]));
+/** Kommunernas gatutaxor, boendeparkering, betalsätt och felparkeringsavgifter (kommunens egen webbplats, med datum). */
+export const KOMMUNTAXOR = lasJson("data/kommuntaxor.json", {});
+// Operatörernas egna flaggor (besöksparkering, endast uthyrning, inomhus, uppvärmt) från parkering-lek:s cache.
+// Saknas cachen blir flaggorna tomma och grinden bedömer bara på övriga uppgifter.
+const OP = new Map();
+for (const op of ["aimo", "apcoa", "stockholmparkering"]) {
+  for (const p of lasJson(`../parkering-lek/data/raw/operator-${op}.json`, { poster: [] }).poster ?? []) {
+    if (p.webb) OP.set(p.webb, { endast_uthyrning: p.endast_uthyrning ?? null, kategori: p.kategori ?? null, inomhus: p.inomhus ?? null, uppvarmd: p.uppvarmd ?? null, besoksparkering: p.besoksparkering ?? null });
+  }
+}
+
 export const KAT = laddaKatalog("../parkering-lek/data/parkeringar.json", {
-  harEgenSida: (e) => !!(e.extra?.taxa || e.oppettider || (e.gatuadress && e.extra?.kapacitet)),
-  forbered: (e) => {
-    const x0 = e.extra ?? {};
-    const x = x0.taxa ? { ...x0, taxa_per_timme: timpris(x0.taxa, x0.taxa_per_timme) } : x0;
+  harEgenSida,
+  forbered: (e0) => {
+    const v = VERIFIERADE.get(e0.id) ?? null;
+    const e = { ...e0, verifierad: v };
+    const x1 = { ...(e.extra ?? {}), op: (e.webb && OP.get(e.webb)) || null };
+    const x0 = v ? { ...x1, kapacitet: v.platser ?? x1.kapacitet, hojdbegransning: v.hojd_m ?? x1.hojdbegransning, laddplatser: v.laddplatser ?? x1.laddplatser, handikapplatser: v.hcp ?? x1.handikapplatser } : x1;
+    if (!x0.kapacitet) x0.kapacitet = null;
+    // Stockholm Parkerings sidor ger ibland samma tal för laddplatser som för alla platser (ex. Arenagaraget 761/761).
+    // Det går inte att skilja från "alla platser förberedda", så talet visas inte om det inte är verifierat.
+    if (!v?.laddplatser && x0.laddplatser && x0.kapacitet && x0.laddplatser >= x0.kapacitet && x0.kapacitet >= 20) x0.laddplatser = null;
+    const x = v?.timpris != null ? { ...x0, taxa_per_timme: v.timpris, avgift: true } : x0.taxa ? { ...x0, taxa_per_timme: timpris(x0.taxa, x0.taxa_per_timme) } : x0;
     const kedja = e.kedja in KEDJA ? KEDJA[e.kedja] : e.kedja;
-    const taxa = taxaRader(x.taxa);
+    const taxa = v?.taxa?.length ? v.taxa : taxaRader(x.taxa);
     return {
       ...e,
       extra: x,
       kedja,
-      listaRad: [TYP[e.typ] ?? "Parkering", x.taxa_per_timme != null ? krTim(x.taxa_per_timme) : x.avgift === false ? "gratis" : null, x.kapacitet && `${x.kapacitet} platser`, x.laddplatser && "laddning"].filter(Boolean).join(" · "),
+      listaRad: [TYP[e.typ] ?? "Parkering", x.taxa_per_timme != null ? krTim(x.taxa_per_timme) : x.avgift === false ? "gratis" : null, x.kapacitet && `${x.kapacitet} platser`, x.max_tid && `max ${maxTid(x.max_tid)}`, x.laddplatser && "laddning"].filter(Boolean).join(" · "),
       fakta: [
         { namn: "Typ", varde: TYP[e.typ] ?? "Parkering" },
         x.avgift === false && { namn: "Avgift", varde: "Avgiftsfri enligt källan – kontrollera skyltningen" },
@@ -76,6 +103,19 @@ export const KAT = laddaKatalog("../parkering-lek/data/parkeringar.json", {
   },
 });
 
+// Kommungrinden (src/grind.js). Kommuner utan egen sida visas som sektion på länssidan: /lan/<län>/#<kommun>,
+// och deras parkeringar som rader där med ankaret <kommun>-<parkering>.
+for (const k of KAT.kommuner) {
+  k.harSida = kommunHarSida(k, !!KOMMUNTAXOR[k.namn]);
+  k.taxa = KOMMUNTAXOR[k.namn] ?? null;
+  const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+  if (k.harSida) { for (const e of k.enheter) e.ankare = e.slug; continue; }
+  k.href = `${lan.href}#${k.slug}`;
+  for (const e of k.enheter) { e.egenSida = false; e.ankare = `${k.slug}-${e.slug}`; e.href = `${lan.href}#${e.ankare}`; }
+}
+export const MED_SIDA = KAT.kommuner.filter((k) => k.harSida);
+export { maxTid, platser };
+
 export const SITE = {
   tema: "trafik",
   tagline: "Parkering i hela Sverige",
@@ -87,8 +127,9 @@ export const SITE = {
   beskrivning: "Parkeringar i hela Sverige med pris per timme, öppettider, antal platser och laddplatser – parkeringshus, garage, pendlarparkeringar och gratis parkering. Uppdateras varje natt.",
   organisation: "parkeringar.nu",
   farg: "#1659a8",
-  meny: [{"namn":"Parkeringshus","href":"/parkeringshus/"},{"namn":"Gratis parkering","href":"/gratis-parkering/"},{"namn":"Pendlarparkering","href":"/pendlarparkering/"},{"namn":"Flygplats","href":"/flygplatsparkering/"},{"namn":"Om","href":"/om/"}],
+  meny: [{ namn: "Parkeringshus", href: "/parkeringshus/" }, { namn: "Gratis parkering", href: "/gratis-parkering/" }, { namn: "Pendlarparkering", href: "/pendlarparkering/" }, { namn: "Flygplats", href: "/flygplatsparkering/" }, { namn: "Guider", href: "/guider/" }, { namn: "Om", href: "/om/" }],
   sidfot: [
+    { namn: "Guider om parkering", href: "/guider/" },
     { namn: "Om parkeringar.nu", href: "/om/" },
     { namn: "Källor", href: "/om/#kallor" },
     { namn: "Integritet och cookies", href: "/integritet/" },

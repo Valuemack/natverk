@@ -1,0 +1,159 @@
+---
+// Lång guide: parkeringstillstånd för rörelsehindrade. Källor: trafikförordningen (1998:1276) 13 kap. 8 §, Transportstyrelsen,
+// Stockholms stad, Göteborgs Stad, Malmö stad, Karlstads kommun, EU:s Your Europe och regeringens dir. 2025:88. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "vem", rubrik: "Vem kan få parkeringstillstånd?" },
+  { id: "ansoka", rubrik: "Så ansöker du" },
+  { id: "tider", rubrik: "Var och hur länge du får parkera" },
+  { id: "inte", rubrik: "Där tillståndet inte gäller" },
+  { id: "avgift", rubrik: "Måste man betala parkeringsavgift?" },
+  { id: "platser", rubrik: "Platserna för rörelsehindrade och avgiften för att stå där" },
+  { id: "anvanda", rubrik: "Så använder du tillståndet rätt" },
+  { id: "utomlands", rubrik: "Tillståndet utomlands" },
+];
+
+const fragor = [
+  { fraga: "Hur länge får man parkera med parkeringstillstånd för rörelsehindrade?", svar: "Enligt 13 kap. 8 § trafikförordningen får du parkera i högst 3 timmar där parkering är förbjuden eller tillåten kortare tid än 3 timmar. Där parkering är tillåten minst 3 men under 24 timmar får du stå i högst 24 timmar. På en gågata gäller högst 3 timmar, och på en plats reserverad för rörelsehindrade gäller den tid som skyltas där." },
+  { fraga: "Får man parkera gratis med parkeringstillstånd för rörelsehindrade?", svar: "Det beror på kommunen. Grundregeln enligt Transportstyrelsen är att avgift ska betalas, men vissa kommuner tar inte ut den. I Göteborg och i Värmlands kommuner är kommunens avgiftsplatser gratis med tillstånd, i Stockholm finns en reducerad avgift på 250 kronor per år och i Malmö betalar du som alla andra om du inte har fått avgiftsbefrielse." },
+  { fraga: "Hur länge gäller ett parkeringstillstånd för rörelsehindrade?", svar: "Tillståndet gäller för en bestämd tid, högst fem år, enligt 13 kap. 8 § trafikförordningen. Kommunen bestämmer tiden. Karlstad skriver till exempel att tillståndet gäller lika länge som läkarintyget, men högst fem år." },
+  { fraga: "Kostar det något att söka parkeringstillstånd för rörelsehindrade?", svar: "Nej. Transportstyrelsen anger att kommunerna inte får ta ut någon avgift för att handlägga ansökan. Däremot kan kommunen ta betalt för annat, till exempel tar Malmö 250 kronor för en ansökan om avgiftsbefrielse och Stockholm 250 kronor per år för den reducerade parkeringsavgiften." },
+  { fraga: "Vad kostar det att parkera på en plats för rörelsehindrade utan tillstånd?", svar: "Det är en felparkeringsavgift som kommunen bestämmer. I Stockholm och Malmö kostar det 1 300 kronor, som är det högsta belopp en kommun får ta ut. I Göteborg kostar det 1 100 kronor, stadens högsta nivå." },
+  { fraga: "Gäller det svenska parkeringstillståndet utomlands?", svar: "Det svenska tillståndet följer EU:s modell och erkänns i EU-länderna. Du får då de rättigheter som gäller i landet du besöker, inte de svenska. Kontrollera reglerna innan du reser, till exempel via EU:s webbplats Your Europe eller landets ambassad." },
+];
+---
+<Guide site={SITE} titel="Parkeringstillstånd för rörelsehindrade – regler"
+  beskrivning="Vem får parkeringstillstånd för rörelsehindrade, hur du ansöker, 3- och 24-timmarsreglerna, avgifter i Stockholm, Göteborg och Malmö och utomlands."
+  h1="Parkeringstillstånd för rörelsehindrade – vem får det och vad gäller?"
+  svar={`Parkeringstillstånd för rörelsehindrade kan du få om du har en varaktig funktionsnedsättning som gör att du har betydande svårigheter att förflytta dig, antingen som förare eller som passagerare som behöver förarens hjälp. Du söker hos kommunen där du är folkbokförd, och tillståndet gäller i hela landet i högst fem år. Det ger rätt att stå <strong>3 timmar</strong> där parkering annars är förbjuden och <strong>24 timmar</strong> där parkering är tillåten minst 3 timmar. Om du måste betala avgift bestämmer varje kommun.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Parkeringstillstånd", href: "/guider/parkeringstillstand-rorelsehindrade/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Gata eller privat mark" },
+    { namn: "Överklaga en parkeringsbot", href: "/guider/overklaga-parkeringsbot/", text: "Om du fått lapp trots tillstånd" },
+    { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/", text: "Förbuden i trafikförordningen" },
+    { namn: "Parkera och ladda elbil", href: "/guider/ladda-elbil-parkering/", text: "Regler för laddplatser" },
+    { namn: "Parkeringshus", href: "/parkeringshus/", text: "Garage och p-hus i hela landet" },
+  ]}
+  kallor={[
+    { namn: "Trafikförordning (1998:1276), riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "13 kap. 8–9 §§: vem som får tillstånd, kommunen beslutar, högst fem år, 3 och 24 timmar, gågata, återkallelse; 3 kap. 54 §: platser för viss grupp", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Parkeringstillstånd för rörelsehindrade", url: "https://www.transportstyrelsen.se/sv/vagtrafik/trafikregler-och-vagmarken/trafikregler/parkeringstillstand-for-rorelsehindrade/", text: "bedömning för passagerare, ingen handläggningsavgift, placering, avgifter varierar, kort stopp för att hjälpa ut (uppdaterad 12 juni 2026)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkering för rörelsehindrad", url: "https://parkering.stockholm/parkering-for-rorelsehindrad/", text: "ansökan, personligt tillstånd, hologram, reducerad avgift 250 kronor per år", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "1 300 kronor på plats för rörelsehindrade", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Regler för att parkera med parkeringstillstånd för rörelsehindrade", url: "https://goteborg.se/wps/portal/start/parkeringstillstand-och-parkeringsplatser/parkeringstillstand/parkeringstillstand-for-rorelsehindrade/regler-for-att-parkera?uri=gbglnk:20120904-173210", text: "gratis på stadens avgiftsplatser, platser där tillståndet inte gäller, stöld, missbruk", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Felparkering", url: "https://goteborg.se/wps/portal/start/parkeringstillstand-och-parkeringsplatser/parkeringsregler/felparkering?uri=gbglnk:gbg.page.761a197c-6cd0-486d-977d-98744016cb75", text: "1 100 kronor på plats för rörelsehindrade", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkering för rörelsehindrade", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkering-for-rorelsehindrade.html", text: "läkarintyg, foto, förare eller passagerare, avgiftsbefrielse 250 kronor (uppdaterad 25 juni 2026)", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkeringsanmärkning", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html", text: "1 300 kronor på plats reserverad för rörelsehindrade", datum: "2026-11-27" },
+    { namn: "Karlstads kommun – Parkeringstillstånd", url: "https://karlstad.se/trafik-och-gator/parkering/parkeringstillstand", text: "gratis tillstånd, avgiftsbefrielse i Värmland, avgift på kvartersmark från 10 juni 2024 (uppdaterad 6 augusti 2026)", datum: "2026-11-27" },
+    { namn: "Your Europe (EU) – Parkeringstillstånd för personer med funktionsnedsättning", url: "https://europa.eu/youreurope/citizens/travel/transport-disability/parking-card-disabilities-people/index_sv.htm", text: "erkänns i EU-länderna, värdlandets regler gäller", datum: "2026-11-27" },
+    { namn: "Regeringen – Kommittédirektiv 2025:88", url: "https://regeringen.se/rattsliga-dokument/kommittedirektiv/2025/09/dir.-202588", text: "genomförande av direktiv (EU) 2024/2841 om EU-parkeringstillstånd", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="vem">Vem kan få parkeringstillstånd?</h2>
+  <p>Reglerna står i 13 kap. 8 § trafikförordningen. Tillståndet får ges till den som har en varaktig funktionsnedsättning som gör att personen har betydande svårigheter att förflytta sig på egen hand. Det finns två sorter:</p>
+  <ul>
+    <li><strong>Förartillstånd</strong> för dig som kör bilen själv.</li>
+    <li><strong>Passagerartillstånd</strong> för dig som inte kör, men som regelbundet behöver förarens hjälp utanför fordonet.</li>
+  </ul>
+  <p>Du kan inte ha båda. För passagerare tittar kommunen enligt Transportstyrelsen särskilt på om du kan vänta ensam på resmålet medan föraren parkerar. Det räcker alltså inte att du har svårt att gå, om du ändå kan vänta på egen hand medan föraren parkerar.</p>
+  <p>Det är hur du kan förflytta dig som bedöms. Därför vill kommunerna veta hur långt du kan gå och hur länge nedsättningen väntas vara. Kravet på att den ska vara varaktig gör att en kortvarig skada inte räcker.</p>
+
+  <h2 id="ansoka">Så ansöker du</h2>
+  <p>Du söker hos kommunen där du är folkbokförd. Är du inte folkbokförd i Sverige söker du där du vistas. Transportstyrelsen anger att kommunen inte får ta ut någon avgift för att handlägga ansökan.</p>
+  <p>Kommunerna har egna blanketter. Malmö har en e-tjänst, Karlstad både e-tjänst och pappersblankett, och Stockholm en pappersblankett som skickas till Kontaktcenter Stockholm. Malmö beskriver tydligt vad som krävs:</p>
+  <ul>
+    <li><strong>Läkarintyg</strong> på svenska som beskriver funktionsnedsättningen i detalj. Det kan skrivas av en behandlande läkare eller fysioterapeut.</li>
+    <li>Intyget ska ange <strong>hur många meter du kan gå</strong>, med och utan hjälpmedel.</li>
+    <li>Det ska ange <strong>hur länge nedsättningen väntas vara</strong>.</li>
+    <li>För passagerare ska det framgå om och hur du behöver hjälp utanför bilen.</li>
+    <li>Ett <strong>foto</strong> i passfotoformat och din <strong>namnteckning</strong>.</li>
+  </ul>
+  <p>Tillståndet gäller för en bestämd tid, högst fem år. Kommunen kan återkalla det om förutsättningarna inte längre finns eller om det inte används som det ska. När tiden går ut måste du söka på nytt.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="tider">Var och hur länge du får parkera</h2>
+  <p>Tillståndet gäller i hela landet och ger fyra rättigheter enligt trafikförordningen:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Där du står</th><th>Med tillstånd får du parkera</th></tr></thead>
+    <tbody>
+      <tr><td>Där parkering är förbjuden</td><td>Högst 3 timmar</td></tr>
+      <tr><td>Där parkering är tillåten kortare tid än 3 timmar, till exempel 1 eller 2 timmar</td><td>Högst 3 timmar</td></tr>
+      <tr><td>Där parkering är tillåten minst 3 men under 24 timmar</td><td>Högst 24 timmar</td></tr>
+      <tr><td>På plats reserverad för rörelsehindrade med tillstånd</td><td>Den längsta tid som gäller för platsen</td></tr>
+      <tr><td>På gågata</td><td>Högst 3 timmar</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: 13 kap. 8 § trafikförordningen (1998:1276).</p>
+  <p>Ett exempel: på en gata med skylten 2 timmar får du stå 3 timmar. På en plats där 4 timmar gäller får du stå ett helt dygn. Där parkering är tillåten utan tidsgräns ändrar tillståndet inget. På gatumark gäller då de vanliga reglerna, som 24-timmarsregeln på vardagar. Läs mer i guiden <a href="/guider/parkera-pa-gatan/">Parkera på gatan natt och helg</a>.</p>
+  <p>Kommunen kan bestämma en egen tidsgräns för platserna för rörelsehindrade. Karlstad skriver att de gäller i 24 timmar om inte en tilläggstavla säger något annat. Läs alltid skylten vid platsen.</p>
+
+  <h2 id="inte">Där tillståndet inte gäller</h2>
+  <p>Tillståndet ger inte rätt att parkera på en plats som är reserverad för ett visst ändamål eller ett visst slags fordon. Malmö påpekar också att det inte gäller där det är förbjudet att stanna. Göteborg och Malmö räknar upp platser där du inte får stå med tillståndet:</p>
+  <ul>
+    <li>Där det är förbjudet att stanna, till exempel nära övergångsställen och i korsningar</li>
+    <li>Lastplatser, taxiplatser och vändplatser</li>
+    <li>Platser för bussar eller andra fordonsslag, och platser för konsulat</li>
+    <li>Huvudled, om inte skyltar säger något annat</li>
+    <li>Gångfartsområden utan P-skylt</li>
+    <li>Kombiplatser, om du inte också har boendeparkeringstillstånd (Göteborg)</li>
+  </ul>
+  <p>På <strong>privat mark</strong>, som köpcentrum och parkeringshus, gäller tillståndet bara om markägaren tillåter det. Där är det bolagets skyltar och villkor som styr. Göteborg nämner särskilt att tillståndet inte gäller i parkeringshus. Privata platser känns ofta igen på en skylt med bolagets namn och telefonnummer.</p>
+  <p>Den som skjutsar en rörelsehindrad person får alltid stanna en kort stund för att hjälpa personen i eller ur bilen, även där parkering är förbjuden, om det görs med särskild försiktighet. Det kräver inget tillstånd.</p>
+
+  <h2 id="avgift">Måste man betala parkeringsavgift?</h2>
+  <p>Grundregeln enligt Transportstyrelsen är att avgift ska betalas, även på platser för rörelsehindrade. Varje kommunfullmäktige bestämmer, och skillnaderna är stora:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Avgift på kommunens gatuplatser med tillstånd</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm</td><td>Du betalar enligt skyltarna. Du kan i stället söka reducerad avgift: 250 kronor per år, sedan ingen avgift på gatumark i Stockholm, även på laddplatser (laddningen betalas separat). Gäller registrerade registreringsnummer.</td></tr>
+      <tr><td>Göteborg</td><td>Gratis på stadens avgiftsbelagda platser.</td></tr>
+      <tr><td>Malmö</td><td>Samma avgift som alla andra. Förare som på grund av funktionsnedsättningen inte kan betala med kort eller mobil kan söka avgiftsbefrielse för en begränsad tid. Ansökan kostar 250 kronor. Ekonomin har ingen betydelse.</td></tr>
+      <tr><td>Karlstad och övriga Värmland</td><td>Gratis så länge tillståndet syns i vindrutan. Karlstads Parkering tar sedan 10 juni 2024 ändå betalt på sina avgiftsplatser på kvartersmark, till exempel Sundstabadet och Rosenbad.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Stockholms stad, Göteborgs Stad, Malmö stad och Karlstads kommun.</p>
+  <p>Ska du till en annan kommun, kontrollera dess regler innan. Avgiftsfriheten i din hemkommun följer inte med. Och den gäller aldrig automatiskt i privata parkeringshus.</p>
+
+  <h2 id="platser">Platserna för rörelsehindrade och avgiften för att stå där</h2>
+  <p>Platser reserverade för rörelsehindrade med tillstånd beslutas genom lokala trafikföreskrifter. Andra fordon får där bara stanna för att låta någon stiga i eller ur. Kommunerna visar platserna på sina parkeringskartor, och Stockholm har en karta över alla stadens platser.</p>
+  <p>Står du där utan tillstånd blir det en av de dyraste felparkeringarna:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Felparkeringsavgift</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Malmö</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Göteborg</td><td class="num">1 100 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p>1 300 kronor är det högsta belopp en kommun får bestämma enligt förordningen om felparkeringsavgift. På privat mark får en kontrollavgift inte vara högre än kommunens felparkeringsavgift för samma sak. Mer om skillnaden finns i guiden <a href="/guider/parkeringsbot-eller-kontrollavgift/">Parkeringsbot eller kontrollavgift?</a></p>
+  <p>Den som behöver en fast plats vid bostaden eller jobbet kan i vissa kommuner söka en egen plats. Stockholm har en särskild ansökan för det.</p>
+
+  <h2 id="anvanda">Så använder du tillståndet rätt</h2>
+  <ul>
+    <li><strong>Lägg det synligt.</strong> Tillståndet ska ligga i den främre delen av fordonet med framsidan utåt, så att det syns och går att läsa utifrån. I Göteborg ska giltighetstiden synas.</li>
+    <li><strong>Bara originalet.</strong> Stockholm kräver originalet och att hologrammet på framsidan är oskadat. Det gäller även på motorcykel och moped klass 1.</li>
+    <li><strong>Det är personligt.</strong> Ett förartillstånd får bara användas när du själv kör. Ett passagerartillstånd bara när du åker med och behöver förarens hjälp ut. Det spelar ingen roll vems bilen är.</li>
+    <li><strong>Lämna det inte i bilen.</strong> Göteborg påpekar att tillståndet är stöldbegärligt. Ta med det när bilen inte står parkerad med det.</li>
+    <li><strong>Stöld eller förlust.</strong> Polisanmäl och skicka en kopia av anmälan till kommunen, som spärrar det gamla kortet och ger dig ett nytt.</li>
+  </ul>
+  <p><strong>Missbruk.</strong> Används tillståndet av någon annan, eller när du inte själv är med, kan kommunen återkalla det. Göteborg skriver att bilen i vissa fall också kan flyttas. Bilen kan dessutom få en felparkeringsavgift, eftersom tillståndet då inte ger någon rätt att stå där.</p>
+
+  <h2 id="utomlands">Tillståndet utomlands</h2>
+  <p>Det svenska tillståndet bygger på en rekommendation från EU:s ministerråd från 1998 och har samma utformning som i andra EU-länder. Enligt EU:s webbplats Your Europe erkänns det i alla EU-länder. Du får då de rättigheter som gäller i landet du besöker. Tiderna och avgiftsreglerna kan vara helt andra än i Sverige.</p>
+  <ul>
+    <li>Kontrollera reglerna innan du reser. Your Europe listar en kontaktmyndighet per land. För Norge, Island och Liechtenstein saknas uppgifter där.</li>
+    <li>Stockholm råder dig att kontakta handikapporganisationerna eller landets ambassad. Göteborg hänvisar till ambassaden.</li>
+    <li>Du kan lägga ett blad med text på landets språk bredvid tillståndet.</li>
+  </ul>
+  <p>Hur utländska tillstånd gäller i Sverige får Transportstyrelsen bestämma i föreskrifter enligt 13 kap. 9 § trafikförordningen. Malmö godtar till exempel giltiga utländska tillstånd när du söker avgiftsbefrielse.</p>
+  <p>Reglerna håller på att ändras. EU antog i oktober 2024 ett direktiv, (EU) 2024/2841, om ett gemensamt EU-parkeringstillstånd för personer med funktionsnedsättning. Regeringen gav i september 2025 en särskild utredare i uppdrag att föreslå hur det ska genomföras i Sverige. Vi har inte hittat något beslut om när de nya reglerna börjar gälla i Sverige.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

@@ -1,0 +1,138 @@
+---
+// Lång guide: parkera och ladda elbil. Källor: trafikförordningen (1998:1276) 3 kap. 54 § och 10 kap., vägmärkesförordningen (2007:90)
+// T24 och H27, Transportstyrelsen, felparkeringstaxor i Kalmar och Ystad, Uppsala kommun, laddoperatörernas prissidor
+// (Recharge, Mer, Vattenfall InCharge) och Aimo Park. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "regeln", rubrik: "Vem får stå på en laddplats?" },
+  { id: "maste-ladda", rubrik: "Måste bilen ladda?" },
+  { id: "boter", rubrik: "Vad kostar det att stå fel?" },
+  { id: "priser", rubrik: "Vad laddningen kostar" },
+  { id: "blockering", rubrik: "Blockeringsavgift: när bilen är full" },
+  { id: "parkeringsavgift", rubrik: "Parkeringsavgift ovanpå laddningen" },
+  { id: "parkeringshus", rubrik: "Ladda i parkeringshus" },
+];
+
+const fragor = [
+  { fraga: "Får en laddhybrid stå på en laddplats?", svar: "Ja. Enligt trafikförordningen får endast fordon som kan laddas externt med elektrisk energi för framdrivningen parkera eller stanna på en laddplats. En laddhybrid kan laddas med sladd och uppfyller därför kravet. En vanlig hybrid som inte kan laddas externt får bara stanna för på- och avstigning." },
+  { fraga: "Måste elbilen ladda för att få stå på laddplatsen?", svar: "Inte enligt den nationella regeln, som bara kräver att bilen kan laddas externt. Men kommunen får besluta om tidsbegränsning, avgift eller andra villkor för parkeringen. Står det på skyltningen att bilen ska ladda, eller anges en längsta tid, gäller det." },
+  { fraga: "Vad kostar det att parkera en bensinbil på en laddplats?", svar: "Det är kommunen som bestämmer beloppet. Ystad tar 900 kr och Kalmar 800 kr för att stanna eller parkera på en laddplats för annat än på- eller avstigning. På privat mark gäller i stället parkeringsbolagets kontrollavgift." },
+  { fraga: "Betalar man både för parkering och laddning?", svar: "Ofta ja. Laddningen betalas till laddoperatören, oftast per kilowattimme, och parkeringen till kommunen eller parkeringsbolaget. Uppsala kommun skriver till exempel att du betalar både parkeringsavgift och laddavgift på kommunens parkeringar med laddstationer." },
+  { fraga: "Vad är en blockeringsavgift?", svar: "En avgift per minut som tas ut när bilen står kvar vid laddaren för länge. Vattenfall InCharge tar 5 kr per minut på sina snabbladdare efter 1,5 timme, i högst tre timmar, alltså högst 900 kr. Syftet är att frigöra laddaren åt nästa bil." },
+];
+---
+<Guide site={SITE} titel="Parkera och ladda elbil – regler och avgifter"
+  beskrivning="Parkera och ladda elbil: vem som får stå på en laddplats, om bilen måste ladda, böter, pris per kWh, blockeringsavgift och laddning i parkeringshus."
+  h1="Parkera och ladda elbil: laddplatsens regler, priser och avgifter"
+  svar={`Parkera och ladda elbil får du på en laddplats om bilen <strong>kan laddas externt</strong>, alltså en elbil eller en laddhybrid. Andra bilar får bara stanna för på- och avstigning, och böterna är 800–900 kr i de kommuner vi kontrollerat. Laddningen kostar <strong>3,40–7,70 kr per kWh</strong> i de prislistor vi kontrollerat, och parkeringsavgiften kommer ofta ovanpå. Står bilen kvar när den är full kan en blockeringsavgift per minut tillkomma.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Ladda elbil", href: "/guider/ladda-elbil-parkering/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkering med laddning", href: "/laddning/", text: "Alla parkeringar med laddplatser" },
+    { namn: "Parkeringshus", href: "/parkeringshus/", text: "Garage med pris och öppettider" },
+    { namn: "Parkeringsappar jämförda", href: "/guider/parkeringsappar/", text: "Avgifter och var de gäller" },
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Gata mot privat mark" },
+    { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/", text: "Förbuden i trafikförordningen" },
+  ]}
+  kallor={[
+    { namn: "Trafikförordning (1998:1276)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "3 kap. 54 § fjärde stycket om laddplats, 10 kap. 1 § lokala trafikföreskrifter, 10 kap. 9 a §", datum: "2026-11-27" },
+    { namn: "Vägmärkesförordning (2007:90)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/vagmarkesforordning-200790_sfs-2007-90/", text: "tilläggstavla T24 Laddplats och märke H27 Laddstation", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – T24 Laddplats", url: "https://www.transportstyrelsen.se/sv/vagtrafik/trafikregler-och-vagmarken/vagmarken/tillaggstavlor/laddplats", text: "tavlans betydelse", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Vägledning förenklar för laddplatser vid flerbostadshus (2024)", url: "https://www.transportstyrelsen.se/sv/om-oss/pressrum/nyhetsarkiv/2024/vagledning-forenklar-for-laddplatser-vid-flerbostadshus/", text: "fordon på laddplats är parkerat, villkor kan beslutas", datum: "2026-11-27" },
+    { namn: "Ystads kommun – Felparkeringsavgifter (PDF)", url: "https://ystad.se/download/18.2f1fe4c418f0f7b412b10898/1714371721502/felparkeringsavgifter.pdf", text: "900 kr enligt 3 kap. 54 §", datum: "2026-11-27" },
+    { namn: "Kalmar kommun – Felparkeringsavgiftens storlek (PDF)", url: "https://kalmar.se/download/18.1c8e963b193dedcadf149a4e/1737021708059/Felparkeringsavgiftens%20storlek.pdf", text: "800 kr enligt 3 kap. 54 §", datum: "2026-11-27" },
+    { namn: "Uppsala kommun – Betala parkering och laddning", url: "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/betala-parkering-och-laddning/", text: "parkeringsavgift och laddavgift, betalning med app", datum: "2026-11-27" },
+    { namn: "Recharge – Priser", url: "https://rechargeinfra.com/sv/priser/", text: "5,99 och 6,49 kr/kWh, Move 79 kr/mån", datum: "2026-11-27" },
+    { namn: "Mer – Priser", url: "https://se.mer.eco/priser/", text: "tidspriser, Mer Energy 79 kr/mån, partnerpriser", datum: "2026-11-27" },
+    { namn: "Vattenfall InCharge – Nu inför vi trängselavgift på våra snabbladdare", url: "https://incharge.vattenfall.se/kunskapshubb/artiklar/minuttariffen-slopas", text: "5 kr/min efter 1,5 timme, högst 900 kr", datum: "2026-11-27" },
+    { namn: "Aimo Park – Citygaraget", url: "https://www.aimopark.se/en/cities/stockholm/citygaraget/", text: "korttidstaxa, kWh-pris i appen", datum: "2026-11-27" },
+    { namn: "IONITY Support – Vad kostar det att ladda?", url: "https://support.ionity.eu/faqs/how-much-does-it-cost-to-charge-at-ionity", text: "priset varierar med tariff, land och station", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="regeln">Vem får stå på en laddplats?</h2>
+  <p>Regeln finns i trafikförordningen 3 kap. 54 §. På en laddplats får bara fordon som kan laddas externt med el för sin framdrivning parkera eller stanna. Andra fordon får stanna för på- och avstigning, men inte mer.</p>
+  <p>En laddplats märks ut med tilläggstavlan <strong>T24 Laddplats</strong> under parkeringsmärket E19. Vägmärkesförordningen beskriver tavlan på samma sätt: bara fordon som kan laddas externt får parkera. Märket H27 Laddstation är något annat. Det är en vägvisningsskylt som visar var det finns en laddanläggning, och den reglerar inte parkeringen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Fordon</th><th>Får parkera på laddplats?</th></tr></thead>
+    <tbody>
+      <tr><td>Elbil</td><td>Ja</td></tr>
+      <tr><td>Laddhybrid (kan laddas med sladd)</td><td>Ja</td></tr>
+      <tr><td>Elmotorcykel som laddas med sladd</td><td>Ja, enligt ordalydelsen</td></tr>
+      <tr><td>Hybrid utan laddkontakt</td><td>Nej, bara på- och avstigning</td></tr>
+      <tr><td>Bensin-, diesel- eller gasbil</td><td>Nej, bara på- och avstigning</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: trafikförordningen 3 kap. 54 § och vägmärkesförordningen, T24.</p>
+  <p>En kommun får bara förklara en plats som laddplats om det finns utrustning för att ladda där. Det står i trafikförordningen 10 kap. 9 a §. Själva beslutet fattas i en lokal trafikföreskrift.</p>
+
+  <h2 id="maste-ladda">Måste bilen ladda?</h2>
+  <p>Den nationella regeln kräver inte att bilen faktiskt laddar. Det räcker att den kan laddas externt. En fulladdad elbil eller en laddhybrid utan sladd i bryter alltså inte mot 3 kap. 54 §.</p>
+  <p>Men det är sällan hela svaret. Transportstyrelsen skrev 2024 att ett fordon som står på en laddplats är parkerat, och att kommunen kan bestämma om tidsbegränsning, avgift eller andra villkor för parkeringen där. Därför ser skyltningen olika ut från plats till plats. Vanliga tillägg är:</p>
+  <ul>
+    <li>en längsta tid, till exempel några timmar, ibland med krav på p-skiva,</li>
+    <li>avgift enligt områdets taxa, utöver laddningen,</li>
+    <li>en text om att platsen bara får användas under pågående laddning.</li>
+  </ul>
+  <p>Läs alltså alla tilläggstavlor under parkeringsmärket. Det är de som avgör vad som gäller på just den platsen. På privat mark, till exempel i ett köpcentrum eller garage, bestämmer markägaren villkoren och skyltar dem vid infarten eller platsen.</p>
+
+  <h2 id="boter">Vad kostar det att stå fel?</h2>
+  <p>På gatan ger en felparkering en felparkeringsavgift, och beloppet bestäms av varje kommun. Två exempel där kommunen uttryckligen räknar laddplatser under 3 kap. 54 §:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Överträdelse</th><th class="num">Avgift</th></tr></thead>
+    <tbody>
+      <tr><td>Ystad</td><td>Stannat eller parkerat på hållplats, ändamålsplats eller laddplats för annat än på- eller avstigning</td><td class="num">900 kr</td></tr>
+      <tr><td>Kalmar</td><td>Stannat eller parkerat i strid med bland annat 3 kap. 54 §, som omfattar laddplats</td><td class="num">800 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Ystads och Kalmars felparkeringstaxor.</p>
+  <p>Bryter du i stället mot ett villkor på tilläggstavlan, till exempel tidsgränsen eller avgiften, gäller kommunens belopp för den sortens överträdelse. I Ystad är det 500 kr för att stå längre än tillåten tid och 500 kr för att inte ha giltig biljett synlig. I Stockholm är beloppet 900 kr för att inte ha betalat på en avgiftsbelagd plats.</p>
+  <p>På privat mark tar parkeringsbolaget ut en kontrollavgift i stället. Skillnaden förklaras i <a href="/guider/parkeringsbot-eller-kontrollavgift/">guiden om parkeringsbot och kontrollavgift</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="priser">Vad laddningen kostar</h2>
+  <p>Publik laddning prissätts nästan alltid per kilowattimme. Priset beror på laddarens effekt, operatören, ibland tid på dygnet och om du har abonnemang. Så här ser några operatörers publicerade priser ut:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Operatör</th><th>Normalladdning</th><th>Snabbladdning</th><th>Abonnemang</th></tr></thead>
+    <tbody>
+      <tr><td>Recharge</td><td>5,99 kr/kWh (upp till 22 kW)</td><td>6,49 kr/kWh</td><td>Move 79 kr/mån: 4,49 kr/kWh på snabb- och supersnabbladdare</td></tr>
+      <tr><td>Mer, egna snabbladdare</td><td>Anges inte</td><td>Från 3,40 kr/kWh natt (22–07), 4,68 kr lågtrafik, 5,10 kr högtrafik (07–11, 16–20)</td><td>Mer Energy 79 kr/mån: 20 % rabatt</td></tr>
+      <tr><td>Mer-appen hos E.ON</td><td>5,20 kr/kWh</td><td>6,20–6,95 kr/kWh</td><td>–</td></tr>
+      <tr><td>Mer-appen hos Circle K</td><td>6,90 kr/kWh</td><td>7,30–7,70 kr/kWh</td><td>–</td></tr>
+      <tr><td>Vattenfall InCharge</td><td>Visas i appen</td><td>Visas i appen, varierar med tid på dygnet</td><td>–</td></tr>
+      <tr><td>IONITY</td><td>–</td><td>Varierar per station, se appen</td><td>Finns, se appen</td></tr>
+      <tr><td>Tesla Supercharger</td><td>–</td><td>Se Teslas app</td><td>–</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: operatörernas prissidor, hämtade 27 november 2026. Mers tidspriser gäller registrerade kunder. Priserna i Mer-appen hos partner sätts av partnern.</p>
+  <p>Räkneexempel: du laddar 30 kWh på en av Recharges snabbladdare. Utan abonnemang kostar det 30 × 6,49 = 194,70 kr. Med Move kostar det 30 × 4,49 = 134,70 kr, alltså 60 kr mindre. Abonnemanget på 79 kr betalar sig om du snabbladdar mer än cirka 40 kWh i månaden.</p>
+  <p>Recharge skriver att priset styrs av laddarens högsta effekt, inte av hur snabbt din bil kan ladda. En bil som tar emot 50 kW betalar alltså snabbladdarpris även på en laddare för 400 kW.</p>
+  <p>Betalar du laddningen via en parkeringsapp kan appens avgift komma ovanpå. EasyPark tar 15 procent av både parkering och laddning med sitt prisalternativ Small. Se <a href="/guider/parkeringsappar/">jämförelsen av parkeringsappar</a>.</p>
+
+  <h2 id="blockering">Blockeringsavgift: när bilen är full</h2>
+  <p>Allt fler operatörer tar betalt per minut när en bil står kvar vid laddaren för länge. Det kallas blockeringsavgift, trängselavgift eller tomgångsavgift. Syftet är att nästa bil ska komma fram.</p>
+  <p>Vattenfall InCharge är ett tydligt exempel. I en artikel från maj 2024 meddelade bolaget att det tar 5 kr per minut på alla sina snabbladdare när bilen stått där mer än 1,5 timme. Avgiften tas ut i högst tre timmar, så taket är 900 kr. Står du i två timmar betalar du alltså 30 minuter × 5 kr = 150 kr utöver elen.</p>
+  <p>Recharge, Mer och IONITY nämner ingen blockeringsavgift på de prissidor vi läst. Det kan ändras, och avgiften kan finnas i appens villkor. Tesla anger sina avgifter i appen. Kontrollera alltid i appen innan du lämnar bilen, och sätt en påminnelse om när den är klar.</p>
+
+  <h2 id="parkeringsavgift">Parkeringsavgift ovanpå laddningen</h2>
+  <p>Laddning och parkering är två olika köp. Laddoperatören tar betalt för elen, och kommunen eller parkeringsbolaget för platsen. Uppsala kommun skriver till exempel att du på kommunens parkeringar med laddstationer betalar både parkeringsavgift och laddavgift, och att du alltid betalar med app.</p>
+  <p>Det betyder att en laddplats i ett avgiftsområde kan kosta dubbelt. Ett exempel: du ställer bilen två timmar i Stockholms taxa 2 och laddar 20 kWh för 5,99 kr. Parkeringen kostar 62 kr och laddningen 119,80 kr, totalt 181,80 kr. Det finns inget generellt undantag från parkeringsavgiften för elbilar på gatan. Det som gäller står på skylten.</p>
+
+  <h2 id="parkeringshus">Ladda i parkeringshus</h2>
+  <p>I parkeringshus finns oftast normalladdare, som laddar långsammare men passar när bilen står flera timmar. Aimo Park anger 3,7–22 kW och kontakt typ 2 i sina anläggningar. Två saker är bra att veta:</p>
+  <ul>
+    <li><strong>Du betalar parkeringen som vanligt.</strong> I Aimo Parks Citygaraget i Stockholm kostar korttidsparkering 56 kr per påbörjad halvtimme, 65 kr vardagar kl 10–14, och 620 kr per dygn. Elen betalas separat, och kWh-priset visas i Aimo-appen innan laddningen startar.</li>
+    <li><strong>Laddplatserna är få och kan vara upptagna.</strong> Planera för att platsen kan vara tagen, och ha ett alternativ.</li>
+  </ul>
+  <p>Ett räkneexempel för en normalladdare på 11 kW: tre timmar ger högst cirka 33 kWh, om bilen kan ta emot full effekt hela tiden. Med 5,99 kr per kWh kostar det upp till cirka 198 kr för elen, plus garagets taxa.</p>
+  <p>Vill du hyra en plats med laddning i ett garage finns månadsabonnemang. Då betalar du för platsen och elen per kWh vid sidan av.</p>
+  <p>Vi listar parkeringar med laddplatser i hela landet på sidan <a href="/laddning/">parkering med laddning</a>, sorterade efter län. Där ser du också pris och öppettider när operatören anger dem. Bland våra <a href="/parkeringshus/">parkeringshus</a> finns många med laddning.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

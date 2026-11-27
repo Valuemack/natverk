@@ -1,0 +1,22 @@
+---
+// Alla guider, grupperade efter ämne (listan finns i src/guider.js).
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../../site.js";
+import { GUIDEGRUPPER, GUIDER } from "../../guider.js";
+---
+<Layout site={SITE} titel={`Guider om parkering – ${GUIDER.length} guider med regler och priser`}
+  beskrivning={`${GUIDER.length} guider om parkering: p-skiva, parkeringsbot och kontrollavgift, överklagan, boendeparkering, parkeringsappar, laddplatser och parkeringstillstånd.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Guider om parkering</h1>
+  <p class="svar">Guider om parkering: {GUIDER.length} genomgångar av reglerna i trafikförordningen, lagarna om felparkeringsavgift och kontrollavgift, kommunernas taxor och apparnas avgifter. Varje guide anger sina källor och när de kontrollerades.</p>
+  {GUIDEGRUPPER.map((g) => <>
+    <h2>{g.rubrik}</h2>
+    <div class="kort">{g.guider.map((x) => <a href={`/guider/${x.slug}/`}><strong>{x.namn}</strong><small>{x.text}</small></a>)}</div>
+  </>)}
+  <h2>Hitta parkering</h2>
+  <div class="kort">
+    <a href="/gratis-parkering/"><strong>Gratis parkering</strong><small>Avgiftsfria parkeringar per län och kommun</small></a>
+    <a href="/parkeringshus/"><strong>Parkeringshus och garage</strong><small>Pris, höjd och laddplatser</small></a>
+    <a href="/pendlarparkering/"><strong>Pendlarparkering</strong><small>Infartsparkeringar vid stationer</small></a>
+  </div>
+</Layout>

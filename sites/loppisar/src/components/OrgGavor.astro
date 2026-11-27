@@ -1,0 +1,22 @@
+---
+// "Skänka saker": vad organisationerna med butik på orten tar emot, med källa. Bara organisationer med verifierade uppgifter.
+import { ORG, HAMTAT } from "../lib/organisationer.js";
+import { organisationer } from "../lib/butik.js";
+const { enheter, plats, rubrikId = "skanka" } = Astro.props;
+const orgs = organisationer(enheter).filter(([k]) => ORG[k]?.tar || ORG[k]?.andamal);
+---
+{orgs.length > 0 && <>
+  <h2 id={rubrikId}>Skänka till second hand i {plats}</h2>
+  <p>{orgs.length === 1 ? "En organisation" : `${orgs.length} organisationer`} driver välgörenhetsbutiker i {plats}. Så här säger de själva om vad de tar emot och vart pengarna går:</p>
+  {orgs.map(([k, c]) => { const o = ORG[k]; return (
+    <section class="org">
+      <h3>{o.namn} <small>({c} {c === 1 ? "butik" : "butiker"})</small></h3>
+      <p>{o.driver} {o.andamal}</p>
+      {o.tar && <p><strong>Tar emot:</strong> {o.tar}</p>}
+      {o.tarInte && <p><strong>Tar inte emot:</strong> {o.tarInte}</p>}
+      {o.hamtning && <p><strong>Hämtning:</strong> {o.hamtning}</p>}
+      <p class="kalla">Källa: <a href={o.kalla.url} rel="nofollow noopener" target="_blank">{o.kalla.namn}</a>, hämtad {HAMTAT}. Reglerna kan skilja mellan butikerna – fråga din butik vid stora gåvor.</p>
+    </section>
+  ); })}
+  <p>Trasig och smutsig textil ska inte skänkas. Sedan 1 januari 2025 lämnas den i kommunens insamling av textilavfall. Läs mer i guiden <a href="/guider/skanka-mobler-och-saker/">Vad tar second hand-butikerna emot?</a></p>
+</>}

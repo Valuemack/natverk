@@ -1,0 +1,168 @@
+---
+// Lång guide: parkeringsappar jämförda. Källor: apparnas egna prissidor (EasyPark, Parkster, ePARK, Mobill), operatörerna
+// (Aimo Park, APCOA, Dukaten, LKP, Parkering Göteborg), Stockholms stad, Polisen och kommunernas betalsidor via data/kommuntaxor.json.
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "avgifter", rubrik: "Vad apparna kostar utöver taxan" },
+  { id: "rakneexempel", rubrik: "Räkneexempel: två timmar i Stockholm och Malmö" },
+  { id: "sa-fungerar", rubrik: "Så fungerar en parkeringsapp" },
+  { id: "operatorer", rubrik: "Operatörernas egna appar och kameraparkering" },
+  { id: "kommuner", rubrik: "Vilka appar gäller i vilken stad?" },
+  { id: "utan-app", rubrik: "Betala utan app" },
+  { id: "appfel", rubrik: "Om appen krånglar" },
+  { id: "p-skiva", rubrik: "App eller p-skiva?" },
+];
+
+const fragor = [
+  { fraga: "Vilken parkeringsapp är billigast?", svar: "Det beror på hur du betalar. Parkster Neutral och Mobill i standardläge tar enligt sina egna webbplatser ingen avgift per parkering. ePARK tar ingen avgift med ett registrerat konto, men 10 procent (minst 5 kr) i snabbläget utan konto. EasyPark tar 15 procent av parkeringskostnaden, minst 4,95 kr, eller 49 kr i månaden med abonnemanget Go. Parkeringstaxan är densamma i alla appar." },
+  { fraga: "Kostar det mer att parkera med app än i automaten?", svar: "Själva taxan är densamma, eftersom det är kommunen eller markägaren som bestämmer den. Det som kan tillkomma är appens egen serviceavgift och eventuella fakturaavgifter. I Stockholm måste varje auktoriserad app erbjuda ett sätt att betala utan avgift utöver taxan." },
+  { fraga: "Vad är en zonkod?", svar: "Zonkoden är ett nummer som pekar ut parkeringsområdet och dess taxa. Den står på skylten eller automaten. Du väljer den i appen innan du startar. Väljer du fel zon kan du ha betalat för fel område och riskera en parkeringsanmärkning." },
+  { fraga: "Gäller en skärmdump som bevis om appen inte fungerade?", svar: "En skärmdump med tid är det bästa underlag du kan ha, men Polisen godtar inte att du betalade med fel uppgifter, till exempel fel registreringsnummer. Du måste betala avgiften först och kan sedan bestrida den inom sex månader. Om appen inte går att använda, betala på annat sätt, till exempel i automaten eller via sms." },
+  { fraga: "Kan jag använda vilken app som helst överallt?", svar: "Nej. Varje kommun och parkeringsbolag väljer vilka appar de godkänner. Stockholm godkänner EasyPark, ePARK, Mobill och Parkster, medan till exempel Örebro bara nämner EasyPark. Kontrollera skylten eller automaten på platsen." },
+];
+---
+<Guide site={SITE} titel="Parkeringsappar jämförda – avgifter och var de gäller"
+  beskrivning="Parkeringsappar jämförda: EasyPark, Parkster, ePARK och Mobill. Serviceavgifter, vilka appar varje stad godtar och hur du betalar utan app."
+  h1="Parkeringsappar jämförda: avgifter, städer och betalning utan app"
+  svar={`Parkeringsappar tar samma taxa som automaten, men vissa lägger på en egen avgift. <strong>EasyPark tar 15 procent av kostnaden, minst 4,95 kr</strong>, eller 49 kr i månaden. <strong>Parkster Neutral och Mobill i standardläge tar ingen avgift per parkering</strong>, och ePARK tar ingen med verifierat konto. Vilken app du kan använda bestäms av kommunen eller parkeringsbolaget, så kontrollera skylten först.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Parkeringsappar", href: "/guider/parkeringsappar/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Billig parkering", href: "/guider/billig-parkering/", text: "Vad en timme och ett dygn kostar" },
+    { namn: "P-skiva", href: "/guider/p-skiva/", text: "Regler och var den gäller" },
+    { namn: "Överklaga en parkeringsbot", href: "/guider/overklaga-parkeringsbot/", text: "Steg för steg och tidsfrister" },
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Gata mot privat mark" },
+    { namn: "Parkeringshus", href: "/parkeringshus/", text: "Garage med pris och öppettider" },
+  ]}
+  kallor={[
+    { namn: "EasyPark – What does it cost? (Sverige)", url: "https://www.easypark.com/en-se/what-it-costs", text: "Small 15 % minst 4,95 kr, Go 49 kr/mån", datum: "2026-11-27" },
+    { namn: "Parkster – Vårt erbjudande", url: "https://www.parkster.com/se/vart-erbjudande/", text: "Express och Komplett 5 kr, Neutral 0 kr per transaktion", datum: "2026-11-27" },
+    { namn: "Parkster – Vanliga frågor om avgifter", url: "https://faq-se.parkster.com/category/200/article/2434?lang=sv", text: "pappersfaktura 39 kr", datum: "2026-11-27" },
+    { namn: "ePARK – Användning och betalsätt", url: "https://epark.se/anvandning", text: "Quick 10 % minst 5 kr, Premium, fakturaavgifter, kameraparkering", datum: "2026-11-27" },
+    { namn: "Mobill – Måste jag ha Mobill Plus?", url: "https://mobill.se/faq/mobill-plus/maste-jag-ha-mobill-plus-for-att-kunna-parkera", text: "standardläget är gratis", datum: "2026-11-27" },
+    { namn: "Mobill – Mobill Plus", url: "https://mobill.se/plus", text: "5 kr per parkering, vad som ingår", datum: "2026-11-27" },
+    { namn: "Mobill – P-skiva i appen", url: "https://mobill.se/services/parkingdisc", text: "digital p-skiva", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Betala parkering", url: "https://parkering.stockholm/betala-parkering/", text: "auktoriserade appar och krav på avgiftsfri betaltjänst", datum: "2026-11-27" },
+    { namn: "Parkering Göteborg – Betala parkering", url: "https://www.parkeringgoteborg.se/parkera/betala-parkering/", text: "egen app, andra appar, sms 72 430", datum: "2026-11-27" },
+    { namn: "Dukaten – Betala parkering i Linköping", url: "https://www.dukaten.se/parkering-linkoping/betala-parkering", text: "LinPark, andra appar, sms, fakturaavgift 29 kr", datum: "2026-11-27" },
+    { namn: "LKP – Betalmetoder", url: "https://lkpab.se/vara-tjanster/betalmetoder/", text: "automater avvecklade, appar, sms och talsvar i Lund", datum: "2026-11-27" },
+    { namn: "LKP – Kundportal och app", url: "https://lkpab.se/vara-tjanster/kundportal-app/", text: "appen för tillstånd", datum: "2026-11-27" },
+    { namn: "Aimo Park – Aimo Park Easy", url: "https://www.aimopark.se/en/about-aimo-park/extra-services/aimo-park-easy", text: "kameraparkering, betala inom 48 timmar", datum: "2026-11-27" },
+    { namn: "APCOA – Park & Go kameraparkering", url: "https://www.apcoa.se/en/find-a-car-park/payment-and-digital-keys/camera-parking-park-go", text: "FLOW, betala inom 72 timmar", datum: "2026-11-27" },
+    { namn: "Polisen – Parkeringsanmärkning", url: "https://polisen.se/lagar-och-regler/boter/parkeringsanmarkning/", text: "betala först, sex månader, skäl som inte godtas", datum: "2026-11-27" },
+    { namn: "Kommunernas betalsidor", text: "Malmö, Uppsala, Västerås, Örebro, Jönköping, Norrköping, Karlstad och Växjö, sammanställda i vår kommundata", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="avgifter">Vad apparna kostar utöver taxan</h2>
+  <p>Parkeringstaxan bestäms av kommunen på gatan och av markägaren på privat mark. Den är densamma oavsett om du betalar i automaten eller i en app. Det som skiljer apparna åt är deras egna avgifter. De varierar mer än många tror, från noll kronor till 15 procent av parkeringen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>App</th><th>Avgiftsfritt sätt</th><th>Avgift per parkering</th><th>Abonnemang</th></tr></thead>
+    <tbody>
+      <tr><td>EasyPark</td><td>Förenklad webbversion i Stockholm</td><td>Small: 15 % av parkering eller laddning, minst 4,95 kr</td><td>Go: 49 kr/mån, ingen avgift per parkering</td></tr>
+      <tr><td>Parkster</td><td>Neutral: 0 kr, betala i efterskott</td><td>Express och Komplett: 5 kr</td><td>Inget för privatpersoner</td></tr>
+      <tr><td>ePARK</td><td>Registrerat konto (verifiera med BankID i Stockholm)</td><td>Quick utan konto: 10 %, minst 5 kr. Premium: upp till 2,50 kr</td><td>Premium kan ha månadsavgift, belopp anges inte</td></tr>
+      <tr><td>Mobill</td><td>Standardläget är gratis</td><td>Mobill Plus: 5 kr</td><td>Inget, Plus betalas per gång</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: apparnas egna prissidor, hämtade 27 november 2026. EasyPark skriver att avgiften kan variera mellan platser och operatörer.</p>
+  <p>Utöver avgiften per parkering kan betalsättet kosta. Parkster tar 39 kr för pappersfaktura. ePARK tar 29 kr för pappersfaktura med 14 dagars betaltid och 35 kr med 30 dagar. Mejlfaktura med 14 dagar är gratis. Hos Dukaten i Linköping tillkommer 29 kr i fakturaavgift för sms-parkering.</p>
+  <p>Vad får du för pengarna? Mobill Plus ger bland annat automatisk betalning med Swish, flera betalkort, familjekonto och kvitton. Parksters Express kräver inget konto. EasyParks avgift täcker samma app i över 20 länder. Behöver du inte det, finns ett avgiftsfritt alternativ i varje app.</p>
+  <p>Stockholms stad ställer ett uttryckligt krav: för att få bli auktoriserad måste varje leverantör erbjuda ett sätt att betala utan avgift utöver taxan. Staden pekar på Parkster och ePARK som appar utan extra avgift, och på EasyParks förenklade webbversion och Mobills webbtjänst.</p>
+
+  <h2 id="rakneexempel">Räkneexempel: två timmar i Stockholm och Malmö</h2>
+  <p>I Stockholms taxa 2 kostar det 31 kr i timmen dagtid på vardagar. Två timmar blir 62 kr. I Malmös taxa A kostar det 30 kr i timmen klockan 8–22, alltså 60 kr för två timmar. Så här mycket betalar du totalt med olika val:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Val</th><th class="num">Stockholm taxa 2, 2 tim</th><th class="num">Malmö taxa A, 2 tim</th></tr></thead>
+    <tbody>
+      <tr><td>Automat med kort</td><td class="num">62,00 kr</td><td class="num">60,00 kr</td></tr>
+      <tr><td>Parkster Neutral, Mobill standard</td><td class="num">62,00 kr</td><td class="num">60,00 kr</td></tr>
+      <tr><td>Parkster Express eller Mobill Plus (+5 kr)</td><td class="num">67,00 kr</td><td class="num">65,00 kr</td></tr>
+      <tr><td>EasyPark Small (+15 %)</td><td class="num">71,30 kr</td><td class="num">69,00 kr</td></tr>
+      <tr><td>ePARK Quick utan konto (+10 %, minst 5 kr)</td><td class="num">68,20 kr</td><td class="num">66,00 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p>Procentavgiften märks mest vid långa parkeringar. En hel arbetsdag på åtta timmar i Stockholms taxa 2 kostar 248 kr i taxa, och 15 procent ovanpå blir 37,20 kr. Parkerar du så ofta att avgifterna överstiger 49 kr i månaden, blir EasyParks abonnemang billigare än att betala per gång. Det motsvarar ungefär tio korta parkeringar med minimiavgiften 4,95 kr.</p>
+  <p>Taxorna kommer från kommunernas egna prislistor och finns på våra stadssidor, till exempel <a href="/stockholm/">Stockholm</a> och <a href="/malmo/">Malmö</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="sa-fungerar">Så fungerar en parkeringsapp</h2>
+  <p>Alla appar bygger på samma tre steg: registreringsnummer, zonkod och tid.</p>
+  <ul>
+    <li><strong>Registreringsnummer.</strong> Det är bilen som betalar, inte du. Parkeringsvakten kontrollerar registreringsnumret mot apparnas system. Skriver du fel nummer räknas parkeringen som obetald.</li>
+    <li><strong>Zonkod.</strong> Varje område har en kod som visar vilken taxa som gäller. Den står på skylten eller automaten. I Malmö har taxa A koden 424 och taxa B 427. I Linköping har stadskärnans zon med max två timmar koden 12912. Apparna föreslår ofta en zon utifrån din position, men kontrollera den mot skylten.</li>
+    <li><strong>Start och stopp.</strong> De flesta appar låter dig parkera med öppen sluttid och stoppa när du kör, så betalar du bara för tiden du stått. Du kan också sätta en sluttid. Glömmer du att stoppa fortsätter parkeringen att kosta, upp till eventuell maxtid.</li>
+  </ul>
+  <p>Vissa zoner har en högsta tid, till exempel 30 minuter eller en timme. Appen hindrar dig oftast från att betala längre, men regeln gäller oavsett vad appen visar. Stå inte kvar längre än skylten tillåter.</p>
+
+  <h2 id="operatorer">Operatörernas egna appar och kameraparkering</h2>
+  <p>Utöver de fyra stora apparna har flera parkeringsbolag egna appar. De används främst i bolagens egna garage och på deras mark.</p>
+  <ul>
+    <li><strong>Parkering Göteborg</strong> är stadens parkeringsbolag. I deras app betalar du bara för tiden du står. På deras platser fungerar också EasyPark, Mobill, Parkster, Parking Time, FastPark och ePARK, men bolaget skriver att eventuella tilläggsavgifter beror på vilken app du väljer.</li>
+    <li><strong>LinPark</strong> är Dukatens app i Linköping. Den fungerar i parkeringshus och på gatu- och markparkering.</li>
+    <li><strong>LKP i Lund</strong> har en app och kundportal, men den används för månads-, vecko- och boendetillstånd. Korttidsparkering betalar du med Parkster, EasyPark eller Mobill. LKP har tagit bort alla automater, och sedan 1 juli 2025 gäller bara betalning med telefon.</li>
+    <li><strong>Aimo Park</strong> har appen Aimo. I garage med Aimo Park Easy läser kameror av registreringsnumret vid in- och utfart. Du betalar i automaten, på webben inom 48 timmar eller automatiskt med registrerat kort. Annars kommer en faktura med posten.</li>
+    <li><strong>APCOA</strong> har appen FLOW. I garage med Park &amp; Go dras rätt belopp automatiskt från kortet i appen. Annars betalar du i automaten innan du kör ut eller på betala.apcoa.se inom 72 timmar. Därefter skickas en påminnelse med en extra avgift.</li>
+  </ul>
+  <p>Kameraparkering kallas också ANPR, efter tekniken som läser registreringsskylten. ePARK har en liknande funktion: aktiverar du den i appen registreras bilen automatiskt när den kör in och ut ur zonen. Aimo och APCOA anger ingen serviceavgift för sina appar på de sidor vi läst, så se appens prislista innan du startar.</p>
+
+  <h2 id="kommuner">Vilka appar gäller i vilken stad?</h2>
+  <p>Det är kommunen som bestämmer vilka appar som får användas på gatan. Här är vad de största städerna själva anger:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th>Appar</th><th>Utan app</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/stockholm/">Stockholm</a></td><td>EasyPark, ePARK, Mobill, Parkster</td><td>Sms (Mobill), automat med kort</td></tr>
+      <tr><td>Göteborg (Parkering Göteborg)</td><td>Parkering Göteborg, EasyPark, Mobill, Parkster, Parking Time, FastPark, ePARK</td><td>Sms till 72 430 (kräver konto), automat med kort</td></tr>
+      <tr><td><a href="/malmo/">Malmö</a></td><td>EasyPark, ePARK, Mobill, Parkster</td><td>Sms, automat med kort, Apple Pay eller Samsung Pay</td></tr>
+      <tr><td>Uppsala</td><td>EasyPark, Parkster, Mobill, ePARK (namnges för boendeparkering)</td><td>Sms, betalautomat</td></tr>
+      <tr><td>Västerås</td><td>ePARK, Mobill, Parkster</td><td>Automat</td></tr>
+      <tr><td>Örebro</td><td>EasyPark</td><td>Sms 010-333 44 00, automat med kort</td></tr>
+      <tr><td>Linköping</td><td>LinPark, EasyPark, Parkster, ePARK, Mobill</td><td>Sms 0790 966 001, automat (bara kort)</td></tr>
+      <tr><td>Jönköping</td><td>ePARK, Parkster</td><td>Sms, biljettautomat</td></tr>
+      <tr><td>Norrköping</td><td>EasyPark</td><td>Sms via EasyPark, biljettautomat</td></tr>
+      <tr><td>Lund (LKP)</td><td>Parkster, EasyPark, Mobill</td><td>Sms och talsvar (kräver svenskt personnummer). Inga automater.</td></tr>
+      <tr><td>Karlstad</td><td>EasyPark, ePARK, Mobill, Parkster</td><td>Sms, automat med kort eller Swish</td></tr>
+      <tr><td>Växjö</td><td>Mobill, ePARK, EasyPark</td><td>Sms, automat med kort (mynt i vissa)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: kommunernas och parkeringsbolagens betalsidor, hämtade 27 november 2026. Listan kan ändras när avtal löper ut.</p>
+  <p>Två saker är värda att veta. Parkering Göteborg skriver att giltiga appar kan ändras och därför inte skyltas på varje plats, så kontrollera bolagets webbplats. Och på privat mark, som köpcentrum och parkeringshus, gäller markägarens val, inte kommunens.</p>
+
+  <h2 id="utan-app">Betala utan app</h2>
+  <p>Det finns nästan alltid ett sätt att betala utan smarttelefon, men utbudet krymper.</p>
+  <ul>
+    <li><strong>Automat med kort.</strong> Stockholms automater är digitala och tar bara kort. Parkering Göteborgs automater tar betalkort med chip, men alla platser har inte automat. Mynt är sällsynt. Växjö anger mynt i vissa automater.</li>
+    <li><strong>Sms.</strong> Du skickar zonkod och registreringsnummer till ett nummer och får en bekräftelse. I Linköping skickar du även personnummer, och parkeringen gäller först när bekräftelsen kommit. Avsluta med sms "AVSLUTA". Sms-parkering faktureras oftast i efterhand, ibland med fakturaavgift.</li>
+    <li><strong>Talsvar.</strong> I Lund kan du ringa Parkster eller EasyPark och starta parkeringen med knapparna. Det kräver svenskt personnummer.</li>
+  </ul>
+  <p>Har du ett utländskt telefonnummer eller saknar personnummer är automaten eller en app med kortbetalning ofta enda vägen. I Lund finns inga automater kvar alls, så där behöver du en av apparna.</p>
+
+  <h2 id="appfel">Om appen krånglar</h2>
+  <p>Får du en parkeringsanmärkning trots att du försökt betala, är det bevisen som avgör. Polisen prövar bestridanden av anmärkningar på gatan, och reglerna är stränga:</p>
+  <ul>
+    <li><strong>Betala först.</strong> Du måste betala avgiften innan du bestrider. Får du rätt betalas den tillbaka.</li>
+    <li><strong>Sex månader.</strong> Bestridandet ska ha kommit in senast sex månader efter att du betalade.</li>
+    <li><strong>Fel uppgifter räknas inte.</strong> Polisen skriver att det inte räcker att du betalade men skrev in fel uppgifter, och att myndigheten inte kan ta hänsyn till den mänskliga faktorn. Fel registreringsnummer eller fel zon i appen ger alltså oftast ingen rätt.</li>
+  </ul>
+  <p>Gör så här om appen inte fungerar på plats:</p>
+  <ol>
+    <li>Ta en skärmdump av felmeddelandet. Klockan ska synas.</li>
+    <li>Fotografera skylten med zonkoden och bilen på platsen.</li>
+    <li>Betala på annat sätt: automat, sms eller en annan app som gäller i zonen.</li>
+    <li>Kontakta appens kundtjänst och spara svaret.</li>
+  </ol>
+  <p>Ett tekniskt fel i appen är inte samma sak som ett eget misstag, men utan underlag är det svårt att visa vad som hände. Kontrollavgifter på privat mark prövas av parkeringsbolaget, inte Polisen. Läs mer i <a href="/guider/overklaga-parkeringsbot/">guiden om att överklaga en parkeringsbot</a>.</p>
+
+  <h2 id="p-skiva">App eller p-skiva?</h2>
+  <p>Appen ersätter betalning, inte p-skivan. På en plats där skylten kräver p-skiva är parkeringen ofta gratis men tidsbegränsad, och då ska en skiva ligga synlig i rutan. Trafikförordningen säger att tiden ska ställas på närmast följande halvtimme räknat från när du parkerade.</p>
+  <p>Mobill erbjuder en digital p-skiva som startas i appen, men bolaget anger inte var den godtas. Använd den bara där skyltningen eller markägaren uttryckligen säger att den gäller. I övriga fall är det den fysiska skivan som räknas. Mer om reglerna finns i <a href="/guider/p-skiva/">guiden om p-skiva</a>.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

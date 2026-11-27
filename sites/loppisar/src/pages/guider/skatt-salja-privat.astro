@@ -1,0 +1,135 @@
+---
+// Guide: skatt när du säljer privat (loppis, Blocket, Tradera). Källor: Skatteverket (andra tillgångar, loppmarknader,
+// näringsverksamhet, momsbefrielse, plattformsekonomi) och lag 2022:1681 för DAC7-trösklarna. Granskad 2026-11-27.
+// Ingen FAQ-markup (ägarens beslut 2026-11-27); frågorna visas som vanlig text.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const kr = (n) => `${String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} kr`;
+// Räkneexempel: tre försäljningar under ett år, beräknade enligt Skatteverkets regler för personliga tillgångar.
+const exempel = [
+  { sak: "Soffa", pris: 5000, inkop: 13000 },
+  { sak: "Begagnad båt", pris: 85000, inkop: 40000 },
+  { sak: "Tavla (ärvd, okänt inköpspris)", pris: 12000, inkop: null },
+].map((x) => {
+  const omk = x.inkop ?? x.pris * 0.25;
+  return { ...x, omk, vinst: Math.max(0, x.pris - omk) };
+});
+const summa = exempel.reduce((s, x) => s + x.vinst, 0);
+const skattepliktig = Math.max(0, summa - 50000);
+
+const avsnitt = [
+  { id: "grundregel", rubrik: "Grundregeln: personliga saker och 50 000 kronor" },
+  { id: "rakna", rubrik: "Så räknar du vinsten" },
+  { id: "exempel", rubrik: "Räkneexempel" },
+  { id: "kapital", rubrik: "Smycken, konst och antikviteter som investering" },
+  { id: "hobby", rubrik: "När loppisen blir hobby eller företag" },
+  { id: "moms", rubrik: "Moms och F-skatt" },
+  { id: "plattformar", rubrik: "Blocket, Tradera och plattformarnas rapportering" },
+  { id: "checklista", rubrik: "Checklista för dig som säljer" },
+];
+const fragor = [
+  { fraga: "Måste man betala skatt när man säljer saker på loppis?", svar: "Nej, inte för vanliga personliga saker så länge den sammanlagda vinsten under året är högst 50 000 kronor. Det mesta säljs dessutom med förlust jämfört med vad det kostade, och förlust ger ingen skatt." },
+  { fraga: "Gäller 50 000-kronorsgränsen försäljningspriset eller vinsten?", svar: "Vinsten. Du räknar vinsten för varje sak, lägger ihop vinsterna och drar av 50 000 kronor. Det som blir kvar beskattas med 30 procent som inkomst av kapital." },
+  { fraga: "Vad gör jag om jag inte vet vad saken kostade?", svar: "Du får räkna med att den kostade 25 procent av försäljningspriset (efter försäljningskostnader). Det är Skatteverkets schablon för personliga tillgångar." },
+  { fraga: "Rapporterar Blocket och Tradera mina försäljningar till Skatteverket?", svar: "Plattformar ska sedan 2023 rapportera säljare som under ett år har minst 30 försäljningar eller säljer för mer än 2 000 euro. Rapporteringen ändrar inte skattereglerna – den gör bara att Skatteverket ser försäljningarna." },
+  { fraga: "Måste jag ha F-skatt för att sälja på loppis?", svar: "Nej, inte när du säljer dina egna saker. F-skatt blir aktuellt när försäljningen är näringsverksamhet, till exempel när du regelbundet köper in saker för att sälja vidare." },
+];
+---
+<Guide site={SITE} titel="Skatt när du säljer privat – loppis, Blocket och Tradera"
+  beskrivning="Behöver du betala skatt när du säljer saker på loppis eller Blocket? 50 000-kronorsregeln, 25-procentsschablonen, hobby eller företag och plattformarnas rapportering."
+  h1="Skatt när du säljer saker privat – på loppis, Blocket och Tradera"
+  svar={`Säljer du dina egna, personliga saker blir det skatt först när den <strong>sammanlagda vinsten under året är över 50 000 kronor</strong>. Det som överstiger gränsen beskattas med <strong>30 procent</strong>. Förlust ger inget avdrag. Vet du inte vad saken kostade får du räkna med 25 procent av försäljningspriset som inköpspris. Köper du in saker för att sälja vidare är det i stället näringsverksamhet.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Skatt när du säljer privat", href: "/guider/skatt-salja-privat/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Ha en egen loppis", href: "/guider/ha-egen-loppis/", text: "Tillstånd, skyltar och fika" },
+    { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/", text: "Köplagen och konsumentköplagen" },
+    { namn: "Silverstämplar och guldstämplar", href: "/guider/silverstamplar-guldstamplar/", text: "Vad är saken värd?" },
+    { namn: "Loppisar nära dig", href: "/", text: "Alla loppisar i Sverige" },
+  ]}
+  kallor={[
+    { namn: "Skatteverket – Andra tillgångar", url: "https://www.skatteverket.se/privat/skatter/vardepapper/andratillgangar", text: "personliga tillgångar, 50 000 kr, 25 %, kapitalplaceringar, punkt 7.5 och 8.4, K4 avsnitt D", datum: "2026-11-27" },
+    { namn: "Skatteverket – Loppmarknader", url: "https://www.skatteverket.se/privat/skatter/arbeteinkomst/inkomster/loppmarknader.4.64a656d113f4c7597012517.html", text: "egna saker, hobby och inköp för vidareförsäljning", datum: "2026-11-27" },
+    { namn: "Skatteverket – Vad är näringsverksamhet?", url: "https://www.skatteverket.se/foretagorganisationer/foretagare/vadarnaringsverksamhet.4.6efe6285127ab4f1d25800025792.html", text: "självständighet, varaktighet och vinstsyfte", datum: "2026-11-27" },
+    { namn: "Skatteverket – Momsbefrielse", url: "https://skatteverket.se/momsbefrielse", text: "120 000 kr från 1 januari 2025", datum: "2026-11-27" },
+    { namn: "Skatteverket – Sälja och hyra ut på nätet", url: "https://skatteverket.se/privat/skatter/arbeteochinkomst/inkomster/saljaochhyrautpanatet.4.48cfd212185efbb440b62ba.html", text: "plattformarnas uppgiftsskyldighet, F-skatt", datum: "2026-11-27" },
+    { namn: "Skatteverket – Digitala plattformar (plattformsekonomi)", url: "https://www.skatteverket.se/plattformsekonomi", text: "rapportering sedan 1 januari 2023", datum: "2026-11-27" },
+    { namn: "Lag (2022:1681) om plattformsoperatörers rapportering, 2 kap. 17 §", url: "https://lagen.nu/2022:1681", text: "tröskeln 30 försäljningar och 2 000 euro", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="grundregel">Grundregeln: personliga saker och 50 000 kronor</h2>
+  <p>Skatteverket delar in det du säljer i olika slags tillgångar. Det som säljs på loppis, Blocket och Tradera är nästan alltid det Skatteverket kallar <strong>personliga tillgångar</strong>: saker som du eller familjen främst har använt privat eller haft som prydnad. Möbler, kläder, verktyg, cyklar, bilar, båtar, smycken du har burit och konst som har hängt på väggen hör hit.</p>
+  <p>För personliga tillgångar finns en generös regel. Du räknar fram vinsten på varje sak och lägger ihop vinsterna för hela året. Från summan drar du <strong>50 000 kronor</strong>. Bara det som blir över är skattepliktigt, och det beskattas som inkomst av kapital med <strong>30 procent</strong>.</p>
+  <p>Det är alltså vinsten som räknas, inte hur mycket pengar du fick in. Den som tömmer ett förråd och säljer för 80 000 kronor på loppisar under ett år betalar i regel ingen skatt alls, eftersom sakerna en gång kostade mer än de säljs för. Begagnade saker säljs nästan alltid med förlust, och en förlust på en personlig tillgång ger varken skatt eller avdrag.</p>
+  <p>Du behöver bara deklarera när den sammanlagda vinsten är över 50 000 kronor. Då redovisas den i punkt 7.5 i inkomstdeklarationen, och Skatteverket använder blanketten K4, avsnitt D, för uträkningen.</p>
+
+  <h2 id="rakna">Så räknar du vinsten</h2>
+  <p>Vinsten är försäljningspriset minus det Skatteverket kallar omkostnadsbeloppet:</p>
+  <ul>
+    <li><strong>Försäljningspris:</strong> det köparen betalade, minus dina kostnader för att sälja, till exempel annonsavgift eller provision till en auktionsfirma.</li>
+    <li><strong>Omkostnadsbelopp:</strong> vad du betalade för saken, plus kostnader när du köpte den och kostnader för förbättringar. Vanligt underhåll räknas inte.</li>
+    <li><strong>Har du bytt till dig saken</strong> räknas marknadsvärdet på det du fick som inköpspris.</li>
+    <li><strong>Har du ärvt saken eller fått den i gåva</strong> tar du över den tidigare ägarens inköpspris. Arvet i sig gör inte saken billigare eller dyrare i skattemässig mening.</li>
+  </ul>
+  <p>Ofta vet man inte vad en sak en gång kostade, särskilt inte när den är ärvd. Då får du använda en <strong>schablon</strong>: omkostnadsbeloppet sätts till 25 procent av försäljningspriset. Vinsten blir då 75 procent av det du fick för saken. Schablonen är ett alternativ, inte ett krav. Kan du visa ett högre inköpspris med kvitto får du använda det.</p>
+
+  <h2 id="exempel">Räkneexempel</h2>
+  <p>Anta att du under ett år säljer tre saker. Exemplet bygger på Skatteverkets regler, och soffan är samma exempel som Skatteverket själva använder.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Sak</th><th class="num">Såld för</th><th class="num">Omkostnadsbelopp</th><th class="num">Vinst</th></tr></thead>
+    <tbody>{exempel.map((x) => <tr><td>{x.sak}</td><td class="num">{kr(x.pris)}</td><td class="num">{kr(x.omk)}{x.inkop == null && " (25 %)"}</td><td class="num">{kr(x.vinst)}</td></tr>)}</tbody>
+    <tfoot><tr><th>Summa vinster</th><td></td><td></td><td class="num"><strong>{kr(summa)}</strong></td></tr></tfoot>
+  </table></div>
+  <p>Soffan gav förlust och räknas som noll. Båten och tavlan gav tillsammans {kr(summa)} i vinst. Efter avdraget på 50 000 kronor blir {kr(skattepliktig)} skattepliktigt, och skatten blir 30 procent av det: <strong>{kr(skattepliktig * 0.3)}</strong>. Hade du inte sålt båten hade det inte blivit någon skatt alls.</p>
+  <p>Förlusten på soffan kan inte kvittas mot vinsten på båten. För personliga tillgångar gäller att förluster inte är avdragsgilla.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="kapital">Smycken, konst och antikviteter som investering</h2>
+  <p>Samma sak kan vara antingen en personlig tillgång eller en kapitalplacering. Det avgörs av hur du faktiskt har använt den, inte av vad den är. En tavla på vardagsrumsväggen är personlig. En tavla som ligger i ett bankfack för att öka i värde är en kapitalplacering. Detsamma gäller guld, silver och ädelstenar som inte sitter i smycken du bär, liksom frimärkssamlingar och antikviteter som köpts som investering.</p>
+  <p>För kapitalplaceringar gäller andra regler:</p>
+  <ul>
+    <li>Det finns ingen gräns på 50 000 kronor – hela vinsten beskattas med 30 procent.</li>
+    <li>Schablonen på 25 procent får inte användas.</li>
+    <li>En förlust får dras av till 70 procent mot andra kapitalvinster och kapitalinkomster. Vinst redovisas i punkt 7.5 och förlust i punkt 8.4.</li>
+  </ul>
+  <p>För den som säljer ett dödsbo på loppis är skillnaden sällan aktuell. Men har du ärvt en samling eller ett guldförråd som aldrig har använts kan det vara värt att läsa Skatteverkets sida om andra tillgångar innan du säljer.</p>
+
+  <h2 id="hobby">När loppisen blir hobby eller företag</h2>
+  <p>Allt ovan gäller när du säljer saker du redan äger. Två andra situationer beskattas på andra sätt:</p>
+  <ul>
+    <li><strong>Saker du själv har tillverkat.</strong> Säljer du stickade sockor, keramik eller sylt du har gjort själv räknar Skatteverket det normalt som hobby. Inkomsten är då inkomst av tjänst, och du får dra av dina kostnader för materialet. Hobbyverksamhet är normalt inte momspliktig.</li>
+    <li><strong>Saker du köper in för att sälja vidare.</strong> Den som regelbundet köper på loppis eller dödsboauktioner för att sälja med vinst bedriver enligt Skatteverket näringsverksamhet. Det gäller även om det sker på fritiden och i liten skala.</li>
+  </ul>
+  <p>Skatteverket bedömer tre saker tillsammans: om verksamheten är självständig, om den är varaktig och om den har ett vinstsyfte. Det är varaktigheten som skiljer ett företag från en tillfällig försäljning, och vinstsyftet som skiljer det från en hobby. En enstaka förrådsrensning är inget företag. Att varje helg köpa lådor med böcker för att sälja styckvis på nätet kan vara det.</p>
+
+  <h2 id="moms">Moms och F-skatt</h2>
+  <p>När du säljer dina personliga saker tar du aldrig ut moms. Moms blir aktuellt först när försäljningen är näringsverksamhet, och även då finns en undre gräns:</p>
+  <ul>
+    <li>Sedan 1 januari 2025 får ett företag med säte i Sverige vara <strong>momsbefriat om omsättningen är högst 120 000 kronor</strong> under kalenderåret och inte har varit högre något av de två föregående åren. Tidigare var gränsen 80 000 kronor.</li>
+    <li>Gränsen gäller beloppet utan moms. Den som säljer varor med 25 procents moms kan därför ta in upp till 150 000 kronor från kunderna innan gränsen nås.</li>
+    <li>Bedriver du näringsverksamhet kan du ansöka om F-skatt eller FA-skatt. Plattformar som Tradera och Blocket drar ingen skatt åt dig.</li>
+  </ul>
+  <p>För föreningar som har loppis gäller särskilda regler. Dem tar vi upp i guiden <a href="/guider/ha-egen-loppis/">Ha en egen loppis</a>.</p>
+
+  <h2 id="plattformar">Blocket, Tradera och plattformarnas rapportering</h2>
+  <p>Sedan 1 januari 2023 måste digitala plattformar lämna uppgifter till Skatteverket om säljare och ersättningar. Det bygger på ett EU-direktiv som ofta kallas DAC7. Rapporten innehåller bland annat säljarens identitet och adress, hur mycket säljaren har fått och vilken provision plattformen har tagit.</p>
+  <p>Alla säljare rapporteras inte. Enligt lagen undantas den som säljer varor och under året har <strong>färre än 30 försäljningar och högst 2 000 euro</strong> i ersättning. Båda villkoren måste vara uppfyllda. Säljer du 30 saker eller fler, eller för mer än 2 000 euro, rapporteras du.</p>
+  <p>Rapporteringen ändrar inte vad som är skattepliktigt. Den som säljer sina gamla barnkläder i 40 annonser blir rapporterad, men betalar fortfarande ingen skatt eftersom det inte blir någon vinst. Det rapporteringen gör är att Skatteverket ser försäljningarna och kan fråga om de ser ut som näringsverksamhet. Ansvaret för att deklarera rätt ligger alltid hos säljaren.</p>
+
+  <h2 id="checklista">Checklista för dig som säljer</h2>
+  <ol>
+    <li>Säljer du saker du har använt privat? Då gäller reglerna för personliga tillgångar.</li>
+    <li>Räkna vinst bara på saker som säljs för mer än de kostade. Det är oftast bara bilar, båtar, konst och smycken.</li>
+    <li>Spara kvitton på dyrare köp. Ett verkligt inköpspris ger ofta lägre vinst än schablonen.</li>
+    <li>Blir vinsterna tillsammans högre än 50 000 kronor? Deklarera överskottet i punkt 7.5.</li>
+    <li>Köper du in saker för att sälja vidare? Läs Skatteverkets sida om näringsverksamhet och fundera på F-skatt.</li>
+    <li>Säljer du mycket på nätet kan plattformen rapportera dig. Det är inget fel i sig, men se till att du kan förklara vad du har sålt.</li>
+  </ol>
+  <p>Den här guiden förklarar huvudreglerna. Gäller det stora belopp, ett dödsbo med värdefulla saker eller en verksamhet som växer, kontakta Skatteverket för ett besked i ditt fall.</p>
+  <Faq fragor={fragor} />
+</Guide>

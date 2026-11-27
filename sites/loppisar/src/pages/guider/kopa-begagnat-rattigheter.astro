@@ -1,0 +1,110 @@
+---
+// Guide: köpa begagnat – dina rättigheter. Källor: Konsumentverket (Handla begagnat, granskad 26 mars 2026),
+// konsumentköplag 2022:260, köplag 1990:931 och distansavtalslag 2005:59 hos riksdagen.se. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const avsnitt = [
+  { id: "vem", rubrik: "Först: köper du av ett företag eller en privatperson?" },
+  { id: "butik", rubrik: "Köp i second hand-butik" },
+  { id: "fel", rubrik: "Vad räknas som fel på en begagnad sak?" },
+  { id: "befintligt", rubrik: "Gäller \"i befintligt skick\"?" },
+  { id: "privat", rubrik: "Köp på loppis och av privatperson" },
+  { id: "auktion", rubrik: "Auktioner" },
+  { id: "natet", rubrik: "Köp på nätet och ångerrätt" },
+  { id: "reklamera", rubrik: "Så reklamerar du" },
+];
+const fragor = [
+  { fraga: "Kan man reklamera något man köpt i en second hand-butik?", svar: "Ja. Köper du av ett företag, även en ideell second hand-butik, gäller konsumentköplagen precis som när du köper nytt. Du kan reklamera fel som fanns vid köpet och som visar sig inom tre år, men du får inte klaga på slitage som är normalt för en begagnad vara." },
+  { fraga: "Har man öppet köp i second hand-butiker?", svar: "Inte enligt lag. Öppet köp och bytesrätt är frivilliga löften som butiken kan ge. I en fysisk butik finns ingen ångerrätt. Köper du på nätet från ett företag har du 14 dagars ångerrätt." },
+  { fraga: "Vad gäller om man köper av en privatperson på loppis?", svar: "Då gäller köplagen och det ni kommit överens om. Saken kan ändå vara felaktig om den inte är som säljaren sagt, om säljaren teg om ett allvarligt fel som säljaren kände till, eller om den är i väsentligt sämre skick än du kunnat räkna med." },
+  { fraga: "Hur lång tid har man på sig att reklamera?", svar: "Mot ett företag ska du klaga inom skälig tid efter att du upptäckt felet. Två månader räknas alltid som skälig tid, och felansvaret gäller i tre år. Mot en privatperson ska du också klaga inom skälig tid, men rätten går förlorad efter två år." },
+  { fraga: "Kan butiken skriva bort reklamationsrätten med \"befintligt skick\"?", svar: "Nej. Konsumentköplagen kan inte avtalas bort till din nackdel. En brist som butiken särskilt berättat om och som du uttryckligen godkänt kan du dock inte klaga på i efterhand." },
+];
+---
+<Guide site={SITE} titel="Köpa begagnat – dina rättigheter i butik, på loppis och privat"
+  beskrivning="Kan du reklamera en begagnad sak? Vad som gäller i second hand-butik, på loppis, på auktion och av privatperson – konsumentköplagen och köplagen förklarade."
+  h1="Köpa begagnat – dina rättigheter i butik, på loppis och av privatperson"
+  svar={`Köper du begagnat av ett <strong>företag eller en ideell second hand-butik</strong> gäller konsumentköplagen: du kan reklamera fel som fanns vid köpet i <strong>tre år</strong>, och fel som visar sig inom två år antas ha funnits från början. Normalt slitage räknas inte som fel. Köper du av en <strong>privatperson</strong> gäller köplagen och det ni kommit överens om, och rätten att klaga upphör efter två år. Ångerrätt finns bara vid köp på distans från företag.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Begagnade leksaker och barnprodukter", href: "/guider/begagnade-barnprodukter/", text: "Säkerheten först" },
+    { namn: "Silverstämplar och guldstämplar", href: "/guider/silverstamplar-guldstamplar/", text: "Är det äkta silver?" },
+    { namn: "Skatt när du säljer privat", href: "/guider/skatt-salja-privat/", text: "Regler för säljaren" },
+    { namn: "När har loppisarna öppet?", href: "/guider/oppettider-second-hand/", text: "Öppettider i hela landet" },
+  ]}
+  kallor={[
+    { namn: "Konsumentverket – Handla begagnat, dina rättigheter", url: "https://www.konsumentverket.se/konsumentratt/handla-begagnat/", text: "företag, ideell second hand-butik, privatperson, normalt slitage (granskad 26 mars 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentköplag (2022:260)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/konsumentkoplag-2022260_sfs-2022-260/", text: "1 kap. 2, 3 och 10 §§, 4 kap. 6, 13, 14 och 17 §§, 5 kap. 2 och 10 §§", datum: "2026-11-27" },
+    { namn: "Köplag (1990:931)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/koplag-1990931_sfs-1990-931/", text: "19, 20 och 32 §§", datum: "2026-11-27" },
+    { namn: "Lag (2005:59) om distansavtal och avtal utanför affärslokaler", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-200559-om-distansavtal-och-avtal-utanfor_sfs-2005-59/", text: "2 kap. 10–12 §§, ångerrätt och auktioner", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="vem">Först: köper du av ett företag eller en privatperson?</h2>
+  <p>Allt hänger på vem som säljer. Svenska regler skiljer skarpt mellan två situationer:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Säljaren är ett företag eller en ideell butik</th><th>Säljaren är en privatperson</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Lag</th><td>Konsumentköplagen</td><td>Köplagen och ert avtal</td></tr>
+      <tr><th scope="row">Exempel</th><td>Myrorna, Röda Korset, Erikshjälpen, privat second hand-butik, antikhandlare, företag på Tradera</td><td>Garageloppis, bakluckeloppis, Blocket, Marketplace, privatperson på Tradera</td></tr>
+      <tr><th scope="row">Hur länge säljaren ansvarar</th><td>Fel som visar sig inom 3 år</td><td>Du förlorar rätten att klaga efter 2 år</td></tr>
+      <tr><th scope="row">Fel som visar sig tidigt</th><td>Inom 2 år antas felet ha funnits vid köpet</td><td>Du måste visa att felet fanns</td></tr>
+      <tr><th scope="row">Går det att avtala bort?</th><td>Nej, inte till din nackdel</td><td>Ja, avtalet gäller först</td></tr>
+      <tr><th scope="row">Ångerrätt</th><td>Bara vid köp på distans: 14 dagar</td><td>Ingen</td></tr>
+    </tbody>
+  </table></div>
+  <p>Konsumentverket nämner särskilt att det räknas som köp från företag när du handlar i <strong>en ideell second hand-butik</strong>, och när en butik säljer saker för en privatpersons räkning. Att pengarna går till välgörenhet ändrar alltså inte dina rättigheter. På marknadsplatser som Tradera, Blocket och Marketplace måste du själv ta reda på om säljaren är en privatperson eller ett företag. Plattformen tar normalt inget ansvar för köpet.</p>
+
+  <h2 id="butik">Köp i second hand-butik</h2>
+  <p>I en second hand-butik gäller konsumentköplagen fullt ut. Det betyder:</p>
+  <ul>
+    <li><strong>Tre års felansvar.</strong> Butiken ansvarar för fel som fanns när du fick varan och som visar sig inom tre år. Har butiken varit grovt vårdslös eller handlat oärligt kan ansvaret gälla längre.</li>
+    <li><strong>Två års bevisregel.</strong> Ett fel som visar sig inom två år antas ha funnits redan vid köpet, om inte butiken visar något annat eller felets art talar emot det. EU-reglerna hade tillåtit Sverige att korta tiden för begagnade varor, men den svenska lagen har ingen sådan regel.</li>
+    <li><strong>Inga villkor till din nackdel.</strong> Avtalsvillkor som ger dig sämre rättigheter än lagen gäller inte. Butiken får bara ge dig längre reklamationstid, aldrig kortare.</li>
+    <li><strong>Normal ordning vid fel.</strong> Du kan i första hand kräva att felet åtgärdas eller att du får en likvärdig vara. Annars kan du få prisavdrag eller häva köpet och få tillbaka pengarna.</li>
+  </ul>
+  <p>För begagnade saker är det sällan möjligt att få en ny likadan vara. Därför blir prisavdrag eller pengarna tillbaka det vanliga i praktiken.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="fel">Vad räknas som fel på en begagnad sak?</h2>
+  <p>En begagnad sak får vara begagnad. Konsumentverket gör skillnad mellan fel och slitage. Det är ett fel om saken inte fungerar som du kunnat förvänta dig, eller om den inte stämmer med vad du fått veta om den. Konsumentverkets exempel är en jacka som inte går att stänga. Brister som är normala för en begagnad sak kan du däremot inte kräva något för, till exempel en jacka som har bleknat.</p>
+  <p>Vad du rimligen kan förvänta dig beror på pris, ålder och vad butiken har sagt. En kaffebryggare för 40 kronor ska fungera. En fåtölj från 1960-talet får ha slitna armstöd. Fråga i butiken vad den vet om saken, och be att få prova elprylar innan du betalar.</p>
+
+  <h2 id="befintligt">Gäller "i befintligt skick"?</h2>
+  <p>Uttrycket "i befintligt skick" finns inte i konsumentköplagen. I stället gäller att en brist är godtagen bara om butiken berättade om den vid köpet och du uttryckligen och särskilt godkände den. En allmän skylt vid kassan räcker därför inte för att du ska förlora dina rättigheter. Har personalen däremot sagt "brödrosten värmer bara på ena sidan" och du köpt den ändå, kan du inte klaga på just det.</p>
+  <p>Vid köp av en privatperson är det annorlunda. Där finns uttrycket i köplagen, och det är vanligt i annonser.</p>
+
+  <h2 id="privat">Köp på loppis och av privatperson</h2>
+  <p>På en gårdsloppis eller via Blocket köper du av en privatperson. Då gäller i första hand det ni har kommit överens om, och i andra hand köplagen. Konsumentköplagen gäller inte, och det finns ingen ångerrätt.</p>
+  <p>Även när en sak har sålts "i befintligt skick" är den felaktig enligt köplagen om:</p>
+  <ol>
+    <li>den inte stämmer med vad säljaren berättat före köpet,</li>
+    <li>säljaren inte berättat om viktiga förhållanden som säljaren måste ha känt till och som du kunde räkna med att få veta, eller</li>
+    <li>den är i väsentligt sämre skick än du med fog kunnat räkna med, med hänsyn till priset och omständigheterna.</li>
+  </ol>
+  <p>Köparen har också en <strong>undersökningsplikt</strong>. Du kan inte klaga på fel som du borde ha sett när du tittade på saken, eller som du skulle ha sett om du hade tittat när säljaren bad dig göra det. Det gäller dock inte om säljaren har varit oärlig. Lagen talar inte om "dolda fel" som ett eget begrepp, men det är i praktiken fel som en normal undersökning inte hade avslöjat som du kan klaga på.</p>
+  <p>Du ska klaga inom skälig tid efter att du märkt felet. Rätten går förlorad om du inte har klagat inom två år från att du fick saken.</p>
+
+  <h2 id="auktion">Auktioner</h2>
+  <p>På en <strong>offentlig auktion</strong>, där en auktionsförrättare håller en öppen budgivning som du kan delta i på plats, gäller särskilda regler för begagnade saker. Saken är felaktig bara om den är i sämre skick än du med fog kunnat räkna med, bland annat med hänsyn till utropspriset. Du kan inte få prisavdrag för fel på en begagnad sak som köpts på offentlig auktion. Om det går att delta på plats finns heller ingen ångerrätt, även om du har budat via nätet.</p>
+  <p>Rena nätauktioner där du inte kan vara på plats, som Tradera, räknas inte som offentlig auktion i lagens mening. Där gäller samma regler som för andra köp av företag eller privatpersoner.</p>
+
+  <h2 id="natet">Köp på nätet och ångerrätt</h2>
+  <p>Köper du begagnat från ett företag på nätet, till exempel en välgörenhetsorganisations nätbutik eller en second hand-handlare på Tradera, har du 14 dagars ångerrätt. Fristen börjar när du har fått varan. I en fysisk butik finns ingen lagstadgad ångerrätt. Öppet köp och bytesrätt är frivilliga löften, så fråga vad som gäller innan du betalar och spara kvittot.</p>
+
+  <h2 id="reklamera">Så reklamerar du</h2>
+  <ol>
+    <li><strong>Klaga snabbt.</strong> Mot ett företag räknas två månader efter att du upptäckt felet alltid som i tid.</li>
+    <li><strong>Gå till säljaren</strong> med kvitto, eller kontoutdrag och Swish-historik, och berätta vad som är fel.</li>
+    <li><strong>Gör det skriftligt</strong> om butiken säger nej, så att du kan visa när du klagade.</li>
+    <li><strong>Var rimlig.</strong> En ideell butik kan sällan reparera, men kan ofta ge pengarna tillbaka eller ett tillgodokvitto.</li>
+    <li><strong>Köpt privat?</strong> Kontakta säljaren direkt. Kommer ni inte överens kan tvisten i sista hand avgöras i domstol, men för små belopp är det sällan värt kostnaden.</li>
+  </ol>
+  <p>Konsumentverkets sida om att handla begagnat har fler exempel. Hitta en butik med reklamationsrätt bland <a href="/">alla second hand-butiker i Sverige</a>.</p>
+  <Faq fragor={fragor} />
+</Guide>

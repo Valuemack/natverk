@@ -1,9 +1,135 @@
 ---
-import KatalogEnhet from "@natverk/core/katalog/KatalogEnhet.astro";
-import { SITE, KAT, ORD, SCHEMA_TYP, UPPDATERAD, KALLA, TITEL_ORD } from "../../../site.js";
+// Sida för en parkering. Byggs bara när parkeringen klarar grinden (src/grind.js): öppen för besökare, sökbart namn,
+// minst 20 platser och minst 5 informationspoäng. Innehåll: svar först, fakta, taxa, öppettider, prisläge mot kommunen,
+// närmaste alternativ med pris (billigare och gratis), kommunens gatutaxa, karta, metod och frågor. Ingen FAQ-schema.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Oppettider from "@natverk/core/katalog/Oppettider.astro";
+import OppetNu from "@natverk/core/katalog/OppetNu.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import Karta from "../../../components/Karta.astro";
+import Gatutaxa from "../../../components/Gatutaxa.astro";
+import Metod from "../../../components/Metod.astro";
+import { besk } from "@natverk/core/seo.js";
+import { enhetLd, veckoSammanfattning, kartLank, adressRad } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, SCHEMA_TYP } from "../../../site.js";
+import { dygnetRunt } from "../../../grind.js";
+import { TYP, krTim, prisText, timprisAv, dygnspris, naraMedPris, prisLage, kmText, arGratis, platser, maxTid, tal } from "../../../fakta.js";
 
 export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
-const { enhet } = Astro.props;
+const { enhet: e } = Astro.props;
+const k = KAT.kommuner.find((x) => x.slug === e.kommunSlug);
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const v = e.verifierad;
+const x = e.extra ?? {};
+const typ = TYP[e.typ] ?? "Parkering";
+const tim = timprisAv(e), dygn = dygnspris(e), p = platser(e);
+const vs = !dygnetRunt(e.oppettider) ? veckoSammanfattning(e.oppettider) : null;
+const oppetDygn = dygnetRunt(e.oppettider) || /dygnet runt/i.test(v?.oppettider ?? "");
+const lage = prisLage(e, k.enheter);
+const nara = naraMedPris(e, KAT.enheter, 8, 3);
+const billigare = tim ? naraMedPris(e, KAT.enheter.filter((y) => timprisAv(y) && timprisAv(y) < tim), 4, 2) : [];
+const gratisNara = !arGratis(e) ? naraMedPris(e, KAT.enheter.filter(arGratis), 3, 2) : [];
+const plats = e.ort ?? e.kommun;
+const harOrt = plats && e.namn.toLowerCase().includes(plats.toLowerCase());
+const namnOrt = `${e.titelNamn ?? e.namn}${e.skilj ? `, ${e.skilj}` : ""}${harOrt ? "" : `, ${plats}`}`;
+const titel = [`${namnOrt} – pris och öppettider`, `${namnOrt} – parkering, pris`, `${namnOrt} – parkering`, namnOrt].find((t) => t.length <= 60) ?? namnOrt;
+
+const svar = [
+  `${e.namn} är ${["parkeringshus", "parkeringsgarage"].includes(e.typ) ? "ett" : "en"} ${typ.toLowerCase()}${e.gatuadress ? ` på ${adressRad(e)}` : ` i ${plats}`}${p ? ` med ${tal(p)} platser` : ""}.`,
+  arGratis(e) ? `Parkeringen är avgiftsfri enligt källan${x.max_tid ? `, med längsta tid ${maxTid(x.max_tid)}` : ""}.` : tim ? `En timme kostar ${krTim(tim)}${dygn ? ` och ett dygn ${tal(dygn)} kr` : ""}.` : null,
+  oppetDygn ? "Öppet dygnet runt." : vs ? `Öppet ${vs}.` : v?.oppettider ? `Öppet ${v.oppettider.toLowerCase()}.` : null,
+  (v?.operator ?? e.kedja) && `Drivs av ${v?.operator ?? e.kedja}.`,
+].filter(Boolean).join(" ");
+
+const fakta = [
+  ...(e.fakta ?? []),
+  v?.avgiftstid && { namn: "Avgiftstid", varde: v.avgiftstid },
+  v?.oppettider && { namn: "Öppettider", varde: v.oppettider },
+  v?.betalning?.length && { namn: "Betalning", varde: v.betalning.join(", ") },
+  v?.operator && v.operator !== e.kedja && { namn: "Operatör", varde: v.operator },
+  x.op?.inomhus === true && { namn: "Inomhus", varde: "Ja" },
+  x.op?.uppvarmd === true && { namn: "Uppvärmt", varde: "Ja" },
+  dygn && !(e.fakta ?? []).some((f) => f.namn === "Dygnspris") && { namn: "Dygnspris", varde: `${tal(dygn)} kr` },
+].filter(Boolean);
+
+const fragor = [
+  (tim || arGratis(e)) && { fraga: `Vad kostar det att parkera på ${e.namn}?`, svar: arGratis(e) ? `${e.namn} är avgiftsfri enligt våra källor${x.max_tid ? `, men du får stå högst ${maxTid(x.max_tid)}` : ""}. Skyltningen på plats gäller.` : `Ordinarie pris är ${krTim(tim)}${dygn ? ` och ${tal(dygn)} kr per dygn` : ""}.${lage ? ` Det är ${lage.dyrare > lage.billigare ? "billigare" : "dyrare"} än de flesta av de ${lage.n} andra parkeringarna med timpris i ${k.namn}, där mittenvärdet är ${krTim(lage.median)}.` : ""}` },
+  { fraga: `Var ligger ${e.namn}?`, svar: `${e.namn} ligger ${e.gatuadress ? `på ${adressRad(e)}` : `i ${plats}`} i ${k.namn} kommun${lan ? `, ${lan.namn}` : ""}.${nara[0] ? ` Närmaste andra parkering är ${nara[0].enhet.namn}, ${kmText(nara[0].km)} bort.` : ""}` },
+  (oppetDygn || vs || v?.oppettider) && { fraga: `Vilka öppettider har ${e.namn}?`, svar: oppetDygn ? `${e.namn} är öppen dygnet runt enligt operatören.` : `${e.namn} har öppet ${vs ?? v.oppettider.toLowerCase()}. Kontrollera in- och utfartstider innan du parkerar länge.` },
+  x.hojdbegransning && { fraga: `Vilken höjdbegränsning har ${e.namn}?`, svar: `Fri höjd är ${String(x.hojdbegransning).replace(".", ",")} meter. Med takbox eller hög skåpbil kan det bli för lågt.` },
+  x.laddplatser > 0 && { fraga: `Kan man ladda elbilen på ${e.namn}?`, svar: `Ja, det finns ${x.laddplatser} laddplatser enligt ${v ? "operatören" : "våra källor"}. Laddningen betalas oftast separat från parkeringsavgiften.` },
+  billigare[0] && { fraga: `Finns det billigare parkering nära ${e.namn}?`, svar: `Ja. ${billigare[0].enhet.namn} ligger ${kmText(billigare[0].km)} bort och kostar ${krTim(timprisAv(billigare[0].enhet))}.` },
+].filter(Boolean);
+
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }, { namn: e.namn, href: e.href }];
+const ld = enhetLd(e, SITE, SCHEMA_TYP);
+const punkter = [e, ...nara.map((n) => n.enhet)].filter((y) => y.lat != null).map((y) => ({ namn: y.namn, lat: y.lat, lon: y.lon, href: y === e ? null : y.href, rad: prisText(y) ?? TYP[y.typ] }));
+const kallor = [
+  v && { namn: v.kalla_namn, url: v.kalla_url, datum: v.hamtad },
+  e.webb && !v && { namn: `Operatörens sida för ${e.namn}`, url: e.webb, datum: e.uppdaterad },
+  ...(e.kallor ?? []).filter((s) => typeof s === "string").map((s) => ({ namn: s })),
+].filter(Boolean);
 ---
-<KatalogEnhet site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<Layout site={SITE} titel={titel}
+  beskrivning={besk(`${e.namn}${e.gatuadress ? `, ${e.gatuadress}` : ""}${harOrt ? "" : ` i ${plats}`}: ${typ.toLowerCase()}${p ? ` med ${p} platser` : ""}.`, tim && `✓ ${krTim(tim)}`, arGratis(e) && "✓ Gratis", dygn && `✓ Dygn ${dygn} kr`, (vs || oppetDygn) && "✓ Öppettider", x.laddplatser > 0 && "✓ Laddplatser", "✓ Billigare alternativ i närheten")}
+  smulor={smulor} jsonld={[ld]} uppdaterad={UPPDATERAD}>
+  <h1>{e.namn}</h1>
+  <p class="svar">{svar}</p>
+  <OppetNu enhet={e} />
+  <div class="knappar">
+    <a class="knapp" href={kartLank(e)} rel="nofollow noopener" target="_blank">Vägbeskrivning</a>
+    {(v?.kalla_url ?? e.webb) && <a class="knapp sekundar" href={v?.kalla_url ?? e.webb} rel="nofollow noopener" target="_blank">Operatörens sida</a>}
+  </div>
+
+  <h2>Fakta om {e.namn}</h2>
+  <dl class="fakta">
+    {e.gatuadress && <><dt>Adress</dt><dd>{adressRad(e)}</dd></>}
+    <dt>Kommun</dt><dd><a href={k.href}>{k.namn}</a></dd>
+    {e.kedja && <><dt>Drivs av</dt><dd>{e.kedja}</dd></>}
+    {fakta.map((f) => <><dt>{f.namn}</dt>{f.varde?.__html ? <dd set:html={f.varde.__html} /> : <dd>{f.varde}</dd>}</>)}
+  </dl>
+  {v?.anmarkning && <p>{v.anmarkning}</p>}
+
+  {vs && <>
+    <h2>Öppettider för {e.namn}</h2>
+    <Oppettider oppettider={e.oppettider} />
+    <p class="kalla">Tiderna gäller in- och utfart enligt operatören. De kan avvika vid helgdagar.</p>
+  </>}
+
+  {lage && <>
+    <h2>Prisläge jämfört med {k.namn}</h2>
+    <p>{e.namn} kostar {krTim(tim)}. Av de {lage.n} andra parkeringarna i {k.namn} där vi har ett timpris är <strong>{lage.dyrare} dyrare</strong> och <strong>{lage.billigare} billigare</strong>. Mittenvärdet i kommunen är {krTim(lage.median)}.</p>
+  </>}
+
+  <Annons plats="enhet-1" />
+
+  {(billigare.length > 0 || gratisNara.length > 0) && <>
+    <h2>Billigare eller gratis i närheten</h2>
+    <ul>
+      {billigare.map((n) => <li><a href={n.enhet.href}>{n.enhet.namn}</a> – {prisText(n.enhet)}, {kmText(n.km)} bort</li>)}
+      {gratisNara.map((n) => <li><a href={n.enhet.href}>{n.enhet.namn}</a> – {prisText(n.enhet)}, {kmText(n.km)} bort</li>)}
+    </ul>
+    <p class="kalla">Avstånd fågelvägen. Gratisparkeringar kan ha tidsgräns och kräva p-skiva.</p>
+  </>}
+
+  {nara.length > 0 && <>
+    <h2>Närmaste parkeringar från {e.namn}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Parkering</th><th>Typ</th><th>Pris</th><th class="num">Avstånd</th></tr></thead>
+      <tbody>{nara.map((n) => <tr><td><a href={n.enhet.href}>{n.enhet.namn}</a></td><td>{TYP[n.enhet.typ] ?? "Parkering"}</td><td>{prisText(n.enhet) ?? "–"}</td><td class="num">{kmText(n.km)}</td></tr>)}</tbody>
+    </table></div>
+  </>}
+
+  <h2>Karta</h2>
+  <Karta punkter={punkter} id="enhet" hojd={300} />
+
+  {k.taxa && <Gatutaxa kommun={k} rubrik={`Gatuparkering runt omkring i ${k.namn}`} kort />}
+
+  <Metod kallor={kallor} />
+  <Faq fragor={fragor} />
+  <p><a href={k.href}>Alla {k.enheter.length} parkeringar i {k.namn} →</a></p>
+  <OppetNuSkript slot="skript" />
+</Layout>

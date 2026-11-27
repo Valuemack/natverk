@@ -1,12 +1,45 @@
 ---
+// Butikssida. Byggs bara för butiker som klarar grinden i src/grind.js (öppettider, adress och minst två av
+// telefon, egen butikssida och sortiment, i en kommun med minst 3 butiker). Utöver kärnmallen: hur butiken står sig
+// mot de andra i kommunen, närmaste söndagsöppna alternativ och organisationens egna regler för gåvor.
 import KatalogEnhet from "@natverk/core/katalog/KatalogEnhet.astro";
-import { rakna, slug } from "@natverk/core/katalog.js";
+import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
+import { rakna, slug, narmaste, veckoSammanfattning } from "@natverk/core/katalog.js";
+import OrgGavor from "../../../components/OrgGavor.astro";
+import { kategori, KATEGORI_TEXT, sondagsoppen, lordagsoppen, timmarVecka, dagarOppet, tidKalla } from "../../../lib/butik.js";
+import { riktigaTider } from "../../../grind.js";
 import { SITE, KAT, ORD, SCHEMA_TYP, UPPDATERAD, KALLA, TITEL_ORD } from "../../../site.js";
 
 export const getStaticPaths = () => KAT.enheter.filter((e) => e.egenSida)
   .map((e) => ({ params: { kommun: e.kommunSlug, enhet: e.slug }, props: { enhet: e } }));
-const { enhet } = Astro.props;
-const medSida = new Set(rakna(KAT.enheter, (e) => e.kedja).filter(([, n]) => n >= 5).map(([k]) => k));
-const kedjaHref = (e) => (medSida.has(e.kedja) ? `/kedja/${slug(e.kedja)}/` : null);
+const { enhet: e } = Astro.props;
+const medSida = new Set(rakna(KAT.enheter, (x) => x.kedja).filter(([, n]) => n >= 5).map(([k]) => k));
+const kedjaHref = (x) => (medSida.has(x.kedja) ? `/kedja/${slug(x.kedja)}/` : null);
+const kommun = KAT.kommuner.find((k) => k.slug === e.kommunSlug);
+const andra = kommun.enheter.filter(riktigaTider);
+const tim = timmarVecka(e), dagar = dagarOppet(e);
+const plats = [...andra].sort((a, b) => timmarVecka(b) - timmarVecka(a)).indexOf(e) + 1;
+const sondagNara = !sondagsoppen(e) ? narmaste(e, KAT.enheter, 3, sondagsoppen, 40) : [];
+const kalla = tidKalla(e);
+const kat = kategori(e);
+const extraFragor = [
+  { fraga: `Vad är ${e.namn} för slags butik?`, svar: `${e.namn} är en ${KATEGORI_TEXT[kat]}${e.typ && !KATEGORI_TEXT[kat].toLowerCase().includes(e.typ.toLowerCase()) ? ` (${e.typ.toLowerCase()})` : ""}.${(e.sortiment ?? []).length ? ` Sortimentet omfattar ${e.sortiment.join(", ")}.` : ""}` },
+  !sondagsoppen(e) && sondagNara[0] && { fraga: `Var finns närmaste second hand med söndagsöppet?`, svar: `${e.namn} har stängt på söndagar. Närmast med söndagsöppet är ${sondagNara[0].enhet.namn} i ${sondagNara[0].enhet.kommun}.` },
+].filter(Boolean);
 ---
-<KatalogEnhet helgdagar kedjaHref={kedjaHref} site={SITE} kat={KAT} enhet={enhet} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<KatalogEnhet helgdagar kedjaHref={kedjaHref} site={SITE} kat={KAT} enhet={e} ord={ORD} schemaTyp={SCHEMA_TYP} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} extraFragor={extraFragor}>
+  <h2>{e.namn} jämfört med andra loppisar i {kommun.namn}</h2>
+  <p>
+    {e.namn} har öppet {dagar} {dagar === 1 ? "dag" : "dagar"} i veckan, sammanlagt cirka {tim} timmar.
+    {andra.length > 1 && <> Det är plats {plats} av {andra.length} butiker med kända tider i {kommun.namn} räknat i öppettimmar.</>}
+    {" "}{lordagsoppen(e) ? "Butiken har lördagsöppet" : "Butiken har stängt på lördagar"}{" "}
+    – {kommun.enheter.filter(lordagsoppen).length} av {kommun.enheter.length} i kommunen har öppet då – och {sondagsoppen(e) ? "är en av" : "hör inte till de"} {kommun.enheter.filter(sondagsoppen).length} som har söndagsöppet.
+  </p>
+  {kalla && <p class="kalla">Öppettiderna kommer från {kalla.url ? <a href={kalla.url} rel="nofollow noopener" target="_blank">{kalla.namn}</a> : kalla.namn}{kalla.hamtad && <>, hämtade {kalla.hamtad}</>}.{e.oppettider_text && <> Källans egen formulering: ”{e.oppettider_text}”.</>}</p>}
+  {sondagNara.length > 0 && <>
+    <h2>Söndagsöppet nära {e.namn}</h2>
+    <p>{e.namn} har stängt på söndagar. De här butikerna i närheten har ordinarie söndagsöppet ({veckoSammanfattning({ sun: sondagNara[0].enhet.oppettider.sun })} för den närmaste):</p>
+    <EnhetLista enheter={sondagNara} visaKommun />
+  </>}
+  <OrgGavor enheter={[e]} plats={e.ort ?? kommun.namn} rubrikId="skanka" />
+</KatalogEnhet>

@@ -1,0 +1,132 @@
+---
+// Guide: begagnade leksaker och barnprodukter. Källor: Kemikalieinspektionen (risker med begagnade leksaker,
+// checklista), Transportstyrelsen och Konsumentverket (bilbarnstol, hjälm, barnsäng, barnvagn), Elsäkerhetsverket,
+// produktsäkerhetslagen, lag 2011:579 och GPSR via Konsumentverket. Organisationernas gåvoregler från deras sidor. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const avsnitt = [
+  { id: "oversikt", rubrik: "Översikt: köpa, tänka efter eller avstå" },
+  { id: "leksaker", rubrik: "Gamla leksaker och kemikalier" },
+  { id: "bilstol", rubrik: "Bilbarnstolar" },
+  { id: "hjalm", rubrik: "Cykelhjälmar" },
+  { id: "sang", rubrik: "Spjälsängar, resesängar och våningssängar" },
+  { id: "vagn", rubrik: "Barnvagnar" },
+  { id: "el", rubrik: "Elprylar och elleksaker" },
+  { id: "lagen", rubrik: "Vad säger lagen om begagnat?" },
+];
+const fragor = [
+  { fraga: "Är det farligt att köpa begagnade leksaker?", svar: "De flesta begagnade leksaker är bra köp. Kemikalieinspektionen avråder från gamla leksaker i mjuk plast, som dockor och badankor, eftersom de kan innehålla hormonstörande ämnen – särskilt om de luktar starkt eller känns klibbiga. Strängare kemikalieregler kom 2013. Trä och hård plast är mindre riskabelt." },
+  { fraga: "Kan man köpa begagnad bilbarnstol?", svar: "Det går, men bara om du vet att stolen inte varit med om en olycka och att den inte är för gammal. Den ska vara godkänd enligt R44-03 eller senare, eller enligt R129 (i-Size). Sedan 1 september 2024 får bara R129-stolar säljas i butik, men äldre godkända stolar får fortfarande användas." },
+  { fraga: "Varför tar second hand-butikerna inte emot bilbarnstolar?", svar: "Röda Korset, Erikshjälpen, PMU, Björkåfrihet och Stockholms Stadsmission tar inte emot bilbarnstolar och flera av dem inte heller hjälmar eller flytvästar. En skada efter en krock eller ett slag syns inte, och historiken går inte att kontrollera." },
+  { fraga: "Ska man köpa begagnad cykelhjälm?", svar: "Konsumentverket avråder, eftersom en hjälm kan ha fått slag som försämrat skyddet utan att det syns. Hjälmen ska vara CE-märkt och barn upp till sju år ska ha en småbarnshjälm med grönt spänne." },
+  { fraga: "Vad ska man kontrollera på en begagnad spjälsäng?", svar: "Avståndet mellan spjälorna ska vara 45–65 millimeter, ribborna i botten högst 25 millimeter isär och hörnstolparna får sticka upp högst ungefär en millimeter. Madrassen ska täcka hela botten utan glipor." },
+];
+---
+<Guide site={SITE} titel="Begagnade leksaker och barnprodukter – vad är säkert?"
+  beskrivning="Kan man köpa begagnad bilbarnstol, cykelhjälm eller spjälsäng? Myndigheternas råd om gamla plastleksaker, bilstolar, hjälmar, barnsängar, vagnar och elleksaker."
+  h1="Begagnade leksaker och barnprodukter – vad är säkert att köpa?"
+  svar={`De flesta begagnade barnsaker är lika bra som nya. Avstå från <strong>mjuka plastleksaker från före 2013</strong>, särskilt om de luktar eller är klibbiga, och från <strong>bilbarnstolar och cykelhjälmar</strong> med okänd historik – en krockskada syns inte. Mät spjälsängar (45–65 mm mellan spjälorna), kontrollera bromsar och lås på vagnar och sök på modellen bland återkallade produkter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Begagnade barnprodukter", href: "/guider/begagnade-barnprodukter/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Köpa begagnat – dina rättigheter", href: "/guider/kopa-begagnat-rattigheter/", text: "Reklamation och fel" },
+    { namn: "Vad tar second hand-butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Bilstolar, hjälmar och leksaker" },
+    { namn: "Ha en egen loppis", href: "/guider/ha-egen-loppis/", text: "Vad du inte bör sälja" },
+    { namn: "Second hand och miljön", href: "/guider/second-hand-miljo/", text: "Varför begagnat lönar sig" },
+  ]}
+  kallor={[
+    { namn: "Kemikalieinspektionen – Risker med begagnade leksaker", url: "https://www.kemi.se/rad-till-privatpersoner/kemikalier-i-hemmet-och-pa-fritiden/leksaker/risker-med-begagnade-leksaker", text: "mjukplast, 2013, magneter, batterier (uppdaterad 24 april 2024)", datum: "2026-11-27" },
+    { namn: "Kemikalieinspektionen – Begagnade leksaker, checklista", url: "https://www.kemi.se/stod-till-foretag/hall-koll-pa-kemikalierna/begagnade-leksaker---checklista", text: "tillsammans med Konsumentverket och Elsäkerhetsverket (uppdaterad 2 oktober 2026)", datum: "2026-11-27" },
+    { namn: "Karolinska Institutet, IMM Riskwebben – Ftalater", url: "https://ki.se/imm/miljomedicinsk-riskbedomning/riskwebben/ftalater", text: "förbud i leksaker sedan januari 2007 (uppdaterad 31 mars 2026)", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Så skyddar du barnen, regler och tips", url: "https://www.transportstyrelsen.se/sv/vagtrafik/trafikregler-och-vagmarken/trafikregler/i-fordonet/Sa-skyddar-du-barnen---regler-och-tips/", text: "135 cm, R44-03, R129, försäljning från 1 september 2024 (uppdaterad 5 november 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Bilbarnstol", url: "https://www.konsumentverket.se/sakerhet-varor-tjanster/bilbarnstol-konsument/", text: "olycka, ålder, godkännande (granskad 17 november 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Hjälmar och säkerhet", url: "https://www.konsumentverket.se/sakerhet-varor-tjanster/hjalm-konsument/", text: "begagnad hjälm, småbarnshjälm (granskad 5 maj 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Barnsäng", url: "https://www.konsumentverket.se/sakerhet-varor-tjanster/barnsang-konsument/", text: "EN 716-1, mått, våningssäng (granskad 24 oktober 2025)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Är det säkert att köpa en begagnad barnvagn?", url: "https://www.konsumentverket.se/fragor-och-svar/3276377/ar-det-sakert-att-kopa-en-begagnad-barnvagn/", text: "EN 1888, broms, Safety Gate (2 november 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Återkallelser och varningar för säkerhetsbrister", url: "https://www.konsumentverket.se/artikellista/aterkallelser-och-varningar-for-sakerhetsbrister/", datum: "2026-11-27" },
+    { namn: "Elsäkerhetsverket – Köpa elprodukter begagnat", url: "https://www.elsakerhetsverket.se/privatpersoner/dina-elprodukter/kopa-elprodukter/kopa-elprodukter-begagnat/", text: "sladd, jordat och ojordat (publicerad 31 augusti 2026)", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Lagar och regler om produktsäkerhet", url: "https://www.konsumentverket.se/produktsakerhet-foretag/lagar-och-regler-inom-produktsakerhet/", text: "GPSR från 13 december 2024 (granskad 17 november 2026)", datum: "2026-11-27" },
+    { namn: "Produktsäkerhetslag (2004:451)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/produktsakerhetslag-2004451_sfs-2004-451/", text: "2–3 §§", datum: "2026-11-27" },
+    { namn: "Erikshjälpen, Röda Korset, PMU, Stockholms Stadsmission och Björkåfrihet – gåvoregler", text: "organisationernas egna sidor om vad de tar emot", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="oversikt">Översikt: köpa, tänka efter eller avstå</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Produkt</th><th>Råd</th><th>Det viktigaste att kontrollera</th></tr></thead>
+    <tbody>
+      <tr><td>Kläder, böcker, pussel, träleksaker</td><td>Köp</td><td>Lösa knappar och små delar på saker till de minsta</td></tr>
+      <tr><td>Leksaker i hård plast</td><td>Köp</td><td>Hela, inga vassa kanter, batteriluckan ska ha skruv</td></tr>
+      <tr><td>Mjuka plastleksaker från före 2013</td><td>Avstå</td><td>Lukt och klibbig yta tyder på ämnen som läcker</td></tr>
+      <tr><td>Bilbarnstol</td><td>Bara med känd historik</td><td>Ingen olycka, inte för gammal, R44-03/04 eller R129</td></tr>
+      <tr><td>Cykelhjälm</td><td>Avstå</td><td>Slagskador syns inte</td></tr>
+      <tr><td>Spjälsäng och resesäng</td><td>Köp efter kontroll</td><td>Spjälavstånd 45–65 mm, fällmekanismen</td></tr>
+      <tr><td>Barnvagn</td><td>Köp efter kontroll</td><td>Bromsen på båda hjulen, lås, sele, EN 1888, återkallelser</td></tr>
+      <tr><td>Elleksaker</td><td>Bara i mycket gott skick</td><td>Hel sladd och stickpropp, transformator högst 24 volt</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tabellen sammanfattar råden från Kemikalieinspektionen, Konsumentverket, Transportstyrelsen och Elsäkerhetsverket. Avsnitten nedan förklarar varför.</p>
+
+  <h2 id="leksaker">Gamla leksaker och kemikalier</h2>
+  <p>Leksaker är det som säljs mest på barnloppisar, och för det mesta är de ett utmärkt köp. Kemikalieinspektionen pekar ut en grupp där det är värt att vara försiktig: <strong>gamla leksaker i mjuk plast</strong>, som dockhuvuden, badankor och figurer. De kan innehålla hormonstörande ämnen. Ett tecken på att ämnena har börjat läcka är att leksaken luktar starkt eller känns klibbig och fet. Gamla leksaker i trä eller hård plast är enligt myndigheten inte lika riskabla.</p>
+  <p>Årtalet att hålla koll på är <strong>2013</strong>. Då kom strängare regler för vilka kemiska ämnen leksaker får innehålla. Den svenska lagen om leksakers säkerhet, som bygger på EU:s leksaksdirektiv, gäller sedan juli 2011. Flera av de vanligaste mjukgörarna förbjöds redan 2007 i leksaker och barnavårdsartiklar. En leksak som köptes ny före de åren kan alltså ha tillverkats efter regler som inte längre gäller. Därför tar Erikshjälpen inte emot mjuka plastleksaker från före 2013, och PMU och Stockholms Stadsmission tar inte emot plastleksaker som är äldre än tio år.</p>
+  <p>Kemikalieinspektionen ger också några råd som inte handlar om kemikalier:</p>
+  <ul>
+    <li><strong>Kläm och dra.</strong> Små delar som lossnar kan ge kvävningsrisk.</li>
+    <li><strong>Långa band och starka magneter.</strong> Flera magneter som sväljs kan dra ihop tarmen och orsaka allvarliga skador.</li>
+    <li><strong>Batterier.</strong> Batteriluckan ska vara svår för barn att öppna, till exempel med en skruv. Knappcellsbatterier kan ge svåra frätskador om de sväljs.</li>
+    <li><strong>Elleksaker</strong> ska ha en transformator på högst 24 volt och får aldrig kopplas direkt till vägguttaget.</li>
+  </ul>
+  <p>Leksaker du väljer bort lämnas på kommunens återvinningscentral, inte i soporna och inte i en insamlingsbox för second hand.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="bilstol">Bilbarnstolar</h2>
+  <p>Bilstolen är den barnprodukt där en begagnad sak kan vara farligast, eftersom skadan efter en krock ofta inte syns. Konsumentverket säger att du ska kontrollera två saker: att stolen inte har varit med om en olycka och att den inte är för gammal. Material åldras, och äldre modeller uppfyller inte alltid dagens krav. Någon myndighet anger ingen fast åldersgräns i år.</p>
+  <p>Transportstyrelsens regler:</p>
+  <ul>
+    <li>Barn som är kortare än 135 centimeter ska använda en särskild skyddsanordning. Barn under tre år får inte åka i ett fordon som saknar en sådan.</li>
+    <li>Stolen ska vara godkänd enligt <strong>ECE R44-03 eller senare</strong>. Godkännandenumret på etiketten ska börja på 03 eller 04. Alternativet är <strong>R129</strong>, även kallat i-Size, som räknar barnets längd i centimeter i stället för vikt.</li>
+    <li>Sedan <strong>1 september 2024</strong> får bara R129-godkända stolar säljas i butik och handel. Stolar som är godkända enligt R44 får fortfarande användas.</li>
+    <li>Barn bör åka bakåtvänt så länge som möjligt, normalt till fyra eller fem års ålder. En bakåtvänd stol får aldrig sitta framför en aktiv krockkudde.</li>
+  </ul>
+  <p>Köp därför helst en begagnad bilstol av någon du känner, så att du vet vad den har varit med om. De stora välgörenhetsbutikerna tar av samma skäl inte emot bilbarnstolar: Röda Korset, Erikshjälpen, PMU, Björkåfrihet och Stockholms Stadsmission säger alla nej.</p>
+
+  <h2 id="hjalm">Cykelhjälmar</h2>
+  <p>Konsumentverket avråder från att köpa begagnad cykelhjälm. Ett slag kan ha försämrat skyddet utan att det syns utanpå. En hjälm ska bytas efter ett hårt slag, oavsett hur gammal den är. Hjälmen ska vara CE-märkt och ha en bruksanvisning på svenska.</p>
+  <p>För barn upp till sju år rekommenderas en <strong>småbarnshjälm med grönt spänne</strong>. Spännet lossnar vid en viss kraft, eftersom det har hänt att små barn har fastnat i hakbandet och hängts. Barn under 15 år måste ha hjälm när de cyklar.</p>
+
+  <h2 id="sang">Spjälsängar, resesängar och våningssängar</h2>
+  <p>Äldre barnsängar kan ha mått som inte längre godkänns. Konsumentverket hänvisar till standarden EN 716-1 och anger måtten att mäta med tumstock på loppisen:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kontroll</th><th>Krav</th></tr></thead>
+    <tbody>
+      <tr><td>Avstånd mellan spjälorna</td><td>45–65 mm</td></tr>
+      <tr><td>Avstånd mellan ribborna i sängbotten</td><td>Högst 25 mm</td></tr>
+      <tr><td>Hörnstolpar över gaveln</td><td>Högst cirka 1 mm</td></tr>
+      <tr><td>Madrassen</td><td>Täcker hela botten utan glipor</td></tr>
+      <tr><td>Våningssäng: skyddsbrädan</td><td>Minst 16 cm över madrassen. Barn under 6 år ska inte sova uppe</td></tr>
+    </tbody>
+  </table></div>
+  <p>Kontrollera fällmekanismen extra noga på en resesäng. Det har hänt olyckor där sängen har fällts ihop med barnet i. Både Stockholms Stadsmission och Göteborgs Stadsmission tar inte emot använda madrasser, så räkna med att köpa en ny.</p>
+
+  <h2 id="vagn">Barnvagnar</h2>
+  <p>En begagnad barnvagn är ett bra köp om den är hel. Konsumentverket påpekar att slitage och åldrade plastdelar i lås och bromsar kan försämra säkerheten. Gör så här:</p>
+  <ol>
+    <li>Ta reda på märke, modell och årsmodell, så att du kan hitta rätt bruksanvisning och se att delarna hör ihop.</li>
+    <li>Kontrollera att vagnen är märkt <strong>EN 1888</strong> och har en angiven maxvikt.</li>
+    <li>Bromsen ska låsa båda hjulen. Prova alla lås, fällmekanismen och selen.</li>
+    <li>Sök på modellen i Konsumentverkets lista över återkallade produkter och i EU:s varningssystem Safety Gate.</li>
+  </ol>
+
+  <h2 id="el">Elprylar och elleksaker</h2>
+  <p>Elsäkerhetsverket rekommenderar att du kontrollerar att hölje, sladd och stickpropp är hela, och frågar hur gammal saken är och hur mycket den har använts. Nya produkter ska vara CE-märkta, och en mycket gammal produkt bör ha ett S-märke. En ojordad produkt får inte användas i ett jordat uttag om den inte är dubbelisolerad. Att bara byta sladd och propp räcker inte, utan det kräver ett elföretag. Myndighetens råd är enkelt: är du det minsta osäker, köp inte.</p>
+
+  <h2 id="lagen">Vad säger lagen om begagnat?</h2>
+  <p>Produktsäkerhetsreglerna gäller för varor som säljs i näringsverksamhet, alltså också i second hand-butiker. Bara varor som säljs som antikviteter, och varor som tydligt säljs för att repareras innan de används, är undantagna. EU:s förordning om allmän produktsäkerhet, som gäller sedan 13 december 2024, omfattar uttryckligen både nya och begagnade produkter. En butik får alltså inte sälja en farlig begagnad produkt.</p>
+  <p>Säljer en privatperson på loppis gäller inte produktsäkerhetslagen, men myndigheternas checklista riktar sig till alla som säljer begagnade leksaker. Det är också en fråga om att ta ansvar för andras barn. Köper du något som visar sig vara farligt i en butik gäller dessutom konsumentköplagen. Se guiden <a href="/guider/kopa-begagnat-rattigheter/">Köpa begagnat – dina rättigheter</a>.</p>
+  <Faq fragor={fragor} />
+</Guide>

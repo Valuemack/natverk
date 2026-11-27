@@ -1,0 +1,25 @@
+---
+// Kommunens gatutaxa per zon, betalsätt och felparkeringsavgifter – från kommunens egen webbplats (data/kommuntaxor.json).
+const { kommun: k, rubrik = `Gatuparkering i ${k.namn} – taxa per zon`, kort = false } = Astro.props;
+const t = k.taxa;
+const kr = (n) => String(n).replace(".", ",");
+---
+{t && <>
+  <h2 id="gatutaxa">{rubrik}</h2>
+  <p>På gatorna sätter kommunen priset. {k.namn} har {t.zoner.length} taxor{t.zoner.some((z) => z.timpris) && <>, från <strong>{kr(Math.min(...t.zoner.filter((z) => z.timpris).map((z) => z.timpris)))} kr</strong> till <strong>{kr(Math.max(...t.zoner.filter((z) => z.timpris).map((z) => z.timpris)))} kr i timmen</strong></>}. Vilken taxa som gäller står på skylten eller automaten vid platsen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Taxa/zon</th><th class="num">Kr/tim</th><th>Avgiftstid</th>{!kort && <th>Längsta tid</th>}</tr></thead>
+    <tbody>{t.zoner.map((z) => <tr><td>{z.namn}{!kort && z.anmarkning && <><br /><small>{z.anmarkning}</small></>}</td><td class="num">{z.timpris != null ? kr(z.timpris) : "–"}</td><td>{z.avgiftstid ?? "–"}</td>{!kort && <td>{z.maxtid ?? "–"}</td>}</tr>)}</tbody>
+  </table></div>
+  {t.sondag_helg && <p><strong>Sön- och helgdagar:</strong> {t.sondag_helg}</p>}
+  {t.betalning?.length > 0 && <p><strong>Så betalar du på gatan i {k.namn}:</strong> {t.betalning.join(", ")}.{t.anmarkning_betalning && <> {t.anmarkning_betalning}</>} Jämför apparna i <a href="/guider/parkeringsappar/">guiden om parkeringsappar</a>.</p>}
+  {!kort && t.boende && <p><strong>Boendeparkering:</strong> {t.boende.pris} {t.boende.villkor} Mer i <a href="/guider/boendeparkering/">guiden om boendeparkering</a>.</p>}
+  {!kort && t.felparkering?.length > 0 && <>
+    <h3>Felparkeringsavgifter i {k.namn}</h3>
+    <div class="tabell"><table><thead><tr><th>Överträdelse</th><th class="num">Avgift</th></tr></thead>
+      <tbody>{t.felparkering.map((f) => <tr><td>{f.fel}</td><td class="num">{kr(f.belopp)} kr</td></tr>)}</tbody></table></div>
+    <p>Skillnaden mot en kontrollavgift på privat mark förklaras i <a href="/guider/parkeringsbot-eller-kontrollavgift/">parkeringsbot eller kontrollavgift</a>.</p>
+  </>}
+  {!kort && t.hcp && <p><strong>Med parkeringstillstånd för rörelsehindrade:</strong> {t.hcp} Läs <a href="/guider/parkeringstillstand-rorelsehindrade/">guiden om parkeringstillstånd</a>.</p>}
+  <p class="kalla">Källa: {t.kallor.map((x, i) => <>{i > 0 && ", "}<a href={x.url} rel="nofollow noopener">{x.namn}</a></>)} (kontrollerad {t.kallor[0]?.hamtad}).</p>
+</>}

@@ -1,35 +1,86 @@
 ---
+// Startsidan (navet): sökverktyg, riksstatistik ur egen data, organisationerna, helgöppet per län,
+// alla län och kommuner samt guiderna. Ingen FAQ-markup (ägarens beslut 2026-11-27).
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Sokverktyg from "@natverk/core/katalog/Sokverktyg.astro";
 import { VERKTYG } from "../verktyg.js";
-import { faqLd, websiteLd } from "@natverk/core/seo.js";
-import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { websiteLd } from "@natverk/core/seo.js";
+import { rakna, slug, talText, invanarePer, FOLK_SVERIGE } from "@natverk/core/katalog.js";
+import OmUppgifterna from "../components/OmUppgifterna.astro";
+import { ORG } from "../lib/organisationer.js";
+import { kategori, sondagsoppen, lordagsoppen, organisationer, listaText, timmarVecka } from "../lib/butik.js";
+import { riktigaTider } from "../grind.js";
+import { GUIDER } from "../guider.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
 
-const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
-const n = KAT.enheter.length;
-const sondag = KAT.enheter.filter((e) => oppetHelg(e, "sun") === true).length;
-const storst = [...KAT.kommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 12);
+const E = KAT.enheter;
+const n = E.length;
+const medTider = E.filter(riktigaTider);
+const sondag = E.filter(sondagsoppen), lordag = E.filter(lordagsoppen);
+const valg = E.filter((e) => e.valgorenhet);
+const pct = (a, b) => Math.round((100 * a) / Math.max(1, b));
+const kategorier = rakna(E, kategori);
+const orgs = organisationer(E);
+const kedjeSidor = new Set(rakna(E, (e) => e.kedja).filter(([, c]) => c >= 5).map(([k]) => k));
+const kedjaFor = (orgKey) => E.find((e) => e.kedja && (e.kedja === orgKey || e.organisation?.startsWith(orgKey)))?.kedja;
+const storst = [...KAT.sidKommuner].sort((a, b) => b.enheter.length - a.enheter.length).slice(0, 12);
+const lanHelg = KAT.lan.map((l) => { const x = l.kommuner.flatMap((k) => k.enheter); const t = x.filter(riktigaTider).length;
+  return { l, n: x.length, sond: x.filter(sondagsoppen).length, lor: x.filter(lordagsoppen).length, pctS: pct(x.filter(sondagsoppen).length, t) }; });
+const utanSondag = KAT.kommuner.filter((k) => !k.enheter.some(sondagsoppen)).length;
+const timmar = medTider.map(timmarVecka).sort((a, b) => a - b);
+const median = timmar.length ? timmar[Math.floor(timmar.length / 2)] : null;
+const perRiket = invanarePer(FOLK_SVERIGE, n);
 const fragor = [
-  { fraga: `Hur många ${ORD.plur} finns det i Sverige?`, svar: `Vi listar ${n} ${ORD.plur} i ${KAT.kommuner.length} kommuner. Listan uppdateras varje natt.` },
-  storst[0] && { fraga: `Vilken kommun har flest ${ORD.plur}?`, svar: `${storst[0].namn} har flest med ${storst[0].enheter.length} st, följt av ${storst.slice(1, 3).map((k) => `${k.namn} (${k.enheter.length})`).join(" och ")}.` },
+  { fraga: "Hur många loppisar finns det i Sverige?", svar: `Vi listar ${talText(n)} loppisar och second hand-butiker i ${KAT.kommuner.length} kommuner – ungefär en på ${talText(perRiket)} invånare. Listan uppdateras varje natt från organisationernas butikslistor och OpenStreetMap. Privata loppisar som bara har öppet några dagar om året finns sällan i källorna.` },
+  { fraga: "Vilka loppisar har öppet på söndagar?", svar: `${sondag.length} butiker har ordinarie söndagsöppet, ${pct(sondag.length, medTider.length)} procent av dem med kända tider. Lördagsöppet har ${pct(lordag.length, medTider.length)} procent. I ${utanSondag} kommuner finns ingen söndagsöppen butik alls. Använd filtret Söndagsöppet ovan eller se din kommun.` },
+  { fraga: "Vilka second hand-butiker går till välgörenhet?", svar: `${valg.length} av butikerna drivs av ideella organisationer: ${listaText(orgs.slice(0, 6).map(([k]) => ORG[k]?.namn ?? k))} med flera. De största är Röda Korsets butiker, som drivs av de lokala föreningarna.` },
+  { fraga: "Vilken kommun har flest loppisar?", svar: `${storst[0].namn} har flest med ${storst[0].enheter.length}, följt av ${listaText(storst.slice(1, 4).map((k) => `${k.namn} (${k.enheter.length})`))}.` },
+  median && { fraga: "Hur länge har en second hand-butik öppet?", svar: `Mittenvärdet är ${median} timmar i veckan bland butikerna med kända tider. Många välgörenhetsbutiker drivs av volontärer och har öppet bara några dagar i veckan, så kontrollera tiderna innan du åker.` },
 ].filter(Boolean);
 ---
 <Layout site={SITE} titel="Loppis nära dig – loppisar och second hand i Sverige"
-  beskrivning={`Hitta ${ORD.plur} nära dig – alla ${n} i Sverige med adress och öppettider. ✓ Öppet nu ✓ Närmaste ${ORD.sing} ✓ Uppdateras varje natt.`}
-  jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  beskrivning={`Loppis nära dig: alla ${talText(n)} loppisar och second hand-butiker i Sverige med öppettider. ✓ Öppet nu ✓ Söndagsöppet ✓ Välgörenhet ✓ Uppdateras varje natt.`}
+  jsonld={[websiteLd(SITE)]} uppdaterad={UPPDATERAD}>
   <h1>Hitta loppis nära dig</h1>
-  <p class="svar">Här finns <strong>{n} {ORD.plur}</strong> i {KAT.kommuner.length} kommuner med adress{KAT.enheter.some(harOppettider) && " och öppettider"}.{sondag > 0 && <> <strong>{sondag}</strong> har öppet på söndagar.</>}</p>
-  <Sokverktyg ord={ORD} kat={KAT} {...VERKTYG} />
+  <p class="svar"><strong>Loppis nära dig:</strong> loppisar.nu listar <strong>{talText(n)} loppisar och second hand-butiker</strong> i {KAT.kommuner.length} kommuner, med adress och – för {medTider.length} av dem – öppettider. <strong>{sondag.length}</strong> har öppet på söndagar och {valg.length} drivs för välgörenhet. Använd din position eller välj kommun nedan.</p>
+  <Sokverktyg ord={{ sing: "loppis", plur: "loppisar", art: "en" }} kat={KAT} {...VERKTYG} />
 
-  <h2>Flest {ORD.plur}</h2>
-  <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
+  <h2>Flest loppisar</h2>
+  <div class="kort">{storst.map((k) => <a href={k.href}><strong>Loppis i {k.namn}</strong><small>{k.enheter.length} butiker · {k.enheter.filter(sondagsoppen).length} söndagsöppna</small></a>)}</div>
 
   <Annons plats="start-1" />
 
-  <h2 id="lan">{Plur} per län och kommun</h2>
+  <h2 id="sverige">Loppis och second hand i Sverige i siffror</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av butik</th><th class="num">Antal</th><th class="num">Andel</th></tr></thead>
+    <tbody>{kategorier.map(([c, x]) => <tr><td>{c}</td><td class="num">{talText(x)}</td><td class="num">{pct(x, n)} %</td></tr>)}</tbody>
+  </table></div>
+  <p>Av butikerna med kända tider har {pct(lordag.length, medTider.length)} procent öppet på lördagar och {pct(sondag.length, medTider.length)} procent på söndagar.{median && <> En typisk butik har öppet {median} timmar i veckan.</>} Det finns ungefär en loppis eller second hand-butik på {talText(perRiket)} invånare.</p>
+
+  <h2 id="organisationer">Välgörenhetsbutikerna – vem driver dem?</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Organisation</th><th class="num">Butiker</th><th>Överskottet går till</th></tr></thead>
+    <tbody>{orgs.map(([k, c]) => { const kd = kedjaFor(k); return <tr>
+      <td>{kd && kedjeSidor.has(kd) ?<a href={`/kedja/${slug(kd)}/`}>{ORG[k]?.namn ?? k}</a> : (ORG[k]?.namn ?? k)}</td>
+      <td class="num">{c}</td><td>{ORG[k]?.andamal ?? "–"}</td></tr>; })}</tbody>
+  </table></div>
+  <p class="kalla">Antal butiker i vår katalog. Ändamålen enligt organisationernas egna webbplatser, hämtade 2026-11-27. <a href="/valgorenhet/">Alla välgörenhetsbutiker</a> · <a href="/guider/valgorenhet-vart-gar-pengarna/">Vart går pengarna?</a></p>
+
+  <h2 id="helg">Loppis öppet på helgen – per län</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Butiker</th><th class="num">Lördagsöppet</th><th class="num">Söndagsöppet</th><th class="num">Andel söndag</th></tr></thead>
+    <tbody>{lanHelg.map((x) => <tr><td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{x.n}</td><td class="num">{x.lor}</td><td class="num">{x.sond}</td><td class="num">{x.pctS} %</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Andel söndag = söndagsöppna butiker delat med butikerna i länet som har kända öppettider.</p>
+
+  <h2 id="guider">Guider om loppis och second hand</h2>
+  <div class="kort">{GUIDER.map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+
+  <Annons plats="start-2" />
+
+  <h2 id="lan">Loppisar per län och kommun</h2>
   {KAT.lan.map((l) => (
     <>
       <h3><a href={l.href}>{l.namn}</a> <small>({l.antal})</small></h3>
@@ -37,7 +88,7 @@ const fragor = [
     </>
   ))}
 
-  <Annons plats="start-2" />
   <Faq fragor={fragor} />
+  <OmUppgifterna enheter={E} plats="hela Sverige" />
   <p class="kalla">{KALLA}</p>
 </Layout>

@@ -1,0 +1,125 @@
+---
+// Guide: vem driver välgörenhetsbutikerna och vart går pengarna? Källor: organisationernas årsberättelser och
+// webbplatser (Röda Korset 2025, Myrorna 2025, Erikshjälpen 2025, Stockholms Stadsmission 2025, PMU, Hela Människan,
+// Björkåfrihet, Artikel2, Lindra), Svensk Insamlingskontroll och SVT (moms 2015). Antal butiker i vårt register räknas vid bygget.
+import Guide from "@natverk/core/Guide.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { slug, rakna } from "@natverk/core/katalog.js";
+import { ORG } from "../../lib/organisationer.js";
+import { organisationer } from "../../lib/butik.js";
+import { SITE, KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const antal = Object.fromEntries(organisationer(KAT.enheter));
+const valg = KAT.enheter.filter((e) => e.valgorenhet).length;
+const kedjeSida = new Set(rakna(KAT.enheter, (e) => e.kedja).filter(([, c]) => c >= 5).map(([k]) => k));
+const kl = (kedja) => (kedjeSida.has(kedja) ? `/kedja/${slug(kedja)}/` : null);
+// Fakta per organisation. "egna" = vad organisationen själv anger om antal butiker.
+const RADER = [
+  { k: "Röda Korset", kedja: "Röda Korset", form: "Ideell förening (1865), lokala föreningar driver butikerna", egna: "260", folk: "5 572 volontärer i butikerna", pengar: "Hjälpverksamhet i Sverige och utomlands" },
+  { k: "Erikshjälpen Second Hand", kedja: "Erikshjälpen Second Hand", form: "Egen juridisk person inom Erikshjälpen (insamlingsstiftelse, stadgar 1967)", egna: "50–51 (Sverige och Norge)", folk: "Anställda, praktikanter och volontärer", pengar: "Barns rättigheter – 28 % av Erikshjälpens finansiering" },
+  { k: "Myrorna", kedja: "Myrorna", form: "Del av trossamfundet Frälsningsarmén, sedan 1896", egna: "32 + nätbutik", folk: "Anställd personal", pengar: "Frälsningsarméns sociala arbete – 16 mnkr 2025" },
+  { k: "PMU Second Hand", kedja: "PMU Second Hand", form: "Avdelning inom Pingst – fria församlingar i samverkan, sedan 1965", egna: "57–60", folk: "Främst volontärer, ofta med en lokal församling", pengar: "Bistånd och lokala sociala projekt" },
+  { k: "Stockholms Stadsmission", kedja: "Stadsmissionen", form: "Idéburen organisation från 1853, fristående från kyrka och stat", egna: "26", folk: "Anställda och 501 volontärer (hela organisationen)", pengar: "Stadsmissionens sociala arbete" },
+  { k: "Göteborgs Stadsmission", kedja: "Stadsmissionen", form: "Idéburen organisation", egna: "–", folk: "–", pengar: "Stadsmissionens sociala arbete" },
+  { k: "Hela Människan", kedja: "Hela Människan", form: "Kyrkornas gemensamma sociala arbete, tolv kyrkor som huvudmän", egna: "15", folk: "–", pengar: "Lokalt socialt arbete på 45 orter" },
+  { k: "Artikel2", kedja: "Emmaus", form: "Ideell förening, tidigare Emmaus Stockholm (namnbyte 2023)", egna: "6", folk: "–", pengar: "Utvecklingsprojekt, främst utomlands" },
+  { k: "Björkåfrihet", kedja: "Emmaus", form: "Ideell förening, tidigare Emmaus Björkå (namnbyte 2019)", egna: "3 + kompisbutiker", folk: "–", pengar: "Solidaritetsprojekt, asylrätt, antirasism" },
+  { k: "Lindra Second Hand", kedja: "Lindra Second Hand", form: "Ideell förening som stöder Human Bridge", egna: "10–12", folk: "–", pengar: "Human Bridges sjukvårdsbistånd" },
+];
+const fragor = [
+  { fraga: "Vart går pengarna när man handlar på Myrorna?", svar: "Hela överskottet går till Frälsningsarméns sociala arbete i Sverige. År 2025 var överskottet 16 miljoner kronor. Myrorna ägs av Frälsningsarmén och har anställd personal." },
+  { fraga: "Vart går pengarna från Erikshjälpen Second Hand?", svar: "Till Erikshjälpens arbete för barns rättigheter. Butikerna omsatte 497 miljoner kronor 2025 och stod för 28 procent av Erikshjälpens finansiering." },
+  { fraga: "Vem driver Röda Korsets second hand-butiker?", svar: "De lokala Röda Korset-föreningarna, med 5 572 volontärer i butikerna enligt årsberättelsen för 2025. Röda Korset har cirka 260 butiker och överskottet går till hjälpverksamhet i Sverige och utomlands." },
+  { fraga: "Vad är skillnaden mellan Myrorna och Erikshjälpen?", svar: "Myrorna är en del av Frälsningsarmén och pengarna går till dess sociala arbete i Sverige. Erikshjälpen är en insamlingsstiftelse som arbetar för barns rättigheter, och butikerna drivs i en egen juridisk person med anställda, praktikanter och volontärer." },
+  { fraga: "Betalar välgörenhetsbutiker moms?", svar: "Ja. Sedan 2015 tar de stora ideella second hand-butikerna ut moms, eftersom Skatteverket ansåg att de konkurrerar med vanlig handel." },
+];
+---
+<Guide site={SITE} titel="Röda Korset, Myrorna, Erikshjälpen – vart går pengarna?"
+  beskrivning="Vem driver välgörenhetsbutikerna och vart går överskottet? Röda Korset, Myrorna, Erikshjälpen, Stadsmissionen, PMU, Hela Människan och Emmaus jämförda med egna siffror."
+  h1="Vem driver second hand-butikerna – och vart går pengarna?"
+  svar={`Välgörenhetsbutikerna drivs av ideella organisationer, och överskottet går till deras arbete. <strong>Myrorna</strong> ger hela överskottet till Frälsningsarméns sociala arbete (16 miljoner kronor 2025). <strong>Erikshjälpens</strong> butiker omsatte 497 miljoner kronor och står för 28 procent av organisationens finansiering. <strong>Röda Korsets</strong> cirka 260 butiker drivs av lokala föreningar med volontärer. Alla stora organisationer har 90-konto, och sedan 2015 tar butikerna ut moms.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vart går pengarna?", href: "/guider/valgorenhet-vart-gar-pengarna/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={[
+    { id: "jamforelse", rubrik: "Jämförelse av organisationerna" },
+    { id: "pengar", rubrik: "Hur mycket pengar handlar det om?" },
+    { id: "organisationerna", rubrik: "Organisationerna en och en" },
+    { id: "nittio", rubrik: "90-konto och kontroll" },
+    { id: "moms", rubrik: "Moms och skatt" },
+    { id: "valja", rubrik: "Hur väljer man butik?" },
+  ]}
+  relaterat={[
+    { namn: "Välgörenhetsbutiker i Sverige", href: "/valgorenhet/", text: `${valg} butiker per organisation` },
+    { namn: "Vad tar butikerna emot?", href: "/guider/skanka-mobler-och-saker/", text: "Skänka rätt" },
+    { namn: "Vad händer med det du skänker?", href: "/guider/vad-hander-med-det-du-skanker/", text: "Butik, export, återvinning" },
+    { namn: "När har loppisarna öppet?", href: "/guider/oppettider-second-hand/", text: "Öppettider per organisation" },
+  ]}
+  kallor={[
+    { namn: "Röda Korset – Årsberättelse 2025", url: "https://www.rodakorset.se/siteassets/bilder/om-oss/seminarier/260428_rk_ab_2025_webb2.pdf", text: "1865, 260 butiker, 5 572 volontärer, 1 198 MSEK, 30 procent via lokalföreningarna", datum: "2026-11-27" },
+    { namn: "Röda Korset – Second hand", url: "https://www.rodakorset.se/second-hand/", datum: "2026-11-27" },
+    { namn: "Myrorna – Hållbarhetsrapport 2025", url: "https://www.myrorna.se/app/uploads/hallbarhetsrapport-2025.pdf", text: "ägare, 1896, 32 butiker, 16 mnkr", datum: "2026-11-27" },
+    { namn: "Erikshjälpen – Årsberättelse 2025", url: "https://erikshjalpen.se/app/uploads/2026/05/EH_Arsberattelse_2025_digital.pdf", text: "stiftelsen, org.nr, separat juridisk person", datum: "2026-11-27" },
+    { namn: "Erikshjälpen Second Hand – Människor, miljö och barnrätt 2025", url: "https://erikshjalpen.se/app/uploads/2026/05/ESH-Manniskor-miljo-och-barnratt-2025.pdf", text: "497 mnkr, 105,7 mnkr, 28 procent, personal", datum: "2026-11-27" },
+    { namn: "Stockholms Stadsmission – Årsredovisning 2025", url: "https://www.stadsmissionen.se/sites/default/files/2026-06/AR_2025_260508_low%20res.pdf", text: "26 butiker, 276,9 mnkr, 501 volontärer", datum: "2026-11-27" },
+    { namn: "PMU – Om oss", url: "https://pmu.se/om-oss/", text: "1965, Pingst", datum: "2026-11-27" },
+    { namn: "PMU – Driva PMU-butik", url: "https://pmu.se/secondhand/drivapmubutik/", datum: "2026-11-27" },
+    { namn: "Hela Människan – Om oss", url: "https://helamanniskan.se/om-oss/", datum: "2026-11-27" },
+    { namn: "Björkåfrihet – Vår historia", url: "https://bjorkafrihet.se/var-historia/", datum: "2026-11-27" },
+    { namn: "Artikel2 – Om oss", url: "https://artikel2.se/om-oss/", datum: "2026-11-27" },
+    { namn: "Lindra – Om Lindra Second Hand", url: "https://lindra.se/om-lindra-second-hand/", datum: "2026-11-27" },
+    { namn: "Svensk Insamlingskontroll", url: "https://www.insamlingskontroll.se/", text: "90-konto, grundad 1943", datum: "2026-11-27" },
+    { namn: "SVT Nyheter – Stadsmissionen förlorar miljoner på ny momsregel", url: "https://www.svt.se/nyheter/stadsmissionen-forlorar-miljoner-pa-ny-momsregel", text: "1 februari 2015", datum: "2026-11-27" },
+    { namn: "loppisar.nu – butiksregistret", text: "antal butiker per organisation, uppdateras varje natt" },
+  ]}>
+
+  <h2 id="jamforelse">Jämförelse av organisationerna</h2>
+  <p>Av de {KAT.enheter.length} loppisar och second hand-butiker vi listar drivs {valg} av ideella organisationer. Tabellen visar vem som står bakom, hur många butiker organisationen själv anger och vad överskottet används till.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Organisation</th><th>Vem driver</th><th class="num">Butiker enligt org.</th><th class="num">I vårt register</th><th>Överskottet går till</th></tr></thead>
+    <tbody>{RADER.map((r) => <tr>
+      <td>{kl(r.kedja) ? <a href={kl(r.kedja)}>{ORG[r.k].namn}</a> : ORG[r.k].namn}</td><td>{r.form}</td><td class="num">{r.egna}</td><td class="num">{antal[r.k] ?? "–"}</td><td>{r.pengar}</td>
+    </tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Organisationernas årsberättelser och webbplatser, hämtade 2026-11-27. Vårt register kan sakna butiker och räkna med enstaka butiker som organisationerna räknar annorlunda. Stadsmissionerna och Emmaus-föreningarna är fristående organisationer med var sina regler.</p>
+
+  <h2 id="pengar">Hur mycket pengar handlar det om?</h2>
+  <p>Bara några av organisationerna redovisar butikernas ekonomi separat. Erikshjälpen redovisar mest:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Erikshjälpen Second Hand</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th></tr></thead>
+    <tbody>
+      <tr><td>Omsättning</td><td class="num">506 mnkr</td><td class="num">475 mnkr</td><td class="num">497 mnkr</td></tr>
+      <tr><td>Överskott</td><td class="num">75,1 mnkr</td><td class="num">84,3 mnkr</td><td class="num">105,7 mnkr</td></tr>
+      <tr><td>Anställda (oktober)</td><td class="num">604</td><td class="num">603</td><td class="num">604</td></tr>
+      <tr><td>Praktikanter (oktober)</td><td class="num">1 424</td><td class="num">1 406</td><td class="num">1 565</td></tr>
+      <tr><td>Volontärer (oktober)</td><td class="num">1 990</td><td class="num">1 946</td><td class="num">1 961</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Erikshjälpen Second Hands rapport för 2025. Stiftelsens egen förvaltningsberättelse anger att second hand lämnade 43 miljoner kronor till Erikshjälpen. Rapporten förklarar inte skillnaden mot överskottet.</p>
+  <p>Stockholms Stadsmissions sociala företag – second hand-butikerna, nätbutiken, Remake och nio Matmissionen-butiker – sålde för 276,9 miljoner kronor 2025, något mer än 275,3 miljoner året innan. Myrornas överskott på 16 miljoner kronor gick till Frälsningsarmén, och kunderna gav dessutom knappt 450 000 kronor extra i kassan. Röda Korset redovisar ingen samlad siffra för butikerna, men 30 procent av förbundets intäkter på 1 198 miljoner kronor kommer via lokalföreningarna, från insamling och second hand. En lokalförening som Röda Korset i Solna sålde för drygt 676 000 kronor i sin butik 2025.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="organisationerna">Organisationerna en och en</h2>
+  {RADER.map((r) => <>
+    <h3>{ORG[r.k].namn}</h3>
+    <p>{ORG[r.k].driver} {ORG[r.k].andamal}{antal[r.k] ? ` Vi listar ${antal[r.k]} av organisationens butiker.` : ""}</p>
+  </>)}
+  <p>Utöver organisationerna i tabellen finns ett hundratal välgörenhetsbutiker som drivs av lokala föreningar och församlingar, till exempel kyrkornas second hand och lokala Emmaus-föreningar. De syns i vårt register under respektive kommun.</p>
+
+  <h2 id="nittio">90-konto och kontroll</h2>
+  <p>Ett 90-konto är ett plus- eller bankgironummer som börjar på 90. Det delas ut av Svensk Insamlingskontroll, som grundades 1943, och bara till ideella föreningar, stiftelser och trossamfund som granskas varje år. Bland kraven finns att högst 25 procent av intäkterna får gå till insamling och administration. Omkring 490 organisationer har ett aktivt 90-konto.</p>
+  <p>Röda Korset, Erikshjälpen, PMU (inom Pingst), Stockholms och Göteborgs Stadsmission, Hela Människan, Björkåfrihet och Artikel2 visar alla 90-konto på sina webbplatser, och Myrorna skriver att Frälsningsarmén följer 90-kontots principer. Vi har inte stämt av varje organisation mot Insamlingskontrollens register, så kontrollera där om det är viktigt för dig. Ett 90-konto gäller insamlingen. Själva butikerna granskas som en del av organisationens ekonomi.</p>
+
+  <h2 id="moms">Moms och skatt</h2>
+  <p>Sedan början av 2015 tar de stora ideella second hand-butikerna ut 25 procents moms. Skatteverket ansåg att butikerna konkurrerar med vanlig handel. SVT rapporterade då att Stockholms Stadsmission räknade med att förlora omkring 13 miljoner kronor per år. Organisationerna driver butikerna på olika sätt: Röda Korsets butiker drivs av lokalföreningarna, Myrorna inom Frälsningsarmén, PMU inom Pingst och Erikshjälpens butiker i en egen juridisk person.</p>
+
+  <h2 id="valja">Hur väljer man butik?</h2>
+  <ul>
+    <li><strong>Efter ändamål.</strong> Vill du stödja socialt arbete i Sverige passar Myrorna, Stadsmissionerna och Hela Människan. Internationellt bistånd får mer via Röda Korset, PMU och Artikel2. Barns rättigheter är Erikshjälpens fokus.</li>
+    <li><strong>Efter vad du vill skänka.</strong> Organisationerna tar emot olika saker, se <a href="/guider/skanka-mobler-och-saker/">jämförelsen</a>.</li>
+    <li><strong>Efter öppettider.</strong> Volontärdrivna butiker har ofta öppet färre timmar. Se <a href="/guider/oppettider-second-hand/">öppettiderna per organisation</a>.</li>
+  </ul>
+  <p>Alla butiker finns på <a href="/valgorenhet/">sidan om välgörenhetsbutiker</a> och på kommunsidorna.</p>
+  <Faq fragor={fragor} />
+</Guide>

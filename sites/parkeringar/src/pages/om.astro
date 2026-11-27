@@ -1,15 +1,27 @@
 ---
 import Layout from "@natverk/core/Layout.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { talText } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, KALLA, MED_SIDA, VERIFIERADE, KOMMUNTAXOR } from "../site.js";
+import { MIN_PLATSER, MIN_POANG, KOMMUN_MIN } from "../grind.js";
+const sidor = KAT.enheter.filter((e) => e.egenSida).length;
 ---
 <Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
-  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om ${ORD.plur} i Sverige: källor, uppdatering och rättelser.`}
+  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om parkeringar i Sverige: källor, hur priser räknas, vilka sidor vi bygger och hur du rättar fel.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
   <h1>Om {SITE.visningsnamn}</h1>
-  <p class="ingress">{SITE.beskrivning}</p>
-  <h2 id="kallor">Källor och metod</h2>
+  <p class="svar">{SITE.visningsnamn} är en oberoende guide till parkering i Sverige. Vi listar {talText(KAT.enheter.length)} parkeringar i {KAT.kommuner.length} kommuner och uppdaterar uppgifterna varje natt. Vi är inte knutna till någon operatör, kommun eller app.</p>
+  <h2 id="kallor">Källor</h2>
+  <ul>
+    <li><strong>OpenStreetMap</strong> (© OpenStreetMap-bidragsgivare, ODbL): läge, namn, typ och ofta antal platser.</li>
+    <li><strong>Kommunernas öppna data</strong>, bland annat Stockholm, Malmö, Jönköping, Växjö, Skövde, Södertälje, Gävle och Helsingborg: taxor, avgiftszoner, laddplatser och platser för rörelsehindrade.</li>
+    <li><strong>Operatörernas anläggningssidor</strong> (Aimo Park, APCOA och Stockholm Parkering): pris, öppettider, höjd, antal platser och laddplatser. Vi hämtar bara fakta, högst en sida per sekund, och följer robots.txt.</li>
+    <li><strong>Kontrollerade uppgifter</strong>: för {VERIFIERADE.size} av de mest sökta anläggningarna har vi läst operatörens egen sida och för {Object.keys(KOMMUNTAXOR).length} städer kommunens gatutaxa. Källa och datum står på sidan.</li>
+  </ul>
+  <h2 id="metod">Så bygger vi sidorna</h2>
+  <p>Vi bygger bara sidor som ger besökaren något. En parkering får en egen sida när den är öppen för besökare, har ett namn man kan söka på, minst {MIN_PLATSER} platser och tillräckligt med uppgifter (minst {MIN_POANG} poäng för pris, taxa, öppettider, storlek, laddplatser, platser för rörelsehindrade, höjd och tidsgräns). Just nu gäller det {talText(sidor)} parkeringar. Övriga visas som rader på kommun- eller länssidan.</p>
+  <p>En kommun får en egen sida när den har minst en sådan parkering, kontrollerad gatutaxa, eller minst {KOMMUN_MIN.parkeringar} parkeringar med minst {KOMMUN_MIN.uppgifter} konkreta uppgifter. Nu har {MED_SIDA.length} kommuner det. Övriga kommuner har en egen sektion på länssidan.</p>
+  <p>Timpris är den ordinarie taxan för bil. MC-, boende- och abonnemangstaxor räknas inte. Mittenvärde betyder median. Gamla adresser till sidor som har slagits ihop leder vidare till rätt sida.</p>
   <p>{KALLA}</p>
-  <p>Just nu listar vi {KAT.enheter.length} {ORD.plur} i {KAT.kommuner.length} kommuner. Uppgifterna hämtas och kontrolleras automatiskt varje natt. Öppettider kan avvika vid helgdagar – kontrollera gärna med verksamheten innan du åker.</p>
   <h2 id="kontakt">Kontakt och rättelser</h2>
-  <p>Har du hittat ett fel eller saknas något? Hör av dig så rättar vi det.</p>
+  <p>Har du hittat ett fel, till exempel ett pris som har ändrats? Hör av dig så rättar vi det. Skyltningen på plats gäller alltid före våra uppgifter.</p>
 </Layout>

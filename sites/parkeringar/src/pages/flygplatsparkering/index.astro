@@ -1,17 +1,53 @@
 ---
-// Hubb: parkering vid Sveriges flygplatser.
+// Parkering vid flygplatser: en samlad sida (de enskilda flygplatssidorna var för tunna och 301-omdirigeras hit, beslut 2026-11-27).
+// Varje flygplats har en sektion med ankare (#arlanda, #landvetter …) och alla parkeringar inom radien i src/flygplatser.js.
 import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Karta from "../../components/Karta.astro";
+import Rader from "../../components/Rader.astro";
+import Metod from "../../components/Metod.astro";
 import { besk } from "@natverk/core/seo.js";
-import { SITE, UPPDATERAD, KALLA } from "../../site.js";
+import { SITE, UPPDATERAD } from "../../site.js";
 import { FLYG } from "../../flyg.js";
+import { nyckeltal, krTim, timprisAv, prisText, TYP } from "../../fakta.js";
+
 const n = FLYG.reduce((s, f) => s + f.enheter.length, 0);
+const data = FLYG.map((f) => ({ f, s: nyckeltal(f.enheter), lang: f.enheter.filter((e) => /långtid/i.test(e.namn)), kort: f.enheter.filter((e) => /korttid|express|hämta|terminal/i.test(e.namn)) }));
+const punkter = FLYG.flatMap((f) => f.enheter).filter((e) => e.lat != null).map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.href, rad: prisText(e) ?? TYP[e.typ] }));
+const fragor = [
+  { fraga: "Ska jag välja korttid eller långtid?", svar: "Korttidsparkeringen ligger närmast terminalen och passar när du hämtar, lämnar eller reser över dagen. Reser du längre än ett dygn blir långtidsparkeringen nästan alltid billigare, särskilt om du förbokar på flygplatsens webbplats." },
+  { fraga: "Vem bestämmer priset på flygplatsparkeringen?", svar: "Flygplatsens egna parkeringar vid Arlanda, Bromma, Landvetter, Malmö Airport och Umeå Airport drivs av Swedavia, som sätter priset och ändrar det efter säsong och hur långt i förväg du bokar. Privata parkeringar en bit bort har egna priser och ofta transfer." },
+  { fraga: "Kan man ladda elbilen på flygplatsen?", svar: data.some((x) => x.s.ladd.length) ? `Ja, i vår lista har ${data.filter((x) => x.s.ladd.length).map((x) => `${x.f.namn} (${x.s.laddPlatser} laddplatser)`).join(", ")} parkeringar med laddning. Boka plats med laddning i förväg om du är beroende av den.` : "Vi saknar uppgifter om laddplatser vid flygplatserna. Fråga flygplatsen innan resan." },
+];
 ---
 <Layout site={SITE} titel="Flygplatsparkering – Arlanda, Landvetter, Bromma med flera"
-  beskrivning={besk(`${n} parkeringar vid ${FLYG.length} svenska flygplatser: korttid, långtid och parkeringshus på karta.`, "✓ Arlanda", "✓ Landvetter", "✓ Bromma", "✓ Malmö")}
+  beskrivning={besk(`Flygplatsparkering: ${n} parkeringar vid ${FLYG.length} svenska flygplatser, korttid och långtid på karta.`, "✓ Arlanda", "✓ Landvetter", "✓ Bromma", "✓ Malmö Airport")}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Flygplatsparkering", href: "/flygplatsparkering/" }]} uppdaterad={UPPDATERAD}>
-  <h1>Parkering vid flygplatser</h1>
-  <p class="svar">Här finns <strong>{n} parkeringar</strong> vid {FLYG.length} svenska flygplatser. Välj flygplats för att se korttid, långtid och parkeringshus.</p>
-  <div class="kort">{FLYG.map((f) => <a href={f.href}><strong>Parkering {f.namn}</strong><small>{f.enheter.length} parkeringar</small></a>)}</div>
-  <p>Reser du längre än en dag är långtidsparkering med förbokning nästan alltid billigast. Korttidsparkeringen ligger närmast terminalen och passar när du hämtar eller lämnar någon.</p>
-  <p class="kalla">{KALLA}</p>
+  <h1>Flygplatsparkering i Sverige</h1>
+  <p class="svar">Flygplatsparkering: vi listar <strong>{n} parkeringar</strong> vid {FLYG.length} svenska flygplatser{data[0] && <>, flest vid {data[0].f.namn} ({data[0].f.enheter.length})</>}. Reser du längre än ett dygn är långtidsparkering med förbokning nästan alltid billigast. Korttid ligger närmast terminalen.</p>
+  <div class="lank-rad">{FLYG.map((f) => <a href={`#${f.slug}`}>{f.namn} ({f.enheter.length})</a>)}</div>
+
+  <h2>Flygplatserna jämförda</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Flygplats</th><th class="num">Parkeringar</th><th class="num">Långtid</th><th class="num">Kända platser</th><th class="num">Laddplatser</th><th>Operatör</th></tr></thead>
+    <tbody>{data.map(({ f, s, lang }) => <tr><td><a href={`#${f.slug}`}>{f.namn}</a></td><td class="num">{f.enheter.length}</td><td class="num">{lang.length}</td><td class="num">{s.platser || "–"}</td><td class="num">{s.laddPlatser || "–"}</td><td>{f.swedavia ? "Swedavia" : "Flygplatsen"}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Karta</h2>
+  <Karta punkter={punkter} id="flyg" />
+
+  {data.map(({ f, s, lang, kort }) => <section id={f.slug}>
+    <h2>Parkering vid {f.namn}</h2>
+    <p>Vi listar {f.enheter.length} parkeringar inom {String(f.radie ?? 1.5).replace(".", ",")} km från terminalen{lang.length > 0 && <>, varav {lang.length} långtid</>}{kort.length > 0 && <> och {kort.length} korttid eller hämta/lämna</>}.{s.platser > 0 && <> Kända platser: minst {s.platser}.</>}{s.billigast && <> Lägst känt timpris: {s.billigast.namn} ({krTim(timprisAv(s.billigast))}).</>} Priset på flygplatsens egna parkeringar sätts av {f.swedavia ? "Swedavia och står på swedavia.se" : "flygplatsen"}.</p>
+    <Rader enheter={[...lang, ...kort.filter((e) => !lang.includes(e)), ...f.enheter.filter((e) => !lang.includes(e) && !kort.includes(e))]} visaKommun />
+  </section>)}
+
+  <h2>Tips inför resan</h2>
+  <ul>
+    <li><strong>Förboka</strong> långtidsparkeringen – priset på nätet är ofta lägre än på plats.</li>
+    <li><strong>Hämta och lämna:</strong> använd korttiden eller flygplatsens hämtzon och kontrollera hur länge du får stå.</li>
+    <li><strong>Kontrollavgift:</strong> flygplatsernas ytor är privat mark. Felparkering ger kontrollavgift, se <a href="/guider/parkeringsbot-eller-kontrollavgift/">parkeringsbot eller kontrollavgift</a>.</li>
+  </ul>
+  <Metod text="Parkeringarna räknas till en flygplats när de ligger inom radien från terminalen och namnet inte tydligt hör till något annat (skola, sjukhus, kyrka)." />
+  <Faq fragor={fragor} />
 </Layout>

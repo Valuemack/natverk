@@ -1,0 +1,166 @@
+---
+// Lång guide: överklaga (bestrida) en parkeringsbot. Källor: lag (1976:206) om felparkeringsavgift, lag (1984:318) om kontrollavgift
+// vid olovlig parkering, Polisen, Transportstyrelsen, Kronofogden, Konsumentverket, Sveriges Domstolar och Parkering Göteborg. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "forst", rubrik: "Först: vilken sorts lapp är det?" },
+  { id: "felparkering", rubrik: "Bestrida en felparkeringsavgift steg för steg" },
+  { id: "frister", rubrik: "Frister att hålla koll på" },
+  { id: "tingsratt", rubrik: "Om Polisen säger nej" },
+  { id: "kontrollavgift", rubrik: "Bestrida en kontrollavgift steg för steg" },
+  { id: "kronofogden", rubrik: "Inkasso, Kronofogden och tingsrätten" },
+  { id: "bevis", rubrik: "Bevis som håller" },
+  { id: "grunder", rubrik: "Grunder som brukar fungera – och som inte gör det" },
+  { id: "mallar", rubrik: "Mallar att utgå från" },
+];
+
+const fragor = [
+  { fraga: "Måste man betala parkeringsboten innan man överklagar?", svar: "Ja, för en felparkeringsavgift från polisen eller kommunen. Avgiften ska betalas i tid även om du bestrider den, och du får tillbaka pengarna om Polisen ger dig rätt. För en kontrollavgift från ett privat bolag gäller det omvända: betalar du anses du i regel ha godtagit avgiften, så vänta med att betala medan du bestrider." },
+  { fraga: "Hur lång tid har man på sig att bestrida en parkeringsbot?", svar: "Ett bestridande av en felparkeringsavgift måste komma in till Polisen inom sex månader från att du betalade avgiften, eller från att Kronofogden började driva in den. Ett överklagande av Polisens beslut ska komma in inom tre veckor från att du fick beslutet. För en kontrollavgift sätter bolaget fristen, till exempel 10 dagar hos Parkering Göteborg." },
+  { fraga: "Vart skickar man ett bestridande av en parkeringsbot?", svar: "En felparkeringsavgift bestrider du hos Polismyndigheten, enklast via Polisens e-tjänst. Du kan också mejla eller posta Polisens blankett till den polisregion där anmärkningen utfärdades. En kontrollavgift bestrider du hos bolaget som står på lappen, oftast via ett formulär på bolagets webbplats." },
+  { fraga: "Räcker det att jag inte såg skylten?", svar: "Nej. Polisen anger uttryckligen att det inte räcker att du inte såg skylten, och inte heller att du skrev fel uppgifter i parkeringsappen. Det som kan fungera är att visa att skyltningen faktiskt saknades eller var otydlig, till exempel med foton från platsen." },
+  { fraga: "Får jag en betalningsanmärkning om jag bestrider en kontrollavgift?", svar: "Inte om du bestrider i varje steg. Konsumentverket påpekar att du måste bestrida även inkassokravet och ett krav från Kronofogden. Privatpersoner får inte heller någon betalningsanmärkning när bolaget ansöker hos Kronofogden. Risken uppstår om du inte svarar och Kronofogden fastställer skulden." },
+];
+---
+<Guide site={SITE} titel="Överklaga parkeringsbot – steg för steg och frister"
+  beskrivning="Så överklagar du en parkeringsbot hos Polisen eller en kontrollavgift hos bolaget: frister, bevis som räcker, vad som inte räcker och mallar att utgå från."
+  h1="Överklaga en parkeringsbot – steg för steg"
+  svar={`Överklaga parkeringsbot gör du på två helt olika sätt. En <strong>felparkeringsavgift</strong> från polis eller kommun betalar du först och bestrider sedan skriftligt hos Polisen, inom sex månader från betalningen. Säger Polisen nej kan du överklaga till tingsrätten inom tre veckor. En <strong>kontrollavgift</strong> från ett privat bolag bestrider du skriftligt hos bolaget och betalar inte medan tvisten pågår. Kommer ett krav från inkasso eller Kronofogden måste du bestrida även det.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Överklaga parkeringsbot", href: "/guider/overklaga-parkeringsbot/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Lagarna och beloppen jämförda" },
+    { namn: "P-skiva – regler", href: "/guider/p-skiva/", text: "Avrundning och godkända skivor" },
+    { namn: "Parkeringsappar jämförda", href: "/guider/parkeringsappar/", text: "Kvitton och betalning utan app" },
+    { namn: "Parkera på gatan natt och helg", href: "/guider/parkera-pa-gatan/", text: "24-timmarsregeln och städnätter" },
+    { namn: "Parkeringstillstånd för rörelsehindrade", href: "/guider/parkeringstillstand-rorelsehindrade/", text: "Var och hur länge du får stå" },
+  ]}
+  kallor={[
+    { namn: "Polisen – Parkeringsanmärkning", url: "https://polisen.se/lagar-och-regler/boter/parkeringsanmarkning/", text: "rättelse, bestridande, e-tjänst, e-post per region, filformat, frister, överklagande, vad som inte räcker (granskad 24 juli 2026)", datum: "2026-11-27" },
+    { namn: "Lag (1976:206) om felparkeringsavgift, riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1976206-om-felparkeringsavgift_sfs-1976-206/", text: "7–10 a §§: betala trots bestridande, rättelse, sex månader, tre veckor, nya bevis, prövningstillstånd", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Parkeringsanmärkning", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/parkeringsanmarkning/", text: "åtta dagar, erinran, åläggande, förhöjd avgift, anstånd", datum: "2026-11-27" },
+    { namn: "Lag (1984:318) om kontrollavgift vid olovlig parkering, riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1984318-om-kontrollavgift-vid-olovlig_sfs-1984-318/", text: "3–10 §§: vägmärken, beloppstak, upprepade avgifter, stöld, påminnelse, två år, oskälighet", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Parkeringsböter", url: "https://www.konsumentverket.se/varor-och-tjanster/felaktig-parkeringsbot/", text: "bestrida kontrollavgift, bestrida i varje steg, app-fel, trasig automat, bevis (granskad 29 oktober 2026)", datum: "2026-11-27" },
+    { namn: "Kronofogden – Du har fått ett krav", url: "https://kronofogden.se/sa-funkar-det-hos-kronofogden/du-har-fatt-ett-krav---sa-funkar-det", text: "bestrida föreläggande, överlämning till tingsrätt, utslag och betalningsanmärkning", datum: "2026-11-27" },
+    { namn: "Sveriges Domstolar – Så hanteras ett tvistemål i tingsrätten", url: "https://www.domstol.se/amnen/tvist-om-pengar/sa-hanteras-ett-tvistemal-i-tingsratten/", text: "förenklat tvistemål upp till 29 600 kronor 2026, ansökningsavgift 900 kronor, begränsade kostnader", datum: "2026-11-27" },
+    { namn: "Parkering Göteborg – Lagen om kontrollavgift vid olovlig parkering", url: "https://www.parkeringgoteborg.se/kontrollavgift/lkop-lagen-om-kontrollavgift-vid-olovlig-parkering/", text: "invändning inom 10 dagar via formulär, betala inte innan svar", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Parkeringstillstånd för rörelsehindrade", url: "https://www.transportstyrelsen.se/sv/vagtrafik/trafikregler-och-vagmarken/trafikregler/parkeringstillstand-for-rorelsehindrade/", text: "kort stopp för att hjälpa sjuka eller rörelsehindrade ut", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "vad bestridandet ska innehålla, tomtmark till bolaget", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="forst">Först: vilken sorts lapp är det?</h2>
+  <p>Det finns två sorters parkeringsbot, och de överklagas på helt olika sätt. Gör du fel kan du missa en frist eller betala något du inte borde.</p>
+  <ul>
+    <li><strong>Felparkeringsavgift</strong> (parkeringsanmärkning) ges på gata och annan allmän mark av polisen eller kommunens parkeringsvakter. Den betalas till Transportstyrelsen och prövas av Polisen.</li>
+    <li><strong>Kontrollavgift</strong> ges på privat mark av markägaren eller ett parkeringsbolag. Den betalas till bolaget och prövas av bolaget, och i sista hand av tingsrätten.</li>
+  </ul>
+  <p>Står det ett bolagsnamn och bolagets egna betalningsuppgifter på lappen är det en kontrollavgift. Står Transportstyrelsens bankgiro 5051-6905 på den är det en felparkeringsavgift. Mer om skillnaderna finns i guiden <a href="/guider/parkeringsbot-eller-kontrollavgift/">Parkeringsbot eller kontrollavgift?</a></p>
+
+  <h2 id="felparkering">Bestrida en felparkeringsavgift steg för steg</h2>
+  <ol>
+    <li><strong>Dokumentera direkt.</strong> Fotografera bilen, lappen, skyltarna och platsen innan du kör iväg. Spara kvittot från appen eller automaten.</li>
+    <li><strong>Är felet uppenbart? Begär rättelse.</strong> Har vakten till exempel skrivit fel registreringsnummer kan du ta med lappen till en polisstation inom några dagar och begära rättelse. Säger Polisen nej kan du ändå bestrida. Du kan också hoppa över rättelsen och bestrida direkt.</li>
+    <li><strong>Betala inom åtta dagar.</strong> Avgiften ska betalas i tid även om du tycker att den är fel. Det står i 7 § lagen om felparkeringsavgift. Vinner du får du tillbaka pengarna. Betalar du inte höjs avgiften med 150 kronor efter påminnelsen. Anstånd med betalningen ges bara om du är helt arbetslös eller långtidssjukskriven.</li>
+    <li><strong>Skriv ditt bestridande.</strong> Förklara varför anmärkningen inte borde ha getts. Ange OCR-numret eller ärendenumret och bilens registreringsnummer. Bifoga bevis.</li>
+    <li><strong>Skicka in det.</strong> Enklast är Polisens e-tjänst på etjanster.polisen.se, som kräver svenskt personnummer eller samordningsnummer. Du kan också fylla i Polisens blankett och mejla, posta eller lämna in den på en polisstation. Bilagor kan vara jpg, png, docx eller pdf, högst 10 MB per fil. Skicka ett bestridande per anmärkning.</li>
+    <li><strong>Vänta på beslutet.</strong> Du kan komplettera med nya uppgifter tills Polisen har beslutat.</li>
+  </ol>
+  <p>Postadressen är Polismyndigheten, Region och regionens namn, Box 711, 981 27 Kiruna. Mejladressen beror på var lappen utfärdades:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Polisregion</th><th>Län</th><th>E-post</th></tr></thead>
+    <tbody>
+      <tr><td>Stockholm och Bergslagen</td><td>Stockholm, Gotland, Dalarna, Värmland, Örebro</td><td>registrator.stockholm@polisen.se</td></tr>
+      <tr><td>Mitt</td><td>Gävleborg, Uppsala, Västmanland</td><td>parkeringsbestridande.mitt@polisen.se</td></tr>
+      <tr><td>Nord, Syd, Väst och Öst</td><td>Övriga län</td><td>parkeringsbestridande@polisen.se</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Polisen, Parkeringsanmärkning.</p>
+  <p>Är du inte ägare till bilen behöver du ägarens godkännande för att bestrida. För ett företag eller en förening ska firmatecknaren godkänna. Det räcker oftast att du intygar godkännandet i bestridandet. Polisen begär en fullmakt om den behövs.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="frister">Frister att hålla koll på</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Steg</th><th>Frist</th><th>Grund</th></tr></thead>
+    <tbody>
+      <tr><td>Betala felparkeringsavgiften</td><td>8 dagar från utfärdandet</td><td>Transportstyrelsen</td></tr>
+      <tr><td>Erinran utan extra kostnad</td><td>21 dagar</td><td>Transportstyrelsen</td></tr>
+      <tr><td>Åläggande med förhöjd avgift (+150 kr)</td><td>21 dagar</td><td>Transportstyrelsen, förordningen 2 b §</td></tr>
+      <tr><td>Begära rättelse</td><td>Inom några dagar</td><td>Polisen</td></tr>
+      <tr><td>Bestrida hos Polisen</td><td>6 månader från betalningen eller från att Kronofogden började driva in</td><td>Lagen 9 §</td></tr>
+      <tr><td>Överklaga till tingsrätten</td><td>3 veckor från att du fick beslutet</td><td>Lagen 10 §</td></tr>
+      <tr><td>Invända mot kontrollavgift</td><td>Bolagets villkor, till exempel 10 dagar</td><td>Parkering Göteborg</td></tr>
+      <tr><td>Bolaget stämmer för kontrollavgift</td><td>Inom 2 år från parkeringen</td><td>Lagen om kontrollavgift 9 §</td></tr>
+    </tbody>
+  </table></div>
+  <p>Vill du bestrida den förhöjda avgiften på 150 kronor gör du det också skriftligt hos Polisen i den region där anmärkningen gavs.</p>
+
+  <h2 id="tingsratt">Om Polisen säger nej</h2>
+  <p>Avslår Polisen ditt bestridande kan du överklaga. Överklagandet skickas till Polisen, inte till domstolen, och ska ha kommit in inom tre veckor från att du fick beslutet. I e-tjänsten går det att överklaga i fyra veckor från beslutsdagen, men det är treveckorsfristen från mottagandet som gäller enligt lagen. Polisen kontrollerar att överklagandet kom in i tid och skickar det sedan till tingsrätten på orten där felparkeringen skedde.</p>
+  <p>Lägg fram alla bevis redan hos Polisen. Enligt 10 § får du åberopa nya omständigheter i tingsrätten bara om du har en giltig ursäkt för att du inte gjorde det tidigare, eller om det finns särskilda skäl. Vill du överklaga tingsrättens beslut till hovrätten krävs prövningstillstånd, som ges bara om det finns särskilda skäl.</p>
+
+  <h2 id="kontrollavgift">Bestrida en kontrollavgift steg för steg</h2>
+  <ol>
+    <li><strong>Betala inte.</strong> Konsumentverket påpekar att en betalning i regel räknas som att du godtar avgiften. Parkering Göteborg skriver också att du inte ska betala innan du fått svar på din invändning.</li>
+    <li><strong>Strunta inte i lappen.</strong> Kontakta bolaget så snart som möjligt, helst skriftligt. Många bolag kräver att du använder deras webbformulär och tar inte emot invändningar per telefon.</li>
+    <li><strong>Skriv att du inte tänker betala och varför.</strong> Saknades skyltar, beskriv det. Bifoga bilder och kvitton. Konsumentverket konstaterar att det då är bolaget som ska visa att avgiften är riktig.</li>
+    <li><strong>Får du nej, ta ställning.</strong> Bestäm om du ska betala eller fortsätta bestrida. Skriv igen och förklara ditt beslut.</li>
+    <li><strong>Bestrid varje nytt krav.</strong> Bolaget ska skicka en påminnelse innan ärendet går till inkasso. Kommer ett inkassokrav, bestrid det skriftligt hos inkassobolaget med samma skäl.</li>
+  </ol>
+
+  <h2 id="kronofogden">Inkasso, Kronofogden och tingsrätten</h2>
+  <p>Vill bolaget fortsätta kan det ansöka om ett betalningsföreläggande hos Kronofogden. Du får då ett brev med en tid inom vilken du måste svara. Kronofogden prövar inte om kravet är rätt. Myndigheten tar bara reda på om du bestrider.</p>
+  <ul>
+    <li><strong>Bestrid inom tiden i brevet.</strong> Det går via Mina sidor, på mottagningsbeviset, per e-post eller brev. Skriv att du bestrider och varför. Du kan bestrida bara en del av kravet.</li>
+    <li><strong>Ingen betalningsanmärkning för att bolaget ansöker.</strong> Privatpersoner får ingen anmärkning i det skedet. Risken kommer om du inte svarar, för då kan Kronofogden besluta att du ska betala. Ett sådant utslag kan ge en betalningsanmärkning.</li>
+    <li><strong>Bolaget väljer om det blir domstol.</strong> När du har bestridit får bolaget veta det. Begär bolaget det lämnar Kronofogden över målet till tingsrätten, som avgör vem som har rätt.</li>
+  </ul>
+  <p>I tingsrätten blir en kontrollavgift ett förenklat tvistemål, eftersom värdet är långt under ett halvt prisbasbelopp, 29 600 kronor 2026. Den som ansöker om stämning betalar 900 kronor. Den som förlorar kan få betala motpartens kostnader, men i förenklade tvistemål är ersättningen begränsad, och kostnader för ombud ersätts normalt inte. Det gör att risken för dig är mindre än många tror, men den är inte noll.</p>
+
+  <h2 id="bevis">Bevis som håller</h2>
+  <ul>
+    <li><strong>Foton av skyltningen.</strong> Ta bilder av varje skylt vid infarten och nära bilen, och av platsen där en skylt borde ha stått. Få med bilen i samma bild och se till att telefonen sparar datum och tid.</li>
+    <li><strong>Kvitto eller skärmbild från appen.</strong> Det ska visa registreringsnummer, zon eller områdeskod och start- och sluttid. Jämför med tiden på lappen.</li>
+    <li><strong>Bild på p-skivan eller tillståndet.</strong> Fotografera genom vindrutan så att det syns att skivan var rätt ställd eller att tillståndet låg synligt.</li>
+    <li><strong>Intyg.</strong> Ett läkarintyg, ett kvitto från en verkstad eller ett vittnesintyg kan stödja att något oförutsett hände.</li>
+    <li><strong>Polisanmälan.</strong> Var bilen stulen är du inte betalningsansvarig för någon av avgifterna. Bifoga anmälan.</li>
+    <li><strong>Utdrag om ägarbyte.</strong> Ansvaret ligger på den som var registrerad ägare dagen för parkeringen.</li>
+  </ul>
+
+  <h2 id="grunder">Grunder som brukar fungera – och som inte gör det</h2>
+  <p>Frågan Polisen prövar är om anmärkningen inte borde ha getts, eller om du inte är betalningsskyldig av något annat skäl. För kontrollavgift ger lagen dig flera konkreta grunder.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Grund</th><th>Felparkeringsavgift</th><th>Kontrollavgift</th></tr></thead>
+    <tbody>
+      <tr><td>Du hade betalat för rätt bil och tid</td><td>Ja, med kvitto</td><td>Ja, med kvitto</td></tr>
+      <tr><td>Skyltar saknades eller var otydliga</td><td>Kan fungera med foton</td><td>Starkt: krav på tydliga vägmärken i 3 §</td></tr>
+      <tr><td>Fel registreringsnummer eller fel bil</td><td>Ja, begär rättelse</td><td>Ja</td></tr>
+      <tr><td>Bilen var stulen</td><td>Ja, 4 §</td><td>Ja, 7 §</td></tr>
+      <tr><td>Beloppet är högre än kommunens felparkeringsavgift</td><td>–</td><td>Ja, 4 §</td></tr>
+      <tr><td>Ny avgift inom sex timmar eller fler än fem</td><td>Ja, 5 §</td><td>Ja, 5 §</td></tr>
+      <tr><td>Akut sjukdom eller annan nödsituation</td><td>Ingen särskild regel, men bifoga intyg</td><td>Kan vara uppenbart oskäligt, 10 §</td></tr>
+      <tr><td>Fel uppgifter i appen</td><td>Räcker inte enligt Polisen</td><td>Ditt ansvar enligt Konsumentverket</td></tr>
+      <tr><td>Du såg inte skylten</td><td>Räcker inte enligt Polisen</td><td>Räcker inte om skylten fanns</td></tr>
+      <tr><td>Automaten var trasig</td><td>Svagt</td><td>Ger ingen rätt att stå gratis enligt Konsumentverket</td></tr>
+    </tbody>
+  </table></div>
+  <p>Den som skjutsar en sjuk eller rörelsehindrad person får enligt trafikförordningen stanna en kort stund för att hjälpa personen ut, även där det är förbjudet att parkera, om det görs med särskild försiktighet. Det kan vara en grund om du fick lapp under just ett sådant stopp. Har du parkeringstillstånd för rörelsehindrade gäller särskilda tider, se guiden om <a href="/guider/parkeringstillstand-rorelsehindrade/">parkeringstillstånd</a>.</p>
+
+  <h2 id="mallar">Mallar att utgå från</h2>
+  <p>Skriv kort och sakligt. Ett starkt bestridande har ett skäl och ett bevis per påstående. Byt ut texten inom hakparentes.</p>
+  <p><strong>Felparkeringsavgift, betalt i app:</strong></p>
+  <blockquote><p>Jag bestrider parkeringsanmärkning [OCR-nummer] för fordon [registreringsnummer], utfärdad [datum och tid] på [gata, ort]. Jag är registrerad ägare. Parkeringen var betald i [appens namn] för rätt registreringsnummer och zon från [tid] till [tid], vilket täcker tidpunkten för anmärkningen. Kvittot bifogas. Anmärkningen borde därför inte ha meddelats. Avgiften är betald och jag begär att den betalas tillbaka.</p></blockquote>
+  <p><strong>Kontrollavgift, bristande skyltning:</strong></p>
+  <blockquote><p>Jag bestrider kontrollavgift [ärendenummer] för fordon [registreringsnummer], utfärdad [datum] på [adress eller anläggning], och kommer inte att betala den. Enligt 3 § lagen om kontrollavgift vid olovlig parkering får avgift bara tas ut om villkoren var tydligt utmärkta med vägmärken på platsen. Vid infarten och vid platsen där bilen stod fanns [ingen skylt / bara en skylt som var skymd av …]. Foton med datum bifogas. Jag bestrider även framtida krav från inkasso eller Kronofogden.</p></blockquote>
+  <p><strong>Kontrollavgift, akut situation:</strong></p>
+  <blockquote><p>Jag bestrider kontrollavgift [ärendenummer]. Bilen stod på platsen för att [kort beskrivning, till exempel att en passagerare blev akut sjuk]. Intyg bifogas. Med hänsyn till omständigheterna vore det uppenbart oskäligt att ta ut avgiften, se 10 § lagen om kontrollavgift vid olovlig parkering.</p></blockquote>
+  <p>Spara en kopia av allt du skickar och av bolagets svar. Den här guiden beskriver gången i ärendet men är inte juridisk rådgivning i ditt enskilda fall.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

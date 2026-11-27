@@ -1,0 +1,38 @@
+---
+// Veckotabell för alla butiker med kända tider: en rad per butik, en kolumn per dag.
+// Dagens kolumn markeras i webbläsaren (OppetNuSkript markerar alla [data-dag=<idag>]) och raden "öppet idag"
+// räknas fram där. Själva HTML:en är dagsoberoende.
+import { DAGAR, dagText } from "@natverk/core/katalog.js";
+import { riktigaTider } from "../grind.js";
+const { enheter, visaKommun = false, id = "vecka" } = Astro.props;
+const KORT = { mon: "Mån", tue: "Tis", wed: "Ons", thu: "Tor", fri: "Fre", sat: "Lör", sun: "Sön" };
+const rader = enheter.filter(riktigaTider);
+---
+{rader.length > 0 && <>
+  <p class="kalla" data-oppet-idag={id} hidden></p>
+  <div class="tabell vecka" id={id}><table>
+    <thead><tr><th>Butik</th>{DAGAR.map((d) => <th data-dag={d}>{KORT[d]}</th>)}</tr></thead>
+    <tbody>{rader.map((e) => (
+      <tr data-tider-rad={JSON.stringify(e.oppettider)}>
+        <td>{e.egenSida ? <a href={e.href}>{e.namn}</a> : <a href={`#${e.ankare}`}>{e.namn}</a>}{visaKommun && <small> · {e.kommun}</small>}</td>
+        {DAGAR.map((d) => <td data-dag={d}>{dagText(e.oppettider[d])}</td>)}
+      </tr>
+    ))}</tbody>
+  </table></div>
+  <script is:inline define:vars={{ id }}>
+    (() => {
+      const D = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], N = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+      const dag = D.indexOf(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Stockholm", weekday: "short" }).format(new Date()).toLowerCase().slice(0, 3));
+      const rader = document.querySelectorAll(`#${id} tr[data-tider-rad]`);
+      let n = 0;
+      for (const r of rader) { const v = JSON.parse(r.dataset.tiderRad)[D[dag]]; if (v && !/^stängt$/i.test(v)) n++; }
+      const el = document.querySelector(`[data-oppet-idag="${id}"]`);
+      if (el && dag >= 0) { el.textContent = `Idag, ${N[dag]}, har ${n} av ${rader.length} butiker i tabellen öppet enligt de ordinarie tiderna. Dagens kolumn är markerad.`; el.hidden = false; }
+    })();
+  </script>
+</>}
+<style>
+  .vecka td, .vecka th { white-space: nowrap; font-size: .9rem; }
+  .vecka td:first-child { white-space: normal; min-width: 11rem; }
+  .vecka :global(.markerad) { background: color-mix(in srgb, var(--farg) 12%, var(--yta)); font-weight: 600; }
+</style>

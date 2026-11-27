@@ -1,15 +1,32 @@
 ---
 import Layout from "@natverk/core/Layout.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { rakna } from "@natverk/core/katalog.js";
+import { KALLNAMN } from "../lib/butik.js";
+import { riktigaTider, MIN_BUTIKER_KOMMUN } from "../grind.js";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+const E = KAT.enheter;
+const perKalla = rakna(E, (e) => e.kvalitet?.oppettider && KALLNAMN[e.kvalitet.oppettider] ? e.kvalitet.oppettider : e.kallor?.[0]?.kalla).map(([k, c]) => [KALLNAMN[k] ?? k, c]);
+const sidor = E.filter((e) => e.egenSida).length;
 ---
 <Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
-  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om ${ORD.plur} i Sverige: källor, uppdatering och rättelser.`}
+  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om loppisar och second hand i Sverige: källor, urval, uppdatering och rättelser.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
   <h1>Om {SITE.visningsnamn}</h1>
-  <p class="ingress">{SITE.beskrivning}</p>
-  <h2 id="kallor">Källor och metod</h2>
-  <p>{KALLA}</p>
-  <p>Just nu listar vi {KAT.enheter.length} {ORD.plur} i {KAT.kommuner.length} kommuner. Uppgifterna hämtas och kontrolleras automatiskt varje natt. Öppettider kan avvika vid helgdagar – kontrollera gärna med verksamheten innan du åker.</p>
+  <p class="ingress">{SITE.visningsnamn} är en oberoende förteckning över loppisar, second hand-butiker, antikvariat och välgörenhetsbutiker i Sverige. Sajten är inte ansluten till någon av organisationerna eller butikerna.</p>
+  <h2 id="kallor">Källor</h2>
+  <p>{KALLA} Just nu listar vi {E.length} butiker i {KAT.kommuner.length} kommuner. Öppettider finns för {E.filter(riktigaTider).length} av dem.</p>
+  <ul>{perKalla.map(([k, c]) => <li>{k}: {c} butiker</li>)}</ul>
+  <h2 id="metod">Metod</h2>
+  <ul>
+    <li>Organisationernas egna butikslistor (Röda Korset, Erikshjälpen, Myrorna, PMU, Stadsmissionerna, Hela Människan, Lindra och Emmaus-föreningarna) hämtas varje natt, högst en sida per sekund och enligt sajternas robots.txt.</li>
+    <li>OpenStreetMap kompletterar med privata second hand-butiker, loppisar och antikvariat. Finns en butik i båda källorna går organisationens uppgifter först.</li>
+    <li>En butik i OpenStreetMap som tillhör en organisation vars hela lista vi hämtar, men som saknas i listan, räknas som troligen stängd och visas inte.</li>
+    <li>Kommun bestäms från butikens koordinater och kommungränserna. Folkmängden kommer från SCB.</li>
+    <li>Öppettiderna är ordinarie veckotider. Helgdagar, lov och sommaruppehåll kan ge andra tider.</li>
+  </ul>
+  <h2 id="urval">Vilka sidor finns?</h2>
+  <p>Vi bygger bara sidor som har något eget att säga. En butik får en egen sida ({sidor} st just nu) när den har öppettider, adress och minst två av: eget telefonnummer, egen butikssida och sortiment, och kommunen har minst {MIN_BUTIKER_KOMMUN} butiker. Alla andra butiker visas i sin helhet på kommunsidan. En kommun får en egen sida när den har minst {MIN_BUTIKER_KOMMUN} butiker eller en butik med både adress och öppettider – annars visas den på länssidan. Sidor som tas bort leds vidare (301) till sidan där butiken nu finns.</p>
+  <p>Guiderna bygger på myndigheternas och organisationernas egna uppgifter. Varje guide anger källor och datum för granskningen.</p>
   <h2 id="kontakt">Kontakt och rättelser</h2>
-  <p>Har du hittat ett fel eller saknas något? Hör av dig så rättar vi det.</p>
+  <p>Har du hittat ett fel, har en butik stängt eller saknas din loppis? Hör av dig så rättar vi det. Rättelser i OpenStreetMap slår igenom här nästa natt.</p>
 </Layout>

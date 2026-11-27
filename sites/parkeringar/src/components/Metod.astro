@@ -1,0 +1,17 @@
+---
+// "Om uppgifterna": var datan på sidan kommer ifrån, hur den räknas och vad som inte går att lita på blint.
+// kallor: [{ namn, url?, datum? }] – extra källor för just den här sidan (kommunens taxa, operatörens sida).
+const { kallor = [], text = null } = Astro.props;
+---
+<section class="metod" id="om-uppgifterna" style="background:var(--yta);border:1px solid var(--linje);border-radius:8px;padding:.8rem 1.1rem;margin:1.2rem 0">
+  <h2 style="margin-top:.2rem">Om uppgifterna</h2>
+  {text && <p>{text}</p>}
+  <ul>
+    <li><strong>Läge, namn, typ och antal platser:</strong> OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL) och kommunernas öppna data.</li>
+    <li><strong>Pris, öppettider, höjd och laddplatser:</strong> operatörernas egna anläggningssidor (Aimo Park, APCOA, Stockholm Parkering) och kommunernas öppna data. Hämtas automatiskt och jämförs varje natt.</li>
+    <li><strong>Timpris</strong> är den ordinarie taxan för bil. MC-, boende- och abonnemangstaxor räknas inte. Där taxan anges per 20 eller 30 minuter har vi räknat om den till kronor per timme.</li>
+    <li><strong>Mittenvärde (median):</strong> hälften av parkeringarna med känt pris är billigare och hälften dyrare.</li>
+    {kallor.map((k) => <li>{k.url ? <a href={k.url} rel="nofollow noopener">{k.namn}</a> : k.namn}{k.datum && <> (kontrollerad {k.datum})</>}</li>)}
+  </ul>
+  <p class="kalla" style="margin-bottom:.2rem">Skyltningen på plats gäller alltid före våra uppgifter. Sajten är oberoende och inte knuten till någon operatör eller kommun. Hittar du ett fel? <a href="/om/#kontakt">Tipsa oss</a>.</p>
+</section>

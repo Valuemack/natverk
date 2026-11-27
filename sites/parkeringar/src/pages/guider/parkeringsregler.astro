@@ -1,0 +1,189 @@
+---
+// Lång guide: var man inte får parkera. Källor: trafikförordningen (1998:1276) 3 kap. 47–55 §§, 8 kap. 1–1 a §§ och 9 kap. 1 §,
+// förordningen (2001:651) om vägtrafikdefinitioner, vägmärkesförordningen (2007:90) C35, C39 och E22, förordningen (1982:198)
+// om flyttning av fordon, TSFS 2024:57, Transportstyrelsen, Stockholms stad och Malmö stad. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "stanna-parkera", rubrik: "Stanna eller parkera – skillnaden avgör" },
+  { id: "stannaforbud", rubrik: "Här får du varken stanna eller parkera" },
+  { id: "parkeringsforbud", rubrik: "Här får du stanna men inte parkera" },
+  { id: "hallplats", rubrik: "Busshållplats, lastplats och laddplats" },
+  { id: "sida", rubrik: "Höger sida, kanten och längdriktningen" },
+  { id: "vagtyp", rubrik: "Tättbebyggt område, gågata och motorväg" },
+  { id: "skyltar", rubrik: "Skyltarna som lägger till förbud" },
+  { id: "tabell", rubrik: "Alla förbud i en tabell" },
+  { id: "flytt", rubrik: "När bilen bärgas bort" },
+];
+
+const fragor = [
+  { fraga: "Hur nära ett övergångsställe får man parkera?", svar: "Du får inte stanna eller parkera på övergångsstället eller inom tio meter före det, enligt 3 kap. 53 § trafikförordningen. Förbudet gäller före övergångsstället i din färdriktning. Samma tio meter gäller före en cykelpassage och en cykelöverfart." },
+  { fraga: "Hur långt från en korsning måste man parkera?", svar: "Minst tio meter från den korsande körbanans närmaste ytterkant. Förbudet gäller både före och efter korsningen och omfattar även att stanna. I själva korsningen får du inte heller stanna." },
+  { fraga: "Får man stanna på en busshållplats?", svar: "Bara för att släppa av eller ta upp passagerare, och bara om det kan ske utan att hindra bussen. Saknas markering på gatan gäller förbudet 20 meter före och 5 meter efter hållplatsskylten." },
+  { fraga: "Vad är skillnaden mellan parkeringsförbud och stoppförbud?", svar: "Vid parkeringsförbud får du stanna kort, till exempel för att låta någon kliva av eller för att lasta, men inte lämna bilen stående. Vid förbud att stanna och parkera, som i vardagligt tal kallas stoppförbud, får du inte stå stilla alls utom när trafiken eller en fara tvingar dig. Boten är oftast högre vid stoppförbud." },
+  { fraga: "Får man parkera framför en infart?", svar: "Nej. Enligt 3 kap. 55 § får du inte parkera på vägen framför infarten till en fastighet eller så att trafiken till eller från fastigheten blir väsentligt svårare. Det gäller även din egen infart, men det är tillåtet att stanna där en kort stund." },
+  { fraga: "Får man parkera på trottoaren?", svar: "Nej. En trottoar är en gångbana, och där får du varken stanna eller parkera med bil enligt 3 kap. 48 §. Bara tvåhjuliga cyklar och tvåhjuliga mopeder klass II undantas. Stockholm tar 1 300 kronor för att stå på gångbana." },
+];
+---
+<Guide site={SITE} titel="Parkeringsregler – var får man inte parkera?"
+  beskrivning="Var får man inte parkera? Alla förbud i trafikförordningen: 10 meter från korsning och övergångsställe, 20 meter före busshållplats, 30 meter från järnväg."
+  h1="Parkeringsregler – var får man inte stanna eller parkera?"
+  svar={`Parkeringsreglerna i trafikförordningen gäller överallt, även där det inte finns någon skylt. Du får inte stanna eller parkera <strong>inom 10 meter</strong> före ett övergångsställe, en cykelöverfart eller från en korsande körbana, och inte på gångbana, cykelbana eller i cykelfält. Du får inte parkera <strong>inom 30 meter</strong> från en järnvägskorsning, framför en infart eller på huvudled. En busshållplats utan markering gäller <strong>20 meter före och 5 meter efter</strong> skylten.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkera på gatan natt och helg", href: "/guider/parkera-pa-gatan/", text: "24-timmarsregeln och städnätter" },
+    { namn: "P-skiva", href: "/guider/p-skiva/", text: "Så ställer du skivan" },
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Lagarna och beloppen" },
+    { namn: "Överklaga en parkeringsbot", href: "/guider/overklaga-parkeringsbot/", text: "Tidsfrister och bevis" },
+    { namn: "Parkera och ladda elbil", href: "/guider/ladda-elbil-parkering/", text: "Regler för laddplatser" },
+  ]}
+  kallor={[
+    { namn: "Trafikförordning (1998:1276), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "3 kap. 47–55 §§, 8 kap. 1 och 1 a §§, 9 kap. 1 § och 10 kap. 1 § (ändrad t.o.m. SFS 2026:1052)", datum: "2026-11-27" },
+    { namn: "Förordning (2001:651) om vägtrafikdefinitioner, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-2001651-om-vagtrafikdefinitioner_sfs-2001-651/", text: "definitionerna av stannande, parkering, plankorsning, huvudled och tättbebyggt område", datum: "2026-11-27" },
+    { namn: "Vägmärkesförordning (2007:90), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/vagmarkesforordning-200790_sfs-2007-90/", text: "märkena C35 och C39, hur långt de gäller, och E22 busshållplats", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Stanna och parkera (broschyr TS 2015:11)", url: "https://www.transportstyrelsen.se/globalassets/global/publikationer-och-rapporter/vag/trafikant/produkter/stanna-och-parkera-a5-webb.pdf", text: "myndighetens förklaring av förbuden och avstånden", datum: "2026-11-27" },
+    { namn: "Transportstyrelsens föreskrifter om parkeringsanmärkningar och felparkeringsavgift (TSFS 2024:57)", url: "https://transportstyrelsen.se/TSFS/TSFS%202024_57.pdf", text: "överträdelsekoderna på parkeringsanmärkningen", datum: "2026-11-27" },
+    { namn: "Förordning (1982:198) om flyttning av fordon i vissa fall, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1982198-om-flyttning-av-fordon-i_sfs-1982-198/", text: "när en felparkerad bil får flyttas direkt", datum: "2026-11-27" },
+    { namn: "Förordning (1976:1128) om felparkeringsavgift, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-19761128-om-felparkeringsavgift_sfs-1976-1128/", text: "beloppsramen 75–1 300 kronor", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "1 100 och 1 300 kronor och vilka fel som hör till vilken nivå (uppdaterad 10 december 2024)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Fordonsflytt", url: "https://parkering.stockholm/felparkering/fordonsflytt/", text: "priser för flytt (uppdaterad 26 augusti 2025)", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkeringsanmärkning", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html", text: "800, 1 000 och 1 300 kronor per slags fel", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="stanna-parkera">Stanna eller parkera – skillnaden avgör</h2>
+  <p>Varje förbud i trafikförordningen gäller antingen bara parkering, eller både att stanna och parkera. Därför måste du först veta vad orden betyder. Definitionerna finns i förordningen om vägtrafikdefinitioner.</p>
+  <ul>
+    <li><strong>Parkera</strong> är att ställa upp fordonet, med eller utan förare, av något annat skäl än trafiken, en fara, att någon ska kliva i eller ur, eller att gods ska lastas av eller på.</li>
+    <li><strong>Stanna</strong> är att stå stilla av något annat skäl än en fara eller trafiken. På- och avstigning och lastning räknas alltså som att stanna.</li>
+  </ul>
+  <p>Står du i kö eller väntar vid ett rödljus har du alltså varken stannat eller parkerat i lagens mening. Släpper du av ett barn har du stannat. Går du in i en butik har du parkerat, även om det bara tar två minuter och motorn är igång. Det avgörande är syftet, inte hur länge bilen står eller om du sitter kvar.</p>
+  <p>Vid parkeringsförbud får du alltså stanna för att lasta eller släppa av någon. Vid förbud att stanna och parkera, som ofta kallas stoppförbud, får du inte det.</p>
+
+  <h2 id="stannaforbud">Här får du varken stanna eller parkera</h2>
+  <p>De här förbuden står i 3 kap. 47, 48 och 53 §§. De gäller utan skylt.</p>
+  <ul>
+    <li><strong>Övergångsställe:</strong> på det eller inom 10 meter före. Samma sak för en cykelpassage och en cykelöverfart.</li>
+    <li><strong>Korsning:</strong> i en vägkorsning, eller inom 10 meter från den korsande körbanans närmaste ytterkant. Avståndet gäller på båda sidor om korsningen.</li>
+    <li><strong>Korsande cykelbana eller gångbana:</strong> på den eller inom 10 meter före.</li>
+    <li><strong>Järnväg och spårväg:</strong> i själva korsningen.</li>
+    <li><strong>Gångbana, cykelbana och cykelfält:</strong> inte med bil. På gång- och cykelbanor undantas bara tvåhjuliga cyklar och tvåhjuliga mopeder klass II.</li>
+    <li><strong>Sikt:</strong> på eller nära ett backkrön, och i eller nära en kurva där sikten är skymd.</li>
+    <li><strong>Vägport och tunnel.</strong></li>
+    <li><strong>Heldragen linje:</strong> längs en heldragen linje mellan körfält, om du står mindre än tre meter från den. Det gäller inte om en streckad linje går mellan bilen och den heldragna.</li>
+    <li><strong>Spärrområde, cirkulationsplats och busskörfält.</strong></li>
+    <li><strong>Skyltar och signaler:</strong> du får inte stå så att de skyms.</li>
+    <li><strong>Fara och hinder:</strong> ingenstans där det blir farligt eller där trafiken onödigt hindras eller störs.</li>
+  </ul>
+  <p>Avståndet före ett övergångsställe gäller bara i din färdriktning. Efter övergångsstället finns inget eget avstånd i förordningen. Ligger det i en korsning gäller ändå de 10 metrarna från korsningen.</p>
+  <p>En bil är ungefär fyra till fem meter lång. Tio meter är alltså ungefär två billängder.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="parkeringsforbud">Här får du stanna men inte parkera</h2>
+  <p>De här förbuden i 3 kap. 49 och 55 §§ gäller bara parkering. Du får alltså stanna för på- och avstigning och för lastning.</p>
+  <ul>
+    <li><strong>Plankorsning:</strong> inom 30 meter från en korsning mellan väg och järnväg eller spårväg på egen banvall.</li>
+    <li><strong>Infart:</strong> framför en infart till en fastighet, eller så att trafiken till eller från fastigheten blir väsentligt svårare.</li>
+    <li><strong>Huvudled:</strong> på hela huvudleden. Den är skyltad med en gul romb.</li>
+    <li><strong>Dubbelparkering:</strong> på körbanan bredvid ett annat fordon som står längs kanten, eller bredvid något som ställts upp där, till exempel en container. Undantaget är om det andra fordonet är en tvåhjulig cykel, moped eller motorcykel.</li>
+    <li><strong>Mötesplats:</strong> en mötesplats som är skyltad med märket för mötesplats.</li>
+    <li><strong>Blockera:</strong> så att andra fordon inte kan komma åt eller köra ut.</li>
+    <li><strong>Utanför rutan:</strong> med något hjul utanför den markerade parkeringsrutan.</li>
+  </ul>
+
+  <h2 id="hallplats">Busshållplats, lastplats och laddplats</h2>
+  <p>Platser med ett särskilt syfte har egna regler i 3 kap. 54 §. På dem får du bara stanna kort.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Plats</th><th>Vad du får göra</th></tr></thead>
+    <tbody>
+      <tr><td>Hållplats för buss, spårvagn eller skolskjuts</td><td>Stanna för på- eller avstigning utan att hindra trafiken. Saknas markering gäller förbudet 20 meter före och 5 meter efter hållplatsskylten.</td></tr>
+      <tr><td>Ändamålsplats, till exempel lastplats</td><td>Bara det ändamål som är skyltat. På- och avstigning är tillåten om den inte hindrar ändamålet. På en lastplats lastas tungt eller skrymmande gods.</td></tr>
+      <tr><td>Plats för ett visst fordonsslag eller en viss grupp, till exempel rörelsehindrade</td><td>Andra får bara stanna för på- eller avstigning.</td></tr>
+      <tr><td>Laddplats</td><td>Bara fordon som kan laddas med el från ett uttag. Andra får bara stanna för på- eller avstigning.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: 3 kap. 54 § trafikförordningen.</p>
+  <p>Laddplatsen kräver alltså inte att bilen laddar enligt förordningen, bara att den är laddbar. Kommunen kan sätta egna villkor på skylten. Mer finns i guiden om att <a href="/guider/ladda-elbil-parkering/">parkera och ladda elbil</a>.</p>
+
+  <h2 id="sida">Höger sida, kanten och längdriktningen</h2>
+  <p>3 kap. 52 § styr hur bilen ska stå:</p>
+  <ul>
+    <li><strong>Höger sida.</strong> Du får bara stanna och parkera på högra sidan i färdriktningen. På en enkelriktad gata får du också stå till vänster. Ligger spår på högra sidan får du stå till vänster.</li>
+    <li><strong>Nära kanten.</strong> Bilen ska stå så långt från körbanans mitt som möjligt.</li>
+    <li><strong>I längdriktningen.</strong> Bilen ska stå parallellt med vägen. Vinkelparkering kräver att det är markerat så. Tvåhjuliga fordon i en markerad ruta undantas.</li>
+    <li><strong>Utanför körbanan.</strong> Parkering ska ske utanför körbanan om vägen tillåter det. Det gäller framför allt på landsväg med vägren eller ficka.</li>
+  </ul>
+  <p>Att stå mot färdriktningen på en dubbelriktad gata är alltså fel även om platsen i sig är tillåten. Stockholm räknar det till den högsta nivån, 1 300 kronor.</p>
+
+  <h2 id="vagtyp">Tättbebyggt område, gågata och motorväg</h2>
+  <ul>
+    <li><strong>Terräng i tättbebyggt område.</strong> Du får inte stanna eller parkera på allmän plats som är terräng, till exempel en gräsmatta, en plantering eller en park. Tättbebyggt område bestäms av kommunen i en lokal trafikföreskrift.</li>
+    <li><strong>Gågata och gångfartsområde.</strong> Där får du inte parkera alls, enligt 8 kap. 1 §.</li>
+    <li><strong>Cykelgata.</strong> Där får du bara parkera på särskilt anordnade platser, enligt 8 kap. 1 a §.</li>
+    <li><strong>Motorväg och motortrafikled.</strong> Du får inte stanna eller parkera annat än på skyltade parkerings- och rastplatser, enligt 9 kap.</li>
+  </ul>
+  <p>Kommunen kan med lokala trafikföreskrifter tillåta avvikelser från flera av förbuden, till exempel parkering närmare en korsning eller på en huvudled. Det ska då synas på skyltar. Utan skylt gäller förordningen.</p>
+
+  <h2 id="skyltar">Skyltarna som lägger till förbud</h2>
+  <p>Utöver förordningen har kommunerna egna förbud. De skyltas med två märken:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Märke</th><th>Betyder</th><th>Du får stanna?</th></tr></thead>
+    <tbody>
+      <tr><td>C35, blå rund skylt med ett rött snedstreck</td><td>Förbud att parkera</td><td>Ja, för på- och avstigning och lastning</td></tr>
+      <tr><td>C39, blå rund skylt med ett rött kryss</td><td>Förbud att stanna och parkera</td><td>Nej</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: vägmärkesförordningen.</p>
+  <p>Märket gäller på den sida av vägen där det sitter. Det börjar där det står och gäller fram till nästa korsning, till en plats där en annan regel skyltats, eller till ett nytt märke med en nedåtriktad pil. En tilläggstavla kan begränsa det till vissa tider. Läs tiderna som i guiden om <a href="/guider/p-skiva/">p-skiva</a>.</p>
+  <p>Ett viktigt förbehåll står också i förordningen. En P-skylt ger inte rätt att parkera där trafikförordningen förbjuder att stanna eller parkera, om inte placeringen tydligt visar det eller en tilläggstavla säger det. En P-skylt tio meter före ett övergångsställe är alltså inget fribrev för de sista metrarna.</p>
+
+  <h2 id="tabell">Alla förbud i en tabell</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Plats</th><th>Avstånd</th><th>Stanna</th><th>Parkera</th><th>Paragraf</th><th class="num">Malmö</th></tr></thead>
+    <tbody>
+      <tr><td>Övergångsställe, cykelpassage, cykelöverfart</td><td>På och 10 m före</td><td>Nej</td><td>Nej</td><td>53 § 1</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Vägkorsning</td><td>I och 10 m från korsande körbana</td><td>Nej</td><td>Nej</td><td>53 § 2</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Korsande cykelbana eller gångbana</td><td>På och 10 m före</td><td>Nej</td><td>Nej</td><td>53 § 3</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Gångbana, cykelbana</td><td>–</td><td>Nej</td><td>Nej</td><td>48 §</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Cykelfält</td><td>–</td><td>Nej</td><td>Nej</td><td>53 § 7</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Busskörfält</td><td>–</td><td>Nej</td><td>Nej</td><td>53 § 10</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Hållplats utan markering</td><td>20 m före, 5 m efter skylten</td><td>Bara på- och avstigning</td><td>Nej</td><td>54 §</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Plats för rörelsehindrade (utan tillstånd)</td><td>–</td><td>Bara på- och avstigning</td><td>Nej</td><td>54 §</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Järnväg eller spårväg</td><td>I korsningen</td><td>Nej</td><td>Nej</td><td>47 § 2</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Backkrön, skymd kurva</td><td>På eller nära</td><td>Nej</td><td>Nej</td><td>53 § 5</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Vägport, tunnel</td><td>–</td><td>Nej</td><td>Nej</td><td>53 § 4</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Heldragen linje mellan körfält</td><td>Närmare än 3 m</td><td>Nej</td><td>Nej</td><td>53 § 6</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Spärrområde, cirkulationsplats</td><td>–</td><td>Nej</td><td>Nej</td><td>53 § 8–9</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Terräng i tättbebyggt område</td><td>–</td><td>Nej</td><td>Nej</td><td>48 §</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Vänster sida, mot färdriktningen</td><td>–</td><td>Nej</td><td>Nej</td><td>52 §</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Plankorsning</td><td>30 m från</td><td>Ja</td><td>Nej</td><td>55 § 1</td><td class="num">800 kr</td></tr>
+      <tr><td>Framför infart</td><td>–</td><td>Ja</td><td>Nej</td><td>55 § 2</td><td class="num">800 kr</td></tr>
+      <tr><td>Huvudled</td><td>Hela leden</td><td>Ja</td><td>Nej</td><td>55 § 3</td><td class="num">800 kr</td></tr>
+      <tr><td>Bredvid parkerat fordon</td><td>–</td><td>Ja</td><td>Nej</td><td>55 § 4</td><td class="num">800 kr</td></tr>
+      <tr><td>Skyltad mötesplats</td><td>–</td><td>Ja</td><td>Nej</td><td>55 § 5</td><td class="num">800 kr</td></tr>
+      <tr><td>Hjul utanför rutan, blockerar andra</td><td>–</td><td>Ja</td><td>Nej</td><td>49 §</td><td class="num">800 kr</td></tr>
+      <tr><td>Gågata, gångfartsområde</td><td>–</td><td>Bara när du får köra där</td><td>Nej</td><td>8 kap. 1 §</td><td class="num">800 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Paragrafer i 3 kap. trafikförordningen om inget annat anges. Belopp: Malmö stads lista över felparkeringsavgifter, hämtad 27 november 2026.</p>
+  <p>Stockholm har bara två nivåer för dessa fel. Där du inte får stanna kostar det 1 300 kronor. Där du bara inte får parkera, till exempel framför en infart eller med ett hjul utanför rutan, kostar det 1 100 kronor. Göteborg tar 850 kronor vid parkeringsförbud och 1 100 kronor vid förbud att stanna. Lagens tak är 1 300 kronor.</p>
+
+  <h2 id="flytt">När bilen bärgas bort</h2>
+  <p>För de farligaste felen räcker det inte med en bot. Enligt förordningen om flyttning av fordon får en felparkerad bil flyttas, oavsett hur länge den har stått, om den står:</p>
+  <ul>
+    <li>på en plats reserverad för rörelsehindrade,</li>
+    <li>i ett busskörfält eller på en hållplats,</li>
+    <li>på eller inom fem meter före ett övergångsställe, en cykelpassage eller en cykelöverfart,</li>
+    <li>på en gång- eller cykelbana eller i ett cykelfält,</li>
+    <li>så att den skapar fara eller onödigt hindrar trafiken.</li>
+  </ul>
+  <p>Notera skillnaden i avstånd. Boten gäller inom tio meter före övergångsstället, men rätten att flytta bilen gäller inom fem meter. I Stockholm kostar en omedelbar flytt av en bil upp till 3,5 ton 3 450 kronor, plus boten och förvaringen. Vill du bestrida en bot, läs guiden om att <a href="/guider/overklaga-parkeringsbot/">överklaga en parkeringsbot</a>.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

@@ -1,0 +1,145 @@
+---
+// Lång guide: parkeringsbot (felparkeringsavgift) eller kontrollavgift. Källor: lag (1976:206) och förordning (1976:1128)
+// om felparkeringsavgift, lag (1984:318) om kontrollavgift vid olovlig parkering, Transportstyrelsen, Polisen, Konsumentverket,
+// Stockholms stad, Göteborgs Stad, Malmö stad och Parkering Göteborg. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "kanna-igen", rubrik: "Så ser du vilken avgift du har fått" },
+  { id: "tabell", rubrik: "Skillnaderna i en tabell" },
+  { id: "felparkeringsavgift", rubrik: "Felparkeringsavgift: lagen och spannet" },
+  { id: "belopp", rubrik: "Vad kostar en parkeringsbot i storstäderna?" },
+  { id: "kontrollavgift", rubrik: "Kontrollavgift: vad markägaren får och inte får" },
+  { id: "obetald", rubrik: "Om du inte betalar" },
+  { id: "ansvar", rubrik: "Vem ska betala – ägaren eller föraren?" },
+  { id: "pengarna", rubrik: "Vem får pengarna?" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan parkeringsbot och kontrollavgift?", svar: "En parkeringsbot heter formellt felparkeringsavgift och ges på gata och annan allmän platsmark av polisen eller kommunens parkeringsvakter. Den betalas till Transportstyrelsen och bestrids hos Polisen. En kontrollavgift ges på privat mark av markägaren eller ett parkeringsbolag, betalas till bolaget och bestrids hos bolaget." },
+  { fraga: "Hur hög får en kontrollavgift vara?", svar: "Enligt 4 § lagen om kontrollavgift vid olovlig parkering får kontrollavgiften inte vara högre än den felparkeringsavgift som kommunen har bestämt för samma slags överträdelse i området. Eftersom felparkeringsavgiften är högst 1 300 kronor kan en kontrollavgift aldrig bli högre än så." },
+  { fraga: "Hur lång tid har man på sig att betala en parkeringsbot?", svar: "En felparkeringsavgift ska enligt Transportstyrelsen vara betald inom åtta dagar från att den utfärdades. Annars skickas en påminnelse med 21 dagars betaltid och därefter ett åläggande där avgiften höjs med 150 kronor. För en kontrollavgift är det bolagets villkor som gäller, till exempel 10 dagar hos Parkering Göteborg." },
+  { fraga: "Får man prickar i belastningsregistret för en parkeringsbot?", svar: "Nej. Felparkeringsavgift får bara tas ut för överträdelser som inte är straffbelagda enligt 1 § lagen om felparkeringsavgift, så det är en avgift och inte böter för ett brott. Obetalda avgifter kan däremot hamna hos Kronofogden och leda till användningsförbud för bilen." },
+  { fraga: "Måste jag betala en kontrollavgift om skyltningen var otydlig?", svar: "En kontrollavgift får enligt 3 § lagen om kontrollavgift bara tas ut om förbudet eller villkoren var tydligt utmärkta med vägmärken på platsen. Saknades skyltar, eller var de otydliga, kan du bestrida avgiften skriftligt hos bolaget och bifoga bilder. Bolaget måste då visa att avgiften är riktig." },
+];
+---
+<Guide site={SITE} titel="Parkeringsbot eller kontrollavgift – skillnaderna"
+  beskrivning="Parkeringsbot på gatan eller kontrollavgift på privat mark? Lagarna, beloppen i Stockholm, Göteborg och Malmö, vem som får pengarna och om du inte betalar."
+  h1="Parkeringsbot eller kontrollavgift – så skiljer du dem åt"
+  svar={`Parkeringsbot eller kontrollavgift avgörs av var du stod. På gata och annan allmän mark får du en <strong>felparkeringsavgift</strong> från polisen eller kommunen. Den är mellan 75 och 1 300 kronor, betalas till Transportstyrelsen inom åtta dagar och bestrids hos Polisen. På privat mark får du en <strong>kontrollavgift</strong> från markägaren eller ett parkeringsbolag. Den får inte vara högre än kommunens felparkeringsavgift, betalas till bolaget och bestrids hos bolaget.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Parkeringsbot eller kontrollavgift", href: "/guider/parkeringsbot-eller-kontrollavgift/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Överklaga en parkeringsbot", href: "/guider/overklaga-parkeringsbot/", text: "Steg för steg, frister och bevis" },
+    { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/", text: "Avstånd och förbud i trafikförordningen" },
+    { namn: "P-skiva – regler", href: "/guider/p-skiva/", text: "Så ställer du skivan rätt" },
+    { namn: "Parkeringsappar jämförda", href: "/guider/parkeringsappar/", text: "Avgifter och var de fungerar" },
+    { namn: "Gratis parkering", href: "/gratis-parkering/", text: "Avgiftsfria parkeringar i hela landet" },
+  ]}
+  kallor={[
+    { namn: "Lag (1976:206) om felparkeringsavgift, riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1976206-om-felparkeringsavgift_sfs-1976-206/", text: "ägaransvar, betalning vid bestridande, upprepade anmärkningar, användningsförbud, fördelning av avgifterna", datum: "2026-11-27" },
+    { namn: "Förordning (1976:1128) om felparkeringsavgift, riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-19761128-om-felparkeringsavgift_sfs-1976-1128/", text: "kommunen bestämmer beloppet, lägst 75 och högst 1 300 kronor, förhöjning med 150 kronor", datum: "2026-11-27" },
+    { namn: "Lag (1984:318) om kontrollavgift vid olovlig parkering, riksdagen.se", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1984318-om-kontrollavgift-vid-olovlig_sfs-1984-318/", text: "vägmärken, beloppstak, solidariskt ansvar, påminnelse före inkasso, två års frist, oskälighet", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Parkeringsanmärkning", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/parkeringsanmarkning/", text: "åtta dagar, erinran och åläggande med 21 dagar, 150 kronor, Kronofogden, användningsförbud", datum: "2026-11-27" },
+    { namn: "Polisen – Parkeringsanmärkning", url: "https://polisen.se/lagar-och-regler/boter/parkeringsanmarkning/", text: "75–1 300 kronor, betala först, bestridande och överklagande", datum: "2026-11-27" },
+    { namn: "Konsumentverket – Parkeringsböter", url: "https://www.konsumentverket.se/varor-och-tjanster/felaktig-parkeringsbot/", text: "skillnaden mellan avgifterna, bestrida kontrollavgift, inkasso och Kronofogden", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "900, 1 100 och 1 300 kronor med exempel", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Felparkering", url: "https://goteborg.se/wps/portal/start/parkeringstillstand-och-parkeringsplatser/parkeringsregler/felparkering?uri=gbglnk:gbg.page.761a197c-6cd0-486d-977d-98744016cb75", text: "600, 850 och 1 100 kronor", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkeringsanmärkning", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html", text: "600, 800, 1 000 och 1 300 kronor med exempel", datum: "2026-11-27" },
+    { namn: "Parkering Göteborg – Lagen om kontrollavgift vid olovlig parkering", url: "https://www.parkeringgoteborg.se/kontrollavgift/lkop-lagen-om-kontrollavgift-vid-olovlig-parkering/", text: "gul lapp, 10 dagars betaltid och invändning", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="kanna-igen">Så ser du vilken avgift du har fått</h2>
+  <p>I vardagligt tal är allt en parkeringsbot. Juridiskt finns två helt olika system, med olika lagar, olika mottagare av pengarna och olika vägar att protestera. Det första du ska göra är därför att läsa lappen noga.</p>
+  <ul>
+    <li><strong>Felparkeringsavgift</strong> står ofta som parkeringsanmärkning. Den utfärdas av en polis eller av en parkeringsvakt som arbetar för kommunen. Betalningen går till Transportstyrelsens bankgiro 5051-6905 med ett OCR-nummer.</li>
+    <li><strong>Kontrollavgift</strong> kallas ibland betalningsuppmaning och ges ut av ett företag eller en förening. Lappen har bolagets namn, ett eget ärendenummer och bolagets betalningsuppgifter. Parkering Göteborg kallar sin för gul lapp.</li>
+  </ul>
+  <p>Avsändarens namn avgör inte saken. Ett kommunalt bolag kan sköta privat mark och ge kontrollavgifter. I Göteborg ger stadens parkeringsbolag kontrollavgifter på sina anläggningar, medan Göteborgs Stad ger parkeringsanmärkningar på gatan. Det som avgör är vilken lag lappen hänvisar till och vart pengarna ska.</p>
+  <p>På platsen kan du ofta se skillnaden på skyltningen. Privata parkeringar har i regel en tilläggstavla med bolagets namn och telefonnummer. Göteborgs Stad påpekar att sådana skyltar inte finns på stadens allmänna platser.</p>
+
+  <h2 id="tabell">Skillnaderna i en tabell</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Felparkeringsavgift (parkeringsbot)</th><th>Kontrollavgift</th></tr></thead>
+    <tbody>
+      <tr><td>Var</td><td>Gata, torg och annan allmän platsmark</td><td>Privat mark, till exempel parkeringshus, köpcentrum och bostadsgårdar</td></tr>
+      <tr><td>Lag</td><td>Lag (1976:206) om felparkeringsavgift</td><td>Lag (1984:318) om kontrollavgift vid olovlig parkering</td></tr>
+      <tr><td>Vem utfärdar</td><td>Polis eller kommunens parkeringsvakt</td><td>Markägaren eller ett bolag som har avtal om att sköta parkeringen</td></tr>
+      <tr><td>Belopp</td><td>75–1 300 kronor, bestäms av kommunen</td><td>Högst kommunens felparkeringsavgift för samma överträdelse</td></tr>
+      <tr><td>Betalas till</td><td>Transportstyrelsen</td><td>Markägaren eller bolaget</td></tr>
+      <tr><td>Betaltid</td><td>8 dagar</td><td>Enligt bolagets villkor, till exempel 10 dagar</td></tr>
+      <tr><td>Betalningsansvar</td><td>Fordonets registrerade ägare</td><td>Förare och ägare tillsammans (solidariskt)</td></tr>
+      <tr><td>Bestrids hos</td><td>Polisen, sedan tingsrätten</td><td>Bolaget, sedan Kronofogden och tingsrätten</td></tr>
+      <tr><td>Betala innan du bestrider?</td><td>Ja, avgiften ska betalas ändå</td><td>Nej, du kan vänta med att betala medan du bestrider</td></tr>
+      <tr><td>Om den inte betalas</td><td>Påminnelse, plus 150 kronor, Kronofogden, användningsförbud</td><td>Påminnelse, inkasso, betalningsföreläggande hos Kronofogden</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: lagarna på riksdagen.se, Transportstyrelsen, Polisen, Konsumentverket och Parkering Göteborg.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="felparkeringsavgift">Felparkeringsavgift: lagen och spannet</h2>
+  <p>Felparkeringsavgift tas ut när någon bryter mot regler om att stanna och parkera som inte är straffbelagda. Det betyder att en parkeringsbot inte är böter för ett brott. Den hamnar inte i belastningsregistret.</p>
+  <p>Regeringen bestämmer det lägsta och högsta beloppet. Enligt förordningen om felparkeringsavgift är spannet i dag <strong>75 till 1 300 kronor</strong>. Inom det bestämmer varje kommun beloppen, och de flesta har flera nivåer efter hur farlig eller störande parkeringen är. Polisen kan inte sänka beloppet eller pröva om det är rimligt.</p>
+  <p>Några fler regler i lagen som är bra att känna till:</p>
+  <ul>
+    <li><strong>Upprepade lappar.</strong> Står bilen kvar får en ny anmärkning ges för varje påbörjat kalenderdygn, men tidigast sex timmar efter den förra. Högst fem anmärkningar får ges för samma felparkering.</li>
+    <li><strong>Lappen kan sitta på bilen.</strong> Den får lämnas till föraren eller ägaren eller fästas på fordonet. Har den blåst bort får ägaren en påminnelse med posten i efterhand.</li>
+    <li><strong>Inte både straff och avgift.</strong> Åtalas någon för ett brott som omfattar felparkeringen ska ingen felparkeringsavgift tas ut.</li>
+  </ul>
+
+  <h2 id="belopp">Vad kostar en parkeringsbot i storstäderna?</h2>
+  <p>De tre största städerna har valt olika nivåer. Tabellen visar beloppen som kommunerna själva anger.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Överträdelse</th><th class="num">Stockholm</th><th class="num">Göteborg</th><th class="num">Malmö</th></tr></thead>
+    <tbody>
+      <tr><td>Ej betald avgift eller för lång tid</td><td class="num">900 kr</td><td class="num">600 kr</td><td class="num">600 kr</td></tr>
+      <tr><td>Parkering där det är förbjudet att parkera</td><td class="num">1 100 kr</td><td class="num">850 kr</td><td class="num">800–1 000 kr</td></tr>
+      <tr><td>Där det är förbjudet att stanna</td><td class="num">1 300 kr</td><td class="num">1 100 kr</td><td class="num">1 000 kr</td></tr>
+      <tr><td>Plats för rörelsehindrade utan tillstånd</td><td class="num">1 300 kr</td><td class="num">1 100 kr</td><td class="num">1 300 kr</td></tr>
+      <tr><td>Cykelbana, cykelfält eller nära övergångsställe</td><td class="num">1 300 kr</td><td class="num">–</td><td class="num">1 300 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Stockholms stad (sidan uppdaterad 10 december 2024), Göteborgs Stad och Malmö stad (tabellen uppdaterad 9 april 2021). Göteborg anger inget eget belopp för cykelbana och övergångsställe; stadens högsta nivå är 1 100 kronor. Kontrollera kommunens sida om du har fått en lapp, beloppen kan ändras.</p>
+  <p>Malmö har fyra nivåer. 600 kronor gäller obetald avgift, fel med p-skivan och att stå mer än 24 timmar. 800 kronor gäller till exempel framför en infart, på huvudled eller utanför en markerad ruta. 1 000 kronor gäller bland annat i korsningar och på lastplatser. 1 300 kronor gäller där parkeringen är farlig eller hindrar, som på hållplatser och cykelbanor.</p>
+  <p>I Stockholm räknas det också som stannandeförbud, och kostar 1 300 kronor, att stå på trottoaren, mot färdriktningen eller inom tio meter före ett övergångsställe. Att stå med ett hjul utanför en markerad ruta, eller utan p-skiva på en tidsbegränsad plats, kostar 1 100 kronor. Läs mer om avstånden i guiden <a href="/guider/parkeringsregler/">Var får man inte parkera?</a></p>
+
+  <h2 id="kontrollavgift">Kontrollavgift: vad markägaren får och inte får</h2>
+  <p>En markägare som upplåter mark för parkering, eller förbjuder parkering där, får ta ut kontrollavgift om någon bryter mot förbudet eller villkoren. Samma rätt har ett bolag som genom avtal sköter parkeringen åt markägaren. Lagen ställer upp tydliga gränser:</p>
+  <ul>
+    <li><strong>Skyltning med vägmärken.</strong> Förbudet eller villkoren ska ha varit tydligt utmärkta på platsen med vägmärken. En lapp på en stolpe eller en text i ett avtal räcker inte.</li>
+    <li><strong>Ett tak för beloppet.</strong> Kontrollavgiften får inte vara högre än den felparkeringsavgift kommunen har bestämt för samma slags överträdelse i området. I Göteborg kan en kontrollavgift för obetald parkering alltså inte överstiga 600 kronor. Högre än 1 300 kronor kan den aldrig bli.</li>
+    <li><strong>Inte dubbelt betalt.</strong> Tar bolaget ut kontrollavgift för en parkering får det inte också kräva den obetalda parkeringsavgiften för samma tid.</li>
+    <li><strong>Högst fem avgifter.</strong> En ny avgift får tas ut för varje påbörjat kalenderdygn, men tidigast sex timmar efter den förra och högst fem gånger för samma parkering.</li>
+    <li><strong>Inte om det är uppenbart oskäligt.</strong> Avgiften får inte tas ut om det med hänsyn till omständigheterna vore uppenbart oskäligt. Det är den regel du åberopar om något oförutsett hindrade dig.</li>
+    <li><strong>Utbildade vakter.</strong> Markägaren ska se till att den som övervakar har lämplig utbildning.</li>
+    <li><strong>Två års gräns.</strong> Vill bolaget driva kravet i domstol måste det väcka talan inom två år från att parkeringen upphörde.</li>
+  </ul>
+  <p>En kontrollavgift och en felparkeringsavgift kan inte tas ut för samma parkering. Lagen om kontrollavgift gäller inte när överträdelsen redan kan ge felparkeringsavgift.</p>
+
+  <h2 id="obetald">Om du inte betalar</h2>
+  <p>De två systemen har olika vägar till Kronofogden.</p>
+  <p><strong>Felparkeringsavgift.</strong> Den ska vara betald inom åtta dagar från att den utfärdades. Annars skickar Transportstyrelsen en erinran utan extra kostnad, med 21 dagars betaltid. Betalar du inte då kommer ett åläggande där avgiften har höjts med 150 kronor, också med 21 dagar. Är den fortfarande obetald lämnas den till Kronofogden för indrivning. Ingen domstol behöver pröva saken först.</p>
+  <p>Det finns också ett användningsförbud. Om en bils obetalda felparkeringsavgifter är över 5 000 kronor och minst sex månader har gått sedan den senaste skulle betalas, får bilen inte användas. Förbudet gäller tills hela skulden är betald, även om den gamla ägaren var betalningsskyldig. Kör du ändå får polisen ta registreringsskyltarna. Bara anmärkningar från och med 1 januari 2021 räknas.</p>
+  <p><strong>Kontrollavgift.</strong> Bolaget måste skicka en påminnelse med sista betalningsdag innan ärendet går till inkasso. Därefter kan bolaget ansöka om betalningsföreläggande hos Kronofogden. Bestrider du där måste bolaget gå till tingsrätten för att få rätt. Bestrider du inte kan Kronofogden fastställa skulden, och då riskerar du en betalningsanmärkning. Konsumentverket påpekar att du kan undvika betalningsanmärkning om du bestrider i varje steg. Hur det går till steg för steg står i guiden <a href="/guider/overklaga-parkeringsbot/">Överklaga en parkeringsbot</a>.</p>
+
+  <h2 id="ansvar">Vem ska betala – ägaren eller föraren?</h2>
+  <p>Här skiljer sig lagarna åt på ett sätt som spelar roll när du lånar ut bilen.</p>
+  <ul>
+    <li><strong>Felparkeringsavgift:</strong> den som var registrerad ägare när felparkeringen skedde ansvarar för att avgiften betalas. Det gäller även om någon annan körde. Undantaget är om bilen sannolikt var stulen.</li>
+    <li><strong>Kontrollavgift:</strong> föraren och ägaren ansvarar solidariskt. Bolaget kan alltså kräva vilken av dem som helst. Konsumentverket påpekar att den som står på kravet får betala och sedan kräva tillbaka pengarna av den som lånade bilen.</li>
+  </ul>
+  <p>Har du sålt bilen är det ägaren i vägtrafikregistret dagen för felparkeringen som räknas. Se därför till att ägarbytet registreras direkt. För en hyrbil går kravet först till uthyraren, som sedan skickar det vidare till dig.</p>
+
+  <h2 id="pengarna">Vem får pengarna?</h2>
+  <p>Felparkeringsavgifter från en kommun som själv sköter parkeringsövervakningen går till kommunen, sedan statens kostnader har dragits av. Av förhöjningen på 150 kronor går tre fjärdedelar till staten. Anmärkningar från polisen går till staten. Transportstyrelsen sköter all betalning, påminnelser och överlämning till Kronofogden.</p>
+  <p>Kontrollavgifter går till markägaren eller bolaget som sköter parkeringen. Det är därför privata bolag har ett eget intresse av att övervaka, och därför lagen sätter ett tak och kräver tydliga vägmärken. Myndigheterna har ingen roll i en kontrollavgift förrän bolaget själv vänder sig till Kronofogden. Transportstyrelsen hänvisar alla frågor om kontrollavgifter till den som har utfärdat dem.</p>
+  <p>Den här guiden förklarar reglerna men är inte juridisk rådgivning i ditt enskilda fall.</p>
+
+  <Faq fragor={fragor} />
+</Guide>

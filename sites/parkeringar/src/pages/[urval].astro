@@ -1,14 +1,17 @@
 ---
-// Urvalssidor: parkeringshus, gratis parkering, pendlarparkering och laddning, per län.
+// Urvalssidor för hela landet: parkeringshus, gratis parkering (dit gratisparkeringar.se pekar), pendlarparkering och laddning.
+// Svar först, siffror per län och stad, tidsgränser/pris/höjd beroende på urval, karta, alla rader per län, metod och frågor.
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
-import { faqLd } from "@natverk/core/seo.js";
-import { rakna } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA } from "../site.js";
+import Karta from "../components/Karta.astro";
+import Rader from "../components/Rader.astro";
+import Metod from "../components/Metod.astro";
+import { besk } from "@natverk/core/seo.js";
+import { talText, rakna } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD } from "../site.js";
 import { URVAL } from "../urval.js";
+import { nyckeltal, krTim, timprisAv, prisText, TYP, tal, median } from "../fakta.js";
 
 export function getStaticPaths() {
   return Object.entries(URVAL).filter(([, u]) => KAT.enheter.filter(u.filter).length >= 3).map(([urval]) => ({ params: { urval } }));
@@ -16,22 +19,77 @@ export function getStaticPaths() {
 const { urval } = Astro.params;
 const u = URVAL[urval];
 const st = KAT.enheter.filter(u.filter);
-const perLan = KAT.lan.map((l) => ({ lan: l, enheter: st.filter((e) => e.lan === l.namn) })).filter((x) => x.enheter.length);
-const storst = rakna(st, (e) => e.lan).slice(0, 3);
+const s = nyckeltal(st);
+const perLan = KAT.lan.map((l) => ({ l, e: st.filter((e) => e.lan === l.namn), alla: l.antal })).filter((x) => x.e.length).sort((a, b) => b.e.length - a.e.length);
+const perKommun = rakna(st, (e) => e.kommun).slice(0, 15).map(([namn, n]) => ({ k: KAT.kommuner.find((x) => x.namn === namn), n }));
+const hojder = st.map((e) => e.extra?.hojdbegransning).filter((h) => h > 1 && h < 5);
+const lagHojd = hojder.filter((h) => h < 2).length;
+const punkter = st.filter((e) => e.lat != null).slice(0, 1200).map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.href, rad: prisText(e) ?? TYP[e.typ] }));
+const gratisMaxtid = urval === "gratis-parkering" ? s.maxtid.length : 0;
+
+const svar = {
+  "gratis-parkering": `Gratis parkering finns på ${talText(s.n)} platser i vår lista, i ${new Set(st.map((e) => e.kommun)).size} kommuner. ${s.maxtid.length} av dem har en angiven tidsgräns – vanligast ${s.tidsgranser.slice(0, 2).map(([g]) => g).join(" och ")} – och där krävs nästan alltid p-skiva. Flest avgiftsfria parkeringar har ${perKommun.slice(0, 3).map((x) => `${x.k?.namn} (${x.n})`).join(", ")}.`,
+  parkeringshus: `Parkeringshus och garage: vi listar ${talText(s.n)} i Sverige${s.platser ? ` med minst ${talText(s.platser)} platser` : ""}. ${s.medianTim ? `Mittenvärdet för timpriset är ${krTim(s.medianTim)}${s.medianDygn ? ` och för ett dygn ${tal(s.medianDygn)} kr` : ""}.` : ""} ${hojder.length ? `Höjdgränsen är känd för ${hojder.length} av dem; mittenvärdet är ${tal(median(hojder))} m och ${lagHojd} är lägre än 2,0 m.` : ""}`,
+  pendlarparkering: `Pendlarparkering: vi listar ${talText(s.n)} pendlar- och infartsparkeringar${s.platser ? ` med minst ${talText(s.platser)} platser` : ""}. ${s.gratis.length} är avgiftsfria${s.medianTim ? ` och mittenvärdet för de prissatta är ${krTim(s.medianTim)}` : ""}. Flest finns i ${perLan.slice(0, 3).map((x) => `${x.l.namn} (${x.e.length})`).join(", ")}.`,
+  laddning: `Parkering med laddning för elbil: ${talText(s.n)} parkeringar har tillsammans ${talText(s.laddPlatser)} laddplatser enligt operatörernas och kommunernas uppgifter. Flest laddplatser har ${[...st].sort((a, b) => b.extra.laddplatser - a.extra.laddplatser).slice(0, 2).map((e) => `${e.namn} i ${e.kommun} (${e.extra.laddplatser})`).join(" och ")}.`,
+}[urval] ?? u.intro(s.n, perLan.length);
+
 const fragor = [
   { fraga: u.fraga, svar: u.svar },
-  { fraga: `Var finns flest ${u.namn.toLowerCase()}?`, svar: `Flest finns i ${storst.map(([l, n]) => `${l} (${n})`).join(", ")}.` },
-];
+  { fraga: `Var finns flest ${u.namn.toLowerCase()}?`, svar: `Flest finns i ${perKommun.slice(0, 3).map((x) => `${x.k?.namn} (${x.n})`).join(", ")}. Räknat per län leder ${perLan[0].l.namn} med ${perLan[0].e.length}.` },
+  s.medianTim && { fraga: `Vad kostar ${u.namn.toLowerCase()}?`, svar: `Av de ${s.medPris.length} där vi har ett timpris är mittenvärdet ${krTim(s.medianTim)}. Billigast är ${s.billigast.namn} i ${s.billigast.kommun} (${krTim(timprisAv(s.billigast))}).` },
+  gratisMaxtid > 0 && { fraga: "Hur länge får man stå på en gratis parkering?", svar: `Det står på skylten. I vår data har ${gratisMaxtid} av ${s.n} avgiftsfria parkeringar en angiven tidsgräns: ${s.tidsgranser.slice(0, 4).map(([g, c]) => `${g} (${c} st)`).join(", ")}. Utan skylt gäller trafikförordningens regel om högst 24 timmar i följd på vardagar.` },
+].filter(Boolean);
+const lankar = {
+  "gratis-parkering": [{ href: "/guider/p-skiva/", namn: "P-skiva – regler" }, { href: "/guider/parkera-pa-gatan/", namn: "Parkera på gatan natt och helg" }, { href: "/guider/billig-parkering/", namn: "Billig parkering" }],
+  parkeringshus: [{ href: "/guider/parkeringsappar/", namn: "Parkeringsappar jämförda" }, { href: "/guider/parkeringsbot-eller-kontrollavgift/", namn: "Kontrollavgift i p-hus" }, { href: "/laddning/", namn: "Parkering med laddning" }],
+  pendlarparkering: [{ href: "/guider/billig-parkering/", namn: "Billig parkering" }, { href: "/gratis-parkering/", namn: "Gratis parkering" }],
+  laddning: [{ href: "/guider/ladda-elbil-parkering/", namn: "Parkera och ladda elbil" }, { href: "/parkeringshus/", namn: "Parkeringshus" }],
+}[urval] ?? [];
 ---
-<Layout site={SITE} titel={u.titel(st.length)}
-  beskrivning={`Alla ${st.length} ${u.namn.toLowerCase()} i Sverige per län, med öppettider och pris där operatören eller kommunen anger det. ✓ Öppet nu ✓ Uppdateras varje natt.`}
-  smulor={[{ namn: "Start", href: "/" }, { namn: u.namn, href: `/${urval}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+<Layout site={SITE} titel={u.titel(s.n)}
+  beskrivning={besk(`${u.namn} i Sverige: ${s.n} st per län och kommun med pris, platser och tidsgräns där det finns.`, s.medianTim && `✓ Mittenpris ${krTim(s.medianTim)}`, "✓ Karta", "✓ Uppdateras varje natt")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: u.namn, href: `/${urval}/` }]} uppdaterad={UPPDATERAD}>
   <h1>{u.h1}</h1>
-  <p class="svar">{u.intro(st.length, perLan.length)}</p>
-  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
+  <p class="svar">{svar}</p>
+  <div class="lank-rad">{perLan.map((x) => <a href={`#${x.l.slug}`}>{x.l.kortnamn} ({x.e.length})</a>)}</div>
+
+  <h2>{u.namn} per län</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Antal</th><th class="num">Andel av länets parkeringar</th><th class="num">Mittenvärde timpris</th><th>Flest i</th></tr></thead>
+    <tbody>{perLan.map((x) => { const n = nyckeltal(x.e); const topp = rakna(x.e, (e) => e.kommun)[0]; return <tr>
+      <td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{x.e.length}</td><td class="num">{Math.round((x.e.length / x.alla) * 100)} %</td>
+      <td class="num">{n.medianTim ? krTim(n.medianTim) : "–"}</td><td>{topp ? `${topp[0]} (${topp[1]})` : "–"}</td></tr>; })}</tbody>
+  </table></div>
+
+  <h2>Kommuner med flest {u.namn.toLowerCase()}</h2>
+  <div class="kort">{perKommun.filter((x) => x.k).map((x) => <a href={x.k.harSida ? x.k.href : x.k.href}><strong>{x.k.namn}</strong><small>{x.n} st</small></a>)}</div>
+
+  {urval === "gratis-parkering" && s.tidsgranser.length > 0 && <>
+    <h2 id="tidsgranser">Tidsgränser på gratis parkering</h2>
+    <p>Avgiftsfritt betyder sällan fritt. Så här fördelar sig de angivna tidsgränserna i vår data. På de övriga {s.n - s.maxtid.length} saknar källan uppgift – det betyder inte att tiden är obegränsad.</p>
+    <div class="tabell"><table><thead><tr><th>Längsta tid</th><th class="num">Parkeringar</th></tr></thead>
+      <tbody>{s.tidsgranser.slice(0, 10).map(([g, c]) => <tr><td>{g}</td><td class="num">{c}</td></tr>)}</tbody></table></div>
+    <p>Med tidsgräns ska du nästan alltid lägga en p-skiva synligt i vindrutan. Hur du ställer den står i <a href="/guider/p-skiva/">guiden om p-skiva</a>.</p>
+  </>}
+
+  {s.medPris.length >= 5 && <>
+    <h2>Billigast {urval === "gratis-parkering" ? "bland övriga" : ""} – lägst timpris</h2>
+    <div class="tabell"><table><thead><tr><th>Parkering</th><th>Kommun</th><th>Pris</th></tr></thead>
+      <tbody>{s.billiga.slice(0, 15).map((e) => <tr><td><a href={e.href}>{e.namn}</a></td><td>{e.kommun}</td><td>{prisText(e)}</td></tr>)}</tbody></table></div>
+  </>}
+
   <Annons plats="urval-1" />
-  {perLan.map((x) => <><h2 id={x.lan.slug}>{u.namn} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}
+
+  <h2>Karta</h2>
+  <Karta punkter={punkter} id="urval" />
+
+  {perLan.map((x) => <>
+    <h2 id={x.l.slug}>{u.namn} i {x.l.namn} ({x.e.length})</h2>
+    <Rader enheter={x.e} visaKommun />
+  </>)}
+
+  {lankar.length > 0 && <><h2>Läs också</h2><div class="kort">{lankar.map((x) => <a href={x.href}><strong>{x.namn}</strong></a>)}</div></>}
+  <Metod />
   <Faq fragor={fragor} />
-  <p class="kalla">{KALLA}</p>
-  <OppetNuSkript slot="skript" />
 </Layout>

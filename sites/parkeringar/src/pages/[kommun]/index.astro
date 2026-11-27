@@ -1,100 +1,160 @@
 ---
-// Parkering i en kommun: sammanfattning (pris, gratis, laddning), billigaste parkeringarna och listor per typ.
+// Parkering i en kommun. Byggs bara för kommuner som klarar kommungrinden (src/grind.js).
+// Svar först, kommunens gatutaxa per zon (verifierad), billigast och gratis, tidsgränser, operatörer, laddning och HCP,
+// station och sjukhus (bara när namnet säger det), karta, alla parkeringar som rader med ankare, grannkommuner, metod och frågor.
 import Layout from "@natverk/core/Layout.astro";
 import Annons from "@natverk/core/Annons.astro";
 import Faq from "@natverk/core/Faq.astro";
-import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
-import KommunTathet from "@natverk/core/katalog/KommunTathet.astro";
 import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
-import { faqLd, besk } from "@natverk/core/seo.js";
-import { grannkommuner, rakna, kommunTathet } from "@natverk/core/katalog.js";
-import { SITE, KAT, UPPDATERAD, KALLA, TYP, krTim, arGratis, ORD } from "../../site.js";
+import Karta from "../../components/Karta.astro";
+import Rader from "../../components/Rader.astro";
+import Gatutaxa from "../../components/Gatutaxa.astro";
+import Metod from "../../components/Metod.astro";
+import { besk } from "@natverk/core/seo.js";
+import { grannkommuner, kommunTathet, talText } from "@natverk/core/katalog.js";
+import { SITE, KAT, UPPDATERAD, MED_SIDA, ORD } from "../../site.js";
+import { nyckeltal, vidStation, vidSjukhus, prisText, krTim, TYP, tal, timprisAv, HUS } from "../../fakta.js";
 
-export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
+export const getStaticPaths = () => MED_SIDA.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
 const { kommun: k } = Astro.props;
-const tt = kommunTathet(KAT, k, ORD);
 const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
 const alla = k.enheter;
-const n = alla.length;
-const medPris = alla.filter((e) => e.extra?.taxa_per_timme > 0).sort((a, b) => a.extra.taxa_per_timme - b.extra.taxa_per_timme);
-const gratis = alla.filter(arGratis);
-const hus = alla.filter((e) => ["parkeringshus", "parkeringsgarage"].includes(e.typ));
-const pendlar = alla.filter((e) => e.typ === "pendlarparkering");
-const ladd = alla.filter((e) => e.extra?.laddplatser > 0);
-const laddPlatser = ladd.reduce((s, e) => s + e.extra.laddplatser, 0);
-const platser = alla.reduce((s, e) => s + (e.extra?.kapacitet ?? 0), 0);
-const medianPris = medPris.length ? medPris[Math.floor(medPris.length / 2)].extra.taxa_per_timme : null;
-const operatorer = rakna(alla.filter((e) => e.kedja), (e) => e.kedja).slice(0, 8);
-const grannar = grannkommuner(k, KAT.kommuner, 6);
-// Långa listor kortas: visa parkeringar med egen sida, räkna resten.
-const MAX = 60;
-const ordning = ["parkeringshus", "parkeringsgarage", "pendlarparkering", "markparkering", "gatuparkering", "flygplatsparkering", "husbilsparkering", "friluftsparkering", "rastficka", "takparkering", "parkering"];
-const grupper = ordning.map((t) => {
-  const e = alla.filter((x) => x.typ === t);
-  const visa = e.length > MAX ? e.filter((x) => x.egenSida).slice(0, MAX * 2) : e;
-  return { t, e, visa, ovriga: e.length - visa.length };
-}).filter((g) => g.e.length);
-const gen = (x) => (/[sxz]$/i.test(x) ? x : `${x}s`);
-const fragor = [
-  medPris.length > 0 && { fraga: `Vad kostar det att parkera i ${k.namn}?`, svar: `Bland de ${medPris.length} parkeringar i ${k.namn} där vi har ett timpris kostar det från ${krTim(medPris[0].extra.taxa_per_timme)} (${medPris[0].namn}). Mittenvärdet är ${krTim(medianPris)}. Gatuparkering följer kommunens taxezoner.` },
-  { fraga: `Finns det gratis parkering i ${k.namn}?`, svar: gratis.length ? `Ja, ${gratis.length} parkeringar i ${k.namn} är avgiftsfria enligt våra källor, till exempel ${gratis.slice(0, 3).map((e) => e.namn).join(", ")}. Kontrollera alltid skyltningen, eftersom tidsbegränsning och p-skiva kan gälla.` : `Vi har inga uppgifter om avgiftsfria parkeringar i ${k.namn}. Utanför centrum är markparkeringar ofta gratis men kan ha tidsbegränsning.` },
-  hus.length > 0 && { fraga: `Hur många parkeringshus finns det i ${k.namn}?`, svar: `Vi listar ${hus.length} parkeringshus och garage i ${k.namn}${operatorer.length ? `. Störst operatörer är ${operatorer.slice(0, 3).map(([o, c]) => `${o} (${c})`).join(", ")}` : ""}.` },
-  ladd.length > 0 && { fraga: `Var kan man ladda elbilen när man parkerar i ${k.namn}?`, svar: `${ladd.length} parkeringar i ${k.namn} har laddplatser, totalt ${laddPlatser} platser enligt våra uppgifter.` },
+const s = nyckeltal(alla);
+const sidor = alla.filter((e) => e.egenSida);
+const station = vidStation(alla), sjukhus = vidSjukhus(alla);
+const grannar = grannkommuner(k, MED_SIDA, 8);
+const tt = kommunTathet(KAT, k, ORD);
+const t = k.taxa;
+const gatuMin = t?.zoner.filter((z) => z.timpris).map((z) => z.timpris);
+// Ordning för raderna: parkeringar med egen sida och pris först, sedan per typ.
+const ORDNING = ["parkeringshus", "parkeringsgarage", "pendlarparkering", "flygplatsparkering", "markparkering", "gatuparkering", "husbilsparkering", "friluftsparkering", "rastficka", "takparkering", "parkering"];
+const grupper = ORDNING.map((typ) => ({ typ, e: alla.filter((x) => x.typ === typ).sort((a, b) => (b.egenSida - a.egenSida) || ((timprisAv(a) ?? 999) - (timprisAv(b) ?? 999)) || a.namn.localeCompare(b.namn, "sv")) })).filter((g) => g.e.length);
+const billigaHus = s.billiga.filter((e) => HUS.includes(e.typ)).slice(0, 5);
+
+const svarDelar = [
+  `Parkering i ${k.namn}: vi listar ${talText(s.n)} parkeringar${s.platser ? ` med minst ${talText(s.platser)} platser` : ""}.`,
+  t && gatuMin?.length && `På gatan kostar det ${tal(Math.min(...gatuMin))}–${tal(Math.max(...gatuMin))} kr i timmen beroende på zon.`,
+  s.billigast && `Billigast timpris bland anläggningarna har ${s.billigast.namn} med ${krTim(timprisAv(s.billigast))}${s.medianTim ? `, och mittenvärdet är ${krTim(s.medianTim)}` : ""}.`,
+  s.gratis.length && `${s.gratis.length} parkeringar är avgiftsfria${s.maxtid.length ? `, men många har tidsgräns` : ""}.`,
 ].filter(Boolean);
-const titel = [`Parkering i ${k.namn} – pris, gratis parkering och p-hus`, `Parkering i ${k.namn} – pris och p-hus`, `Parkering i ${k.namn}`].find((t) => t.length <= 60);
+
+const fragor = [
+  (s.medPris.length || t) && { fraga: `Vad kostar det att parkera i ${k.namn}?`, svar: [t && gatuMin?.length && `Gatuparkeringen kostar ${tal(Math.min(...gatuMin))}–${tal(Math.max(...gatuMin))} kr i timmen enligt kommunens taxa.`, s.medPris.length && `Bland de ${s.medPris.length} anläggningar där vi har ett timpris kostar det från ${krTim(timprisAv(s.medPris[0]))} (${s.medPris[0].namn}) till ${krTim(timprisAv(s.dyrast))}, och mittenvärdet är ${krTim(s.medianTim)}.`, s.medianDygn && `Ett dygn kostar i mitten ${tal(s.medianDygn)} kr.`].filter(Boolean).join(" ") },
+  { fraga: `Finns det gratis parkering i ${k.namn}?`, svar: s.gratis.length ? `Ja. ${s.gratis.length} parkeringar i ${k.namn} är avgiftsfria enligt våra källor, till exempel ${s.gratis.slice(0, 3).map((e) => e.namn).join(", ")}.${s.tidsgranser.length ? ` Vanligaste tidsgränsen är ${s.tidsgranser[0][0]}.` : ""} Kontrollera skyltningen, eftersom p-skiva kan krävas.` : `Vi har inga uppgifter om avgiftsfria parkeringar i ${k.namn}. Utanför centrum är markparkeringar ofta gratis men kan ha tidsgräns och kräva p-skiva.` },
+  s.hus.length > 0 && { fraga: `Hur många parkeringshus finns det i ${k.namn}?`, svar: `Vi listar ${s.hus.length} parkeringshus och garage i ${k.namn}.${billigaHus[0] ? ` Billigast timpris bland dem har ${billigaHus[0].namn} (${krTim(timprisAv(billigaHus[0]))}).` : ""}${s.operatorer.length ? ` Störst operatörer är ${s.operatorer.slice(0, 3).map(([o, c]) => `${o} (${c})`).join(", ")}.` : ""}` },
+  s.ladd.length > 0 && { fraga: `Var kan man ladda elbilen när man parkerar i ${k.namn}?`, svar: `${s.ladd.length} parkeringar i ${k.namn} har laddplatser, totalt ${s.laddPlatser} platser enligt operatörernas och kommunens uppgifter. Flest har ${[...s.ladd].sort((a, b) => b.extra.laddplatser - a.extra.laddplatser)[0].namn}.` },
+  t?.betalning?.length && { fraga: `Hur betalar man parkering i ${k.namn}?`, svar: `På kommunens gatumark i ${k.namn} kan du betala med ${t.betalning.join(", ")}. I parkeringshus och på privata ytor bestämmer operatören vilka appar som gäller, och det står på skylten.` },
+  t?.felparkering?.length && { fraga: `Vad kostar en parkeringsbot i ${k.namn}?`, svar: `Felparkeringsavgiften i ${k.namn} är ${t.felparkering.map((f) => `${tal(f.belopp)} kr för ${f.fel.toLowerCase()}`).join(", ")}.` },
+].filter(Boolean);
+
+const titel = [`Parkering i ${k.namn} – pris, gratis parkering och p-hus`, `Parkering i ${k.namn} – pris och gratis parkering`, `Parkering i ${k.namn} – pris och p-hus`, `Parkering i ${k.namn}`].find((x) => x.length <= 60);
 const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+const punkter = alla.filter((e) => e.lat != null).slice(0, 600).map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.egenSida ? e.href : `#${e.ankare}`, rad: prisText(e) ?? TYP[e.typ] }));
+const metodKallor = [
+  ...(t?.kallor ?? []).map((x) => ({ namn: x.namn, url: x.url, datum: x.hamtad })),
+  ...sidor.filter((e) => e.verifierad).map((e) => ({ namn: e.verifierad.kalla_namn, url: e.verifierad.kalla_url, datum: e.verifierad.hamtad })),
+];
 ---
 <Layout site={SITE} titel={titel}
-  beskrivning={besk(`${n} parkeringar i ${k.namn}${medPris.length ? ` – från ${krTim(medPris[0].extra.taxa_per_timme)}` : ""}.${gratis.length ? ` ✓ ${gratis.length} gratis` : ""}${hus.length ? ` ✓ ${hus.length} p-hus och garage` : ""}${ladd.length ? " ✓ Laddplatser" : ""} ✓ Öppettider och antal platser.`, `${k.namn} kommun, ${KAT.lan.find((l) => l.slug === k.lanSlug)?.namn ?? ""}.`, "Uppdateras varje natt.")}
-  smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  beskrivning={besk(`Parkering i ${k.namn}: ${s.n} parkeringar${s.billigast ? `, från ${krTim(timprisAv(s.billigast))}` : ""}.`, t && "✓ Gatutaxa per zon", s.gratis.length > 0 && `✓ ${s.gratis.length} gratis`, s.hus.length > 0 && `✓ ${s.hus.length} p-hus`, s.ladd.length > 0 && "✓ Laddplatser", "✓ Karta")}
+  smulor={smulor} uppdaterad={UPPDATERAD}>
   <h1>Parkering i {k.namn}</h1>
-  <p class="svar">
-    Vi listar <strong>{n} parkeringar</strong> i {k.namn}{platser > 0 && <> med minst {platser.toLocaleString("sv-SE")} platser</>}.
-    {medPris.length > 0 && <> Billigast timpris har <strong>{medPris[0].namn}</strong> ({krTim(medPris[0].extra.taxa_per_timme)}).</>}
-    {gratis.length > 0 && <> {gratis.length} är avgiftsfria.</>}
-  </p>
+  <p class="svar">{svarDelar.join(" ")}</p>
+  <div class="lank-rad">
+    {t && <a href="#gatutaxa">Gatutaxa</a>}{s.medPris.length >= 3 && <a href="#billigast">Billigast</a>}{s.gratis.length > 0 && <a href="#gratis">Gratis</a>}
+    {s.hus.length > 0 && <a href="#hus">P-hus</a>}{(station.length > 0 || sjukhus.length > 0) && <a href="#station">Station och sjukhus</a>}<a href="#karta">Karta</a><a href="#alla">Alla parkeringar</a>
+  </div>
 
-  {medPris.length >= 3 && <>
-    <h2>Billigast att parkera i {k.namn}</h2>
+  <h2>Parkering i {k.namn} i siffror</h2>
+  <div class="tabell"><table>
+    <tbody>
+      <tr><th scope="row">Parkeringar i vår lista</th><td class="num">{talText(s.n)}</td></tr>
+      {s.platser > 0 && <tr><th scope="row">Kända platser (minst)</th><td class="num">{talText(s.platser)}</td></tr>}
+      {s.medPris.length > 0 && <tr><th scope="row">Med känt timpris</th><td class="num">{s.medPris.length}</td></tr>}
+      {s.medianTim && <tr><th scope="row">Mittenvärde, timpris</th><td class="num">{krTim(s.medianTim)}</td></tr>}
+      {s.medianDygn && <tr><th scope="row">Mittenvärde, dygnspris</th><td class="num">{tal(s.medianDygn)} kr</td></tr>}
+      <tr><th scope="row">Avgiftsfria</th><td class="num">{s.gratis.length}</td></tr>
+      {s.hus.length > 0 && <tr><th scope="row">Parkeringshus och garage</th><td class="num">{s.hus.length}</td></tr>}
+      {s.pendlar.length > 0 && <tr><th scope="row">Pendlarparkeringar</th><td class="num">{s.pendlar.length}</td></tr>}
+      {s.ladd.length > 0 && <tr><th scope="row">Laddplatser för elbil</th><td class="num">{s.laddPlatser} på {s.ladd.length} parkeringar</td></tr>}
+      {s.hcp.length > 0 && <tr><th scope="row">Platser för rörelsehindrade</th><td class="num">{s.hcpPlatser} på {s.hcp.length} parkeringar</td></tr>}
+    </tbody>
+  </table></div>
+
+  <Gatutaxa kommun={k} />
+
+  {s.medPris.length >= 3 && <>
+    <h2 id="billigast">Billigast att parkera i {k.namn}</h2>
+    <p>De tio lägsta ordinarie timpriserna bland anläggningarna i {k.namn}. {s.medianTim && <>Mittenvärdet är {krTim(s.medianTim)}, och det dyraste vi har är {krTim(timprisAv(s.dyrast))} ({s.dyrast.namn}).</>}</p>
     <div class="tabell"><table>
-      <thead><tr><th>Parkering</th><th>Typ</th><th class="num">Pris per timme</th></tr></thead>
-      <tbody>{medPris.slice(0, 10).map((e) => <tr><td>{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</td><td>{TYP[e.typ] ?? "Parkering"}</td><td class="num">{krTim(e.extra.taxa_per_timme)}</td></tr>)}</tbody>
+      <thead><tr><th>Parkering</th><th>Typ</th><th>Pris</th></tr></thead>
+      <tbody>{s.billiga.slice(0, 10).map((e) => <tr><td><a href={e.href}>{e.namn}</a></td><td>{TYP[e.typ] ?? "Parkering"}</td><td>{prisText(e)}</td></tr>)}</tbody>
     </table></div>
-    <p class="kalla">Ordinarie timpris enligt operatör eller kommun. Dygns- och kvällstaxor finns på varje parkerings sida.</p>
   </>}
 
   <Annons plats="kommun-1" />
 
-  {gratis.length > 0 && <>
+  {s.gratis.length > 0 && <>
     <h2 id="gratis">Gratis parkering i {k.namn}</h2>
-    <EnhetLista enheter={gratis.slice(0, 40)} />
-    {gratis.length > 40 && <p>… och {gratis.length - 40} till.</p>}
+    <p>{s.gratis.length} parkeringar i {k.namn} är avgiftsfria enligt kommunens, operatörernas eller OpenStreetMaps uppgifter.{s.gratisTid.length > 0 && <> {s.maxtid.filter((e) => s.gratis.includes(e)).length} av dem har en angiven tidsgräns. Vanligast: {s.gratisTid.slice(0, 3).map(([g, c]) => `${g} (${c})`).join(", ")}.</>} Där det står tidsgräns krävs oftast <a href="/guider/p-skiva/">p-skiva</a>.</p>
+    <ul class="kolumner">{s.gratis.slice(0, 60).map((e) => <li><a href={e.href}>{e.namn}</a>{prisText(e) !== "gratis" && <small> – {prisText(e)}</small>}</li>)}</ul>
+    {s.gratis.length > 60 && <p class="kalla">Visar 60 av {s.gratis.length}. Alla finns i listan längre ner.</p>}
   </>}
 
-  {grupper.map((g) => <>
-    <h2 id={g.t}>{g.t === "parkering" ? "Övriga parkeringar" : `${TYP[g.t]} i ${k.namn}`}</h2>
-    <EnhetLista enheter={g.visa} />
-    {g.ovriga > 0 && <p class="kalla">Ytterligare {g.ovriga} mindre parkeringar av den här typen utan uppgifter om pris eller öppettider visas inte i listan.</p>}
-  </>)}
+  {s.hus.length > 0 && <>
+    <h2 id="hus">Parkeringshus och garage i {k.namn}</h2>
+    <p>{s.hus.length} parkeringshus och garage.{billigaHus.length > 0 && <> Lägst timpris: {billigaHus.map((e) => `${e.namn} (${krTim(timprisAv(e))})`).join(", ")}.</>} {s.hus.filter((e) => e.extra?.hojdbegransning).length > 0 && <>Höjdgränsen är känd för {s.hus.filter((e) => e.extra?.hojdbegransning).length} av dem – lägst {String(Math.min(...s.hus.filter((e) => e.extra?.hojdbegransning).map((e) => e.extra.hojdbegransning))).replace(".", ",")} m.</>}</p>
+    <ul class="kolumner">{s.hus.slice(0, 40).map((e) => <li><a href={e.href}>{e.namn}</a>{prisText(e) && <small> – {prisText(e)}</small>}</li>)}</ul>
+  </>}
 
-  {operatorer.length > 1 && <>
+  {(station.length > 0 || sjukhus.length > 0) && <>
+    <h2 id="station">Parkering vid station och sjukhus i {k.namn}</h2>
+    <p>Parkeringar vars namn visar att de hör till en station, en infart eller ett sjukhus.</p>
+    {station.length > 0 && <><h3>Vid station och resecentrum</h3><ul class="kolumner">{station.slice(0, 20).map((e) => <li><a href={e.href}>{e.namn}</a>{prisText(e) && <small> – {prisText(e)}</small>}</li>)}</ul></>}
+    {sjukhus.length > 0 && <><h3>Vid sjukhus och vårdcentral</h3><ul class="kolumner">{sjukhus.slice(0, 20).map((e) => <li><a href={e.href}>{e.namn}</a>{prisText(e) && <small> – {prisText(e)}</small>}</li>)}</ul></>}
+  </>}
+
+  {s.operatorer.length > 0 && <>
     <h2>Parkeringsoperatörer i {k.namn}</h2>
+    <p>Operatören bestämmer pris, betalsätt och vilka appar som gäller på sina anläggningar. Kontrollavgifter på privat mark tas ut av operatören, inte kommunen.</p>
     <div class="tabell"><table>
-      <thead><tr><th>Operatör</th><th class="num">Anläggningar</th></tr></thead>
-      <tbody>{operatorer.map(([o, c]) => <tr><td>{o}</td><td class="num">{c}</td></tr>)}</tbody>
+      <thead><tr><th>Operatör</th><th class="num">Anläggningar</th><th class="num">Mittenvärde timpris</th></tr></thead>
+      <tbody>{s.operatorer.slice(0, 10).map(([o, c]) => { const p = nyckeltal(alla.filter((e) => e.kedja === o)); return <tr><td>{o}</td><td class="num">{c}</td><td class="num">{p.medianTim ? krTim(p.medianTim) : "–"}</td></tr>; })}</tbody>
     </table></div>
   </>}
 
-  <KommunTathet t={tt} kommun={k} ord={ORD} />
+  {s.ladd.length > 0 && <>
+    <h2 id="laddning">Ladda elbilen när du parkerar i {k.namn}</h2>
+    <p>{s.ladd.length} parkeringar har tillsammans {s.laddPlatser} laddplatser. Laddningen betalas oftast separat från parkeringen – se <a href="/guider/ladda-elbil-parkering/">guiden om laddplatser</a>.</p>
+    <ul class="kolumner">{[...s.ladd].sort((a, b) => b.extra.laddplatser - a.extra.laddplatser).slice(0, 12).map((e) => <li><a href={e.href}>{e.namn}</a> <small>– {e.extra.laddplatser} laddplatser</small></li>)}</ul>
+  </>}
 
+  {s.hcp.length > 0 && <>
+    <h2>Platser för rörelsehindrade i {k.namn}</h2>
+    <p>{s.hcp.length} parkeringar har tillsammans {s.hcpPlatser} reserverade platser för den som har parkeringstillstånd. Reglerna för tillståndet står i <a href="/guider/parkeringstillstand-rorelsehindrade/">guiden om parkeringstillstånd</a>.</p>
+  </>}
+
+  <h2 id="karta">Karta över parkeringar i {k.namn}</h2>
+  <Karta punkter={punkter} id="kommun" />
+
+  <Annons plats="kommun-2" />
+
+  <h2 id="alla">Alla {s.n} parkeringar i {k.namn}</h2>
+  <p>Parkeringar med tillräckligt mycket uppgifter har en egen sida med taxa, öppettider och närmaste alternativ. Övriga visas här med det vi vet.</p>
+  {grupper.map((g) => <>
+    <h3>{g.typ === "parkering" ? "Övriga parkeringar" : TYP[g.typ]} ({g.e.length})</h3>
+    <Rader enheter={g.e} />
+  </>)}
+
+  {tt.text && <><h2>Parkeringar per invånare</h2><p>{tt.text}</p></>}
 
   {grannar.length > 0 && <>
     <h2>Parkering i närliggande kommuner</h2>
-    <ul class="kolumner">{grannar.map((g) => <li><a href={g.href}>{g.namn}</a> ({g.enheter.length})</li>)}</ul>
+    <div class="kort">{grannar.map((g) => { const n2 = nyckeltal(g.enheter); return <a href={g.href}><strong>Parkering i {g.namn}</strong><small>{g.enheter.length} parkeringar{n2.medianTim ? ` · mitten ${krTim(n2.medianTim)}` : ""}{n2.gratis.length ? ` · ${n2.gratis.length} gratis` : ""}</small></a>; })}</div>
   </>}
 
-  <Annons plats="kommun-2" />
+  <Metod kallor={metodKallor} />
   <Faq fragor={fragor} />
-  <p class="kalla">{KALLA}</p>
+  {lan && <p><a href={lan.href}>Parkering i hela {lan.namn} →</a></p>}
   <OppetNuSkript slot="skript" />
 </Layout>

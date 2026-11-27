@@ -1,0 +1,128 @@
+---
+// Lång guide: billig parkering. Bygger på vår egen data (alla timpriser och dygnspriser i katalogen, räknas om varje natt),
+// kommunernas gatutaxor (data/kommuntaxor.json), verifierade operatörssidor (data/verifierade-anlaggningar.json),
+// apparnas egna prissidor och trafikförordningen. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { talText } from "@natverk/core/katalog.js";
+import { SITE, KAT, MED_SIDA, VERIFIERADE, UPPDATERAD } from "../../site.js";
+import { nyckeltal, krTim, timprisAv, prisText, tal, dygnspris, HUS } from "../../fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const s = nyckeltal(KAT.enheter);
+const pris = s.medPris.map(timprisAv);
+const andel = (f) => Math.round((pris.filter(f).length / pris.length) * 100);
+const spann = [
+  { namn: "Under 10 kr/tim", f: (p) => p < 10 },
+  { namn: "10–19 kr/tim", f: (p) => p >= 10 && p < 20 },
+  { namn: "20–29 kr/tim", f: (p) => p >= 20 && p < 30 },
+  { namn: "30 kr/tim eller mer", f: (p) => p >= 30 },
+].map((x) => ({ ...x, n: pris.filter(x.f).length, andel: andel(x.f) }));
+const stader = MED_SIDA.filter((k) => k.taxa).map((k) => {
+  const z = k.taxa.zoner.filter((x) => x.timpris).map((x) => x.timpris);
+  return { k, min: Math.min(...z), max: Math.max(...z), n: nyckeltal(k.enheter) };
+}).sort((a, b) => b.max - a.max);
+const billigaK = MED_SIDA.map((k) => ({ k, n: nyckeltal(k.enheter) })).filter((x) => x.n.medPris.length >= 10).sort((a, b) => a.n.medianTim - b.n.medianTim);
+const husDygn = KAT.enheter.filter((e) => HUS.includes(e.typ) && dygnspris(e) && e.egenSida).sort((a, b) => dygnspris(a) - dygnspris(b));
+const husMedianDygn = nyckeltal(KAT.enheter.filter((e) => HUS.includes(e.typ))).medianDygn;
+const pendel = nyckeltal(KAT.enheter.filter((e) => e.typ === "pendlarparkering"));
+// Rader med kvälls- eller nattpris: "natt", "kväll", "övrig tid" eller ett intervall som slutar på morgonen (22–08).
+const NATT = /natt|kväll|övrig tid|\b(1[89]|2[0-3])\s*[–-]\s*0?[0-8]\b/i;
+const nattEx = [...VERIFIERADE.values()].filter((v) => v.taxa?.some((r) => NATT.test(r)));
+const sthlm = stader.find((x) => x.k.namn === "Stockholm");
+const ex2h = sthlm ? sthlm.k.taxa.zoner.filter((z) => z.timpris).map((z) => ({ namn: z.namn, kr: z.timpris * 2 })) : [];
+
+const avsnitt = [
+  { id: "vad-kostar", rubrik: "Vad kostar en timmes parkering i Sverige?" },
+  { id: "gatan-eller-huset", rubrik: "Gatan eller parkeringshuset – vad är billigast?" },
+  { id: "billigaste-kommunerna", rubrik: "Kommunerna där det är billigast" },
+  { id: "dygn", rubrik: "Parkera ett dygn eller längre" },
+  { id: "kvall-natt", rubrik: "Kvälls- och nattaxor" },
+  { id: "pendlar", rubrik: "Pendlarparkering som billigt alternativ" },
+  { id: "gratis", rubrik: "Gratis parkering – och fällorna" },
+  { id: "avgifter", rubrik: "Dolda kostnader: appavgifter och böter" },
+];
+const fragor = [
+  { fraga: "Vad kostar det att parkera en timme?", svar: `Mittenvärdet för de ${talText(pris.length)} parkeringar i vår lista som har ett ordinarie timpris är ${krTim(s.medianTim)}. ${spann[0].andel} procent kostar under 10 kronor och ${spann[3].andel} procent 30 kronor eller mer.` },
+  sthlm && { fraga: "Var är det dyrast att parkera på gatan?", svar: `${stader[0].k.namn} har högst gatutaxa av städerna vi kontrollerat, ${tal(stader[0].max)} kr i timmen i den dyraste zonen. I Stockholm kostar två timmar i ${ex2h[0]?.namn} ${tal(ex2h[0]?.kr)} kr men ${tal(ex2h.at(-1)?.kr)} kr i ${ex2h.at(-1)?.namn}.` },
+  billigaK[0] && { fraga: "Var är det billigast att parkera?", svar: `Bland kommunerna med minst tio prissatta parkeringar har ${billigaK[0].k.namn} lägst mittenvärde (${krTim(billigaK[0].n.medianTim)}), följt av ${billigaK[1]?.k.namn} och ${billigaK[2]?.k.namn}.` },
+  { fraga: "Lönar det sig att betala dygnspris?", svar: `Oftast från tre–fyra timmar. Mittenvärdet för ett dygn är ${tal(s.medianDygn)} kr mot ${krTim(s.medianTim)} för en timme, så dygnstaxan blir billigare redan efter ungefär ${Math.ceil(s.medianDygn / s.medianTim)} timmar på en typisk anläggning.` },
+  { fraga: "Hur hittar jag gratis parkering?", svar: `${talText(s.gratis.length)} parkeringar i vår lista är avgiftsfria. Sidan Gratis parkering visar dem per län och kommun. Räkna med tidsgräns och p-skiva på många av dem.` },
+].filter(Boolean);
+const kallor = [
+  { namn: "parkeringar.nu – egen sammanställning", text: `${talText(s.n)} parkeringar, ${talText(pris.length)} med timpris, beräknat ${UPPDATERAD}`, datum: UPPDATERAD },
+  ...stader.flatMap((x) => x.k.taxa.kallor.slice(0, 1)).map((k) => ({ namn: k.namn, url: k.url, text: "gatutaxa per zon", datum: k.hamtad })),
+  ...nattEx.slice(0, 6).map((v) => ({ namn: v.kalla_namn, url: v.kalla_url, text: "taxa och nattpris", datum: v.hamtad })),
+  { namn: "EasyPark – Vad kostar det", url: "https://www.easypark.com/en-se/what-it-costs", text: "serviceavgift", datum: "2026-11-27" },
+  { namn: "Parkster – Vårt erbjudande", url: "https://www.parkster.com/se/vart-erbjudande/", text: "avgift per parkering", datum: "2026-11-27" },
+  { namn: "Stockholms stad – Betala parkering", url: "https://parkering.stockholm/betala-parkering", text: "krav på avgiftsfritt alternativ i godkända appar", datum: "2026-11-27" },
+  { namn: "Trafikförordning (1998:1276)", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "3 kap. 49 a § om p-skiva och 24 timmar", datum: "2026-11-27" },
+];
+---
+<Guide site={SITE} titel="Billig parkering – vad det kostar och var det är billigast"
+  beskrivning={`Billig parkering: mittenpriset är ${krTim(s.medianTim)} i vår data med ${talText(pris.length)} timpriser. Gatan mot p-huset, nattaxor, dygnspris och gratis parkering.`}
+  h1="Billig parkering – så betalar du mindre"
+  svar={`Billig parkering hittar du oftast en bit från centrum, på kvällar och nätter och med dygnstaxa om du står länge. Mittenvärdet för de <strong>${talText(pris.length)}</strong> timpriser vi har är <strong>${krTim(s.medianTim)}</strong>, men ${spann[0].andel} procent kostar under 10 kronor. Ett dygn kostar i mitten ${tal(s.medianDygn)} kr, och ${talText(s.gratis.length)} parkeringar är helt avgiftsfria.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Billig parkering", href: "/guider/billig-parkering/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Gratis parkering", href: "/gratis-parkering/", text: `${talText(s.gratis.length)} avgiftsfria parkeringar` },
+    { namn: "Parkeringsappar jämförda", href: "/guider/parkeringsappar/", text: "Serviceavgifterna app för app" },
+    { namn: "P-skiva", href: "/guider/p-skiva/", text: "Så undviker du boten på gratisparkeringen" },
+    { namn: "Pendlarparkering", href: "/pendlarparkering/", text: "Infartsparkeringar i hela landet" },
+  ]}
+  kallor={kallor}>
+
+  <h2 id="vad-kostar">Vad kostar en timmes parkering i Sverige?</h2>
+  <p>Vi har ett ordinarie timpris för bil på {talText(pris.length)} av de {talText(s.n)} parkeringar vi listar. Priserna kommer från operatörernas egna sidor (Aimo Park, APCOA, Stockholm Parkering) och från kommunernas öppna data. Mittenvärdet är <strong>{krTim(s.medianTim)}</strong>. Det betyder att hälften av parkeringarna är billigare och hälften dyrare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Timpris</th><th class="num">Parkeringar</th><th class="num">Andel</th></tr></thead>
+    <tbody>{spann.map((x) => <tr><td>{x.namn}</td><td class="num">{talText(x.n)}</td><td class="num">{x.andel} %</td></tr>)}</tbody>
+  </table></div>
+  <p>Spännvidden är stor. Billigast är {s.billigast.namn} i {s.billigast.kommun} med {krTim(timprisAv(s.billigast))}. Dyrast är {s.dyrast.namn} i {s.dyrast.kommun} med {krTim(timprisAv(s.dyrast))}, omräknat från taxan per påbörjad period ({s.dyrast.extra.taxa?.split(";").slice(-1)[0].trim()}). Priset beror mest på läget: nära handel, stationer och sjukhus är det dyrare, i bostadsområden och vid idrottsanläggningar billigare.</p>
+
+  <h2 id="gatan-eller-huset">Gatan eller parkeringshuset – vad är billigast?</h2>
+  <p>På gatan sätter kommunen taxan. I parkeringshus och på privata ytor bestämmer operatören. Tabellen jämför kommunens zoner med mittenvärdet för anläggningarna i samma stad.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Stad</th><th class="num">Gatan, billigaste zon</th><th class="num">Gatan, dyraste zon</th><th class="num">Anläggningar, mittenvärde</th></tr></thead>
+    <tbody>{stader.map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{tal(x.min)} kr</td><td class="num">{tal(x.max)} kr</td><td class="num">{x.n.medianTim ? krTim(x.n.medianTim) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>Mönstret är tydligt: <strong>i innerstaden är gatan ofta dyrare än parkeringshuset</strong>, eftersom kommunerna vill att bilar ska stå i garage i stället för på gatan. En bit ut vänder det, och där är gatan billigare. {sthlm && <>I Stockholm kostar två timmar {ex2h.map((z) => `${tal(z.kr)} kr i ${z.namn}`).join(", ")}.</>} Det lönar sig alltså att gå några kvarter.</p>
+  <p>Tänk också på avgiftstiden. På många gator är det gratis kvällar, nätter och söndagar, medan parkeringshusen tar betalt dygnet runt. Avgiftstiden för varje zon står på stadens sida.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="billigaste-kommunerna">Kommunerna där det är billigast</h2>
+  <p>Bland kommunerna med minst tio prissatta parkeringar har de här lägst mittenvärde för timpriset:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Mittenvärde</th><th class="num">Prissatta</th><th class="num">Gratis</th></tr></thead>
+    <tbody>{billigaK.slice(0, 10).map((x) => <tr><td><a href={x.k.href}>{x.k.namn}</a></td><td class="num">{krTim(x.n.medianTim)}</td><td class="num">{x.n.medPris.length}</td><td class="num">{x.n.gratis.length}</td></tr>)}</tbody>
+  </table></div>
+  <p>Högst mittenvärde har {billigaK.slice(-3).reverse().map((x) => `${x.k.namn} (${krTim(x.n.medianTim)})`).join(", ")}. Skillnaden mot de billigaste kommunerna är flera gånger om.</p>
+
+  <h2 id="dygn">Parkera ett dygn eller längre</h2>
+  <p>Ska bilen stå mer än några timmar är dygnstaxan nästan alltid billigare än att betala per timme. Mittenvärdet för ett dygn är <strong>{tal(s.medianDygn)} kr</strong> i vår data, och för parkeringshus och garage {tal(husMedianDygn)} kr. Med ett typiskt timpris på {krTim(s.medianTim)} är dygnet billigare redan efter ungefär {Math.ceil(s.medianDygn / s.medianTim)} timmar.</p>
+  {husDygn.length > 0 && <>
+    <p>Parkeringshus och garage med lägst dygnspris:</p>
+    <ul>{husDygn.slice(0, 8).map((e) => <li><a href={e.href}>{e.namn}</a>, {e.kommun} – {prisText(e)}</li>)}</ul>
+  </>}
+  <p>Längre än så finns ofta veckobiljett eller månadskort. Kontrollera också att anläggningen är öppen hela tiden – vissa garage stänger utfarten på natten. Öppettiderna står på varje parkerings sida.</p>
+
+  <h2 id="kvall-natt">Kvälls- och nattaxor</h2>
+  <p>Många parkeringshus har en lägre taxa på kvällen och natten. Det är värt att veta om du ska till teatern, äta ute eller sova över hos någon. Exempel som vi har kontrollerat hos operatören:</p>
+  <ul>{nattEx.slice(0, 8).map((v) => <li><strong>{v.namn}</strong>{v.operator && <> ({v.operator})</>}: {v.taxa.filter((r) => NATT.test(r)).slice(0, 2).join("; ")}</li>)}</ul>
+  <p>På gatan är natten ofta helt avgiftsfri, men där kan städnätter och servicetid gälla. Läs <a href="/guider/parkera-pa-gatan/">parkera på gatan natt och helg</a> innan du lämnar bilen över natten.</p>
+
+  <h2 id="pendlar">Pendlarparkering som billigt alternativ</h2>
+  <p>Ska du in till en storstad är det ofta billigast att parkera vid en station och åka vidare kollektivt. Vi listar {pendel.n} pendlar- och infartsparkeringar. {pendel.gratis.length} är avgiftsfria{pendel.medianTim && <>, och för de prissatta är mittenvärdet {krTim(pendel.medianTim)}</>}. Vissa kräver giltig färdbiljett eller registrering – skylten säger vad som gäller. Se <a href="/pendlarparkering/">alla pendlarparkeringar</a>.</p>
+
+  <h2 id="gratis">Gratis parkering – och fällorna</h2>
+  <p>{talText(s.gratis.length)} parkeringar i vår lista är avgiftsfria. {s.tidsgranser.length > 0 && <>Av dem har {s.maxtid.filter((e) => s.gratis.includes(e)).length} en angiven tidsgräns, oftast {s.tidsgranser.slice(0, 3).map(([g]) => g).join(", ")}.</>} Där tid är begränsad krävs i regel p-skiva, och den ska ställas på närmast följande halvtimme efter att du parkerat enligt trafikförordningen. En glömd skiva kan kosta mer än en hel dags parkering i ett garage. Läs <a href="/guider/p-skiva/">guiden om p-skiva</a>.</p>
+  <p>Saknas skylt med tidsgräns gäller den allmänna regeln: på vardagar får du inte stå mer än 24 timmar i följd på samma plats på gatan. Gratisparkeringar per kommun finns på sidan <a href="/gratis-parkering/">Gratis parkering</a>.</p>
+
+  <h2 id="avgifter">Dolda kostnader: appavgifter och böter</h2>
+  <p>Priset på skylten är inte alltid allt du betalar. Parkeringsapparna tar ofta en serviceavgift per parkering. EasyPark tar enligt sin prislista 15 procent av parkeringsavgiften, minst 4,95 kr, i sitt grundläge. Parkster har ett läge utan avgift och lägen för 5 kr per parkering. Stockholms stad kräver att apparna som får användas på stadens gator har ett alternativ utan serviceavgift. För korta parkeringar kan avgiften bli en stor del av kostnaden – jämför i <a href="/guider/parkeringsappar/">guiden om parkeringsappar</a>.</p>
+  <p>Den dyraste parkeringen är den du inte betalar. {sthlm?.k.taxa.felparkering?.[0] && <>I Stockholm kostar det {tal(sthlm.k.taxa.felparkering[0].belopp)} kr att stå utan att betala på en avgiftsbelagd plats – lika mycket som {Math.round(sthlm.k.taxa.felparkering[0].belopp / sthlm.min)} timmar i stadens billigaste zon.</>} Skillnaden mellan kommunens felparkeringsavgift och en kontrollavgift på privat mark står i <a href="/guider/parkeringsbot-eller-kontrollavgift/">parkeringsbot eller kontrollavgift</a>.</p>
+  <Faq fragor={fragor} />
+</Guide>

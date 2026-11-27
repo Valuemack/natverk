@@ -1,0 +1,172 @@
+---
+// Lång guide: p-skiva. Källor: trafikförordningen (1998:1276) 3 kap. 49 a § och 13 kap. 8 §, vägmärkesförordningen (2007:90)
+// tavlorna T6, T17 och T18, TSFS 2024:57, lagen och förordningen om felparkeringsavgift, lagen om kontrollavgift,
+// Transportstyrelsen, Malmö stad, Stockholms stad och Göteborgs Stad. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { SITE } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+
+const avsnitt = [
+  { id: "stalla", rubrik: "Så ställer du p-skivan" },
+  { id: "exempel", rubrik: "Exempel: vilken tid ska skivan visa?" },
+  { id: "skylten", rubrik: "Var krävs p-skiva? Så läser du skylten" },
+  { id: "vilken-skiva", rubrik: "Vilken p-skiva är godkänd?" },
+  { id: "placera", rubrik: "Var skivan ska ligga" },
+  { id: "bot", rubrik: "Vad kostar en saknad eller felställd p-skiva?" },
+  { id: "privat-mark", rubrik: "P-skiva på privat mark" },
+  { id: "tillstand", rubrik: "P-skiva och parkeringstillstånd för rörelsehindrade" },
+  { id: "misstag", rubrik: "Vanliga misstag" },
+];
+
+const fragor = [
+  { fraga: "Hur ställer man en p-skiva?", svar: "Du ställer skivan på den närmast följande halvtimmen efter att du parkerade, enligt 3 kap. 49 a § trafikförordningen. Parkerar du 14.10 ställer du skivan på 14.30, och parkerar du 14.40 ställer du den på 15.00. Den tillåtna tiden räknas sedan från klockslaget på skivan." },
+  { fraga: "Vad gäller om jag parkerar innan tidsbegränsningen börjar?", svar: "Ska bilen stå kvar efter att tidsbegränsningen börjat, ställer du skivan på klockslaget då begränsningen börjar. Parkerar du 07.40 där tavlan säger 8–18 och två timmar, ställer du skivan på 08.00 och får stå kvar till 10.00." },
+  { fraga: "Behövs p-skiva på söndagar?", svar: "Bara om tilläggstavlan har röda siffror, som gäller sön- och helgdagar, eller om tavlan saknar tidsangivelse helt. Står det bara svarta siffror och siffror inom parentes gäller tidsgränsen inte på söndagar, och då behövs ingen skiva." },
+  { fraga: "Är en elektronisk p-skiva tillåten i Sverige?", svar: "Trafikförordningen kräver en parkeringsskiva eller motsvarande och pekar inte ut någon viss modell. Det avgörande är att tiden är rätt enligt den svenska regeln, alltså närmast följande halvtimme, och att den går att läsa utifrån. En skiva som rundar till närmaste kvart, eller vars display har slocknat, uppfyller inte kravet." },
+  { fraga: "Vad kostar det att glömma p-skivan?", svar: "Kommunen bestämmer beloppet inom ramen 75 till 1 300 kronor. Stockholm tar 1 100 kronor för saknad eller felinställd p-skiva och Malmö 600 kronor för brott mot villkoren vid p-skiva. Betalar du inte i tid höjs avgiften med 150 kronor." },
+  { fraga: "Får man vrida fram p-skivan om man vill stå längre?", svar: "Nej. Skivan ska visa när parkeringen började, avrundat till närmast följande halvtimme. Vrider du fram den utan att flytta bilen visar den fel tid. Malmö stad skriver uttryckligen att inställningen inte får ändras under pågående parkering inom tidsbegränsningen." },
+];
+---
+<Guide site={SITE} titel="P-skiva – så ställer du den och var den gäller"
+  beskrivning="Så ställer du p-skivan enligt trafikförordningen: avrundning till närmast följande halvtimme, skylten, elektroniska skivor och vad en miss kostar."
+  h1="P-skiva – så ställer du den, var den krävs och vad felet kostar"
+  svar={`P-skivan ställer du på <strong>närmast följande halvtimme</strong> efter att du parkerade, enligt 3 kap. 49 a § trafikförordningen. Ställer du bilen 14.10 ska skivan visa 14.30, och med två timmars tillåten tid får du stå kvar till 16.30. Skivan krävs bara där P-skylten har en tilläggstavla med skivsymbolen, och bara under de tider tavlan anger. En saknad eller felställd skiva kostar 600 kronor i Malmö och 1 100 kronor i Stockholm.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "P-skiva", href: "/guider/p-skiva/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt}
+  relaterat={[
+    { namn: "Parkera på gatan natt och helg", href: "/guider/parkera-pa-gatan/", text: "24-timmarsregeln och städnätter" },
+    { namn: "Var får man inte parkera?", href: "/guider/parkeringsregler/", text: "Avstånd och förbud i trafikförordningen" },
+    { namn: "Parkeringsbot eller kontrollavgift?", href: "/guider/parkeringsbot-eller-kontrollavgift/", text: "Gata mot privat mark" },
+    { namn: "Överklaga en parkeringsbot", href: "/guider/overklaga-parkeringsbot/", text: "Steg för steg och tidsfrister" },
+    { namn: "Parkeringstillstånd för rörelsehindrade", href: "/guider/parkeringstillstand-rorelsehindrade/", text: "Var och hur länge du får stå" },
+  ]}
+  kallor={[
+    { namn: "Trafikförordning (1998:1276), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/trafikforordning-19981276_sfs-1998-1276/", text: "3 kap. 49 a § om p-skivans inställning och placering, 13 kap. 8 § om parkeringstillstånd (ändrad t.o.m. SFS 2026:1052)", datum: "2026-11-27" },
+    { namn: "Vägmärkesförordning (2007:90), Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/vagmarkesforordning-200790_sfs-2007-90/", text: "tilläggstavlorna T6 tidsangivelse, T17 parkeringsskiva och T18 tillåten tid, märket E19", datum: "2026-11-27" },
+    { namn: "Transportstyrelsens föreskrifter om parkeringsanmärkningar och felparkeringsavgift (TSFS 2024:57)", url: "https://transportstyrelsen.se/TSFS/TSFS%202024_57.pdf", text: "överträdelsekoderna 23, 38 och 41, betalning inom åtta dagar och 21 dagar efter erinran", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Stanna och parkera (broschyr TS 2015:11)", url: "https://www.transportstyrelsen.se/globalassets/global/publikationer-och-rapporter/vag/trafikant/produkter/stanna-och-parkera-a5-webb.pdf", text: "myndighetens förklaring av skivregeln och tidsangivelserna", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Parkeringsanmärkning", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/parkeringsanmarkning", text: "betalning, erinran och höjd avgift", datum: "2026-11-27" },
+    { namn: "Förordning (1976:1128) om felparkeringsavgift, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-19761128-om-felparkeringsavgift_sfs-1976-1128/", text: "75–1 300 kronor, kommunen bestämmer, höjning med 150 kronor", datum: "2026-11-27" },
+    { namn: "Lag (1976:206) om felparkeringsavgift, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1976206-om-felparkeringsavgift_sfs-1976-206/", text: "ny anmärkning per påbörjat kalenderdygn, högst fem", datum: "2026-11-27" },
+    { namn: "Lag (1984:318) om kontrollavgift vid olovlig parkering, Riksdagen", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1984318-om-kontrollavgift-vid-olovlig_sfs-1984-318/", text: "kontrollavgiften får inte överstiga kommunens felparkeringsavgift", datum: "2026-11-27" },
+    { namn: "Malmö stad – P-skiva", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/P-skiva.html", text: "placering, en skiva i taget, ingen ändring under parkeringen (uppdaterad 17 juli 2023)", datum: "2026-11-27" },
+    { namn: "Malmö stad – Parkeringsanmärkning", url: "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html", text: "600 kronor för villkor vid p-skiva", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkeringsanmärkning", url: "https://parkering.stockholm/felparkering/parkeringsanmarkning/", text: "1 100 kronor utan eller med felinställd p-skiva (uppdaterad 10 december 2024)", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Parkering på helger", url: "https://parkering.stockholm/parkeringsregler/parkering-pa-helger/", text: "parenteser, röda siffror och vilka dagar som är dag före helgdag", datum: "2026-11-27" },
+    { namn: "Göteborgs Stad – Felparkering", url: "https://goteborg.se/wps/portal/start/parkeringstillstand-och-parkeringsplatser/parkeringsregler/felparkering?uri=gbglnk:gbg.page.761a197c-6cd0-486d-977d-98744016cb75", text: "600 kronor när tillåten parkeringstid överskridits", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="stalla">Så ställer du p-skivan</h2>
+  <p>Reglerna för p-skivan står i 3 kap. 49 a § trafikförordningen. Paragrafen ställer tre krav:</p>
+  <ol>
+    <li><strong>Avrunda uppåt till nästa halvtimme.</strong> Skivan ska visa den närmast följande halvtimmen, räknat från när du ställde upp bilen. Du rundar alltså alltid uppåt till nästa hela eller halva timme.</li>
+    <li><strong>Före tidsgränsen: ställ på starttiden.</strong> Parkerar du innan tidsbegränsningen börjar, och bilen ska stå kvar efter det, ställer du skivan på det klockslag då begränsningen börjar.</li>
+    <li><strong>Synlig utifrån.</strong> Skivan ska ligga framtill i bilen. Går det inte, ska den sitta på fordonet. Tiden ska gå att läsa utifrån.</li>
+  </ol>
+  <p>Den tillåtna tiden räknas sedan från klockslaget på skivan, inte från när du faktiskt kom. Avrundningen ger dig därför mellan en minut och en halvtimme extra. Det gör kontrollen enkel. Vakten behöver bara jämföra skivan, skylten och klockan.</p>
+  <p>Du får inte vrida fram skivan medan bilen står kvar. Malmö stad skriver att inställningen inte får ändras under en pågående parkering inom tidsbegränsningen. Staden skriver också att bara en skiva får användas per uppställning.</p>
+  <p>Utanför skyltens tider behövs ingen skiva alls. Samma paragraf säger att skivan inte behöver användas om bilen bara står parkerad under tid då ingen tidsbegränsning gäller.</p>
+
+  <h2 id="exempel">Exempel: vilken tid ska skivan visa?</h2>
+  <p>Exemplen utgår från en vanlig skylt: P, tilläggstavla med p-skiva, en tidsgräns och tiderna 8–18 på vardagar och (9–15) på lördagar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Du parkerar</th><th>Tillåten tid</th><th>Skivan ska visa</th><th>Du får stå till</th></tr></thead>
+    <tbody>
+      <tr><td>Tisdag 14.10</td><td>2 tim</td><td>14.30</td><td>16.30</td></tr>
+      <tr><td>Tisdag 09.55</td><td>2 tim</td><td>10.00</td><td>12.00</td></tr>
+      <tr><td>Onsdag 15.03</td><td>1 tim</td><td>15.30</td><td>16.30</td></tr>
+      <tr><td>Onsdag 15.25</td><td>1 tim</td><td>15.30</td><td>16.30</td></tr>
+      <tr><td>Torsdag 07.40</td><td>2 tim</td><td>08.00 (gränsen börjar då)</td><td>10.00</td></tr>
+      <tr><td>Fredag 21.00, står kvar över natten</td><td>2 tim</td><td>09.00 (lördagens gräns börjar då)</td><td>Lördag 11.00</td></tr>
+      <tr><td>Lördag 08.30</td><td>2 tim</td><td>09.00</td><td>11.00</td></tr>
+      <tr><td>Söndag 12.00</td><td>2 tim</td><td>Ingen skiva behövs</td><td>Skylten sätter ingen gräns på söndagen</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Regeln: 3 kap. 49 a § trafikförordningen. Tidsangivelserna: tavla T6 i vägmärkesförordningen.</p>
+  <p>Exemplen 15.03 och 15.25 visar poängen med regeln. Båda ger samma tid på skivan, eftersom nästa halvtimme är 15.30 i båda fallen.</p>
+  <p>Kommer du exakt på en hel eller halv timme, till exempel 14.30, kan lagtexten läsas på två sätt. Vi har inte hittat något besked om vilket som gäller. Ställ då skivan på 14.30. En tidigare tid kan aldrig leda till att du står kvar för länge.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="skylten">Var krävs p-skiva? Så läser du skylten</h2>
+  <p>P-skiva krävs bara där det är skyltat. Grundmärket är den blå P-skylten, E19. Under den sitter tilläggstavlor. Tavlan T17 visar en p-skiva. Enligt vägmärkesförordningen betyder den att tiden när parkeringen började ska anges med en parkeringsskiva eller motsvarande. Oftast sitter den ihop med T18, som anger längsta tillåtna tid, till exempel 2 tim, och T6, som anger när reglerna gäller.</p>
+  <p>Tiderna på T6 läser du så här:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Så står tiden</th><th>Gäller</th></tr></thead>
+    <tbody>
+      <tr><td>Svarta eller vita siffror, utan parentes</td><td>Vardagar utom vardag före sön- och helgdag, i praktiken oftast måndag–fredag</td></tr>
+      <tr><td>Siffror inom parentes</td><td>Vardag före sön- och helgdag, oftast lördag men också till exempel midsommarafton och julafton</td></tr>
+      <tr><td>Röda siffror</td><td>Sön- och helgdagar</td></tr>
+      <tr><td>En veckodag utskriven</td><td>Den dagen, även om den är en helgdag</td></tr>
+      <tr><td>Ingen tidsangivelse</td><td>Dygnet runt, alla dagar</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: vägmärkesförordningen, tavla T6, och Stockholms stad om helgdagar.</p>
+  <p>Två detaljer brukar överraska. Den första: midsommardagen och alla helgons dag infaller alltid på en lördag och är helgdagar. Då gäller de röda siffrorna den lördagen, inte parentesen. Fredagen före är i stället en vardag före helgdag, och då gäller parentesen. Den andra: sträcker sig en tid över midnatt, till exempel 22–06, gäller delen efter midnatt nästa dag.</p>
+  <p>Står det inga röda siffror på tavlan gäller tidsgränsen inte på sön- och helgdagar. Då behövs ingen skiva den dagen.</p>
+
+  <h2 id="vilken-skiva">Vilken p-skiva är godkänd?</h2>
+  <p>Trafikförordningen talar om en parkeringsskiva eller motsvarande. Varken den eller vägmärkesförordningen pekar ut någon modell, något märke eller någon godkännandestämpel. Det som räknas är vad skivan visar. Tiden ska vara rätt enligt regeln och gå att läsa utifrån.</p>
+  <ul>
+    <li><strong>Vanlig vridskiva.</strong> Den klassiska skivan har bara hela och halva timmar. Då blir det svårt att ställa fel, så länge du rundar uppåt.</li>
+    <li><strong>Elektronisk skiva.</strong> Den räknas som motsvarande om den visar den svenska tiden, alltså närmast följande halvtimme. En skiva byggd för ett annat land kan runda på ett annat sätt, till exempel till närmaste kvart. Då visar den en tid som inte följer den svenska regeln. Har batteriet tagit slut och displayen är tom, syns ingen tid alls.</li>
+    <li><strong>P-skiva i en app.</strong> Förordningen säger inget om att en registrering i mobilen ersätter skivan i rutan. Vi har inte hittat någon av storstäderna som skriver att en app räcker på gatan. Använd en fysisk skiva om inte kommunen eller markägaren uttryckligen säger något annat.</li>
+  </ul>
+  <p>Kontrollanten ser bara det som syns genom rutan. Därför är frågan inte vilken skiva du har, utan om tiden på den är rätt och läsbar.</p>
+
+  <h2 id="placera">Var skivan ska ligga</h2>
+  <p>Förordningen kräver att skivan ligger framtill i bilen, med tiden väl synlig och läsbar utifrån. Malmö stad preciserar det till innanför vindrutans högra sida. Några praktiska råd:</p>
+  <ul>
+    <li>Lägg skivan plant mot rutan, inte längst in på instrumentbrädan där den skyms av reflexer.</li>
+    <li>Låt den inte ligga bakom en tonad solskyddsremsa eller under ett papper.</li>
+    <li>Använd bara en skiva. Två skivor med olika tider visar inte vilken tid som gäller.</li>
+    <li>På en motorcykel eller moped går det sällan att lägga skivan inuti. Då ska den enligt förordningen sitta på fordonet.</li>
+  </ul>
+
+  <h2 id="bot">Vad kostar en saknad eller felställd p-skiva?</h2>
+  <p>Felet ger en felparkeringsavgift, alltså en parkeringsbot. Kommunen bestämmer beloppet. Enligt förordningen om felparkeringsavgift måste det ligga mellan 75 och 1 300 kronor.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Vad staden skriver</th><th class="num">Avgift</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/stockholm/">Stockholm</a></td><td>Tidsbegränsad plats utan p-skiva eller med felinställd p-skiva, eller längre tid än tillåtet</td><td class="num">1 100 kr</td></tr>
+      <tr><td><a href="/malmo/">Malmö</a></td><td>Villkor vid p-skiva</td><td class="num">600 kr</td></tr>
+      <tr><td><a href="/goteborg/">Göteborg</a></td><td>Tillåten parkeringstid överskriden (skivan nämns inte separat)</td><td class="num">600 kr</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Stockholms stad, Malmö stad och Göteborgs Stad, hämtade 27 november 2026.</p>
+  <p>På lappen står felet som en kod. Transportstyrelsens föreskrifter har tre koder som rör p-skivan:</p>
+  <ul>
+    <li><strong>23:</strong> tiden på skivan är inte inställd enligt förordningen, eller går inte att läsa.</li>
+    <li><strong>41:</strong> ingen skiva har använts där en lokal föreskrift kräver det.</li>
+    <li><strong>38:</strong> bilen har stått längre än den tillåtna tiden.</li>
+  </ul>
+  <p>Avgiften ska betalas till Transportstyrelsen inom åtta dagar. Kommer pengarna inte in skickas en erinran med 21 dagars betaltid. Betalar du inte heller då höjs avgiften med 150 kronor. Står bilen kvar får vakten skriva en ny lapp för varje påbörjat kalenderdygn. Det måste gå minst sex timmar mellan lapparna, och det får bli högst fem för samma överträdelse.</p>
+
+  <h2 id="privat-mark">P-skiva på privat mark</h2>
+  <p>Avrundningsregeln i 49 a § gäller på kommunens gator och allmänna platser och på allmänna vägar. På tomtmark, till exempel en parkering vid en butik, är det markägaren som bestämmer villkoren enligt lagen om kontrollavgift vid olovlig parkering. Stockholms stad skriver att det på privat mark kan krävas p-skiva eller ett särskilt tillstånd.</p>
+  <p>Där gäller alltså villkoren på markägarens skylt. Många följer samma halvtimmesregel, men läs skylten. Bryter du mot villkoren får du en kontrollavgift i stället för en parkeringsbot. Den får enligt lagen inte vara högre än kommunens felparkeringsavgift för samma slags fel i samma del av kommunen. Läs mer i guiden <a href="/guider/parkeringsbot-eller-kontrollavgift/">parkeringsbot eller kontrollavgift</a>.</p>
+
+  <h2 id="tillstand">P-skiva och parkeringstillstånd för rörelsehindrade</h2>
+  <p>Ett parkeringstillstånd för rörelsehindrade gäller i hela landet och förlänger tidsgränser som en lokal trafikföreskrift sätter. Enligt 13 kap. 8 § trafikförordningen gäller två regler:</p>
+  <ul>
+    <li>Där parkering är förbjuden eller tillåten kortare tid än tre timmar får du stå i högst tre timmar.</li>
+    <li>Där parkering är tillåten minst tre men mindre än 24 timmar får du stå i högst 24 timmar.</li>
+  </ul>
+  <p>På en tvåtimmarsplats med p-skiva får du alltså stå i tre timmar med tillståndet. Förordningen säger inte hur du ska visa när du kom. Lägg därför både tillståndet och en rätt ställd skiva synligt, så kan vakten räkna. Mer finns i guiden om <a href="/guider/parkeringstillstand-rorelsehindrade/">parkeringstillstånd för rörelsehindrade</a>.</p>
+
+  <h2 id="misstag">Vanliga misstag</h2>
+  <ul>
+    <li><strong>Exakt ankomsttid.</strong> Ställer du skivan på 14.10 ger du bort 20 minuter. Strängt taget är den då inte heller inställd enligt regeln.</li>
+    <li><strong>För generös avrundning.</strong> Kommer du 14.10 och ställer skivan på 15.00 visar den fel tid. Det är kod 23.</li>
+    <li><strong>Glömd skiva före gränsen.</strong> Du parkerar 07.30 när gränsen börjar 08.00 och tänker att skivan inte behövs ännu. Ska bilen stå kvar efter 08.00 ska skivan visa 08.00 från början.</li>
+    <li><strong>Vriden skiva.</strong> Att gå ut och vrida fram skivan utan att flytta bilen är att visa fel tid.</li>
+    <li><strong>Fel dag på tavlan.</strong> Parentesen gäller lördagar och dagar före helgdag. Röda siffror gäller söndagar och helgdagar, också midsommardagen.</li>
+    <li><strong>Skivan i fel land.</strong> En elektronisk skiva inställd efter andra länders regler visar fel tid här.</li>
+    <li><strong>Tro att skivan ersätter 24-timmarsregeln.</strong> Utanför skyltens tider behövs ingen skiva, men den allmänna regeln om högst 24 timmar i följd på vardagar gäller ändå. Den förklaras i guiden <a href="/guider/parkera-pa-gatan/">parkera på gatan natt och helg</a>.</li>
+  </ul>
+
+  <Faq fragor={fragor} />
+</Guide>

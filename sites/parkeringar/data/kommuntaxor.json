@@ -1,0 +1,836 @@
+{
+ "Stockholm": {
+  "zoner": [
+   {
+    "namn": "Taxa 1",
+    "timpris": 55,
+    "avgiftstid": "Alla dagar, dygnet runt",
+    "maxtid": null,
+    "anmarkning": "Centrala Stockholm. MC: 13,75 kr/tim. Boendeparkering finns på vissa gator, ibland bara nattetid."
+   },
+   {
+    "namn": "Taxa 2",
+    "timpris": 31,
+    "avgiftstid": "Vardagar 7–21, dag före sön-/helgdag 9–19, sön- och helgdag 9–19; övrig tid 20 kr/tim",
+    "maxtid": null,
+    "anmarkning": "Avgift dygnet runt alla dagar (lägre pris utanför dagtid). MC: 7,75 kr/tim dagtid, 5 kr/tim övrig tid."
+   },
+   {
+    "namn": "Taxa 3",
+    "timpris": 20,
+    "avgiftstid": "Vardagar 7–19 (20 kr/tim); dag före sön-/helgdag 11–17 (15 kr/tim)",
+    "maxtid": null,
+    "anmarkning": "Bland annat delar av Vasastan, Östermalm, Kungsholmen och Södermalm. Övrig tid avgiftsfritt."
+   },
+   {
+    "namn": "Taxa 4",
+    "timpris": 10,
+    "avgiftstid": "Vardagar 7–19; dag före sön-/helgdag 11–17",
+    "maxtid": null,
+    "anmarkning": "Övrig tid avgiftsfritt. MC: 2,50 kr/tim."
+   },
+   {
+    "namn": "Taxa 5",
+    "timpris": 5,
+    "avgiftstid": "Vardagar 7–19",
+    "maxtid": null,
+    "anmarkning": "Ytterstaden, t.ex. Vällingby, Älvsjö och Skarpnäcks gård. Övrig tid avgiftsfritt."
+   },
+   {
+    "namn": "Taxa 9 (badplatser sommartid)",
+    "timpris": 10,
+    "avgiftstid": "Alla dagar 7–22, 1 juni–31 augusti",
+    "maxtid": null,
+    "anmarkning": "Gäller bara vid utvalda badplatser, t.ex. Solviksbadet och Flatenbadet."
+   }
+  ],
+  "sondag_helg": "I taxa 1 betalar man dygnet runt även söndagar och helgdagar, och i taxa 2 kl 9–19 (20 kr/tim övrig tid). I taxa 3, 4 och 5 är det gratis på söndagar, helgdagar och kvällar. Någon generell maxtid anges inte, utan skyltarna gäller.",
+  "boende": {
+   "villkor": "Du ska vara folkbokförd i en bostad inom boendeparkeringsområdet och stå som ägare till bilen i vägtrafikregistret. Nyinflyttade i hus med bygglov som vunnit laga kraft från 1 juli 2025 kan inte få boendeparkering.",
+   "pris": "Taxa 1–3: 90 kr/dygn eller 1 600 kr per 30 dagar. Taxa 4: 35 kr/dygn eller 500 kr. Taxa 5: 20 kr/dygn eller 300 kr. MC betalar en fjärdedel."
+  },
+  "betalning": [
+   "EasyPark",
+   "ePARK",
+   "Mobill",
+   "Parkster",
+   "SMS (Mobill)",
+   "P-automat (kort)"
+  ],
+  "felparkering": [
+   {
+    "fel": "Ej betalt på avgiftsbelagd plats",
+    "belopp": 900
+   },
+   {
+    "fel": "Parkering där parkeringsförbud gäller",
+    "belopp": 1100
+   },
+   {
+    "fel": "Uppställning där stoppförbud gäller (t.ex. lastplats, vändplats)",
+    "belopp": 1300
+   }
+  ],
+  "hcp": "Med tillståndet betalar du som vanligt enligt skyltningen, även på platser för rörelsehindrade. Du kan dock ansöka om nedsatt avgift: 250 kr per år, som faktureras. Då registreras bilens regnummer och du betalar inget mer när du parkerar. På platser med parkeringsförbud får du stå högst 3 timmar.",
+  "kallor": [
+   {
+    "namn": "Stockholms stad – Taxeområden och avgifter",
+    "url": "https://parkering.stockholm/betala-parkering/taxeomraden-avgifter/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Stockholms stad – Betala parkering",
+    "url": "https://parkering.stockholm/betala-parkering/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Stockholms stad – Parkeringsanmärkning",
+    "url": "https://parkering.stockholm/felparkering/parkeringsanmarkning/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Stockholms stad – Parkering för rörelsehindrad",
+    "url": "https://parkering.stockholm/parkering-for-rorelsehindrad/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Stockholms stad – Infoblad periodbetalning boendeparkering (PDF)",
+    "url": "https://parkering.stockholm/siteassets/parkering/boendeparkering/infoblad-periodbetalning.pdf",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Stockholms stad – Ansökan om tillstånd för boendeparkering (PDF)",
+    "url": "https://parkering.stockholm.se/siteassets/parkering/dokument/ansokan-om-tillstand-for-boendeparkering.pdf",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Malmö": {
+  "zoner": [
+   {
+    "namn": "Taxa A (zonkod 424)",
+    "timpris": 30,
+    "avgiftstid": "Dygnet runt alla dagar; 30 kr/tim kl 8–22, 5 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Blå på kommunens karta."
+   },
+   {
+    "namn": "Taxa A max 30 min (zonkod 416)",
+    "timpris": 30,
+    "avgiftstid": "15 kr per 30 min kl 8–22, 2,50 kr övrig tid",
+    "maxtid": "30 min",
+    "anmarkning": "Priset är 15 kr för högst 30 minuter."
+   },
+   {
+    "namn": "Taxa B (zonkod 427)",
+    "timpris": 25,
+    "avgiftstid": "25 kr/tim kl 8–22, 5 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Röd på kartan."
+   },
+   {
+    "namn": "Taxa B max 1 tim (zonkod 412)",
+    "timpris": 25,
+    "avgiftstid": "25 kr/tim kl 8–22, 5 kr/tim övrig tid",
+    "maxtid": "1 tim",
+    "anmarkning": null
+   },
+   {
+    "namn": "Taxa B max 30 min (zonkod 404)",
+    "timpris": 25,
+    "avgiftstid": "12,50 kr per 30 min kl 8–22, 2,50 kr övrig tid",
+    "maxtid": "30 min",
+    "anmarkning": null
+   },
+   {
+    "namn": "Taxa C (zonkod 429)",
+    "timpris": 20,
+    "avgiftstid": "20 kr/tim kl 8–22, 5 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Grå på kartan."
+   },
+   {
+    "namn": "Taxa D (zonkod 431)",
+    "timpris": 15,
+    "avgiftstid": "15 kr/tim kl 8–20, 2 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Grön på kartan."
+   },
+   {
+    "namn": "Taxa E (zonkod 420)",
+    "timpris": 10,
+    "avgiftstid": "10 kr/tim kl 8–20, 2 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Rosa på kartan."
+   },
+   {
+    "namn": "Taxa F (zonkod 426)",
+    "timpris": 5,
+    "avgiftstid": "5 kr/tim kl 8–20, 2 kr/tim övrig tid",
+    "maxtid": null,
+    "anmarkning": "Orange på kartan. Variant med max 3 tim har zonkod 433."
+   },
+   {
+    "namn": "Taxa Pendlar (zonkod 422)",
+    "timpris": 1,
+    "avgiftstid": null,
+    "maxtid": null,
+    "anmarkning": "Pendlarparkeringar."
+   }
+  ],
+  "sondag_helg": "Avgift tas ut dygnet runt alla dagar. Dagtid (kl 8–22 eller 8–20, beroende på taxa) är priset högre och kvällar och nätter lägre. Kommunen skriver att det är billigare på söndagar och helgdagar, men anger inget separat pris för dem. Skylten på plats gäller.",
+  "boende": {
+   "villkor": "Du behöver ett digitalt boendetillstånd för just ditt område. Det gäller sju dygn i följd, och bilen ska flyttas var sjunde dag även om du betalat för 30 dygn.",
+   "pris": "Per 30 dygn / 7 dygn: Taxa A 1 200 / 600 kr, Taxa B 1 050 / 525 kr, Taxa C 900 / 450 kr, Taxa D 750 / 375 kr, Taxa E 450 / 225 kr."
+  },
+  "betalning": [
+   "EasyPark",
+   "ePARK",
+   "Mobill",
+   "Parkster",
+   "SMS (via apparnas leverantörer)",
+   "P-automat (kort, Apple Pay, Samsung Pay)"
+  ],
+  "felparkering": [
+   {
+    "fel": "Ej betald avgift eller villkor för avgiftsparkering ej uppfyllt",
+    "belopp": 600
+   },
+   {
+    "fel": "Parkering där lokalt parkeringsförbud gäller, framför infart eller utanför markering",
+    "belopp": 800
+   },
+   {
+    "fel": "Stannandeförbud, lastplats, i korsning eller i rondell",
+    "belopp": 1000
+   },
+   {
+    "fel": "Plats för rörelsehindrade utan tillstånd, övergångsställe, busshållplats eller cykelbana",
+    "belopp": 1300
+   }
+  ],
+  "hcp": "Tillståndet ger ingen gratis parkering, utan du betalar samma avgift som andra. Den som av praktiska skäl inte kan betala, t.ex. för att man inte kan använda kort eller mobil, kan söka tidsbegränsad befrielse från avgiften (ansökan kostar 250 kr). Där parkering är förbjuden eller får pågå kortare än 3 timmar får du stå i upp till 3 timmar, och där den får pågå 3–24 timmar i upp till 24 timmar.",
+  "kallor": [
+   {
+    "namn": "Malmö stad – Parkeringsavgifter",
+    "url": "https://malmo.se/Service/Var-stad-och-var-omgivning/Parkering/Parkeringsavgifter.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Malmö stad – Så betalar du för parkering",
+    "url": "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsavgifter/Sa-betalar-du-for-parkering.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Malmö stad – Betala och parkera med boendeparkering",
+    "url": "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Boendeparkering/Betala-och-parkera-med-boendeparkering.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Malmö stad – Parkeringsanmärkning",
+    "url": "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkeringsanmarkning.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Malmö stad – Parkering för rörelsehindrade",
+    "url": "https://malmo.se/Bo-och-leva/Stadsmiljo-och-trafik/Parkering/Parkering-for-rorelsehindrade.html",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Uppsala": {
+  "zoner": [
+   {
+    "namn": "Zon A",
+    "timpris": 20,
+    "avgiftstid": "Måndag–lördag 8–18 (de två första timmarna 20 kr/tim, därefter 35 kr/tim); kl 18–24 5 kr/tim; kl 0–8 gratis",
+    "maxtid": null,
+    "anmarkning": "Centrala Uppsala. Kommunfullmäktige beslutade nya taxor i juni 2025, men vi har inte kunnat bekräfta att de har börjat gälla."
+   },
+   {
+    "namn": "Zon B",
+    "timpris": 20,
+    "avgiftstid": "Måndag–lördag 8–18; kl 18–24 5 kr/tim; kl 0–8 gratis",
+    "maxtid": null,
+    "anmarkning": "Centrala Uppsala."
+   },
+   {
+    "namn": "Zon C",
+    "timpris": 15,
+    "avgiftstid": "Måndag–lördag 8–18; kl 18–24 5 kr/tim; kl 0–8 gratis",
+    "maxtid": null,
+    "anmarkning": "Centrala Uppsala."
+   },
+   {
+    "namn": "Zon D",
+    "timpris": 10,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Tidigare avgiftsfria områden, där avgift införs efter hand."
+   },
+   {
+    "namn": "Zon E",
+    "timpris": 5,
+    "avgiftstid": "Vardagar och lördagar kl 8–24 i de nya områdena 2025 (t.ex. Luthagen, Eriksberg, Flogsta, Valsätra); söndag och helgdag gratis",
+    "maxtid": null,
+    "anmarkning": "Från 13 oktober 2026 gäller avgiften även på vissa gator i Norby."
+   }
+  ],
+  "sondag_helg": "Enligt kommunens avgiftssida tas avgift ut måndag–lördag, och kvällar kl 18–24 kostar det 5 kr/tim. På söndagar och helgdagar är det gratis i de nya områdena med 5 kr/tim. För zon A–C säger sidan inget uttryckligt om söndagar.",
+  "boende": {
+   "villkor": "Du ska vara folkbokförd i boendeparkeringsområdet och stå som ägare eller brukare av bilen i vägtrafikregistret. Bilen får inte vara avställd. Vissa adresser med egna parkeringstal är undantagna.",
+   "pris": "20 kr per påbörjat dygn, 400 kr per hel månad eller 4 400 kr per helt år. Avgift tas ut vardagar 8–24."
+  },
+  "betalning": [
+   "Parkeringsapp (kommunen namnger inte vilka)",
+   "SMS",
+   "Betalautomat"
+  ],
+  "felparkering": [],
+  "hcp": "Med tillståndet parkerar du gratis bara på de platser som är reserverade för rörelsehindrade. På vanliga avgiftsplatser betalar du som alla andra. På nya HCP-platser som kommunen anlägger på gatumark får du stå högst fyra timmar i följd.",
+  "kallor": [
+   {
+    "namn": "Uppsala kommun – Parkeringsavgifter",
+    "url": "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/parkeringsavgifter/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Uppsala kommun – Nya parkeringsregler",
+    "url": "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/nya-parkeringsregler/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Uppsala kommun – Boendeparkering",
+    "url": "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/boendeparkering/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Uppsala kommun – Betala parkering och laddning",
+    "url": "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/betala-parkering-och-laddning/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Uppsala kommun – Parkering för rörelsehindrade",
+    "url": "https://www.uppsala.se/gator-trafik-och-resor/parkera-din-cykel-bil-eller-andra-fordon/parkering-for-rorelsehindrade/",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Västerås": {
+  "zoner": [
+   {
+    "namn": "Röd zon",
+    "timpris": 20,
+    "avgiftstid": "Vardagar 9–19; lördag och dag före röd dag 9–16",
+    "maxtid": null,
+    "anmarkning": "Stigande pris: första timmen 20 kr, andra timmen 25 kr, från tredje timmen 40 kr/tim."
+   },
+   {
+    "namn": "Gul zon",
+    "timpris": 15,
+    "avgiftstid": "Vardagar 9–18; lördag och dag före röd dag 9–15",
+    "maxtid": null,
+    "anmarkning": "30-dagarsbiljett 700 kr."
+   },
+   {
+    "namn": "Blå zon",
+    "timpris": 10,
+    "avgiftstid": "Vardagar 9–18; lördag och dag före röd dag 9–15",
+    "maxtid": null,
+    "anmarkning": "30-dagarsbiljett 600 kr."
+   },
+   {
+    "namn": "Vit zon",
+    "timpris": 6,
+    "avgiftstid": "Vardagar 9–18; lördag och dag före röd dag 9–15",
+    "maxtid": null,
+    "anmarkning": "30-dagarsbiljett 360 kr."
+   }
+  ],
+  "sondag_helg": "Utanför de angivna tiderna är det gratis, alltså på kvällar, söndagar och helgdagar.",
+  "boende": {
+   "villkor": "Du ska vara folkbokförd inom zonen och äga bilen (personbil klass 1 eller MC). Det finns undantag för förmånsbil, hyrbil och familjemedlems bil. Den som bor i zonen minst 6 månader för arbete eller studier kan få tidsbegränsat tillstånd. Det kostar inget att söka.",
+   "pris": "Gul zon: 11 kr/tim eller 525 kr per 30 dagar. Blå zon: 7 kr/tim eller 450 kr per 30 dagar."
+  },
+  "betalning": [
+   "ePARK",
+   "Mobill",
+   "Parkster",
+   "P-automat"
+  ],
+  "felparkering": [],
+  "hcp": "Kommunen skriver att det är gratis att parkera med tillståndet på Västerås stads parkeringar. På andra parkeringar bestämmer ägaren. Där parkering är förbjuden eller får pågå kortare än 3 timmar får du stå i högst 3 timmar, och där den får pågå 3–24 timmar i högst 24 timmar.",
+  "kallor": [
+   {
+    "namn": "Västerås stad – Parkera i Västerås",
+    "url": "https://www.vasteras.se/trafik-och-gator/parkera-i-vasteras.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Västerås stad – Parkeringstillstånd för boende",
+    "url": "https://www.vasteras.se/trafik-och-gator/parkera-i-vasteras/parkeringstillstand/parkeringstillstand-for-boende.html",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Västerås stad – Parkeringstillstånd för rörelsehindrade",
+    "url": "https://www.vasteras.se/trafik-och-gator/parkera-i-vasteras/parkeringstillstand/parkeringstillstand-for-rorelsehindrade.html",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Örebro": {
+  "zoner": [
+   {
+    "namn": "Zon 1 Röd (zonkod 1603)",
+    "timpris": 25,
+    "avgiftstid": "Vardagar och dag före sön-/helgdag 8–20; sön- och helgdag 8–14; övrig tid 2 kr/tim",
+    "maxtid": null,
+    "anmarkning": "Centrum. Avgift dygnet runt alla dagar (lägre nattpris)."
+   },
+   {
+    "namn": "Zon 2 Grön (zonkod 1601)",
+    "timpris": 10,
+    "avgiftstid": "Vardagar utom dag före sön-/helgdag 8–20",
+    "maxtid": null,
+    "anmarkning": "Gratis dag före sön-/helgdag samt sön- och helgdag. Boendekod 1621."
+   },
+   {
+    "namn": "Zon 3 Blå (zonkod 1602)",
+    "timpris": 5,
+    "avgiftstid": "Vardagar utom dag före sön-/helgdag 8–20",
+    "maxtid": null,
+    "anmarkning": "Ny zon från 2026. Gratis dag före sön-/helgdag samt sön- och helgdag. Boendekod 1622."
+   }
+  ],
+  "sondag_helg": "I zon 1 betalar du även söndagar och helgdagar (25 kr/tim kl 8–14, annars 2 kr/tim). Zon 2 och 3 är gratis på lördagar (dag före söndag), söndagar och helgdagar. Utanför zon 3 kostar det inget att parkera på kommunens gatumark.",
+  "boende": {
+   "villkor": "För boende i zon 2 och 3 med giltigt boendeparkeringstillstånd. Det kostar 250 kr att ansöka.",
+   "pris": "600 kr per 30 dagar."
+  },
+  "betalning": [
+   "EasyPark",
+   "SMS (010-333 44 00)",
+   "P-automat (kort)"
+  ],
+  "felparkering": [],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Örebro kommun – Betala parkeringsavgiften",
+    "url": "https://www.orebro.se/bygga-bo--trafik/trafik--gator/parkering/betala-parkeringsavgiften.html",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Linköping": {
+  "zoner": [
+   {
+    "namn": "Kommunens boendeområden (Gottfridsberg, Hejdegården, Ramshäll, Tannefors, Vasastaden, Vimanshäll, Östra Valla)",
+    "timpris": 10,
+    "avgiftstid": "10 kr/tim kl 8–22, 2 kr/tim kl 22–8",
+    "maxtid": null,
+    "anmarkning": "Zonkoder 12800–12806 hos Dukaten."
+   },
+   {
+    "namn": "Kommun max 1 tim / max 2 tim (stadskärnan)",
+    "timpris": 17,
+    "avgiftstid": "17 kr/tim kl 8–22, 2 kr/tim kl 22–8",
+    "maxtid": "1 tim eller 2 tim kl 8–22",
+    "anmarkning": "Zonkoder 12911 (1 tim) och 12912 (2 tim)."
+   },
+   {
+    "namn": "Kommun max 30 min (stadskärnan)",
+    "timpris": 20,
+    "avgiftstid": "10 kr per 30 min kl 8–22, 2 kr/tim kl 22–8",
+    "maxtid": "30 min kl 8–22",
+    "anmarkning": "Zonkod 12910. Kostar 10 kr för högst 30 minuter."
+   }
+  ],
+  "sondag_helg": "Enligt Dukatens taxor gäller avgiften kl 8–22 och ett lägre pris på natten. Det anges inga undantag för söndagar och helgdagar, men kontrollera skylten på plats.",
+  "boende": {
+   "villkor": "Du ska vara minst 18 år, folkbokförd i ett boendeparkeringsområde och ägare till fordonet (högst 3,5 ton, i trafik). Max ett fordon per person.",
+   "pris": "420 kr per månad."
+  },
+  "betalning": [
+   "LinPark (Dukaten)",
+   "EasyPark",
+   "Parkster",
+   "ePARK",
+   "Mobill",
+   "SMS (0790 966 001)",
+   "P-automat (endast kort)"
+  ],
+  "felparkering": [],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Dukaten – SMS-parkera i Linköping (zonkoder och priser)",
+    "url": "https://dukaten.se/sms-parkera-i-linkoping/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Dukaten – Betala parkering",
+    "url": "https://www.dukaten.se/parkering-linkoping/betala-parkering",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Linköpings kommun – Boendeparkering",
+    "url": "https://www.linkoping.se/stadsplanering-och-trafik/parkering/boendeparkering/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Linköpings kommun – Frågor och svar om parkering",
+    "url": "https://www.linkoping.se/stadsplanering-och-trafik/trafik-och-parkering/parkering/fragor-och-svar-om-parkering",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Jönköping": {
+  "zoner": [
+   {
+    "namn": "P-zon 1 (lila)",
+    "timpris": 22,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Biljetten gäller i egen zon och i alla zoner med högre nummer."
+   },
+   {
+    "namn": "P-zon 2 (grön)",
+    "timpris": 22,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Dagpris 150 kr. På lördagar kostar de tre första timmarna högst 30 kr (P-trettian)."
+   },
+   {
+    "namn": "P-zon 3 (blå)",
+    "timpris": 12,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Dag 60 kr, två veckor 450 kr."
+   },
+   {
+    "namn": "P-zon 4 (gul)",
+    "timpris": 10,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Dag 50 kr, två veckor 300 kr."
+   }
+  ],
+  "sondag_helg": null,
+  "boende": null,
+  "betalning": [
+   "ePARK",
+   "Parkster",
+   "SMS",
+   "Biljettautomat"
+  ],
+  "felparkering": [
+   {
+    "fel": "Ej betald avgift",
+    "belopp": 800
+   },
+   {
+    "fel": "Parkering där parkeringsförbud gäller",
+    "belopp": 800
+   },
+   {
+    "fel": "Uppställning där stannaförbud gäller",
+    "belopp": 1050
+   },
+   {
+    "fel": "På eller inom 10 meter före övergångsställe",
+    "belopp": 1050
+   },
+   {
+    "fel": "Plats för rörelsehindrade utan tillstånd",
+    "belopp": 1200
+   }
+  ],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Jönköpings kommun – Parkeringsavgifter",
+    "url": "https://www.jonkoping.se/trafik--stadsplanering/parkering/parkeringsavgifter",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Jönköpings kommun – Betala din parkering med mobiltelefon",
+    "url": "https://www.jonkoping.se/trafik--stadsplanering/parkering/betala-din-parkering-med-mobiltelefon",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Jönköpings kommun – Parkeringsböter, kontrollavgift och flytt av felparkerade fordon",
+    "url": "https://www.jonkoping.se/trafik--stadsplanering/parkering/felparkerade-fordon",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Norrköping": {
+  "zoner": [
+   {
+    "namn": "Röd taxa",
+    "timpris": 22,
+    "avgiftstid": "Vardagar 8–20; dag före sön-/helgdag 8–15",
+    "maxtid": "24 tim om inte annat skyltas",
+    "anmarkning": "Innanför promenaderna. Minsta avgift 22 kr, därefter 1,10 kr per 3 min. Dygnsbiljett 120 kr. Gäller även på blå och grön taxa."
+   },
+   {
+    "namn": "Blå taxa",
+    "timpris": 11,
+    "avgiftstid": "Vardagar 8–20; dag före sön-/helgdag 8–15",
+    "maxtid": "24 tim om inte annat skyltas",
+    "anmarkning": "Utanför promenaderna och på vissa torg och parkeringar innanför. Minsta avgift 11 kr, därefter 1,10 kr per 6 min. Dygnsbiljett 80 kr."
+   },
+   {
+    "namn": "Grön taxa",
+    "timpris": 6,
+    "avgiftstid": "Vardagar 8–20; dag före sön-/helgdag 8–15",
+    "maxtid": "24 tim om inte annat skyltas",
+    "anmarkning": "Ytterkanten av centrum, bland annat delar av Haga och Hageby (sedan augusti 2025). Dygnsbiljett 60 kr."
+   }
+  ],
+  "sondag_helg": "Söndagar och helgdagar är gratis, och en helgdag som infaller på en vardag är gratis hela dagen. På kvällar efter kl 20 (eller efter kl 15 dagen före en helgdag) tas ingen avgift ut.",
+  "boende": null,
+  "betalning": [
+   "EasyPark",
+   "SMS (via EasyPark)",
+   "Biljettautomat"
+  ],
+  "felparkering": [
+   {
+    "fel": "Ej betald avgift, för lång tid eller hjul utanför rutan",
+    "belopp": 700
+   },
+   {
+    "fel": "Parkeringsförbud, huvudled eller plats för annan fordonstyp",
+    "belopp": 1000
+   },
+   {
+    "fel": "Mot färdriktningen, gång- eller cykelbana, övergångsställe eller busshållplats",
+    "belopp": 1300
+   }
+  ],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Norrköpings kommun – Parkering i Norrköping",
+    "url": "https://norrkoping.se/boende-trafik-och-miljo/resa-och-parkera/parkering-i-norrkoping",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Lund": {
+  "zoner": [
+   {
+    "namn": "Högsta taxan (centralt)",
+    "timpris": 25,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Ju närmare centrum, desto högre taxa. Kommunens karta visar vilken taxa som gäller på varje gata. Gäller sedan 1 juni 2024."
+   },
+   {
+    "namn": "Mellantaxan",
+    "timpris": 15,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Gatuvis enligt kommunens karta."
+   },
+   {
+    "namn": "Lägsta taxan",
+    "timpris": 8,
+    "avgiftstid": "Enligt skyltning",
+    "maxtid": null,
+    "anmarkning": "Gatuvis enligt kommunens karta. På vissa gator tas avgift bara ut under del av dygnet."
+   }
+  ],
+  "sondag_helg": null,
+  "boende": {
+   "villkor": "Du ska vara folkbokförd på en adress i ett av de centrala boendeområdena och stå som ägare till bilen, som ska vara i trafik. Tillstånd ges för en bil.",
+   "pris": "Hos LKP i de flesta områden 18 kr/dygn, 90 kr/vecka eller 378 kr/månad. I Prennelyckan, Påskalyckan och Sofiaparken kostar det 108 kr/vecka eller 450 kr/månad. I vissa områden är lördagar gratis."
+  },
+  "betalning": [
+   "Parkster",
+   "EasyPark",
+   "Mobill",
+   "SMS",
+   "Telefon (talsvar)"
+  ],
+  "felparkering": [
+   {
+    "fel": "Lindrigaste överträdelserna",
+    "belopp": 500
+   },
+   {
+    "fel": "Mellannivå",
+    "belopp": 800
+   },
+   {
+    "fel": "Allvarligaste överträdelserna",
+    "belopp": 1300
+   }
+  ],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Lunds kommun – Parkering i Lund",
+    "url": "https://lund.se/stadsutveckling-och-trafik/parkering-och-trafik/parkering-i-lund",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Lunds kommun – Parkeringsavgifter i Lunds kommun",
+    "url": "https://lund.se/kommun-och-politik/sa-styrs-lunds-kommun/styrande-dokument/parkeringsavgifter-i-lunds-kommun",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Lunds kommun – Boendeparkering",
+    "url": "https://lund.se/stadsutveckling-och-trafik/parkering-och-trafik/boendeparkering",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "LKP AB – Boendeparkering",
+    "url": "https://lkpab.se/hyra-p-plats/boendeparkering/",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "LKP AB – betala parkering",
+    "url": "https://lkpab.se/",
+    "hamtad": "2026-11-27"
+   }
+  ],
+  "anmarkning_betalning": "Korttidsparkering betalas bara med Parkster, EasyPark eller Mobill (app, sms eller telefon); p-automaterna togs bort 2025. LKP-appen gäller månads-, vecko- och boendetillstånd."
+ },
+ "Karlstad": {
+  "zoner": [
+   {
+    "namn": "Röd zon",
+    "timpris": 18,
+    "avgiftstid": "Vardagar 9–18; lördag och dag före röd dag 9–15",
+    "maxtid": "2 tim under avgiftstid",
+    "anmarkning": "Centrala Karlstad."
+   },
+   {
+    "namn": "Gul zon",
+    "timpris": 16,
+    "avgiftstid": "Vardagar 9–18; vardag före sön-/helgdag 9–15",
+    "maxtid": null,
+    "anmarkning": null
+   },
+   {
+    "namn": "Grön zon",
+    "timpris": 8,
+    "avgiftstid": "Vardagar 9–18 utom dag före sön-/helgdag",
+    "maxtid": null,
+    "anmarkning": "Lördag, söndag och helgdag gratis."
+   },
+   {
+    "namn": "Blå zon",
+    "timpris": 4,
+    "avgiftstid": "Vardagar 9–18 utom dag före sön-/helgdag",
+    "maxtid": null,
+    "anmarkning": "Lördag, söndag och helgdag gratis."
+   }
+  ],
+  "sondag_helg": "Söndagar och helgdagar är gratis i alla zoner. Kvällar efter kl 18 är också gratis på gatumark.",
+  "boende": null,
+  "betalning": [
+   "EasyPark",
+   "ePARK",
+   "Mobill",
+   "Parkster",
+   "SMS (via samma leverantörer)",
+   "P-automat (kort, Swish)"
+  ],
+  "felparkering": [
+   {
+    "fel": "Lindrigaste förseelserna, t.ex. ej betalt eller för lång tid",
+    "belopp": 500
+   },
+   {
+    "fel": "Övriga överträdelser, t.ex. parkeringsförbud",
+    "belopp": 700
+   },
+   {
+    "fel": "Grövsta överträdelserna, t.ex. vid korsning, busshållplats eller plats för rörelsehindrade",
+    "belopp": 1000
+   }
+  ],
+  "hcp": "Tillståndet är gratis, och med tillståndet synligt i rutan behöver du enligt kommunen inte betala parkeringsavgift. Undantag är vissa av Karlstads Parkerings områden på kvartersmark, som har tagit ut avgift sedan juni 2024. Där parkering är förbjuden eller får pågå kortare än 3 timmar får du stå i högst 3 timmar, och där den får pågå 3–24 timmar i högst 24 timmar.",
+  "kallor": [
+   {
+    "namn": "Karlstads kommun – Avgifter och regler för parkering",
+    "url": "https://karlstad.se/trafik-och-gator/parkering/avgifter-och-regler-for-parkering",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Karlstads kommun – Felparkeringsavgift för gatumark",
+    "url": "https://karlstad.se/trafik-och-gator/parkering/avgifter-och-regler-for-parkering/felparkeringsavgift",
+    "hamtad": "2026-11-27"
+   },
+   {
+    "namn": "Karlstads kommun – Parkeringstillstånd",
+    "url": "https://karlstad.se/trafik-och-gator/parkering/parkeringstillstand",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ },
+ "Växjö": {
+  "zoner": [
+   {
+    "namn": "Zon 1 (zonkod 47001)",
+    "timpris": 18,
+    "avgiftstid": "Vardagar 9–18; lördag och dag före helgdag 9–12",
+    "maxtid": "24 tim",
+    "anmarkning": "Centrum. På Drottninggatan (47006) gäller avgift vardagar 9–21 och 5 kr/tim övrig tid."
+   },
+   {
+    "namn": "Zon 2 (zonkod 47002 / 47003)",
+    "timpris": 10,
+    "avgiftstid": "Vardagar 9–18",
+    "maxtid": "48 tim (47002) eller 3 tim (47003)",
+    "anmarkning": "40 kr/dygn, 30-dagarsbiljett 650 kr. Lördag och söndag gratis."
+   },
+   {
+    "namn": "Zon 8 Arenastaden (zonkod 47008)",
+    "timpris": 5,
+    "avgiftstid": "Alla dagar dygnet runt",
+    "maxtid": null,
+    "anmarkning": "De två första timmarna gratis om du registrerar dig via app eller SMS. Högst 30 kr/dygn."
+   }
+  ],
+  "sondag_helg": "Söndagar är gratis i zon 1, och i zon 2 är både lördagar och söndagar gratis. Kvällar efter kl 18 är gratis, utom på Drottninggatan.",
+  "boende": null,
+  "betalning": [
+   "Mobill",
+   "ePARK",
+   "EasyPark",
+   "SMS",
+   "P-automat (kort, mynt i vissa)"
+  ],
+  "felparkering": [
+   {
+    "fel": "Lindriga fel, t.ex. ej betalt eller för lång tid",
+    "belopp": 600
+   },
+   {
+    "fel": "Trafikstörande, t.ex. där parkeringsförbud gäller",
+    "belopp": 800
+   },
+   {
+    "fel": "Allvarliga fel, t.ex. nära övergångsställe eller korsning",
+    "belopp": 1000
+   },
+   {
+    "fel": "Plats för rörelsehindrade utan giltigt tillstånd",
+    "belopp": 1300
+   }
+  ],
+  "hcp": null,
+  "kallor": [
+   {
+    "namn": "Växjö kommun – Kommunal parkering",
+    "url": "https://www.vaxjo.se/sidor/trafik-och-stadsplanering/kommunal-parkering.html",
+    "hamtad": "2026-11-27"
+   }
+  ]
+ }
+}

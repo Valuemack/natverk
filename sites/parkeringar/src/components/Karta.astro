@@ -1,0 +1,40 @@
+---
+// Karta som laddas först när den skrollas fram (Leaflet + OpenStreetMap-kartbilder). Höjden är reserverad (ingen CLS),
+// och sidan fungerar utan JavaScript: listan över stationer finns alltid i HTML:en.
+// punkter: [{ namn, lat, lon, href, rad }]
+const { punkter = [], id = "karta", hojd = 360 } = Astro.props;
+const data = punkter.filter((p) => p.lat != null && p.lon != null)
+  .map((p) => ({ n: p.namn, a: +p.lat.toFixed(5), o: +p.lon.toFixed(5), h: p.href ?? null, r: p.rad ?? null }));
+---
+{data.length > 0 && <>
+  <div data-karta={id} class="karta" style={`height:${hojd}px;background:var(--yta);border:1px solid var(--linje);border-radius:8px;margin:.6rem 0 .3rem`} data-punkter={JSON.stringify(data)} role="region" aria-label="Karta över parkeringarna">
+    <p style="padding:1rem;margin:0;color:var(--dampad)">Kartan laddas när du skrollar hit. {data.length} parkeringar.</p>
+  </div>
+  <p class="kalla">Karta: © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap-bidragsgivare</a>. Klicka på en markör för parkeringen.</p>
+  <script is:inline define:vars={{ id }}>
+    (() => {
+      const el = document.querySelector(`div.karta[data-karta="${id}"]`);
+      if (!el || !("IntersectionObserver" in window)) return;
+      const css = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";
+      const js = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+      const rita = () => {
+        const p = JSON.parse(el.dataset.punkter);
+        el.innerHTML = "";
+        const L = window.L;
+        const m = L.map(el, { scrollWheelZoom: false });
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
+        const g = L.featureGroup(p.map((x) => L.circleMarker([x.a, x.o], { radius: 7, weight: 2, color: "#1f4f8f", fillColor: "#ffb21a", fillOpacity: 0.9 })
+          .bindPopup(`<strong>${x.h ? `<a href="${esc(x.h)}">${esc(x.n)}</a>` : esc(x.n)}</strong>${x.r ? `<br>${esc(x.r)}` : ""}`))).addTo(m);
+        if (p.length === 1) m.setView([p[0].a, p[0].o], 14); else m.fitBounds(g.getBounds(), { padding: [20, 20], maxZoom: 15 });
+      };
+      const ladda = () => {
+        if (window.L) return rita();
+        const l = document.createElement("link"); l.rel = "stylesheet"; l.href = css; document.head.appendChild(l);
+        const s = document.createElement("script"); s.src = js; s.onload = rita; document.head.appendChild(s);
+      };
+      const o = new IntersectionObserver((e) => { if (e.some((x) => x.isIntersecting)) { o.disconnect(); ladda(); } }, { rootMargin: "200px" });
+      o.observe(el);
+    })();
+  </script>
+</>}
