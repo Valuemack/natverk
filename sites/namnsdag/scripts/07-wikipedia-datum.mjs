@@ -53,7 +53,9 @@ for (let m = 1; m <= 12; m++) {
       return { ar, namn: namn.trim(), beskr: beskr.join(", ").replace(/\s*\([^)]*\d{3,4}[^)]*\)\s*$/, "").trim() };
     }).filter((x) => x.namn && x.beskr && x.namn.length < 60);
     const hAvsn = wt.split(/\n==\s*Händelser\s*==\s*\n/)[1]?.split(/\n==[^=]/)[0] ?? "";
-    const hRader = hAvsn.split("\n").filter((r) => /^\*\s*\[\[\d{3,4}\]\]\s*[–-]/.test(r)).map((r) => ({ ar: Number(r.match(/\[\[(\d{3,4})\]\]/)[1]), text: ren(r.replace(/^\*\s*\[\[\d{3,4}\]\]\s*[–-]\s*/, "")) })).filter((x) => x.text.length > 15 && x.text.length < 260);
+    const hRader = hAvsn.split("\n").filter((r) => /^\*\s*\[\[\d{3,4}\]\]\s*[–-]/.test(r)).map((r) => ({ ar: Number(r.match(/\[\[(\d{3,4})\]\]/)[1]), text: ren(r.replace(/^\*\s*\[\[\d{3,4}\]\]\s*[–-]\s*/, "")) }))
+      // Långa händelser: bara första meningen (ordagrant) – annars föll hela dagar bort (t.ex. 21 juli).
+      .map((x) => (x.text.length < 260 ? x : { ...x, text: meningar(x.text)[0] ?? "" })).filter((x) => x.text.length > 15 && x.text.length < 260);
     const hSv = hRader.filter((x) => /Sverige|svensk|Stockholm|Göteborg|Malmö|Uppsala|riksdag/i.test(x.text));
     const hOvr = hRader.filter((x) => !hSv.includes(x));
     const svenska = rader.filter((x) => /svensk/i.test(x.beskr));
