@@ -14,7 +14,7 @@ const DRIVMEDEL = { "bensin-95": "/bensinpris/", "bensin-98": "/drivmedel/bensin
 /** Bästa nya sökväg för en gammal sökväg på dagensbensinpris.se. */
 export function nySokvag(u) {
   const d = u.split("/").filter(Boolean);
-  if (!d.length) return "/bensinpris/"; // startsidan var "Bensinpris idag"
+  if (!d.length) return "/"; // startsidan måste peka på nya startsidan, annars underkänner Search Consoles adressändring flytten
   if (d.length === 1 && DRIVMEDEL[d[0]]) return DRIVMEDEL[d[0]];
   if (d[0] === "ort") return d[1] ? `/${d[1]}/` : "/bensinpris/"; // bensinpris per kommun → kommunsidan (samma slugregel)
   if (["historik", "europa", "guider", "kedja"].includes(d[0])) return `/${d.join("/")}/`; // samma sökväg finns på bensinstationer.nu

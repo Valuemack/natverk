@@ -15,7 +15,7 @@ test("alla 372 gamla URL:er har en regel", () => {
 });
 
 test("rätt mål för prissidorna och kommunsidorna", () => {
-  assert.equal(nySokvag("/"), "/bensinpris/");
+  assert.equal(nySokvag("/"), "/"); // Search Consoles adressändring kräver startsida → startsida
   assert.equal(nySokvag("/diesel/"), "/dieselpris/");
   assert.equal(nySokvag("/e85/"), "/drivmedel/e85/");
   assert.equal(nySokvag("/ort/angelholm/"), "/angelholm/");
