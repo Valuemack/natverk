@@ -38,7 +38,7 @@ const nya = ANDRINGAR.filter((a) => a.ar === 2027 && a.nytt).map((a) => ({ ...a,
 
 const K1 = okar("K")[0], M1 = okar("M")[0];
 const fragor = [
-  { fraga: "Får jag citera siffrorna?", svar: "Ja. Uppgifterna bygger på SCB:s öppna namnstatistik (CC0) och namnlängden från Isof. Ange gärna dagensnamnsdagar.se och SCB som källa. Sammanställningarna är våra egna." },
+  { fraga: "Får jag citera siffrorna?", svar: "Ja. Uppgifterna bygger på SCB:s öppna namnstatistik (CC0) och namnlängden från Isof. Ange gärna namnsdagaridag.se och SCB som källa. Sammanställningarna är våra egna." },
   { fraga: "Hur färsk är statistiken?", svar: "SCB slutade publicera namnstatistik 2024. De senaste siffrorna gäller folkbokförda 31 december 2020 (tilltalsnamn och medelålder) och nyfödda 2022. Skatteverket publicerar numera topplistor för nyfödda." },
   { fraga: "Vilket namn ökar mest bland nyfödda?", svar: `Bland flicknamnen ökade ${K1.namn} mest (+${K1.trend} procent 2018–2022 jämfört med 2013–2017), bland pojknamnen ${M1.namn} (+${M1.trend} procent). Bara namn som minst 300 barn fick under perioden räknas.` },
 ];
@@ -47,7 +47,7 @@ const fragor = [
   beskrivning={beskriv(`Färdiga nyhetsvinklar om svenska förnamn: namn som ökar mest, almanacksnamn som försvinner, äldsta och yngsta namnen och vem som firar mest.`, "✓ Fritt att citera")}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Press", href: "/press/" }]} jsonld={[faqLd(fragor), datasetLd({ namn: "Namnstatistik för press – nyhetsvinklar 1998–2022", beskrivning: "Sammanställda nyhetsvinklar ur SCB:s namnstatistik: stigande och fallande namn bland nyfödda, namn som försvunnit, vanliga namn utan namnsdag och nya namn i almanackan 2027.", sokvag: "/press/", tid: "1998/2022", nyckelord: ["namnstatistik", "press"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] })]} uppdaterad={UPPDATERAD}>
   <h1>Namnstatistik för press</h1>
-  <p class="svar">Här är färdiga vinklar ur <strong>SCB:s namnstatistik</strong> och almanackans namnlängd, sammanställda av dagensnamnsdagar.se. Siffrorna är fria att citera med källa. Tilltalsnamn och medelålder gäller 31 december 2020, nyfödda 1998–2022 – de senaste uppgifter SCB publicerat.</p>
+  <p class="svar">Här är färdiga vinklar ur <strong>SCB:s namnstatistik</strong> och almanackans namnlängd, sammanställda av namnsdagaridag.se. Siffrorna är fria att citera med källa. Tilltalsnamn och medelålder gäller 31 december 2020, nyfödda 1998–2022 – de senaste uppgifter SCB publicerat.</p>
 
   <h2>1. Namnen som ökar mest bland nyfödda</h2>
   <p>{K1.namn} och {M1.namn} är de namn som ökat mest: fler barn fick dem 2018–2022 än under de fem åren innan, räknat bland namn som minst 300 barn fick.</p>
@@ -105,6 +105,6 @@ const fragor = [
   </table></div>
 
   <h2>Källor och metod</h2>
-  <p>{SCB_KALLA}. Nyfödda: SCB BE0001Nyfodda (namn som minst två barn fått ett visst år). Medelålder: SCB BE0001T08AR. Namnlängden: Institutet för språk och folkminnen. Alla sammanställningar och urval är dagensnamnsdagar.se:s egna och görs om vid varje bygge ({AR}). Läs mer under <a href="/om/#kallor">källor och metod</a>.</p>
+  <p>{SCB_KALLA}. Nyfödda: SCB BE0001Nyfodda (namn som minst två barn fått ett visst år). Medelålder: SCB BE0001T08AR. Namnlängden: Institutet för språk och folkminnen. Alla sammanställningar och urval är namnsdagaridag.se:s egna och görs om vid varje bygge ({AR}). Läs mer under <a href="/om/#kallor">källor och metod</a>.</p>
   <Faq fragor={fragor} />
 </Layout>

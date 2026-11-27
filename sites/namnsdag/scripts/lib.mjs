@@ -7,7 +7,7 @@ export const ROT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const DATA = join(ROT, "data");
 const UA = "Mozilla/5.0 (compatible; namnsdag-datahamtning/1.0)";
 // Wikimedia kräver en beskrivande User-Agent utan webbläsarsträng (meta.wikimedia.org/wiki/User-Agent_policy).
-const UA_WIKI = "dagensnamnsdagar-datahamtning/1.0 (https://dagensnamnsdagar.se/om/)";
+const UA_WIKI = "namnsdagaridag-datahamtning/1.0 (https://namnsdagaridag.se/om/)";
 
 export const vanta = (ms) => new Promise((r) => setTimeout(r, ms));
 

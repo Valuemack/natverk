@@ -21,7 +21,7 @@ export function ics(namn, n, url) {
   const start = startDatum(n);
   const d = (dt) => iso(dt).replaceAll("-", "");
   const rader = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//dagensnamnsdagar.se//Namnsdag//SV", "CALSCALE:GREGORIAN",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//namnsdagaridag.se//Namnsdag//SV", "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
     `UID:namnsdag-${encodeURIComponent(namn.toLowerCase())}@namnsdagsidag.se`,
     `DTSTAMP:${d(IDAG)}T000000Z`,

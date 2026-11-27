@@ -72,7 +72,7 @@ jobs:
           - { sajt: dagensbensinpris, projekt: dagensbensinpris, omdir: true }
           # jourapotek kör apoteken.nus datahämtning och delar därför dess cache.
           - { sajt: jourapotek, projekt: jourapotek, cache: apoteken }
-          # dagensnamnsdagar.se (tidigare namnsdagsidag.se): namnlängden (Isof) och namnstatistik (SCB), datan är incheckad i repot.
+          # namnsdagaridag.se (tidigare namnsdagsidag.se): namnlängden (Isof) och namnstatistik (SCB), datan är incheckad i repot.
           - { sajt: namnsdag, projekt: namnsdag }
     steps:
       - uses: actions/checkout@v4

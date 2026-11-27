@@ -1,4 +1,4 @@
-/* Sajtspecifika komponenter för dagensnamnsdagar.se (temat ligger i packages/core/src/bas.css). */
+/* Sajtspecifika komponenter för namnsdagaridag.se (temat ligger i packages/core/src/bas.css). */
 .idag { display: grid; gap: .4rem; background: var(--yta); border: 1px solid #e6d7df; border-top: 6px solid var(--farg);
   border-radius: 6px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
 .idag .datumrad { color: var(--dampad); font-size: .95rem; }

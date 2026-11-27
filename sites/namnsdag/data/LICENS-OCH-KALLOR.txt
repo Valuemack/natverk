@@ -1,4 +1,4 @@
-KÄLLOR OCH LICENSER – sites/namnsdag (dagensnamnsdagar.se)
+KÄLLOR OCH LICENSER – sites/namnsdag (namnsdagaridag.se)
 =========================================================
 
 1. NAMNLÄNGDEN (data/namnlangd.json)

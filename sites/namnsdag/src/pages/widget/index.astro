@@ -7,11 +7,11 @@ import "../../styles/sajt.css";
 import { SITE, UPPDATERAD, beskriv } from "../../site.js";
 
 const kod = (tema) => `<iframe src="${SITE.url}/widget/idag/${tema ? "?tema=mork" : ""}" title="Namnsdag idag" width="300" height="110" style="border:0;max-width:100%" loading="lazy"></iframe>
-<p style="font-size:12px;margin:4px 0 0"><a href="${SITE.url}/">Namnsdag idag</a> från dagensnamnsdagar.se</p>`;
+<p style="font-size:12px;margin:4px 0 0"><a href="${SITE.url}/">Namnsdag idag</a> från namnsdagaridag.se</p>`;
 const fragor = [
-  { fraga: "Kostar widgeten något?", svar: "Nej. Widgeten är gratis för alla, även på kommersiella sajter. Den enda förutsättningen är att länken till dagensnamnsdagar.se under rutan får vara kvar." },
+  { fraga: "Kostar widgeten något?", svar: "Nej. Widgeten är gratis för alla, även på kommersiella sajter. Den enda förutsättningen är att länken till namnsdagaridag.se under rutan får vara kvar." },
   { fraga: "Uppdateras namnet automatiskt?", svar: "Ja. Widgeten visar alltid dagens namnsdag i svensk tid. Den byggs om varje natt och rättar sig själv i besökarens webbläsare om sidan skulle vara cachad från en tidigare dag." },
-  { fraga: "Sätter widgeten kakor eller spårar besökare?", svar: "Nej. Widgeten är en statisk sida utan kakor, annonser eller spårning. Den hämtar bara namnsdagslistan från dagensnamnsdagar.se." },
+  { fraga: "Sätter widgeten kakor eller spårar besökare?", svar: "Nej. Widgeten är en statisk sida utan kakor, annonser eller spårning. Den hämtar bara namnsdagslistan från namnsdagaridag.se." },
 ];
 ---
 <Layout site={SITE} titel="Gratis namnsdagswidget – dagens namnsdag på din sajt"

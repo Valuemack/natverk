@@ -108,7 +108,7 @@ const forraM = typ === "manad" ? ((m + 10) % 12) + 1 : null;
 const nastaM = typ === "manad" ? (m % 12) + 1 : null;
 const idagK = mmddAv(IDAG);
 ---
-<Layout site={SITE} titel={valjTitel(`${titel} | dagensnamnsdagar.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), ...extraLd]} uppdaterad={UPPDATERAD}
+<Layout site={SITE} titel={valjTitel(`${titel} | namnsdagaridag.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), ...extraLd]} uppdaterad={UPPDATERAD}
   ogBild={ogBild} sidtyp={typ === "manad" ? "CollectionPage" : "WebPage"}>
   {typ === "dag" ? (
     <>

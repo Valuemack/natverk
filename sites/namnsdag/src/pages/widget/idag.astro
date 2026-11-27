@@ -1,5 +1,5 @@
 ---
-// Inbäddningsbar widget (iframe): dagens namnsdag med synlig länk till dagensnamnsdagar.se.
+// Inbäddningsbar widget (iframe): dagens namnsdag med synlig länk till namnsdagaridag.se.
 // Egen minimal sida utan layout (canonical till startsidan, inte i sitemap). ?tema=mork ger mörk variant.
 import { SITE, IDAG, namnPaDag, mmddAv, dagText, veckodag, lista, iso, UTAN_NAMN } from "../../site.js";
 const k = mmddAv(IDAG);
@@ -12,7 +12,7 @@ const text = namn.length ? lista(namn.map((n) => n.namn)) : UTAN_NAMN[k]?.split(
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="canonical" href={`${SITE.url}/`} />
-  <title>Namnsdag idag – widget från dagensnamnsdagar.se</title>
+  <title>Namnsdag idag – widget från namnsdagaridag.se</title>
   <style>
     :root { --farg: #7a2e5a; --text: #1c1b1f; --dampad: #5f5d66; --bg: #fff; --kant: #ead5e0; }
     html.mork { --farg: #f0c7dc; --text: #ecebef; --dampad: #b2afba; --bg: #1d1c21; --kant: #4a3442; }
@@ -31,7 +31,7 @@ const text = namn.length ? lista(namn.map((n) => n.namn)) : UTAN_NAMN[k]?.split(
   <div class="w" data-byggdag={iso(IDAG)}>
     <div class="d" id="d">Namnsdag idag, {veckodag(IDAG)} {dagText(k)}</div>
     <div class="n" id="n">{text}</div>
-    <div class="l">Från <a href={`${SITE.url}/`} target="_blank" rel="noopener">dagensnamnsdagar.se</a></div>
+    <div class="l">Från <a href={`${SITE.url}/`} target="_blank" rel="noopener">namnsdagaridag.se</a></div>
   </div>
   <script is:inline>
     (async () => {

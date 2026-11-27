@@ -2,7 +2,7 @@
 // "Gratulera X med ett riktigt brev" – länk till postabrev.se (samma ägare, redovisas här och på /om/).
 // rel="sponsored" eftersom det är en kommersiell länk till egen tjänst. Ingen extra JS.
 const { namn, falt } = Astro.props;
-const BREV_URL = "https://postabrev.se/skapa-brev?utm_source=dagensnamnsdagar&utm_medium=referral&utm_campaign=namnsdag";
+const BREV_URL = "https://postabrev.se/skapa-brev?utm_source=namnsdagaridag&utm_medium=referral&utm_campaign=namnsdag";
 ---
 <aside class="brevruta" aria-label="Skicka ett gratulationsbrev">
   <svg class="brevikon" viewBox="0 0 48 36" width="48" height="36" aria-hidden="true" focusable="false">
@@ -11,6 +11,6 @@ const BREV_URL = "https://postabrev.se/skapa-brev?utm_source=dagensnamnsdagar&ut
   </svg>
   <div>
     <p class="brevrubrik"><a class="knapp" href={BREV_URL} rel="sponsored noopener" target="_blank" data-falt={falt}>Gratulera {namn} med ett riktigt brev</a></p>
-    <p class="brevtext">Skriv en hälsning på nätet – brevet skrivs ut och skickas med posten. <small>Posta Brev drivs av samma ägare som dagensnamnsdagar.se.</small></p>
+    <p class="brevtext">Skriv en hälsning på nätet – brevet skrivs ut och skickas med posten. <small>Posta Brev drivs av samma ägare som namnsdagaridag.se.</small></p>
   </div>
 </aside>
