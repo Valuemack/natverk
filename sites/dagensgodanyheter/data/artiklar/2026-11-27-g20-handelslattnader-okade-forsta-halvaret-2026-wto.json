@@ -1,0 +1,93 @@
+{
+  "id": "38cda618235a",
+  "slug": "g20-handelslattnader-okade-forsta-halvaret-2026-wto",
+  "kategori": "ekonomi",
+  "vinjett": "Världshandel",
+  "rubrik": "G20-länderna införde fler handelslättnader första halvåret 2026 än under hela 2025",
+  "seorubrik": "G20 ökar handelslättnader 2026 – ny WTO-rapport",
+  "ingress": "G20-länderna införde 282 handelsunderlättande åtgärder under första halvåret 2026, fler än under hela 2025. Det visar Världshandelsorganisationens nya rapport. Lättnaderna hjälper till att hålla varuflödena i gång trots fler handelshinder och oro i omvärlden.",
+  "avsnitt": [
+    {
+      "rubrik": "Fler lättnader har motverkat nya hinder",
+      "stycken": [
+        "Världshandelsorganisationen WTO följer regelbundet hur G20-länderna ändrar sin handelspolitik. Den senaste rapporten gäller perioden fram till den 30 juni 2026. Den visar två tydliga rörelser åt olika håll.",
+        "Länderna har infört fler tullhöjningar och andra åtgärder som försvårar handeln. Under första halvåret 2026 tillkom 206 sådana åtgärder, jämfört med 194 under hela 2025. Samtidigt har takten ökat ännu mer för åtgärder som gör handeln lättare. Enligt WTO har lättnaderna bidragit till att stärka de globala handelsflödena, trots geopolitiska spänningar och ekonomisk osäkerhet.",
+        "G20-ekonomierna står för omkring 80–85 procent av världens BNP och 75 procent av den internationella handeln. Därför får deras beslut stor betydelse för resten av världen."
+      ]
+    },
+    {
+      "rubrik": "Rekordnivå för lättnader på exporten",
+      "stycken": [
+        "De nya importlättnaderna under första halvåret omfattade varor till ett uppskattat värde av 977 miljarder dollar. Det motsvarar 6,4 procent av G20-ländernas import. Lättnaderna på exportsidan nådde 560 miljarder dollar, eller 3,8 procent av exporten. Det är mer än fem gånger så mycket som under 2025 och den högsta nivån som uppmätts.",
+        "En stor del av ökningen var enligt rapporten tillfälliga svar på de störningar som stängningen av Hormuzsundet orsakade, bland annat sänkta och slopade tullar.",
+        "WTO:s generaldirektör välkomnar lättnaderna. Hon uppmanar medlemsländerna att bygga vidare på dem och att vara återhållsamma med nya handelshinder. Enligt rapporten stod G20-länderna för nästan tre fjärdedelar av all import som gynnats av lättnader under perioden. På exportsidan stod de för nästan alla lättnader."
+      ]
+    },
+    {
+      "rubrik": "Världshandeln klarade sig bättre än väntat",
+      "stycken": [
+        "Varuhandeln i världen visade sig mer motståndskraftig än beräknat under första halvåret 2026, trots konflikten i Mellanöstern. Den främsta drivkraften var en stark efterfrågan på varor som behövs för AI. I oktober höjde WTO sin prognos för tillväxten i varuhandelns volym under 2026 till 3,9 procent. Det är mer än dubbelt så mycket som prognosen från mars, som låg på 1,9 procent.",
+        "Prognosen för handeln med kommersiella tjänster har däremot sänkts till 3,3 procent, främst eftersom konflikten har påverkat transporter och resor. Rapporten lyfter också att G20-länderna fortsätter att lösa handelsfrågor genom dialog och förhandlingar i WTO:s kommittéer, i stället för genom tvister."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "WTO:s rapport om G20-handeln",
+    "punkter": [
+      "282 handelsunderlättande åtgärder första halvåret 2026, mot 225 under hela 2025",
+      "Exportlättnader värda 560 miljarder dollar, den högsta nivån som uppmätts",
+      "206 nya handelsbegränsande åtgärder under samma period",
+      "WTO:s prognos för varuhandelns tillväxt 2026 höjd till 3,9 procent",
+      "Rapporten omfattar åtgärder fram till 30 juni 2026",
+      "WTO har följt G20-ländernas handelsåtgärder sedan 2009"
+    ]
+  },
+  "varfor": "G20-länderna står för ungefär tre fjärdedelar av världshandeln, så deras val påverkar varuflöden över hela världen. Rapporten visar att länderna samtidigt har infört fler hinder och kraftigt fler lättnader. Lättnaderna har hjälpt till att hålla handeln i gång under en orolig period. WTO hoppas att länderna bygger vidare på den utvecklingen.",
+  "taggar": [
+    "världshandel",
+    "g20",
+    "tullar",
+    "wto"
+  ],
+  "beskrivning": "G20-länderna införde 282 handelslättnader första halvåret 2026, fler än under hela 2025. WTO:s rapport visar att de hjälpt världshandeln att stå emot oron.",
+  "kalla": {
+    "id": "wto",
+    "namn": "Världshandelsorganisationen (WTO)",
+    "url": "https://www.wto.org/english/news_e/news26_e/tmg20_23nov26_559_e.htm",
+    "kandidatUrl": "https://www.wto.org/english/news_e/news26_e/tmg20_23nov26_559_e.htm",
+    "hem": "https://www.wto.org",
+    "typ": "organisation",
+    "publicerad": "2026-11-23T00:00:00.000Z",
+    "rubrik": "Trade-facilitating measures help offset rise in new G20 trade restrictions"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:54:28.895Z",
+  "uppdaterad": "2026-11-27T02:54:28.895Z",
+  "bild": null,
+  "bildmotiv": "a busy container port with stacked colourful shipping containers and gantry cranes loading a cargo ship at dusk",
+  "bildalt": "Containerhamn med staplade containrar och kranar som lastar ett fartyg",
+  "bildsok": [
+    "container ship port",
+    "shipping containers terminal",
+    "cargo port cranes"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.65,
+    "betydelse": 0.46,
+    "tillit": 0.9,
+    "total": 55
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:54:28.895Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att länderna använder SPS- och TBT-kommittéernas transparensmekanismer för att anmäla åtgärder och hantera specifika handelsfrågor utan att gå till tvistlösning. Där står inte att frågorna löses. Dialogen och förhandlingarna om obalanser nämns i ett separat stycke och kopplas inte till kommittéerna. Formuleringen är något starkare än källan.",
+      "overdrift: Uppgiften kommer från generaldirektörens uttalande, inte från rapporttexten. Källan talar dessutom om nästan all export som gynnats av exportlättnader, inte om nästan alla lättnader. Det är en mindre förskjutning i både tillskrivning och innebörd."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

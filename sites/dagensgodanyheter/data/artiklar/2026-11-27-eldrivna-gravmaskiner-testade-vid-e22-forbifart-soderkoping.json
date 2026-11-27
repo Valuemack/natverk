@@ -1,0 +1,90 @@
+{
+  "id": "1b10c427d287",
+  "slug": "eldrivna-gravmaskiner-testade-vid-e22-forbifart-soderkoping",
+  "kategori": "miljo",
+  "vinjett": "Elektrifiering",
+  "rubrik": "Eldrivna grävmaskiner provades i två veckor vid vägbygget av E22 förbi Söderköping",
+  "seorubrik": "Eldrivna grävmaskiner testade vid E22 Söderköping",
+  "ingress": "Trafikverket och dess partner har under två veckor testat två eldrivna grävmaskiner vid bygget av E22 Förbifart Söderköping. Testet ska visa om tunga arbetsmaskiner kan drivas på el och därmed minska vägbyggets klimatpåverkan.",
+  "avsnitt": [
+    {
+      "rubrik": "Grävmaskiner på el lastade sprängsten norr om Göta kanal",
+      "stycken": [
+        "Försöket genomfördes vid Slussporten, en trafikplats som håller på att byggas norr om Göta kanal. Där fick två olika elektrifierade grävmaskiner arbeta i två veckor. En av uppgifterna var att lasta ut bergmassor efter sprängningar, ett tungt jobb som i dag vanligen utförs av dieseldrivna maskiner.",
+        "Utgångspunkten var frågan om en grävmaskin på 35 ton kan klara sig helt utan diesel. Projektet har undersökt det tillsammans med de företag som ingår i samarbetet kring vägbygget."
+      ]
+    },
+    {
+      "rubrik": "Batteritid och laddning stod i fokus",
+      "stycken": [
+        "Enligt Trafikverkets projektledare Andreas Eklund var syftet att se hur tekniken fungerar ute på ett riktigt bygge. Projektet ville ta reda på hur länge batterierna håller, hur maskinerna kan laddas på platser som saknar direkt anslutning till elnätet och om de klarar samma arbetsuppgifter som maskiner med dieselmotor.",
+        "Erfarenheterna ska tas med i det fortsatta arbetet. Trafikverket har ännu inte redovisat några resultat från testet."
+      ]
+    },
+    {
+      "rubrik": "Nästa steg blir ännu tyngre maskiner",
+      "stycken": [
+        "Resultaten från testperioden ska nu utvärderas. Därefter planerar projektet att testa ännu tyngre elektrifierade anläggningsmaskiner.",
+        "Projektet hoppas kunna bli en så kallad systemdemonstration. Det är ett sätt för flera aktörer att tillsammans pröva och visa upp nya arbetssätt och lösningar som ger byggprojekt mindre påverkan på klimat och miljö. Målet är att fler utsläppsfria fordon och arbetsmaskiner ska användas i framtida byggen.",
+        "Bakom vägprojektet står en allians där Trafikverket samarbetar med byggföretaget PEAB och konsultföretaget ELU Konsult. Tanken med samarbetsformen är att samla olika kompetenser genom hela projektet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Elgrävmaskiner vid E22",
+    "punkter": [
+      "Projekt: E22 Förbifart Söderköping",
+      "Plats: blivande trafikplatsen Slussporten norr om Göta kanal",
+      "Två olika eldrivna grävmaskiner testades under två veckor",
+      "Utgångsfråga: kan en grävmaskin på 35 ton drivas helt på el",
+      "Parter i alliansen: Trafikverket, PEAB AB och ELU Konsult AB",
+      "Nästa steg: tester med ännu tyngre elektrifierade maskiner"
+    ]
+  },
+  "varfor": "Tunga arbetsmaskiner är en del av de utsläpp som uppstår när vägar och järnvägar byggs. Testet ingår i Trafikverkets arbete för att minska transportinfrastrukturens klimat- och miljöpåverkan. Erfarenheter från verkliga byggen kan göra det lättare att använda utsläppsfria maskiner i kommande projekt.",
+  "taggar": [
+    "transporter",
+    "klimatet",
+    "elektrifiering",
+    "vägbygge",
+    "arbetsmaskiner"
+  ],
+  "beskrivning": "Två eldrivna grävmaskiner har testats i två veckor vid bygget av E22 Förbifart Söderköping. Nu väntar utvärdering och tester med ännu tyngre maskiner.",
+  "kalla": {
+    "id": "trafikverket",
+    "namn": "Trafikverket",
+    "url": "https://via.tt.se/pressmeddelande/4657416/kan-en-35-ton-tung-gravmaskin-drivas-helt-pa-el?lang=sv",
+    "kandidatUrl": "https://via.tt.se/pressmeddelande/4657416/kan-en-35-ton-tung-gravmaskin-drivas-helt-pa-el?lang=sv",
+    "hem": "https://www.trafikverket.se",
+    "typ": "myndighet",
+    "publicerad": "2026-11-26T08:26:23.000Z",
+    "rubrik": "Kan en 35 ton tung grävmaskin drivas helt på el"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:53:13.855Z",
+  "uppdaterad": "2026-11-27T02:53:13.855Z",
+  "bild": null,
+  "bildmotiv": "A large tracked excavator loading blasted rock into a dump truck at a road construction site in Swedish countryside, overcast autumn light",
+  "bildalt": "Stor grävmaskin lastar sprängsten på ett vägbygge",
+  "bildsok": [
+    "electric excavator",
+    "excavator construction site rock",
+    "road construction sweden"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.3,
+    "tillit": 0.92,
+    "total": 61
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:53:13.855Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

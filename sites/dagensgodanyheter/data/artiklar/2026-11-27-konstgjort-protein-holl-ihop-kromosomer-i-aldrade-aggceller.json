@@ -1,0 +1,127 @@
+{
+  "id": "82bc4ca8f979",
+  "slug": "konstgjort-protein-holl-ihop-kromosomer-i-aldrade-aggceller",
+  "kategori": "halsa",
+  "vinjett": "Fertilitetsforskning",
+  "rubrik": "Konstgjort protein höll ihop kromosomer i åldrade äggceller hos möss",
+  "seorubrik": "Konstgjort lim skyddar åldrade äggceller – Max Planck",
+  "ingress": "Forskare vid Max Planck-institutet för multidisciplinära vetenskaper har tagit fram ett konstruerat proteinsystem som kan ersätta det naturliga kromosomlimmet i åldrade äggceller. Hos möss minskade det felaktiga kromosomdelningar tydligt.",
+  "avsnitt": [
+    {
+      "rubrik": "Ett molekylärt lim som ersätter det som försvinner med åldern",
+      "stycken": [
+        "Systemet heter TALhesin och har utvecklats av biokemisten Melina Schuh och hennes forskargrupp. Det ska ta över uppgiften från cohesin, ett proteinkomplex som i vanliga fall håller ihop kromosomernas två identiska halvor, kromatiderna.",
+        "Äggceller bildas redan före födseln och hinner därför bli flera decennier gamla. Med åren lossnar cohesinet från kromatiderna utan att ersättas. Då ökar risken att halvorna skiljs åt för tidigt när ägget förbereder sig för befruktning. Ägget kan då få för många eller för få kromosomer, och ett embryo med fel antal kromosomer fäster oftast inte i livmodern eller utvecklas inte normalt.",
+        "Enligt forskarna har det hittills inte funnits något sätt att kompensera för den här förlusten. Det är en av förklaringarna till att fertilitetsbehandlingar oftare misslyckas för kvinnor från slutet av 30-årsåldern."
+      ]
+    },
+    {
+      "rubrik": "Andelen felfria ägg hos äldre möss nådde nästan ungdomsnivå",
+      "stycken": [
+        "TALhesin bygger på två DNA-bindande proteiner som kan programmeras att fästa nära centromeren, den del av kromosomen där cohesin hjälper till att hålla ihop kromatiderna. Forskarna försåg proteinerna med kopplingsställen som binder starkt till varandra, så att de tillsammans fungerar som ett lim.",
+        "I unga musägg där forskarna tog bort det naturliga cohesinet gled kromatiderna isär inom en timme. Med TALhesin på plats höll de ihop tills systemet avlägsnades. I ägg från äldre möss ökade andelen ägg utan för tidigt separerade kromosomer från 46,7 till 74,1 procent. Det är nästan samma nivå som hos unga djur, 74,7 procent."
+      ]
+    },
+    {
+      "rubrik": "Limmet släpper vid rätt tillfälle",
+      "stycken": [
+        "Ett lim som håller för hårt kan också ställa till problem, eftersom kromatiderna måste skiljas åt vid en bestämd punkt i celldelningen. I ägget sköts det av enzymet separas, som klipper av cohesinet vid rätt ögonblick. Forskarna byggde in ett liknande klippställe i TALhesin. När de konstgjort startade äggets sista delning, på samma sätt som en befruktning skulle göra, klippte separaset av limmet i tid och kromatiderna delade sig normalt."
+      ]
+    },
+    {
+      "rubrik": "Första tecknen i mänskliga äggceller",
+      "stycken": [
+        "Forskarna anpassade också systemet till mänskliga kromosomer och testade det i donerade obefruktade ägg från tre fertilitetskliniker i Tyskland och Storbritannien. TALhesin fäste där det var tänkt utan att synbart störa den första delningen. Kromosomer med mycket TALhesin hade mindre avstånd mellan kromatiderna, vilket tyder på att systemet höll ihop dem. Även klippstället fungerade i de mänskliga äggen.",
+        "Nästa steg är att undersöka om TALhesin kan minska kromosomfel i ägg från äldre kvinnor. Enligt forskarna är målet på lång sikt att systemet ska kunna användas säkert vid fertilitetsbehandling, men mer forskning och säkerhetstester krävs innan det kan bli aktuellt i vården."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "TALhesin i korthet",
+    "punkter": [
+      "Utvecklat vid Max Planck-institutet för multidisciplinära vetenskaper under ledning av Melina Schuh",
+      "Ersätter cohesin, som håller ihop kromatiderna men minskar med åldern",
+      "Hos äldre möss: andelen felfria ägg ökade från 46,7 till 74,1 procent",
+      "Unga möss hade 74,7 procent ägg utan för tidigt separerade kromosomer",
+      "Ett inbyggt klippställe gör att enzymet separas släpper limmet i rätt tid",
+      "Mänskliga ägg kom från Göttingen Fertility Center, Bourn Hall Fertility Clinic och Fertility Center Berlin"
+    ]
+  },
+  "varfor": "Kvinnors fertilitet sjunker märkbart från mitten av 30-årsåldern, bland annat för att äggens kromosomlim försvagas. Enligt forskarna är det första gången någon har lyckats ersätta den förlorade sammanhållningen mellan kromatiderna. Resultaten är ett första steg mot en metod som på sikt kan öka chansen att fertilitetsbehandlingar lyckas, även om mer forskning behövs först.",
+  "taggar": [
+    "genetik",
+    "fertilitet",
+    "cellbiologi",
+    "äggceller"
+  ],
+  "beskrivning": "Ett konstruerat protein kallat TALhesin höll ihop kromosomer i åldrade musägg och gav nästan samma andel felfria ägg som hos unga möss, visar ny forskning.",
+  "kalla": {
+    "id": "mpg",
+    "namn": "Max Planck-sällskapet",
+    "url": "https://www.mpg.de/27061728/an-engineered-glue-for-aged-eggs",
+    "kandidatUrl": "https://www.mpg.de/27061728/an-engineered-glue-for-aged-eggs",
+    "hem": "https://www.mpg.de",
+    "typ": "forskning",
+    "publicerad": "2026-11-26T19:00:00.000Z",
+    "rubrik": "An engineered “glue” for aged eggs"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:51:24.397Z",
+  "uppdaterad": "2026-11-27T02:51:24.397Z",
+  "bild": {
+    "fil": "/bilder/konstgjort-protein-holl-ihop-kromosomer-i-aldrade-aggceller.webp",
+    "og": "/bilder/konstgjort-protein-holl-ihop-kromosomer-i-aldrade-aggceller.jpg",
+    "liten": "/bilder/konstgjort-protein-holl-ihop-kromosomer-i-aldrade-aggceller-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: mikroskopbild av en äggcell där kromosomerna lyser blått mot mörk bakgrund",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "Fluorescence microscope view of a single egg cell with glowing blue chromosomes and green protein markers on a dark background in a cell biology laboratory",
+    "skapad": "2026-11-27T03:01:11.276Z",
+    "anvandning": {
+      "input_tokens": 252,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 252
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1176
+    },
+    "kostnadUSD": 0.02898,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "Fluorescence microscope view of a single egg cell with glowing blue chromosomes and green protein markers on a dark background in a cell biology laboratory",
+  "bildalt": "Mikroskopbild av en äggcell där kromosomerna lyser blått mot mörk bakgrund",
+  "bildsok": [
+    "oocyte microscopy",
+    "chromosomes fluorescence microscopy",
+    "IVF laboratory"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.8,
+    "betydelse": 0.5,
+    "tillit": 0.94,
+    "total": 76
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:51:24.397Z",
+    "anmarkningar": [
+      "overdrift: Källan mäter andelen ägg utan för tidigt separerade kromatider, inte ägg som är felfria i allmänhet. Det är en mindre överdrift. Brödtexten använder rätt formulering.",
+      "overdrift: Sökrubriken är något säkrare än källan. Effekten är visad i musägg, och i mänskliga ägg finns bara första tecken. Det är en mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

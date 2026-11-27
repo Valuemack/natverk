@@ -1,0 +1,89 @@
+{
+  "id": "a5860869d13c",
+  "slug": "eth-zurich-latsispriset-mikrobubblor-outi-supponen",
+  "kategori": "teknik",
+  "vinjett": "Strömningsforskning",
+  "rubrik": "ETH-forskare får Latsispriset för forskning om mikrobubblor med stor kraft",
+  "seorubrik": "Latsispriset till forskare om mikrobubblor – ETH Zürich",
+  "ingress": "Outi Supponen, professor vid ETH Zürich, har tilldelats årets Latsispris för sin forskning om gasfyllda mikrobubblor. Bubblorna kan vara mindre än en mänsklig cell men ändå utöva mycket stora krafter, något som på sikt kan göra medicinska behandlingar säkrare.",
+  "avsnitt": [
+    {
+      "rubrik": "Små bubblor som fungerar som verktyg",
+      "stycken": [
+        "Outi Supponen är professor i flerfasströmning vid ETH Zürich. En stor del av hennes forskning handlar om mikrobubblor, små bubblor fyllda med gas. Med hjälp av ljudvågor sätter hon bubblorna i rörelse, och då kan de fungera ungefär som små verktyg. De kan slå sönder material eller rengöra en yta utan att någon behöver torka av den.",
+        "Trots att bubblor har studerats länge finns det enligt Supponen fortfarande mycket som är okänt, särskilt om hur de beter sig under extrema förhållanden. Många förlopp sker så snabbt och i så liten skala att de tidigare har varit nästan omöjliga att se.",
+        "Hennes forskargrupp har bland annat visat hur ultraljud får mikrobubblor i en vätska att vibrera och bilda mycket snabba, tunna strålar. När sådana strålar uppstår nära celler kan de göra små hål i cellmembranet, så att läkemedel kan ta sig in."
+      ]
+    },
+    {
+      "rubrik": "Röntgen avslöjar det osynliga",
+      "stycken": [
+        "Utöver höghastighetsexperimenten i det egna laboratoriet reser gruppen flera gånger om året till European Synchrotron Radiation Facility i Grenoble. Där fångas bubblornas snabba rörelser med kraftfull röntgenstrålning. Till skillnad från vanlig optisk avbildning går det då att se genom täta bubbelkluster och följa förlopp i ogenomskinliga vätskor.",
+        "Anläggningen används också för att studera skador som bubblor orsakar. Forskarna kan till exempel följa hur bubblor som skapas med ljud beter sig runt njurstenar, och sedan med tredimensionella röntgenbilder se sprickorna inuti stenarna. När gruppen först provade metoden visste de inte om den skulle fungera."
+      ]
+    },
+    {
+      "rubrik": "Grundforskning med långsiktiga mål",
+      "stycken": [
+        "På lång sikt kan forskningen bidra till att medicinska behandlingar blir säkrare och mer precisa. Supponen ser det som särskilt lovande att använda fokuserat ultraljud tillsammans med mikrobubblor för att föra läkemedel till hjärnan, något som annars är svårt. Just nu är gruppen dock inriktad på att förstå de grundläggande fysikaliska processerna.",
+        "Enligt Supponen är priset också ett erkännande av hennes forskargrupp och av grundforskningens betydelse inom ingenjörsvetenskapen. Hon låter sina medarbetare arbeta självständigt och driva egna idéer. Vägen till forskningen började med ett erbjudande om att studera bubblor under viktlösa flygningar, något hon tackade ja till av äventyrslust snarare än vetenskapligt intresse."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Latsispriset vid ETH Zürich",
+    "punkter": [
+      "Pristagare 2026: Outi Supponen, professor i flerfasströmning",
+      "Priset delas ut årligen till unga forskare inom alla discipliner",
+      "Instiftat 1985 genom en stiftelse från Fondation Latsis Internationale",
+      "Prissumma: 25 000 schweiziska franc",
+      "Delades ut av rektor Günther Dissertori på ETH Day 2026",
+      "Gruppen gör mätningar vid European Synchrotron Radiation Facility i Grenoble"
+    ]
+  },
+  "varfor": "Mikrobubblor kan på sikt bli ett verktyg för att föra in läkemedel i celler och till hjärnan, där det annars är svårt att nå fram. Genom nya mätmetoder kan forskarna nu se förlopp som tidigare varit dolda. Priset lyfter fram värdet av grundforskning som lägger grunden för framtida tillämpningar inom vården.",
+  "taggar": [
+    "mikrobubblor",
+    "ultraljud",
+    "strömningsmekanik",
+    "forskningspris"
+  ],
+  "beskrivning": "Outi Supponen vid ETH Zürich får Latsispriset för forskning om mikrobubblor som kan skapa stora krafter och på sikt bidra till säkrare behandlingar.",
+  "kalla": {
+    "id": "eth",
+    "namn": "ETH Zürich",
+    "url": "https://ethz.ch/en/news-and-events/eth-news/news/2026/11/the-adventurer-and-the-power-of-tiny-bubbles.html",
+    "kandidatUrl": "https://ethz.ch/en/news-and-events/eth-news/news/2026/11/the-adventurer-and-the-power-of-tiny-bubbles.html",
+    "hem": "https://ethz.ch",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T07:00:00.000Z",
+    "rubrik": "The adventurer and the power of tiny bubbles"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:55:55.952Z",
+  "uppdaterad": "2026-11-27T02:55:55.952Z",
+  "bild": null,
+  "bildmotiv": "close-up of tiny gas bubbles suspended in clear liquid inside a laboratory glass chamber, lit by bright light beside a high-speed camera setup",
+  "bildalt": "Små gasbubblor i en vätska i en laboratoriebehållare, belysta för höghastighetsfilmning",
+  "bildsok": [
+    "microbubbles ultrasound",
+    "synchrotron beamline",
+    "bubbles in water macro"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.65,
+    "betydelse": 0.3,
+    "tillit": 0.93,
+    "total": 54
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:55:55.952Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

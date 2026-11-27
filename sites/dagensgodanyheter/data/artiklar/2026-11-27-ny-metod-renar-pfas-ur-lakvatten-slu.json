@@ -1,0 +1,120 @@
+{
+  "id": "eeb672660692",
+  "slug": "ny-metod-renar-pfas-ur-lakvatten-slu",
+  "kategori": "miljo",
+  "vinjett": "Vattenrening",
+  "rubrik": "Ny metod renar lakvatten från PFAS i tre steg – testad vid Hovgården",
+  "seorubrik": "Ny metod renar PFAS ur lakvatten – SLU-studie",
+  "ingress": "En doktorsavhandling vid Sveriges lantbruksuniversitet visar att stora mängder PFAS kan avskiljas ur lakvatten och till stor del brytas ner till ofarliga ämnen. Metoden har prövats vid Hovgårdens avfallsanläggning utanför Uppsala.",
+  "avsnitt": [
+    {
+      "rubrik": "Skum, ström och våtmark tar hand om kemikalierna",
+      "stycken": [
+        "Reningen sker i tre steg. Först blåses luft in i botten av en behållare med lakvatten. Bubblorna drar med sig PFAS-ämnena upp till ytan, där de samlas i ett skum. Tekniken kallas skumfraktionering.",
+        "Skummet behandlas sedan med elektrokemisk oxidation. Den elektriska strömmen lyckades bryta ner som mest 88 procent av skummets PFAS-ämnen till fluoridjoner och koldioxid. Slutligen får en del av vattnet passera en anlagd våtmark, där en del av de kvarvarande ämnena kan bindas."
+      ]
+    },
+    {
+      "rubrik": "Långkedjiga ämnen avskiljs nästan helt",
+      "stycken": [
+        "Resultaten skiljer sig mellan olika typer av PFAS. I de första försöken avskilde skumfraktioneringen 98 procent av de långkedjiga ämnena, men bara 14 procent av de kortkedjiga. När forskarna tillsatte tensider steg andelen avskilda kortkedjiga ämnen till 67 procent.",
+        "Enligt Oscar Liljeström, som har skrivit avhandlingen, är skumfraktioneringen redo att användas i stor skala på platser där problemet främst gäller långkedjiga PFAS. Han bedömer också att processen kan förbättras ytterligare, både nedbrytningen och tillsatsen av tensider. Vatten som framför allt innehåller kortkedjiga ämnen är dock enligt honom klart svårare att rena."
+      ]
+    },
+    {
+      "rubrik": "Lakvatten är en svag punkt i dag",
+      "stycken": [
+        "PFAS är en stor grupp kemikalier som har använts i industrin och i vardagsprodukter sedan mitten av 1900-talet. De bryts ner mycket långsamt i naturen och följer lätt med vatten, vilket gör dem till ett hot mot dricksvattnet.",
+        "Kemikalierna hamnar till sist i reningsverk och på avfallsanläggningar. Där rinner vatten genom avfallet och tar med sig föroreningar, så kallat lakvatten. Många anläggningar kan i dag inte ta bort PFAS ur det vattnet. Forskningen är en del av EU-projektet LIFE SOuRCE, där flera svenska företag, myndigheter och lärosäten arbetar för att lösa problemet."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Så gick testerna",
+    "punkter": [
+      "Avhandling vid Sveriges lantbruksuniversitet av Oscar Liljeström",
+      "Testad vid Hovgårdens avfallsanläggning utanför Uppsala",
+      "98 procent av långkedjiga PFAS avskildes med skumfraktionering",
+      "Kortkedjiga PFAS: 14 procent utan och 67 procent med tensider",
+      "Upp till 88 procent av PFAS i skummet bröts ner med elektrisk ström",
+      "Del av EU-projektet LIFE SOuRCE med sex svenska deltagare"
+    ]
+  },
+  "varfor": "Många avfallsanläggningar saknar i dag möjlighet att rena lakvatten från PFAS, ämnen som enligt källan hotar dricksvattnet. Metoden visar att kemikalierna inte bara kan samlas in utan också brytas ner till ofarliga ämnen. Eftersom skumfraktioneringen bedöms vara redo för stor skala där långkedjiga PFAS dominerar kan tekniken komma till nytta relativt snart.",
+  "taggar": [
+    "rent vatten",
+    "pfas",
+    "kemikalier",
+    "avfall"
+  ],
+  "beskrivning": "En avhandling vid SLU visar att PFAS kan avskiljas ur lakvatten och till stor del brytas ner. Metoden har testats vid Hovgården utanför Uppsala.",
+  "kalla": {
+    "id": "forskningse",
+    "namn": "forskning.se (svenska lärosätens pressmeddelanden)",
+    "url": "https://forskning.se/2026/11/26/sa-kan-pfas-separeras-fran-lakvatten-och-sedan-forstoras/",
+    "kandidatUrl": "https://forskning.se/2026/11/26/sa-kan-pfas-separeras-fran-lakvatten-och-sedan-forstoras",
+    "hem": "https://www.forskning.se",
+    "typ": "forskning",
+    "publicerad": "2026-11-26T17:24:04.000Z",
+    "rubrik": "Lakvatten kan renas från PFAS med ny metod"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:50:45.165Z",
+  "uppdaterad": "2026-11-27T02:50:45.165Z",
+  "bild": {
+    "fil": "/bilder/ny-metod-renar-pfas-ur-lakvatten-slu.webp",
+    "og": "/bilder/ny-metod-renar-pfas-ur-lakvatten-slu.jpg",
+    "liten": "/bilder/ny-metod-renar-pfas-ur-lakvatten-slu-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Illustration: behållare med skum på vattenytan vid en avfallsanläggning, intill en anlagd våtmark med vass",
+    "illustration": true,
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "A water treatment tank with white foam on the surface at a waste facility, next to a small constructed wetland with reeds in Swedish autumn light",
+    "skapad": "2026-11-27T03:01:04.184Z",
+    "anvandning": {
+      "input_tokens": 253,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 253
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1177
+    },
+    "kostnadUSD": 0.028985,
+    "kontroller": [],
+    "granskningUSD": 0
+  },
+  "bildmotiv": "A water treatment tank with white foam on the surface at a waste facility, next to a small constructed wetland with reeds in Swedish autumn light",
+  "bildalt": "Behållare med skum på vattenytan vid en avfallsanläggning, intill en anlagd våtmark med vass",
+  "bildsok": [
+    "foam fractionation water treatment",
+    "constructed wetland",
+    "landfill leachate pond"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.8,
+    "betydelse": 0.6,
+    "tillit": 0.93,
+    "total": 78
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:50:45.165Z",
+    "anmarkningar": [
+      "overdrift: Källan nämner bara ett lärosäte (SLU) och en myndighet (Statens geotekniska institut). Pluralformerna överdriver något. Källan säger bara 'flera svenska aktörer'.",
+      "overdrift: Slutsatsen om nytta 'relativt snart' står inte i källan. Den är en rimlig men egen tolkning av Liljeströms uttalande om att skumfraktioneringen är klar att införas i stor skala. Mindre överdrift."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "bild"
+}

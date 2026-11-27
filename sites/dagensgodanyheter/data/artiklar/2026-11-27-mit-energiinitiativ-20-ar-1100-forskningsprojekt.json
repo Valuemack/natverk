@@ -1,0 +1,94 @@
+{
+  "id": "6fbe0ed18dde",
+  "slug": "mit-energiinitiativ-20-ar-1100-forskningsprojekt",
+  "kategori": "teknik",
+  "vinjett": "Energiforskning",
+  "rubrik": "MIT:s energisatsning fyller 20 år med över 1 100 forskningsprojekt bakom sig",
+  "seorubrik": "MIT Energy Initiative 20 år – 1 100 energiprojekt",
+  "ingress": "MIT Energy Initiative, energisatsningen vid Massachusetts Institute of Technology, firar 20 år. Under den tiden har den finansierat över 1 100 forskningsprojekt, stöttat mer än 3 000 forskarstudenter och postdoktorer och lagt grunden för omkring 65 företag.",
+  "avsnitt": [
+    {
+      "rubrik": "Två decennier av energiforskning i siffror",
+      "stycken": [
+        "MIT Energy Initiative, förkortat MITEI, startade 2006. Syftet var att samla lärosätets energiforskare kring ett gemensamt mål: att ta fram lösningar och teknik som kan förändra världens energisystem. Initiativet växte fram ur ett starkt intresse för energifrågor bland MIT:s forskare.",
+        "I samband med jubileet summerar direktören William H. Green, professor i kemiteknik, vad satsningen har åstadkommit. Mer än 1 100 forskningsprojekt har fått pengar, över 3 000 forskarstudenter och postdoktorer har fått stöd och nästan en miljard dollar har slussats till MIT.",
+        "Ungefär 65 företag har vuxit fram ur MITEI:s forskning eller har direkt koppling till forskarstudenter och postdoktorer som finansierats av initiativet. Enligt Green har en del av dem fått stor betydelse för omställningen av energisystemet."
+      ]
+    },
+    {
+      "rubrik": "Elbilsprognos från 2019 slog in",
+      "stycken": [
+        "Ett exempel på MITEI:s arbete är studien Mobility of the Future, som publicerades 2019 och där Green var vetenskaplig ledare. Studien förutspådde att elbilar skulle bli så prisvärda att de på allvar kunde konkurrera med bensinbilar under perioden 2025–2030.",
+        "Enligt Green har den globala elbilsförsäljningen sedan dess ökat något snabbare än studien räknade med. En del av förklaringen är att forskarna inte förutsåg de globala konflikter som har drivit upp bensinpriserna.",
+        "Ett annat projekt gällde att förutsäga hur lösningsmedel påverkar kemiska reaktioner och jämvikter. Metoden blev snabb, träffsäker och allmänt användbar, och förmågan att förutsäga hur fasta ämnen löser sig har sedan väckt stort intresse inom läkemedelsindustrin."
+      ]
+    },
+    {
+      "rubrik": "Stora utmaningar men skäl till hopp",
+      "stycken": [
+        "Green pekar på att energianvändningen står för ungefär tre fjärdedelar av världens utsläpp av växthusgaser. Utsläppen behöver minska, och det kräver att energisystemen ställs om inom byggnader, livsmedel, transporter och industri, utan att energin blir dyrare eller svårare att få tag på. Samtidigt ökar efterfrågan, bland annat från ny teknik som AI och från de mer än en miljard människor som fortfarande håller på att få tillgång till pålitlig el.",
+        "Forskare som samarbetar med MITEI arbetar i dag med bland annat datacentrens elbehov, minskade utsläpp från industrin, motståndskraftiga elnät, koldioxidhantering, förnybar energi och hållbara bränslen. Enligt Green ger detta arbete, tillsammans med de hundratals studenter som initiativet finansierar, verkliga skäl till hopp om energins framtid."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "MIT Energy Initiative",
+    "punkter": [
+      "Grundat 2006 vid MIT i USA",
+      "Över 1 100 finansierade forskningsprojekt",
+      "Mer än 3 000 forskarstudenter och postdoktorer har fått stöd",
+      "Nästan 1 miljard dollar i forskningsmedel till MIT",
+      "Omkring 65 företag har vuxit fram ur eller har koppling till verksamheten",
+      "Leds sedan våren 2024 av William H. Green"
+    ]
+  },
+  "varfor": "Energianvändningen står för ungefär tre fjärdedelar av världens växthusgasutsläpp, så forskning som kan ställa om energisystemen har stor betydelse. MITEI:s 20 år visar hur långsiktig finansiering kan ge både nya företag och ny kunskap. Satsningen har också utbildat tusentals unga forskare som enligt Green ofta går vidare till ledande roller inom energiforskning, näringsliv och offentlig sektor.",
+  "taggar": [
+    "förnybar energi",
+    "klimatet",
+    "transporter",
+    "energiforskning",
+    "elbilar"
+  ],
+  "beskrivning": "MIT Energy Initiative fyller 20 år. Satsningen har finansierat över 1 100 forskningsprojekt och gett upphov till omkring 65 företag inom energiområdet.",
+  "kalla": {
+    "id": "mit",
+    "namn": "MIT News",
+    "url": "https://news.mit.edu/2026/3-questions-tackling-energy-challenges-changing-world-1124",
+    "kandidatUrl": "https://news.mit.edu/2026/3-questions-tackling-energy-challenges-changing-world-1124",
+    "hem": "https://news.mit.edu",
+    "typ": "larosate",
+    "publicerad": "2026-11-24T22:25:00.000Z",
+    "rubrik": "3 Questions: Tackling energy challenges in a changing world"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:58:16.054Z",
+  "uppdaterad": "2026-11-27T02:58:16.054Z",
+  "bild": null,
+  "bildmotiv": "rows of solar panels and wind turbines on an open plain under a clear sky, with an electric vehicle charging station in the foreground",
+  "bildalt": "Solpaneler och vindkraftverk på en slätt med en laddstation för elbilar i förgrunden",
+  "bildsok": [
+    "solar panels research laboratory",
+    "electric vehicle charging station",
+    "wind turbines"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.93,
+    "total": 53
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:58:16.054Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att cirka 65 företag har vuxit fram ur MITEI:s forskning eller har direkt koppling till MITEI-finansierade forskarstudenter eller postdoktorer. Att MITEI har 'lagt grunden för' alla dessa företag är något starkare än källan. Brödtexten och faktarutan återger detta korrekt.",
+      "overdrift: Källan säger att MITEI har stöttat över 3 000 forskarstudenter och postdoktorer, inte att initiativet har utbildat dem. Att många går vidare till ledande roller stämmer med källan. Det är en mindre förskjutning."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

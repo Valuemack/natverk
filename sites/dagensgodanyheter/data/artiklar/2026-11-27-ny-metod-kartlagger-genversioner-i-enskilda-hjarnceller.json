@@ -1,0 +1,100 @@
+{
+  "id": "e7083b9fac29",
+  "slug": "ny-metod-kartlagger-genversioner-i-enskilda-hjarnceller",
+  "kategori": "vetenskap",
+  "vinjett": "Hjärnforskning",
+  "rubrik": "Ny metod visar vilka genversioner hjärnans celler använder – cell för cell",
+  "seorubrik": "Ny metod kartlägger genversioner i enskilda hjärnceller",
+  "ingress": "Forskare vid Helsingfors universitet har tagit fram en metod som visar vilka versioner av gener enskilda celler i hjärnvävnad använder. Kunskapen kan på sikt hjälpa forskare att förstå sjukdomar som ALS och Alzheimers sjukdom.",
+  "avsnitt": [
+    {
+      "rubrik": "En gen kan ge flera olika molekyler",
+      "stycken": [
+        "Hos komplexa organismer, som människan, kan en och samma gen ge upphov till flera olika RNA-molekyler. Fenomenet kallas alternativ splitsning. De olika varianterna kallas isoformer, och de kan i sin tur leda till att cellen bildar olika proteiner.",
+        "Många förändringar i isoformer märks inte. Ibland kan dock fel version få allvarliga följder. Felaktiga isoformer har kopplats till flera hjärnsjukdomar, bland annat ALS, frontotemporal demens och Alzheimers sjukdom.",
+        "Enligt forskaren Andrey Prjibelski vid institutionen för datavetenskap lämnar proteinet TDP-43 sin vanliga plats i cellen vid dessa sjukdomar och klumpar ihop sig. Då kan det inte längre göra sitt jobb. Vissa RNA-molekyler splitsas fel, och nervcellerna förlorar proteiner som de behöver."
+      ]
+    },
+    {
+      "rubrik": "Upplösning finare än en enskild cell",
+      "stycken": [
+        "Det är svårt att upptäcka felaktig splitsning i hjärnan. Forskarna har därför utvecklat både nya laboratorietekniker och algoritmer, programvara och statistiska verktyg för att analysera data. Resultatet är en metod som kartlägger vilka isoformer cellerna i hjärnvävnad använder, och var i vävnaden de finns.",
+        "Studiens huvudmål var att visa att sådan rumslig kartläggning går att göra på cellnivå. Det lyckades. Metoden når en upplösning på 500 nanometer, vilket är tydligt mindre än en enskild cell. Den har hittills prövats på hjärnprover från möss.",
+        "När metoden används på prover från personer med hjärnsjukdomar kan den enligt forskarna avslöja nya fall där splitsningen fungerar fel i vissa celler eller hjärnområden. Den kan också användas för att studera processer i den friska hjärnan, till exempel utveckling, där mycket fortfarande är outforskat."
+      ]
+    },
+    {
+      "rubrik": "Lång väg mot läkemedel som rättar till splitsning",
+      "stycken": [
+        "På längre sikt kan fynden bidra till att utforma nya läkemedel som korrigerar splitsning. Det finns redan ett exempel: sedan 2016 behandlas patienter med spinal muskelatrofi, en sjukdom i nervcellerna, med läkemedlet nusinersen. Det verkar genom att rätta till hur RNA från en gen bearbetas i cellerna. Läkemedel som bygger på liknande principer prövas nu i kliniska studier för ALS och demens.",
+        "Prjibelski betonar att det är en lång väg från att hitta avvikande splitsningsmönster till nya läkemedelskandidater, men att stora framsteg börjar med mindre steg."
+      ]
+    },
+    {
+      "rubrik": "Nästa steg blir Alzheimers sjukdom",
+      "stycken": [
+        "Forskarna planerar nu projekt som analyserar data från människor för att studera neurologiska sjukdomar, särskilt Alzheimers sjukdom. De vill också analysera om offentliga sekvenseringsarkiv. Där finns stora mängder data som inte har utnyttjats fullt ut, och enligt Prjibelski kan nya analyser ge intressanta resultat utan att det krävs ny, kostsam sekvensering.",
+        "Studien gjordes tillsammans med forskare vid Weill Cornell Medicine. Den har tre jämbördiga huvudförfattare: Andrey Prjibelski, Lieke Michielsen och Careen Foord. I Helsingfors utfördes beräkningsarbetet i Alexandru Tomescus forskargrupp."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Om studien",
+    "punkter": [
+      "Utförd av Helsingfors universitet tillsammans med Weill Cornell Medicine",
+      "Metoden kartlägger genisoformer med 500 nanometers upplösning",
+      "Hittills prövad på hjärnprover från möss",
+      "Felaktiga isoformer kopplas till ALS, frontotemporal demens och Alzheimers",
+      "Läkemedlet nusinersen har använts mot spinal muskelatrofi sedan 2016",
+      "Nästa steg: studier på mänskliga data, särskilt Alzheimers sjukdom"
+    ]
+  },
+  "varfor": "Felaktig splitsning har kopplats till flera allvarliga hjärnsjukdomar, men har varit svår att upptäcka i hjärnvävnad. Den nya metoden gör det möjligt att se vilka genversioner som används i enskilda celler och var de finns. Det kan ge forskare nya ledtrådar om både sjuk och frisk hjärna, och på sikt underlag för läkemedel som rättar till splitsningen.",
+  "taggar": [
+    "genetik",
+    "alzheimers sjukdom",
+    "als",
+    "hjärnforskning",
+    "rna"
+  ],
+  "beskrivning": "Forskare vid Helsingfors universitet har utvecklat en metod som visar vilka genversioner enskilda hjärnceller använder – kunskap som kan belysa ALS och Alzheimers.",
+  "kalla": {
+    "id": "helsinki",
+    "namn": "Helsingfors universitet",
+    "url": "https://www.helsinki.fi/en/news/mathematics-and-science/researchers-map-which-gene-versions-brain-cells-use-cell-cell",
+    "kandidatUrl": "https://www.helsinki.fi/en/news/mathematics-and-science/researchers-map-which-gene-versions-brain-cells-use-cell-cell",
+    "hem": "https://www.helsinki.fi",
+    "typ": "larosate",
+    "publicerad": "2026-11-26T06:05:13.000Z",
+    "rubrik": "Researchers map which gene versions brain cells use, cell by cell"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:52:03.829Z",
+  "uppdaterad": "2026-11-27T02:52:03.829Z",
+  "bild": null,
+  "bildmotiv": "A fluorescence microscope image of mouse brain tissue with neurons glowing in different colours on a dark background, viewed in a research laboratory setting.",
+  "bildalt": "Mikroskopbild av hjärnvävnad där nervceller lyser i olika färger",
+  "bildsok": [
+    "mouse brain tissue microscopy",
+    "neurons fluorescence microscope",
+    "RNA sequencing laboratory"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.5,
+    "tillit": 0.93,
+    "total": 66
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:52:03.829Z",
+    "anmarkningar": [
+      "overdrift: Källan säger bara att inte alla förändringar i isoformer har en synlig effekt. Att det gäller ”många” är en liten förstärkning."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

@@ -1,0 +1,91 @@
+{
+  "id": "1feb3974be87",
+  "slug": "fao-firar-forsta-internationella-dagen-for-medelhavskost",
+  "kategori": "kultur",
+  "vinjett": "Matkultur",
+  "rubrik": "FAO uppmärksammar medelhavskosten på dess första internationella dag",
+  "seorubrik": "Första internationella dagen för medelhavskost – FAO",
+  "ingress": "FN:s livsmedels- och jordbruksorganisation FAO firade i Rom den första internationella dagen för medelhavskosten. Dagen ska lyfta hur mat, hälsa, natur och kulturarv hänger ihop, och hur traditionell kunskap kan föras vidare.",
+  "avsnitt": [
+    {
+      "rubrik": "FN-dag som ser maten som ett levande system",
+      "stycken": [
+        "Den 25 november 2026 samlades företrädare för regeringar, forskare, jordbruksorganisationer och kockar vid FAO:s huvudkontor i Rom. Där firades för första gången den internationella dagen för medelhavskosten.",
+        "Dagen instiftades av FN:s generalförsamling i december 2025, efter en resolution från FAO:s konferens. FAO fick uppdraget att stödja arbetet med dagen. Tanken är att se medelhavskosten som mer än en meny. Den beskrivs som ett levande system där odling, matvanor, hälsa, naturresurser, försörjning och traditioner hör ihop.",
+        "Evenemanget i Rom ordnades av Italiens ständiga representation vid FAO och Future Food Institute. Temat var ett levande system för en gemensam matframtid. Bland deltagarna fanns två italienska regeringsföreträdare, borgmästaren i Pollica och forskare från universiteten i Aten och Neapel."
+      ]
+    },
+    {
+      "rubrik": "Grönsaker, baljväxter och kunskap som går i arv",
+      "stycken": [
+        "Medelhavskosten ser olika ut i olika länder och samhällen. Gemensamt är ofta fullkorn, grönsaker, baljväxter, nötter, frön och frukt efter säsong. Olivolja är den viktigaste fettkällan, medan fisk, skaldjur, fågel, ägg och mejeriprodukter äts i måttliga mängder.",
+        "Lika viktiga är matlagningskunskapen, de gemensamma måltiderna och färdigheterna som går från generation till generation. Unesco har tagit upp detta levande arv på listan över mänsklighetens immateriella kulturarv.",
+        "Enligt FAO:s generaldirektör Qu Dongyu har forskningen upprepade gånger kopplat traditionella medelhavsmatvanor till bättre hälsa, särskilt till lägre risk för hjärt- och kärlsjukdomar. Han betonade samtidigt att målet inte är att alla i världen ska äta likadant. Principerna kan i stället anpassas efter lokala förhållanden, så att fler får tillgång till mat som är nyttig, prisvärd, kulturellt passande och hållbar."
+      ]
+    },
+    {
+      "rubrik": "Mormödrar och kockar delade recept från Pollica",
+      "stycken": [
+        "Firandet lyfte särskilt matkulturen i Pollica, en ort i Cilento i södra Italien med en framträdande plats i medelhavskostens historia. I FAO:s museum delade mormödrar, kockar, odlare och lokala företrädare med sig av traditionella recept och lokala råvaror, bland annat ett traditionellt vitt fikon från Cilento.",
+        "Pollica stod tidigare i november värd för tre dagar av aktiviteter. Då invigdes ett nytt levande museum om medelhavskosten, och producenter, fiskare, kockar och invånare möttes. Även vid FN:s högkvarter i New York uppmärksammades dagen.",
+        "I Rom visades också ett konstverk av den italienske designern Tiziano Guardini. Det är gjort av ett material som tillverkas av restprodukter från druvförädling och handlar om band mellan landskap, människor, biologisk mångfald och kunskap."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Medelhavskostens dag",
+    "punkter": [
+      "Instiftad av FN:s generalförsamling i december 2025",
+      "Första firandet vid FAO i Rom den 25 november 2026",
+      "Tema: ett levande system för en gemensam matframtid",
+      "Medelhavskosten finns på Unescos lista över immateriellt kulturarv",
+      "Pollica i Cilento invigde ett nytt levande museum om medelhavskosten",
+      "Dagen uppmärksammades även i New York"
+    ]
+  },
+  "varfor": "Enligt FAO förändras matvanor snabbt i takt med urbanisering, globalisering och nya livsstilar, och traditionell matkunskap försvagas, särskilt bland unga. Den nya FN-dagen ger ett återkommande tillfälle att föra vidare den kunskapen. Den lyfter också hur det vi äter påverkar både hälsan och hur mark, vatten och jordbruk används.",
+  "taggar": [
+    "kulturarv",
+    "mat och jordbruk",
+    "medelhavskost",
+    "fao"
+  ],
+  "beskrivning": "FAO firade i Rom den första internationella dagen för medelhavskosten, som FN instiftade 2025 för att lyfta band mellan mat, hälsa och kultur.",
+  "kalla": {
+    "id": "fao",
+    "namn": "FAO",
+    "url": "https://www.fao.org/newsroom/detail/fao-marks-first-international-day-of-the-mediterranean-diet/en",
+    "kandidatUrl": "https://www.fao.org/newsroom/detail/fao-marks-first-international-day-of-the-mediterranean-diet/en",
+    "hem": "https://www.fao.org",
+    "typ": "organisation",
+    "publicerad": "2026-11-25T12:00:00.000Z",
+    "rubrik": "FAO marks first International Day of the Mediterranean Diet"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:53:49.995Z",
+  "uppdaterad": "2026-11-27T02:53:49.995Z",
+  "bild": null,
+  "bildmotiv": "A rustic wooden table with olive oil, fresh vegetables, legumes, whole grain bread, nuts and white figs in soft southern Italian daylight",
+  "bildalt": "Olivolja, grönsaker, baljväxter, nötter och fikon på ett träbord – typiska inslag i medelhavskosten",
+  "bildsok": [
+    "mediterranean diet food",
+    "olive oil vegetables legumes",
+    "white figs"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.92,
+    "total": 55
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:53:49.995Z",
+    "anmarkningar": []
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

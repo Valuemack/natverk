@@ -1,0 +1,93 @@
+{
+  "id": "3ca53c14e317",
+  "slug": "bepicolombo-i-omloppsbana-runt-merkurius",
+  "kategori": "vetenskap",
+  "vinjett": "Rymden",
+  "rubrik": "BepiColombo har gått in i omloppsbana runt Merkurius efter åtta års resa",
+  "seorubrik": "BepiColombo i omloppsbana runt Merkurius – ESA och JAXA",
+  "ingress": "Den europeisk-japanska rymdsonden BepiColombo gick den 21 november in i omloppsbana runt Merkurius. Därmed är uppdraget ett stort steg närmare att låta två farkoster studera planeten samtidigt. Det är första gången det görs vid Merkurius.",
+  "avsnitt": [
+    {
+      "rubrik": "Ny teknik användes för första gången vid en annan planet",
+      "stycken": [
+        "Inbromsningen startade klockan 18.24 UTC den 21 november. Enligt Europeiska rymdorganisationen ESA är det den andra stora milstolpen i uppdragets ankomstfas. Resan genom det inre solsystemet har tagit åtta år.",
+        "BepiColombo blev samtidigt först med att gå in i bana runt en annan planet med en metod som kallas svag stabilitetsfångst. Farkosten anländer då med lägre fart än vad planetuppdrag brukar ha. Tidigare har tekniken bara använts av vissa farkoster på väg till månen.",
+        "Uppdraget leds av ESA i nära samarbete med den japanska rymdorganisationen JAXA. ESA:s farkost Mercury Planetary Orbiter (MPO) och JAXA:s Mio ska kretsa runt planeten samtidigt."
+      ]
+    },
+    {
+      "rubrik": "Ett programfel stoppades utan att planen påverkades",
+      "stycken": [
+        "Inbromsningen gick inte helt som planerat. Efter ett schemalagt avbrott i kontakten såg kontrollteamet att farkosten hade gått in i säkert läge. Raketmotorerna hade slutat brinna tidigare än väntat.",
+        "Team vid ESA:s kontrollcenter ESOC i Darmstadt i Tyskland har arbetat dygnet runt tillsammans med huvudtillverkaren Airbus och kollegor inom samarbetet med JAXA. De har spårat felet till ett programfel.",
+        "Farkosten hamnade i en bana där ett varv tar 75 timmar i stället för de planerade 58. Enligt ESA var inbromsningen utformad för att tåla oväntade händelser. De återstående manövrerna har redan anpassats till den nya banan, och inga extra motorbränningar behövs. Uppdraget är säkert. Separationen av de två farkosterna den 9–10 december påverkas inte, och MPO kan fortfarande nå sin planerade forskningsbana."
+      ]
+    },
+    {
+      "rubrik": "Instrumenten har klarat sina första tester",
+      "stycken": [
+        "Den 3 september släpptes farkostens transportmodul, MTM. Den 15 september slogs alla instrument på MPO på samtidigt för första gången. De första analyserna visar att instrumenten mår bra. Laserhöjdmätaren BELA skickade ut över 700 000 pulser under 21,5 timmar. Spektrometern MERTIS samlade in omkring en gigabit data och har knappt förlorat någon känslighet sedan den kalibrerades på marken 2013. Kameran SIMBIO-SYS tog sin första bild i rymden.",
+        "Den 24 september provade MPO sina motorer i den nya konfigurationen. Motorerna brann i 8 minuter och 42 sekunder och gav en exakt fartändring på 11,4 meter per sekund. Inför ankomsten övade teamen hela förloppet i en simuleringskampanj från juni till oktober. I övningarna lade de medvetet in oväntade problem."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "BepiColombo i korthet",
+    "punkter": [
+      "Ett samarbete mellan ESA och den japanska rymdorganisationen JAXA",
+      "Gick in i omloppsbana runt Merkurius den 21 november 2026 klockan 18.24 UTC",
+      "Första uppdraget som kretsar runt Merkurius med två farkoster: MPO och Mio",
+      "Banan blev 75 timmar lång i stället för de planerade 58",
+      "MPO och Mio separeras den 9–10 december 2026",
+      "Forskningsfasen väntas börja i april 2027"
+    ]
+  },
+  "varfor": "BepiColombo blir det första uppdraget som studerar Merkurius med två farkoster samtidigt. Uppdraget har också visat att svag stabilitetsfångst fungerar vid en annan planet än jorden. Trots ett programfel håller tidsplanen, och instrumenten har klarat sina första tester inför forskningsfasen.",
+  "taggar": [
+    "rymden",
+    "merkurius",
+    "esa",
+    "rymdsonder"
+  ],
+  "beskrivning": "Efter åtta års resa har rymdsonden BepiColombo gått in i bana runt Merkurius. ESA och JAXA ska studera planeten med två farkoster samtidigt.",
+  "kalla": {
+    "id": "esa",
+    "namn": "ESA",
+    "url": "https://www.esa.int/articles/about-us/directorates/science/bepicolombo/latest-updates-bepicolombo-s-arrival-at-mercury",
+    "kandidatUrl": "https://www.esa.int/articles/about-us/directorates/science/bepicolombo/latest-updates-bepicolombo-s-arrival-at-mercury",
+    "hem": "https://www.esa.int",
+    "typ": "rymd",
+    "publicerad": "2026-11-23T17:00:00.000Z",
+    "rubrik": "Latest updates: BepiColombo's arrival at Mercury"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:56:46.200Z",
+  "uppdaterad": "2026-11-27T02:56:46.200Z",
+  "bild": null,
+  "bildmotiv": "a large deep-space radio dish antenna pointing upward at a twilight sky in a dry hilly landscape",
+  "bildalt": "En stor parabolantenn för kommunikation med rymdsonder riktad mot himlen i skymningen",
+  "bildsok": [
+    "deep space antenna",
+    "ESTRACK ground station",
+    "spacecraft clean room"
+  ],
+  "bildRymd": true,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.4,
+    "tillit": 0.97,
+    "total": 53
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:56:46.200Z",
+    "anmarkningar": [
+      "overdrift: Källan säger att felet har spårats till ett programfel och att den fortsatta sekvensen har anpassats. Att felet ”stoppades” står inte i källan, och formuleringen är oklar. Planen påverkades också delvis, eftersom banan blev 75 timmar i stället för 58, även om separationen och forskningsbanan inte påverkas.",
+      "overdrift: Källan säger att det är första gången metoden används för att gå in i bana runt en annan planet, och att den tidigare bara använts av farkoster på väg till jordens måne. ”Annan planet än jorden” antyder att metoden tidigare använts vid jorden, vilket är något oprecist. Dessutom avbröts brännningen i förtid, så ”visat att fungerar” är något starkare än källan."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

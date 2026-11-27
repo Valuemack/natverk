@@ -1,0 +1,93 @@
+{
+  "id": "dc6384bb7fb2",
+  "slug": "pinnkonstnar-arvika-arets-miljohjalte-2026",
+  "kategori": "djur-natur",
+  "vinjett": "Skog och natur",
+  "rubrik": "Pinnkonstnär som planterat lövträd vid Arvika blir Årets Miljöhjälte 2026",
+  "seorubrik": "Årets Miljöhjälte 2026: pinnkonstnär vid Arvika – WWF",
+  "ingress": "Världsnaturfonden WWF utser Maria Westerberg, kallad Vildhjärta, till Årets Miljöhjälte 2026. Hon får priset för sin konst om skogen och för arbetet med att göra en barkborreskadad granplantering vid Arvika rikare på liv.",
+  "avsnitt": [
+    {
+      "rubrik": "Konst och skogsvård i samma engagemang",
+      "stycken": [
+        "Utmärkelsen Årets Miljöhjälte går till en person som har gjort viktiga insatser för klimatet och miljön och samtidigt inspirerat andra. I år lyfter WWF fram Maria Westerberg för hennes engagemang för att bevara skogen.",
+        "Enligt WWF tar engagemanget sig två uttryck. Det ena är konsten, som väcker nyfikenhet på skogen och allt som lever där. Det andra är det praktiska arbetet med att öka den biologiska mångfalden i skogen där hon bor.",
+        "WWF:s generalsekreterare Gustaf Lind framhåller att konsten är ett sätt att få fler att engagera sig. Enligt honom påminner hennes verk om att skogen också är andra arters hem och om vad som kan gå förlorat om den inte sköts väl."
+      ]
+    },
+    {
+      "rubrik": "Figurer av pinnar och döda träd",
+      "stycken": [
+        "Maria Westerberg arbetar med det hon kallar pinnkonst. Av pinnar och döda träd skapar hon figurer och objekt som får besökarna att se skogen från ett mer lekfullt håll. Hon kombinerar pinnkonsten med ordkonst.",
+        "Själv beskriver hon priset som särskilt värdefullt. Hon menar dock att den verkliga hjälten är naturskogen och dess myller av liv, och att hennes konst är ett sätt att ge skogen stöd."
+      ]
+    },
+    {
+      "rubrik": "Barkborreangrepp blev starten på en ny skog",
+      "stycken": [
+        "Hon bor och arbetar i Brunskog utanför Arvika. Där angreps skogen av granbarkborre, och hundratals granar dog. I stället för att se det enbart som en förlust valde hon att använda skadan som en chans att göra skillnad.",
+        "Målet blev att göra granplanteringen på 40 hektar mer artrik och låta den bli en skog som liknar naturen igen. Arbetet har engagerat många. Fram till december 2025 hade hon tillsammans med andra planterat närmare 4000 lövträd.",
+        "Träden har hämtats från platser i närområdet där de av olika skäl inte var önskade. Flera av de döda granarna har hon dessutom förvandlat till pinnkonst, som i dag finns utställd i skogen."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Årets Miljöhjälte 2026",
+    "punkter": [
+      "Pristagare: Maria Westerberg, kallad Vildhjärta",
+      "Utdelas av Världsnaturfonden WWF",
+      "Plats: Brunskog utanför Arvika",
+      "Granplanteringen är 40 hektar stor",
+      "Närmare 4000 lövträd planterade fram till december 2025",
+      "Tidigare pristagare bland andra Erik Ahlström (2025) och Emil Nilsson (2024)"
+    ]
+  },
+  "varfor": "Utmärkelsen visar hur en skogsskada kan vändas till något positivt. Genom att plantera närmare 4000 lövträd i en granplantering som drabbats av granbarkborre har Maria Westerberg och andra lagt grunden för en mer varierad skog. Med sin konst når hon dessutom människor som kanske inte annars hade stannat upp och sett skogen som ett hem för många arter.",
+  "taggar": [
+    "biologisk mångfald",
+    "skog",
+    "granbarkborre",
+    "konst",
+    "lövträd"
+  ],
+  "beskrivning": "WWF utser Maria Westerberg, kallad Vildhjärta, till Årets Miljöhjälte 2026 för pinnkonst och närmare 4000 planterade lövträd vid Arvika.",
+  "kalla": {
+    "id": "wwf-se",
+    "namn": "WWF Sverige",
+    "url": "https://www.wwf.se/pressmeddelande/maria-vildhjarta-westerberg-ar-arets-miljohjalte/",
+    "kandidatUrl": "https://www.wwf.se/pressmeddelande/maria-vildhjarta-westerberg-ar-arets-miljohjalte",
+    "hem": "https://www.wwf.se",
+    "typ": "organisation",
+    "publicerad": "2026-11-25T11:54:02.000Z",
+    "rubrik": "Maria ”Vildhjärta” Westerberg är Årets Miljöhjälte"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:59:44.470Z",
+  "uppdaterad": "2026-11-27T02:59:44.470Z",
+  "bild": null,
+  "bildmotiv": "young birch and oak saplings planted among dead spruce trunks in a Swedish forest clearing, soft autumn light, a small sculpture made of sticks standing between the trees",
+  "bildalt": "Unga lövträd planterade bland döda granar i en svensk skog, med en figur av pinnar i förgrunden",
+  "bildsok": [
+    "deciduous saplings planted in spruce forest",
+    "bark beetle damaged spruce forest",
+    "stick sculpture in forest"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.55,
+    "betydelse": 0.3,
+    "tillit": 0.82,
+    "total": 53
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:59:44.470Z",
+    "anmarkningar": [
+      "overdrift: En egen tolkning. Källan säger att konsten väcker nyfikenhet och påminner om att skogen är andra arters hem, men inget om att den når människor som annars inte hade stannat upp. Mindre spekulation."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}

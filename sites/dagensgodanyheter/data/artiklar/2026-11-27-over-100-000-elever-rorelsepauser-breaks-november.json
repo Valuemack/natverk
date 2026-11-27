@@ -1,0 +1,99 @@
+{
+  "id": "d2741ad4fc2d",
+  "slug": "over-100-000-elever-rorelsepauser-breaks-november",
+  "kategori": "halsa",
+  "vinjett": "Rörelse i skolan",
+  "rubrik": "Över 100 000 elever har tagit rörelsepauser till musik i skolan under november",
+  "seorubrik": "Breaks: 100 000 elever gjorde rörelsepauser i skolan",
+  "ingress": "Fler än 4 300 skolklasser runt om i Sverige har under november gjort korta rörelsepauser till musik inom satsningen Breaks. Folkhälsomyndigheten och Skolverket står bakom satsningen, som ska få barn och unga att röra sig mer under skoldagen.",
+  "avsnitt": [
+    {
+      "rubrik": "Klasser i nästan alla kommuner var med",
+      "stycken": [
+        "Rörelsesatsningen Breaks har nått brett. Drygt 1 700 skolor har deltagit med fler än 4 300 klasser, och 269 av landets 290 kommuner finns med. Eleverna går från förskoleklass upp till årskurs nio.",
+        "Sammanlagt har över 100 000 elever gjort fler än 41 000 rörelsepauser under månaden. Enligt Folkhälsomyndigheten motsvarar det mer än 5,5 miljoner minuter rörelse.",
+        "Klasserna har kunnat registrera sina pauser på en webbsida. Där har de också kunnat jämföra sig med andra klasser."
+      ]
+    },
+    {
+      "rubrik": "En ny del av dansen varje måndag",
+      "stycken": [
+        "Varje måndag i november har klasserna kunnat hämta ytterligare en film på nätet. I dem lärs en lättsam koreografi ut, skapad speciellt för Breaks. Rörelserna har byggts på vecka för vecka, så att eleverna successivt har lärt sig hela dansen.",
+        "Musiken är låten Hur Dom Än av Oskar Linnros. Koreografin är gjord av Cajsa Ohlsson."
+      ]
+    },
+    {
+      "rubrik": "Gemensam final i klassrum över hela landet",
+      "stycken": [
+        "Satsningen avslutas med en final fredagen den 27 november klockan 10. Då gör klasserna hela koreografin samtidigt, i klassrum över hela Sverige.",
+        "Filmerna försvinner inte efter finalen. De ligger kvar på Folkhälsomyndighetens webbsida för Breaks, så att skolor och klasser som vill kan fortsätta med rörelsepauserna."
+      ]
+    },
+    {
+      "rubrik": "Några minuter kan ge mer energi",
+      "stycken": [
+        "Elisabet Olofsson, utredare på Folkhälsomyndigheten, är glad över att så många barn och unga har deltagit under de fyra veckorna. Myndigheten hoppas att satsningen har inspirerat eleverna att röra sig mer under skoldagen.",
+        "Enligt Olofsson kan en rörelsepaus på bara några minuter betyda mycket, eftersom eleverna får mer ork och lättare att koncentrera sig. Hon pekar på att barn och unga rör sig allt mindre och att stillasittandet i regel ökar med åldern. Att låta elever röra sig regelbundet i skolan beskriver hon som en investering i hälsa och välmående, som också kan göra det lättare för dem att klara undervisningen."
+      ]
+    }
+  ],
+  "faktaruta": {
+    "rubrik": "Breaks i siffror",
+    "punkter": [
+      "Över 100 000 elever från förskoleklass till årskurs nio",
+      "Drygt 1 700 skolor med sammanlagt fler än 4 300 klasser",
+      "269 av landets 290 kommuner deltog",
+      "Mer än 41 000 breaks, över 5,5 miljoner minuter rörelse",
+      "Final fredagen den 27 november klockan 10",
+      "Folkhälsomyndigheten i samarbete med Skolverket"
+    ]
+  },
+  "varfor": "Enligt Folkhälsomyndigheten rör sig barn och unga allt mindre, och stillasittandet ökar med åldern. Breaks visar att korta och enkla rörelsepauser går att ordna i klassrum i nästan alla landets kommuner. Eftersom filmerna finns kvar efter finalen kan skolor fortsätta med pauserna även framöver.",
+  "taggar": [
+    "folkhälsa",
+    "fysisk aktivitet",
+    "skola",
+    "barn och unga"
+  ],
+  "beskrivning": "Över 100 000 elever i 4 300 klasser har gjort korta rörelsepauser till musik i november inom Breaks, en satsning från Folkhälsomyndigheten och Skolverket.",
+  "kalla": {
+    "id": "folkhalsomyndigheten",
+    "namn": "Folkhälsomyndigheten",
+    "url": "https://www.folkhalsomyndigheten.se/nyheter-och-press/nyhetsarkiv/2026/november/over-100-000-elever-har-gjort-breaks-i-november",
+    "kandidatUrl": "https://www.folkhalsomyndigheten.se/nyheter-och-press/nyhetsarkiv/2026/november/over-100-000-elever-har-gjort-breaks-i-november",
+    "hem": "https://www.folkhalsomyndigheten.se",
+    "typ": "myndighet",
+    "publicerad": "2026-11-26T11:00:47.000Z",
+    "rubrik": "Över 100 000 elever har gjort breaks i november"
+  },
+  "ovrigaKallor": [],
+  "publicerad": "2026-11-27T02:52:44.285Z",
+  "uppdaterad": "2026-11-27T02:52:44.285Z",
+  "bild": null,
+  "bildmotiv": "An empty bright Swedish school classroom with desks pushed aside, open floor space for movement, a projector screen and late autumn light through the windows",
+  "bildalt": "Ett ljust klassrum med bänkarna flyttade åt sidan för att ge plats åt rörelsepauser",
+  "bildsok": [
+    "children dancing classroom",
+    "school classroom exercise",
+    "physical activity school"
+  ],
+  "bildRymd": false,
+  "poang": {
+    "positiv": 0.6,
+    "betydelse": 0.3,
+    "tillit": 0.95,
+    "total": 62
+  },
+  "produktion": {
+    "metod": "ai-stod",
+    "skrivmodell": "claude-opus-5-5",
+    "granskningsmodell": "claude-opus-5-5",
+    "granskad": "2026-11-27T02:52:44.285Z",
+    "anmarkningar": [
+      "overdrift: Källan säger bara att koreografin byggts på varje vecka och att klasserna gör hela koreografin i finalen. Att eleverna faktiskt har lärt sig hela dansen är en liten slutsats utöver källan.",
+      "overdrift: Slutsatsen dras av artikeln själv utifrån att 269 av 290 kommuner deltog. Den är rimlig men något generaliserande. Källan säger inte att satsningen visar detta."
+    ]
+  },
+  "rattelser": [],
+  "bildbeslut": "text"
+}
