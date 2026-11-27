@@ -1,0 +1,50 @@
+---
+// Gratis widget: dagens namnsdag på din egen sajt (iframe) med kopierbar kod.
+import Layout from "../../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../../styles/sajt.css";
+import { SITE, UPPDATERAD, beskriv } from "../../site.js";
+
+const kod = (tema) => `<iframe src="${SITE.url}/widget/idag/${tema ? "?tema=mork" : ""}" title="Namnsdag idag" width="300" height="110" style="border:0;max-width:100%" loading="lazy"></iframe>
+<p style="font-size:12px;margin:4px 0 0"><a href="${SITE.url}/">Namnsdag idag</a> från dagensnamnsdagar.se</p>`;
+const fragor = [
+  { fraga: "Kostar widgeten något?", svar: "Nej. Widgeten är gratis för alla, även på kommersiella sajter. Den enda förutsättningen är att länken till dagensnamnsdagar.se under rutan får vara kvar." },
+  { fraga: "Uppdateras namnet automatiskt?", svar: "Ja. Widgeten visar alltid dagens namnsdag i svensk tid. Den byggs om varje natt och rättar sig själv i besökarens webbläsare om sidan skulle vara cachad från en tidigare dag." },
+  { fraga: "Sätter widgeten kakor eller spårar besökare?", svar: "Nej. Widgeten är en statisk sida utan kakor, annonser eller spårning. Den hämtar bara namnsdagslistan från dagensnamnsdagar.se." },
+];
+---
+<Layout site={SITE} titel="Gratis namnsdagswidget – dagens namnsdag på din sajt"
+  beskrivning={beskriv("Visa dagens namnsdag på din egen sajt, intranät eller blogg. Kopiera koden – widgeten är gratis och uppdateras automatiskt varje dag.", "✓ Ljus och mörk", "✓ Inga kakor")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Widget", href: "/widget/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Namnsdag på din sajt – gratis widget</h1>
+  <p class="svar">Visa <strong>dagens namnsdag</strong> på din webbplats, ditt intranät eller din blogg. Kopiera koden nedan och klistra in den där rutan ska synas. Widgeten är gratis, sätter inga kakor och byter namn automatiskt varje dag.</p>
+
+  <h2>Så ser den ut</h2>
+  <div class="widget-forhand">
+    <div><iframe src="/widget/idag/" title="Namnsdag idag (ljus)" width="300" height="110" style="border:0;max-width:100%" loading="lazy"></iframe><p class="kalla">Ljus</p></div>
+    <div><iframe src="/widget/idag/?tema=mork" title="Namnsdag idag (mörk)" width="300" height="110" style="border:0;max-width:100%" loading="lazy"></iframe><p class="kalla">Mörk</p></div>
+  </div>
+
+  <h2>Kopiera koden</h2>
+  {[["Ljus widget", kod(false)], ["Mörk widget", kod(true)]].map(([rub, k], i) => <>
+    <h3>{rub}</h3>
+    <textarea class="kodruta" readonly rows="4" id={`kod${i}`}>{k}</textarea>
+    <p><button type="button" class="knapp" data-kopiera={`kod${i}`}>Kopiera koden</button> <span class="kopierad" aria-live="polite"></span></p>
+  </>)}
+  <p>Bredden kan ändras fritt (minst cirka 220 pixlar). Länken under rutan ska vara kvar – det är så widgeten kan vara gratis.</p>
+
+  <h2>Andra sätt att använda namnsdagarna</h2>
+  <ul>
+    <li><a href="/namnsdagar.ics">Alla namnsdagar som kalenderfil</a> – för Outlook, Google Kalender eller mobilen</li>
+    <li><a href="/data/namnsdagar.json">Namnsdagarna som JSON</a> – för utvecklare (namnlängden enligt Isof)</li>
+    <li><a href="/press/">Namnstatistik för press och redaktioner</a></li>
+  </ul>
+  <Faq fragor={fragor} />
+  <script slot="skript" is:inline>
+    document.querySelectorAll("[data-kopiera]").forEach((b) => b.addEventListener("click", async () => {
+      const t = document.getElementById(b.dataset.kopiera), s = b.nextElementSibling;
+      try { await navigator.clipboard.writeText(t.value); s.textContent = "Kopierad!"; } catch { t.select(); s.textContent = "Markerad – tryck Ctrl+C."; }
+    }));
+  </script>
+</Layout>

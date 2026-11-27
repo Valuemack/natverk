@@ -68,7 +68,7 @@
     "liten": "/bilder/ska-gora-stralbehandling-snabbare-och-sakrare-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: linjäraccelerator för strålbehandling i ett behandlingsrum på ett sjukhus",
+    "alt": "Målad illustration av en strålbehandlingsmaskin med rund arm över en brun behandlingsbrits i ett ljust sjukhusrum.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -95,10 +95,11 @@
   "bildmotiv": "A modern medical linear accelerator for radiation therapy in a calm, softly lit hospital treatment room, with an empty patient couch",
   "bildalt": "Linjäraccelerator för strålbehandling i ett behandlingsrum på ett sjukhus",
   "poang": {
-    "positiv": 0.7,
-    "betydelse": 0.5,
+    "positiv": 0.6,
+    "betydelse": 0.4,
     "tillit": 0.95,
-    "total": 68
+    "total": 62,
+    "gladje": 0.5
   },
   "produktion": {
     "metod": "ai-stod",
@@ -115,5 +116,6 @@
     "linear accelerator radiotherapy",
     "radiotherapy treatment room"
   ],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "medicin"
 }

@@ -1,0 +1,116 @@
+---
+// Namnsdagar ett helt år (/namnsdagar-2026/, /namnsdagar-2027/): kalender att skriva ut månad för
+// månad eller hela året, med veckonummer, röda dagar och flaggdagar. Nya namn det året lyfts fram.
+import Layout from "../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, valjTitel } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import {
+  SITE, AR, UPPDATERAD, MANADER, ANDRINGAR, ALLA_NAMN, namnPaDag, dagText, dagHref, namnHref, lista, datum, plusDagar, mmddAv,
+  veckodag, isoVecka, tal, barare, UTAN_NAMN, NAMN_KALLA, beskriv, giltigt,
+} from "../site.js";
+import { handelser } from "../lib/dagdata.js";
+import { scb, nyfodda } from "../lib/namndata.js";
+
+export function getStaticPaths() {
+  return [AR, AR + 1].map((ar) => ({ params: { ar: String(ar) }, props: { y: ar } }));
+}
+const { y } = Astro.props;
+const nya = ANDRINGAR.filter((a) => a.ar === y && a.nytt).sort((a, b) => a.datum.localeCompare(b.datum));
+const bort = ANDRINGAR.filter((a) => a.ar === y && a.bort);
+const antal = ALLA_NAMN.filter((n) => giltigt(n, y)).length;
+const VD = ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"];
+const nyaSet = new Set(nya.map((a) => a.nytt));
+// Månadsrutnät: veckor (mån–sön) med veckonummer.
+const manader = MANADER.map((mn, i) => {
+  const forsta = datum(y, i + 1, 1);
+  const dagar = new Date(Date.UTC(y, i + 1, 0)).getUTCDate();
+  const tomma = (forsta.getUTCDay() + 6) % 7;
+  const celler = [...Array(tomma).fill(null), ...Array.from({ length: dagar }, (_, d) => {
+    const dt = datum(y, i + 1, d + 1);
+    const k = mmddAv(dt);
+    const h = handelser(dt);
+    return { dt, k, d: d + 1, namn: namnPaDag(k, y), rod: h.rod.length > 0 || dt.getUTCDay() === 0, helg: [...h.rod, ...h.afton], flagg: h.flagg.length > 0 };
+  })];
+  while (celler.length % 7) celler.push(null);
+  const veckor = Array.from({ length: celler.length / 7 }, (_, w) => celler.slice(w * 7, w * 7 + 7));
+  return { mn, i, veckor };
+});
+const kung = (k) => `${veckodag(datum(y, Number(k.slice(0, 2)), Number(k.slice(3))))} ${dagText(k)}`;
+const fragor = [
+  { fraga: `Hur många namn har namnsdag ${y}?`, svar: `${y} har almanackan ${antal} namn med namnsdag.${nya.length ? ` ${nya.length} av dem är nya för året: ${lista(nya.map((a) => `${a.nytt} (${dagText(a.datum)})`))}.` : ""}` },
+  nya.length > 0 && { fraga: `Vilka nya namn får namnsdag ${y}?`, svar: `Från ${y} får ${lista(nya.map((a) => a.nytt))} namnsdag. Namnlängdskommittén beslutade om ändringen i januari 2025. Inga befintliga namn tas bort.` },
+  { fraga: `Vilka veckodagar infaller de kungliga namnsdagarna ${y}?`, svar: `Kungens namnsdag (Karl) är ${kung("01-28")}, kronprinsessans (Viktoria) ${kung("03-12")} och drottningens (Silvia) ${kung("08-08")} ${y}. Alla tre är allmänna flaggdagar.` },
+  { fraga: "Hur skriver jag ut namnsdagskalendern?", svar: "Välj en månad och tryck på Skriv ut vald månad, eller tryck på Skriv ut hela året. Varje månad hamnar då på ett eget papper i stående A4, med veckonummer, röda dagar och flaggdagar." },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={valjTitel(`Namnsdagar ${y} – kalender att skriva ut${nya.length ? `, ${nya.length} nya namn` : ""}`, `Namnsdagar ${y} – kalender att skriva ut`)}
+  beskrivning={beskriv(`Alla namnsdagar ${y} månad för månad, med veckonummer, röda dagar och flaggdagar.`, nya.length && `Nytt ${y}: ${lista(nya.map((a) => a.nytt))}.`, "✓ Skriv ut en månad eller hela året", `✓ ${antal} namn`, "✓ Gratis att skriva ut", "✓ Ingen inloggning")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: `Namnsdagar ${y}`, href: `/namnsdagar-${y}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Namnsdagar {y}</h1>
+  <p class="svar">{y} har almanackan <strong>{antal} namn</strong> med namnsdag.{nya.length > 0 && <> Nytt för året är <strong>{lista(nya.map((a) => a.nytt))}</strong>.</>} Här är hela året som kalender med veckonummer, röda dagar och flaggdagar – skriv ut en månad i taget eller alla tolv.</p>
+
+  {nya.length > 0 && <>
+    <h2>Nya namn {y}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Namn</th><th>Namnsdag</th><th>Veckodag {y}</th><th>Delar dag med</th><th class="num">Tilltalsnamn 2020</th><th class="num">Nyfödda 2022</th></tr></thead>
+      <tbody>{nya.map((a) => {
+        const s = scb(a.nytt), nf = nyfodda(a.nytt).at(-1);
+        const med = namnPaDag(a.datum, y).filter((n) => n.namn !== a.nytt);
+        return <tr><td><a href={namnHref(a.nytt)}>{a.nytt}</a></td><td><a href={dagHref(a.datum)}>{dagText(a.datum)}</a></td><td>{veckodag(datum(y, Number(a.datum.slice(0, 2)), Number(a.datum.slice(3))))}</td>
+          <td>{med.length ? med.map((n, j) => <>{j > 0 && ", "}<a href={namnHref(n.namn)}>{n.namn}</a></>) : "–"}</td>
+          <td class="num">{s ? tal(s.tilltal) : "färre än 10"}</td><td class="num">{nf ? tal(nf.x) : "–"}</td></tr>;
+      })}</tbody>
+    </table></div>
+    <p>Tillsammans hade de sex namnen {tal(nya.reduce((s, a) => s + (scb(a.nytt)?.tilltal ?? 0), 0))} bärare 2020{bort.length ? "" : ", och inga namn tas bort"}. Mer om beslutet och tidigare ändringar finns på sidan <a href="/nya-namn/">nya namn i almanackan</a>.</p>
+    <p class="kalla">Källa: namnlängden enligt {NAMN_KALLA.utgivare}; SCB (tilltalsnamn 31 december 2020, nyfödda 2022 – SCB:s senaste namnstatistik).</p>
+  </>}
+
+  <h2>Kalender {y} att skriva ut</h2>
+  <div class="utskrift-val" id="utskrift">
+    <label for="manadsval">Månad</label>
+    <select id="manadsval">{MANADER.map((m, i) => <option value={i}>{m[0].toUpperCase() + m.slice(1)}</option>)}</select>
+    <button type="button" class="knapp" data-skriv="manad">Skriv ut vald månad</button>
+    <button type="button" class="knapp sekundar" data-skriv="ar">Skriv ut hela året</button>
+  </div>
+  <p class="teckenforklaring"><span class="rod-ex">17</span> röd dag (söndag eller helgdag) · <span class="flagg-ex" aria-hidden="true"></span> allmän flaggdag · <span class="ny-ex">Nytt</span> nytt namn {y}</p>
+
+  <div class="kalender">
+    {manader.map((m) => (
+      <section class="manad" data-manad={m.i} id={`m${m.i + 1}`}>
+        <h3>{m.mn[0].toUpperCase() + m.mn.slice(1)} {y}</h3>
+        <table class="manadsgrid">
+          <thead><tr><th class="v" title="Vecka">V</th>{VD.map((d) => <th>{d}</th>)}</tr></thead>
+          <tbody>{m.veckor.map((w) => {
+            const forsta = w.find(Boolean);
+            return <tr><td class="v">{isoVecka(forsta.dt).vecka}</td>{w.map((c) => c ? (
+              <td class:list={[{ rod: c.rod, flagg: c.flagg }]}>
+                <a class="d" href={dagHref(c.k)}>{c.d}</a>
+                {c.helg.length > 0 && <span class="helg">{c.helg.join(", ")}</span>}
+                <span class="n">{c.namn.length ? c.namn.map((n, j) => <>{j > 0 && ", "}<span class:list={[{ ny: nyaSet.has(n.namn) }]}>{n.namn}</span></>) : (UTAN_NAMN[c.k] && !c.helg.length ? UTAN_NAMN[c.k].split(" –")[0] : "")}</span>
+              </td>) : <td class="tom"></td>)}</tr>;
+          })}</tbody>
+        </table>
+      </section>
+    ))}
+  </div>
+  <p class="kalla">Namnlängden enligt {NAMN_KALLA.utgivare}. Helgdagar enligt lag (1989:253), flaggdagar enligt förordning (1982:270), veckonummer enligt ISO 8601. Utskriften blir en månad per sida.</p>
+
+  <Faq fragor={fragor} />
+
+  <script slot="skript" is:inline>
+    (() => {
+      const val = document.getElementById("manadsval");
+      if (!val) return;
+      val.value = String(new Date().getMonth());
+      const skriv = (manad) => {
+        document.body.classList.toggle("skriv-manad", manad != null);
+        document.querySelectorAll(".manad").forEach((m) => m.classList.toggle("vald", m.dataset.manad === String(manad)));
+        window.print();
+      };
+      document.querySelector('[data-skriv="manad"]').addEventListener("click", () => skriv(val.value));
+      document.querySelector('[data-skriv="ar"]').addEventListener("click", () => skriv(null));
+      window.addEventListener("afterprint", () => document.body.classList.remove("skriv-manad"));
+    })();
+  </script>
+</Layout>

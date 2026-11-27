@@ -1,0 +1,153 @@
+---
+// Lång guide: varför diesel ofta är dyrare än bensin i Sverige. Skillnaden per år delas upp i produktpris, punktskatt och moms
+// ur EU:s veckoserie (VECKOR + skattedelar). Skattesatser: lib/fakta.js (Skatteverket). Reduktionsplikt: lib/fakta.js (lagen).
+// Orsaker: Konjunkturinstitutet (Specialstudie 091, 2023, och 121, 2025), Drivkraft Sverige. Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, AR, LP_DATUM, VECKOR, SENASTE_VECKA, LISTKEDJOR, LANDER, landPris, idagPris, skattedelar, kr, pris, procent, datumText } from "../../pris.js";
+import { SKATTESATSER, VARMEVARDEN, REDUKTIONSPLIKT, summa, periodFor } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const gapIdag = pd - p95;
+
+// Per vecka: skillnad diesel − 95 i pumppris, produktpris (utan skatt), punktskatt och moms.
+const veckor = VECKOR.map((v) => {
+  const b = skattedelar(v, "b95"), d = skattedelar(v, "diesel");
+  return b && d ? { datum: v.datum, ar: Number(v.datum.slice(0, 4)), gap: d.pris - b.pris, produkt: d.produkt - b.produkt, punkt: d.punkt - b.punkt, moms: d.moms - b.moms, dyrare: d.pris > b.pris } : null;
+}).filter(Boolean);
+const arLista = [...new Set(veckor.map((x) => x.ar))];
+const perAr = arLista.map((y) => {
+  const w = veckor.filter((x) => x.ar === y);
+  const m = (k) => w.reduce((s, x) => s + x[k], 0) / w.length;
+  const max = w.reduce((a, b) => (b.gap > a.gap ? b : a));
+  return { ar: y, gap: m("gap"), produkt: m("produkt"), punkt: m("punkt"), moms: m("moms"), andel: w.filter((x) => x.dyrare).length / w.length, max, veckor: w.length };
+});
+const A = (y) => perAr.find((x) => x.ar === y);
+const rekord = veckor.reduce((a, b) => (b.gap > a.gap ? b : a));
+
+// Skatt per liter och per kWh med dagens skattesats.
+const per = periodFor(LP_DATUM) ?? SKATTESATSER.perioder.at(-1);
+const jan = SKATTESATSER.perioder.find((p) => p.fran === "2027-01-01");
+const sB = summa(per.bensin), sD = summa(per.diesel);
+const kwhB = VARMEVARDEN.bensin95, kwhD = VARMEVARDEN.diesel;
+const rp = REDUKTIONSPLIKT.nivaer;
+// Samma vecka i några grannländer och stora EU-länder: diesel − 95 i pumppris och i pris utan skatt (kronor).
+const sv = landPrisSE();
+function landPrisSE() { const v = SENASTE_VECKA; return { namn: "Sverige", href: null, b95: v.b95, diesel: v.diesel, b95utan: v.b95utan, dieselutan: v.dieselutan }; }
+const lander = [sv, ...["DK", "FI", "DE", "PL", "NL", "FR"].map((kod) => { const l = LANDER.find((x) => x.kod === kod); const p = landPris(kod); return l && p && p.diesel && p.dieselutan && p.b95utan ? { namn: l.namn, href: `/europa/${l.slug}/`, ...p } : null; }).filter(Boolean)]
+  .map((x) => ({ ...x, gap: x.diesel - x.b95, prod: x.dieselutan - x.b95utan }));
+const dyrareOverallt = lander.every((x) => x.gap > 0 && x.prod > 0);
+const prodOverallt = lander.filter((x) => x.prod > 0).length;
+
+const avsnitt = [
+  { id: "idag", rubrik: "Hur mycket dyrare är diesel idag?" },
+  { id: "per-ar", rubrik: "Skillnaden mellan diesel och 95 år för år" },
+  { id: "inte-skatten", rubrik: "Det är inte skatten" },
+  { id: "varldsmarknaden", rubrik: "Världsmarknaden för diesel" },
+  { id: "reduktionsplikt", rubrik: "Reduktionsplikten och HVO" },
+  { id: "europa", rubrik: "Är diesel dyrare även i andra länder?" },
+  { id: "historik", rubrik: "Diesel var billigare förr" },
+  { id: "per-mil", rubrik: "Per kilowattimme och per mil" },
+];
+
+const fragor = [
+  { fraga: "Varför är diesel dyrare än bensin?", svar: `Inte på grund av skatten, som är lägre per liter diesel. Skillnaden sitter i produktpriset: världsmarknadspriset på diesel och kostnaden för den förnybara diesel som måste blandas in enligt reduktionsplikten. Under ${AR} har dieselns pris utan skatt i snitt varit ${kr(A(AR).produkt)} högre per liter än bensinens.` },
+  { fraga: "Hur mycket dyrare är diesel än bensin idag?", svar: `Enligt kedjornas listpriser den ${datumText(LP_DATUM)} kostar diesel ${kr(pd)} och bensin 95 ${kr(p95)} per liter, en skillnad på ${kr(gapIdag)}.` },
+  { fraga: "Har diesel alltid varit dyrare än bensin?", svar: `Nej. Från 2005 till 2017 var diesel billigare än bensin de flesta veckor, och åren 2005–2007 och 2010 varje vecka. Från mitten av 1970-talet till början av 1990-talet kostade diesel ofta hälften så mycket som bensin eller mindre, eftersom dieselfordon då framför allt betalade kilometerskatt och skatten på själva dieseln var låg.` },
+  { fraga: "Är skatten högre på diesel än på bensin?", svar: `Nej. Under ${per.text} är energi- och koldioxidskatten ${kr(sD, 3)} per liter diesel och ${kr(sB)} per liter bensin. Momsen blir däremot högre på diesel när dieseln är dyrare, eftersom den är 25 procent av priset.` },
+  { fraga: "När var skillnaden mellan diesel och bensin störst?", svar: `Den största skillnaden i EU:s veckoserie var ${kr(rekord.gap)} per liter, veckan som började ${datumText(rekord.datum)}.` },
+  { fraga: "Lönar sig diesel trots det högre priset?", svar: `Det beror på hur mycket du kör och hur snål bilen är. En liter diesel innehåller ${pris(kwhD, 1)} kWh mot ${pris(kwhB, 2)} kWh för bensin enligt Energimyndigheten, och dieselmotorer är enligt Drivkraft Sverige 25–30 procent effektivare. Räkna på din bil i guiden om bensin eller diesel.` },
+];
+---
+<Guide site={SITE} titel={`Varför är diesel dyrare än bensin? (${pris(gapIdag)} kr/l idag)`}
+  beskrivning={`Diesel kostar ${kr(gapIdag)} mer per liter än 95 idag. Skillnaden år för år sedan 2005 uppdelad i produktpris, skatt och moms – och varför det inte är skatten.`}
+  h1="Varför är diesel dyrare än bensin?"
+  svar={`Idag kostar diesel <strong>${kr(gapIdag)} mer per liter</strong> än bensin 95 enligt kedjornas listpriser. Skatten är inte förklaringen: energi- och koldioxidskatten är <strong>lägre</strong> på diesel (${kr(sD, 2)} mot ${kr(sB)} per liter). Skillnaden sitter i <strong>produktpriset</strong>, som påverkas av världsmarknaden för diesel och av reduktionsplikten, som kräver inblandning av dyrare förnybar diesel. Före reduktionsplikten 2018 var diesel billigare än bensin de flesta år.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Varför är diesel dyrare?", href: "/guider/varfor-ar-diesel-dyrare/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Kedjornas listpriser för diesel" },
+    { namn: "Bensin eller diesel?", href: "/guider/bensin-eller-diesel/", text: "Kostnad per mil och år med dagens priser" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Nivåerna sedan 2018" },
+    { namn: "HVO100", href: "/drivmedel/hvo100/", text: "Pris idag och vilka bilar som kan tanka" },
+    { namn: "Bensinpriset genom åren", href: "/guider/bensinpris-genom-aren/", text: "Bensin och diesel per år sedan 1960" },
+  ]}
+  kallor={[
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "pumppris med och utan skatt för bensin 95 och diesel i Sverige per vecka sedan 2005 (CC BY 4.0)", datum: "2026-11-27" },
+    { namn: "Skatteverket – Skattesatser och vissa belopp", url: SKATTESATSER.kalla, text: "energiskatt och koldioxidskatt för bensin och diesel i miljöklass 1", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Drivmedelsprisernas utveckling (Specialstudie, november 2023)", url: "https://www.konj.se/media/ts3j22ju/specialstudie-091-drivmedelsprisernas-utveckling.pdf", text: "diesel och bensin före och efter reduktionsplikten, biodrivmedlens andel av dieselpriset, skillnaden 2022", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Priseffekten av den förändrade reduktionsplikten 2025 (Specialstudie 121, december 2025)", url: "https://www.konj.se/media/ha5n5p4s/specialstudie-121-priseffekten-av-den-forandrade-reduktionsplikten-2025.pdf", text: "inblandning i volym före och efter 1 juli 2025 och priseffekt per liter", datum: "2026-11-27" },
+    { namn: "Lag (2017:1201) om reduktion av växthusgasutsläpp", url: REDUKTIONSPLIKT.lag, text: "reduktionsnivåer för diesel och bensin", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Reduktionsplikten", url: REDUKTIONSPLIKT.drivkraft, text: "nivån vid införandet 1 juli 2018", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Drivmedelsprisernas utveckling över tid (juni 2025)", url: "https://drivkraftsverige.se/wp-content/uploads/2025/06/DS-Broschyr-drivmedelspriser.pdf", text: "sänkt dieselskatt när reduktionsplikten infördes 2018, skatterna inte höjda när plikten sänktes 2024, dieselpriset jämfört med grannländerna", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Diesel", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/diesel/", text: "dieselmotorns verkningsgrad, FAME och HVO i diesel, B10", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Priser (Årsmedelspriser motorbränslen)", url: "https://drivkraftsverige.se/fakta-statistik/priser/", text: "diesel- och bensinpris per år före 2005", datum: "2026-11-27" },
+    { namn: "Prop. 1971:153 och prop. 1992/93:124", url: "https://lagen.nu/prop/1992/93:124", text: "kilometerskatt för dieselfordon 1974–1993", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll per liter diesel och bensin", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, ${datumText(LP_DATUM)}` },
+  ]}>
+
+  <h2 id="idag">Hur mycket dyrare är diesel idag?</h2>
+  <p>Kedjornas genomsnittliga listpris den {datumText(LP_DATUM)} är {kr(pd)} för diesel och {kr(p95)} för bensin 95. Diesel kostar alltså {kr(gapIdag)} mer per liter, eller {procent((gapIdag / p95) * 100)} mer. För en tank på 50 liter blir skillnaden {kr(gapIdag * 50, 0)}.</p>
+  <p>EU-kommissionens veckosiffror ger samma bild. Veckan som började {datumText(SENASTE_VECKA.datum)} var skillnaden {kr(veckor.at(-1).gap)} per liter. Av den kom {kr(veckor.at(-1).produkt)} från produktpriset, det vill säga priset utan skatter, och {kr(veckor.at(-1).moms)} från momsen. Punktskatten drog i andra riktningen med {kr(veckor.at(-1).punkt)}.</p>
+
+  <h2 id="per-ar">Skillnaden mellan diesel och 95 år för år</h2>
+  <p>Tabellen delar upp skillnaden i pumppris mellan diesel och bensin 95 i tre delar för varje år sedan 2005. Ett positivt tal betyder att diesel var dyrare. Produktpris är priset utan skatt, alltså bränslet, frakten och bolagens marginal.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Diesel − 95</th><th class="num">Varav produktpris</th><th class="num">Varav punktskatt</th><th class="num">Varav moms</th><th class="num">Veckor diesel dyrare</th></tr></thead>
+    <tbody>{perAr.map((x) => (
+      <tr><td><a href={`/historik/${x.ar}/`}>{x.ar}</a>{x.ar >= AR && " *"}</td><td class="num">{pris(x.gap)}</td><td class="num">{pris(x.produkt)}</td><td class="num">{pris(x.punkt)}</td><td class="num">{pris(x.moms)}</td><td class="num">{procent(x.andel * 100)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter, medel av veckorna. Beräknat ur EU-kommissionens pumppris med och utan skatt för Sverige. * = året är inte slut.</p>
+  <Kurva titel="Diesel minus bensin 95 per vecka" linjer={[
+    { namn: "Skillnad i pumppris", farg: "#334155", punkter: veckor.map((x) => ({ x: x.datum, y: x.gap })) },
+    { namn: "Skillnad i produktpris", farg: "#b42318", punkter: veckor.map((x) => ({ x: x.datum, y: x.produkt })) },
+  ]} />
+  <p>Mönstret är tydligt. Fram till 2017 var diesel billigare än bensin de flesta veckor, trots att dieselns produktpris redan då var ungefär 40–90 öre högre per liter. Den lägre skatten på diesel räckte för att väga upp det. Från 2018 steg skillnaden i produktpris till omkring två kronor per liter, och diesel blev dyrare än bensin de flesta veckor. Under 2022 och 2023 var skillnaden i produktpris nästan fem kronor. Den största skillnaden i pumppris i hela serien, {kr(rekord.gap)}, uppmättes veckan som började {datumText(rekord.datum)}.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="inte-skatten">Det är inte skatten</h2>
+  <p>Många tror att diesel är dyrare för att den beskattas hårdare. Det stämmer inte. Energiskatten och koldioxidskatten per liter är lägre för diesel än för bensin, och så har det varit under hela 2026:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Period</th><th class="num">Bensin, kr/l</th><th class="num">Diesel, kr/l</th><th class="num">Diesel lägre med</th></tr></thead>
+    <tbody>{SKATTESATSER.perioder.map((p) => (
+      <tr><td>{p === per ? <strong>{p.text} (gäller nu)</strong> : p.text}</td><td class="num">{pris(summa(p.bensin))}</td><td class="num">{pris(summa(p.diesel), 3)}</td><td class="num">{pris(summa(p.bensin) - summa(p.diesel), 3)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Energiskatt plus koldioxidskatt före moms, miljöklass 1. Källa: Skatteverket.</p>
+  <p>Det som gör att skatten ändå kan se högre ut är momsen. Den är 25 procent av priset före moms, så när dieseln är dyrare blir även momsen högre. Under {AR} har momsen i snitt varit {kr(A(AR).moms)} högre per liter diesel än per liter bensin, medan punktskatten har varit {kr(Math.abs(A(AR).punkt))} {A(AR).punkt < 0 ? "lägre" : "högre"}. Under maj–september 2026 var skillnaden i punktskatt bara {kr(summa(SKATTESATSER.perioder[1].bensin) - summa(SKATTESATSER.perioder[1].diesel), 2)} per liter, eftersom energiskatten på bensin sänktes mer än på diesel. Från 1 januari 2027 är skatten {kr(summa(jan.diesel), 3)} för diesel och {kr(summa(jan.bensin))} för bensin.</p>
+
+  <h2 id="varldsmarknaden">Världsmarknaden för diesel</h2>
+  <p>Diesel och bensin raffineras ur samma råolja, men de prissätts var för sig på världsmarknaden. Enligt Konjunkturinstitutet är råvarupriserna och kronans växelkurs de viktigaste förklaringarna till de kortsiktiga prisförändringarna, och fossil diesel är dessutom en viktig insatsvara i jord- och skogsbruket. Institutet konstaterar i sin genomgång av drivmedelspriserna att dieselpriset steg betydligt mer än bensinpriset när råoljepriset gick upp hösten 2021. Enligt samma rapport var skillnaden som störst drygt sex kronor per liter i slutet av oktober 2022, samma månad som dieselpriset nådde sin högsta nivå på drygt 28 kronor.</p>
+  <p>I EU:s veckoserie syns det som en topp i skillnaden i produktpris: i snitt {kr(A(2022).produkt)} per liter under 2022, mot {kr(A(2021).produkt)} året innan. Under {AR} har produktpriset för diesel återigen legat långt över bensinens, i snitt {kr(A(AR).produkt)} per liter, och som mest {kr(A(AR).max.gap)} i pumppris veckan som började {datumText(A(AR).max.datum)}. Eftersom produktpriset sätts på världsmarknaden och i dollar kan skillnaden ändras snabbt, åt båda hållen. Det är också därför det inte går att säga hur stor den blir framöver.</p>
+
+  <h2 id="reduktionsplikt">Reduktionsplikten och HVO</h2>
+  <p>Den 1 juli 2018 infördes reduktionsplikten. Den tvingar bolagen att blanda in biodrivmedel så att växthusgasutsläppen från bensin och diesel minskar med en viss procent. I diesel blandas enligt Konjunkturinstitutet främst HVO och FAME in, och en större inblandning har enligt institutet en prishöjande effekt. Kraven på diesel var länge mycket högre än på bensin:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Diesel</th><th class="num">Bensin</th><th class="num">Diesel − 95, produktpris</th></tr></thead>
+    <tbody>{rp.filter((x) => /^\d{4}$/.test(x.ar)).map((x) => { const a = A(Number(x.ar)); return <tr><td>{x.ar}{x.not ? ` (${x.not.toLowerCase()})` : ""}</td><td class="num">{procent(x.diesel, 1)}</td><td class="num">{procent(x.bensin, 1)}</td><td class="num">{a ? pris(a.produkt) : "–"}</td></tr>; })}</tbody>
+  </table></div>
+  <p class="kalla">Reduktionsnivå i procent enligt lagen (2018 enligt Drivkraft Sverige). Produktprisskillnad i kronor per liter, medel per år ur EU-serien.</p>
+  <p>Konjunkturinstitutet beskriver det som att diesel i de flesta perioder var något billigare än bensin före juli 2018, medan det omvända har gällt efteråt. Biodrivmedlens andel av dieselpriset steg enligt institutet från drygt 20 procent i maj 2020 till drygt 30 procent 2022, från drygt 3 till drygt 7 kronor per liter, och HVO-priset stod för merparten av ökningen. När plikten för diesel sänktes från 30,5 till 6 procent den 1 januari 2024 krympte skillnaden i produktpris till {kr(A(2024).produkt)} per liter det året.</p>
+  <p>Sedan den 1 juli 2025 är plikten 10 procent för både bensin och diesel. Enligt Konjunkturinstitutets beräkningar motsvarar det en inblandning på drygt 11,8 volymprocent i diesel, mot drygt 7,1 procent före höjningen, och höjningen gjorde dieseln 0,5–0,7 kronor dyrare per liter vid pumpen. Drivkraft Sverige påpekar att dieselskatten sänktes när plikten infördes 2018, men att skatterna inte höjdes när plikten sänktes 2024. Ren HVO100 ingår inte i plikten och har ett eget pris, se <a href="/drivmedel/hvo100/">HVO100 idag</a>.</p>
+
+  <h2 id="europa">Är diesel dyrare även i andra länder?</h2>
+  <p>Om skillnaden bara berodde på svenska regler skulle den synas bara här. EU:s veckopriser gör det möjligt att jämföra. Tabellen visar samma vecka, {datumText(SENASTE_VECKA.datum)}, för Sverige och några andra länder, omräknat till kronor.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th class="num">Bensin 95</th><th class="num">Diesel</th><th class="num">Diesel − 95</th><th class="num">Diesel − 95 utan skatt</th></tr></thead>
+    <tbody>{lander.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.namn}</a> : <strong>{x.namn}</strong>}</td><td class="num">{pris(x.b95)}</td><td class="num">{pris(x.diesel)}</td><td class="num">{pris(x.gap)}</td><td class="num">{pris(x.prod)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter, EU-kommissionens Weekly Oil Bulletin, omräknat med veckans växelkurs.</p>
+  <p>{dyrareOverallt ? "Diesel är dyrare än bensin i alla länderna i tabellen just nu, och dieselns pris utan skatt ligger över bensinens överallt." : `Bilden skiljer sig mellan länderna. Dieselns pris utan skatt ligger över bensinens i ${prodOverallt} av ${lander.length}.`} Det tyder på att en stor del av skillnaden kommer från världsmarknaden och inte från svenska regler. Hur stor skillnaden blir i pumppriset beror sedan på varje lands skatter, och därför skiljer sig kolumnerna åt. Drivkraft Sverige skriver att Sveriges höga dieselpris jämfört med grannländerna under flera år förklarades med den höga reduktionsplikten, och tidigare med en hög dieselskatt. {(() => { const ord = (n) => (n === 1 ? "" : `${n}:${n === 2 ? "a" : "e"} `); const r = [...lander].sort((x, y) => y.gap - x.gap).findIndex((x) => x.namn === "Sverige") + 1; const billigD = [...lander].sort((x, y) => x.diesel - y.diesel).findIndex((x) => x.namn === "Sverige") + 1; return `Av de ${lander.length} länderna har Sverige just nu den ${ord(r)}största skillnaden mellan diesel och bensin, men det ${ord(billigD)}lägsta dieselpriset.${SENASTE_VECKA.datum >= "2026-07-01" && SENASTE_VECKA.datum <= "2026-11-30" ? " De svenska priserna är låga i jämförelsen eftersom koldioxidskatten var tillfälligt sänkt med 2,40 kronor per liter från 1 juli till 30 november 2026." : ""}`; })()} Fler länder finns i <a href="/europa/">bensinpriset i Europa</a>.</p>
+
+  <h2 id="historik">Diesel var billigare förr</h2>
+  <p>Längre tillbaka var skillnaden ännu större åt andra hållet. Från 1974 till hösten 1993 betalade dieselfordon i huvudsak kilometerskatt efter körsträcka, och skatten på själva dieseln var låg. Enligt Drivkraft Sveriges årsmedelpriser kostade diesel 1,48 kronor per liter 1980, när bensinen kostade 2,88 kronor. När kilometerskatten ersattes med en skatt på dieseloljan steg dieselpriset till 7,06 kronor 1994 och kom nära bensinens 7,52 kronor. Hela serien finns i guiden om <a href="/guider/bensinpris-genom-aren/">bensinpriset genom åren</a>.</p>
+
+  <h2 id="per-mil">Per kilowattimme och per mil</h2>
+  <p>Literpriset säger inte hela sanningen. Enligt Energimyndigheten innehåller en liter diesel {pris(kwhD, 1)} kWh, mot {pris(kwhB, 2)} kWh för bensin 95. Med dagens listpriser kostar energin {kr(pd / kwhD)} per kWh i diesel och {kr(p95 / kwhB)} per kWh i bensin. Dieselmotorn är dessutom enligt Drivkraft Sverige 25–30 procent effektivare än bensinmotorn, vilket ger lägre förbrukning per mil. Därför kan en dieselbil vara billigare i drift trots dyrare bränsle, särskilt för den som kör långt. Räkna på din egen bil i guiden <a href="/guider/bensin-eller-diesel/">bensin eller diesel</a> eller i <a href="/rakna/">kalkylatorn</a>.</p>
+</Guide>

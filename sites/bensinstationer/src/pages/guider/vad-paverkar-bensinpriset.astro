@@ -1,0 +1,211 @@
+---
+// Lång guide: vad som driver bensinpriset. Produktpris i euro och kronkurs ur EU:s Weekly Oil Bulletin (Sverige, veckovis
+// sedan 2005), skattesatser (Skatteverket), reduktionsplikt (lag 2017:1201), säsongsmönster och största veckoförändringar
+// räknat ur samma serie, kedjornas listpriser och Ingos prispolicy. Inga prognoser. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, LP, LP_DATUM, LISTKEDJOR, EU, SENASTE_VECKA, VECKOR, AR_LISTA, LANDER, landPris, arSammanfattning, skattedelar, kr, pris, procent, datumText } from "../../pris.js";
+import { SKATTESATSER, MOMS, REDUKTIONSPLIKT, summa, periodFor, nastaPeriod } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, "2026-11-27"].sort().at(-1);
+const v = SENASTE_VECKA;
+const ar = VECKOR.slice(-53);
+const forstaAr = ar[0];
+const nu = skattedelar(v), da = skattedelar(forstaAr);
+const dProdukt = nu.produkt - da.produkt, dSkatt = nu.skatt - da.skatt;
+
+// Produktpris i euro och kronans kurs (EU Weekly Oil Bulletin: r = [datum, 95, diesel, 95 utan skatt, diesel utan skatt, EUR per SEK]).
+const SE = EU.lander.SE.serie.filter((r) => r[1] && r[3] && r[5]);
+const rNu = SE.find((r) => r[0] === v.datum) ?? SE.at(-1);
+const rDa = SE.find((r) => r[0] === forstaAr.datum) ?? SE.at(-53);
+const kursNu = 1 / rNu[5], kursDa = 1 / rDa[5]; // kronor per euro
+const eurNu = rNu[3], eurDa = rDa[3]; // euro per liter före skatt
+const effektEuro = (eurNu - eurDa) * kursDa; // ändring om kursen stått still
+const effektKurs = eurNu * (kursNu - kursDa); // ändring av kursen
+const bulletinUrl = "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en";
+
+// Årsöversikt: pumppris, produktpris, skatteandel och kronkurs.
+const arsrader = AR_LISTA.slice(-10).map((y) => {
+  const w = SE.filter((r) => r[0].startsWith(`${y}-`));
+  if (!w.length) return null;
+  const m = (f) => w.reduce((s, r) => s + f(r), 0) / w.length;
+  const pris95 = m((r) => r[1] / r[5]), produkt = m((r) => r[3] / r[5]);
+  return { ar: y, pris95, produkt, andel: (pris95 - produkt) / pris95, kurs: m((r) => 1 / r[5]), eur: m((r) => r[3]), komplett: w.length >= 45 };
+}).filter(Boolean);
+
+// Skattesatser 2026–2027 och vad de betyder vid pumpen (punktskatt + moms på den).
+const per = periodFor(LP_DATUM);
+const nasta = nastaPeriod(LP_DATUM);
+const hojning = per && nasta ? (summa(nasta.bensin) - summa(per.bensin)) * (1 + MOMS) : null;
+const skatterader = SKATTESATSER.perioder.map((p) => ({ text: p.text, punkt: summa(p.bensin), medMoms: summa(p.bensin) * (1 + MOMS), galler: per && p.fran === per.fran }));
+
+// Säsong: produktprisets genomsnittliga avvikelse från årsmedel per månad, kompletta år.
+const MAN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+const avv = {};
+let antalAr = 0;
+for (const y of AR_LISTA) {
+  const s = arSammanfattning(y);
+  if (!s?.komplett) continue;
+  const w = s.veckor.filter((x) => x.b95utan);
+  if (!w.length) continue;
+  antalAr++;
+  const medel = w.reduce((a, x) => a + x.b95utan, 0) / w.length;
+  for (const x of w) (avv[Number(x.datum.slice(5, 7)) - 1] ??= []).push(x.b95utan - medel);
+}
+const sasong = MAN.map((namn, i) => ({ namn, d: avv[i] ? avv[i].reduce((a, b) => a + b, 0) / avv[i].length : null })).filter((x) => x.d != null);
+const sasHog = sasong.reduce((a, b) => (b.d > a.d ? b : a)), sasLag = sasong.reduce((a, b) => (b.d < a.d ? b : a));
+
+// Största förändringarna från en vecka till nästa, uppdelat på produktpris (inkl. moms) och resten (skatt).
+const andringar = VECKOR.slice(1).map((x, i) => ({ datum: x.datum, tot: x.b95 - VECKOR[i].b95, prod: (x.b95utan - VECKOR[i].b95utan) * (1 + MOMS) }))
+  .filter((x) => !Number.isNaN(x.prod)).sort((a, b) => Math.abs(b.tot) - Math.abs(a.tot)).slice(0, 8);
+
+// Kedjornas listpriser idag och Sverige i EU.
+const spann = LP.snitt?.bensin95 ? LP.snitt.bensin95.max - LP.snitt.bensin95.min : null;
+const eu = LANDER.map((l) => ({ ...l, p: landPris(l.kod, v.datum)?.b95, u: landPris(l.kod, v.datum)?.b95utan })).filter((x) => x.p != null);
+const plats = eu.filter((x) => x.p < v.b95).length + 1;
+const reduk = REDUKTIONSPLIKT.nivaer;
+const andringText = (x) => `${x >= 0 ? "+" : "−"}${kr(Math.abs(x))}`;
+const median = (a) => { const x = [...a].sort((p, q) => p - q); const m = Math.floor(x.length / 2); return x.length % 2 ? x[m] : (x[m - 1] + x[m]) / 2; };
+const euProdukt = median(eu.filter((x) => x.u != null).map((x) => x.u)), euPris = median(eu.map((x) => x.p));
+const lagreProdukt = eu.filter((x) => x.u != null && x.u < v.b95utan).length;
+const rekord = VECKOR.reduce((a, b) => (b.b95 > a.b95 ? b : a));
+const rekordDel = skattedelar(rekord);
+const dNu = skattedelar(v, "diesel"), dDa = skattedelar(forstaAr, "diesel");
+
+const avsnitt = [
+  { id: "faktorer", rubrik: "Fyra saker bestämmer priset" },
+  { id: "varldsmarknad", rubrik: "Världsmarknaden: produktpriset" },
+  { id: "valuta", rubrik: "Valutan: kronans kurs" },
+  { id: "skatter", rubrik: "Skatterna: fasta kronor per liter plus moms" },
+  { id: "reduktionsplikt", rubrik: "Reduktionsplikten" },
+  { id: "sasong", rubrik: "Säsongen: sommarbensin och efterfrågan" },
+  { id: "storsta", rubrik: "De största prisförändringarna sedan 2005" },
+  { id: "konkurrens", rubrik: "Konkurrensen där du tankar" },
+  { id: "utveckling", rubrik: "Utvecklingen det senaste året" },
+];
+
+const fragor = [
+  { fraga: "Vad påverkar bensinpriset mest?", svar: `Produktpriset på världsmarknaden och skatterna. Veckan som började ${datumText(v.datum)} var produktpriset ${kr(nu.produkt)} och skatterna, inklusive moms, ${kr(nu.skatt)} av pumppriset ${kr(nu.pris)} per liter.` },
+  { fraga: "Kommer bensinpriset att gå ner?", svar: "Ingen kan säga säkert, och vi gör inga prognoser. Det som är känt i förväg är skatteändringarna, som Skatteverket publicerar. Produktpriset och kronkursen ändras från vecka till vecka." },
+  { fraga: "Varför ändras bensinpriset så ofta?", svar: "Kedjorna justerar listpriserna när produktpriset på världsmarknaden och kronans kurs ändras. Pumppriset på varje station sätts dessutom lokalt efter konkurrensen på orten." },
+  { fraga: "Vad har hänt med bensinpriset det senaste året?", svar: `Pumppriset för 95 har gått från ${kr(da.pris)} (${datumText(forstaAr.datum)}) till ${kr(nu.pris)} (${datumText(v.datum)}). Produktpriset har ${dProdukt >= 0 ? "ökat" : "minskat"} med ${kr(Math.abs(dProdukt))} och skatterna med moms har ${dSkatt >= 0 ? "ökat" : "minskat"} med ${kr(Math.abs(dSkatt))} per liter.` },
+  { fraga: "Hur påverkar dollarn bensinpriset?", svar: "Olja och drivmedel handlas i amerikanska dollar enligt SCB. En svagare krona gör samma produkt dyrare i kronor. EU:s veckostatistik anger priserna i euro, och där syns kronans kurs mot euron." },
+  { fraga: "Är bensinen dyrare på sommaren?", svar: `I genomsnitt för ${antalAr} kompletta år sedan 2005 har produktpriset legat högst i förhållande till årsmedel i ${sasHog.namn} och lägst i ${sasLag.namn}. Skillnaden är liten jämfört med hur mycket priset rör sig mellan åren.` },
+];
+---
+<Guide site={SITE} titel="Vad påverkar bensinpriset? Olja, kronan och skatter"
+  beskrivning={`Därför går bensinpriset upp och ner: produktpris, kronkurs, skatter, reduktionsplikt och konkurrens. Senaste året har 95 gått från ${pris(da.pris)} till ${kr(nu.pris)}/l.`}
+  h1="Vad påverkar bensinpriset?"
+  svar={`Bensinpriset bestäms av fyra saker: <strong>produktpriset</strong> på världsmarknaden, <strong>kronans kurs</strong>, <strong>skatterna</strong> och <strong>konkurrensen</strong> där du tankar. Veckan som började ${datumText(v.datum)} var ${kr(nu.produkt)} av literpriset ${kr(nu.pris)} produktpris och ${kr(nu.skatt)} skatt med moms. Det senaste året har 95 gått från ${kr(da.pris)} till ${kr(nu.pris)} per liter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vad påverkar bensinpriset?", href: "/guider/vad-paverkar-bensinpriset/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinskatt", href: "/guider/vad-bestar-bensinpriset-av/", text: "Priset uppdelat i produkt, skatt och moms" },
+    { namn: "Bensinpriset genom åren", href: "/guider/bensinpris-genom-aren/", text: "Utvecklingen sedan 2005" },
+    { namn: "När är bensinen billigast?", href: "/guider/nar-ar-bensinen-billigast/", text: "Veckodag, månad och säsong" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Nivåer och påverkan på priset" },
+    { namn: "Historik sedan 2005", href: "/historik/", text: "Veckopris för 95 och diesel" },
+  ]}
+  kallor={[
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: bulletinUrl, text: "veckopriser i Sverige och EU med och utan skatt, i euro med växelkurs", datum: "2026-11-27" },
+    { namn: "Skatteverket – Skattesatser på bränslen", url: SKATTESATSER.kalla, text: "energi- och koldioxidskatt per liter 2026–2027", datum: "2026-11-27" },
+    { namn: "Lag (2017:1201) om reduktion av växthusgasutsläpp", url: REDUKTIONSPLIKT.lag, text: "reduktionsnivåer för bensin", datum: "2026-11-27" },
+    { namn: "SCB – Drivmedelspriserna på rekordnivåer (2022)", url: "https://www.scb.se/hitta-statistik/temaomraden/sveriges-ekonomi/fordjupningsartiklar_Sveriges_ekonomi/drivmedelspriserna-pa-rekordnivaer/", text: "råolja, dollarkurs och regeringens bedömning av reduktionspliktens priseffekt", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Analys av drivmedelspriser, slutredovisning (december 2024)", url: "https://www.konj.se/media/wr1bnjnc/specialstudie-111-slutredovisning-drivmedelsuppdrag.pdf", text: "skatteförändringarnas genomslag på bensinpriset", datum: "2026-11-27" },
+    { namn: "Ingo – Våra låga priser", url: "https://www.ingo.se/v%C3%A5ra-l%C3%A5ga-priser/v%C3%A5ra-l%C3%A5ga-priser", text: "lokal prissättning", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datumText(LP_DATUM)}` },
+  ]}>
+
+  <h2 id="faktorer">Fyra saker bestämmer priset</h2>
+  <p>Pumppriset består av två delar: produktpriset, som är vad själva bensinen kostar inklusive raffinering, transport och kedjornas marginal, och skatterna. Produktpriset följer världsmarknaden och kronans kurs. Skatterna består av energiskatt och koldioxidskatt i fasta kronor per liter, plus {procent(MOMS * 100)} moms på hela priset. Ovanpå det sätter varje station sitt eget pris efter konkurrensen på orten.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Del av priset, bensin 95</th><th class="num">{datumText(forstaAr.datum)}</th><th class="num">{datumText(v.datum)}</th><th class="num">Ändring</th></tr></thead>
+    <tbody>
+      <tr><td>Produktpris (före skatt)</td><td class="num">{pris(da.produkt)}</td><td class="num">{pris(nu.produkt)}</td><td class="num">{dProdukt >= 0 ? "+" : "−"}{pris(Math.abs(dProdukt))}</td></tr>
+      <tr><td>Energi- och koldioxidskatt</td><td class="num">{pris(da.punkt)}</td><td class="num">{pris(nu.punkt)}</td><td class="num">{nu.punkt - da.punkt >= 0 ? "+" : "−"}{pris(Math.abs(nu.punkt - da.punkt))}</td></tr>
+      <tr><td>Moms</td><td class="num">{pris(da.moms)}</td><td class="num">{pris(nu.moms)}</td><td class="num">{nu.moms - da.moms >= 0 ? "+" : "−"}{pris(Math.abs(nu.moms - da.moms))}</td></tr>
+      <tr><td><strong>Pumppris</strong></td><td class="num"><strong>{pris(da.pris)}</strong></td><td class="num"><strong>{pris(nu.pris)}</strong></td><td class="num"><strong>{nu.pris - da.pris >= 0 ? "+" : "−"}{pris(Math.abs(nu.pris - da.pris))}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter, genomsnitt för Sverige enligt EU:s Weekly Oil Bulletin. Punktskatten är härledd som priset utan moms minus priset före skatt.</p>
+  <p>Skatterna utgör just nu {procent(nu.andelSkatt * 100)} av pumppriset. Hur skatten räknas ut i detalj beskrivs i guiden om <a href="/guider/vad-bestar-bensinpriset-av/">bensinskatt</a>.</p>
+
+  <h2 id="varldsmarknad">Världsmarknaden: produktpriset</h2>
+  <p>Bensin handlas internationellt som färdig produkt. SCB beskriver råoljan som den viktigaste råvaran för bensin och diesel, och priset på råolja kan stundtals svänga kraftigt. Till det kommer kostnader för raffinering, transport till stationerna och drivmedelsbolagens påslag. I EU:s statistik syns allt detta som priset före skatt.</p>
+  <p>Det senaste året har produktpriset för bensin 95 i Sverige gått från {pris(eurDa, 3)} till {pris(eurNu, 3)} euro per liter, en ändring på {procent((eurNu / eurDa - 1) * 100)}. Tabellen visar hur produktpriset och skatteandelen har varierat de senaste tio åren.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Pumppris</th><th class="num">Produktpris</th><th class="num">Produktpris, euro</th><th class="num">Skatteandel</th><th class="num">Kronor per euro</th></tr></thead>
+    <tbody>{arsrader.map((x) => <tr><td><a href={`/historik/${x.ar}/`}>{x.ar}</a>{!x.komplett && " (hittills)"}</td><td class="num">{pris(x.pris95)}</td><td class="num">{pris(x.produkt)}</td><td class="num">{pris(x.eur, 3)}</td><td class="num">{procent(x.andel * 100)}</td><td class="num">{pris(x.kurs)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Årsmedel av veckopriser för bensin 95. Kronor per liter om inget annat anges.</p>
+  <p>Tabellen visar ett tydligt mönster: när produktpriset stiger minskar skatteandelen, eftersom energi- och koldioxidskatten är fasta belopp per liter. Det syns till exempel 2022 och 2023, när produktpriset var högt och skatteandelen lägre än under åren före.</p>
+
+  <Annons plats="guide-1" />
+
+  <p>Den dyraste veckan i serien sedan 2005 började {datumText(rekord.datum)}, när bensin 95 kostade {kr(rekord.b95)} per liter. Då var produktpriset {kr(rekordDel.produkt)} och skatterna med moms {kr(rekordDel.skatt)}. Jämfört med idag var alltså produktpriset {kr(rekordDel.produkt - nu.produkt)} högre per liter.</p>
+  <p>Diesel påverkas av samma krafter men följer sin egen världsmarknad. Det senaste året har dieselns produktpris gått från {kr(dDa.produkt)} till {kr(dNu.produkt)} per liter, en ändring på {andringText(dNu.produkt - dDa.produkt)}, medan bensinens ändrades med {andringText(dProdukt)}. Läs mer i <a href="/guider/varfor-ar-diesel-dyrare/">varför diesel är dyrare</a>.</p>
+
+  <h2 id="valuta">Valutan: kronans kurs</h2>
+  <p>Enligt SCB handlas drivmedel i amerikanska dollar, och därför påverkar dollarns kurs mot kronan det svenska priset. EU:s veckostatistik redovisar priserna i euro med veckans växelkurs, och där går det att se hur mycket av förändringen som beror på kronan. Veckan som började {datumText(forstaAr.datum)} kostade en euro {pris(kursDa)} kronor, veckan som började {datumText(v.datum)} {pris(kursNu)} kronor.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Produktprisets ändring det senaste året</th><th class="num">Kr per liter</th></tr></thead>
+    <tbody>
+      <tr><td>Priset i euro ändrades</td><td class="num">{effektEuro >= 0 ? "+" : "−"}{pris(Math.abs(effektEuro))}</td></tr>
+      <tr><td>Kronans kurs mot euron ändrades</td><td class="num">{effektKurs >= 0 ? "+" : "−"}{pris(Math.abs(effektKurs))}</td></tr>
+      <tr><td><strong>Summa, produktpris före moms</strong></td><td class="num"><strong>{effektEuro + effektKurs >= 0 ? "+" : "−"}{pris(Math.abs(effektEuro + effektKurs))}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Räknat ur EU:s Weekly Oil Bulletin. Momsen på 25 procent kommer till på båda raderna vid pumpen.</p>
+  <p>{Math.abs(effektEuro) > Math.abs(effektKurs) ? "Det senaste året har alltså priset på världsmarknaden betytt mer än valutan." : "Det senaste året har alltså valutan betytt mer än priset på världsmarknaden."} En tumregel ur samma räkning: med dagens produktpris på {pris(eurNu, 3)} euro per liter gör en krona svagare kurs mot euron produkten {kr(eurNu)} dyrare per liter, plus moms.</p>
+
+  <h2 id="skatter">Skatterna: fasta kronor per liter plus moms</h2>
+  <p>Energiskatten och koldioxidskatten beslutas av riksdagen och anges i kronor per liter. Konjunkturinstitutet konstaterade i sin slutrapport om drivmedelspriser i december 2024 att skatteförändringar har haft fullt genomslag på bensinpriset. Under 2026 har skatten tillfälligt sänkts i två steg. Tabellen visar Skatteverkets skattesatser för bensin i miljöklass 1 och vad de motsvarar vid pumpen med moms.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Period</th><th class="num">Energi- och koldioxidskatt</th><th class="num">Med moms</th></tr></thead>
+    <tbody>{skatterader.map((x) => <tr><td>{x.text}{x.galler && " (gäller idag)"}</td><td class="num">{pris(x.punkt)}</td><td class="num">{pris(x.medMoms)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Skatteverket, kronor per liter bensin i miljöklass 1.</p>
+  <p>Eftersom momsen räknas på hela priset inklusive punktskatterna blir varje krona i skatteändring {pris(1 + MOMS)} kronor vid pumpen. Skatteändringar är de enda prisförändringar som är kända i förväg. {hojning != null && <>Under nästa period, {nasta.text}, {hojning >= 0 ? "höjs" : "sänks"} skatten med {kr(Math.abs(summa(nasta.bensin) - summa(per.bensin)))} per liter, vilket med moms motsvarar {kr(Math.abs(hojning))} {hojning >= 0 ? "mer" : "mindre"} vid pumpen om produktpriset står still.</>} Mer om perioderna i guiden om <a href="/guider/vad-bestar-bensinpriset-av/">bensinskatt</a> och i <a href="/guider/bensinpriset-2027/">bensinpriset 2027</a>.</p>
+
+  <h2 id="reduktionsplikt">Reduktionsplikten</h2>
+  <p>Reduktionsplikten kräver att drivmedelsleverantörerna minskar växthusgasutsläppen från bensinen genom att blanda in förnybart, främst etanol. Det är ingen skatt, men biodrivmedlen är i regel dyrare än det fossila, så kostnaden hamnar i produktpriset. SCB återgav 2022 regeringens bedömning att varje procentenhet högre reduktionsnivå höjer priset med 8 till 12 öre per liter exklusive moms.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Reduktionsnivå, bensin</th></tr></thead>
+    <tbody>{reduk.map((x) => <tr><td>{x.ar}{x.not && <> <small>({x.not})</small></>}</td><td class="num">{procent(x.bensin, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Lag (2017:1201) om reduktion av växthusgasutsläpp; 2018 enligt Drivkraft Sverige.</p>
+  <p>Läs mer i guiden om <a href="/guider/reduktionsplikt/">reduktionsplikten</a>.</p>
+
+  <h2 id="sasong">Säsongen: sommarbensin och efterfrågan</h2>
+  <p>Produktpriset brukar variera något över året. Vi har räknat ut hur mycket produktpriset för 95 i genomsnitt har avvikit från årsmedel varje månad, för de {antalAr} kompletta åren sedan 2005.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Avvikelse från årsmedel, kr/l före skatt</th></tr></thead>
+    <tbody>{sasong.map((x) => <tr><td>{x.namn[0].toUpperCase() + x.namn.slice(1)}</td><td class="num">{x.d >= 0 ? "+" : "−"}{pris(Math.abs(x.d))}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Räknat ur EU:s Weekly Oil Bulletin. Ett snitt över många år; enskilda år kan avvika kraftigt.</p>
+  <p>Mönstret visar högst produktpris i {sasHog.namn} och lägst i {sasLag.namn}, med en skillnad på {kr(sasHog.d - sasLag.d)} per liter före moms. Snittet påverkas också av att priserna steg eller sjönk under enskilda år, så tolka det som en tendens och inte som en regel. Mer i <a href="/guider/nar-ar-bensinen-billigast/">när är bensinen billigast</a>.</p>
+
+  <h2 id="storsta">De största prisförändringarna sedan 2005</h2>
+  <p>De största förändringarna från en vecka till nästa visar vad som kan flytta priset snabbt. Genom att jämföra med produktpriset går det att se om det var marknaden eller skatten som låg bakom.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Vecka</th><th class="num">Pumppris</th><th class="num">Varav produkt inkl. moms</th><th class="num">Varav skatt</th></tr></thead>
+    <tbody>{andringar.map((x) => <tr><td>{datumText(x.datum)}</td><td class="num">{x.tot >= 0 ? "+" : "−"}{pris(Math.abs(x.tot))}</td><td class="num">{x.prod >= 0 ? "+" : "−"}{pris(Math.abs(x.prod))}</td><td class="num">{x.tot - x.prod >= 0 ? "+" : "−"}{pris(Math.abs(x.tot - x.prod))}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Ändring i kronor per liter bensin 95 mot föregående vecka. "Varav skatt" är resten när produktprisets ändring med moms dragits av.</p>
+  <p>När skattekolumnen är stor var det skatten och inte produktpriset som flyttade priset, som när skatten sänktes den 1 juli 2026. I de flesta av de största rörelserna var det däremot produktpriset som låg bakom, och flera av dem inträffade under 2022.</p>
+
+  <h2 id="konkurrens">Konkurrensen där du tankar</h2>
+  <p>Kedjorna sätter ett listpris, men pumppriset bestäms per station. Idag skiljer det {spann != null ? kr(spann) : "lite"} per liter mellan högsta och lägsta listpris för 95 hos {LISTKEDJOR.slice(0, -1).join(", ")} och {LISTKEDJOR.at(-1)}. Mellan stationer kan skillnaden vara större, eftersom priset anpassas efter konkurrensen på orten. Lågpriskedjan Ingo skriver till exempel att dess priser kan skilja mellan de egna stationerna på grund av lokal konkurrens och att de ska ligga i det lägsta prisskiktet på orten.</p>
+  <p>Jämförelsen med EU-länderna visar också om skillnaden beror på skatten eller på produktpriset. Veckan som började {datumText(v.datum)} var det svenska produktpriset för 95 före skatt {kr(v.b95utan)} per liter mot en median på {kr(euProdukt)} i de andra EU-länderna; {lagreProdukt} av {eu.length} länder hade lägre produktpris. Pumppriset var däremot {kr(v.b95)} i Sverige mot en median på {kr(euPris)}. {v.b95 < euPris && v.b95utan >= euProdukt ? "Det svenska pumppriset ligger alltså under mittenlandet för att skatten är lägre, inte för att bensinen är billigare att köpa in." : v.b95 < euPris ? "Både ett lägre produktpris och lägre skatt bidrar alltså till att Sverige ligger under mittenlandet." : "Skillnaden i pumppris beror alltså till stor del på skatterna."}</p>
+  <p>Jämfört med andra EU-länder hamnar Sverige på plats {plats} av {eu.length + 1} från billigast räknat, veckan som började {datumText(v.datum)}. Se <a href="/europa/">bensinpris i Europa</a> och <a href="/guider/billigaste-bensinen/">hur du hittar billigaste bensinen</a>.</p>
+
+  <h2 id="utveckling">Utvecklingen det senaste året</h2>
+  <p>Diagrammet visar pumppriset och produktpriset före skatt vecka för vecka. Avståndet mellan linjerna är skatten med moms. När linjerna närmar sig varandra har skatten sänkts, när de rör sig parallellt är det produktpriset som styr.</p>
+  <Kurva titel="Bensin 95: pumppris och produktpris utan skatt" linjer={[
+    { namn: "Pumppris", farg: "#d97706", punkter: ar.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Utan skatt", farg: "#2563eb", punkter: ar.map((x) => ({ x: x.datum, y: x.b95utan })) },
+  ]} />
+  <p>Hela serien sedan 2005 finns under <a href="/historik/">historik</a> och i <a href="/guider/bensinpris-genom-aren/">bensinpriset genom åren</a>. Dagens pris per kedja finns på <a href="/bensinpris/">bensinpris idag</a>.</p>
+</Guide>

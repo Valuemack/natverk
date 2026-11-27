@@ -1,0 +1,222 @@
+---
+// Lång guide: tanka i Norge. Norska pumppriser per månad från Statistisk sentralbyrå (SSB, tabell 09654, hämtad 2026-11-27),
+// omräknade med Norges Banks månadskurser (SEK/NOK, snitt av observationer, hämtade 2026-11-27) och jämförda med Sveriges
+// veckopriser (EU:s Weekly Oil Bulletin, VECKOR) samt kedjornas listpriser. Tullregler: Tullverket. Betalning: Konsumenternas
+// Bank- och finansbyrå. Gränsövergångar: sv.wikipedia.org (Gränsen mellan Norge och Sverige). Stationer: sajtens register.
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, STATIONER, VECKOR, idagPris, kr, pris, procent, datumText, manadText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+
+// SSB tabell 09654 "Priser på drivstoff (kr per liter)": genomsnittliga utsalgspriser inkl. skatter och avgifter, NOK/l.
+// 031 = Bensin, blyfri 95 oktan; 035 = Avgiftspliktig diesel. Tabellen uppdaterad av SSB 2026-11-19.
+// Norges Bank, EXR M.SEK.NOK.SP: NOK per 100 SEK, månadssnitt.
+const NORGE = [
+  { ym: "2025-11", b95: 20.52, diesel: 20.27, nokPer100sek: 106.81 },
+  { ym: "2025-12", b95: 20.78, diesel: 20.56, nokPer100sek: 108.67 },
+  { ym: "2026-01", b95: 20.47, diesel: 20.19, nokPer100sek: 109.22 },
+  { ym: "2026-02", b95: 19.68, diesel: 19.82, nokPer100sek: 106.45 },
+  { ym: "2026-03", b95: 23.5, diesel: 24.54, nokPer100sek: 103.76 },
+  { ym: "2026-04", b95: 19.32, diesel: 23.31, nokPer100sek: 101.79 },
+  { ym: "2026-05", b95: 19.15, diesel: 20.02, nokPer100sek: 99.39 },
+  { ym: "2026-06", b95: 18.43, diesel: 18.81, nokPer100sek: 100.72 },
+  { ym: "2026-07", b95: 19.59, diesel: 20.25, nokPer100sek: 100.33 },
+  { ym: "2026-08", b95: 19.42, diesel: 21.48, nokPer100sek: 99.14 },
+  { ym: "2026-09", b95: 26.18, diesel: 27.52, nokPer100sek: 96.15 },
+  { ym: "2026-10", b95: 25.67, diesel: 27.26, nokPer100sek: 94.96 },
+];
+const medel = (a) => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : null);
+const RADER = NORGE.map((m) => {
+  const sekPerNok = 100 / m.nokPer100sek;
+  const v = VECKOR.filter((x) => x.datum.startsWith(m.ym));
+  const se95 = medel(v.map((x) => x.b95)), seD = medel(v.map((x) => x.diesel).filter((x) => x != null));
+  return { ...m, sekPerNok, no95: m.b95 * sekPerNok, noD: m.diesel * sekPerNok, se95, seD, veckor: v.length };
+}).filter((r) => r.se95 != null);
+const sista = RADER.at(-1);
+const diff95 = sista.no95 - sista.se95, diffD = sista.noD - sista.seD;
+const tank = 50;
+const arsMedel = { no95: medel(RADER.map((r) => r.no95)), se95: medel(RADER.map((r) => r.se95)), noD: medel(RADER.map((r) => r.noD)), seD: medel(RADER.map((r) => r.seD)) };
+const billigareManader95 = RADER.filter((r) => r.no95 < r.se95).length;
+const billigareManaderD = RADER.filter((r) => r.noD < r.seD).length;
+const p95 = idagPris("bensin95"), pD = idagPris("diesel");
+
+// Svenska kommuner vid vägar till Norge. Vägnummer enligt sv.wikipedia.org, Gränsen mellan Norge och Sverige.
+const GRANS = [
+  { kommun: "Strömstad", vag: "E6 (Svinesund)" },
+  { kommun: "Dals-Ed", vag: "" },
+  { kommun: "Årjäng", vag: "E18" },
+  { kommun: "Eda", vag: "riksväg 61" },
+  { kommun: "Torsby", vag: "E16, riksväg 62" },
+  { kommun: "Malung-Sälen", vag: "riksväg 66" },
+  { kommun: "Älvdalen", vag: "" },
+  { kommun: "Härjedalen", vag: "" },
+  { kommun: "Åre", vag: "E14 (Storlien)" },
+  { kommun: "Strömsund", vag: "" },
+  { kommun: "Storuman", vag: "E12" },
+  { kommun: "Arjeplog", vag: "riksväg 95" },
+  { kommun: "Kiruna", vag: "E10 (Riksgränsen)" },
+];
+const FLYTANDE = ["bensin95", "bensin98", "diesel", "hvo100", "e85"];
+const baraGasEl = (s) => !FLYTANDE.some((k) => s.drivmedel?.[k] === true) && ["biogas", "lng", "lpg", "vatgas", "el"].some((k) => s.drivmedel?.[k] === true);
+const KOMMUN = GRANS.map((g) => {
+  const k = KAT.kommuner.find((x) => x.namn === g.kommun);
+  const st = STATIONER.filter((s) => s.kommun === g.kommun && !baraGasEl(s));
+  return {
+    ...g, href: k?.href ?? null, st,
+    dygnet: st.filter((s) => s.dygnet).length, hvo: st.filter((s) => s.drivmedel?.hvo100 === true).length,
+    e85: st.filter((s) => s.drivmedel?.e85 === true).length, truck: st.filter((s) => s.tjanster?.truckdiesel === true).length,
+    gas: STATIONER.filter((s) => s.kommun === g.kommun && s.drivmedel?.biogas === true).length,
+  };
+}).filter((k) => k.href && k.st.length);
+const totalt = KOMMUN.reduce((s, k) => s + k.st.length, 0);
+const totaltDygnet = KOMMUN.reduce((s, k) => s + k.dygnet, 0);
+const strom = KOMMUN.find((k) => k.kommun === "Strömstad");
+
+// Utvecklingen: första och sista månaden i tabellen, i NOK och i SEK, och hur mycket av skillnaden som är valuta.
+const forsta = RADER[0];
+const andNok95 = sista.b95 / forsta.b95 - 1, andSek95 = sista.no95 / forsta.no95 - 1, andKurs = sista.sekPerNok / forsta.sekPerNok - 1;
+const andSe95 = sista.se95 / forsta.se95 - 1;
+const hogst = [...RADER].sort((a, b) => b.no95 - a.no95)[0], lagst = [...RADER].sort((a, b) => a.no95 - b.no95)[0];
+const minstDygnet = [...KOMMUN].sort((a, b) => a.dygnet / a.st.length - b.dygnet / b.st.length)[0];
+const flestDygnet = [...KOMMUN].sort((a, b) => b.dygnet / b.st.length - a.dygnet / a.st.length)[0];
+const pct = (x) => `${x >= 0 ? "+" : "−"}${Math.abs(x * 100).toLocaleString("sv-SE", { maximumFractionDigits: 0 })} %`;
+const n0 = (x) => Math.round(x).toLocaleString("sv-SE");
+const nok = (x) => `${x.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} NOK`;
+const kurs = (x) => x.toLocaleString("sv-SE", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+const manad = (ym) => manadText(ym);
+
+const avsnitt = [
+  { id: "pris", rubrik: "Vad kostar bensin och diesel i Norge?" },
+  { id: "jamfor", rubrik: "Norge jämfört med Sverige, månad för månad" },
+  { id: "utveckling", rubrik: "Hur har priset i Norge utvecklats?" },
+  { id: "tank", rubrik: "Vad betyder skillnaden för en tank?" },
+  { id: "tull", rubrik: "Bränsle i tanken och i dunk: Tullverkets regler" },
+  { id: "betala", rubrik: "Betala i Norge: kort och valuta" },
+  { id: "grans", rubrik: "Tanka på svenska sidan av gränsen" },
+  { id: "stationer", rubrik: "Stationer i gränskommunerna" },
+  { id: "checklista", rubrik: "Checklista före resan till Norge" },
+];
+
+const fragor = [
+  { fraga: "Vad kostar bensin i Norge?", svar: `Enligt Statistisk sentralbyrå kostade bensin 95 i snitt ${nok(sista.b95)} per liter i Norge i ${manad(sista.ym)}. Med Norges Banks snittkurs för månaden motsvarar det ${kr(sista.no95)}.` },
+  { fraga: "Är det billigare att tanka i Sverige än i Norge?", svar: `I ${manad(sista.ym)} var bensin 95 ${kr(Math.abs(diff95))} per liter ${diff95 > 0 ? "dyrare" : "billigare"} i Norge och diesel ${kr(Math.abs(diffD))} ${diffD > 0 ? "dyrare" : "billigare"}, jämfört med Sveriges snittpris samma månad. Under de senaste ${RADER.length} månaderna var bensinen dyrare i Norge ${RADER.length - billigareManader95} av ${RADER.length} månader.` },
+  { fraga: "Hur mycket bränsle får man ta med från Norge till Sverige?", svar: "Enligt Tullverket får bränslet i fordonets ordinarie tank föras in utan tull och moms. I en privatbil eller på en motorcykel får du dessutom ha högst 10 liter i en bärbar behållare. Bränslet får inte säljas, lämnas bort eller tas ur fordonet för lagring." },
+  { fraga: "Ska jag betala i norska eller svenska kronor?", svar: "Konsumenternas Bank- och finansbyrå skriver att det oftast är billigast att betala med kort i den lokala valutan, alltså norska kronor. Väljer du svenska kronor i terminalen gör butikens betalningsföretag växlingen, ofta med ett påslag i kursen." },
+  { fraga: "Var ligger bensinstationerna närmast norska gränsen?", svar: `I de ${KOMMUN.length} svenska kommuner vid vägarna till Norge som vi listar finns ${n0(totalt)} stationer i vårt register, varav ${n0(totaltDygnet)} går att tanka på dygnet runt.${strom ? ` Flest vid E6 ligger i Strömstad, ${strom.st.length} stationer.` : ""}` },
+];
+---
+<Guide site={SITE} titel={`Tanka i Norge – pris ${pris(sista.no95)} kr/l och tullregler`}
+  beskrivning={`Bensin kostade ${nok(sista.b95)} per liter i Norge i ${manad(sista.ym)} (${kr(sista.no95)}). Jämförelse med Sverige, regler för reservdunk och stationer vid gränsen.`}
+  h1="Tanka i Norge – priser, betalning och regler"
+  svar={`Bensin 95 kostade i snitt <strong>${nok(sista.b95)} per liter</strong> i Norge i ${manad(sista.ym)} enligt Statistisk sentralbyrå, vilket motsvarar ${kr(sista.no95)}. Det var ${kr(Math.abs(diff95))} ${diff95 > 0 ? "mer" : "mindre"} än i Sverige samma månad, och diesel var ${kr(Math.abs(diffD))} ${diffD > 0 ? "dyrare" : "billigare"}. Bränsle i tanken och högst 10 liter i en reservdunk får tas med hem till Sverige.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Tanka i Norge", href: "/guider/tanka-i-norge/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Tanka längs E6", href: "/guider/tanka-langs-e6/", text: "Stationer fram till Svinesund" },
+    { namn: "Tanka utomlands", href: "/guider/tanka-utomlands/", text: "Bränslenamn och regler i Europa" },
+    { namn: "Bensinpris i Europa", href: "/europa/", text: "Alla EU-länder jämförda" },
+    { namn: "Regler för bensindunk", href: "/guider/bensindunk-regler/", text: "Förvaring och transport" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpris per kedja i Sverige" },
+  ]}
+  kallor={[
+    { namn: "Statistisk sentralbyrå (SSB) – tabell 09654, Priser på drivstoff", url: "https://www.ssb.no/statbank/table/09654", text: "månadspriser för bensin 95 och diesel i Norge, NOK per liter inkl. skatter och avgifter", datum: "2026-11-27" },
+    { namn: "SSB – Sal av petroleumsprodukt", url: "https://www.ssb.no/petroleumsalg", text: "definition: genomsnittliga utsalgspriser sedan januari 2017", datum: "2026-11-27" },
+    { namn: "Norges Bank – valutakurser SEK/NOK", url: "https://www.norges-bank.no/tema/Statistikk/Valutakurser/", text: "månadssnitt, NOK per 100 SEK", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "Sveriges veckopriser i kronor (CC BY 4.0)", datum: "2026-11-27" },
+    { namn: "Tullverket – Drivmedel till fordon och specialcontainrar", url: "https://www.tullverket.se/en/startpage/private/goods/seeallgoods/fuelforvehiclesandspecialcontainers.4.311bf4f016e69d6ea0dbf8.html", text: "tull- och skattefrihet för bränsle i ordinarie tank och upp till 10 liter i bärbar behållare", datum: "2026-11-27" },
+    { namn: "Skatteverket – Föra in bränsle till Sverige från ett annat land i EU", url: "https://www.skatteverket.se/privat/skatter/skattpabransleforprivatpersoner/forainbransletillsverigefranettannatlandieu.4.48cfd212185efbb440b1d16.html", text: "hänvisar till Tullverket för bränsle från länder utanför EU", datum: "2026-11-27" },
+    { namn: "Konsumenternas Bank- och finansbyrå – Betala i SEK eller lokal valuta", url: "https://konsumenternasbankochfinansbyra.se/konsumentstod/guider--checklistor/guider---lan--betalningar/betala-pa-resa/betala-i-sek", text: "dynamisk valutaväxling (DCC)", datum: "2026-11-27" },
+    { namn: "Wikipedia – Gränsen mellan Norge och Sverige", url: "https://sv.wikipedia.org/wiki/Gr%C3%A4nsen_mellan_Norge_och_Sverige", text: "gränsens längd och vägövergångar", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", url: "/", text: "stationer i gränskommunerna" },
+  ]}>
+
+  <h2 id="pris">Vad kostar bensin och diesel i Norge?</h2>
+  <p>Norges statistikbyrå SSB publicerar varje månad ett genomsnittligt pumppris för blyfri 95 och diesel. Sedan januari 2017 bygger siffran på genomsnittliga utsalgspriser, och priset inkluderar skatter och avgifter. Senaste månaden i tabellen är {manad(sista.ym)}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>{manad(sista.ym)}</th><th class="num">Norge, NOK/l</th><th class="num">Norge, kr/l</th><th class="num">Sverige, kr/l</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin 95</td><td class="num">{pris(sista.b95)}</td><td class="num">{pris(sista.no95)}</td><td class="num">{pris(sista.se95)}</td><td class="num">{diff95 > 0 ? "+" : "−"}{pris(Math.abs(diff95))}</td></tr>
+      <tr><td>Diesel</td><td class="num">{pris(sista.diesel)}</td><td class="num">{pris(sista.noD)}</td><td class="num">{pris(sista.seD)}</td><td class="num">{diffD > 0 ? "+" : "−"}{pris(Math.abs(diffD))}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Norge: SSB tabell 09654, omräknat med Norges Banks snittkurs för månaden, 1 NOK = {kurs(sista.sekPerNok)} kr. Sverige: snitt av EU:s veckopriser samma månad ({sista.veckor} veckor).</p>
+  <p>Det är ett riksgenomsnitt. Priset vid en enskild norsk station kan skilja sig, precis som i Sverige. I Sverige är dagens listpris hos de stora kedjorna {kr(p95)} för bensin 95 och {kr(pD)} för diesel ({datum}), se <a href="/bensinpris/">bensinpris idag</a> och <a href="/dieselpris/">dieselpris idag</a>.</p>
+
+  <h2 id="jamfor">Norge jämfört med Sverige, månad för månad</h2>
+  <p>Skillnaden mellan länderna varierar med både pumppriset och kronkursen. Under de senaste {RADER.length} månaderna har den norska kronan gått från {kurs(RADER[0].sekPerNok)} till {kurs(sista.sekPerNok)} svenska kronor, enligt Norges Bank, och det påverkar vad en norsk liter kostar för den som betalar med svenskt kort.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">95 Norge</th><th class="num">95 Sverige</th><th class="num">Diesel Norge</th><th class="num">Diesel Sverige</th><th class="num">1 NOK</th></tr></thead>
+    <tbody>{RADER.map((r) => <tr><td>{manad(r.ym)}</td><td class="num">{pris(r.no95)}</td><td class="num">{pris(r.se95)}</td><td class="num">{pris(r.noD)}</td><td class="num">{pris(r.seD)}</td><td class="num">{kurs(r.sekPerNok)}</td></tr>)}
+      <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(arsMedel.no95)}</strong></td><td class="num"><strong>{pris(arsMedel.se95)}</strong></td><td class="num"><strong>{pris(arsMedel.noD)}</strong></td><td class="num"><strong>{pris(arsMedel.seD)}</strong></td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter. Norge: SSB, omräknat med Norges Banks månadssnitt. Sverige: EU:s Weekly Oil Bulletin, snitt av veckorna i månaden.</p>
+  <p>Bensinen var dyrare i Norge än i Sverige {RADER.length - billigareManader95} av {RADER.length} månader och dieseln {RADER.length - billigareManaderD} av {RADER.length}. Jämförelsen är inte exakt, eftersom SSB och EU mäter på olika sätt: SSB redovisar ett månadsgenomsnitt av utsalgspriser, medan EU:s siffra för Sverige bygger på priser som rapporteras varje vecka. Skillnader på några tiotals öre ska därför inte läsas för noga. Prisutvecklingen i Sverige över längre tid finns på <a href="/historik/">historiksidan</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="utveckling">Hur har priset i Norge utvecklats?</h2>
+  <p>Från {manad(forsta.ym)} till {manad(sista.ym)} ändrades priset på bensin 95 i Norge med {pct(andNok95)} räknat i norska kronor, enligt SSB. För en svensk som betalar med svenskt kort blev ändringen {pct(andSek95)}, eftersom den norska kronan samtidigt ändrades med {pct(andKurs)} mot den svenska. I Sverige ändrades snittpriset på bensin 95 med {pct(andSe95)} under samma tid.</p>
+  <p>Dyrast i kronor räknat var den norska bensinen i {manad(hogst.ym)}, {kr(hogst.no95)} per liter, och billigast i {manad(lagst.ym)}, {kr(lagst.no95)}. Skillnaden mellan dyraste och billigaste månaden var alltså {kr(hogst.no95 - lagst.no95)} per liter, eller {kr((hogst.no95 - lagst.no95) * tank, 0)} för en full tank på {tank} liter. Det visar att det spelar roll när du åker, inte bara var du tankar. SSB publicerar nya siffror varje månad; siffrorna här gäller till och med {manad(sista.ym)}.</p>
+
+  <h2 id="tank">Vad betyder skillnaden för en tank?</h2>
+  <p>Med priserna för {manad(sista.ym)} blir skillnaden för en tank på {tank} liter:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">{tank} l i Norge</th><th class="num">{tank} l i Sverige</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin 95</td><td class="num">{kr(sista.no95 * tank, 0)}</td><td class="num">{kr(sista.se95 * tank, 0)}</td><td class="num">{kr(Math.abs(diff95) * tank, 0)} {diff95 > 0 ? "dyrare i Norge" : "billigare i Norge"}</td></tr>
+      <tr><td>Diesel</td><td class="num">{kr(sista.noD * tank, 0)}</td><td class="num">{kr(sista.seD * tank, 0)}</td><td class="num">{kr(Math.abs(diffD) * tank, 0)} {diffD > 0 ? "dyrare i Norge" : "billigare i Norge"}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ska du på en kortare resa in i Norge och tillbaka kan det alltså {diff95 > 0 ? "löna sig att fylla tanken i Sverige före gränsen och vänta med nästa tankning tills du är tillbaka" : "löna sig att tanka i Norge, så länge skillnaden håller i sig"}. Räkna på din bil i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <h2 id="tull">Bränsle i tanken och i dunk: Tullverkets regler</h2>
+  <p>Norge är inte med i EU, så när du kör in i Sverige från Norge är det Tullverkets regler som gäller. Skatteverket hänvisar själv till Tullverket för bränsle från länder utanför EU. Enligt Tullverket gäller följande:</p>
+  <ul>
+    <li><strong>Bränslet i fordonets ordinarie tank</strong> får föras in utan tull och moms. Med ordinarie tank menas den tank som tillverkaren monterat i alla fordon av samma modell och som är fast monterad, så att bränslet används direkt för att driva fordonet.</li>
+    <li><strong>En reservdunk på högst 10 liter</strong> per fordon är också tull- och skattefri, men bara i privatbil och på motorcykel.</li>
+    <li><strong>Bränslet får bara användas i det fordon</strong> som det fördes in med. Det får inte tas ut för lagring, utom vid nödvändiga reparationer av fordonet, och inte lämnas bort eller säljas.</li>
+    <li><strong>Bryter du mot villkoren</strong> ska tull och skatt betalas.</li>
+  </ul>
+  <p>Gränsen på 10 liter gäller per fordon, inte per person. Har du med mer bränsle i dunk än så omfattas det inte av friheten; kontakta Tullverket om vad som då gäller. Vad som gäller för att förvara och transportera dunken finns i <a href="/guider/bensindunk-regler/">guiden om regler för bensindunk</a>.</p>
+
+  <h2 id="betala">Betala i Norge: kort och valuta</h2>
+  <p>I Norge betalar du i norska kronor. När du betalar med ett svenskt kort kan terminalen fråga om du vill betala i svenska kronor i stället. Det kallas dynamisk valutaväxling. Konsumenternas Bank- och finansbyrå skriver att det oftast är billigast att välja den lokala valutan: väljer du svenska kronor är det butikens betalningsföretag som växlar, och kursen innehåller ofta ett påslag. Väljer du norska kronor växlar din egen kortutgivare, och då ser du kursen först när köpet har bokförts.</p>
+  <p>Samma val kan dyka upp i en kortautomat vid pumpen. Välj norska kronor där också om terminalen frågar. Hur du tankar i automat beskriver vi i <a href="/guider/obemannad-bensinstation/">guiden om obemannade stationer</a>.</p>
+
+  <h2 id="grans">Tanka på svenska sidan av gränsen</h2>
+  <p>Gränsen mellan Sverige och Norge är cirka 1 630 km lång och går genom sex svenska län, från Västra Götaland i söder till Norrbotten i norr. Mest trafik har E6 över Svinesundsbron. Andra stora vägar över gränsen är E18 i Värmland, E14 vid Storlien, E12 i Västerbotten och E10 vid Riksgränsen.</p>
+  <p>På sträckorna närmast gränsen kan det vara långt mellan stationerna, särskilt i fjällen. {KOMMUN.length > 0 && <>I de {KOMMUN.length} kommunerna nedan finns sammanlagt {n0(totalt)} stationer i vårt register, och {n0(totaltDygnet)} av dem går att tanka på dygnet runt.</>} Den som kör E6 norrut hittar stationerna närmast Svinesundsbron i <a href="/guider/tanka-langs-e6/">guiden om E6</a>.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th>Väg mot Norge</th><th class="num">Stationer</th><th class="num">Dygnet runt</th><th class="num">HVO100</th><th class="num">E85</th><th class="num">Gas</th><th class="num">Truckdiesel</th></tr></thead>
+    <tbody>{KOMMUN.map((k) => <tr><td><a href={k.href}>{k.kommun}</a></td><td>{k.vag || "–"}</td><td class="num">{k.st.length}</td><td class="num">{k.dygnet}</td><td class="num">{k.hvo}</td><td class="num">{k.e85}</td><td class="num">{k.gas}</td><td class="num">{k.truck}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Vägnummer enligt Wikipedia, Gränsen mellan Norge och Sverige. Kommunerna är ett urval vid vägarna till Norge, inte alla kommuner som gränsar till Norge.</p>
+
+  <h2 id="stationer">Stationer i gränskommunerna</h2>
+  <p>Här är stationerna i varje kommun. Klicka på stationen för adress och öppettider, eller på kommunen för karta och alla detaljer.</p>
+  {KOMMUN.map((k) => (
+    <details>
+      <summary><strong>{k.kommun}</strong> – {k.st.length} stationer{k.vag && ` (${k.vag})`}</summary>
+      <div class="tabell"><table>
+        <thead><tr><th>Station</th><th>Ort</th><th>Dygnet runt</th><th>Utbud</th></tr></thead>
+        <tbody>{k.st.map((s) => <tr><td><a href={s.href}>{s.namn}</a></td><td>{s.ort}</td><td>{s.dygnet ? "ja" : ""}</td><td>{[s.drivmedel?.hvo100 === true && "HVO100", s.drivmedel?.e85 === true && "E85", s.drivmedel?.biogas === true && "fordonsgas", (s.drivmedel?.el === true || s.tjanster?.laddning === true) && "laddning", s.tjanster?.truckdiesel === true && "truckdiesel"].filter(Boolean).join(", ")}</td></tr>)}</tbody>
+      </table></div>
+    </details>
+  ))}
+  <p>Uppgifter om drivmedel och öppettider kommer från kedjornas stationssök och OpenStreetMap och kan saknas för vissa stationer. På landsbygden nära gränsen är det klokt att inte vänta till sista stationen innan tanken är tom.</p>
+
+  <h2 id="checklista">Checklista före resan till Norge</h2>
+  <ol>
+    <li><strong>Jämför priset före gränsen.</strong> I {manad(sista.ym)} var en tank på {tank} liter bensin {kr(Math.abs(diff95) * tank, 0)} {diff95 > 0 ? "dyrare" : "billigare"} i Norge än i Sverige. {diff95 > 0 ? "Fyll tanken på svenska sidan om resan är kort." : "Då kan det vara värt att vänta och tanka i Norge."}</li>
+    <li><strong>Kolla öppettiderna längs vägen.</strong> Andelen stationer som går att tanka på dygnet runt skiljer sig mycket mellan gränskommunerna: lägst i {minstDygnet.kommun} ({minstDygnet.dygnet} av {minstDygnet.st.length}) och högst i {flestDygnet.kommun} ({flestDygnet.dygnet} av {flestDygnet.st.length}).</li>
+    <li><strong>Betala i norska kronor</strong> när terminalen frågar, och ha gärna två olika kort med dig om en automat inte tar det ena.</li>
+    <li><strong>Högst 10 liter i dunk</strong> när du kör tillbaka in i Sverige, och bara i privatbil eller på motorcykel. Bränslet i tanken är fritt.</li>
+    <li><strong>Tål bilen bränslet?</strong> Pumparna märks med samma europeiska symboler som i Sverige, se <a href="/guider/tanka-utomlands/">guiden om att tanka utomlands</a>.</li>
+  </ol>
+</Guide>

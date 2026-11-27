@@ -1,0 +1,313 @@
+---
+// Lång guide: tanka längs E20 från Öresundsbron via Göteborg och Örebro till Stockholm. Stationerna väljs ur sajtens eget
+// register vid byggtid: alla stationer högst MAX_KM fågelvägen från vägens linje (haversine + avstånd punkt–linjesegment).
+// Vägens linje är E20 enligt OpenStreetMap (vägar med ref "E 20", hämtade 2026-11-27 via Overpass API, kortaste väg längs
+// E20-vägarna från Öresundsbrons svenska landfäste till Värtahamnen i Stockholm, förenklad med Douglas–Peucker 250 m).
+// © OpenStreetMap-bidragsgivare, ODbL. Ombyggnaden i Västra Götaland: Trafikverkets projektsida (uppdaterad 2025-03-05).
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, kedjePris, kedjaHref, kr, pris, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+
+// E20 från söder till Stockholm, [lat, lon]. Brytpunkter längs vägen ur OpenStreetMap (se kommentaren överst).
+const LINJE = [
+  [55.5656, 12.9008], [55.564, 12.9289], [55.5476, 12.9681], [55.5505, 13.0556], [55.5753, 13.1055], [55.5958, 13.117], [55.6521, 13.0982], [55.7039, 13.0974],
+  [55.7242, 13.0886], [55.7335, 13.074], [55.7544, 13.0006], [55.7758, 12.9726], [55.7998, 12.9611], [55.8356, 12.9253], [55.8623, 12.8826], [55.9047, 12.8628],
+  [55.9346, 12.8217], [55.9915, 12.7801], [56.0372, 12.7861], [56.0871, 12.7804], [56.1402, 12.8413], [56.1879, 12.8527], [56.2229, 12.8972], [56.2712, 12.894],
+  [56.3404, 12.9156], [56.3571, 12.9354], [56.3776, 12.9344], [56.4409, 12.9542], [56.47, 12.9416], [56.5137, 12.9638], [56.543, 12.9694], [56.5668, 12.9507],
+  [56.5846, 12.9458], [56.6103, 12.9183], [56.6403, 12.9033], [56.6629, 12.9063], [56.7165, 12.8868], [56.744, 12.8652], [56.758, 12.8435], [56.7674, 12.8151],
+  [56.7954, 12.7807], [56.8132, 12.7193], [56.8394, 12.7039], [56.8636, 12.6605], [56.8828, 12.6102], [56.9132, 12.5602], [56.9415, 12.4878], [56.9621, 12.4503],
+  [56.9914, 12.4143], [57.0469, 12.3672], [57.1117, 12.3315], [57.1908, 12.2559], [57.2375, 12.2221], [57.3302, 12.2061], [57.3564, 12.2092], [57.398, 12.1875],
+  [57.4304, 12.1569], [57.4455, 12.1076], [57.4786, 12.0441], [57.5035, 12.0526], [57.562, 12.0527], [57.5882, 12.0638], [57.6488, 12.0215], [57.6979, 11.9954],
+  [57.7154, 11.9944], [57.7235, 12.0086], [57.7388, 12.11], [57.7441, 12.1577], [57.7404, 12.1752], [57.7427, 12.2168], [57.7526, 12.246], [57.7677, 12.2685],
+  [57.8073, 12.3811], [57.8131, 12.4121], [57.8353, 12.439], [57.8469, 12.4681], [57.8728, 12.4925], [57.897, 12.4896], [57.9219, 12.5248], [57.9315, 12.567],
+  [57.9477, 12.6077], [57.9506, 12.632], [57.963, 12.6531], [57.9735, 12.701], [58.0176, 12.7775], [58.0369, 12.7898], [58.0569, 12.8188], [58.0759, 12.8136],
+  [58.0963, 12.8188], [58.1153, 12.844], [58.1504, 12.8674], [58.1663, 12.8861], [58.2076, 12.9007], [58.2446, 12.9457], [58.272, 13.0119], [58.2894, 13.0348],
+  [58.2978, 13.077], [58.309, 13.0906], [58.3193, 13.1228], [58.3343, 13.1423], [58.3436, 13.1656], [58.3514, 13.3113], [58.3564, 13.3351], [58.3692, 13.3621],
+  [58.3764, 13.4411], [58.3807, 13.4561], [58.3897, 13.4633], [58.4799, 13.479], [58.5009, 13.5026], [58.5357, 13.5231], [58.5707, 13.5953], [58.6343, 13.6853],
+  [58.6462, 13.714], [58.667, 13.7809], [58.6769, 13.8272], [58.6856, 13.8479], [58.7039, 13.8712], [58.7256, 13.8871], [58.7396, 13.9373], [58.7795, 14.0076],
+  [58.7973, 14.0269], [58.7993, 14.0612], [58.8115, 14.1288], [58.8382, 14.1895], [58.8639, 14.222], [58.8847, 14.2989], [58.9055, 14.3479], [58.9207, 14.4018],
+  [58.9428, 14.4421], [58.9609, 14.53], [58.9731, 14.5452], [58.9798, 14.6163], [59.0058, 14.7112], [59.0216, 14.8028], [59.0317, 14.8299], [59.0383, 14.9131],
+  [59.0723, 15.0147], [59.103, 15.0624], [59.1328, 15.0777], [59.1757, 15.1183], [59.2463, 15.1474], [59.2626, 15.1708], [59.2925, 15.1945], [59.2964, 15.2397],
+  [59.3074, 15.2736], [59.3066, 15.3748], [59.3177, 15.467], [59.3338, 15.5303], [59.3725, 15.5904], [59.3789, 15.6464], [59.3986, 15.7132], [59.4043, 15.7526],
+  [59.4223, 15.7881], [59.4262, 15.8742], [59.4235, 15.8882], [59.3973, 15.8909], [59.41, 16.0054], [59.41, 16.0326], [59.4187, 16.057], [59.4077, 16.0998],
+  [59.4182, 16.1675], [59.4045, 16.2617], [59.4033, 16.3308], [59.4084, 16.3575], [59.4063, 16.4138], [59.3899, 16.4822], [59.3762, 16.6031], [59.3771, 16.6299],
+  [59.3689, 16.6797], [59.3692, 16.7166], [59.3807, 16.7763], [59.3749, 16.805], [59.374, 16.8357], [59.3571, 16.9021], [59.3587, 16.917], [59.3678, 16.9365],
+  [59.3681, 16.9526], [59.356, 17.0012], [59.3305, 17.0172], [59.2987, 17.0905], [59.2523, 17.1537], [59.2315, 17.1996], [59.2207, 17.2883], [59.202, 17.3658],
+  [59.1973, 17.4218], [59.1878, 17.4751], [59.185, 17.536], [59.1874, 17.563], [59.1763, 17.6319], [59.1769, 17.6391], [59.1873, 17.6444], [59.201, 17.6663],
+  [59.2108, 17.7218], [59.214, 17.7736], [59.2282, 17.7915], [59.2402, 17.8342], [59.2542, 17.8617], [59.2559, 17.8842], [59.2821, 17.9249], [59.289, 17.9553],
+  [59.2893, 17.988], [59.3009, 18.0185], [59.3205, 17.9965], [59.3301, 18.0097], [59.3453, 18.0113], [59.3444, 18.0259], [59.3537, 18.0585], [59.351, 18.119],
+];
+// Längden längs den fullständiga OSM-geometrin (före förenklingen), uppmätt 2026-11-27. Kilometertalen nedan skalas till den.
+const LANGD_OSM = 765.0;
+// Ett stationsläge räknas som "längs E20" om det ligger högst så här många km fågelvägen från vägens linje.
+const MAX_KM = 2;
+// Orter som delar vägen i sträckor (ungefärligt centrum). De projiceras på linjen; start och slut är linjens ändar.
+const ORTER = [
+  { namn: "Malmö", p: [55.57, 12.9] },
+  { namn: "Helsingborg", p: [56.046, 12.694] },
+  { namn: "Halmstad", p: [56.674, 12.857] },
+  { namn: "Göteborg", p: [57.708, 11.974] },
+  { namn: "Alingsås", p: [57.93, 12.533] },
+  { namn: "Skara", p: [58.386, 13.438] },
+  { namn: "Mariestad", p: [58.709, 13.823] },
+  { namn: "Örebro", p: [59.274, 15.207] },
+  { namn: "Arboga", p: [59.394, 15.838] },
+  { namn: "Eskilstuna", p: [59.371, 16.51] },
+  { namn: "Södertälje", p: [59.196, 17.626] },
+  { namn: "Stockholm", p: [59.351, 18.119] },
+];
+// E20 delar väg med E6 från Malmö till Göteborg (se guiden om E6). Här listas stationerna från Göteborg och norrut.
+const DELAD_TILL = "Göteborg";
+
+// ---------- Geometri: haversine och avstånd från punkt till linjesegment ----------
+const R = 6371.0088, rad = (d) => (d * Math.PI) / 180;
+const hav = (a, b) => { const h = Math.sin(rad(b[0] - a[0]) / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(rad(b[1] - a[1]) / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const KM0 = [0]; for (let i = 1; i < LINJE.length; i++) KM0.push(KM0[i - 1] + hav(LINJE[i - 1], LINJE[i]));
+const skala = LANGD_OSM / KM0.at(-1);
+const KM = KM0.map((k) => k * skala);
+const LANGD = LANGD_OSM;
+/** Närmaste punkt på linjen: avstånd i km (d) och position längs vägen i km från start (km). */
+function projicera(p) {
+  let bast = { d: Infinity, km: 0 };
+  for (let i = 1; i < LINJE.length; i++) {
+    const a = LINJE[i - 1], b = LINJE[i], c = Math.cos(rad((a[0] + b[0]) / 2));
+    const dx = (b[1] - a[1]) * c, dy = b[0] - a[0], L = dx * dx + dy * dy;
+    const t = L ? Math.max(0, Math.min(1, (((p[1] - a[1]) * c) * dx + (p[0] - a[0]) * dy) / L)) : 0;
+    const d = hav(p, [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])]);
+    if (d < bast.d) bast = { d, km: KM[i - 1] + t * (KM[i] - KM[i - 1]) };
+  }
+  return bast;
+}
+
+// ---------- Stationerna längs vägen ----------
+const FLYTANDE = ["bensin95", "bensin98", "diesel", "hvo100", "e85"];
+const baraGasEl = (s) => !FLYTANDE.some((k) => s.drivmedel?.[k] === true) && ["biogas", "lng", "lpg", "vatgas", "el"].some((k) => s.drivmedel?.[k] === true);
+const EXTRA = new Map(KAT.enheter.map((e) => [e.href, e.extra ?? {}]));
+const ALLA = STATIONER.filter((s) => s.lat != null && s.lon != null)
+  .map((s) => ({ ...s, ...projicera([s.lat, s.lon]), maxLangd: Number(EXTRA.get(s.href)?.max_fordonslangd_m) || null }))
+  .filter((s) => s.d <= MAX_KM).sort((a, b) => a.km - b.km);
+/** Stationer med bensin eller diesel, eller där utbudet saknas i datan (inte rena gas-, el- eller vätgasstationer). */
+const TANK = ALLA.filter((s) => !baraGasEl(s));
+const EGENSKAP = {
+  dygnet: (s) => s.dygnet && !baraGasEl(s),
+  e85: (s) => s.drivmedel?.e85 === true,
+  hvo100: (s) => s.drivmedel?.hvo100 === true,
+  biogas: (s) => s.drivmedel?.biogas === true,
+  el: (s) => s.drivmedel?.el === true || s.tjanster?.laddning === true,
+  adblue: (s) => s.drivmedel?.adblue === true || s.tjanster?.adblue === true,
+  truck: (s) => s.tjanster?.truckdiesel === true,
+  butik: (s) => s.tjanster?.butik === true,
+  toalett: (s) => s.tjanster?.toalett === true,
+};
+const ort = ORTER.map((o, i) => ({ ...o, km: i === 0 ? 0 : i === ORTER.length - 1 ? LANGD : projicera(o.p).km }));
+const ETAPPER = ort.slice(1).map((o, i) => {
+  const a = ort[i].km, b = o.km, sist = i === ort.length - 2;
+  const st = ALLA.filter((s) => s.km >= a && (s.km < b || (sist && s.km <= b)));
+  const tank = st.filter((s) => !baraGasEl(s));
+  const n = Object.fromEntries(Object.entries(EGENSKAP).map(([k, f]) => [k, st.filter(f).length]));
+  return { namn: `${ort[i].namn}–${o.namn}`, fran: ort[i].namn, till: o.namn, a, b, km: b - a, st, tank, n };
+});
+/** Avstånden mellan stationerna i listan, längs vägen, från start till slut. Störst först. */
+function luckor(lista) {
+  const pos = [{ km: 0, namn: `start (${ORTER[0].namn})` }, ...lista, { km: LANGD, namn: `slut (${ORTER.at(-1).namn})` }];
+  return pos.slice(1).map((s, i) => ({ fran: pos[i], till: s, km: s.km - pos[i].km })).sort((x, y) => y.km - x.km);
+}
+const LUCKA = {
+  alla: luckor(TANK), dygnet: luckor(ALLA.filter(EGENSKAP.dygnet)), hvo100: luckor(ALLA.filter(EGENSKAP.hvo100)),
+  e85: luckor(ALLA.filter(EGENSKAP.e85)), biogas: luckor(ALLA.filter(EGENSKAP.biogas)), truck: luckor(ALLA.filter(EGENSKAP.truck)),
+};
+const ANTAL = Object.fromEntries(Object.entries(EGENSKAP).map(([k, f]) => [k, ALLA.filter(f).length]));
+const kedjor = Object.entries(TANK.reduce((m, s) => ((m[s.kedja || "Utan kedja"] = (m[s.kedja || "Utan kedja"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const listkedjor = LISTKEDJOR.map((c) => ({ c, n: TANK.filter((s) => s.kedja === c).length, b95: kedjePris(c, "bensin95"), diesel: kedjePris(c, "diesel") }));
+const langaFordon = ALLA.filter((s) => s.maxLangd != null && s.maxLangd >= 24);
+
+// Den egna delen: Göteborg–Stockholm.
+const delKm = ort.find((o) => o.namn === DELAD_TILL).km;
+const EGNA = ETAPPER.filter((e) => e.a >= delKm);
+const egenTank = TANK.filter((s) => s.km >= delKm);
+const egenLangd = LANGD - delKm;
+const egenAntal = Object.fromEntries(Object.entries(EGENSKAP).map(([k, f]) => [k, ALLA.filter((s) => s.km >= delKm && f(s)).length]));
+const egenLucka = Object.fromEntries(Object.entries(LUCKA).map(([k, v]) => [k, v.filter((l) => l.fran.km >= delKm)]));
+const vg = ETAPPER.filter((e) => ["Göteborg–Alingsås", "Alingsås–Skara", "Skara–Mariestad"].includes(e.namn));
+const vgKm = vg.reduce((s, e) => s + e.km, 0), vgN = vg.reduce((s, e) => s + e.tank.length, 0);
+
+// Hur nära vägen: stationerna fördelade på avstånd och typ, och luckorna om man bara räknar stationer inom 500 m.
+const ZONER = [[0, 0.5, "Högst 500 m"], [0.5, 1, "0,5–1 km"], [1, MAX_KM + 1e-9, `1–${MAX_KM} km`]].map(([a, b, t]) => {
+  const z = TANK.filter((s) => s.d >= a && s.d < b);
+  return { t, n: z.length, dygnet: z.filter((s) => s.dygnet).length, truck: z.filter((s) => s.tjanster?.truckdiesel === true).length };
+});
+const TYPER = [["obemannad", "Obemannad"], ["bemannad", "Bemannad"], ["truckstation", "Truckstation"], [null, "Uppgift saknas"]]
+  .map(([k, t]) => ({ t, n: TANK.filter((s) => (s.typ ?? null) === k).length, dygnet: TANK.filter((s) => (s.typ ?? null) === k && s.dygnet).length }));
+const NARA = TANK.filter((s) => s.d <= 0.5);
+const luckaNara = luckor(NARA);
+const luckaNaraDygnet = luckor(NARA.filter((s) => s.dygnet));
+
+// Förslag på tankstopp: var STEG km väljs den station inom 500 m från vägen som går att tanka på dygnet runt och ligger närmast målpunkten (högst 25 km före eller efter).
+const STEG = 150;
+const STOPP = [];
+for (let mal = STEG; mal < LANGD - 30; mal += STEG) {
+  const kand = NARA.filter((s) => s.dygnet && Math.abs(s.km - mal) <= 25).sort((a, b) => Math.abs(a.km - mal) - Math.abs(b.km - mal));
+  STOPP.push({ mal, s: kand[0] ?? null });
+}
+
+// ---------- Formatering ----------
+const n0 = (x) => Math.round(x).toLocaleString("sv-SE");
+const km1 = (x) => x.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const ja = (v) => (v ? "ja" : "");
+const utbud = (s) => [EGENSKAP.e85(s) && "E85", EGENSKAP.hvo100(s) && "HVO100", EGENSKAP.biogas(s) && "fordonsgas", EGENSKAP.el(s) && "laddning", EGENSKAP.adblue(s) && "AdBlue", EGENSKAP.truck(s) && "truckdiesel"].filter(Boolean).join(", ");
+const per10mil = (n, km) => (km > 0 ? (n / (km / 100)).toLocaleString("sv-SE", { maximumFractionDigits: 1 }) : "–");
+const glesast = [...EGNA].sort((a, b) => a.tank.length / a.km - b.tank.length / b.km)[0];
+const tatast = [...EGNA].sort((a, b) => b.tank.length / b.km - a.tank.length / a.km)[0];
+const literB = (LANGD / 10) * 0.6, literD = (LANGD / 10) * 0.5;
+const billB = listkedjor.filter((x) => x.b95 != null).sort((a, b) => a.b95 - b.b95);
+const billD = listkedjor.filter((x) => x.diesel != null).sort((a, b) => a.diesel - b.diesel);
+
+const avsnitt = [
+  { id: "snabbfakta", rubrik: "E20 i siffror" },
+  { id: "strackor", rubrik: "Stationer per sträcka" },
+  { id: "luckor", rubrik: "Längsta avstånden utan station" },
+  { id: "vastra-gotaland", rubrik: "Göteborg–Mariestad: en väg under ombyggnad" },
+  { id: "nara", rubrik: "Hur nära vägen ligger stationerna?" },
+  { id: "stopp", rubrik: "Förslag på tankstopp var 15:e mil" },
+  { id: "alternativa", rubrik: "E85, HVO100, fordonsgas och laddning" },
+  { id: "lastbil", rubrik: "Lastbil, husbil och släp" },
+  { id: "pris", rubrik: "Vad kostar det att tanka längs E20?" },
+  { id: "lista", rubrik: "Stationer längs E20 från Göteborg till Stockholm" },
+  { id: "metod", rubrik: "Så har vi räknat" },
+];
+
+const fragor = [
+  { fraga: "Hur många bensinstationer finns längs E20?", svar: `I vårt register ligger ${n0(TANK.length)} stationer med bensin eller diesel högst ${MAX_KM} km fågelvägen från E20 mellan Öresundsbron och Stockholm. På den del som inte delas med E6, Göteborg–Stockholm, är de ${n0(egenTank.length)}.` },
+  { fraga: "Var är det längst mellan bensinstationerna på E20?", svar: `Den längsta sträckan utan station inom ${MAX_KM} km från vägen är ${n0(LUCKA.alla[0].km)} km, mellan ${LUCKA.alla[0].fran.namn} och ${LUCKA.alla[0].till.namn}.` },
+  { fraga: "Kan man tanka dygnet runt längs E20?", svar: `Ja, ${n0(ANTAL.dygnet)} stationer längs E20 går att tanka på dygnet runt enligt vår data. Längst mellan två sådana är det ${n0(LUCKA.dygnet[0].km)} km, mellan ${LUCKA.dygnet[0].fran.namn} och ${LUCKA.dygnet[0].till.namn}.` },
+  { fraga: "Var finns fordonsgas längs E20?", svar: `${n0(ANTAL.biogas)} stationer längs E20 har fordonsgas enligt vår data. Den längsta luckan är ${n0(LUCKA.biogas[0].km)} km, mellan ${LUCKA.biogas[0].fran.namn} och ${LUCKA.biogas[0].till.namn}.` },
+  { fraga: "Hur lång är E20 i Sverige?", svar: `Längs den linje vi har hämtat ur OpenStreetMap är E20 cirka ${n0(LANGD)} km från Öresundsbron till Värtahamnen i Stockholm. Ungefär ${n0(delKm)} km av dem, Malmö–Göteborg, delar E20 med E6.` },
+  { fraga: "Finns det HVO100 mellan Göteborg och Stockholm?", svar: `Ja, ${n0(egenAntal.hvo100)} stationer längs E20 mellan Göteborg och Stockholm anger att de säljer HVO100.${egenLucka.hvo100[0] ? ` Den längsta luckan på den delen är ${n0(egenLucka.hvo100[0].km)} km.` : ""}` },
+];
+---
+<Guide site={SITE} titel={`Tanka längs E20 – ${n0(TANK.length)} stationer Malmö–Stockholm`}
+  beskrivning={`${n0(TANK.length)} stationer inom ${MAX_KM} km från E20 via Göteborg och Örebro. Per sträcka: dygnet runt, E85, HVO100, fordonsgas, laddning, AdBlue och längsta luckorna.`}
+  h1="Tanka längs E20 – stationer från Malmö via Göteborg till Stockholm"
+  svar={`Längs E20 mellan Öresundsbron och Stockholm, cirka ${n0(LANGD)} km, ligger <strong>${n0(TANK.length)} bensinstationer</strong> högst ${MAX_KM} km från vägen, varav ${n0(egenTank.length)} mellan Göteborg och Stockholm. ${n0(ANTAL.dygnet)} går att tanka på dygnet runt. Längst utan station är det ${n0(LUCKA.alla[0].km)} km, mellan ${LUCKA.alla[0].fran.namn} och ${LUCKA.alla[0].till.namn}.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Tanka längs E20", href: "/guider/tanka-langs-e20/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Tanka längs E6", href: "/guider/tanka-langs-e6/", text: "Trelleborg–Göteborg–Svinesund" },
+    { namn: "Tanka längs E4", href: "/guider/tanka-langs-e4/", text: "Helsingborg–Stockholm–Haparanda" },
+    { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/", text: "Priser och skillnader" },
+    { namn: "Fordonsgas och gasbil", href: "/guider/fordonsgas-gasbil/", text: "Så fungerar det" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Bränslekalkylator med dagens priser" },
+  ]}
+  kallor={[
+    { namn: "OpenStreetMap – E20 i Sverige", url: "https://www.openstreetmap.org/", text: "vägens sträckning (vägar märkta E 20), hämtad via Overpass API. © OpenStreetMap-bidragsgivare, ODbL", datum: "2026-11-27" },
+    { namn: "Trafikverket – E20 mötesfri väg Västra Götaland", url: "https://www.trafikverket.se/e20vastragotaland", text: "ombyggnaden till mötesfri väg, färdiga och planerade etapper (sidan uppdaterad 5 mars 2025)", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", url: "/", text: "stationernas läge, drivmedel, tjänster och öppettider från kedjornas stationssök och OpenStreetMap" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+  ]}>
+
+  <h2 id="snabbfakta">E20 i siffror</h2>
+  <p>E20 kommer in i Sverige över Öresundsbron och går tillsammans med E6 upp längs västkusten till Göteborg. Där viker den av österut genom Västergötland, förbi Alingsås, Skara och Mariestad, norr om Vättern till Örebro och vidare via Arboga, Eskilstuna och Södertälje till Stockholm. Längs den linje vi har hämtat ur OpenStreetMap är den svenska delen cirka {n0(LANGD)} km, varav ungefär {n0(delKm)} km gemensamma med E6 och den sista biten in mot Stockholm gemensam med E4.</p>
+  <p>Trafikverket beskriver E20 som vägen som binder ihop Malmö, Göteborg och Stockholm. Med gränsen {MAX_KM} km fågelvägen från vägen ger vårt register följande:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Längs E20 (högst {MAX_KM} km från vägen)</th><th class="num">Hela E20</th><th class="num">Göteborg–Stockholm</th><th class="num">Per 10 mil, Göteborg–Stockholm</th></tr></thead>
+    <tbody>
+      <tr><td>Stationer med bensin eller diesel</td><td class="num">{n0(TANK.length)}</td><td class="num">{n0(egenTank.length)}</td><td class="num">{per10mil(egenTank.length, egenLangd)}</td></tr>
+      {[["Tankning dygnet runt", "dygnet"], ["E85", "e85"], ["HVO100", "hvo100"], ["Fordonsgas", "biogas"], ["Laddning", "el"], ["AdBlue", "adblue"], ["Truckdiesel (lastbilspump)", "truck"]].map(([t, k]) => <tr><td>{t}</td><td class="num">{n0(ANTAL[k])}</td><td class="num">{n0(egenAntal[k])}</td><td class="num">{per10mil(egenAntal[k], egenLangd)}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. En station räknas bara för ett drivmedel eller en tjänst om uppgiften finns i datan, så de verkliga talen kan vara högre.</p>
+
+  <h2 id="strackor">Stationer per sträcka</h2>
+  <p>De tre första sträckorna är desamma som för E6; de finns med här för att ge hela bilden för den som kör från Skåne till Stockholm. Från Göteborg och österut är glesast {glesast.namn} med {per10mil(glesast.tank.length, glesast.km)} stationer per 10 mil, och tätast {tatast.namn} med {per10mil(tatast.tank.length, tatast.km)}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Sträcka</th><th class="num">km</th><th class="num">Stationer</th><th class="num">Dygnet runt</th><th class="num">E85</th><th class="num">HVO100</th><th class="num">Gas</th><th class="num">Laddning</th><th class="num">AdBlue</th><th class="num">Truck</th><th class="num">Butik</th><th class="num">Toalett</th></tr></thead>
+    <tbody>{ETAPPER.map((e) => <tr><td>{e.namn}{e.b <= delKm && " (E6)"}</td><td class="num">{n0(e.km)}</td><td class="num">{e.tank.length}</td><td class="num">{e.n.dygnet}</td><td class="num">{e.n.e85}</td><td class="num">{e.n.hvo100}</td><td class="num">{e.n.biogas}</td><td class="num">{e.n.el}</td><td class="num">{e.n.adblue}</td><td class="num">{e.n.truck}</td><td class="num">{e.n.butik}</td><td class="num">{e.n.toalett}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Sträckorna går mellan orternas närmaste punkt på E20. "Stationer" omfattar inte rena gas- och laddstationer; de räknas i kolumnerna Gas och Laddning.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="luckor">Längsta avstånden utan station</h2>
+  <p>Vi har sorterat stationerna efter läge längs vägen och mätt avståndet mellan varje par. De fem längsta luckorna bland stationer med bensin eller diesel på hela E20:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Lucka</th><th>Från</th><th>Till</th><th class="num">Vid km</th></tr></thead>
+    <tbody>{LUCKA.alla.slice(0, 5).map((l) => <tr><td class="num">{n0(l.km)} km</td><td>{l.fran.href ? <a href={l.fran.href}>{l.fran.namn}</a> : l.fran.namn}</td><td>{l.till.href ? <a href={l.till.href}>{l.till.namn}</a> : l.till.namn}</td><td class="num">{n0(l.fran.km)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Om du behöver ett visst drivmedel, eller tankar på natten, blir avstånden längre:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Om du behöver</th><th class="num">Stationer</th><th class="num">Längsta lucka</th><th>Mellan</th></tr></thead>
+    <tbody>
+      {[["Tankning dygnet runt", "dygnet"], ["E85", "e85"], ["HVO100", "hvo100"], ["Fordonsgas", "biogas"], ["Truckdiesel", "truck"]].map(([t, k]) => <tr><td>{t}</td><td class="num">{n0(ANTAL[k])}</td><td class="num">{n0(LUCKA[k][0].km)} km</td><td>{LUCKA[k][0].fran.namn} – {LUCKA[k][0].till.namn}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p>Kilometertalet "vid km" räknas från Öresundsbron. Göteborg ligger vid ungefär km {n0(delKm)}, Örebro vid km {n0(ort.find((o) => o.namn === "Örebro").km)}.</p>
+
+  <h2 id="vastra-gotaland">Göteborg–Mariestad: en väg under ombyggnad</h2>
+  <p>Trafikverket bygger om E20 genom Västra Götaland till mötesfri väg med mitträcke, med motorväg på vissa delar och 2+2-väg på andra. Enligt projektsidan är etapperna mellan Göteborg och Götene klara, medan E20 förbi Mariestad var planerad att byggas 2024–2027 och sträckan Götene–Mariestad 2025–2028. Trafikverket skriver också att korsningar i plan byggs bort och att gamla delar av E20 blir lokalvägar.</p>
+  <p>För den som tankar betyder det att en del stationer som låg vid gamla E20 nu kan ligga en bit från den nya vägen, med en avfart emellan. Mellan Göteborg och Mariestad, cirka {n0(vgKm)} km, ligger {n0(vgN)} stationer inom {MAX_KM} km från vägens nuvarande sträckning i OpenStreetMap, alltså {per10mil(vgN, vgKm)} per 10 mil, mot {per10mil(TANK.length, LANGD)} för hela E20. Under byggtiden kan avfarter och påfarter vara omlagda, så kontrollera vägen till stationen innan du svänger av.</p>
+
+  <h2 id="nara">Hur nära vägen ligger stationerna?</h2>
+  <p>Två kilometer fågelvägen är en generös gräns. En station 1,8 km från E20 kan ligga mitt i en tätort, med rondeller och trafikljus emellan, medan en station 300 meter från vägen oftast ligger vid själva avfarten. Så här fördelar sig stationerna längs E20:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Avstånd från E20</th><th class="num">Stationer</th><th class="num">Andel</th><th class="num">Dygnet runt</th><th class="num">Truckdiesel</th></tr></thead>
+    <tbody>{ZONER.map((z) => <tr><td>{z.t}</td><td class="num">{z.n}</td><td class="num">{TANK.length ? Math.round((z.n / TANK.length) * 100) : 0} %</td><td class="num">{z.dygnet}</td><td class="num">{z.truck}</td></tr>)}</tbody>
+  </table></div>
+  <p>Räknar man bara de {n0(NARA.length)} stationer som ligger högst 500 meter från vägen blir den längsta luckan {n0(luckaNara[0].km)} km, mellan {luckaNara[0].fran.namn} och {luckaNara[0].till.namn}. Bland dem som dessutom går att tanka på dygnet runt är den längsta luckan {n0(luckaNaraDygnet[0].km)} km. Det är de siffrorna som gäller om du vill tanka utan att leta dig in i en tätort.</p>
+  <p>Stationerna längs E20 fördelar sig så här på typ. Obemannade stationer har bara automater och räknas i vår data som öppna dygnet runt. Bemannade stationer har personal och oftast butik, men bara ett fåtal av dem anger tankning dygnet runt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av station</th><th class="num">Stationer</th><th class="num">Varav dygnet runt</th></tr></thead>
+    <tbody>{TYPER.filter((x) => x.n > 0).map((x) => <tr><td>{x.t}</td><td class="num">{x.n}</td><td class="num">{x.dygnet}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Typ enligt kedjornas egna uppgifter. "Uppgift saknas" gäller främst stationer som bara finns i OpenStreetMap.</p>
+
+  <h2 id="stopp">Förslag på tankstopp var 15:e mil</h2>
+  <p>Vill du planera resan i förväg kan du utgå från ett stopp ungefär var 15:e mil. För varje punkt har vi valt den station som ligger högst 500 meter från E20, går att tanka på dygnet runt och ligger närmast punkten. Kilometertalen räknas från Öresundsbron.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Runt km</th><th>Station</th><th class="num">Vid km</th><th>Kommun</th><th>Utbud</th></tr></thead>
+    <tbody>{STOPP.map((x) => <tr><td class="num">{n0(x.mal)}</td>{x.s ? <><td><a href={x.s.href}>{x.s.namn}</a></td><td class="num">{n0(x.s.km)}</td><td>{x.s.kommun}</td><td>{utbud(x.s)}</td></> : <><td colspan="4">Ingen station som uppfyller villkoren inom 25 km</td></>}</tr>)}</tbody>
+  </table></div>
+  <p>Förslagen är ett sätt att dela upp resan, inte en rekommendation av en viss kedja. Har du en bil med lång räckvidd kan du hoppa över vartannat stopp, och kör du på dagtid går det lika bra att välja en bemannad station i närheten. {STOPP.some((x) => !x.s) && "Där tabellen saknar station finns ingen dygnet-runt-station inom 500 meter från vägen nära punkten, och då är det klokt att tanka vid stoppet före."}</p>
+
+  <h2 id="alternativa">E85, HVO100, fordonsgas och laddning</h2>
+  <p>E85 finns på {n0(ANTAL.e85)} stationer längs E20. Längst mellan två av dem är det {n0(LUCKA.e85[0].km)} km, från {LUCKA.e85[0].fran.namn} till {LUCKA.e85[0].till.namn}. Se <a href="/drivmedel/e85/">E85-priser</a> och <a href="/guider/lonar-sig-e85/">om E85 lönar sig</a>.</p>
+  <p>HVO100 finns på {n0(ANTAL.hvo100)} stationer längs hela vägen och {n0(egenAntal.hvo100)} mellan Göteborg och Stockholm. Den längsta luckan är {n0(LUCKA.hvo100[0].km)} km, mellan {LUCKA.hvo100[0].fran.namn} och {LUCKA.hvo100[0].till.namn}. Läs <a href="/guider/hvo100-vilka-bilar/">vilka bilar som tål HVO100</a> och se <a href="/drivmedel/hvo100/">dagens HVO100-pris</a>.</p>
+  <p>Fordonsgas finns på {n0(ANTAL.biogas)} stationer, men de ligger ojämnt. Den längsta luckan är {n0(LUCKA.biogas[0].km)} km, mellan {LUCKA.biogas[0].fran.namn} och {LUCKA.biogas[0].till.namn}. Med en gasbil som har kort räckvidd på gas är det den sträckan du behöver planera för. Mer på <a href="/drivmedel/fordonsgas/">sidan om fordonsgas</a>.</p>
+  <p>Laddning finns vid {n0(ANTAL.el)} av stationerna längs E20 enligt vår data. Det är bara laddare vid bensinstationer, inte hela det publika laddnätet. Se <a href="/drivmedel/laddning/">laddning vid bensinstationer</a>.</p>
+
+  <h2 id="lastbil">Lastbil, husbil och släp</h2>
+  <p>{n0(ANTAL.truck)} stationer längs E20 har truckdiesel, alltså pumpar avsedda för lastbilar, och {n0(ANTAL.adblue)} har AdBlue. Längst mellan två truckdieselstationer är det {n0(LUCKA.truck[0].km)} km, mellan {LUCKA.truck[0].fran.namn} och {LUCKA.truck[0].till.namn}.</p>
+  <p>{langaFordon.length > 0 ? <>{n0(langaFordon.length)} stationer längs E20 anger att fordon på minst 24 meter kan tanka där. Uppgiften finns bara för en del av stationerna.</> : <>Uppgift om största fordonslängd finns inte för stationerna längs E20 i vår data.</>} Se <a href="/guider/truckdiesel-lastbil/">guiden om truckdiesel</a> och <a href="/drivmedel/adblue/">AdBlue-stationer</a>.</p>
+
+  <h2 id="pris">Vad kostar det att tanka längs E20?</h2>
+  <p>Kedjornas listpriser är desamma längs hela vägen, men den enskilda stationen kan ha ett eget pris. Tabellen visar listpriserna {datum} och hur många av kedjornas stationer som ligger längs E20.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer längs E20</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{listkedjor.map((x) => <tr><td>{kedjaHref(x.c) ? <a href={kedjaHref(x.c)}>{x.c}</a> : x.c}</td><td class="num">{x.n}</td><td class="num">{pris(x.b95)}</td><td class="num">{pris(x.diesel)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms i kr/l, {LP_DATUM}.</p>
+  <p>Hela E20 genom Sverige motsvarar cirka {pris(literB, 0)} liter bensin för en bil som drar 0,6 liter per mil, eller {pris(literD, 0)} liter diesel med 0,5 liter per mil. {billB[0] && <>Till {billB[0].c}s listpris blir bensinen {kr(literB * billB[0].b95, 0)}</>}{billD[0] && <> och dieseln {kr(literD * billD[0].diesel, 0)}</>}. Räkna på din egen bil i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+  <p>Flest stationer längs vägen har {kedjor.slice(0, 5).map(([k, n], i) => <>{i > 0 && ", "}{kedjaHref(k) ? <a href={kedjaHref(k)}>{k}</a> : k} ({n})</>)}. Läs också <a href="/guider/billigaste-bensinen/">så hittar du billigaste bensinen</a>.</p>
+
+  <h2 id="lista">Stationer längs E20 från Göteborg till Stockholm</h2>
+  <p>Stationerna mellan Malmö och Göteborg finns i <a href="/guider/tanka-langs-e6/">guiden om E6</a>, eftersom vägarna där är gemensamma. Här listas resten, från väster till öster. Kilometertalet räknas från Öresundsbron längs vägen, och "från vägen" är avståndet fågelvägen till närmaste punkt på E20.</p>
+  {EGNA.map((e) => (
+    <details>
+      <summary><strong>{e.namn}</strong> – {e.st.length} stationer</summary>
+      <div class="tabell"><table>
+        <thead><tr><th class="num">km</th><th>Station</th><th>Kommun</th><th class="num">Från vägen</th><th>Dygnet runt</th><th>Utbud</th></tr></thead>
+        <tbody>{e.st.map((s) => <tr><td class="num">{n0(s.km)}</td><td><a href={s.href}>{s.namn}</a></td><td>{s.kommun}</td><td class="num">{km1(s.d)} km</td><td>{ja(s.dygnet)}</td><td>{utbud(s)}</td></tr>)}</tbody>
+      </table></div>
+    </details>
+  ))}
+
+  <h2 id="metod">Så har vi räknat</h2>
+  <p>Vägens sträckning kommer från OpenStreetMap. Vi hämtade alla vägavsnitt i Sverige som är märkta E 20, även de som delas med E6, E4 och E18, och letade upp den kortaste sammanhängande vägen längs dem från Öresundsbron till Värtahamnen i Stockholm. Linjen förenklades till {LINJE.length} brytpunkter så att ingen del av vägen avviker mer än 250 meter. Brytpunkterna står i sidans källkod.</p>
+  <p>För varje station räknade vi ut avståndet till närmaste punkt på linjen med haversineformeln och avståndet från en punkt till ett linjesegment. Stationer inom {MAX_KM} km kom med. Det är fågelvägen; den verkliga körvägen via avfarten kan vara längre, och på motorväg ligger en station ibland bara på ena sidan.</p>
+  <p>Luckorna mäts längs vägen mellan stationernas närmaste punkter på linjen. Uppgifter om drivmedel, tjänster och öppettider kommer från kedjornas stationssök och OpenStreetMap. Saknas en uppgift räknas den inte, så talen är snarare för låga än för höga.</p>
+</Guide>

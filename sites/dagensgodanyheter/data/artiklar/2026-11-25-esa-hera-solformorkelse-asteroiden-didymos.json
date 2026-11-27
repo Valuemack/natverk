@@ -66,10 +66,11 @@
   "bildmotiv": "a small spacecraft navigation camera mounted on an optical test bench in a clean room, technicians out of frame",
   "bildalt": "Asteroidmånen Dimorphos kastar sin skugga över den större asteroiden Didymos i rymden.",
   "poang": {
-    "positiv": 0.55,
+    "positiv": 0.6,
     "betydelse": 0.4,
     "tillit": 0.97,
-    "total": 55
+    "total": 73,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -83,5 +84,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "rymden"
 }

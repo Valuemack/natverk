@@ -1,6 +1,6 @@
 // Bildsteget: som i en tidning får bara en del av artiklarna bild. Av nattens artiklar (publicerade de senaste
 // 30 timmarna) får de cirka 35 % högst poängsatta en bild – i första hand ett riktigt fritt foto (NASA, Wikimedia
-// Commons) som har klarat en visuell kontroll, annars en tecknad redaktionell illustration. Övriga artiklar
+// Commons) som har klarat en visuell kontroll, annars en skapad bild från gpt-image-2.6-flare (stil enligt BILDSTIL). Övriga artiklar
 // publiceras som ren text och markeras bildbeslut: "text", så att de inte prövas igen.
 //
 //   node scripts/bildsatt.mjs             # nattläge (kräver OPENAI_API_KEY för illustrationer, ANTHROPIC_API_KEY för bildkontrollen)
@@ -58,7 +58,7 @@ const plan = {
   skapad: new Date().toISOString(),
   lage: torr ? "torr" : "skarp",
   orsak: torr ? "--torr" : null,
-  modell: inst.modell, storlek: inst.storlek, kvalitet: inst.kvalitet,
+  modell: inst.modell, stil: inst.stil, storlek: inst.storlek, kvalitet: inst.kvalitet,
   regel: bara ? `bara ${bara}` : `${Math.round(andel * 100)} % av ${pool.length} artiklar (${alla ? "alla" : `senaste ${timmar} h`}) = ${mal} med bild, ${harBild} hade redan, högst ${max} nya`,
   antal: valda.length,
   uppskattadKostnadUSD: Math.round(valda.length * (UPPSKATTAD_KOSTNAD[inst.kvalitet] ?? 0.04) * 100) / 100,
@@ -73,10 +73,10 @@ for (const { f, a } of valda) {
   const hittills = plan.bilder.reduce((s, b) => s + (b.kostnadUSD ?? 0) + (b.granskningUSD ?? 0), 0);
   if (hittills >= TAK) { plan.bilder.push({ ...post, status: "hoppad", fel: `bildtaket $${TAK} nått` }); continue; }
   try {
-    const alt = a.bildalt || a.rubrik;
+    // Alt-texten skrivs om utifrån själva bilden om skribentens förslag inte klarar reglerna (80–125 tecken m.m.).
     const bild = await hittaBild({
       slug: a.slug, sokord: a.bildsok ?? [], motiv: a.bildmotiv, kategori: a.kategori,
-      alt: /^illustration/i.test(alt) ? alt : `Illustration: ${alt.charAt(0).toLowerCase()}${alt.slice(1)}`,
+      alt: String(a.bildalt ?? "").replace(/^illustration:s*/i, ""),
       rubrik: a.rubrik, ingress: a.ingress, publicDir: PUBLIC, rymd: Boolean(a.bildRymd),
     });
     if (!bild) throw new Error("ingen bild");

@@ -70,7 +70,7 @@
     "liten": "/bilder/overskott-sol-och-vindel-kan-driva-industri-och-datacenter-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: solpaneler och vindkraftverk i ett öppet landskap en solig vårdag",
+    "alt": "Målad illustration av solpaneler i förgrunden och vindkraftverk i bakgrunden under blå himmel, med gula blommor i gräset.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -97,10 +97,11 @@
   "bildmotiv": "a large solar farm with rows of panels and wind turbines behind them under a bright spring midday sky",
   "bildalt": "Solpaneler och vindkraftverk i ett öppet landskap en solig vårdag",
   "poang": {
-    "positiv": 0.7,
+    "positiv": 0.6,
     "betydelse": 0.6,
     "tillit": 0.93,
-    "total": 69
+    "total": 56,
+    "gladje": 0.3
   },
   "produktion": {
     "metod": "ai-stod",
@@ -116,5 +117,6 @@
     "wind farm and solar park",
     "wind turbines solar panels"
   ],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "klimat"
 }

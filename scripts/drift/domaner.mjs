@@ -6,8 +6,11 @@ export const HUVUD = [
   ["förskolor.nu", "forskolor"], ["komvux.nu", "komvux"], ["biblioteken.nu", "biblioteken"], ["bensinstationer.nu", "bensinstationer"],
   ["parkeringar.nu", "parkeringar"], ["pollenläget.se", "pollenlaget"], ["badstränder.se", "badstrander"], ["simhallar.se", "simhallar"],
   ["lekplatserna.nu", "lekplatserna"],
+  // dagensbensinpris.se slogs ihop med bensinstationer.nu 2026-11-27. Domänen och Pages-projektet finns kvar, men projektet
+  // publicerar bara en _redirects-fil med en 301 per gammal URL till bästa sida på bensinstationer.nu
+  // (sites/dagensbensinpris/scripts/bygg.mjs). Ta inte bort raden: www- och pages.dev-omdirigeringarna nedan behövs fortfarande.
   ["dagensbensinpris.se", "dagensbensinpris"], ["jourapotek.se", "jourapotek"],
-  ["dagensgodanyheter.se", "dagensgodanyheter"], ["namnsdagsidag.se", "namnsdag"],
+  ["dagensgodanyheter.se", "dagensgodanyheter"], ["dagensnamnsdagar.se", "namnsdag"],
 ].map(([namn, projekt]) => ({ namn, ascii: domainToASCII(namn), projekt }));
 
 // DNS-uppslag via Cloudflares offentliga DNS-over-HTTPS (inga nycklar).
@@ -29,4 +32,7 @@ export const OMDIR = {
   "gratisparkeringar.se": "https://parkeringar.nu/gratis-parkering/",
   "lovdagar.se": "https://xn--rdadagar-n4a.nu",
   "secondhandbutiker.se": "https://loppisar.nu",
+  // Namnsdagssajten hette först namnsdagsidag.se. namnsdagaridag.se köptes av misstag (felstavning). Båda pekar på dagensnamnsdagar.se.
+  "namnsdagsidag.se": "https://dagensnamnsdagar.se",
+  "namnsdagaridag.se": "https://dagensnamnsdagar.se",
 };

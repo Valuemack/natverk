@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/09-og-bilder.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "data": "node scripts/run-all.mjs"
+    "data": "node scripts/run-all.mjs",
+    "og": "node scripts/09-og-bilder.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",

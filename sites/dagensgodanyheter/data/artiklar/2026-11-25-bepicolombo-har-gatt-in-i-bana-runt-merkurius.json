@@ -67,7 +67,7 @@
     "liten": "/bilder/bepicolombo-har-gatt-in-i-bana-runt-merkurius-640.webp",
     "bredd": 1280,
     "hojd": 720,
-    "alt": "Kratrar på Merkurius yta, fotograferade av NASA:s rymdsond Messenger",
+    "alt": "Gråtonad månliknande yta på Merkurius med många kratrar, varav två stora i övre mitten. Ljus slätt till höger.",
     "fotograf": "NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie Institution of Washington",
     "licens": "Public domain (NASA)",
     "licensUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
@@ -77,10 +77,11 @@
   "bildmotiv": "the cratered grey surface of the planet Mercury seen from orbit, harsh sunlight and long shadows",
   "bildalt": "Kratrar på Merkurius yta, fotograferade av NASA:s rymdsond Messenger",
   "poang": {
-    "positiv": 0.61,
-    "betydelse": 0.48,
+    "positiv": 0.7,
+    "betydelse": 0.5,
     "tillit": 0.97,
-    "total": 63
+    "total": 75,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -92,5 +93,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "rymden"
 }

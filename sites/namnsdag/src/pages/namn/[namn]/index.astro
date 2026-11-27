@@ -1,144 +1,238 @@
 ---
-// En sida per namn i almanackan (/namn/ture/) och per vanlig stavningsvariant (/namn/thomas/).
-import Layout from "@natverk/core/Layout.astro";
+// En sida per namn: almanackans namn (/namn/ture/), stavningsvarianter som kan firas på
+// almanacksnamnets dag (/namn/thomas/) och vanliga namn utan namnsdag (/namn/liam/, 1 januari).
+// "Allt om namnet": namnsdag, betydelse (Wikipedia), statistik (SCB), kända personer (Wikidata).
+import Layout from "../../../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
 import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import "../../../styles/sajt.css";
-import { NAMNSIDOR, startDatum } from "../../../lib/namnsidor.js";
+import NyfoddaDiagram from "../../../components/NyfoddaDiagram.astro";
+import Gratulationskort from "../../../components/Gratulationskort.astro";
+import BrevKnapp from "../../../components/BrevKnapp.astro";
+import { NAMNSIDOR, startDatum, sidNamn } from "../../../lib/namnsidor.js";
 import {
   SITE, AR, UPPDATERAD, MANADER, ANDRINGAR, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
-  kommandeAr, fore, efter, FASTA_DAGAR, barare, tal, delMmdd, veckodag, iso, SCB_KALLA, SCB_TOTALT, varianterTill, giltigt,
+  kommandeAr, fore, efter, FASTA_DAGAR, tal, delMmdd, veckodag, iso, SCB_KALLA, giltigt, genitiv, konAndel, procent,
+  UTAN_NAMNSDAG, isoVecka, beskriv,
 } from "../../../site.js";
+import {
+  scb, nyfodda, trend, medelalder, rang, ANTAL_TILLTALSNAMN, ursprung, kandaPersoner, liknande, NYF_KALLA, WIKI_LICENS,
+  WIKI_HAMTAD, PERS_HAMTAD,
+} from "../../../lib/namndata.js";
+import { NYARE } from "../../../lib/statistik.js";
 
 export function getStaticPaths() {
   return NAMNSIDOR.map((s) => ({ params: { namn: s.slug }, props: s }));
 }
-const { typ, n, v, slug } = Astro.props;
-const versal = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-const namn = typ === "variant" ? v.namn : n.namn;
-const dt = dagText(n.datum);
-const { m } = delMmdd(n.datum);
+const sida = Astro.props;
+const { typ, n, v, slug } = sida;
+const namn = sidNamn(sida);
+const utan = typ === "utan";
+const k = n.datum; // namnsdagen (för varianter huvudnamnets dag, för namn utan namnsdag 1 januari)
+const dt = dagText(k);
+const { m } = delMmdd(k);
 const start = startDatum(n);
-const ar = kommandeAr(n.datum, 6).filter((x) => giltigt(n, x.ar));
-const samma = [...namnPaDag(n.datum, Math.max(AR, n.fran ?? 0))].filter((x) => x.namn !== n.namn);
-const samma2027 = kommandeNamnPaDag(n.datum).filter((x) => x.namn !== n.namn);
-const fast = FASTA_DAGAR[n.datum];
-const varianter = typ === "namn" ? varianterTill(n) : [];
-const andring = ANDRINGAR.filter((a) => a.nytt === n.namn || a.bort === n.namn);
-const s = n.scb;
-const t2020 = typ === "variant" ? v.antal : barare(n);
-const kon = typ === "variant" ? { K: v.kvinnor, M: v.man } : (s?.tilltal2020 ?? {});
-const fornamn = s?.fornamn2020 ? (s.fornamn2020.K ?? 0) + (s.fornamn2020.M ?? 0) : null;
-const nyf = typ === "namn" && s?.nyfodda ? Object.entries(s.nyfodda).map(([a, x]) => ({ ar: Number(a), x })).sort((a, b) => a.ar - b.ar) : [];
-const nyfMax = nyf.reduce((mx, r) => (r.x > mx.x ? r : mx), { x: 0 });
-const nyfSenast = nyf.at(-1);
-const nyfFull = Array.from({ length: 25 }, (_, i) => 1998 + i).map((a) => ({ ar: a, x: nyf.find((r) => r.ar === a)?.x ?? 0 }));
-const konText = (k) => {
-  const K = k.K ?? 0, M = k.M ?? 0;
-  if (!K && !M) return null;
-  if (!K) return "alla män";
-  if (!M) return "alla kvinnor";
-  return K > M ? `${tal(K)} kvinnor och ${tal(M)} män` : `${tal(M)} män och ${tal(K)} kvinnor`;
-};
-const ny = n.fran && n.fran > AR;
-const huvudBarare = typ === "variant" ? barare(n) : 0;
+const ar = kommandeAr(k, 6).filter((x) => typ !== "namn" || giltigt(n, x.ar));
+const samma = utan ? [] : [...namnPaDag(k, Math.max(AR, n.fran ?? 0))].filter((x) => x.namn !== namn);
+const samma2027 = utan ? [] : kommandeNamnPaDag(k).filter((x) => x.namn !== namn);
+const fast = FASTA_DAGAR[k];
+const andring = typ === "namn" ? ANDRINGAR.filter((a) => a.nytt === namn || a.bort === namn) : [];
+const ny = typ === "namn" && n.fran && n.fran > AR;
 
-const titel = typ === "variant"
-  ? valjTitel(`${namn} namnsdag – ${dt} (${n.namn}-dagen) | ${tal(t2020)} heter ${namn}`, `${namn} namnsdag – ${dt} (${n.namn}-dagen)`, `${namn} namnsdag – ${dt}`)
-  : ny ? valjTitel(`${namn} namnsdag – ${dt} från ${n.fran} (nytt namn i almanackan)`, `${namn} namnsdag – ${dt} från ${n.fran} (nytt namn)`, `${namn} namnsdag – ${dt} från ${n.fran}`)
-  : valjTitel(`${namn} namnsdag – ${dt}${t2020 ? ` | ${tal(t2020)} heter ${namn}` : ""}`, `${namn} namnsdag – ${dt}`);
-const beskrivning = typ === "variant"
-  ? `När har ${namn} namnsdag? ${namn} saknas i almanackan men kan firas på ${n.namn}-dagen den ${dt}. ${tal(t2020)} personer i Sverige heter ${namn} (SCB).`
-  : `När har ${namn} namnsdag? ${ny ? `Från ${n.fran} den ${dt}` : `Den ${dt}`}${samma.length ? `, samma dag som ${lista(samma.map((x) => x.namn))}` : ""}. ${t2020 ? `${tal(t2020)} personer i Sverige heter ${namn}.` : ""} ✓ Veckodag ${AR}–${AR + 4} ✓ Lägg in i kalendern.`;
+// ---- Data om namnet ----
+const s = scb(namn); // { K, M, tilltal, fornamn, t2000 } eller null (färre än 10 bärare)
+const t2020 = s?.tilltal ?? 0;
+const baraFornamn = t2020 === 0 && (s?.fornamn ?? 0) > 0; // finns i SCB bara som förnamn, inte som tilltalsnamn
+const t2010 = typ === "namn" ? n.scb?.tilltal2010 : null;
+const kon = s ? konAndel(s.K, s.M) : null;
+const plats = rang(namn);
+const alder = medelalder(namn);
+const serie = nyfodda(namn);
+const harNyf = serie.some((r) => r.x > 0);
+const nyfTopp = serie.reduce((a, r) => (r.x > (a?.x ?? 0) ? r : a), null);
+const nyfSist = serie.at(-1);
+const tr = trend(serie);
+const urs = ursprung(namn);
+const pers = kandaPersoner(namn);
+const lik = liknande(namn, typ === "variant" ? n.namn : null);
+const nyare = Object.entries(NYARE).flatMap(([a, x]) => ["K", "M"].map((kk) => ({ ar: Number(a), kon: kk, plats: x[kk].indexOf(namn) + 1, kalla: x.kalla, antal: x[kk].length }))).filter((x) => x.plats > 0).at(-1);
+const huvudBarare = typ === "variant" ? (scb(n.namn)?.tilltal ?? 0) : 0;
+const komma = (x) => String(x).replace(".", ",");
+const andelText = (x) => (x.K >= x.M ? "flickor" : "pojkar");
+const utanIndex = utan || typ === "variant" ? UTAN_NAMNSDAG.findIndex((x) => x.namn === namn) : -1;
+const grannar = utanIndex >= 0 ? UTAN_NAMNSDAG.slice(Math.max(0, utanIndex - 4), utanIndex + 5).filter((x) => x.namn !== namn) : [];
+const forandring2000 = s?.t2000 && t2020 ? Math.round(((t2020 - s.t2000) / s.t2000) * 100) : null;
 
+// ---- Title och beskrivning ----
+const titel = utan
+  ? valjTitel(`${namn} namnsdag – saknas i almanackan, firas 1 januari`, `${namn} namnsdag – firas 1 januari`)
+  : typ === "variant"
+    ? valjTitel(`${namn} namnsdag ${dt} (${n.namn}-dagen) – betydelse och fakta`, `${namn} namnsdag – ${dt} (${n.namn}-dagen)`, `${namn} namnsdag – ${dt}`)
+    : ny ? valjTitel(`${namn} namnsdag – ${dt} från ${n.fran} (nytt namn i almanackan)`, `${namn} namnsdag – ${dt} från ${n.fran}`)
+    : t2020 || harNyf
+      ? valjTitel(`${namn} namnsdag ${dt} – ${urs ? "betydelse, statistik och fakta" : "statistik och fakta"}`, `${namn} namnsdag ${dt} – ${urs ? "betydelse och statistik" : "statistik"}`, `${namn} namnsdag – ${dt}`)
+      : valjTitel(`${namn} namnsdag ${dt} – ${urs ? "betydelse och veckodag" : "veckodag och vecka"}`, `${namn} namnsdag – ${dt}`);
+const beskrivning = beskriv(
+  utan
+    ? `När har ${namn} namnsdag? ${namn} saknas i almanackan och firas på den gemensamma namnsdagen 1 januari.`
+    : typ === "variant"
+      ? `När har ${namn} namnsdag? ${namn} saknas i almanackan men kan firas på ${n.namn}-dagen den ${dt}.`
+      : `När har ${namn} namnsdag? ${ny ? `Från ${n.fran} den ${dt}` : `Den ${dt}`}${samma.length ? `, samma dag som ${lista(samma.map((x) => x.namn))}` : ""}.`,
+  t2020 ? `${tal(t2020)} heter ${namn} (SCB 2020).` : null,
+  urs && "✓ Betydelse",
+  harNyf && "✓ Nyfödda 1998–2022",
+  pers.length && "✓ Kända personer",
+  kon && "✓ Kön och ålder",
+  lik.length && "✓ Liknande namn",
+  "✓ Veckodag och vecka",
+  "✓ Lägg in i kalendern",
+  "✓ Grattiskort att dela",
+  `✓ ${AR}–${AR + 5}`,
+  "✓ Gratis",
+  "✓ Utan inloggning",
+);
+
+// ---- Vanliga frågor ----
 const fragor = [
-  { fraga: `När har ${namn} namnsdag?`, svar: typ === "variant"
-    ? `${namn} finns inte med i almanackans namnlängd. Namnet är en stavningsvariant av ${n.namn}, som har namnsdag den ${dt}, och språkligt samhöriga namn kan firas samma dag. Alla namn som saknas i almanackan har dessutom gemensam namnsdag den 1 januari.`
-    : `${namn} har namnsdag den ${dt}${ny ? ` från och med ${n.fran}` : ""}. Nästa gång är ${veckodag(start)} ${dt} ${start.getUTCFullYear()}.` },
-  t2020 > 0 && { fraga: `Hur många heter ${namn}?`, svar: `${tal(t2020)} personer i Sverige hade ${namn} som tilltalsnamn den 31 december 2020 enligt SCB${konText(kon) ? ` – ${konText(kon)}` : ""}.${fornamn ? ` Räknas alla förnamn, inte bara tilltalsnamnet, är det ${tal(fornamn)} personer.` : ""}` },
+  { fraga: `När har ${namn} namnsdag?`, svar: utan
+    ? `${namn} finns inte i almanackans namnlängd. Alla namn som saknas där har gemensam namnsdag den 1 januari, och det är den dag ${namn} kan firas.`
+    : typ === "variant"
+      ? `${namn} finns inte med i almanackans namnlängd. Namnet är en stavningsvariant av ${n.namn}, som har namnsdag den ${dt}, och språkligt samhöriga namn kan firas samma dag. Alla namn som saknas i almanackan har dessutom gemensam namnsdag den 1 januari.`
+      : `${namn} har namnsdag den ${dt}${ny ? ` från och med ${n.fran}` : ""}. Nästa gång är ${veckodag(start)} ${dt} ${start.getUTCFullYear()}.` },
+  urs && { fraga: `Vad betyder namnet ${namn}?`, svar: `Enligt svenska Wikipedia (artikeln ${urs.titel}): ${urs.ursprung}` },
+  t2020 > 0 && { fraga: `Hur många heter ${namn}?`, svar: `${tal(t2020)} personer i Sverige hade ${namn} som tilltalsnamn den 31 december 2020 enligt SCB${kon ? `, ${kon}` : ""}.${s.fornamn > t2020 ? ` Räknas alla förnamn, inte bara tilltalsnamnet, är det ${tal(s.fornamn)} personer.` : ""}${plats ? ` Det gör ${namn} till det ${tal(plats)}:e vanligaste tilltalsnamnet.` : ""}` },
+  baraFornamn && { fraga: `Hur många heter ${namn}?`, svar: `${tal(s.fornamn)} personer i Sverige hade ${namn} bland sina förnamn den 31 december 2020 enligt SCB, men färre än 10 hade det som tilltalsnamn.${s.t2000 > 0 ? ` År 2000 hade ${tal(s.t2000)} personer ${namn} som tilltalsnamn.` : ""}` },
+  harNyf && { fraga: `Hur många nyfödda får namnet ${namn}?`, svar: `${nyfSist.ar} fick ${tal(nyfSist.x)} nyfödda tilltalsnamnet ${namn}. Flest var det ${nyfTopp.ar}, med ${tal(nyfTopp.x)} barn (SCB, nyfödda 1998–2022).${tr ? ` Namnet ${tr.ord} bland nyfödda.` : ""}` },
+  pers.length >= 3 && { fraga: `Vilka kända personer heter ${namn}?`, svar: `Bland kända personer som heter ${namn} finns ${lista(pers.slice(0, 4).map((p) => `${p.titel}${p.beskr ? ` (${p.beskr})` : ""}`))}.` },
   (samma.length > 0 || samma2027.length > 0) && { fraga: `Vem mer har namnsdag den ${dt}?`, svar: `${samma.length ? `Samma dag har ${lista(samma.map((x) => x.namn))} namnsdag.` : ""}${samma2027.length ? ` Från ${samma2027[0].fran} tillkommer ${lista(samma2027.map((x) => x.namn))}.` : ""}`.trim() },
-  nyfMax.x > 0 && { fraga: `Hur många nyfödda får namnet ${namn}?`, svar: `${nyfSenast.ar} fick ${tal(nyfSenast.x)} nyfödda tilltalsnamnet ${namn}. Flest var det ${nyfMax.ar}, med ${tal(nyfMax.x)} barn (SCB, nyfödda 1998–2022).` },
-  andring.length > 0 && { fraga: `Har ${namn} alltid haft namnsdag den ${dt}?`, svar: andring.map((a) => a.nytt === n.namn
+  andring.length > 0 && { fraga: `Har ${namn} alltid haft namnsdag den ${dt}?`, svar: andring.map((a) => a.nytt === namn
     ? `${namn} kom in i almanackan ${a.ar}${a.bort ? ` och ersatte ${a.bort}` : ""}.`
     : `${namn} togs bort från den ${dagText(a.datum)} ${a.ar}.`).join(" ") },
 ].filter(Boolean);
+const h1 = utan ? `När har ${namn} namnsdag?` : typ === "variant" ? `${namn} namnsdag` : `${namn} har namnsdag ${dt}`;
 ---
 <Layout site={SITE} titel={titel} beskrivning={beskrivning}
-  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Alla namn", href: "/alla-namn/" }, { namn, href: `/namn/${slug}/` }]}
-  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>{typ === "variant" ? `${namn} namnsdag` : `${namn} har namnsdag ${dt}`}</h1>
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: utan || typ === "variant" ? "Namn utan namnsdag" : "Alla namn", href: utan || typ === "variant" ? "/namn-utan-namnsdag/" : "/alla-namn/" }, { namn, href: `/namn/${slug}/` }]}
+  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD} ogBild={`/og/namn/${slug}.png`} ogAlt={`${namn} – ${utan ? "namnsdag 1 januari" : `namnsdag ${dt}`}`}>
+  <h1>{h1}</h1>
 
   <p class="svar">
-    {typ === "variant"
-      ? <><strong>{namn}</strong> finns inte i almanackan, men är en stavningsvariant av <a href={namnHref(n.namn)}>{n.namn}</a>, som har namnsdag <strong>{dt}</strong>. Språkligt samhöriga namn kan firas samma dag. Alla namn som saknas i almanackan har också gemensam namnsdag den <a href="/1-januari/">1 januari</a>.</>
-      : <><strong>{namn}</strong> har namnsdag den <strong>{dt}</strong>{ny && <> från och med {n.fran}</>}. Nästa gång är {veckodag(start)} {dt} {start.getUTCFullYear()}<span data-nedrakning={iso(start)}></span>.{samma.length > 0 && <> Samma dag har {lista(samma.map((x) => x.namn))} namnsdag.</>}</>}
+    {utan
+      ? <><strong>{namn}</strong> finns inte i almanackan. Alla namn som saknas där har gemensam namnsdag den <a href="/1-januari/"><strong>1 januari</strong></a>, så {namn} kan firas på nyårsdagen. Nästa gång är {veckodag(start)} 1 januari {start.getUTCFullYear()}<span data-nedrakning={iso(start)}></span>.</>
+      : typ === "variant"
+        ? <><strong>{namn}</strong> finns inte i almanackan, men är en stavningsvariant av <a href={namnHref(n.namn)}>{n.namn}</a>, som har namnsdag <strong>{dt}</strong>. Språkligt samhöriga namn kan firas samma dag. Alla namn som saknas i almanackan har också gemensam namnsdag den <a href="/1-januari/">1 januari</a>.</>
+        : <><strong>{namn}</strong> har namnsdag den <strong>{dt}</strong>{ny && <> från och med {n.fran}</>}. Nästa gång är {veckodag(start)} {dt} {start.getUTCFullYear()}<span data-nedrakning={iso(start)}></span>.{samma.length > 0 && <> Samma dag har {lista(samma.map((x) => x.namn))} namnsdag.</>}</>}
     {t2020 > 0 && <> {tal(t2020)} personer i Sverige har {namn} som tilltalsnamn (SCB 2020).</>}
   </p>
 
-  <p><a class="knapp" href={`/namn/${slug}/kalender.ics`} download={`namnsdag-${slug}.ics`}>Lägg in {namn}s namnsdag i kalendern</a></p>
+  <Gratulationskort namn={namn} datum={utan ? "1 januari – gemensam namnsdag" : typ === "variant" ? `${dt} (${n.namn}-dagen)` : dt}
+    url={`/namn/${slug}/`} ics={`/namn/${slug}/kalender.ics`} icsNamn={`namnsdag-${slug}.ics`} />
+  <BrevKnapp namn={namn} />
 
-  {typ === "variant" && huvudBarare > 0 && <p>Det finns fler som heter {namn} ({tal(t2020)}) än {n.namn} ({tal(huvudBarare)}) – men det är {n.namn} som står i almanackan.</p>}
+  {typ === "variant" && huvudBarare > 0 && t2020 > huvudBarare && <p>Det finns fler som heter {namn} ({tal(t2020)}) än {n.namn} ({tal(huvudBarare)}) – men det är {n.namn} som står i almanackan.</p>}
+  {ny && <p><strong>Nytt namn {n.fran}:</strong> Namnlängdskommittén beslutade i januari 2025 att {namn} ska in i almanackan från {n.fran}. Läs mer om <a href="/namnsdagar-2027/">namnsdagarna 2027</a> och <a href="/nya-namn/">alla nya namn i almanackan</a>.</p>}
 
-  {ny && <p><strong>Nytt namn {n.fran}:</strong> Namnlängdskommittén beslutade i januari 2025 att {namn} ska in i almanackan från {n.fran}. Läs mer om <a href="/nya-namn/">nya namn i almanackan</a>.</p>}
-
-  <h2>Vilken veckodag har {namn} namnsdag?</h2>
-  <div class="tabell"><table>
-    <thead><tr><th>År</th><th>Datum</th><th>Veckodag</th></tr></thead>
-    <tbody>{ar.map((x) => <tr><td>{x.ar}</td><td>{dt}</td><td>{x.dag}</td></tr>)}</tbody>
-  </table></div>
-
-  {(t2020 > 0 || fornamn) && <>
-    <h2>Hur många heter {namn}?</h2>
-    <div class="tabell"><table>
-      <thead><tr><th>Mått (SCB)</th><th class="num">Antal</th></tr></thead>
-      <tbody>
-        {t2020 > 0 && <tr><td>Tilltalsnamn 2020</td><td class="num">{tal(t2020)}</td></tr>}
-        {konText(kon) && <tr><td>Varav</td><td class="num">{konText(kon)}</td></tr>}
-        {typ === "namn" && s?.tilltal2010 && <tr><td>Tilltalsnamn 2010</td><td class="num">{tal(s.tilltal2010)}</td></tr>}
-        {typ === "namn" && s?.tilltal2000 && <tr><td>Tilltalsnamn 2000</td><td class="num">{tal(s.tilltal2000)}</td></tr>}
-        {fornamn && <tr><td>Har namnet bland sina förnamn (2020)</td><td class="num">{tal(fornamn)}</td></tr>}
-        {typ === "namn" && s?.placering2020 && <tr><td>Placering bland {tal(SCB_TOTALT.namn)} tilltalsnamn</td><td class="num">{tal(s.placering2020)}</td></tr>}
-      </tbody>
-    </table></div>
-    {typ === "namn" && s?.tilltal2000 && t2020 > 0 && <p>Sedan 2000 har antalet som heter {namn} {t2020 > s.tilltal2000 ? `ökat med ${tal(t2020 - s.tilltal2000)}` : t2020 < s.tilltal2000 ? `minskat med ${tal(s.tilltal2000 - t2020)}` : "legat still"} ({Math.round(((t2020 - s.tilltal2000) / s.tilltal2000) * 100)} procent).</p>}
-    <p class="kalla">Källa: {SCB_KALLA}. Folkbokförda 31 december. Namn med färre än 10 bärare redovisas inte av SCB. <a href="/hur-manga-heter/">Jämför med andra namn</a>.</p>
+  {urs && <>
+    <h2>Vad betyder namnet {namn}?</h2>
+    <blockquote class="citat" cite={urs.url}>
+      <p>{urs.ursprung}</p>
+    </blockquote>
+    <p class="kalla">Citat ur artikeln <a href={urs.url} rel="noopener">{urs.titel}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {WIKI_HAMTAD}. Texten återges ordagrant och utan ändringar.</p>
   </>}
 
-  {nyfMax.x > 0 && <>
-    <h2>Nyfödda som fått namnet {namn}</h2>
-    <p>{nyfSenast.ar} fick {tal(nyfSenast.x)} nyfödda tilltalsnamnet {namn}. Flest var det {nyfMax.ar}, med {tal(nyfMax.x)} barn.</p>
-    <div class="staplar" role="img" aria-label={`Nyfödda med tilltalsnamnet ${namn} per år 1998–2022. Flest ${nyfMax.ar}: ${nyfMax.x}.`}>
-      {nyfFull.map((r) => <span style={`height:${Math.max(1, Math.round((r.x / nyfMax.x) * 100))}%`} title={`${r.ar}: ${r.x}`}></span>)}
-    </div>
-    <div class="staplar-ar"><span>1998</span><span>2010</span><span>2022</span></div>
-    <p class="kalla">Källa: SCB, nyfödda efter tilltalsnamn och namngivningsår (BE0001Nyfodda). År med färre än 2 barn redovisas inte.</p>
+  {(t2020 > 0) && <>
+    <h2>Hur många heter {namn}?</h2>
+    {kon && <div class="konstapel" role="img" aria-label={`Kön bland dem som heter ${namn}: ${kon}`}>
+      <span class="k" style={`width:${(s.K / t2020) * 100}%`}></span><span class="m" style={`width:${(s.M / t2020) * 100}%`}></span>
+    </div>}
+    {kon && <p class="konrad"><span class="pr k"></span>Kvinnor {procent(s.K, t2020)} % <span class="pr m"></span>Män {procent(s.M, t2020)} %</p>}
+    <div class="tabell"><table>
+      <thead><tr><th>Mått (SCB)</th><th class="num">Värde</th></tr></thead>
+      <tbody>
+        <tr><td>Har {namn} som tilltalsnamn, 2020</td><td class="num">{tal(t2020)}</td></tr>
+        {kon && <tr><td>Kvinnor / män</td><td class="num">{tal(s.K)} / {tal(s.M)}</td></tr>}
+        {s.fornamn > 0 && <tr><td>Har {namn} bland sina förnamn, 2020</td><td class="num">{tal(s.fornamn)}</td></tr>}
+        {t2010 && <tr><td>Tilltalsnamn 2010</td><td class="num">{tal(t2010)}</td></tr>}
+        {s.t2000 > 0 && <tr><td>Tilltalsnamn 2000</td><td class="num">{tal(s.t2000)}</td></tr>}
+        {plats && <tr><td>Placering bland {tal(ANTAL_TILLTALSNAMN)} tilltalsnamn, 2020</td><td class="num">{tal(plats)}</td></tr>}
+        {alder?.total && <tr><td>Medelålder, 2020</td><td class="num">{komma(alder.total)} år</td></tr>}
+      </tbody>
+    </table></div>
+    <p>{kon && <>Av dem som heter {namn} är {kon}. </>}{forandring2000 !== null && <>Sedan 2000 har antalet {t2020 > s.t2000 ? `ökat med ${tal(t2020 - s.t2000)}` : t2020 < s.t2000 ? `minskat med ${tal(s.t2000 - t2020)}` : "legat still"} ({forandring2000 > 0 ? "+" : ""}{forandring2000} procent). </>}{alder?.total && <>Medelåldern är {komma(alder.total)} år{alder.total >= 50 ? ", så namnet bärs mest av äldre" : alder.total <= 20 ? ", så namnet bärs mest av barn och unga" : ""}.</>}</p>
+    <p class="kalla">Källa: {SCB_KALLA}. Folkbokförda 31 december 2020 – SCB:s senaste namnstatistik (SCB slutade publicera namnstatistik 2024). Namn med färre än 10 bärare redovisas inte. <a href="/hur-manga-heter/">Jämför med andra namn</a>.</p>
+  </>}
+
+  {baraFornamn && <>
+    <h2>Hur många heter {namn}?</h2>
+    <p>{tal(s.fornamn)} personer i Sverige har {namn} bland sina förnamn, men färre än 10 har det som tilltalsnamn – det namn man faktiskt kallas för. {namn} bärs alltså i dag nästan bara som ett av flera förnamn.{s.t2000 > 0 && <> År 2000 hade {tal(s.t2000)} personer {namn} som tilltalsnamn{s.t2000 >= 10 ? ", så antalet har sjunkit under SCB:s gräns sedan dess" : ""}.</>}</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Mått (SCB)</th><th class="num">Värde</th></tr></thead>
+      <tbody>
+        <tr><td>Har {namn} bland sina förnamn, 2020</td><td class="num">{tal(s.fornamn)}</td></tr>
+        <tr><td>Har {namn} som tilltalsnamn, 2020</td><td class="num">färre än 10</td></tr>
+        {s.t2000 > 0 && <tr><td>Tilltalsnamn 2000</td><td class="num">{tal(s.t2000)}</td></tr>}
+      </tbody>
+    </table></div>
+    <p class="kalla">Källa: {SCB_KALLA}. Folkbokförda 31 december 2020 – SCB:s senaste namnstatistik. SCB redovisar inte tilltalsnamn med färre än 10 bärare. <a href="/hur-manga-heter/">Jämför med andra namn</a>.</p>
+  </>}
+
+  {harNyf && <>
+    <h2>Hur populärt är {namn} bland nyfödda?</h2>
+    <p>{nyfSist.ar} fick {tal(nyfSist.x)} nyfödda tilltalsnamnet {namn}. Flest var det {nyfTopp.ar}, med {tal(nyfTopp.x)} barn{nyfTopp.K && nyfTopp.M ? "" : <>, alla {andelText(nyfTopp)}</>}.
+      {tr && <> Under 2018–2022 fick i snitt {tal(Math.round(tr.nu))} barn per år namnet, mot {tal(Math.round(tr.fore))} under 2013–2017 – namnet {tr.ord}.</>}
+      {nyare && <> Enligt {nyare.kalla} var {namn} det {nyare.plats === 1 ? "vanligaste" : `${nyare.plats}:e vanligaste`} {nyare.kon === "K" ? "flicknamnet" : "pojknamnet"} {nyare.ar}.</>}</p>
+    <NyfoddaDiagram serie={serie} namn={namn} />
+    <p class="kalla">Källa: {NYF_KALLA}. SCB redovisar bara namn som minst två barn fick ett visst år; senaste året är 2022.{nyare && ` Uppgiften för ${nyare.ar} kommer från ${nyare.kalla}.`}</p>
   </>}
 
   <Annons plats="namn-1" />
 
-  {varianter.length > 0 && <>
-    <h2>Stavningsvarianter som kan firas samma dag</h2>
-    <ul class="namnchips">{varianter.map((x) => <li><a href={`/namn/${x.slug}/`}>{x.namn}<small>{tal(x.antal)}</small></a></li>)}</ul>
+  {pers.length > 0 && <>
+    <h2>Kända personer som heter {namn}</h2>
+    <ul class="personer">{pers.map((p) => (
+      <li><a href={p.url} rel="noopener">{p.titel}</a>{p.beskr && <> – {p.beskr}</>}{p.fodd && <span class="levnad"> ({p.fodd < 0 ? `${-p.fodd} f.Kr.` : p.fodd}{p.dod ? `–${p.dod}` : ""})</span>}</li>
+    ))}</ul>
+    <p class="kalla">Urval ur Wikidata (CC0): personer med förnamnet {namn} som har en artikel på svenska Wikipedia, ordnade efter hur många språkversioner av Wikipedia som har en artikel om dem. Hämtad {PERS_HAMTAD}.</p>
   </>}
 
-  {andring.length > 0 && typ === "namn" && <>
+  {lik.length > 0 && <>
+    <h2>Liknande namn och stavningar</h2>
+    <ul class="namnchips">{lik.map((x) => <li><a href={`/namn/${x.slug}/`}>{x.namn}<small>{x.datum && x.typ !== "utan" ? dagText(x.datum) : "1 januari"}{x.antal ? ` · ${tal(x.antal)}` : ""}</small></a></li>)}</ul>
+    <p class="kalla">Datum = namnsdag (för stavningsvarianter almanacksnamnets dag). Siffran är antal med namnet som tilltalsnamn (SCB 2020).</p>
+  </>}
+
+  {andring.length > 0 && <>
     <h2>{namn} i almanackans historia</h2>
-    <ul>{andring.map((a) => <li>{a.nytt === n.namn
+    <ul>{andring.map((a) => <li>{a.nytt === namn
       ? <>{a.ar}: {namn} kom in i almanackan den {dagText(a.datum)}{a.bort && <> och ersatte {a.bort}</>}.</>
       : <>{a.ar}: {namn} togs bort från den {dagText(a.datum)}.</>}</li>)}</ul>
   </>}
 
-  <h2>Namnsdagar runt {dt}</h2>
-  <ul class="veckan">
-    {[fore(n.datum), n.datum, efter(n.datum)].map((kk) => {
-      const ns = namnPaDag(kk, Math.max(AR, n.fran ?? 0));
-      return <li aria-current={kk === n.datum ? "page" : undefined}><span class="vd"><a href={dagHref(kk)}>{dagText(kk)}</a></span>
-        <span>{ns.length ? ns.map((x, j) => <>{j > 0 && ", "}{x.namn === n.namn ? <strong>{x.namn}</strong> : <a href={namnHref(x.namn)}>{x.namn}</a>}</>) : <em>ingen namnsdag</em>}</span></li>;
-    })}
-  </ul>
-  {fast && <p>Den {dt} är också {fast}.</p>}
-  <p><a href={manadHref(m)}>Alla namnsdagar i {MANADER[m - 1]}</a> · <a href="/alla-namn/">Alla namn A–Ö</a> · <a href="/">Namnsdag idag</a></p>
+  <h2>Vilken veckodag {utan ? "är 1 januari" : `har ${namn} namnsdag`}?</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Datum</th><th>Veckodag</th><th class="num">Vecka</th></tr></thead>
+    <tbody>{ar.map((x) => <tr><td>{x.ar}</td><td>{dt}</td><td>{x.dag}</td><td class="num">{isoVecka(x.dt).vecka}</td></tr>)}</tbody>
+  </table></div>
+
+  {utan ? <>
+    {grannar.length > 0 && <>
+      <h2>Andra vanliga namn utan namnsdag</h2>
+      <ul class="namnchips">{grannar.map((x) => <li><a href={`/namn/${x.slug}/`}>{x.namn}<small>{tal(x.antal)}</small></a></li>)}</ul>
+      <p><a href="/namn-utan-namnsdag/">Alla {UTAN_NAMNSDAG.length} vanliga namn som saknar namnsdag</a> · <a href="/1-januari/">Namnsdag 1 januari</a> · <a href="/">Namnsdag idag</a></p>
+    </>}
+  </> : <>
+    <h2>Namnsdagar runt {dt}</h2>
+    <ul class="veckan">
+      {[fore(k), k, efter(k)].map((kk) => {
+        const ns = namnPaDag(kk, Math.max(AR, n.fran ?? 0));
+        return <li aria-current={kk === k ? "page" : undefined}><span class="vd"><a href={dagHref(kk)}>{dagText(kk)}</a></span>
+          <span>{ns.length ? ns.map((x, j) => <>{j > 0 && ", "}{x.namn === namn ? <strong>{x.namn}</strong> : <a href={namnHref(x.namn)}>{x.namn}</a>}</>) : <em>ingen namnsdag</em>}</span></li>;
+      })}
+    </ul>
+    {fast && <p>Den {dt} är också {fast}.</p>}
+    <p><a href={manadHref(m)}>Alla namnsdagar i {MANADER[m - 1]}</a> · <a href="/alla-namn/">Alla namn A–Ö</a> · <a href="/">Namnsdag idag</a></p>
+  </>}
 
   <Faq fragor={fragor} />
 
@@ -148,7 +242,7 @@ const fragor = [
       if (!el) return;
       const nu = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
       const dagar = Math.round((Date.parse(el.dataset.nedrakning) - Date.parse(nu)) / 86400000);
-      if (dagar === 0) el.textContent = " – det är idag!";
+      if (dagar === 0) el.textContent = " – det är idag";
       else if (dagar > 0) el.textContent = ` (om ${dagar} ${dagar === 1 ? "dag" : "dagar"})`;
     })();
   </script>

@@ -3,14 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "data": "node scripts/run-all.mjs"
+    "build": "node scripts/bygg.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
     "@natverk/core": "*",
     "astro": "^7.4.13"
-  }
+  },
+  "description": "Omdirigeringssajt: dagensbensinpris.se → bensinstationer.nu (sammanslagen 2026-11-27)."
 }

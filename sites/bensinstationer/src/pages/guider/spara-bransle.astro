@@ -1,0 +1,168 @@
+---
+// Lång guide: spara bränsle. Effekter enligt Transportstyrelsen, Energimyndigheten/Trafikverket, VTI, NTF m.fl. och ADAC,
+// omräknade till kronor per år med dagens snittpris och Trafikanalys körsträckor 2025. Alla antaganden står i texten.
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, idagPris, kr, pris, procent, datumText } from "../../pris.js";
+import { KORSTRACKOR } from "../../lib/fakta.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => Math.round(n).toLocaleString("sv-SE");
+const dec = (n, d = 1) => n.toLocaleString("sv-SE", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+// Antaganden: 0,6 l/mil för bensinbilen och 0,48 l/mil för dieselbilen (samma som i guiden bensin eller diesel).
+const FB = 0.6, FD = 0.48;
+const tb = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin");
+const td = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Diesel");
+const lB = tb.mil * FB, lD = td.mil * FD;
+const kB = lB * p95, kD = lD * pd;
+
+// Åtgärder med källa. andel = andel av årsförbrukningen; liter = liter per år i ett räkneexempel.
+const atgarder = [
+  { namn: "Sparsam körning", kalla: "Trafikverket via Energimyndigheten", effekt: "7 % i genomsnitt", b: 0.07 * kB, d: 0.07 * kD },
+  { namn: "Energieffektiva däck", kalla: "Energimyndigheten", effekt: "5 %", b: 0.05 * kB, d: 0.05 * kD },
+  { namn: "Däck och körstil tillsammans", kalla: "Energimyndigheten", effekt: "12 %", b: 0.12 * kB, d: 0.12 * kD },
+  { namn: "100 kg mindre last", kalla: "ADAC", effekt: "upp till 0,3 l/100 km", b: tb.mil * 0.03 * p95, d: td.mil * 0.03 * pd },
+];
+
+// Hastighet: 0,5–1,0 dl/mil per 10 km/h över 70–75 km/h (Transportstyrelsen).
+const hast = [100, 300, 500].map((m) => ({ m, lo: m * 0.05, hi: m * 0.1 }));
+// Takbox: ca 11 % vid 80 km/h, upp till 2 l/100 km vid 130 km/h (ADAC).
+const resa = 100; // mil, en semesterresa tur och retur
+const boxResa = resa * FB * 0.11;
+const boxAr = lB * 0.11;
+// Tomgång: 0,5–1 l/timme (ADAC). Exempel: 5 minuter om dagen, 250 dagar.
+const tomTim = (5 * 250) / 60;
+
+// Per län: 7 % av en bensinbils förbrukning med länets genomsnittliga körsträcka (privatägda bilar).
+const lanHref = Object.fromEntries(KAT.lan.map((l) => [l.namn, l.href]));
+const perLan = KORSTRACKOR.perLan.map(([lan, mil]) => ({ lan, mil, kr: mil * FB * p95 * 0.07 })).sort((a, b) => b.mil - a.mil);
+
+const avsnitt = [
+  { id: "kostnad", rubrik: "Vad kostar bränslet per år?" },
+  { id: "korstil", rubrik: "Sparsam körning: 7 procent i snitt" },
+  { id: "hastighet", rubrik: "Hastigheten kostar mest" },
+  { id: "dack", rubrik: "Däck och däcktryck" },
+  { id: "takbox", rubrik: "Takbox, last och luftkonditionering" },
+  { id: "tomgang", rubrik: "Tomgång och kallstarter" },
+  { id: "lan", rubrik: "Vad sparar en bilist i ditt län?" },
+  { id: "tank", rubrik: "Tanka billigare" },
+];
+
+const fragor = [
+  { fraga: "Hur mycket bränsle kan man spara med sparsam körning?", svar: `Enligt Trafikverket, som Energimyndigheten hänvisar till, sparar sparsam körning i genomsnitt 7 procent, och i spannet 4–10 procent eller mer. För en genomsnittlig bensinbil motsvarar 7 procent ${kr(0.07 * kB, 0)} per år med dagens pris, räknat på 0,6 liter per mil och ${tal(tb.mil)} mil.` },
+  { fraga: "Hur mycket mer drar bilen i högre fart?", svar: "Transportstyrelsen anger att förbrukningen ökar med 0,5–1,0 deciliter per mil för varje 10 km/h du kör över 70–75 km/h." },
+  { fraga: "Hur mycket drar en takbox?", svar: "Den tyska motororganisationen ADAC mätte cirka 11 procent högre förbrukning med takbox redan vid 80 km/h, och upp till två liter mer per 100 kilometer vid 130 km/h." },
+  { fraga: "Hur mycket drar bilen på tomgång?", svar: "ADAC anger ungefär en halv till en liter i timmen. I Stockholms stad får motorn gå på tomgång i högst en minut, och kommunen skriver att en minuts tomgång kräver mer bränsle än att starta om motorn." },
+  { fraga: "Påverkar däcktrycket förbrukningen?", svar: "Ja. Med för lågt tryck ökar förbrukningen och däcken slits fortare, enligt Energimyndigheten, VTI, NTF och Bilprovningen. De råder dig att kontrollera trycket minst en gång i månaden och gärna köra på biltillverkarens högre eko-tryck." },
+  { fraga: "Sparar motorvärmaren bränsle?", svar: "Den minskar kallstartstillägget, men VTI:s beräkningar åt Energimyndigheten visar att förvärmning sällan är effektiv om man bara räknar energi, eftersom elen också kostar. Nyttan beror på utetemperatur, hur länge bilen stått och bilens miljöklass." },
+];
+---
+<Guide site={SITE} titel={`Spara bränsle – så mycket sparar du i kronor per år`}
+  beskrivning={`Sparsam körning sparar i snitt 7 procent, ${kr(0.07 * kB, 0)} per år för en vanlig bensinbil. Fart, däcktryck, takbox och tomgång i kronor, med myndigheternas siffror.`}
+  h1="Spara bränsle – det här ger mest i kronor"
+  svar={`Sparsam körning minskar förbrukningen med i genomsnitt <strong>7 procent</strong> enligt Trafikverket. För en genomsnittlig bensinbil som kör ${tal(tb.mil)} mil om året är det <strong>${kr(0.07 * kB, 0)} per år</strong> med dagens pris, ${kr(p95)} per liter. Farten betyder mest: enligt Transportstyrelsen ökar förbrukningen med 0,5–1,0 deciliter per mil för varje 10 km/h över 70–75 km/h. Rätt däcktryck, att ta av takboxen och att undvika tomgång sparar ytterligare.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Spara bränsle", href: "/guider/spara-bransle/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Räkna med din egen förbrukning" },
+    { namn: "Så hittar du billigaste bensinen", href: "/guider/billigaste-bensinen/", text: "Kedjor och obemannade stationer" },
+    { namn: "När är bensinen billigast?", href: "/guider/nar-ar-bensinen-billigast/", text: "Veckodag och tid" },
+    { namn: "Tankkort och appar", href: "/guider/tankkort-och-appar/", text: "Rabatt per liter hos kedjorna" },
+    { namn: "Milersättning", href: "/guider/milersattning/", text: "Vad bilen kostar per mil" },
+  ]}
+  kallor={[
+    { namn: "Transportstyrelsen – Sparsam körning", url: "https://www.transportstyrelsen.se/sv/vagtrafik/miljo/klimat-och-energi/sparsam-korning/", text: "0,5–1,0 dl/mil per 10 km/h över 70–75 km/h", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Kom längre som medveten bilist (ET2012:57)", url: "https://www.energimyndigheten.se/contentassets/9174f17706a9415390df8476191aafc9/kom-langre-som-medveten-bilist.pdf", text: "sparsam körning 7 % (Trafikverket), 4–10 %, däck 5 %, tillsammans 12 %, nio steg", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Få grepp om energimärkningen av däck (ET2012:35)", url: "https://www.energimyndigheten.se/contentassets/9174f17706a9415390df8476191aafc9/fa-grepp-om-energimarkningen-av-dack.pdf", text: "däcken står för 20–30 % av förbrukningen, upp till 7,5 % lägre med bästa energiklass", datum: "2026-11-27" },
+    { namn: "NTF m.fl. – Så har du koll på dina däck (2025)", url: "https://ntf.se/media/szclbkda/bilaga_dackkollen_25.pdf", text: "däcktryck, eko-tryck, kontroll varje månad (Energimyndigheten, VTI, NTF, Bilprovningen)", datum: "2026-11-27" },
+    { namn: "VTI rapport 886 – Ekonomisk och energieffektiv användning av motorvärmare (2016)", url: "https://www.diva-portal.org/smash/get/diva2:911224/FULLTEXT01.pdf", text: "kallstartstillägg, cirka 7 % av bränslet", datum: "2026-11-27" },
+    { namn: "ADAC – Sprit sparen: Die 12 besten Tipps (5 maj 2026)", url: "https://www.adac.de/infotestrat/adac-im-einsatz/motorwelt/spritspartipps.aspx", text: "tomgång, last, luftkonditionering, däcktryck", datum: "2026-11-27" },
+    { namn: "ADAC – Die Dachbox ist der größte Spritverbraucher im Winter (30 december 2013)", url: "https://presse.adac.de/meldungen/adac-ev/technik/die-dachbox-ist-der-groesste-spritverbraucher-im-winter.html", text: "takbox: cirka 11 % vid 80 km/h, upp till 2 l/100 km vid 130 km/h", datum: "2026-11-27" },
+    { namn: "Stockholms stad – Bil", url: "https://hallbart.stockholm/resa/bil/", text: "tomgång högst en minut", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "körsträcka per drivmedel och län", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `OKQ8, Circle K och Preem, ${datum}` },
+  ]}>
+
+  <h2 id="kostnad">Vad kostar bränslet per år?</h2>
+  <p>För att kunna räkna om procent till kronor behövs en utgångspunkt. Enligt Trafikanalys körde bensinbilarna i genomsnitt {tal(tb.mil)} mil och dieselbilarna {tal(td.mil)} mil under {KORSTRACKOR.ar}. Vi antar att bensinbilen drar 0,6 liter per mil och dieselbilen 0,48 liter per mil. Med kedjornas snittpriser {datum} blir årskostnaden:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Mil per år</th><th class="num">Förbrukning</th><th class="num">Liter per år</th><th class="num">Pris per liter</th><th class="num">Kostnad per år</th></tr></thead>
+    <tbody>
+      <tr><td>Bensinbil</td><td class="num">{tal(tb.mil)}</td><td class="num">0,6 l/mil</td><td class="num">{tal(lB)}</td><td class="num">{kr(p95)}</td><td class="num">{kr(kB, 0)}</td></tr>
+      <tr><td>Dieselbil</td><td class="num">{tal(td.mil)}</td><td class="num">0,48 l/mil</td><td class="num">{tal(lD)}</td><td class="num">{kr(pd)}</td><td class="num">{kr(kD, 0)}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Varje procent du sparar är alltså värd ungefär {kr(kB / 100, 0)} om året för bensinbilen och {kr(kD / 100, 0)} för dieselbilen. Drar din bil mer eller kör du längre blir besparingen större. Räkna med dina egna siffror i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Åtgärd</th><th>Effekt enligt källan</th><th>Källa</th><th class="num">Bensinbil per år</th><th class="num">Dieselbil per år</th></tr></thead>
+    <tbody>{atgarder.map((x) => <tr><td>{x.namn}</td><td>{x.effekt}</td><td>{x.kalla}</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.d, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Räkneexempel med antagandena ovan och dagens snittpris. Effekterna kan inte alltid läggas ihop rakt av.</p>
+
+  <h2 id="korstil">Sparsam körning: 7 procent i snitt</h2>
+  <p>Energimyndigheten hänvisar i sin broschyr om sparsam körning till Trafikverket, som anger att sparsam körning i genomsnitt sparar 7 procent av bränslet och att spannet är 4–10 procent eller mer. Trafikverkets nio steg är:</p>
+  <ol>
+    <li>Kör med framförhållning och undvik onödiga stopp.</li>
+    <li>Växla upp tidigt och kör på så hög växel som möjligt.</li>
+    <li>Ha jämnt gaspådrag och håll hastighetsgränserna.</li>
+    <li>Motorbromsa.</li>
+    <li>Kör inte på tomgång.</li>
+    <li>Rulla i nedförsbacke och håll jämnt gaspådrag i uppförsbacke.</li>
+    <li>Använd motorvärmare.</li>
+    <li>Serva bilen regelbundet och kontrollera däcktrycket minst varannan tankning.</li>
+    <li>Ta bort takboxen och annat som ökar bilens motstånd.</li>
+  </ol>
+  <p>Med 4–10 procent blir besparingen för bensinbilen i vårt exempel {kr(0.04 * kB, 0)}–{kr(0.10 * kB, 0)} per år och för dieselbilen {kr(0.04 * kD, 0)}–{kr(0.10 * kD, 0)}. Transportstyrelsen skriver att en privatbilist kan spara flera tusenlappar per år, och sparsam körning ingår numera både i kunskapsprovet och i körprovet.</p>
+
+  <h2 id="hastighet">Hastigheten kostar mest</h2>
+  <p>Luftmotståndet växer snabbt med farten. Transportstyrelsen anger att förbrukningen ökar med 0,5–1,0 deciliter per mil för varje 10 km/h du kör över 70–75 km/h. Det är en av få siffror som går att använda direkt: kör du 120 i stället för 110 kostar varje mil 0,05–0,1 liter mer.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Mil per år 10 km/h fortare</th><th class="num">Extra liter</th><th class="num">Bensin, extra kr</th><th class="num">Diesel, extra kr</th></tr></thead>
+    <tbody>{hast.map((x) => <tr><td class="num">{tal(x.m)}</td><td class="num">{tal(x.lo)}–{tal(x.hi)}</td><td class="num">{tal(x.lo * p95)}–{kr(x.hi * p95, 0)}</td><td class="num">{tal(x.lo * pd)}–{kr(x.hi * pd, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Räkneexempel: 0,5–1,0 dl/mil per 10 km/h enligt Transportstyrelsen, dagens snittpriser.</p>
+  <p>På en enskild resa märks det också. Kör du 50 mil på motorväg 10 km/h fortare går det åt 2,5–5 liter mer, {kr(2.5 * p95, 0)}–{kr(5 * p95, 0)} med bensin. Tidsvinsten är samtidigt liten: 50 mil i 120 km/h går {tal((500 / 110 - 500 / 120) * 60)} minuter fortare än i 110 km/h, och det bara om du kan hålla farten hela vägen.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="dack">Däck och däcktryck</h2>
+  <p>Däcken svarar för 20–30 procent av bilarnas bränsleförbrukning, enligt Energimyndigheten. Myndigheten anger att energimärkta däck sparar 5 procent av bränslet och att däck i den bästa energiklassen kan minska förbrukningen med upp till 7,5 procent jämfört med den sämsta. Tillsammans med sparsam körning räknar myndigheten med 12 procent, för bensinbilen i vårt exempel {kr(0.12 * kB, 0)} per år.</p>
+  <p>Däcktrycket kostar ingenting att rätta till. Energimyndigheten, VTI, NTF och Bilprovningen skriver i sin gemensamma däckkampanj att förbrukningen ökar och räckvidden minskar med för lågt tryck. Deras råd:</p>
+  <ul>
+    <li>Kontrollera trycket minst en gång i månaden, på kalla däck. Det gäller även bilar med automatisk tryckövervakning.</li>
+    <li>Rätt tryck står i instruktionsboken och oftast på en dekal i dörrstolpen.</li>
+    <li>Många tillverkare anger ett lägre tryck för normal körning och ett högre eko-tryck. Kör du alltid på det högre trycket minskar förbrukningen och däcken håller längre. Gå aldrig under det lägsta angivna trycket.</li>
+    <li>Med 30 procent för lågt tryck kan däckens livslängd halveras.</li>
+  </ul>
+  <p>ADAC skriver att redan 0,3 bar för lågt tryck ökar rullmotståndet. Ingen av de svenska källorna anger hur många procent förbrukningen ökar, så vi räknar inte på det.</p>
+
+  <h2 id="takbox">Takbox, last och luftkonditionering</h2>
+  <p>ADAC mätte i ett praktiskt test att en takbox höjer förbrukningen med cirka 11 procent redan vid 80 km/h och med upp till två liter per 100 kilometer, alltså 0,2 liter per mil, vid 130 km/h. Två exempel för bensinbilen:</p>
+  <ul>
+    <li><strong>En semesterresa på {resa} mil</strong> med takbox: 11 procent av 0,6 liter per mil ger {dec(boxResa)} liter extra, {kr(boxResa * p95, 0)}.</li>
+    <li><strong>Takboxen sitter kvar hela året:</strong> 11 procent av {tal(lB)} liter är {tal(boxAr)} liter, {kr(boxAr * p95, 0)}.</li>
+  </ul>
+  <p>Vikten spelar mindre roll men märks i stadstrafik. Enligt ADAC ger 100 kilo extra last upp till 0,3 liter mer per 100 kilometer. Över ett genomsnittsår för en bensinbil blir det upp till {tal(tb.mil * 0.03)} liter, {kr(tb.mil * 0.03 * p95, 0)}. Luftkonditioneringen kostar enligt ADAC 0,3–1,5 liter per 100 kilometer, beroende på bil och förhållanden.</p>
+
+  <h2 id="tomgang">Tomgång och kallstarter</h2>
+  <p>En bil på tomgång drar enligt ADAC ungefär en halv till en liter i timmen. ADAC råder dig att stänga av motorn om du räknar med att stå still längre än 20 sekunder. Stockholms stad skriver att en minuts tomgång kräver mer bränsle än att starta om motorn, och där får motorn gå på tomgång i högst en minut.</p>
+  <p>Låter du motorn gå fem minuter om dagen, till exempel för att värma bilen eller medan du väntar, blir det {tal(tomTim)} timmar på 250 dagar. Med en halv till en liter i timmen är det {tal(tomTim * 0.5)}–{tal(tomTim)} liter om året, {kr(tomTim * 0.5 * p95, 0)}–{kr(tomTim * p95, 0)} med bensin.</p>
+  <p>En kall motor drar mer. VTI har på uppdrag av Energimyndigheten beräknat att kallstarterna står för cirka 7 procent av personbilstrafikens koldioxidutsläpp och därmed bränsleförbrukning. Motorvärmare minskar det tillägget, och Trafikverket har den med i sina nio steg. VTI konstaterar ändå att förvärmningen sällan är effektiv om man bara räknar energi, eftersom elen också kostar. Nyttan beror på utetemperaturen, hur länge bilen stått och bilens miljöklass. Använd därför timer och värm inte längre än nödvändigt.</p>
+
+  <h2 id="lan">Vad sparar en bilist i ditt län?</h2>
+  <p>Körsträckan skiljer sig mellan länen. Tabellen visar den genomsnittliga körsträckan för privatägda personbilar per län enligt Trafikanalys, och vad 7 procent sparsam körning skulle vara värt om bilen var en bensinbil som drar 0,6 liter per mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Mil per år</th><th class="num">7 % sparsam körning</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{lanHref[x.lan] ? <a href={lanHref[x.lan]}>{x.lan}</a> : x.lan}</td><td class="num">{tal(x.mil)}</td><td class="num">{kr(x.kr, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Körsträckor {KORSTRACKOR.ar}, privatägda personbilar oavsett drivmedel, efter registreringslän (Trafikanalys). Bensinpris: kedjornas snitt {datum}.</p>
+
+  <h2 id="tank">Tanka billigare</h2>
+  <p>Utöver att köra snålare kan du sänka kostnaden per liter. Kedjornas rabatter på 10–25 öre per liter är värda {kr(0.10 * lB, 0)}–{kr(0.25 * lB, 0)} om året för en genomsnittlig bensinbil, vilket vi räknar på i <a href="/guider/tankkort-och-appar/">guiden om tankkort och appar</a>. Skillnaden mellan stationer kan vara större, så jämför <a href="/bensinpris/">dagens bensinpris</a> och <a href="/dieselpris/">dieselpris</a> och läs <a href="/guider/billigaste-bensinen/">så hittar du billigaste bensinen</a>. Allra mest sparar du ändå på det som minskar antalet liter, och där är farten och körstilen det som betyder mest.</p>
+</Guide>

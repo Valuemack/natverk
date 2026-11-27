@@ -71,10 +71,12 @@
   "bildmotiv": "an empty university lecture hall with wooden benches, a large chalkboard and laptops on the desks, soft daylight from tall windows",
   "bildalt": "ETH Zürichs huvudbyggnad i Zürich en klar höstdag",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.3,
+    "positiv": 0.3,
+    "betydelse": 0.2,
     "tillit": 0.93,
-    "total": 48
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -86,5 +88,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

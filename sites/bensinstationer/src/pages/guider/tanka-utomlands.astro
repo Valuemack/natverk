@@ -1,0 +1,173 @@
+---
+// Lång guide: tanka utomlands i Europa (praktiskt). Bränslemärkning enligt EN 16942 / direktiv 2014/94/EU (belgiska
+// ekonomiministeriet FOD Economie), tyska namn (ADAC), priser ur EU:s Weekly Oil Bulletin via landPris (samma vecka som
+// Sverige), betalning (Konsumenternas Bank- och finansbyrå), införsel av bränsle (Skatteverket, Tullverket), E10 (Drivkraft).
+// Prisrankning finns på /europa/ och dupliceras inte här. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LANDER, SENASTE_VECKA, landPris, kr, pris, datumText } from "../../pris.js";
+
+const PUBLICERAD = "2026-11-27";
+// Guiden visar EU:s veckopriser, som byts varje vecka.
+const uppdaterad = [PUBLICERAD, SENASTE_VECKA.datum].sort().at(-1);
+const vecka = datumText(SENASTE_VECKA.datum);
+
+// Länder som svenska bilister ofta kör till eller genom på väg ut i Europa (urval; hela listan finns på /europa/).
+const URVAL = ["DK", "DE", "PL", "FI", "EE", "LV", "LT", "NL", "BE", "FR", "AT", "CZ", "IT", "ES", "HR"];
+const LAND = URVAL.map((kod) => {
+  const l = LANDER.find((x) => x.kod === kod);
+  const p = l ? landPris(kod) : null;
+  return l && p ? { ...l, p, d95: p.b95 - SENASTE_VECKA.b95, dD: p.diesel != null ? p.diesel - SENASTE_VECKA.diesel : null } : null;
+}).filter(Boolean);
+const tank = 50;
+const billigare95 = LAND.filter((l) => l.d95 < 0), billigareD = LAND.filter((l) => l.dD != null && l.dD < 0);
+const dyrast95 = [...LAND].sort((a, b) => b.p.b95 - a.p.b95)[0];
+const billigast95 = [...LAND].sort((a, b) => a.p.b95 - b.p.b95)[0];
+const billigastD = [...LAND].filter((l) => l.p.diesel != null).sort((a, b) => a.p.diesel - b.p.diesel)[0];
+const ejEuro = LAND.filter((l) => l.p.valuta && l.p.valuta !== "EUR");
+const lokal = (v, valuta) => (v == null ? "–" : `${v.toLocaleString("sv-SE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${valuta === "EUR" ? "€" : valuta ?? ""}`);
+const tyskland = LAND.find((l) => l.kod === "DE"), danmark = LAND.find((l) => l.kod === "DK"), polen = LAND.find((l) => l.kod === "PL");
+// Skillnaden mellan diesel och bensin 95 per land, samma vecka.
+const GAP = LAND.filter((l) => l.p.diesel != null).map((l) => ({ ...l, gap: l.p.diesel - l.p.b95 })).sort((a, b) => a.gap - b.gap);
+const seGap = SENASTE_VECKA.diesel - SENASTE_VECKA.b95;
+const storreGap = GAP.filter((l) => l.gap > seGap);
+const href = (l) => `/europa/${l.slug}/`;
+
+// Märkningen enligt EN 16942 (FOD Economie, Belgien).
+const MARKNING = [
+  { form: "Cirkel", typ: "Bensin", etiketter: "E5, E10, E85", betyder: "E och siffran anger högsta andel etanol (biokomponent) i volymprocent." },
+  { form: "Kvadrat", typ: "Diesel", etiketter: "B7, B10, XTL", betyder: "B och siffran anger högsta andel biodiesel (FAME). XTL är syntetisk eller paraffinisk diesel." },
+  { form: "Romb", typ: "Gas", etiketter: "H2, CNG, LPG, LNG", betyder: "Vätgas, komprimerad gas (fordonsgas), gasol och flytande gas." },
+];
+
+const avsnitt = [
+  { id: "markning", rubrik: "Märkningen på pumpen: E5, E10, B7 och XTL" },
+  { id: "bilen", rubrik: "Vilket bränsle tål bilen?" },
+  { id: "namn", rubrik: "Namnen vid pumpen skiljer sig" },
+  { id: "pris", rubrik: "Vad kostar det i grannländerna?" },
+  { id: "diesel", rubrik: "Diesel eller bensin: skillnaden varierar" },
+  { id: "planera", rubrik: "Var lönar det sig att tanka på resan?" },
+  { id: "betala", rubrik: "Betala: kort, valuta och automater" },
+  { id: "hem", rubrik: "Ta med bränsle hem: vad gäller?" },
+  { id: "checklista", rubrik: "Checklista före bilresan" },
+];
+
+const fragor = [
+  { fraga: "Vad betyder E10 och B7 på pumpen utomlands?", svar: "Det är den gemensamma europeiska märkningen enligt standarden EN 16942. E10 i en cirkel är bensin med högst 10 procent etanol, och B7 i en kvadrat är diesel med högst 7 procent biodiesel. Samma symbol finns vid tanklocket på nyare bilar." },
+  { fraga: "Vad är XTL för bränsle?", svar: "XTL i en kvadrat betyder syntetisk eller paraffinisk diesel, alltså diesel som inte tillverkats av råolja på vanligt sätt. HVO100 hör hit. Tanka det bara om bilens tanklock eller instruktionsbok visar XTL." },
+  billigast95 && { fraga: "Var i Europa är bensinen billigast?", svar: `Av länderna i vårt urval var bensin 95 billigast i ${billigast95.namn} veckan som började ${vecka}, ${kr(billigast95.p.b95)} per liter mot ${kr(SENASTE_VECKA.b95)} i Sverige. Hela rankningen av EU-länderna finns på sidan om bensinpris i Europa.` },
+  { fraga: "Ska jag betala i kronor eller lokal valuta utomlands?", svar: "Välj lokal valuta. Enligt Konsumenternas Bank- och finansbyrå är det oftast billigast, eftersom kursen vid betalning i kronor sätts av butikens betalningsföretag och ofta har ett påslag." },
+  { fraga: "Får man ta med bensin i dunk från Tyskland eller Danmark?", svar: "Ja, i begränsad mängd. Enligt Skatteverket behöver du inte betala svensk skatt för bränsle i fordonets vanliga tank eller i en reservdunk på högst 10 liter när du kommer från ett annat EU-land. Mer än så ska anmälas till Skatteverket i förväg." },
+  { fraga: "Vad gäller för bränsle från Norge eller andra länder utanför EU?", svar: "Då gäller Tullverkets regler: bränslet i den ordinarie tanken är tull- och skattefritt, och i privatbil och på motorcykel även högst 10 liter i en bärbar behållare. Bränslet får inte säljas eller lämnas bort." },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Tanka utomlands – E10, B7, XTL, priser och regler"
+  beskrivning={`Så läser du pumpmärkningen E5, E10, B7 och XTL, vad bensin kostar i ${LAND.length} europeiska länder jämfört med Sverige, hur du betalar och vad du får ta med hem.`}
+  h1="Tanka utomlands – märkning, priser, betalning och regler"
+  svar={`I hela EU är pumparna märkta enligt samma standard, EN 16942: <strong>bensin i en cirkel (E5, E10), diesel i en kvadrat (B7, B10, XTL) och gas i en romb</strong>. Tanka det som står vid bilens tanklock. Betala i lokal valuta, inte i kronor. Bränsle i tanken och högst 10 liter i reservdunk får du ta med hem utan svensk skatt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Tanka utomlands", href: "/guider/tanka-utomlands/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinpris i Europa", href: "/europa/", text: "Alla EU-länder rangordnade" },
+    { namn: "Tanka i Norge", href: "/guider/tanka-i-norge/", text: "Priser, tullregler och gränsstationer" },
+    { namn: "Feltankning", href: "/guider/feltankning/", text: "Om du tankat fel bränsle" },
+    { namn: "Bensin 95 eller 98", href: "/guider/95-eller-98/", text: "Oktantal och E10/E5" },
+    { namn: "Regler för bensindunk", href: "/guider/bensindunk-regler/", text: "Förvaring och transport" },
+  ]}
+  kallor={[
+    { namn: "FOD Economie (Belgien) – Fuel labelling", url: "https://economie.fgov.be/en/themes/energy/fuel-labelling", text: "märkningen enligt EN 16942 och direktiv 2014/94/EU: former, beteckningar och var de ska sitta", datum: "2026-11-27" },
+    { namn: "ADAC – Super E10 statt E5 tanken", url: "https://www.adac.de/news/mit-e10-niedrigere-spritkosten/", text: "namnen Super E10, Super E5 och Super Plus i Tyskland", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Bensin", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/bensin/", text: "E10 och E5, andel bilar godkända för E10", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: `veckopriser per land, veckan som började ${vecka} (CC BY 4.0)`, datum: "2026-11-27" },
+    { namn: "Konsumenternas Bank- och finansbyrå – Betala i SEK eller lokal valuta", url: "https://konsumenternasbankochfinansbyra.se/konsumentstod/guider--checklistor/guider---lan--betalningar/betala-pa-resa/betala-i-sek", text: "dynamisk valutaväxling (DCC)", datum: "2026-11-27" },
+    { namn: "Skatteverket – Föra in bränsle till Sverige från ett annat land i EU", url: "https://www.skatteverket.se/privat/skatter/skattpabransleforprivatpersoner/forainbransletillsverigefranettannatlandieu.4.48cfd212185efbb440b1d16.html", text: "skattefrihet för ordinarie tank och reservdunk på högst 10 liter, anmälan på SKV 5386", datum: "2026-11-27" },
+    { namn: "Tullverket – Drivmedel till fordon och specialcontainrar", url: "https://www.tullverket.se/en/startpage/private/goods/seeallgoods/fuelforvehiclesandspecialcontainers.4.311bf4f016e69d6ea0dbf8.html", text: "bränsle från länder utanför EU", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="markning">Märkningen på pumpen: E5, E10, B7 och XTL</h2>
+  <p>Sedan den 12 oktober 2018 märks drivmedel på samma sätt i hela Europa. Märkningen kommer från EU:s direktiv 2014/94/EU om infrastruktur för alternativa drivmedel och är utformad enligt den europeiska standarden EN 16942. Formen visar typen av bränsle, och texten inuti visar vilken kvalitet det är.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Form</th><th>Bränsle</th><th>Beteckningar</th><th>Betyder</th></tr></thead>
+    <tbody>{MARKNING.map((m) => <tr><td>{m.form}</td><td>{m.typ}</td><td>{m.etiketter}</td><td>{m.betyder}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: FOD Economie, Belgiens ekonomiministerium. B20 och B30 finns också men är bara avsedda för särskilda fordonsflottor.</p>
+  <p>Märkningen ska enligt reglerna sitta på pumpen och på själva pistolen vid alla publika stationer, på nya bilar vid tanklocket eller tankluckan, i instruktionsboken och hos bilhandlare. Det är därför det enklaste sättet att undvika feltankning i ett land där du inte förstår språket: jämför symbolen på pistolen med symbolen i tankluckan. Har det ändå blivit fel, läs <a href="/guider/feltankning/">vad du gör vid feltankning</a>.</p>
+
+  <h2 id="bilen">Vilket bränsle tål bilen?</h2>
+  <ul>
+    <li><strong>E10 (cirkel):</strong> standardbensin i Sverige. Drivkraft Sverige uppger att ungefär 94 procent av de bensindrivna personbilarna är godkända för E10. Tål bilen E10 kan du tanka E10 utomlands också.</li>
+    <li><strong>E5 (cirkel):</strong> högst 5 procent etanol. Det är valet för en bil som inte tål E10, och det kan du alltid tanka i en bil som tål E10. Se <a href="/guider/95-eller-98/">95 eller 98</a> om oktantal.</li>
+    <li><strong>E85 (cirkel):</strong> bara för flexifuelbilar.</li>
+    <li><strong>B7 (kvadrat):</strong> vanlig diesel med högst 7 procent biodiesel, den vanligaste dieseln i Europa.</li>
+    <li><strong>B10 (kvadrat):</strong> diesel med upp till 10 procent biodiesel. Tanka den bara om din bil är märkt B10 vid tanklocket eller i instruktionsboken.</li>
+    <li><strong>XTL (kvadrat):</strong> syntetisk eller paraffinisk diesel, som HVO100. Kontrollera att bilen är godkänd, se <a href="/guider/hvo100-vilka-bilar/">vilka bilar som tål HVO100</a>.</li>
+    <li><strong>CNG och LNG (romb):</strong> fordonsgas. En svensk gasbil tankar CNG. Läs mer i <a href="/guider/fordonsgas-gasbil/">guiden om gasbil</a>.</li>
+  </ul>
+  <p>Har bilen en dekal i tankluckan med symbolerna, är det den som gäller. Äldre bilar, registrerade före oktober 2018, kan sakna dekalen. Då står det i instruktionsboken.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="namn">Namnen vid pumpen skiljer sig</h2>
+  <p>Symbolerna är gemensamma, men namnen på pumpen är det inte. I Tyskland heter bensinen enligt ADAC <strong>Super E10</strong> (högst 10 procent etanol), <strong>Super E5</strong> (högst 5 procent) och <strong>Super Plus</strong>, som har högre oktantal och högst 5 procent etanol. ADAC skriver också att stationer som säljer E10 med 95 oktan måste erbjuda E5 också. Kedjornas egna varumärken för premiumbränsle säger inte alltid vilken kvalitet det är. Titta på symbolen.</p>
+  <p>För diesel är det enklare: ordet diesel används i de flesta länder, och symbolen B7 visar att det är vanlig diesel.</p>
+
+  <h2 id="pris">Vad kostar det i grannländerna?</h2>
+  <p>EU-kommissionen samlar varje vecka in genomsnittliga pumppriser från alla medlemsländer. Tabellen visar veckan som började {vecka}, omräknat till kronor med samma veckas kurs, för de länder som svenskar ofta kör genom. Sverige låg den veckan på {kr(SENASTE_VECKA.b95)} för bensin 95 och {kr(SENASTE_VECKA.diesel)} för diesel.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th class="num">95 i egen valuta</th><th class="num">95, kr/l</th><th class="num">Diesel, kr/l</th><th class="num">Tank 95 ({tank} l) mot Sverige</th></tr></thead>
+    <tbody>{LAND.map((l) => <tr><td><a href={href(l)}>{l.namn}</a></td><td class="num">{lokal(l.p.b95lokal, l.p.valuta)}</td><td class="num">{pris(l.p.b95)}</td><td class="num">{pris(l.p.diesel)}</td><td class="num">{l.d95 > 0 ? "+" : "−"}{kr(Math.abs(l.d95) * tank, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">EU:s Weekly Oil Bulletin, snittpriser inkl. skatter. Alla EU-länder och utvecklingen över tid finns på <a href="/europa/">bensinpris i Europa</a>.</p>
+  <p>{billigare95.length > 0 ? <>Av de {LAND.length} länderna var bensin 95 billigare än i Sverige i {billigare95.length}: {billigare95.map((l, i) => <>{i > 0 && ", "}<a href={href(l)}>{l.namn}</a></>)}.</> : <>Inget av de {LAND.length} länderna hade billigare bensin 95 än Sverige den veckan.</>} {billigareD.length > 0 ? <>Diesel var billigare i {billigareD.length}: {billigareD.map((l, i) => <>{i > 0 && ", "}<a href={href(l)}>{l.namn}</a></>)}.</> : <>Diesel var dyrare än i Sverige i alla {LAND.length}.</>} Billigast i urvalet var bensinen i {billigast95.namn}, dyrast i {dyrast95.namn}.</p>
+
+  <h2 id="diesel">Diesel eller bensin: skillnaden varierar</h2>
+  <p>I Sverige kostade diesel {kr(Math.abs(seGap))} {seGap > 0 ? "mer" : "mindre"} per liter än bensin 95 veckan som började {vecka}. Skillnaden ser helt olika ut i andra länder. För en dieselbil kan ett land som är dyrt för bensin därför vara billigt för diesel, och tvärtom.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th class="num">Diesel minus bensin 95, kr/l</th></tr></thead>
+    <tbody>{GAP.map((l) => <tr><td><a href={href(l)}>{l.namn}</a></td><td class="num">{l.gap > 0 ? "+" : "−"}{pris(Math.abs(l.gap))}</td></tr>)}
+      <tr><td><strong>Sverige</strong></td><td class="num"><strong>{seGap > 0 ? "+" : "−"}{pris(Math.abs(seGap))}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p>{storreGap.length > 0 ? <>Bara {storreGap.map((l, i) => <>{i > 0 && ", "}{l.namn}</>)} hade en större skillnad än Sverige.</> : <>Inget av länderna i urvalet hade en större skillnad mellan diesel och bensin än Sverige den veckan.</>} Varför diesel ofta kostar mer i Sverige förklarar vi i <a href="/guider/varfor-ar-diesel-dyrare/">guiden om dieselpriset</a>.</p>
+
+  <h2 id="planera">Var lönar det sig att tanka på resan?</h2>
+  <p>Priserna i tabellen är nationella snitt. Priset vid en enskild station, till exempel vid motorvägen, kan skilja sig från snittet, och den skillnaden finns inte i EU:s statistik. Tumregeln blir att jämföra länderna du passerar och fylla tanken i det billigaste av dem.</p>
+  <ul>
+    {danmark && tyskland && <li><strong>Mot kontinenten via Danmark:</strong> en liter 95 kostade {kr(danmark.p.b95)} i Danmark och {kr(tyskland.p.b95)} i Tyskland, mot {kr(SENASTE_VECKA.b95)} i Sverige. {danmark.p.b95 > SENASTE_VECKA.b95 ? "Det talar för att åka från Sverige med full tank och tanka nästa gång där det är billigast längre fram." : "Danmark var alltså inte dyrare än Sverige den veckan."}</li>}
+    {polen && <li><strong>Färja till Polen:</strong> bensin 95 kostade {lokal(polen.p.b95lokal, polen.p.valuta)} per liter, eller {kr(polen.p.b95)}, och diesel {kr(polen.p.diesel)}.</li>}
+    {billigastD && <li><strong>Dieselbil:</strong> billigast diesel i urvalet hade {billigastD.namn}, {kr(billigastD.p.diesel)} per liter, mot {kr(SENASTE_VECKA.diesel)} i Sverige.</li>}
+  </ul>
+  <p>Räkna på din egen förbrukning i <a href="/rakna/">bränslekalkylatorn</a>, och glöm inte att priserna ändras varje vecka. För Norge, som inte är med i EU:s statistik, se <a href="/guider/tanka-i-norge/">guiden om att tanka i Norge</a>.</p>
+
+  <h2 id="betala">Betala: kort, valuta och automater</h2>
+  <p>De flesta länderna i tabellen har euro. {ejEuro.length > 0 && <>Undantagen i urvalet är {ejEuro.map((l, i) => <>{i > 0 && (i === ejEuro.length - 1 ? " och " : ", ")}{l.namn} ({l.p.valuta})</>)}.</>} När du betalar med svenskt kort kan terminalen erbjuda dig att betala i svenska kronor. Det kallas dynamisk valutaväxling. Konsumenternas Bank- och finansbyrå skriver att det oftast är billigare att välja den lokala valutan, eftersom butikens betalningsföretag lägger ett påslag i kursen när du väljer kronor. Väljer du lokal valuta är det din kortutgivare som växlar, och du ser kursen först när köpet bokförs.</p>
+  <ul>
+    <li><strong>Ha två kort med dig,</strong> gärna från olika kortnätverk, ifall ett kort inte fungerar i en automat.</li>
+    <li><strong>Välj lokal valuta</strong> i terminalen och i bankomaten om du får frågan.</li>
+    <li><strong>Obemannade stationer</strong> finns i många länder. Hur en kortautomat fungerar beskriver vi i <a href="/guider/obemannad-bensinstation/">guiden om obemannade stationer</a>.</li>
+  </ul>
+
+  <h2 id="hem">Ta med bränsle hem: vad gäller?</h2>
+  <p>Reglerna skiljer sig beroende på om du kommer från ett EU-land eller inte.</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Från ett EU-land (t.ex. Danmark, Tyskland, Polen)</th><th>Från ett land utanför EU (t.ex. Norge)</th></tr></thead>
+    <tbody>
+      <tr><td>Myndighet</td><td>Skatteverket</td><td>Tullverket</td></tr>
+      <tr><td>Bränsle i ordinarie tank</td><td>Ingen svensk energi-, koldioxid- eller svavelskatt</td><td>Fritt från tull och moms</td></tr>
+      <tr><td>Reservdunk</td><td>Högst 10 liter utan skatt</td><td>Högst 10 liter per fordon, bara privatbil och motorcykel</td></tr>
+      <tr><td>Mer än så</td><td>Anmäl i förväg på blankett SKV 5386, betala säkerhet och deklarera inom fem dagar</td><td>Omfattas inte av friheten; kontakta Tullverket</td></tr>
+      <tr><td>Villkor</td><td>–</td><td>Bränslet får bara användas i fordonet, inte lagras, säljas eller lämnas bort</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källor: Skatteverket, Föra in bränsle till Sverige från ett annat land i EU; Tullverket, Drivmedel till fordon och specialcontainrar.</p>
+  <p>Skatteverkets skattefrihet för den ordinarie tanken gäller fordon, fartyg och luftfartyg. För mer bränsle än tanken och en dunk på 10 liter blir det alltså både blanketter och svensk skatt. Vad som gäller för att förvara och transportera en dunk finns i <a href="/guider/bensindunk-regler/">guiden om regler för bensindunk</a>.</p>
+
+  <h2 id="checklista">Checklista före bilresan</h2>
+  <ol>
+    <li><strong>Titta i tankluckan</strong> och fota dekalen med symbolerna, så har du den i mobilen vid pumpen.</li>
+    <li><strong>Jämför länderna du ska köra genom</strong> i tabellen ovan och bestäm i förväg var du fyller tanken. {billigast95 && <>Billigast bensin i urvalet hade {billigast95.namn} den senaste veckan.</>}</li>
+    <li><strong>Ha två betalkort</strong> och välj alltid lokal valuta i terminalen.</li>
+    <li><strong>Fyll tanken före en dyr gräns.</strong> Danmark och Finland låg {danmark && LAND.find((l) => l.kod === "FI") ? <>på {kr(danmark.p.b95)} och {kr(LAND.find((l) => l.kod === "FI").p.b95)} per liter bensin</> : "högt"} den senaste veckan, mot {kr(SENASTE_VECKA.b95)} i Sverige.</li>
+    <li><strong>Reservdunken hem</strong> får rymma högst 10 liter för att slippa svensk skatt. Vad som gäller för själva dunken står i <a href="/guider/bensindunk-regler/">guiden om bensindunk</a>.</li>
+  </ol>
+</Guide>

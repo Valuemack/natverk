@@ -67,10 +67,11 @@
   "bildmotiv": "Wooden museum storage cabinets with open doors, ethnographic artifacts on shelves and a small air sampling device inside, in a dim storeroom.",
   "bildalt": "Öppet förvaringsskåp i ett museimagasin med etnografiska föremål på hyllorna och en luftprovtagare.",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.48,
+    "positiv": 0.5,
+    "betydelse": 0.3,
     "tillit": 0.95,
-    "total": 50
+    "total": 50,
+    "gladje": 0.3
   },
   "produktion": {
     "metod": "ai-stod",
@@ -83,5 +84,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

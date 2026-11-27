@@ -1,0 +1,77 @@
+---
+// Prisdelen för ett drivmedel (flyttad från dagensbensinpris.se/<drivmedel>/): pris per kedja, jämförelse,
+// utveckling, fakta och skatt. Används av /bensinpris/, /dieselpris/ och /drivmedel/<typ>/ så att varje
+// sökintention har exakt en sida.
+import Kurva from "./Kurva.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { OM_DRIVMEDEL } from "../lib/texter.js";
+import {
+  LP_DATUM, LISTKEDJOR, DAGAR, idagPris, kedjePris, kr, pris, andring, procent, datumText, VECKOR, SENASTE_VECKA, FORRA_VECKAN,
+  skattedelar, arSammanfattning, AR, drivmedel, kedjaHref,
+} from "../pris.js";
+
+const { nyckel: k, visaOm = true, visaSkatt = true } = Astro.props;
+const d = drivmedel(k);
+const p = idagPris(k);
+const kedjor = LISTKEDJOR.map((c) => ({ c, p: kedjePris(c, k) })).filter((x) => x.p != null).sort((x, y) => x.p - y.p);
+const text = OM_DRIVMEDEL[k];
+const p95 = idagPris("bensin95");
+const euKol = d.eu;
+const v = SENASTE_VECKA, fv = FORRA_VECKAN;
+const skatt = euKol && visaSkatt ? skattedelar(v, euKol) : null;
+const ifjol = euKol ? arSammanfattning(AR - 1)?.[euKol] : null;
+const dagSerie = DAGAR.filter((x) => x.snitt[k] != null).map((x) => ({ x: x.datum, y: x.snitt[k] }));
+
+const jamfor = [];
+if (k === "bensin98" && p95) jamfor.push(`98 kostar idag ${kr(p - p95)} mer per liter än 95. För en tank på 50 liter blir skillnaden ${kr((p - p95) * 50, 0)}.`);
+if (k === "diesel" && p95) jamfor.push(`Diesel kostar idag ${p > p95 ? `${kr(p - p95)} mer` : `${kr(p95 - p)} mindre`} per liter än bensin 95.`);
+if (k === "e85" && p95) {
+  jamfor.push(`E85 kostar ${procent((1 - p / p95) * 100)} mindre per liter än 95 idag. Med en merförbrukning på 30 procent motsvarar E85 ${kr(p * 1.3)} per liter bensin, alltså ${p * 1.3 < p95 ? "billigare" : "dyrare"} än 95 (${kr(p95)}).`);
+  jamfor.push(`E85 lönar sig när literpriset är under ungefär ${kr(p95 / 1.3)} vid dagens bensinpris (räknat med 30 procents merförbrukning).`);
+}
+if (k === "hvo100") { const ds = idagPris("diesel"); if (ds) jamfor.push(`HVO100 kostar idag ${kr(p - ds)} mer per liter än vanlig diesel, ${procent((p / ds - 1) * 100)} dyrare.`); }
+if (k === "biogas" && p95) jamfor.push(`Ett kilo fordonsgas motsvarar ungefär 1,5 liter bensin. Dagens pris på ${kr(p)} per kilo motsvarar alltså ${kr(p / 1.5)} per liter bensin, att jämföra med ${kr(p95)} för 95.`);
+---
+{p != null && <>
+  <h2>{d.namn} per kedja idag</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Pris ({d.enhet})</th><th class="num">Mot snittet</th></tr></thead>
+    <tbody>{kedjor.map((x) => <tr><td>{kedjaHref(x.c) ? <a href={kedjaHref(x.c)}>{x.c}</a> : x.c}</td><td class="num">{pris(x.p)}</td><td class="num">{andring(x.p - p)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kedjornas listpriser inkl. moms den {LP_DATUM}. Priset vid pumpen sätts lokalt och kan avvika.</p>
+
+  {jamfor.length > 0 && <><h2>Jämförelse med andra drivmedel</h2>{jamfor.map((t) => <p>{t}</p>)}</>}
+
+  <Annons plats="drivmedel-pris" />
+
+  {euKol && <>
+    <h2>Pumppriset vecka för vecka</h2>
+    <p>Genomsnittligt pumppris för {d.liten} i Sverige enligt EU-kommissionens veckostatistik. Senaste veckan, som började {datumText(v.datum)}: <strong>{kr(v[euKol])}</strong> ({andring(v[euKol] - fv[euKol])} mot veckan innan).{ifjol && <> Snittet för hela {AR - 1} var {kr(ifjol.medel)}.</>}</p>
+    <Kurva titel={`${d.namn} i Sverige, senaste tre åren`} linjer={[{ namn: d.namn, farg: euKol === "b95" ? "#d97706" : "#334155", punkter: VECKOR.slice(-157).map((x) => ({ x: x.datum, y: x[euKol] })) }]} />
+    <p><a href="/historik/">Hela historiken sedan 2005</a> · <a href={`/historik/${AR}/`}>Bensinpriset {AR} månad för månad</a></p>
+  </>}
+  {!euKol && dagSerie.length >= 14 && <>
+    <h2>Utvecklingen dag för dag</h2>
+    <Kurva titel={`${d.namn}, snitt av kedjornas listpriser`} enhet={d.enhet} linjer={[{ namn: d.namn, farg: "#d97706", punkter: dagSerie }]} />
+  </>}
+
+  {visaOm && text && <>
+    <h2>Om {d.liten}</h2>
+    <p><strong>{text.ingress}</strong></p>
+    {text.stycken.map((s) => <p>{s}</p>)}
+  </>}
+
+  {skatt && <>
+    <h2>Skatten på {d.liten}</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Del av priset</th><th class="num">Kr per liter</th><th class="num">Andel</th></tr></thead>
+      <tbody>
+        <tr><td>Produkt, frakt och marginal</td><td class="num">{pris(skatt.produkt)}</td><td class="num">{procent(skatt.produkt / skatt.pris * 100)}</td></tr>
+        <tr><td>Energi- och koldioxidskatt</td><td class="num">{pris(skatt.punkt)}</td><td class="num">{procent(skatt.punkt / skatt.pris * 100)}</td></tr>
+        <tr><td>Moms (25 %)</td><td class="num">{pris(skatt.moms)}</td><td class="num">{procent(skatt.moms / skatt.pris * 100)}</td></tr>
+        <tr><td><strong>Pris vid pump</strong></td><td class="num"><strong>{pris(skatt.pris)}</strong></td><td class="num">100 %</td></tr>
+      </tbody>
+    </table></div>
+    <p class="kalla">Beräknat från EU-kommissionens priser med och utan skatt veckan som började {datumText(v.datum)}. <a href="/guider/vad-bestar-bensinpriset-av/">Så består priset</a>.</p>
+  </>}
+</>}

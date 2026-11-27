@@ -1,14 +1,17 @@
 ---
 // En sida per kalenderdag (/3-januari/, 366 st) och per månad (/januari/, 12 st).
-import Layout from "@natverk/core/Layout.astro";
+import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
+import BrevKnapp from "../components/BrevKnapp.astro";
 import { faqLd, valjTitel } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import {
-  SITE, AR, IDAG, UPPDATERAD, MANADER, DAGAR, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
-  nastaDatum, kommandeAr, fore, efter, FASTA_DAGAR, UTAN_NAMN, barare, tal, delMmdd, mmddAv, veckodag, SCB_KALLA, NAMN_KALLA,
+  SITE, AR, IDAG, UPPDATERAD, MANADER, DAGAR, SAMMANSLAGNA, ALLA_NAMN, namnPaDag, kommandeNamnPaDag, dagText, dagHref, manadHref, namnHref, lista,
+  nastaDatum, kommandeAr, fore, efter, FASTA_DAGAR, UTAN_NAMN, helgnamn, barare, tal, delMmdd, mmddAv, veckodag, SCB_KALLA, NAMN_KALLA,
+  isoVecka, beskriv, procent, kalenderHref, genitiv,
 } from "../site.js";
+import { fnDagar, fodda, nedrakning, rorligaPa, handelser, FN_KALLA, FODDA_KALLA } from "../lib/dagdata.js";
 
 export function getStaticPaths() {
   const dagar = DAGAR.map((k) => ({ params: { sida: dagHref(k).slice(1, -1) }, props: { typ: "dag", k } }));
@@ -18,7 +21,7 @@ export function getStaticPaths() {
 const { typ, k, m } = Astro.props;
 const versal = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
-let titel, beskrivning, smulor, fragor, data;
+let titel, beskrivning, smulor, fragor, data, ogBild, extraLd = [];
 if (typ === "dag") {
   const { m: mn } = delMmdd(k);
   const namn = namnPaDag(k);
@@ -31,30 +34,73 @@ if (typ === "dag") {
   const dt = dagText(k);
   const toppen = [...namn].sort((a, b) => barare(b) - barare(a));
   const sammanlagt = namn.reduce((s, n) => s + barare(n), 0);
-  data = { k, mn, namn, senare, nasta, ar, fast, utan, namnText, dt, toppen, sammanlagt };
-  titel = namnText
-    ? `Namnsdag ${dt}: ${namnText}${senare.length ? ` (från ${senare[0].fran} även ${lista(senare.map((n) => n.namn))})` : ""}`
-    : `Namnsdag ${dt} – ingen namnsdag, ${utan?.split(" –")[0].toLowerCase()}`;
-  beskrivning = namnText
-    ? `Vem har namnsdag ${dt}? ${namnText}.${sammanlagt ? ` ${tal(sammanlagt)} personer i Sverige bär namnen som tilltalsnamn.` : ""} ✓ Veckodag ${AR}–${AR + 5} ✓ Dagen före och efter.`
-    : `${dt} har ingen namnsdag i den svenska almanackan – dagen är ${utan?.split(" –")[0].toLowerCase()}. Se namnsdagarna dagen före och efter.`;
+  const fn = fnDagar(k);
+  const fodd = fodda(k);
+  const ned = nedrakning(k);
+  const rorliga = rorligaPa(k);
+  const vecka = nasta ? isoVecka(nasta).vecka : null;
+  const ett = namn.length === 1 ? namn[0] : null;
+  data = { k, mn, namn, senare, nasta, ar, fast, utan, namnText, dt, toppen, sammanlagt, fn, fodd, ned, rorliga, vecka, ett };
+  const fodda1 = fodd?.fodda?.find((x) => /svensk/i.test(x.beskr)) ?? fodd?.fodda?.[0];
+  titel = ett
+    ? valjTitel(`${versal(dt)}: ${ett.namn} har namnsdag – temadagar och födda`, `${versal(dt)}: ${ett.namn} har namnsdag`)
+    : namnText
+      ? valjTitel(`Namnsdag ${dt}: ${namnText}${senare.length ? ` (från ${senare[0].fran} även ${lista(senare.map((n) => n.namn))})` : ""}`, `Namnsdag ${dt}: ${namnText}`)
+      : valjTitel(`Namnsdag ${dt} – ingen namnsdag, ${helgnamn(utan?.split(" –")[0])}`, `${versal(dt)} – ingen namnsdag, ${helgnamn(utan?.split(" –")[0].split(" (")[0])}`, `${versal(dt)} – ingen namnsdag`);
+  beskrivning = beskriv(
+    namnText ? `Vem har namnsdag ${dt}? ${namnText}.` : `${versal(dt)} har ingen namnsdag i almanackan – dagen är ${helgnamn(utan?.split(" –")[0])}.`,
+    fast && `Dagen är ${fast.replace(/ (.*)/, "")}.`,
+    fn.length && `✓ ${fn.length === 1 ? "FN-dag" : `${fn.length} FN-dagar`}`,
+    fodd && "✓ Födda",
+    vecka && `✓ Vecka ${vecka}`,
+    ned?.jul != null && `✓ ${ned.jul} dagar till jul`,
+    `✓ Veckodag ${AR}–${AR + 5}`,
+    "✓ Röd dag eller flaggdag?",
+    "✓ Dagen före och efter",
+    ned && `✓ Dag ${ned.dagNr} av året`,
+    "✓ Grattiskort",
+    "✓ Gratis",
+  );
   smulor = [{ namn: "Namnsdag idag", href: "/" }, { namn: versal(MANADER[mn - 1]), href: manadHref(mn) }, { namn: dt, href: dagHref(k) }];
+  data.delar = data.ett && SAMMANSLAGNA.has(data.ett.namn) ? data.ett.namn.split(" ").map((x) => ALLA_NAMN.find((n) => n.namn === x)).filter(Boolean) : [];
+  ogBild = `/og/dag${dagHref(k).slice(0, -1)}.png`;
+  const flagg = fast && /flaggdag/.test(fast), rod = fast && /röd dag/.test(fast);
   fragor = [
-    { fraga: `Vem har namnsdag ${dt}?`, svar: namnText ? `${namnText} har namnsdag den ${dt}.${senare.length ? ` Från ${senare[0].fran} har även ${lista(senare.map((n) => n.namn))} namnsdag den dagen.` : ""}` : `Ingen. ${versal(dt)} saknar namn i almanackan eftersom dagen är ${utan?.toLowerCase()}.` },
-    nasta && { fraga: `Vilken veckodag är ${dt} ${nasta.getUTCFullYear()}?`, svar: `${versal(dt)} ${nasta.getUTCFullYear()} är en ${veckodag(nasta)}.${ar[1] ? ` År ${ar[1].ar} infaller dagen på en ${ar[1].dag}.` : ""}` },
-    toppen[0] && barare(toppen[0]) > 0 && { fraga: `Hur många heter ${toppen[0].namn}?`, svar: `${tal(barare(toppen[0]))} personer i Sverige hade ${toppen[0].namn} som tilltalsnamn i slutet av 2020, enligt SCB.` },
-    fast && { fraga: `Vad mer händer ${dt}?`, svar: `${versal(dt)} är ${fast}.` },
+    { fraga: `Vem har namnsdag ${dt}?`, svar: namnText ? `${namnText} har namnsdag den ${dt}.${senare.length ? ` Från ${senare[0].fran} har även ${lista(senare.map((n) => n.namn))} namnsdag den dagen.` : ""}` : `Ingen. ${versal(dt)} saknar namn i almanackan eftersom dagen är ${helgnamn(utan)}.` },
+    nasta && { fraga: `Vilken veckodag är ${dt} ${nasta.getUTCFullYear()}?`, svar: `${versal(dt)} ${nasta.getUTCFullYear()} är en ${veckodag(nasta)} i vecka ${vecka}.${ar[1] ? ` År ${ar[1].ar} infaller dagen på en ${ar[1].dag}.` : ""}` },
+    { fraga: `Är ${dt} en röd dag eller flaggdag?`, svar: fast
+      ? `Ja, ${dt} är ${fast}.`
+      : rorliga.length ? `Inte varje år. ${lista([...new Set(rorliga.map((x) => `${helgnamn(x.namn)} ${x.ar}`))])} infaller på ${dt}. Övriga år är dagen varken röd dag eller allmän flaggdag.`
+      : `Nej, ${dt} är varken en allmän helgdag (röd dag) eller en allmän flaggdag i Sverige.` },
+    fn.length > 0 && { fraga: `Vilka internationella dagar är det ${dt}?`, svar: `FN uppmärksammar ${lista(fn.map((x) => helgnamn(x.sv)))} den ${dt}.` },
+    ned?.jul != null && ned.jul > 0 && { fraga: `Hur många dagar är det kvar till jul från ${dt}?`, svar: `Från ${dt} ${ned.y} är det ${ned.jul} dagar kvar till julafton och ${ned.nyar} dagar kvar till nyårsafton. ${versal(dt)} är dag ${ned.dagNr} av ${ned.arsDagar} det året.` },
+    fodda1 && { fraga: `Vilka kända personer är födda ${dt}?`, svar: `Bland dem som är födda den ${dt} finns ${lista(fodd.fodda.slice(0, 4).map((x) => `${x.namn} (${x.ar}), ${x.beskr}`))}, enligt svenska Wikipedia.` },
+    toppen[0] && barare(toppen[0]) > 0 && !ett && { fraga: `Hur många heter ${toppen[0].namn}?`, svar: `${tal(barare(toppen[0]))} personer i Sverige hade ${toppen[0].namn} som tilltalsnamn i slutet av 2020, enligt SCB.` },
   ].filter(Boolean);
 } else {
   const dagar = DAGAR.filter((kk) => delMmdd(kk).m === m).map((kk) => ({ k: kk, namn: namnPaDag(kk), senare: kommandeNamnPaDag(kk) }));
   const allaNamn = dagar.flatMap((d) => d.namn);
   const storst = [...allaNamn].sort((a, b) => barare(b) - barare(a))[0];
   const mnamn = MANADER[m - 1];
-  data = { dagar, allaNamn, storst, mnamn };
+  const topp = [...allaNamn].filter((n) => barare(n) > 0).sort((a, b) => barare(b) - barare(a)).slice(0, 10);
+  const summaBarare = allaNamn.reduce((x, n) => x + barare(n), 0);
+  // Röda dagar, helgaftnar och allmänna flaggdagar i månaden under kalenderåret (fasta och rörliga).
+  const helger = dagar.map((d) => { const { m: mm, d: dd } = delMmdd(d.k); const dt = new Date(Date.UTC(AR, mm - 1, dd)); if (dt.getUTCMonth() !== mm - 1) return null; const h = handelser(dt); const t = [...h.rod.map((x) => [x, "röd dag"]), ...h.afton.map((x) => [x, "helgafton"]), ...h.flagg.filter((f) => !h.rod.includes(f)).map((x) => [x, "allmän flaggdag"])]; return t.length ? { k: d.k, dt, t } : null; }).filter(Boolean);
+  const fnManad = dagar.flatMap((d) => fnDagar(d.k).map((x) => ({ k: d.k, ...x })));
+  const utanDagar = dagar.filter((d) => !d.namn.length && UTAN_NAMN[d.k]);
+  const nyaManad = dagar.flatMap((d) => d.senare.map((n) => ({ k: d.k, n })));
+  data = { dagar, allaNamn, storst, mnamn, topp, summaBarare, helger, fnManad, utanDagar, nyaManad };
   titel = `Namnsdagar i ${mnamn} ${AR} – alla ${allaNamn.length} namn dag för dag`;
-  beskrivning = `Alla namnsdagar i ${mnamn}: ${allaNamn.length} namn från ${dagar.find((d) => d.namn.length).namn[0].namn} till ${dagar.findLast((d) => d.namn.length).namn.at(-1).namn}. ✓ Veckodag ${AR} ✓ Antal bärare enligt SCB.`;
+  beskrivning = beskriv(`Alla namnsdagar i ${mnamn}: ${allaNamn.length} namn från ${dagar.find((d) => d.namn.length).namn[0].namn} till ${dagar.findLast((d) => d.namn.length).namn.at(-1).namn}.`, `✓ Veckodag ${AR}`, "✓ Antal bärare enligt SCB", "✓ Utskrivbar kalender", "✓ Nya namn 2027", "✓ Röda dagar och flaggdagar", "✓ Gratis");
   smulor = [{ namn: "Namnsdag idag", href: "/" }, { namn: versal(mnamn), href: manadHref(m) }];
+  extraLd = [{
+    "@context": "https://schema.org", "@type": "ItemList", name: `Namnsdagar i ${mnamn}`, numberOfItems: dagar.length,
+    itemListElement: dagar.map((d, i) => ({ "@type": "ListItem", position: i + 1, url: SITE.url + dagHref(d.k),
+      name: `${dagText(d.k)}: ${d.namn.length ? lista(d.namn.map((n) => n.namn)) : helgnamn(UTAN_NAMN[d.k]?.split(" –")[0] ?? "ingen namnsdag")}` })),
+  }];
   fragor = [
+    helger.length > 0 && { fraga: `Vilka röda dagar och flaggdagar finns i ${mnamn} ${AR}?`, svar: `${versal(lista(helger.map((h) => `${h.t.map((x) => helgnamn(x[0])).join(" och ")} ${dagText(h.k)}`)))}.` },
+    topp.length >= 3 && { fraga: `Vilka vanliga namn har namnsdag i ${mnamn}?`, svar: `Flest bärare bland ${genitiv(mnamn)} namn har ${lista(topp.slice(0, 5).map((n) => `${n.namn} (${dagText(n.datum)}, ${tal(barare(n))})`))}, enligt SCB 2020.` },
     { fraga: `Hur många har namnsdag i ${mnamn}?`, svar: `I ${mnamn} har ${allaNamn.length} namn namnsdag i den svenska almanackan.${storst ? ` Vanligast av dem är ${storst.namn} med ${tal(barare(storst))} bärare (SCB 2020), namnsdag ${dagText(storst.datum)}.` : ""}` },
   ];
 }
@@ -62,18 +108,35 @@ const forraM = typ === "manad" ? ((m + 10) % 12) + 1 : null;
 const nastaM = typ === "manad" ? (m % 12) + 1 : null;
 const idagK = mmddAv(IDAG);
 ---
-<Layout site={SITE} titel={valjTitel(`${titel} | namnsdagsidag.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+<Layout site={SITE} titel={valjTitel(`${titel} | dagensnamnsdagar.se`, titel)} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), ...extraLd]} uppdaterad={UPPDATERAD}
+  ogBild={ogBild} sidtyp={typ === "manad" ? "CollectionPage" : "WebPage"}>
   {typ === "dag" ? (
     <>
-      <h1>Namnsdag {data.dt}</h1>
+      <h1>{data.ett ? <>{versal(data.dt)} – namnsdag, temadagar och födda</> : <>Namnsdag {data.dt}</>}</h1>
       <p class="svar">{data.namnText
         ? <>Den {data.dt} har <strong>{data.namnText}</strong> namnsdag.</>
-        : <>Den {data.dt} finns inget namn i almanackan – dagen är {data.utan?.toLowerCase()}.</>}
-        {data.nasta && <> Nästa gång är {veckodag(data.nasta)} {data.dt} {data.nasta.getUTCFullYear()}.</>}
-        {data.sammanlagt > 0 && <> Sammanlagt {tal(data.sammanlagt)} personer i Sverige har {data.namn.length > 1 ? "namnen" : "namnet"} som tilltalsnamn.</>}
-        {data.fast && <> Dagen är också {data.fast}.</>}</p>
+        : <>Den {data.dt} finns inget namn i almanackan – dagen är {helgnamn(data.utan)}.</>}
+        {data.nasta && <> {versal(data.dt)} {data.nasta.getUTCFullYear()} är en {veckodag(data.nasta)} i vecka {data.vecka}.</>}
+        {data.fast && <> Dagen är {data.fast}.</>}
+        {data.fn.length > 0 && <> FN uppmärksammar {data.fn.length === 1 ? helgnamn(data.fn[0].sv) : `${data.fn.length} internationella dagar`}.</>}
+        {data.ned?.jul > 0 && <> Det är {data.ned.jul} dagar kvar till julafton.</>}</p>
 
-      {data.namn.length > 0 && <>
+      <ul class="dagkort">
+        {data.vecka && <li><span class="etikett">Vecka</span><span class="stor">{data.vecka}</span><span>{data.nasta.getUTCFullYear()}</span></li>}
+        {data.ned && <li><span class="etikett">Dag på året</span><span class="stor">{data.ned.dagNr}</span><span>av {data.ned.arsDagar} ({data.ned.kvar} kvar)</span></li>}
+        {data.ned?.jul != null && data.ned.jul > 0 && <li><span class="etikett">Till julafton</span><span class="stor">{data.ned.jul}</span><span>dagar</span></li>}
+        <li><span class="etikett">Till nyårsafton</span><span class="stor">{data.ned?.nyar ?? "–"}</span><span>dagar</span></li>
+      </ul>
+
+      {data.namn.length > 0 && <BrevKnapp namn={data.namnText} />}
+
+      {data.ett && SAMMANSLAGNA.has(data.ett.namn) ? <>
+        <h2>Om namnet {data.ett.namn}</h2>
+        <p>Den enda som har namnsdag den {data.dt} är <strong>{data.ett.namn}</strong>. Namnet finns inte i SCB:s namnstatistik, eftersom SCB räknar varje förnamn för sig.{data.delar.length > 0 && <> Delarna har egna namnsdagar: {data.delar.map((d, i) => <>{i > 0 && (i === data.delar.length - 1 ? " och " : ", ")}<a href={namnHref(d.namn)}>{d.namn}</a> den <a href={dagHref(d.datum)}>{dagText(d.datum)}</a>{barare(d) > 0 && <> ({tal(barare(d))} har det som tilltalsnamn, SCB 2020)</>}</>)}.</>}</p>
+      </> : data.ett ? <>
+        <h2>Namnsdag den {data.dt}</h2>
+        <p>Den enda som har namnsdag den {data.dt} är <a href={namnHref(data.ett.namn)}><strong>{data.ett.namn}</strong></a>{barare(data.ett) > 0 && <>, ett namn som {tal(barare(data.ett))} personer i Sverige har som tilltalsnamn (SCB 2020)</>}. Betydelse, statistik och kända personer med namnet finns på sidan om <a href={namnHref(data.ett.namn)}>namnet {data.ett.namn}</a>.</p>
+      </> : data.namn.length > 0 && <>
         <h2>{data.namn.length > 1 ? "Namnen" : "Namnet"} den {data.dt}</h2>
         <div class="tabell"><table>
           <thead><tr><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">2000</th><th class="num">Förnamn totalt 2020</th></tr></thead>
@@ -84,18 +147,38 @@ const idagK = mmddAv(IDAG);
               <td class="num">{n.scb?.fornamn2020 ? tal((n.scb.fornamn2020.K ?? 0) + (n.scb.fornamn2020.M ?? 0)) : "–"}</td></tr>
           ))}</tbody>
         </table></div>
-        <p class="kalla">"Tilltalsnamn" är det namn man kallas, "förnamn totalt" räknar alla som har namnet bland sina förnamn. Källa: {SCB_KALLA}. Folkbokförda 31 december respektive år.</p>
+        {data.sammanlagt > 0 && <p>Sammanlagt {tal(data.sammanlagt)} personer i Sverige har något av namnen som tilltalsnamn{data.toppen[0] && barare(data.toppen[0]) > 0 && <>, flest {data.toppen[0].namn} ({procent(barare(data.toppen[0]), data.sammanlagt)} procent)</>}.</p>}
+        <p class="kalla">"Tilltalsnamn" är det namn man kallas, "förnamn totalt" räknar alla som har namnet bland sina förnamn. Källa: {SCB_KALLA}. Folkbokförda 31 december respektive år; 2020 är SCB:s senaste namnstatistik.</p>
       </>}
 
-      {data.senare.length > 0 && <p><strong>Nytt namn:</strong> från {data.senare[0].fran} får även {lista(data.senare.map((n) => n.namn))} namnsdag den {data.dt} (Namnlängdskommitténs beslut 2025). Se <a href="/nya-namn/">alla nya namn</a>.</p>}
+      {data.senare.length > 0 && <p><strong>Nytt namn:</strong> från {data.senare[0].fran} får även {lista(data.senare.map((n) => n.namn))} namnsdag den {data.dt} (Namnlängdskommitténs beslut 2025). Se <a href="/namnsdagar-2027/">namnsdagarna 2027</a>.</p>}
+
+      <h2>Är {data.dt} en röd dag eller flaggdag?</h2>
+      {data.fast
+        ? <p>Ja. Den {data.dt} är {data.fast} varje år.</p>
+        : <p>Den {data.dt} är ingen fast helgdag eller allmän flaggdag.</p>}
+      {data.rorliga.length > 0 && <ul>{data.rorliga.map((x) => <li>{x.ar}: {x.namn} ({x.typ === "röd dag" ? "röd dag" : x.typ === "flaggdag" ? "allmän flaggdag" : "helgafton"})</li>)}</ul>}
+      <p class="kalla">Helgdagar enligt lag (1989:253) om allmänna helgdagar, flaggdagar enligt förordning (1982:270) om allmänna flaggdagar. Rörliga dagar (påsk, pingst, midsommar, riksdagsval) är beräknade för {AR}–{AR + 6}. Se även <a href="https://xn--rdadagar-n4a.nu/">rödadagar.nu</a>.</p>
+
+      {data.fn.length > 0 && <>
+        <h2>Internationella dagar den {data.dt}</h2>
+        <ul class="fnlista">{data.fn.map((x) => <li><strong>{x.sv}</strong> <small lang="en">(<a href={x.url} rel="noopener">{x.en}</a>)</small></li>)}</ul>
+        <p class="kalla">Källa: <a href={FN_KALLA.url} rel="noopener">{FN_KALLA.namn}</a>, kontrollerad {FN_KALLA.hamtad}. Bara dagar med fast datum. Svensk benämning är redaktionens översättning där etablerat svenskt namn saknas.</p>
+      </>}
+
+      <Annons plats="dag-1" />
+
+      {data.fodd && <>
+        <h2>Födda den {data.dt}</h2>
+        <ul class="fodda">{data.fodd.fodda.map((x) => <li><span class="ar">{x.ar}</span> {x.namn}, {x.beskr}</li>)}</ul>
+        <p class="kalla">Urval ur avsnittet Födda i artikeln <a href={data.fodd.url} rel="noopener">{data.dt}</a> på svenska Wikipedia, licens <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.sv" rel="license noopener">CC BY-SA 4.0</a>. Hämtad {FODDA_KALLA.hamtad}. I första hand svenska personer.</p>
+      </>}
 
       <h2>Vilken veckodag är {data.dt}?</h2>
       <div class="tabell"><table>
-        <thead><tr><th>År</th><th>Veckodag</th></tr></thead>
-        <tbody>{data.ar.map((x) => <tr><td>{x.ar}</td><td>{x.dag}</td></tr>)}</tbody>
+        <thead><tr><th>År</th><th>Veckodag</th><th class="num">Vecka</th><th>Röd dag / flaggdag</th></tr></thead>
+        <tbody>{data.ar.map((x) => { const h = handelser(x.dt); const t = [...h.rod, ...h.afton, ...h.flagg.filter((f) => !h.rod.includes(f))]; return <tr><td>{x.ar}</td><td>{x.dag}</td><td class="num">{isoVecka(x.dt).vecka}</td><td>{t.length ? t.join(", ") : "–"}</td></tr>; })}</tbody>
       </table></div>
-
-      <Annons plats="dag-1" />
 
       <h2>Dagen före och efter</h2>
       <ul class="veckan">
@@ -105,7 +188,7 @@ const idagK = mmddAv(IDAG);
             <span>{ns.length ? ns.map((n, j) => <>{j > 0 && ", "}<a href={namnHref(n.namn)}>{n.namn}</a></>) : <em>{UTAN_NAMN[kk]?.split(" –")[0]}</em>}</span></li>;
         })}
       </ul>
-      <p><a href={manadHref(data.mn)}>Alla namnsdagar i {MANADER[data.mn - 1]}</a> · <a href="/">Namnsdag idag</a></p>
+      <p><a href={manadHref(data.mn)}>Alla namnsdagar i {MANADER[data.mn - 1]}</a> · <a href={kalenderHref()}>Namnsdagskalender att skriva ut</a> · <a href="/">Namnsdag idag</a></p>
     </>
   ) : (
     <>
@@ -127,6 +210,35 @@ const idagK = mmddAv(IDAG);
       </table></div>
       <p class="kalla">Namnlängden enligt {NAMN_KALLA.utgivare}. Antal bärare: SCB 2020.</p>
       <Annons plats="manad-1" />
+
+      {data.topp.length > 0 && <>
+        <h2>Vanligaste namnen med namnsdag i {data.mnamn}</h2>
+        <p>Tillsammans har {tal(data.summaBarare)} personer i Sverige något av {genitiv(data.mnamn)} {data.allaNamn.length} almanacksnamn som tilltalsnamn. De tio med flest bärare:</p>
+        <div class="tabell"><table>
+          <thead><tr><th class="num">Plats</th><th>Namn</th><th>Namnsdag</th><th class="num">Tilltalsnamn 2020</th></tr></thead>
+          <tbody>{data.topp.map((n, i) => <tr><td class="num">{i + 1}</td><td><a href={namnHref(n.namn)}>{n.namn}</a></td><td><a href={dagHref(n.datum)}>{dagText(n.datum)}</a></td><td class="num">{tal(barare(n))}</td></tr>)}</tbody>
+        </table></div>
+        <p class="kalla">Källa: {SCB_KALLA}. Folkbokförda 31 december 2020. Namn med färre än 10 bärare redovisas inte av SCB.</p>
+      </>}
+
+      <h2>Röda dagar och flaggdagar i {data.mnamn} {AR}</h2>
+      {data.helger.length
+        ? <ul>{data.helger.map((h) => <li><a href={dagHref(h.k)}>{veckodag(h.dt)} {dagText(h.k)}</a>: {h.t.map((x, i) => <>{i > 0 && ", "}{x[0]} ({x[1]})</>)}</li>)}</ul>
+        : <p>I {data.mnamn} {AR} finns ingen allmän helgdag, helgafton eller allmän flaggdag.</p>}
+      {data.utanDagar.length > 0 && <p>{data.utanDagar.length === 1 ? "En dag" : `${data.utanDagar.length} dagar`} i {data.mnamn} saknar namn i almanackan: {lista(data.utanDagar.map((d) => `${dagText(d.k)} (${helgnamn(UTAN_NAMN[d.k].split(" –")[0])})`))}.</p>}
+      <p class="kalla">Helgdagar enligt lag (1989:253) om allmänna helgdagar, flaggdagar enligt förordning (1982:270) om allmänna flaggdagar. Rörliga dagar är beräknade för {AR}.</p>
+
+      {data.fnManad.length > 0 && <>
+        <h2>FN:s internationella dagar i {data.mnamn}</h2>
+        <p>FN uppmärksammar {data.fnManad.length} internationella {data.fnManad.length === 1 ? "dag" : "dagar"} med fast datum i {data.mnamn}.</p>
+        <ul class="fnlista">{data.fnManad.map((x) => <li><a href={dagHref(x.k)}>{dagText(x.k)}</a>: {x.sv}</li>)}</ul>
+        <p class="kalla">Källa: <a href={FN_KALLA.url} rel="noopener">{FN_KALLA.namn}</a>, kontrollerad {FN_KALLA.hamtad}. Svensk benämning är redaktionens översättning där etablerat svenskt namn saknas.</p>
+      </>}
+
+      {data.nyaManad.length > 0 && <>
+        <h2>Nya namn i {data.mnamn} från 2027</h2>
+        <p>Enligt Namnlängdskommitténs beslut 2025 får {lista(data.nyaManad.map((x) => `${x.n.namn} (${dagText(x.k)})`))} namnsdag i {data.mnamn} från och med {data.nyaManad[0].n.fran}. Se alla <a href="/nya-namn/">nya namn i almanackan</a>.</p>
+      </>}
       <div class="lank-rad">
         <a href={manadHref(forraM)}>← {MANADER[forraM - 1]}</a>
         <a href={manadHref(nastaM)}>{MANADER[nastaM - 1]} →</a>

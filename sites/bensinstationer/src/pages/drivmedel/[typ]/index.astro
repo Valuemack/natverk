@@ -7,9 +7,13 @@ import EnhetLista from "@natverk/core/katalog/EnhetLista.astro";
 import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
 import { faqLd } from "@natverk/core/seo.js";
 import { rakna } from "@natverk/core/katalog.js";
+import DrivmedelPris from "../../../components/DrivmedelPris.astro";
+import Prisrutor from "../../../components/Prisrutor.astro";
 import { SITE, KAT, UPPDATERAD, KALLA, DRIVMEDEL, harDrivmedel, LISTPRISER, kr } from "../../../site.js";
+import { idagPris, datumText, LP_DATUM, pris as prisTal, dagsAndring, andring, riktning } from "../../../pris.js";
 
 const OM = {
+  "bensin-98": "Bensin 98 har högre oktantal än 95 och säljs ofta som E5 med högst 5 procent etanol. Den behövs bara i motorer som kräver den enligt instruktionsboken.",
   hvo100: "HVO100 är en förnybar diesel av restprodukter och vegetabiliska oljor. Den kan användas i de flesta moderna dieselbilar som tillverkaren har godkänt för HVO.",
   e85: "E85 är etanolbränsle med upp till 85 % etanol. Det kräver en bil som är byggd för etanol (flexifuel).",
   fordonsgas: "Fordonsgas är biogas eller naturgas för gasbilar. Den säljs per kilo, inte per liter.",
@@ -32,13 +36,16 @@ const fragor = [
   pris && { fraga: `Vad kostar ${kort} idag?`, svar: `Snittet av kedjornas listpriser för företagskunder är ${kr(pris.pris)} per ${enhet} inkl. moms (${LISTPRISER.datum}). Priset vid pumpen kan skilja sig.` },
   OM[s] && { fraga: `Vad är ${kort}?`, svar: OM[s] },
 ].filter(Boolean);
+const harPris = idagPris(nyckel) != null;
+const a = harPris ? dagsAndring(nyckel) : null;
 const titel = [`${namn} – ${st.length} stationer i Sverige`, `${kort} – ${st.length} stationer`].find((t) => t.length <= 60);
 ---
-<Layout site={SITE} titel={nyckel === "el" ? `Laddning på bensinstationer – ${st.length} stationer` : `Tanka ${kort} – ${st.length} stationer med ${namn}`.length <= 60 ? `Tanka ${kort} – ${st.length} stationer med ${namn}` : titel}
+<Layout site={SITE} titel={harPris ? [`${kort === "fordonsgas" ? "Fordonsgas" : kort} pris idag ${prisTal(pris.pris)} kr/${enhet} – ${st.length} stationer`, `${kort} pris idag – ${st.length} stationer`].find((t) => t.length <= 60) : nyckel === "el" ? `Laddning på bensinstationer – ${st.length} stationer` : `Tanka ${kort} – ${st.length} stationer med ${namn}`.length <= 60 ? `Tanka ${kort} – ${st.length} stationer med ${namn}` : titel}
   beskrivning={`Alla ${st.length} bensinstationer med ${namn} i Sverige, sorterade per län och kommun.${pris ? ` ✓ Listpris idag ${kr(pris.pris)}/${enhet}` : ""} ✓ Öppettider ✓ Uppdateras varje natt.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Drivmedel", href: "/drivmedel/" }, { namn, href: `/drivmedel/${s}/` }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
   <h1>Stationer med {namn}</h1>
-  <p class="svar"><strong>{st.length} stationer</strong> i {perLan.length} län säljer {namn}.{pris && <> Kedjornas listpris idag är i snitt <strong>{kr(pris.pris)}/{enhet}</strong>.</>} {OM[s]}</p>
+  <p class="svar">{pris && <>{namn} kostar i snitt <strong>{kr(pris.pris)}/{enhet}</strong> enligt kedjornas listpriser den {datumText(LP_DATUM)}.{a && Math.abs(a.varde) > 0.004 && <> Det är <span class={riktning(a.varde)}>{andring(a.varde)}</span> mot {datumText(a.mot)}.</>} </>}<strong>{st.length} stationer</strong> i {perLan.length} län säljer {namn}. {OM[s]}</p>
+  {harPris && <><Prisrutor /><DrivmedelPris nyckel={nyckel} /><h2>Var kan man tanka {kort}?</h2></>}
   <div class="lank-rad">{perLan.map((x) => <a href={`#${x.lan.slug}`}>{x.lan.kortnamn} ({x.enheter.length})</a>)}</div>
   <Annons plats="drivmedel-1" />
   {perLan.map((x) => <><h2 id={x.lan.slug}>{namn} i {x.lan.namn}</h2><EnhetLista enheter={x.enheter} visaKommun /></>)}

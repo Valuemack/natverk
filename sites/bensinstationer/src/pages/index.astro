@@ -7,6 +7,9 @@ import { VERKTYG } from "../verktyg.js";
 import { faqLd, websiteLd } from "@natverk/core/seo.js";
 import { harOppettider, oppetHelg } from "@natverk/core/katalog.js";
 import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import Prisrutor from "../components/Prisrutor.astro";
+import { idagPris, kr, LP_DATUM, datumText } from "../pris.js";
+import { GUIDER } from "../guider.js";
 
 const Plur = ORD.plur[0].toUpperCase() + ORD.plur.slice(1);
 const n = KAT.enheter.length;
@@ -27,6 +30,10 @@ const fragor = [
   <h2>Flest {ORD.plur}</h2>
   <div class="kort">{storst.map((k) => <a href={k.href}><strong>{Plur} i {k.namn}</strong><small>{k.enheter.length} st</small></a>)}</div>
 
+  <h2>Bensinpris idag</h2>
+  <p>Kedjornas listpris den {datumText(LP_DATUM)}: bensin 95 <strong>{kr(idagPris("bensin95"))}</strong> och diesel <strong>{kr(idagPris("diesel"))}</strong> per liter i snitt. <a href="/bensinpris/">Alla priser per kedja</a> · <a href="/dieselpris/">dieselpris</a> · <a href="/historik/">historik</a> · <a href="/europa/">Europa</a> · <a href="/rakna/">räkna bränslekostnad</a>.</p>
+  <Prisrutor />
+
   <Annons plats="start-1" />
 
   <h2 id="lan">{Plur} per län och kommun</h2>
@@ -36,6 +43,10 @@ const fragor = [
       <ul class="kolumner">{l.kommuner.map((k) => <li><a href={k.href}>{k.namn}</a> ({k.enheter.length})</li>)}</ul>
     </>
   ))}
+
+  <h2>Guider</h2>
+  <div class="kort">{GUIDER.filter((g) => ["billigaste-bensinen", "tanka-langs-e4", "tanka-langs-e6", "hvo100-vilka-bilar", "obemannad-bensinstation", "tanka-i-norge"].includes(g.slug)).map((g) => <a href={g.href}><strong>{g.namn}</strong><small>{g.text}</small></a>)}</div>
+  <p><a href="/guider/">Alla {GUIDER.length} guider</a></p>
 
   <Annons plats="start-2" />
   <Faq fragor={fragor} />

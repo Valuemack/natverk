@@ -1,0 +1,201 @@
+---
+// Lång guide: bensinpriset per år 1960–2026, nominellt och i 2025 års penningvärde.
+// 1960–2004: Drivkraft Sveriges tabell "Årsmedelspriser motorbränslen" (pumppris på bemannad station, 95 och diesel, med skatt).
+//   Tabellen visas i dag som inbäddad graf på drivkraftsverige.se/fakta-statistik/priser/; siffrorna är avlästa ur
+//   tabellversionen på samma sajt (arkiverad 2021-07-31). 1960 och 1965 är de enda åren före 1970 i tabellen.
+// 2005–: EU-kommissionens Weekly Oil Bulletin (arSammanfattning i pris.js). Inflation: SCB KPI årsmedel (juli 1914=100).
+// Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, AR, AR_LISTA, SENASTE_VECKA, VECKOR, arSammanfattning, skattedelar, kr, pris, procent, datumText } from "../../pris.js";
+import { SKATTESATSER, summa } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, SENASTE_VECKA.datum].sort().at(-1);
+
+// Drivkraft Sverige: [år, 95 pris, 95 varav skatt och moms, diesel pris, diesel varav skatt och moms], kr/l årsmedel.
+const DK = [
+  [1960, 0.74, 0.42, 0.58, 0.33], [1965, 0.77, 0.51, 0.61, 0.35], [1970, 0.84, 0.59, 0.67, 0.41], [1971, 0.96, 0.68, 0.77, 0.48],
+  [1972, 0.96, 0.68, 0.74, 0.48], [1973, 1.04, 0.71, 0.82, 0.48], [1974, 1.33, 0.75, 0.55, 0.05], [1975, 1.37, 0.78, 0.5, 0.06],
+  [1976, 1.55, 0.83, 0.59, 0.06], [1977, 1.59, 0.84, 0.6, 0.06], [1978, 1.81, 1.01, 0.66, 0.06], [1979, 2.14, 1.1, 0.98, 0.07],
+  [1980, 2.88, 1.46, 1.48, 0.13], [1981, 3.48, 1.64, 1.84, 0.25], [1982, 3.86, 1.7, 2.33, 0.36], [1983, 4.07, 1.71, 2.52, 0.42],
+  [1984, 4.14, 1.86, 2.85, 0.53], [1985, 4.57, 2.33, 3.05, 0.53], [1986, 4.01, 2.19, 2.3, 0.53], [1987, 4.02, 2.3, 2.57, 0.76],
+  [1988, 4.28, 2.58, 2.67, 0.88], [1989, 4.59, 2.64, 3.22, 1.03], [1990, 6.29, 4.06, 4.78, 1.9], [1991, 6.45, 4.26, 5.16, 2.29],
+  [1992, 6.26, 4.2, 4.92, 2.24], [1993, 7.67, 5.41, 6.02, 2.99], [1994, 7.52, 5.42, 7.06, 4.23], [1995, 7.57, 5.55, 6.8, 4.25],
+  [1996, 7.87, 5.77, 6.55, 4.34], [1997, 8.27, 6.02, 6.65, 4.46], [1998, 8.1, 6.09, 6.3, 4.46], [1999, 8.4, 6.11, 6.66, 4.5],
+  [2000, 9.57, 6.38, 8.44, 4.61], [2001, 9.52, 6.4, 8.7, 4.78], [2002, 9.37, 6.49, 8.41, 4.8], [2003, 9.46, 6.6, 7.95, 4.77],
+  [2004, 10.05, 6.8, 8.66, 5.06],
+];
+// Samma tabell 2005–2020 (bara 95), för att jämföra med EU-serien där de överlappar.
+const DK95_OVERLAPP = { 2005: 11.14, 2008: 12.54, 2012: 14.98, 2016: 13.2, 2020: 14.15 };
+// SCB: KPI/Levnadskostnadsindex, årsmedel, juli 1914=100 (tabell KPILevindexAr).
+const KPI = {
+  1960: 407, 1965: 487, 1970: 605, 1971: 650, 1972: 689, 1973: 735, 1974: 808, 1975: 887, 1976: 979, 1977: 1090, 1978: 1200, 1979: 1286,
+  1980: 1461, 1981: 1638, 1982: 1778, 1983: 1937, 1984: 2092, 1985: 2246, 1986: 2341, 1987: 2440, 1988: 2582, 1989: 2748,
+  1990: 3036, 1991: 3319, 1992: 3395, 1993: 3553, 1994: 3631, 1995: 3723, 1996: 3740, 1997: 3760, 1998: 3754, 1999: 3772,
+  2000: 3809, 2001: 3902, 2002: 3986, 2003: 4063, 2004: 4078, 2005: 4097, 2006: 4152, 2007: 4244, 2008: 4390, 2009: 4378,
+  2010: 4434, 2011: 4550, 2012: 4590, 2013: 4588, 2014: 4580, 2015: 4578, 2016: 4623, 2017: 4706, 2018: 4798, 2019: 4884,
+  2020: 4908, 2021: 5014, 2022: 5434, 2023: 5898, 2024: 6065, 2025: 6107,
+};
+const BAS = 2025;
+const real = (v, ar) => (v != null && KPI[ar] ? (v * KPI[BAS]) / KPI[ar] : null);
+
+const tidig = DK.map(([ar, b95, s95, diesel, sd]) => ({ ar, b95, s95, diesel, sd, kalla: "Drivkraft" }));
+const eu = AR_LISTA.map(arSammanfattning).filter(Boolean).map((x) => ({ ar: x.ar, b95: x.b95.medel, diesel: x.diesel?.medel ?? null, komplett: x.ar < AR, kalla: "EU" }));
+const alla = [...tidig, ...eu].map((x) => ({ ...x, r95: real(x.b95, x.ar), rd: real(x.diesel, x.ar) }));
+const ar = (y) => alla.find((x) => x.ar === y);
+const medR = alla.filter((x) => x.r95 != null);
+const billigastReal = medR.reduce((a, b) => (b.r95 < a.r95 ? b : a));
+const dyrastReal = medR.reduce((a, b) => (b.r95 > a.r95 ? b : a));
+const nu = ar(AR);
+const fjol = ar(BAS);
+
+// Decennier: medel av de år som finns i serien.
+const decennier = [1960, 1970, 1980, 1990, 2000, 2010, 2020].map((d) => {
+  const r = alla.filter((x) => x.ar >= d && x.ar < d + 10);
+  const m = (k) => { const v = r.map((x) => x[k]).filter((v) => v != null); return v.length ? v.reduce((s, v) => s + v, 0) / v.length : null; };
+  return { d, ar: r.map((x) => x.ar), b95: m("b95"), r95: m("r95"), diesel: m("diesel"), rd: m("rd"), lag: r.reduce((a, b) => (b.b95 < a.b95 ? b : a)), hog: r.reduce((a, b) => (b.b95 > a.b95 ? b : a)) };
+});
+const f = (y) => ar(y);
+const olja = { fore: f(1973), efter: f(1974), p73: f(1973).b95 - f(1973).s95, p74: f(1974).b95 - f(1974).s95 };
+const skattAndel = (x) => x.s95 / x.b95;
+const okning = (a, b) => (b / a - 1) * 100;
+const ar27 = SKATTESATSER.perioder.find((p) => p.fran === "2027-01-01");
+const skattHog = tidig.reduce((a, b) => (skattAndel(b) > skattAndel(a) ? b : a));
+// Skattens andel per år: Drivkraft före 2005, EU-veckornas medel (skattedelar) från 2005.
+const euSkatt = (y) => { const w = VECKOR.filter((v) => v.datum.startsWith(`${y}-`)).map((v) => skattedelar(v, "b95")).filter(Boolean); return w.length ? { skatt: w.reduce((s, x) => s + x.skatt, 0) / w.length, pris: w.reduce((s, x) => s + x.pris, 0) / w.length } : null; };
+const skattRader = [1960, 1970, 1980, 1990, 2000, 2005, 2010, 2015, 2020, 2022, BAS].map((y) => {
+  const x = ar(y);
+  if (y < 2005) return { ar: y, pris: x.b95, skatt: x.s95, andel: x.s95 / x.b95, rskatt: real(x.s95, y) };
+  const e = euSkatt(y); return e ? { ar: y, pris: e.pris, skatt: e.skatt, andel: e.skatt / e.pris, rskatt: real(e.skatt, y) } : null;
+}).filter(Boolean);
+const tank = 50;
+const tankAr = [1960, 1970, 1980, 1990, 2000, 2010, 2020, 2022, BAS].map((y) => ar(y)).filter(Boolean);
+
+const avsnitt = [
+  { id: "decennier", rubrik: "Bensinpriset per decennium" },
+  { id: "kurva", rubrik: "Hela kurvan i dagens penningvärde" },
+  { id: "60-70", rubrik: "1960- och 1970-talet: oljekrisen" },
+  { id: "80-talet", rubrik: "Bensinpriset på 80-talet" },
+  { id: "90-talet", rubrik: "90-talet: skatterna tar över" },
+  { id: "skatt", rubrik: "Hur stor del av priset har varit skatt?" },
+  { id: "tank", rubrik: "Vad har en full tank kostat?" },
+  { id: "tabell", rubrik: "Bensinpris och dieselpris år för år" },
+  { id: "efter-2005", rubrik: "Från 2005: veckopriser från EU" },
+  { id: "metod", rubrik: "Så har vi räknat" },
+];
+
+const fragor = [
+  { fraga: "Vad kostade bensinen 1970?", svar: `En liter kostade i genomsnitt ${kr(f(1970).b95)} under 1970 enligt Drivkraft Sverige. Räknat med SCB:s konsumentprisindex motsvarar det ${kr(f(1970).r95)} i ${BAS} års penningvärde.` },
+  { fraga: "Vad kostade bensinen på 80-talet?", svar: `Årsmedelpriset gick från ${kr(f(1980).b95)} 1980 till ${kr(f(1989).b95)} 1989. Det högsta årsmedlet var ${kr(f(1985).b95)} år 1985. I ${BAS} års penningvärde låg 80-talets bensin mellan ${kr(Math.min(...alla.filter((x) => x.ar >= 1980 && x.ar < 1990).map((x) => x.r95)))} och ${kr(Math.max(...alla.filter((x) => x.ar >= 1980 && x.ar < 1990).map((x) => x.r95)))} per liter.` },
+  { fraga: "Vad kostade bensinen 1990 och 2000?", svar: `Årsmedlet var ${kr(f(1990).b95)} år 1990 och ${kr(f(2000).b95)} år 2000. Omräknat till ${BAS} års penningvärde blir det ${kr(f(1990).r95)} respektive ${kr(f(2000).r95)}.` },
+  { fraga: "När var bensinen som dyrast i Sverige?", svar: `Räknat i ${BAS} års penningvärde var ${dyrastReal.ar} det dyraste året, med ett årsmedel på ${kr(dyrastReal.r95)} per liter (${kr(dyrastReal.b95)} i dåtidens kronor). Billigast var ${billigastReal.ar} med ${kr(billigastReal.r95)} i dagens penningvärde.` },
+  { fraga: "Var diesel billigare än bensin förr?", svar: `Ja. Mellan 1974 och 1993 betalade dieselfordon framför allt kilometerskatt och skatten på själva dieseln var låg. Dieseln kostade då ofta hälften så mycket som bensin eller mindre. År 1980 kostade diesel ${kr(f(1980).diesel)} och bensin ${kr(f(1980).b95)} per liter.` },
+  { fraga: "Hur mycket har bensinpriset ökat sedan 1980?", svar: `Från ${kr(f(1980).b95)} år 1980 till ${kr(fjol.b95)} år ${BAS} i löpande priser, en ökning med ${procent(okning(f(1980).b95, fjol.b95))}. Rensat för inflationen är ökningen ${procent(okning(f(1980).r95, fjol.r95))}.` },
+];
+---
+<Guide site={SITE} titel={`Bensinpris historik 1960–${AR}: pris per år och decennium`}
+  beskrivning={`Bensinpriset år för år sedan 1960: ${kr(f(1970).b95)} 1970, ${kr(f(1980).b95)} 1980 och ${kr(fjol.b95)} ${BAS}. Varje år också i dagens penningvärde, plus dieselpriset och skatten.`}
+  h1={`Bensinpriset genom åren – 1960 till ${AR}`}
+  svar={`En liter bensin kostade i genomsnitt <strong>${kr(f(1970).b95)} år 1970</strong>, ${kr(f(1980).b95)} år 1980, ${kr(f(1990).b95)} år 1990 och ${kr(f(2000).b95)} år 2000. År ${BAS} var snittet ${kr(fjol.b95)}. Räknat i ${BAS} års penningvärde motsvarar 1970 års pris <strong>${kr(f(1970).r95)}</strong>, så bensinen har blivit dyrare även efter inflationen, men mycket mindre än de nominella priserna antyder. Det dyraste året hittills var ${dyrastReal.ar}.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensinpriset genom åren", href: "/guider/bensinpris-genom-aren/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinprisets historik vecka för vecka", href: "/historik/", text: "Alla veckopriser sedan 2005, rekord och utveckling" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Kedjornas listpriser, uppdateras varje natt" },
+    { namn: "Varför är diesel dyrare än bensin?", href: "/guider/varfor-ar-diesel-dyrare/", text: "Skatter, reduktionsplikt och världsmarknaden" },
+    { namn: "Bensinskatt", href: "/guider/vad-bestar-bensinpriset-av/", text: "Hur stor del av priset som är skatt idag" },
+    { namn: "Bensinpriset 2027", href: "/guider/bensinpriset-2027/", text: "Vad som ändras vid årsskiftet" },
+  ]}
+  kallor={[
+    { namn: "Drivkraft Sverige – Priser (Årsmedelspriser motorbränslen)", url: "https://drivkraftsverige.se/fakta-statistik/priser/", text: "årsmedelpris för bensin 95 och diesel med skatt och moms 1960–2004, pumppris på bemannad station", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Årsmedelspriser motorbränslen (tabellversion, arkiverad 31 juli 2021)", url: "https://web.archive.org/web/20210731034619/https://drivkraftsverige.se/statistik/priser/mer-prisstatistik/arsmedelspriser-motorbranslen/", text: "samma tabell med siffror, som vi läst av", datum: "2026-11-27" },
+    { namn: "SCB – Konsumentprisindex (KPI)/Levnadskostnadsindex, årsmedel, juli 1914=100", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__PR__PR0101__PR0101A/KPILevindexAr/", text: "inflationsomräkning till 2025 års penningvärde", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "pumppris i Sverige per vecka sedan 2005 (CC BY 4.0)", datum: "2026-11-27" },
+    { namn: "Prop. 1971:153 om vägtrafikbeskattningen", url: "https://lagen.nu/prop/1971:153", text: "kilometerskatt för dieseldrivna fordon från 1 januari 1974", datum: "2026-11-27" },
+    { namn: "Prop. 1992/93:124", url: "https://lagen.nu/prop/1992/93:124", text: "kilometerskatten slopas 1 oktober 1993 och ersätts med skatt på dieselolja", datum: "2026-11-27" },
+    { namn: "Government Offices of Sweden – Sweden's carbon tax", url: "https://www.government.se/carbontax", text: "koldioxidskatten infördes 1991", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Drivmedelsprisernas utveckling (Specialstudie, november 2023)", url: "https://www.konj.se/media/ts3j22ju/specialstudie-091-drivmedelsprisernas-utveckling.pdf", text: "sänkningarna av energiskatten 2022", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Drivmedelsprisernas utveckling över tid (juni 2025)", url: "https://drivkraftsverige.se/wp-content/uploads/2025/06/DS-Broschyr-drivmedelspriser.pdf", text: "prisutvecklingen sedan 1980 i fasta priser", datum: "2026-11-27" },
+  ]}>
+
+  <h2 id="decennier">Bensinpriset per decennium</h2>
+  <p>Tabellen visar genomsnittet av årsmedelpriserna för varje decennium, först i dåtidens kronor och sedan omräknat till {BAS} års penningvärde med SCB:s konsumentprisindex. Det är den raden som säger något om hur dyrt det faktiskt var att tanka. Före 2005 kommer priserna från branschorganisationen Drivkraft Sverige (tidigare SPBI), som mätte pumppriset på bemannade stationer. Från 2005 använder vi EU-kommissionens veckopriser för Sverige.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Decennium</th><th class="num">95, kr/l</th><th class="num">95 i {BAS} års kr</th><th class="num">Diesel, kr/l</th><th class="num">Diesel i {BAS} års kr</th></tr></thead>
+    <tbody>{decennier.map((x) => (
+      <tr><td>{x.d}-talet{x.d === 1960 ? " (1960 och 1965)" : x.d === 2020 ? ` (2020–${AR})` : ""}</td><td class="num">{pris(x.b95)}</td><td class="num">{pris(x.r95)}</td><td class="num">{pris(x.diesel)}</td><td class="num">{pris(x.rd)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Medel av årsmedelpriser med skatt och moms. Omräkningen gäller bara hela år till och med {BAS}; {AR} ingår därför i 2020-talets löpande pris men inte i det inflationsjusterade.</p>
+  <p>I löpande kronor har bensinen blivit ungefär tjugo gånger dyrare sedan 1960. Men även lönerna och nästan alla andra priser har stigit. I fast penningvärde var en liter 95 under 1970-talet ungefär {kr(decennier[1].r95)} och under 2010-talet {kr(decennier[5].r95)}. Ökningen är alltså verklig men betydligt mindre än de nominella priserna antyder.</p>
+
+  <h2 id="kurva">Hela kurvan i dagens penningvärde</h2>
+  <Kurva titel={`Bensin 95 och diesel, årsmedel i ${BAS} års penningvärde`} linjer={[
+    { namn: "Bensin 95", farg: "#b42318", punkter: medR.map((x) => ({ x: `${x.ar}-07-01`, y: x.r95 })) },
+    { namn: "Diesel", farg: "#334155", punkter: medR.filter((x) => x.rd != null).map((x) => ({ x: `${x.ar}-07-01`, y: x.rd })) },
+  ]} />
+  <p>Räknat på det sättet var {billigastReal.ar} det billigaste året i serien, med {kr(billigastReal.r95)} per liter i dagens penningvärde. Det dyraste var {dyrastReal.ar}, då årsmedlet motsvarade {kr(dyrastReal.r95)}. Kurvan visar också en tydlig trappa uppåt kring 1980, 1990 och 2000, och den nedgången som följde efter rekordåret 2022. År {BAS} låg bensinen på {kr(fjol.r95)}, ungefär samma nivå som åren 2000–2005 räknat i fast penningvärde.</p>
+  <p>Dieselns kurva ser annorlunda ut. Mellan mitten av 1970-talet och början av 1990-talet låg dieseln långt under bensinen, för att sedan klättra ikapp. Sedan 2018 har dieseln oftast varit dyrare än bensinen. Varför går vi igenom i guiden om <a href="/guider/varfor-ar-diesel-dyrare/">varför diesel är dyrare</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="60-70">1960- och 1970-talet: oljekrisen</h2>
+  <p>År 1960 kostade en liter bensin {kr(f(1960).b95)}. Av det var {kr(f(1960).s95)} skatt och moms, alltså {procent(skattAndel(f(1960)) * 100)}. Fram till 1970 steg priset bara till {kr(f(1970).b95)}, alltså med {kr(f(1970).b95 - f(1960).b95)} på tio år.</p>
+  <p>Oljekrisen 1973 syns tydligt i serien. Mellan 1973 och 1974 steg årsmedelpriset från {kr(olja.fore.b95)} till {kr(olja.efter.b95)}, en ökning med {procent(okning(olja.fore.b95, olja.efter.b95))}. Nästan hela höjningen kom från produkten: delen utan skatt gick från {kr(olja.p73)} till {kr(olja.p74)} per liter, medan skatten bara ökade med {kr(olja.efter.s95 - olja.fore.s95)}. Under resten av decenniet steg priset vidare till {kr(f(1979).b95)} år 1979.</p>
+  <p>Samma år, 1974, rasade skatten på diesel från {kr(f(1973).sd)} till {kr(f(1974).sd)} per liter. Det beror på att dieseldrivna fordon från den 1 januari 1974 i stället betalade kilometerskatt efter hur långt de körde. Därför kostade diesel bara {kr(f(1975).diesel)} per liter 1975, mot {kr(f(1975).b95)} för bensin.</p>
+
+  <h2 id="80-talet">Bensinpriset på 80-talet</h2>
+  <p>Kring 1980 kom nästa stora höjning. Årsmedlet gick från {kr(f(1979).b95)} 1979 till {kr(f(1980).b95)} 1980 och vidare till {kr(f(1982).b95)} 1982. Toppen kom 1985 med {kr(f(1985).b95)}, vilket i {BAS} års penningvärde motsvarar {kr(f(1985).r95)}. I fast penningvärde var dock 1982 dyrare, med {kr(f(1982).r95)}.</p>
+  <p>År 1986 föll priset till {kr(f(1986).b95)}. Nästan hela nedgången kom från produktdelen, som minskade från {kr(f(1985).b95 - f(1985).s95)} till {kr(f(1986).b95 - f(1986).s95)} per liter. Under resten av 80-talet höll sig priset kring fyra kronor och slutade på {kr(f(1989).b95)} år 1989. Skattens andel växte under decenniet från {procent(skattAndel(f(1980)) * 100)} till {procent(skattAndel(f(1989)) * 100)} av priset.</p>
+
+  <h2 id="90-talet">90-talet: skatterna tar över</h2>
+  <p>Mellan 1989 och 1990 steg skatten och momsen på en liter bensin från {kr(f(1989).s95)} till {kr(f(1990).s95)}, och priset gick från {kr(f(1989).b95)} till {kr(f(1990).b95)}. Det är det största enskilda hoppet i hela serien räknat i procent av året innan. År 1991 infördes dessutom koldioxidskatten.{ar27 && <> Enligt Skatteverket är den {kr(ar27.bensin.co2)} av totalt {kr(summa(ar27.bensin))} i punktskatt per liter bensin från 2027.</>}</p>
+  <p>För diesel kom förändringen 1993. Regeringen föreslog att kilometerskatten skulle slopas den 1 oktober det året och ersättas med en skatt på själva dieseloljan, och bytet syns tydligt i tabellen. Skatten per liter diesel steg från {kr(f(1992).sd)} 1992 till {kr(f(1994).sd)} 1994, och priset från {kr(f(1992).diesel)} till {kr(f(1994).diesel)}. Under resten av 90-talet låg bensinen på 7,50–8,40 kronor och skatten utgjorde som mest {procent(skattAndel(skattHog) * 100)} av priset ({skattHog.ar}), den högsta andelen i Drivkraft Sveriges tabell före 2005.</p>
+
+  <h2 id="skatt">Hur stor del av priset har varit skatt?</h2>
+  <p>Skatterna förklarar en stor del av den långsiktiga ökningen. Tabellen visar hur mycket av literpriset för bensin 95 som var skatt och moms ett urval av år. Före 2005 kommer siffrorna från Drivkraft Sverige. Från 2005 har vi räknat fram skatten ur EU:s veckopriser med och utan skatt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Pris, kr/l</th><th class="num">Skatt och moms, kr/l</th><th class="num">Andel skatt</th><th class="num">Skatt i {BAS} års kr</th></tr></thead>
+    <tbody>{skattRader.map((x) => <tr><td>{x.ar}</td><td class="num">{pris(x.pris)}</td><td class="num">{pris(x.skatt)}</td><td class="num">{procent(x.andel * 100)}</td><td class="num">{pris(x.rskatt)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Bensin 95, årsmedel. Skatt = energiskatt, koldioxidskatt (från 1991) och moms.</p>
+  <p>I fast penningvärde har skatten per liter ökat med {procent(okning(skattRader[0].rskatt, skattRader.at(-1).rskatt))} sedan 1960, från {kr(skattRader[0].rskatt)} till {kr(skattRader.at(-1).rskatt)} i {BAS} års kronor. Andelen var som högst under 1990-talet och låg mellan 2005 och 2020 kring två tredjedelar av priset. De senaste åren har den varit lägre: {procent(skattRader.find((x) => x.ar === 2022).andel * 100)} år 2022 och {procent(skattRader.at(-1).andel * 100)} år {BAS}. Ett år med dyr olja ger lägre skatteandel, eftersom punktskatterna är fasta belopp per liter, och under 2022 sänktes dessutom energiskatten. Hur dagens pris fördelar sig visas i guiden om <a href="/guider/vad-bestar-bensinpriset-av/">bensinskatten</a>.</p>
+
+  <h2 id="tank">Vad har en full tank kostat?</h2>
+  <p>Ett annat sätt att se förändringen är att räkna på en tank på {tank} liter. Tabellen visar priset för en full tank bensin 95 med årsmedelpriset, i dåtidens kronor och i {BAS} års penningvärde.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">{tank} liter, dåtidens kr</th><th class="num">{tank} liter, {BAS} års kr</th></tr></thead>
+    <tbody>{tankAr.map((x) => <tr><td>{x.ar}</td><td class="num">{kr(x.b95 * tank, 0)}</td><td class="num">{kr(x.r95 * tank, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>En full tank som kostade {kr(f(1970).b95 * tank, 0)} år 1970 motsvarar {kr(f(1970).r95 * tank, 0)} i dagens penningvärde, medan samma tank kostade {kr(fjol.b95 * tank, 0)} år {BAS}. Under rekordåret 2022 kostade tanken i snitt {kr(ar(2022).b95 * tank, 0)}. Hur mycket bränslet kostar per mil beror också på bilen. Drivkraft Sverige pekar i sin rapport från juni 2025 på att bilarna har blivit snålare över tid, så att kostnaden per körd mil har ökat mindre än literpriset. Räkna på din egen bil i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <h2 id="tabell">Bensinpris och dieselpris år för år</h2>
+  <p>Hela serien, med årsmedelpriset i dåtidens kronor och i {BAS} års penningvärde. För åren före 2005 visas också hur stor del som var skatt och moms. Från 2005 kan du klicka på året för att se veckopriser och månadssnitt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Bensin 95</th><th class="num">Varav skatt och moms</th><th class="num">95 i {BAS} års kr</th><th class="num">Diesel</th><th class="num">Diesel i {BAS} års kr</th></tr></thead>
+    <tbody>{alla.map((x) => (
+      <tr><td>{x.ar >= 2005 ? <a href={`/historik/${x.ar}/`}>{x.ar}</a> : x.ar}{x.ar >= AR && " *"}</td><td class="num">{pris(x.b95)}</td><td class="num">{x.s95 != null ? pris(x.s95) : "–"}</td><td class="num">{x.r95 != null ? pris(x.r95) : "–"}</td><td class="num">{pris(x.diesel)}</td><td class="num">{x.rd != null ? pris(x.rd) : "–"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter, årsmedel med skatt och moms. 1960–2004: Drivkraft Sverige. Från 2005: EU-kommissionens Weekly Oil Bulletin, medel av veckopriserna. * = året är inte slut, och KPI för hela året finns inte ännu.</p>
+
+  <h2 id="efter-2005">Från 2005: veckopriser från EU</h2>
+  <p>För åren från 2005 använder vi EU-kommissionens veckovisa pumppriser för Sverige, samma serie som ligger bakom vår <a href="/historik/">historik med veckopriser</a>. Där finns varje år med lägsta och högsta vecka, månadssnitt och skillnaden mot diesel. Drivkraft Sveriges tabell och EU-serien överlappar fram till 2020, och de ger nästan samma årsmedel:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Drivkraft Sverige</th><th class="num">EU, medel av veckor</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>{Object.entries(DK95_OVERLAPP).map(([y, v]) => { const e = ar(Number(y)); return <tr><td><a href={`/historik/${y}/`}>{y}</a></td><td class="num">{pris(v)}</td><td class="num">{pris(e.b95)}</td><td class="num">{pris(e.b95 - v)}</td></tr>; })}</tbody>
+  </table></div>
+  <p class="kalla">Bensin 95, kronor per liter.</p>
+  <p>Skillnaden är högst några tiotal öre per liter, trots att mätmetoderna skiljer sig: Drivkraft mätte på bemannade stationer, medan EU-serien är det nationella snitt som Sverige rapporterar. Därför går det att läsa serierna efter varandra. Rekordet räknat i löpande kronor är 2022, när årsmedlet var {kr(ar(2022).b95)} för bensin och {kr(ar(2022).diesel)} för diesel. {nu && <>Hittills under {AR} är snittet {kr(nu.b95)} för bensin och {kr(nu.diesel)} för diesel, enligt veckorna fram till {datumText(SENASTE_VECKA.datum)}.</>} Vad som ändras vid nästa årsskifte står i guiden om <a href="/guider/bensinpriset-2027/">bensinpriset 2027</a>, och dagens priser per kedja finns under <a href="/bensinpris/">bensinpris idag</a>.</p>
+
+  <h2 id="metod">Så har vi räknat</h2>
+  <ul>
+    <li><strong>Priser före 2005.</strong> Drivkraft Sveriges årsmedelpriser för motorbränslen. Det är priset vid pump på bemannad station, med skatt och moms, utan rabatter. Tabellen innehåller åren 1960, 1965 och varje år från 1970. Kolumnen heter blyfri 95 även för åren innan blyfri bensin var standard, så de tidigaste åren ska läsas med viss försiktighet.</li>
+    <li><strong>Priser från 2005.</strong> Medel av EU-kommissionens veckopriser för Sverige, omräknade från euro med veckans växelkurs.</li>
+    <li><strong>Inflationen.</strong> Priset för ett år multipliceras med KPI för {BAS} och delas med KPI för det året. Vi använder SCB:s årsmedel av konsumentprisindex. Exempel för 1970: {pris(f(1970).b95)} × {KPI[BAS].toLocaleString("sv-SE")} ÷ {KPI[1970]} = {pris(f(1970).r95)} kronor.</li>
+    <li><strong>Före 1960</strong> har vi ingen förstahandskälla med årsmedelpriser, och därför börjar serien där.</li>
+  </ul>
+  <p>Drivkraft Sverige gör samma slags jämförelse i rapporten om drivmedelsprisernas utveckling från juni 2025. Där konstateras att bensinen har blivit dyrare även i fasta priser sedan 1980, men att ökningen är måttlig jämfört med dieselns. Vår omräkning ger samma bild: 95 har ökat med {procent(okning(f(1980).r95, fjol.r95))} och diesel med {procent(okning(f(1980).rd, fjol.rd))} från 1980 till {BAS}, räknat i fast penningvärde.</p>
+</Guide>

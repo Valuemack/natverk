@@ -1,0 +1,185 @@
+---
+// Lång guide: lönar sig E85? Brytpunkten med dagens priser och olika merförbrukning, energiinnehåll per säsongskvalitet
+// (Drivkraft Sverige, Energimyndigheten), kostnad per år (Trafikanalys), fordonsskatt (Transportstyrelsen),
+// klimatpåverkan (Drivkraft Sverige) och stationer med E85 ur registret. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, KEDJOR, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+import { VARMEVARDEN, KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, "2026-11-27", LP_DATUM].sort().at(-1);
+const p95 = idagPris("bensin95"), pe = idagPris("e85");
+const datum = datumText(LP_DATUM);
+const merforbrukning = [0.25, 0.3, 0.35];
+const lonar = pe * 1.3 < p95;
+const brytpunkt30 = p95 / 1.3;
+
+// Drivkraft Sverige, Beräkningsfaktorer 2026: energi i kWh per liter och koldioxid.
+const DK = {
+  url: "https://drivkraftsverige.se/wp-content/uploads/2026/07/Berakningsfaktorer-2026_V1.pdf",
+  bensinE10: 8.583, // motorbensin med 10 vol-% etanol
+  sommar: 6.292, // E85 sommar, ca 85 % etanol
+  vinter: 6.597, // E85 vinter, ca 75 % etanol
+  helar: 6.444, // E85 helår, ca 80 % etanol
+  wtwE85: 48.4, // g CO2e per MJ, E85 helår
+  wtwBensin: 87.1, // g CO2e per MJ, bensin, genomsnitt 2025
+};
+const energi = [
+  { namn: "E85 sommarkvalitet (ca 85 % etanol)", kwh: DK.sommar },
+  { namn: "E85 vinterkvalitet (ca 75 % etanol)", kwh: DK.vinter },
+  { namn: "E85 helårssnitt (ca 80 % etanol)", kwh: DK.helar },
+].map((x) => ({ ...x, mer: DK.bensinE10 / x.kwh - 1 }));
+const emMer = VARMEVARDEN.bensin95 / VARMEVARDEN.e85 - 1;
+
+// Kedjornas priser idag.
+const kedjor = LISTKEDJOR.map((c) => ({ c, href: kedjaHref(c), b: kedjePris(c, "bensin95"), e: kedjePris(c, "e85") })).filter((x) => x.b != null && x.e != null).sort((a, b) => a.e / a.b - b.e / b.b);
+
+// Körsträckor 2025: etanolbilar (Trafikanalys).
+const tE = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Etanol (E85)");
+const lBensin = 0.7; // l/mil, räkneexempel
+const arsrader = merforbrukning.map((m) => { const b = tE.mil * lBensin * p95, e = tE.mil * lBensin * (1 + m) * pe; return { m, b, e }; });
+
+// Stationer med E85.
+const e85 = STATIONER.filter((s) => s.drivmedel?.e85 === true);
+const perKedja = KEDJOR.map((k) => ({ ...k, n: e85.filter((s) => s.kedja === k.namn).length })).filter((k) => k.n > 0).sort((a, b) => b.n - a.n).slice(0, 8);
+const e85Obem = e85.filter((s) => s.typ === "obemannad").length;
+const utanE85 = KAT.kommuner.filter((k) => STATIONER.some((s) => s.kommun === k.namn) && !STATIONER.some((s) => s.kommun === k.namn && s.drivmedel?.e85 === true));
+// Koldioxid från avgasröret per liter (Drivkraft Sverige): E85 helår och bensin E10.
+const ttwE85 = 0.47, ttwBensin = 2.12;
+// E85-pris som behövs för att spara 1 000 kr om året vid 30 procents merförbrukning.
+const pris1000 = (tE_mil) => (tE_mil * lBensin * p95 - 1000) / (tE_mil * lBensin * 1.3);
+const nB95 = STATIONER.filter((s) => s.drivmedel?.bensin95 === true).length;
+const tBensin = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin");
+const perLan = KAT.lan.map((l) => { const st = STATIONER.filter((s) => s.lan === l.namn); return { namn: l.namn, href: l.href, n: st.length, e: st.filter((s) => s.drivmedel?.e85 === true).length }; }).filter((x) => x.n > 0).sort((a, b) => b.e / b.n - a.e / a.n);
+
+const avsnitt = [
+  { id: "brytpunkt", rubrik: "Vad E85 motsvarar i bensinpris idag" },
+  { id: "kedjor", rubrik: "E85 och bensin 95 per kedja" },
+  { id: "energi", rubrik: "Hur mycket mer drar bilen på E85?" },
+  { id: "rakna", rubrik: "Så räknar du på din egen bil" },
+  { id: "per-ar", rubrik: "Vad betyder det per år?" },
+  { id: "klimat", rubrik: "Klimat och fordonsskatt" },
+  { id: "var", rubrik: "Var finns E85?" },
+  { id: "misstag", rubrik: "Fem misstag när du jämför E85 och bensin" },
+  { id: "tanka", rubrik: "Vilka bilar kan tanka E85?" },
+];
+
+const fragor = [
+  { fraga: "Lönar det sig att tanka E85?", svar: `Med dagens priser (E85 ${kr(pe)}, 95 ${kr(p95)}) och 30 procents merförbrukning motsvarar E85 ${kr(pe * 1.3)} per liter bensin, ${lonar ? "alltså billigare" : "alltså dyrare"} än 95. E85 lönar sig när literpriset är under ungefär ${kr(brytpunkt30)}.` },
+  { fraga: "Hur mycket mer drar en bil på E85?", svar: `Räknat på energiinnehållet enligt Drivkraft Sverige behövs ${procent(energi[1].mer * 100)} fler liter av vinterkvaliteten och ${procent(energi[0].mer * 100)} fler av sommarkvaliteten än av bensin E10 för samma energi. Den verkliga merförbrukningen beror på bil och körning.` },
+  { fraga: "Varför skiljer sig E85 mellan sommar och vinter?", svar: "Vinterkvaliteten innehåller mer bensin, ungefär 25 procent mot 15 procent på sommaren enligt Drivkraft Sverige. Den har därför mer energi per liter och ger mindre merförbrukning." },
+  { fraga: "Kan alla bilar köra på E85?", svar: "Nej. Bara bilar som är byggda och godkända för E85, så kallade flexifuelbilar (FFV). Kontrollera instruktionsboken eller tanklocket." },
+  { fraga: "Hur många stationer säljer E85?", svar: `Av de ${STATIONER.length.toLocaleString("sv-SE")} stationerna i vårt register anger ${e85.length.toLocaleString("sv-SE")} att de säljer E85.` },
+  { fraga: "Hur många etanolbilar finns det?", svar: `Enligt Trafikanalys fanns ${tE.bilar.toLocaleString("sv-SE")} etanolbilar i trafik ${KORSTRACKOR.ar}. De körde i genomsnitt ${tE.mil.toLocaleString("sv-SE")} mil under året.` },
+];
+---
+<Guide site={SITE} titel={`Lönar sig E85? Brytpunkten med dagens priser`}
+  beskrivning={`E85 kostar ${kr(pe)}/l och 95 ${kr(p95)}/l idag. Med 30 % merförbrukning ${lonar ? "lönar sig E85" : "lönar sig inte E85"}. Brytpunkt, energi per säsong och kostnad per år.`}
+  h1="Lönar sig E85?"
+  svar={`${lonar ? "Ja, med dagens priser lönar sig E85 även om din bil drar 30 procent mer:" : "Nej, inte med dagens priser om din bil drar 30 procent mer på E85:"} en liter E85 för <strong>${kr(pe)}</strong> motsvarar <strong>${kr(pe * 1.3)}</strong> per liter bensin, mot <strong>${kr(p95)}</strong> för 95. Brytpunkten är ungefär <strong>${kr(brytpunkt30)}</strong> per liter E85. Räknat på energiinnehållet drar en flexifuelbil ${procent(energi[1].mer * 100)} mer på vinterkvaliteten och ${procent(energi[0].mer * 100)} mer på sommarkvaliteten.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Lönar sig E85?", href: "/guider/lonar-sig-e85/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "E85-pris idag", href: "/drivmedel/e85/", text: "Pris per kedja och stationer" },
+    { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/", text: "Pris per kWh och per mil" },
+    { namn: "Bensin 95 eller 98", href: "/guider/95-eller-98/", text: "E10, E5 och oktantal" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Etanol i bensinen" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Bränslekalkylator med dagens priser" },
+  ]}
+  kallor={[
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Drivkraft Sverige – Beräkningsfaktorer 2026", url: DK.url, text: "energiinnehåll och sammansättning för E85 sommar, vinter och helår, bensin E10 och koldioxid", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll för E85 och bensin 95", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "antal etanolbilar och genomsnittlig körsträcka", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Skattens storlek", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/fordonsskatt/skattens-storlek/", text: "koldioxidbelopp för bilar som kan köras på alternativa drivmedel", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Malus", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/malus/", text: "undantag för etanolbilar skattepliktiga före 1 februari 2025", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer som säljer E85" },
+  ]}>
+
+  <h2 id="brytpunkt">Vad E85 motsvarar i bensinpris idag</h2>
+  <p>E85 innehåller mindre energi per liter än bensin, så bilen drar fler liter. För att jämföra priserna rättvist räknar du om E85-priset till vad det motsvarar per liter bensin: E85-priset gånger 1 plus merförbrukningen. Är resultatet lägre än priset på 95 är E85 billigare per mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Merförbrukning på E85</th><th class="num">E85 motsvarar (kr/l bensin)</th><th class="num">Brytpunkt för E85</th><th>Billigast idag</th></tr></thead>
+    <tbody>{merforbrukning.map((m) => <tr><td>{procent(m * 100)}</td><td class="num">{pris(pe * (1 + m))}</td><td class="num">{pris(p95 / (1 + m))}</td><td>{pe * (1 + m) < p95 ? "E85" : "Bensin 95"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Snittpriser från kedjornas listpriser {LP_DATUM}. Brytpunkt = det E85-pris där kostnaden per mil blir lika med 95.</p>
+  <p>Idag är E85 {kr(p95 - pe)} billigare per liter än 95, vilket motsvarar {procent((1 - pe / p95) * 100, 1)}. Merförbrukningen behöver alltså vara lägre än {procent((p95 / pe - 1) * 100, 1)} för att E85 ska vinna. {p95 / pe - 1 < energi[1].mer ? "Det är lägre än vad energiinnehållet ger även för vinterkvaliteten, se nedan." : "Det klarar en bil som drar ungefär vad energiinnehållet ger, se nedan."}</p>
+
+  <h2 id="kedjor">E85 och bensin 95 per kedja</h2>
+  <p>Prisskillnaden mellan E85 och 95 varierar mellan kedjorna. Tabellen visar hur stor merförbrukning bilen får ha för att E85 ska bli billigare hos respektive kedja.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">E85</th><th class="num">Bensin 95</th><th class="num">E85 i % av 95</th><th class="num">Högsta merförbrukning</th></tr></thead>
+    <tbody>{kedjor.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.e)}</td><td class="num">{pris(x.b)}</td><td class="num">{procent(x.e / x.b * 100)}</td><td class="num">{procent((x.b / x.e - 1) * 100, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms {LP_DATUM}. Pumppriset på en enskild station kan avvika.</p>
+  <p>Ett konkret exempel med kedjan som har störst skillnad idag, {kedjor[0].c}: en tank på 50 liter E85 kostar {kr(50 * kedjor[0].e, 0)}. Drar bilen 30 procent mer på E85 räcker de 50 litrarna lika långt som {pris(50 / 1.3, 1)} liter bensin, som hos samma kedja kostar {kr(50 / 1.3 * kedjor[0].b, 0)}. {50 * kedjor[0].e > 50 / 1.3 * kedjor[0].b ? <>Bensinen blir alltså {kr(50 * kedjor[0].e - 50 / 1.3 * kedjor[0].b, 0)} billigare för samma körsträcka.</> : <>E85 blir alltså {kr(50 / 1.3 * kedjor[0].b - 50 * kedjor[0].e, 0)} billigare för samma körsträcka.</>} Skillnaden mellan kedjorna är liten jämfört med effekten av merförbrukningen, så det är din bils förbrukning som avgör.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="energi">Hur mycket mer drar bilen på E85?</h2>
+  <p>Ren etanol innehåller enligt Energimyndigheten {VARMEVARDEN.etanol.toLocaleString("sv-SE")} kWh per liter, {procent(VARMEVARDEN.etanol / VARMEVARDEN.bensinRen * 100)} av energin i en liter bensin utan inblandning. E85 är en blandning, och blandningen ändras med årstiden. Enligt Drivkraft Sveriges beräkningsfaktorer innehåller sommarkvaliteten ungefär 85 procent etanol och vinterkvaliteten ungefär 75 procent, med bensin i resten. Mer bensin ger mer energi per liter, och därför ger vinterkvaliteten mindre merförbrukning.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bränsle</th><th class="num">kWh per liter</th><th class="num">Fler liter än bensin E10</th><th class="num">Brytpunkt idag</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin med 10 % etanol (E10)</td><td class="num">{pris(DK.bensinE10, 3)}</td><td class="num">–</td><td class="num">–</td></tr>
+      {energi.map((x) => <tr><td>{x.namn}</td><td class="num">{pris(x.kwh, 3)}</td><td class="num">{procent(x.mer * 100, 1)}</td><td class="num">{pris(p95 / (1 + x.mer))}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p class="kalla">Drivkraft Sverige, Beräkningsfaktorer 2026. Brytpunkt = E85-pris där energin kostar lika mycket som i 95 till dagens snittpris.</p>
+  <p>Energimyndigheten anger {VARMEVARDEN.e85.toLocaleString("sv-SE")} kWh per liter för E85 och {VARMEVARDEN.bensin95.toLocaleString("sv-SE")} kWh för bensin 95, vilket motsvarar {procent(emMer * 100, 1)} fler liter. Siffrorna är teoretiska: de förutsätter att motorn utnyttjar energin lika bra i båda bränslena. Den verkliga merförbrukningen kan bli något lägre eller högre beroende på motor, temperatur och körsätt.</p>
+  <p>Räknat per kWh kostar E85 idag {kr(pe / DK.helar)} per kWh med helårssnittets energiinnehåll, mot {kr(p95 / DK.bensinE10)} för bensin E10.</p>
+
+  <h2 id="rakna">Så räknar du på din egen bil</h2>
+  <ol>
+    <li><strong>Kör en hel tank på varje bränsle</strong> under liknande förhållanden och notera mätarställningen när du tankar fullt.</li>
+    <li><strong>Räkna ut förbrukningen:</strong> liter delat med körda mil, för båda bränslena.</li>
+    <li><strong>Räkna ut merförbrukningen:</strong> E85-förbrukningen delat med bensinförbrukningen, minus 1.</li>
+    <li><strong>Jämför:</strong> E85-priset gånger 1 plus merförbrukningen. Är det lägre än priset på 95 lönar sig E85.</li>
+  </ol>
+  <p>Exempel: drar bilen 0,7 liter bensin per mil och 0,91 liter E85 per mil, alltså 30 procent mer, kostar en mil {kr(0.7 * p95)} på 95 och {kr(0.91 * pe)} på E85 med dagens priser. Jämför gärna under samma årstid, eftersom E85:s sammansättning ändras mellan sommar och vinter.</p>
+
+  <h2 id="per-ar">Vad betyder det per år?</h2>
+  <p>Enligt Trafikanalys fanns {tE.bilar.toLocaleString("sv-SE")} etanolbilar i trafik {KORSTRACKOR.ar}, och de körde i genomsnitt {tE.mil.toLocaleString("sv-SE")} mil. Med en bensinförbrukning på {lBensin.toLocaleString("sv-SE")} liter per mil blir årskostnaden så här:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Merförbrukning</th><th class="num">Bensin 95 per år</th><th class="num">E85 per år</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>{arsrader.map((x) => <tr><td>{procent(x.m * 100)}</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.e, 0)}</td><td class="num">{x.e < x.b ? "E85 " : "Bensin 95 "}{kr(Math.abs(x.b - x.e), 0)} billigare</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">{tE.mil.toLocaleString("sv-SE")} mil per år, {lBensin.toLocaleString("sv-SE")} l bensin per mil och dagens snittpriser.</p>
+  <p>För att spara 1 000 kronor om året med en sådan bil, vid 30 procents merförbrukning, behöver E85 kosta högst {kr(pris1000(tE.mil))} per liter med dagens bensinpris. Kör du dubbelt så långt, {(tE.mil * 2).toLocaleString("sv-SE")} mil, räcker ett E85-pris på {kr(pris1000(tE.mil * 2))}. Ju längre du kör, desto mindre behöver prisskillnaden alltså vara för att ge en märkbar besparing, men brytpunkten per liter är densamma.</p>
+  <p>En flexifuelbil kan tankas med både E85 och bensin. Det gör att du kan välja det som är billigast vid varje tankning.</p>
+
+  <h2 id="klimat">Klimat och fordonsskatt</h2>
+  <p>Etanolen i E85 är förnybar. Enligt Drivkraft Sveriges beräkningsfaktorer ger E85 i helårssnitt {pris(DK.wtwE85, 1)} gram koldioxidekvivalenter per MJ räknat från källa till hjul, mot {pris(DK.wtwBensin, 1)} gram för bensin i genomsnitt 2025. Det är {procent((1 - DK.wtwE85 / DK.wtwBensin) * 100)} lägre per energienhet.</p>
+  <p>Räknat bara på utsläppen från avgasröret, där koldioxiden från den förnybara etanolen räknas som noll, anger samma beräkningsfaktorer {pris(ttwE85)} kg koldioxid per liter E85 i helårssnitt mot {pris(ttwBensin)} kg per liter bensin E10. För bilen i räkneexemplet, som drar {lBensin.toLocaleString("sv-SE")} liter bensin eller {pris(lBensin * 1.3)} liter E85 per mil, blir det {pris(lBensin * ttwBensin)} respektive {pris(lBensin * 1.3 * ttwE85)} kg per mil.</p>
+  <p>Även fordonsskatten kan påverkas. Enligt Transportstyrelsen är koldioxidbeloppet 11 kronor per gram över 111 gram per kilometer för bilar som kan köras på alternativa drivmedel som E85, mot 22 kronor för andra bilar. Etanolbilar som blev skattepliktiga för första gången före den 1 februari 2025 omfattas inte av malus.</p>
+
+  <h2 id="var">Var finns E85?</h2>
+  <p>Av de {STATIONER.length.toLocaleString("sv-SE")} stationerna i vårt register anger {e85.length.toLocaleString("sv-SE")} att de säljer E85, alltså {procent(e85.length / STATIONER.length * 100)}. Flest har {perKedja.slice(0, 3).map((k) => k.namn).join(", ")}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer med E85</th><th class="num">Andel av kedjans stationer</th></tr></thead>
+    <tbody>{perKedja.map((k) => <tr><td><a href={k.href}>{k.namn}</a></td><td class="num">{k.n}</td><td class="num">{procent(k.n / k.antal * 100)}</td></tr>)}</tbody>
+  </table></div>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Stationer</th><th class="num">Med E85</th><th class="num">Andel</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td><a href={x.href}>{x.namn}</a></td><td class="num">{x.n}</td><td class="num">{x.e}</td><td class="num">{procent(x.e / x.n * 100)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Uppgiften om drivmedel kan saknas för vissa stationer.</p>
+  <p>{procent(e85Obem / e85.length * 100)} av E85-stationerna, {e85Obem.toLocaleString("sv-SE")} stycken, är obemannade. {utanE85.length > 0 && <>I {utanE85.length} av de {KAT.kommuner.length} kommunerna med stationer finns ingen station med E85 i vårt register, bland dem {utanE85.slice(0, 8).map((k, i) => <>{i > 0 && ", "}<a href={k.href}>{k.namn}</a></>)}. Kör du en flexifuelbil i de trakterna är det bra att veta att bilen alltid kan tankas med bensin.</>}</p>
+  <p>Se alla stationer och dagens pris på <a href="/drivmedel/e85/">E85-pris idag</a>.</p>
+
+  <h2 id="misstag">Fem misstag när du jämför E85 och bensin</h2>
+  <ol>
+    <li><strong>Att jämföra literpriset.</strong> En liter E85 räcker kortare än en liter bensin. Jämför alltid pris per mil, eller räkna om E85-priset med din merförbrukning som i tabellerna ovan.</li>
+    <li><strong>Att jämföra olika årstider.</strong> Vinterkvaliteten har enligt Drivkraft Sverige mer energi per liter än sommarkvaliteten. En förbrukning uppmätt i januari på E85 och i juli på bensin blir missvisande.</li>
+    <li><strong>Att mäta på en halv tank.</strong> Tanka fullt båda gångerna och räkna på hela tanken. Ju fler mil mätningen gäller, desto säkrare blir siffran.</li>
+    <li><strong>Att räkna med en annan kedjas pris.</strong> Skillnaden mellan E85 och 95 varierar mellan kedjorna och mellan stationer. Använd priset på den station där du faktiskt tankar.</li>
+    <li><strong>Att glömma att priserna ändras.</strong> Brytpunkten flyttas varje gång någon av priserna justeras. Kontrollera den igen när du tankar, till exempel på <a href="/drivmedel/e85/">E85-pris idag</a>.</li>
+  </ol>
+
+  <h2 id="tanka">Vilka bilar kan tanka E85?</h2>
+  <p>Bara bilar som är byggda och godkända för E85, flexifuelbilar eller FFV. Det framgår av instruktionsboken och ofta av en dekal vid tanklocket. En vanlig bensinbil ska inte tankas med E85. Den tål däremot bensin med upp till 10 procent etanol, E10, om den är godkänd för det, se <a href="/guider/95-eller-98/">95 eller 98</a>.</p>
+  <p>Etanolbilarna är en liten del av bilparken. Enligt Trafikanalys fanns {tE.bilar.toLocaleString("sv-SE")} etanolbilar i trafik {KORSTRACKOR.ar}, mot {tBensin.bilar.toLocaleString("sv-SE")} bensinbilar. Utbudet av E85 är ändå brett: i vårt register säljer {e85.length.toLocaleString("sv-SE")} stationer E85, vilket motsvarar {procent(e85.length / nB95 * 100)} av antalet stationer med bensin 95.</p>
+  <p>Har du en flexifuelbil är det enkelt att växla: titta på prisskillnaden när du tankar, räkna med din bils merförbrukning och välj det som ger lägst pris per mil. Med dagens priser går gränsen vid {kr(brytpunkt30)} per liter E85 om bilen drar 30 procent mer.</p>
+</Guide>

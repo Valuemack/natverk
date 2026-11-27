@@ -1,0 +1,1456 @@
+{
+ "kalla": "Förenta nationerna, List of International Days and Weeks",
+ "url": "https://www.un.org/en/observances/list-days-weeks",
+ "hamtad": "2026-11-26",
+ "not": "Bara dagar med fast datum. Svensk benämning är redaktionens översättning där etablerat svenskt namn saknas.",
+ "dagar": {
+  "01-04": [
+   {
+    "sv": "Världsdagen för punktskrift",
+    "en": "World Braille Day",
+    "url": "https://www.un.org/en/observances/braille-day"
+   }
+  ],
+  "01-24": [
+   {
+    "sv": "Internationella dagen för utbildning",
+    "en": "International Day of Education",
+    "url": "https://www.un.org/en/observances/education-day"
+   }
+  ],
+  "01-26": [
+   {
+    "sv": "Internationella dagen för ren energi",
+    "en": "International Day of Clean Energy",
+    "url": "https://www.un.org/en/observances/clean-energy-day"
+   }
+  ],
+  "01-27": [
+   {
+    "sv": "Internationella minnesdagen för Förintelsens offer",
+    "en": "International Day of Commemoration in Memory of the Victims of the Holocaust",
+    "url": "https://www.un.org/en/observances/commemoration-holocaust-victims-day"
+   }
+  ],
+  "01-28": [
+   {
+    "sv": "Internationella dagen för fredlig samexistens",
+    "en": "International Day of Peaceful Coexistence",
+    "url": "https://www.un.org/en/observances/peaceful-coexistence-day"
+   }
+  ],
+  "02-02": [
+   {
+    "sv": "Världsvåtmarksdagen",
+    "en": "World Wetlands Day",
+    "url": "https://www.un.org/en/observances/world-wetlands-day"
+   }
+  ],
+  "02-04": [
+   {
+    "sv": "Internationella dagen för mänskligt broderskap",
+    "en": "International Day of Human Fraternity",
+    "url": "https://www.un.org/en/observances/human-fraternity"
+   }
+  ],
+  "02-06": [
+   {
+    "sv": "Internationella dagen för nolltolerans mot könsstympning",
+    "en": "International Day of Zero Tolerance to Female Genital Mutilation",
+    "url": "https://www.un.org/en/observances/female-genital-mutilation-day"
+   }
+  ],
+  "02-10": [
+   {
+    "sv": "Världsbaljväxtdagen",
+    "en": "World Pulses Day",
+    "url": "https://www.fao.org/world-pulses-day/en"
+   },
+   {
+    "sv": "Internationella dagen för arabisk leopard",
+    "en": "International Day of the Arabian Leopard",
+    "url": "https://www.un.org/en/observances/arabian-leopard-day"
+   }
+  ],
+  "02-11": [
+   {
+    "sv": "Internationella dagen för kvinnor och flickor inom vetenskap",
+    "en": "International Day of Women and Girls in Science",
+    "url": "https://www.un.org/en/observances/women-and-girls-in-science-day/"
+   }
+  ],
+  "02-13": [
+   {
+    "sv": "Världsradiodagen",
+    "en": "World Radio Day",
+    "url": "https://www.un.org/en/observances/radio-day"
+   }
+  ],
+  "02-17": [
+   {
+    "sv": "Globala dagen för en motståndskraftig turism",
+    "en": "Global Tourism Resilience Day",
+    "url": "https://www.un.org/en/observances/tourism-resilience-day"
+   }
+  ],
+  "02-20": [
+   {
+    "sv": "Världsdagen för social rättvisa",
+    "en": "World Day of Social Justice",
+    "url": "https://www.un.org/en/observances/social-justice-day"
+   }
+  ],
+  "02-21": [
+   {
+    "sv": "Internationella modersmålsdagen",
+    "en": "International Mother Language Day",
+    "url": "https://www.un.org/en/observances/mother-language-day"
+   }
+  ],
+  "03-01": [
+   {
+    "sv": "Dagen för nolltolerans mot diskriminering",
+    "en": "Zero Discrimination Day",
+    "url": "https://www.unaids.org/en/zero-discrimination-day"
+   },
+   {
+    "sv": "Världssjögräsdagen",
+    "en": "World Seagrass Day",
+    "url": "https://www.un.org/en/observances/seagrass-day"
+   }
+  ],
+  "03-03": [
+   {
+    "sv": "Världsdagen för vilda djur och växter",
+    "en": "World Wildlife Day",
+    "url": "https://www.un.org/en/observances/world-wildlife-day"
+   }
+  ],
+  "03-05": [
+   {
+    "sv": "Internationella dagen för medvetenhet om nedrustning och icke-spridning",
+    "en": "International Day for Disarmament and Non-Proliferation Awareness",
+    "url": "https://www.un.org/en/observances/disarmament-non-proliferation-awareness-day"
+   }
+  ],
+  "03-08": [
+   {
+    "sv": "Internationella kvinnodagen",
+    "en": "International Women's Day",
+    "url": "https://www.un.org/en/observances/womens-day"
+   }
+  ],
+  "03-10": [
+   {
+    "sv": "Internationella dagen för kvinnliga domare",
+    "en": "International Day of Women Judges",
+    "url": "https://www.un.org/en/observances/women-judges-day"
+   }
+  ],
+  "03-15": [
+   {
+    "sv": "Internationella dagen mot islamofobi",
+    "en": "International Day to Combat Islamophobia",
+    "url": "https://www.un.org/en/observances/anti-islamophobia-day"
+   }
+  ],
+  "03-20": [
+   {
+    "sv": "Internationella lyckodagen",
+    "en": "International Day of Happiness",
+    "url": "https://www.un.org/en/observances/happiness-day"
+   },
+   {
+    "sv": "Franska språkets dag",
+    "en": "French Language Day",
+    "url": "https://www.un.org/fr/observances/french-language-day/"
+   }
+  ],
+  "03-21": [
+   {
+    "sv": "Världsglaciärdagen",
+    "en": "World Day for Glaciers",
+    "url": "https://www.un.org/en/observances/world-glaciers-day"
+   },
+   {
+    "sv": "Internationella skogsdagen",
+    "en": "International Day of Forests",
+    "url": "https://www.fao.org/international-day-of-forests/en"
+   },
+   {
+    "sv": "Internationella dagen för avskaffande av rasdiskriminering",
+    "en": "International Day for the Elimination of Racial Discrimination",
+    "url": "https://www.un.org/en/observances/end-racism-day"
+   },
+   {
+    "sv": "Världspoesidagen",
+    "en": "World Poetry Day",
+    "url": "https://www.unesco.org/en/days/poetry"
+   },
+   {
+    "sv": "Internationella nowruzdagen",
+    "en": "International Day of Nowruz",
+    "url": "https://www.un.org/en/observances/international-nowruz-day"
+   },
+   {
+    "sv": "Internationella Downs syndrom-dagen",
+    "en": "World Down Syndrome Day",
+    "url": "https://www.un.org/en/observances/down-syndrome-day"
+   }
+  ],
+  "03-22": [
+   {
+    "sv": "Världsvattendagen",
+    "en": "World Water Day",
+    "url": "https://www.un.org/en/observances/water-day"
+   }
+  ],
+  "03-23": [
+   {
+    "sv": "Världsmeteorologidagen",
+    "en": "World Meteorological Day",
+    "url": "https://wmo.int/about-wmo/world-meteorological-day"
+   }
+  ],
+  "03-24": [
+   {
+    "sv": "Världstuberkulosdagen",
+    "en": "World Tuberculosis Day",
+    "url": "https://www.who.int/campaigns/world-tb-day/"
+   },
+   {
+    "sv": "Internationella dagen för rätten till sanning om grova brott mot de mänskliga rättigheterna",
+    "en": "International Day for the Right to the Truth concerning Gross Human Rights Violations and for the Dignity of Victims",
+    "url": "https://www.un.org/en/observances/right-to-truth-day"
+   }
+  ],
+  "03-25": [
+   {
+    "sv": "Internationella minnesdagen för offren för slaveriet och den transatlantiska slavhandeln",
+    "en": "International Day of Remembrance of the Victims of Slavery and the Transatlantic Slave Trade",
+    "url": "https://www.un.org/en/observances/transatlantic-slave-trade"
+   },
+   {
+    "sv": "Internationella dagen för solidaritet med frihetsberövad och försvunnen FN-personal",
+    "en": "International Day of Solidarity with Detained and Missing Staff Members",
+    "url": "https://www.un.org/en/observances/detained-staff-day"
+   }
+  ],
+  "03-30": [
+   {
+    "sv": "Internationella dagen för noll avfall",
+    "en": "International Day of Zero Waste",
+    "url": "https://www.un.org/en/observances/zero-waste-day"
+   }
+  ],
+  "04-02": [
+   {
+    "sv": "Världsautismdagen",
+    "en": "World Autism Awareness Day",
+    "url": "https://www.un.org/en/observances/autism-day"
+   }
+  ],
+  "04-04": [
+   {
+    "sv": "Internationella dagen för minröjning",
+    "en": "International Day for Mine Awareness and Assistance in Mine Action",
+    "url": "https://www.un.org/en/observances/mine-awareness-day"
+   }
+  ],
+  "04-05": [
+   {
+    "sv": "Internationella samvetsdagen",
+    "en": "International Day of Conscience",
+    "url": "https://www.un.org/en/observances/conscience-day"
+   }
+  ],
+  "04-06": [
+   {
+    "sv": "Internationella dagen för idrott för utveckling och fred",
+    "en": "International Day of Sport for Development and Peace",
+    "url": "https://www.un.org/en/observances/sport-day"
+   }
+  ],
+  "04-07": [
+   {
+    "sv": "Världshälsodagen",
+    "en": "World Health Day",
+    "url": "https://www.who.int/campaigns/world-health-day"
+   },
+   {
+    "sv": "Internationella minnesdagen för folkmordet på tutsier i Rwanda 1994",
+    "en": "International Day of Reflection on the 1994 Genocide against the Tutsi in Rwanda",
+    "url": "https://www.un.org/en/preventgenocide/rwanda/commemoration/annualcommemoration.shtml"
+   }
+  ],
+  "04-12": [
+   {
+    "sv": "Internationella dagen för bemannad rymdfärd",
+    "en": "International Day of Human Space Flight",
+    "url": "https://www.un.org/en/observances/human-spaceflight-day"
+   }
+  ],
+  "04-14": [
+   {
+    "sv": "Världsdagen för Chagas sjukdom",
+    "en": "World Chagas Disease Day",
+    "url": "https://www.who.int/campaigns/world-chagas-disease-day"
+   }
+  ],
+  "04-20": [
+   {
+    "sv": "Kinesiska språkets dag",
+    "en": "Chinese Language Day",
+    "url": "https://www.un.org/zh/observances/chinese-language-day"
+   }
+  ],
+  "04-21": [
+   {
+    "sv": "Världsdagen för kreativitet och innovation",
+    "en": "World Creativity and Innovation Day",
+    "url": "https://www.un.org/en/observances/creativity-and-innovation-day"
+   }
+  ],
+  "04-22": [
+   {
+    "sv": "Internationella dagen för Moder jord",
+    "en": "International Mother Earth Day",
+    "url": "https://www.un.org/en/observances/earth-day"
+   }
+  ],
+  "04-23": [
+   {
+    "sv": "Världsbokdagen",
+    "en": "World Book and Copyright Day",
+    "url": "https://www.unesco.org/en/days/world-book-and-copyright"
+   },
+   {
+    "sv": "Engelska språkets dag",
+    "en": "English Language Day",
+    "url": "https://www.un.org/en/observances/english-language-day"
+   },
+   {
+    "sv": "Spanska språkets dag",
+    "en": "Spanish Language Day",
+    "url": "https://www.un.org/es/observances/spanish-language-day"
+   }
+  ],
+  "04-24": [
+   {
+    "sv": "Internationella dagen för multilateralism och diplomati för fred",
+    "en": "International Day of Multilateralism and Diplomacy for Peace",
+    "url": "https://www.un.org/en/observances/Multilateralism-for-Peace-day"
+   }
+  ],
+  "04-25": [
+   {
+    "sv": "Världsmalariadagen",
+    "en": "World Malaria Day",
+    "url": "https://www.who.int/campaigns/world-malaria-day/world-malaria-day-2021"
+   },
+   {
+    "sv": "Internationella delegatdagen",
+    "en": "International Delegate’s Day",
+    "url": "https://www.un.org/en/observances/delegates-day"
+   }
+  ],
+  "04-26": [
+   {
+    "sv": "Internationella minnesdagen för Tjernobylkatastrofen",
+    "en": "International Chernobyl Disaster Remembrance Day",
+    "url": "https://www.un.org/en/observances/chernobyl-remembrance-day"
+   },
+   {
+    "sv": "Världsdagen för immateriella rättigheter",
+    "en": "World Intellectual Property Day",
+    "url": "https://www.wipo.int/ip-outreach/en/ipday/"
+   }
+  ],
+  "04-28": [
+   {
+    "sv": "Världsdagen för arbetsmiljö",
+    "en": "World Day for Safety and Health at Work",
+    "url": "https://www.un.org/en/observances/work-safety-day"
+   }
+  ],
+  "04-29": [
+   {
+    "sv": "Internationella minnesdagen för jordbävningarnas offer",
+    "en": "International Day in Memory of the Victims of Earthquakes",
+    "url": "https://www.un.org/en/observances/earthquake-victims-day"
+   }
+  ],
+  "04-30": [
+   {
+    "sv": "Internationella jazzdagen",
+    "en": "International Jazz Day",
+    "url": "https://www.un.org/en/observances/jazz-day"
+   }
+  ],
+  "05-02": [
+   {
+    "sv": "Världstonfiskdagen",
+    "en": "World Tuna Day",
+    "url": "https://www.un.org/en/observances/tuna-day"
+   }
+  ],
+  "05-03": [
+   {
+    "sv": "Pressfrihetens dag",
+    "en": "World Press Freedom Day",
+    "url": "https://www.un.org/en/observances/press-freedom-day"
+   }
+  ],
+  "05-05": [
+   {
+    "sv": "Portugisiska språkets dag",
+    "en": "World Portuguese Language Day",
+    "url": "https://www.unesco.org/en/days/portuguese-language"
+   }
+  ],
+  "05-10": [
+   {
+    "sv": "Internationella arganträdsdagen",
+    "en": "International Day of Argania",
+    "url": "https://www.un.org/en/observances/argania-day"
+   }
+  ],
+  "05-12": [
+   {
+    "sv": "Internationella växtskyddsdagen",
+    "en": "International Day of Plant Health",
+    "url": "https://www.fao.org/plant-health-day/en"
+   }
+  ],
+  "05-15": [
+   {
+    "sv": "Internationella familjedagen",
+    "en": "International Day of Families",
+    "url": "https://www.un.org/en/observances/international-day-of-families"
+   }
+  ],
+  "05-16": [
+   {
+    "sv": "Internationella dagen för att leva tillsammans i fred",
+    "en": "International Day of Living Together in Peace",
+    "url": "https://www.un.org/en/observances/living-in-peace-day"
+   },
+   {
+    "sv": "Internationella ljusdagen",
+    "en": "International Day of Light",
+    "url": "https://www.unesco.org/en/days/light"
+   }
+  ],
+  "05-17": [
+   {
+    "sv": "Världsdagen för telekommunikation och informationssamhället",
+    "en": "World Telecommunication and Information Society Day",
+    "url": "https://www.un.org/en/observances/telecommunication-day"
+   }
+  ],
+  "05-20": [
+   {
+    "sv": "Världsbidagen",
+    "en": "World Bee Day",
+    "url": "https://www.fao.org/world-bee-day/en"
+   }
+  ],
+  "05-21": [
+   {
+    "sv": "Internationella tedagen",
+    "en": "International Tea Day",
+    "url": "https://www.fao.org/international-tea-day/en"
+   },
+   {
+    "sv": "Världsdagen för kulturell mångfald",
+    "en": "World Day for Cultural Diversity for Dialogue and Development",
+    "url": "https://www.un.org/en/observances/cultural-diversity-day"
+   }
+  ],
+  "05-22": [
+   {
+    "sv": "Internationella dagen för biologisk mångfald",
+    "en": "International Day for Biological Diversity",
+    "url": "https://www.un.org/en/observances/biological-diversity-day"
+   }
+  ],
+  "05-23": [
+   {
+    "sv": "Internationella dagen mot förlossningsfistel",
+    "en": "International Day to End Obstetric Fistula",
+    "url": "https://www.un.org/en/observances/end-fistula-day"
+   }
+  ],
+  "05-24": [
+   {
+    "sv": "Internationella dagen för skruvhornsget",
+    "en": "International Day of the Markhor",
+    "url": "https://www.un.org/en/observances/markhor-day"
+   }
+  ],
+  "05-25": [
+   {
+    "sv": "Världsfotbollsdagen",
+    "en": "World Football Day",
+    "url": "https://www.un.org/en/observances/football-day"
+   }
+  ],
+  "05-29": [
+   {
+    "sv": "Internationella dagen för FN:s fredsbevarare",
+    "en": "International Day of UN Peacekeepers",
+    "url": "https://www.un.org/en/observances/peacekeepers-day"
+   }
+  ],
+  "05-30": [
+   {
+    "sv": "Internationella potatisdagen",
+    "en": "International Day of Potato",
+    "url": "https://www.fao.org/international-potato-day/en"
+   }
+  ],
+  "05-31": [
+   {
+    "sv": "Världstobaksfria dagen",
+    "en": "World No-Tobacco Day",
+    "url": "https://www.who.int/campaigns/world-no-tobacco-day"
+   }
+  ],
+  "06-01": [
+   {
+    "sv": "Globala föräldradagen",
+    "en": "Global Day of Parents",
+    "url": "https://www.un.org/en/observances/parents-day"
+   }
+  ],
+  "06-03": [
+   {
+    "sv": "Världscykeldagen",
+    "en": "World Bicycle Day",
+    "url": "https://www.un.org/en/observances/bicycle-day"
+   }
+  ],
+  "06-04": [
+   {
+    "sv": "Internationella dagen för oskyldiga barn som drabbats av aggression",
+    "en": "International Day of Innocent Children Victims of Aggression",
+    "url": "https://www.un.org/en/observances/child-victim-day"
+   }
+  ],
+  "06-05": [
+   {
+    "sv": "Världsmiljödagen",
+    "en": "World Environment Day",
+    "url": "https://www.un.org/en/observances/environment-day"
+   },
+   {
+    "sv": "Internationella dagen mot olagligt, orapporterat och oreglerat fiske",
+    "en": "International Day for the Fight against Illegal, Unreported and Unregulated Fishing",
+    "url": "https://www.un.org/en/observances/end-illegal-fishing-day"
+   }
+  ],
+  "06-06": [
+   {
+    "sv": "Ryska språkets dag",
+    "en": "Russian Language Day",
+    "url": "https://www.un.org/en/observances/russian-language-day"
+   }
+  ],
+  "06-07": [
+   {
+    "sv": "Världsdagen för livsmedelssäkerhet",
+    "en": "World Food Safety Day",
+    "url": "https://www.un.org/en/observances/food-safety-day"
+   }
+  ],
+  "06-08": [
+   {
+    "sv": "Världshavsdagen",
+    "en": "World Oceans Day",
+    "url": "https://www.un.org/en/observances/oceans-day"
+   }
+  ],
+  "06-10": [
+   {
+    "sv": "Internationella dagen för dialog mellan civilisationer",
+    "en": "International Day for Dialogue among Civilizations",
+    "url": "https://www.un.org/en/observances/international-day-for-dialogue-among-civilizations"
+   }
+  ],
+  "06-11": [
+   {
+    "sv": "Internationella lekdagen",
+    "en": "International Day of Play",
+    "url": "https://www.un.org/en/observances/international-day-of-play"
+   }
+  ],
+  "06-12": [
+   {
+    "sv": "Världsdagen mot barnarbete",
+    "en": "World Day Against Child Labour",
+    "url": "https://www.un.org/en/observances/world-day-against-child-labour"
+   }
+  ],
+  "06-13": [
+   {
+    "sv": "Internationella albinismdagen",
+    "en": "International Albinism Awareness Day",
+    "url": "https://www.un.org/en/observances/albinism-day"
+   }
+  ],
+  "06-14": [
+   {
+    "sv": "Världsblodgivardagen",
+    "en": "World Blood Donor Day",
+    "url": "https://www.who.int/campaigns/world-blood-donor-day"
+   }
+  ],
+  "06-15": [
+   {
+    "sv": "Världsdagen mot övergrepp på äldre",
+    "en": "World Elder Abuse Awareness Day",
+    "url": "https://www.un.org/en/observances/elder-abuse-awareness-day"
+   }
+  ],
+  "06-16": [
+   {
+    "sv": "Internationella dagen för penningöverföringar till familjer",
+    "en": "International Day of Family Remittances",
+    "url": "https://www.un.org/en/observances/remittances-day"
+   }
+  ],
+  "06-17": [
+   {
+    "sv": "Världsdagen mot ökenspridning och torka",
+    "en": "World Day to Combat Desertification and Drought",
+    "url": "https://www.un.org/en/observances/desertification-day"
+   }
+  ],
+  "06-18": [
+   {
+    "sv": "Dagen för hållbar gastronomi",
+    "en": "Sustainable Gastronomy Day",
+    "url": "https://www.fao.org/sustainable-gastronomy-day/en"
+   },
+   {
+    "sv": "Internationella dagen mot hatpropaganda",
+    "en": "International Day for Countering Hate Speech",
+    "url": "https://www.un.org/en/observances/countering-hate-speech"
+   }
+  ],
+  "06-19": [
+   {
+    "sv": "Internationella dagen för avskaffande av sexuellt våld i konflikter",
+    "en": "International Day for the Elimination of Sexual Violence in Conflict",
+    "url": "https://www.un.org/en/observances/end-sexual-violence-in-conflict-day"
+   }
+  ],
+  "06-20": [
+   {
+    "sv": "Världsflyktingdagen",
+    "en": "World Refugee Day",
+    "url": "https://www.un.org/en/observances/refugee-day"
+   }
+  ],
+  "06-21": [
+   {
+    "sv": "Internationella yogadagen",
+    "en": "International Day of Yoga",
+    "url": "https://www.un.org/en/observances/yoga-day"
+   },
+   {
+    "sv": "Internationella solståndsdagen",
+    "en": "International Day of the Celebration of the Solstice",
+    "url": "https://www.un.org/en/observances/solstice-day"
+   }
+  ],
+  "06-23": [
+   {
+    "sv": "FN:s dag för offentlig service",
+    "en": "United Nations Public Service Day",
+    "url": "https://www.un.org/en/observances/public-service-day"
+   },
+   {
+    "sv": "Internationella änkedagen",
+    "en": "International Widows' Day",
+    "url": "https://www.un.org/en/observances/widows-day"
+   }
+  ],
+  "06-24": [
+   {
+    "sv": "Internationella dagen för kvinnor i diplomatin",
+    "en": "International Day of Women in Diplomacy",
+    "url": "https://www.un.org/en/observances/women-in-diplomacy-day"
+   }
+  ],
+  "06-25": [
+   {
+    "sv": "Sjöfolkets dag",
+    "en": "Day of the Seafarer",
+    "url": "https://www.imo.org/en/About/Events/Pages/Day-of-the-Seafarer-2025.aspx"
+   }
+  ],
+  "06-26": [
+   {
+    "sv": "Internationella dagen mot narkotikamissbruk och olaglig narkotikahandel",
+    "en": "International Day against Drug Abuse and Illicit Trafficking",
+    "url": "https://www.un.org/en/observances/end-drug-abuse-day"
+   },
+   {
+    "sv": "FN:s internationella dag till stöd för tortyroffer",
+    "en": "United Nations International Day in Support of Victims of Torture",
+    "url": "https://www.un.org/en/observances/torture-victims-day"
+   }
+  ],
+  "06-27": [
+   {
+    "sv": "Internationella dövblindhetsdagen",
+    "en": "International Day of Deafblindness",
+    "url": "https://www.un.org/en/observances/deafblindness-day"
+   },
+   {
+    "sv": "Dagen för mikroföretag och små och medelstora företag",
+    "en": "Micro-, Small and Medium-sized Enterprises Day",
+    "url": "https://www.un.org/en/observances/micro-small-medium-businesses-day"
+   }
+  ],
+  "06-29": [
+   {
+    "sv": "Internationella tropikdagen",
+    "en": "International Day of the Tropics",
+    "url": "https://www.un.org/en/observances/tropics-day"
+   }
+  ],
+  "06-30": [
+   {
+    "sv": "Internationella asteroiddagen",
+    "en": "International Asteroid Day",
+    "url": "https://www.un.org/en/observances/asteroid-day"
+   },
+   {
+    "sv": "Internationella parlamentarismdagen",
+    "en": "International Day of Parliamentarism",
+    "url": "https://www.un.org/en/observances/parliamentarism-day"
+   }
+  ],
+  "07-06": [
+   {
+    "sv": "Världsdagen för landsbygdsutveckling",
+    "en": "World Rural Development Day",
+    "url": "https://www.un.org/en/observances/rural-development-day"
+   }
+  ],
+  "07-07": [
+   {
+    "sv": "Världsdagen för swahili",
+    "en": "World Kiswahili Language Day",
+    "url": "https://www.un.org/en/observances/kiswahili-day"
+   }
+  ],
+  "07-11": [
+   {
+    "sv": "Världsbefolkningsdagen",
+    "en": "World Population Day",
+    "url": "https://www.un.org/en/observances/world-population-day"
+   },
+   {
+    "sv": "Internationella minnesdagen för folkmordet i Srebrenica 1995",
+    "en": "International Day of Reflection and Commemoration of the 1995 Genocide in Srebrenica",
+    "url": "https://www.un.org/en/observances/srebrenica-genocide-commemoration-day"
+   },
+   {
+    "sv": "Världshästdagen",
+    "en": "World Horse Day",
+    "url": "https://www.un.org/en/observances/horse-day"
+   }
+  ],
+  "07-12": [
+   {
+    "sv": "Internationella dagen mot sand- och dammstormar",
+    "en": "International Day of Combating Sand and Dust Storms",
+    "url": "https://www.un.org/en/observances/day-of-combating-sand-and-dust-storms"
+   },
+   {
+    "sv": "Internationella hoppets dag",
+    "en": "International Day of Hope",
+    "url": "https://www.un.org/en/observances/hope-day"
+   }
+  ],
+  "07-15": [
+   {
+    "sv": "Världsdagen för ungdomars yrkesfärdigheter",
+    "en": "World Youth Skills Day",
+    "url": "https://www.un.org/en/observances/world-youth-skills-day"
+   }
+  ],
+  "07-18": [
+   {
+    "sv": "Nelson Mandela-dagen",
+    "en": "Nelson Mandela International Day",
+    "url": "https://www.un.org/en/events/mandeladay/"
+   }
+  ],
+  "07-20": [
+   {
+    "sv": "Världsschackdagen",
+    "en": "World Chess Day",
+    "url": "https://www.un.org/en/observances/world-chess-day"
+   },
+   {
+    "sv": "Internationella månens dag",
+    "en": "International Moon Day",
+    "url": "https://www.un.org/en/observances/moon-day"
+   }
+  ],
+  "07-25": [
+   {
+    "sv": "Världsdagen för att förebygga drunkning",
+    "en": "World Drowning Prevention Day",
+    "url": "https://www.un.org/en/observances/drowning-prevention-day"
+   },
+   {
+    "sv": "Internationella dagen för kvinnor och flickor av afrikansk härkomst",
+    "en": "International Day of Women and Girls of African Descent",
+    "url": "https://www.un.org/en/observances/women-girls-african-descent"
+   },
+   {
+    "sv": "Internationella dagen för domares välbefinnande",
+    "en": "International Day for Judicial Well-being",
+    "url": "https://www.un.org/en/observances/judicial-well-being-day"
+   }
+  ],
+  "07-28": [
+   {
+    "sv": "Världshepatitdagen",
+    "en": "World Hepatitis Day",
+    "url": "https://www.who.int/campaigns/world-hepatitis-day"
+   }
+  ],
+  "07-30": [
+   {
+    "sv": "Internationella vänskapsdagen",
+    "en": "International Day of Friendship",
+    "url": "https://www.un.org/en/observances/friendship-day"
+   },
+   {
+    "sv": "Världsdagen mot människohandel",
+    "en": "World Day against Trafficking in Persons",
+    "url": "https://www.un.org/en/observances/end-human-trafficking-day"
+   }
+  ],
+  "08-06": [
+   {
+    "sv": "Internationella dagen för utvecklingsländer utan kust",
+    "en": "International Day of Awareness of the Special Development Needs and Challenges of Landlocked Developing Countries",
+    "url": "https://www.un.org/en/observances/landlocked-developing-countries-day"
+   }
+  ],
+  "08-09": [
+   {
+    "sv": "Internationella dagen för världens urfolk",
+    "en": "International Day of the World's Indigenous Peoples",
+    "url": "https://www.un.org/en/observances/indigenous-day"
+   }
+  ],
+  "08-11": [
+   {
+    "sv": "Världsdagen för steelpan",
+    "en": "World Steelpan Day",
+    "url": "https://www.un.org/en/observances/steelpan-day"
+   }
+  ],
+  "08-12": [
+   {
+    "sv": "Internationella ungdomsdagen",
+    "en": "International Youth Day",
+    "url": "https://www.un.org/en/observances/youth-day"
+   }
+  ],
+  "08-19": [
+   {
+    "sv": "Världsdagen för humanitärt arbete",
+    "en": "World Humanitarian Day",
+    "url": "https://www.un.org/en/observances/humanitarian-day"
+   }
+  ],
+  "08-21": [
+   {
+    "sv": "Internationella minnesdagen för terrorismens offer",
+    "en": "International Day of Remembrance and Tribute to the Victims of Terrorism",
+    "url": "https://www.un.org/en/observances/terrorism-victims-day"
+   }
+  ],
+  "08-22": [
+   {
+    "sv": "Internationella minnesdagen för offer för våld på grund av religion eller övertygelse",
+    "en": "International Day Commemorating the Victims of Acts of Violence Based on Religion or Belief",
+    "url": "https://www.un.org/en/observances/religious-based-violence-victims-day"
+   }
+  ],
+  "08-23": [
+   {
+    "sv": "Internationella minnesdagen för slavhandeln och dess avskaffande",
+    "en": "International Day for the Remembrance of the Slave Trade and Its Abolition",
+    "url": "https://www.unesco.org/en/days/slave-trade-remembrance"
+   }
+  ],
+  "08-27": [
+   {
+    "sv": "Världssjödagen",
+    "en": "World Lake Day",
+    "url": "https://www.un.org/en/observances/world-lake-day"
+   }
+  ],
+  "08-29": [
+   {
+    "sv": "Internationella dagen mot kärnvapenprov",
+    "en": "International Day against Nuclear Tests",
+    "url": "https://www.un.org/en/observances/end-nuclear-tests-day"
+   }
+  ],
+  "08-30": [
+   {
+    "sv": "Internationella dagen för offer för påtvingade försvinnanden",
+    "en": "International Day of the Victims of Enforced Disappearances",
+    "url": "https://www.un.org/en/observances/victims-enforced-disappearance"
+   }
+  ],
+  "08-31": [
+   {
+    "sv": "Internationella dagen för människor av afrikansk härkomst",
+    "en": "International Day for People of African Descent",
+    "url": "https://www.un.org/en/observances/african-descent-day"
+   }
+  ],
+  "09-05": [
+   {
+    "sv": "Internationella välgörenhetsdagen",
+    "en": "International Day of Charity",
+    "url": "https://www.un.org/en/observances/charity-day"
+   },
+   {
+    "sv": "Internationella dagen för urfolkens kvinnor och flickor",
+    "en": "International Day of the World’s Indigenous Women and Girls",
+    "url": "https://www.un.org/en/observances/indigenous-women-day"
+   }
+  ],
+  "09-07": [
+   {
+    "sv": "Internationella dagen för ren luft",
+    "en": "International Day of Clean Air for Blue Skies",
+    "url": "https://www.cleanairblueskies.org/"
+   },
+   {
+    "sv": "Internationella dagen för polissamarbete",
+    "en": "International Day of Police Cooperation",
+    "url": "https://www.un.org/en/observances/police-cooperation-day"
+   },
+   {
+    "sv": "Världsdagen för Duchennes muskeldystrofi",
+    "en": "World Duchenne Awareness Day",
+    "url": "https://www.un.org/en/observances/duchenne-awareness-day"
+   }
+  ],
+  "09-08": [
+   {
+    "sv": "Internationella läskunnighetsdagen",
+    "en": "International Literacy Day",
+    "url": "https://www.unesco.org/en/days/literacy"
+   }
+  ],
+  "09-09": [
+   {
+    "sv": "Internationella dagen för att skydda utbildning mot angrepp",
+    "en": "International Day to Protect Education from Attack",
+    "url": "https://www.un.org/en/observances/protect-education-day"
+   }
+  ],
+  "09-12": [
+   {
+    "sv": "FN:s dag för syd–syd-samarbete",
+    "en": "United Nations Day for South-South Cooperation",
+    "url": "https://www.un.org/en/observances/south-south-cooperation-day"
+   }
+  ],
+  "09-15": [
+   {
+    "sv": "Internationella demokratidagen",
+    "en": "International Day of Democracy",
+    "url": "https://www.un.org/en/observances/democracy-day"
+   }
+  ],
+  "09-16": [
+   {
+    "sv": "Internationella dagen för skydd av ozonskiktet",
+    "en": "International Day for the Preservation of the Ozone Layer",
+    "url": "https://www.un.org/en/observances/ozone-day"
+   },
+   {
+    "sv": "Internationella dagen för vetenskap, teknik och innovation för det globala syd",
+    "en": "International Day of Science, Technology and Innovation for the South",
+    "url": "https://www.un.org/en/observances/science-technology-and-innovation-for-south-day"
+   },
+   {
+    "sv": "Internationella dagen för interventionell kardiologi",
+    "en": "International Day for Interventional Cardiology",
+    "url": "https://www.un.org/en/observances/interventional-cardiology-day"
+   }
+  ],
+  "09-17": [
+   {
+    "sv": "Världsdagen för patientsäkerhet",
+    "en": "World Patient Safety Day",
+    "url": "https://www.who.int/campaigns/world-patient-safety-day/"
+   }
+  ],
+  "09-18": [
+   {
+    "sv": "Internationella dagen för lika lön",
+    "en": "International Equal Pay Day",
+    "url": "https://www.un.org/en/observances/equal-pay-day"
+   }
+  ],
+  "09-20": [
+   {
+    "sv": "Världsstädardagen",
+    "en": "World Cleanup Day",
+    "url": "https://www.un.org/en/observances/cleanup-day"
+   }
+  ],
+  "09-21": [
+   {
+    "sv": "Internationella fredsdagen",
+    "en": "International Day of Peace",
+    "url": "https://www.un.org/en/observances/international-day-peace"
+   }
+  ],
+  "09-23": [
+   {
+    "sv": "Internationella teckenspråksdagen",
+    "en": "International Day of Sign Languages",
+    "url": "https://www.un.org/en/observances/sign-languages-day"
+   }
+  ],
+  "09-26": [
+   {
+    "sv": "Internationella dagen för total avskaffning av kärnvapen",
+    "en": "International Day for the Total Elimination of Nuclear Weapons",
+    "url": "https://www.un.org/en/observances/nuclear-weapons-elimination-day"
+   }
+  ],
+  "09-27": [
+   {
+    "sv": "Världsturismdagen",
+    "en": "World Tourism Day",
+    "url": "https://www.untourism.int/world-tourism-day-2026"
+   }
+  ],
+  "09-28": [
+   {
+    "sv": "Internationella dagen för allmän tillgång till information",
+    "en": "International Day for Universal Access to Information",
+    "url": "https://www.un.org/en/observances/information-access-day"
+   }
+  ],
+  "09-29": [
+   {
+    "sv": "Internationella dagen mot matsvinn",
+    "en": "International Day of Awareness of Food Loss and Waste",
+    "url": "https://www.fao.org/platform-food-loss-waste/flw-events/international-day-food-loss-and-waste/en"
+   }
+  ],
+  "09-30": [
+   {
+    "sv": "Internationella översättardagen",
+    "en": "International Translation Day",
+    "url": "https://www.un.org/en/observances/international-translation-day"
+   }
+  ],
+  "10-01": [
+   {
+    "sv": "Internationella äldredagen",
+    "en": "International Day of Older Persons",
+    "url": "https://www.un.org/en/observances/older-persons-day"
+   },
+   {
+    "sv": "Internationella kaffedagen",
+    "en": "International Coffee Day",
+    "url": "https://www.un.org/en/observances/coffee-day"
+   }
+  ],
+  "10-02": [
+   {
+    "sv": "Internationella icke-våldsdagen",
+    "en": "International Day of Non-Violence",
+    "url": "https://www.un.org/en/observances/non-violence-day"
+   }
+  ],
+  "10-05": [
+   {
+    "sv": "Världslärardagen",
+    "en": "World Teachers’ Day",
+    "url": "https://www.unesco.org/en/days/teachers"
+   }
+  ],
+  "10-07": [
+   {
+    "sv": "Världsbomullsdagen",
+    "en": "World Cotton Day",
+    "url": "https://www.un.org/en/observances/cotton-day"
+   }
+  ],
+  "10-09": [
+   {
+    "sv": "Världspostdagen",
+    "en": "World Post Day",
+    "url": "https://www.un.org/en/observances/world-post-day"
+   }
+  ],
+  "10-10": [
+   {
+    "sv": "Världsdagen för psykisk hälsa",
+    "en": "World Mental Health Day",
+    "url": "https://www.who.int/mental_health/world-mental-health-day/en/"
+   }
+  ],
+  "10-11": [
+   {
+    "sv": "Internationella flickdagen",
+    "en": "International Day of the Girl Child",
+    "url": "https://www.un.org/en/observances/girl-child-day"
+   }
+  ],
+  "10-13": [
+   {
+    "sv": "Internationella dagen för katastrofriskreducering",
+    "en": "International Day for Disaster Risk Reduction",
+    "url": "https://www.un.org/en/observances/disaster-reduction-day"
+   }
+  ],
+  "10-15": [
+   {
+    "sv": "Internationella dagen för kvinnor på landsbygden",
+    "en": "International Day of Rural Women",
+    "url": "https://www.un.org/en/observances/rural-women-day"
+   }
+  ],
+  "10-16": [
+   {
+    "sv": "Världslivsmedelsdagen",
+    "en": "World Food Day",
+    "url": "https://www.fao.org/world-food-day"
+   }
+  ],
+  "10-17": [
+   {
+    "sv": "Internationella dagen för avskaffande av fattigdom",
+    "en": "International Day for the Eradication of Poverty",
+    "url": "https://www.un.org/en/observances/day-for-eradicating-poverty"
+   }
+  ],
+  "10-23": [
+   {
+    "sv": "Internationella snöleopardens dag",
+    "en": "International Day of the Snow Leopard",
+    "url": "https://www.un.org/en/observances/snow-leopard-day"
+   }
+  ],
+  "10-24": [
+   {
+    "sv": "FN-dagen",
+    "en": "United Nations Day",
+    "url": "https://www.un.org/en/observances/un-day"
+   },
+   {
+    "sv": "Världsdagen för information om utvecklingsfrågor",
+    "en": "World Development Information Day",
+    "url": "https://www.un.org/en/observances/development-information-day"
+   }
+  ],
+  "10-27": [
+   {
+    "sv": "Världsdagen för det audiovisuella kulturarvet",
+    "en": "World Day for Audiovisual Heritage",
+    "url": "https://www.unesco.org/en/days/audiovisual-heritage"
+   }
+  ],
+  "10-29": [
+   {
+    "sv": "Internationella dagen för omsorg och stöd",
+    "en": "International Day of Care and Support",
+    "url": "https://www.un.org/en/observances/care-and-support-day"
+   }
+  ],
+  "10-31": [
+   {
+    "sv": "Världsstädernas dag",
+    "en": "World Cities Day",
+    "url": "https://www.un.org/en/observances/cities-day"
+   }
+  ],
+  "11-02": [
+   {
+    "sv": "Internationella dagen mot straffrihet för brott mot journalister",
+    "en": "International Day to End Impunity for Crimes against Journalists",
+    "url": "https://www.un.org/en/observances/end-impunity-crimes-against-journalists"
+   }
+  ],
+  "11-05": [
+   {
+    "sv": "Världsdagen för medvetenhet om tsunamier",
+    "en": "World Tsunami Awareness Day",
+    "url": "https://www.un.org/en/observances/tsunami-awareness-day"
+   }
+  ],
+  "11-06": [
+   {
+    "sv": "Internationella dagen mot exploatering av miljön i krig och väpnade konflikter",
+    "en": "International Day for Preventing the Exploitation of the Environment in War and Armed Conflict",
+    "url": "https://www.un.org/en/observances/environment-in-war-protection-day"
+   }
+  ],
+  "11-10": [
+   {
+    "sv": "Världsvetenskapsdagen för fred och utveckling",
+    "en": "World Science Day for Peace and Development",
+    "url": "https://www.un.org/en/observances/world-science-day"
+   }
+  ],
+  "11-14": [
+   {
+    "sv": "Världsdiabetesdagen",
+    "en": "World Diabetes Day",
+    "url": "https://www.un.org/en/observances/diabetes-day"
+   }
+  ],
+  "11-15": [
+   {
+    "sv": "Internationella dagen mot gränsöverskridande organiserad brottslighet",
+    "en": "International Day for the Prevention of and Fight against All Forms of Transnational Organized Crime",
+    "url": "https://www.un.org/en/observances/fight-against-transnational-crime-day"
+   }
+  ],
+  "11-16": [
+   {
+    "sv": "Internationella toleransdagen",
+    "en": "International Day for Tolerance",
+    "url": "https://www.unesco.org/en/days/tolerance"
+   },
+   {
+    "sv": "Internationella dagen för medelhavskosten",
+    "en": "International Day of the Mediterranean Diet",
+    "url": "https://www.un.org/en/observances/mediterranean-diet-day"
+   }
+  ],
+  "11-18": [
+   {
+    "sv": "Världsdagen för att förebygga och läka sexuell exploatering av och våld mot barn",
+    "en": "World Day for the Prevention of and Healing from Child Sexual Exploitation, Abuse and Violence",
+    "url": "https://www.un.org/en/observances/child-sexual-exploitation-prevention-and-healing-day"
+   }
+  ],
+  "11-19": [
+   {
+    "sv": "Världstoalettdagen",
+    "en": "World Toilet Day",
+    "url": "https://www.un.org/en/observances/toilet-day"
+   }
+  ],
+  "11-20": [
+   {
+    "sv": "Dagen för Afrikas industrialisering",
+    "en": "Africa Industrialization Day",
+    "url": "https://www.un.org/en/observances/africa-industrialization-day"
+   },
+   {
+    "sv": "Världsbarndagen",
+    "en": "World Children's Day",
+    "url": "https://www.un.org/en/observances/world-childrens-day"
+   }
+  ],
+  "11-21": [
+   {
+    "sv": "Världstelevisionsdagen",
+    "en": "World Television Day",
+    "url": "https://www.un.org/en/observances/world-television-day"
+   }
+  ],
+  "11-24": [
+   {
+    "sv": "Världsdagen för siamesiska tvillingar",
+    "en": "World Conjoined Twins Day",
+    "url": "https://www.un.org/en/observances/conjoined-twins-day"
+   }
+  ],
+  "11-25": [
+   {
+    "sv": "Internationella dagen för avskaffande av våld mot kvinnor",
+    "en": "International Day for the Elimination of Violence against Women",
+    "url": "https://www.un.org/en/observances/ending-violence-against-women-day"
+   }
+  ],
+  "11-26": [
+   {
+    "sv": "Världsdagen för hållbara transporter",
+    "en": "World Sustainable Transport Day",
+    "url": "https://www.un.org/en/observances/sustainable-transport-day"
+   }
+  ],
+  "11-27": [
+   {
+    "sv": "Internationella dagen mot barnäktenskap och tvångsäktenskap",
+    "en": "International Day for the Elimination of Child, Early and Forced Marriage",
+    "url": "https://www.un.org/en/elimination-of-child-and-forced-marriage-day"
+   }
+  ],
+  "11-29": [
+   {
+    "sv": "Internationella dagen för solidaritet med det palestinska folket",
+    "en": "International Day of Solidarity with the Palestinian People",
+    "url": "https://www.un.org/en/observances/international-day-of-solidarity-with-the-palestinian-people"
+   }
+  ],
+  "11-30": [
+   {
+    "sv": "Minnesdagen för alla offer för kemisk krigföring",
+    "en": "Day of Remembrance for all Victims of Chemical Warfare",
+    "url": "https://www.un.org/en/observances/chemical-warfare-victims-day"
+   }
+  ],
+  "12-01": [
+   {
+    "sv": "Världsaidsdagen",
+    "en": "World AIDS Day",
+    "url": "https://www.un.org/en/observances/world-aids-day"
+   }
+  ],
+  "12-02": [
+   {
+    "sv": "Internationella dagen för slaveriets avskaffande",
+    "en": "International Day for the Abolition of Slavery",
+    "url": "https://www.un.org/en/observances/slavery-abolition-day"
+   }
+  ],
+  "12-03": [
+   {
+    "sv": "Internationella dagen för personer med funktionsnedsättning",
+    "en": "International Day of Persons with Disabilities",
+    "url": "https://www.un.org/en/observances/day-of-persons-with-disabilities"
+   }
+  ],
+  "12-04": [
+   {
+    "sv": "Internationella bankdagen",
+    "en": "International Day of Banks",
+    "url": "https://www.un.org/en/observances/international-day-of-banks"
+   },
+   {
+    "sv": "Internationella dagen mot ensidiga tvångsåtgärder",
+    "en": "International Day Against Unilateral Coercive Measures",
+    "url": "https://www.un.org/en/observances/day-against-unilateral-coercive-measures"
+   }
+  ],
+  "12-05": [
+   {
+    "sv": "Internationella volontärdagen",
+    "en": "International Volunteer Day for Economic and Social Development",
+    "url": "https://www.un.org/en/observances/volunteer-day"
+   },
+   {
+    "sv": "Världsjorddagen",
+    "en": "World Soil Day",
+    "url": "https://www.un.org/en/observances/world-soil-day"
+   }
+  ],
+  "12-07": [
+   {
+    "sv": "Internationella dagen för civil luftfart",
+    "en": "International Civil Aviation Day",
+    "url": "https://www.un.org/en/observances/civil-aviation-day"
+   }
+  ],
+  "12-09": [
+   {
+    "sv": "Internationella antikorruptionsdagen",
+    "en": "International Anti-Corruption Day",
+    "url": "https://www.un.org/en/observances/anti-corruption-day"
+   },
+   {
+    "sv": "Internationella minnesdagen för folkmordens offer",
+    "en": "International Day of Commemoration and Dignity of the Victims of the Crime of Genocide and of the Prevention of this Crime",
+    "url": "https://www.un.org/en/observances/genocide-prevention-day"
+   }
+  ],
+  "12-10": [
+   {
+    "sv": "Mänskliga rättigheternas dag",
+    "en": "Human Rights Day",
+    "url": "https://www.un.org/en/observances/human-rights-day"
+   }
+  ],
+  "12-11": [
+   {
+    "sv": "Internationella bergsdagen",
+    "en": "International Mountain Day",
+    "url": "https://www.un.org/en/observances/mountain-day"
+   }
+  ],
+  "12-12": [
+   {
+    "sv": "Internationella neutralitetsdagen",
+    "en": "International Day of Neutrality",
+    "url": "https://www.un.org/en/observances/neutrality-day"
+   },
+   {
+    "sv": "Internationella dagen för hälso- och sjukvård för alla",
+    "en": "International Universal Health Coverage Day",
+    "url": "https://www.un.org/en/observances/universal-health-coverage-day"
+   }
+  ],
+  "12-14": [
+   {
+    "sv": "Internationella dagen mot kolonialism i alla dess former",
+    "en": "International Day against Colonialism in All its Forms and Manifestations",
+    "url": "https://www.un.org/en/observances/anti-colonialism-day"
+   }
+  ],
+  "12-18": [
+   {
+    "sv": "Internationella migrantdagen",
+    "en": "International Migrants Day",
+    "url": "https://www.un.org/en/observances/migrants-day"
+   },
+   {
+    "sv": "Arabiska språkets dag",
+    "en": "Arabic Language Day",
+    "url": "https://www.un.org/en/observances/arabiclanguageday"
+   }
+  ],
+  "12-20": [
+   {
+    "sv": "Internationella dagen för mänsklig solidaritet",
+    "en": "International Human Solidarity Day",
+    "url": "https://www.un.org/en/observances/human-solidarity-day"
+   }
+  ],
+  "12-21": [
+   {
+    "sv": "Världsmeditationsdagen",
+    "en": "World Meditation Day",
+    "url": "https://www.un.org/en/observances/meditation-day"
+   },
+   {
+    "sv": "Världsbasketdagen",
+    "en": "World Basketball Day",
+    "url": "https://www.un.org/en/observances/world-basketball-day"
+   }
+  ],
+  "12-27": [
+   {
+    "sv": "Internationella dagen för epidemiberedskap",
+    "en": "International Day of Epidemic Preparedness",
+    "url": "https://www.un.org/en/observances/epidemic-preparedness-day"
+   }
+  ]
+ }
+}

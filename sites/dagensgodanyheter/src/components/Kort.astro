@@ -8,11 +8,14 @@ const medBild = visaBild && a.harBild && storlek !== "liten";
 const stor = storlek === "huvud" || storlek === "stor";
 const bild = stor ? a.bildUrl : a.bildLiten;
 const [b, h] = stor ? [1280, 720] : [640, 360];
+// Stora bilder: mobilen hämtar 640-versionen, större skärmar originalet (som behåller sin ursprungsmetadata).
+const srcset = stor && a.bildLiten && a.bildLiten !== a.bildUrl ? `${a.bildLiten} 640w, ${a.bildUrl} ${a.bild?.bredd ?? 1280}w` : undefined;
+const sizes = storlek === "huvud" ? "(max-width: 760px) calc(100vw - 32px), 620px" : "(max-width: 760px) calc(100vw - 32px), 420px";
 ---
 <article class:list={["kort", `kort-${storlek}`, { huvudnyhet: storlek === "huvud", "utan-bild": !medBild }]} style={`--kat:${a.kat.farg}`}>
   {medBild && (
     <a href={a.href} class="kort-bild-lank" tabindex="-1" aria-hidden="true">
-      <img src={bild} alt="" width={b} height={h} loading={ladda} decoding="async" fetchpriority={ladda === "eager" ? "high" : undefined} />
+      <img src={bild} srcset={srcset} sizes={srcset ? sizes : undefined} alt={a.bild?.alt ?? ""} width={b} height={h} loading={ladda} decoding="async" fetchpriority={ladda === "eager" ? "high" : undefined} />
     </a>
   )}
   <a class="vinjett" href={`/${a.kategori}/`}>{a.kat.kort}{a.vinjett && a.vinjett.toLowerCase() !== a.kat.kort.toLowerCase() ? ` · ${a.vinjett}` : ""}</a>

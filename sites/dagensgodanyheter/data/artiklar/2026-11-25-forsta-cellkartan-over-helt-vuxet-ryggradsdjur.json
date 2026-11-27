@@ -72,10 +72,11 @@
   "bildmotiv": "a tiny transparent freshwater fish in a laboratory aquarium, its brain faintly visible through the top of its head",
   "bildalt": "Liten genomskinlig fisk i ett akvarium där hjärnan syns genom huvudet",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.46,
+    "positiv": 0.7,
+    "betydelse": 0.6,
     "tillit": 0.93,
-    "total": 51
+    "total": 71,
+    "gladje": 0.6
   },
   "produktion": {
     "metod": "ai-stod",
@@ -88,5 +89,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "natur"
 }

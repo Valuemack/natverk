@@ -71,10 +71,11 @@
   "bildmotiv": "a waste management facility with leachate treatment tanks and a small constructed wetland in the Swedish countryside under an overcast sky",
   "bildalt": "Avfallsanläggning med behållare för rening av lakvatten och en anlagd våtmark",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.3,
+    "positiv": 0.6,
+    "betydelse": 0.5,
     "tillit": 0.95,
-    "total": 55
+    "total": 59,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -84,5 +85,6 @@
     "anmarkningar": []
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "klimat"
 }

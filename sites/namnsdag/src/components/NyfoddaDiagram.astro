@@ -1,0 +1,45 @@
+---
+// Stapeldiagram: nyfödda per år med tilltalsnamnet (SCB 1998–2022). En serie, märkta axlar,
+// etikett på toppåret och senaste året, verktygstips per stapel och siffrorna som tabell.
+import { tal } from "../site.js";
+const { serie, namn } = Astro.props; // [{ ar, x, K, M }]
+const B = 640, H = 230, V = 46, Ho = 14, U = 28, O = 22; // bredd, höjd, vänster-, höger-, under-, övermarginal
+const max = Math.max(...serie.map((r) => r.x), 1);
+const snygg = (v) => { const p = 10 ** Math.floor(Math.log10(v)); return [1, 2, 2.5, 5, 10].map((m) => m * p).find((m) => m >= v); };
+const ymax = snygg(max);
+const steg = [0, ymax / 2, ymax];
+const bw = (B - V - Ho) / serie.length;
+const y = (v) => H - U - (v / ymax) * (H - U - O);
+const topp = serie.reduce((a, r) => (r.x > a.x ? r : a), serie[0]);
+const sist = serie.at(-1);
+const stapel = (i, v) => {
+  const x = V + i * bw + 1, w = bw - 2, y0 = H - U, y1 = y(v), r = Math.min(4, w / 2, (y0 - y1) / 2);
+  if (y0 - y1 < 0.5) return "";
+  return `M${x},${y0} V${y1 + r} Q${x},${y1} ${x + r},${y1} H${x + w - r} Q${x + w},${y1} ${x + w},${y1 + r} V${y0} Z`;
+};
+const etikett = (r) => r.x > 0 && (r === topp || r === sist);
+const beskr = `Nyfödda som fått tilltalsnamnet ${namn}, per år 1998–${sist.ar}. Flest ${topp.ar} med ${tal(topp.x)} barn, ${sist.ar}: ${tal(sist.x)}.`;
+---
+<figure class="diagram">
+  <svg viewBox={`0 0 ${B} ${H}`} role="img" aria-label={beskr}>
+    {steg.map((s) => <g class="axel">
+      <line x1={V} x2={B - Ho} y1={y(s)} y2={y(s)} />
+      <text x={V - 6} y={y(s) + 4} text-anchor="end">{tal(s)}</text>
+    </g>)}
+    {serie.map((r, i) => <g class="stapel" tabindex="0">
+      <rect class="traff" x={V + i * bw} y={O} width={bw} height={H - U - O} />
+      <path d={stapel(i, r.x)} />
+      <title>{r.ar}: {tal(r.x)} {r.x === 1 ? "barn" : "barn"}</title>
+      {etikett(r) && <text class="varde" x={V + i * bw + bw / 2} y={y(r.x) - 6} text-anchor="middle">{tal(r.x)}</text>}
+      {(i % 4 === 0 || i === serie.length - 1) && <text class="ar" x={V + i * bw + bw / 2} y={H - 8} text-anchor="middle">{r.ar}</text>}
+    </g>)}
+  </svg>
+  <figcaption>Nyfödda per år med tilltalsnamnet {namn}. Håll över eller tryck på en stapel för att se antalet.</figcaption>
+  <details class="sifferdata">
+    <summary>Visa siffrorna år för år</summary>
+    <div class="tabell"><table>
+      <thead><tr><th>År</th><th class="num">Flickor</th><th class="num">Pojkar</th><th class="num">Totalt</th></tr></thead>
+      <tbody>{[...serie].reverse().map((r) => <tr><td>{r.ar}</td><td class="num">{tal(r.K)}</td><td class="num">{tal(r.M)}</td><td class="num">{tal(r.x)}</td></tr>)}</tbody>
+    </table></div>
+  </details>
+</figure>

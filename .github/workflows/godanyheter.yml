@@ -11,7 +11,9 @@
 #   INDEXNOW_KEY           – samma som för de andra sajterna
 #   OPENAI_API_KEY         – bild-API för illustrationer (sites/dagensgodanyheter/scripts/lib/ai-bild.mjs). Saknas den
 #                            får bara rymdnyheter bild (fria NASA-foton); övriga publiceras som ren text.
-# Valfria variabler (Variables): GODA_BILDMODELL (standard gpt-image-2.6-flare), GODA_BILDKVALITET (low/medium/high),
+#   GOOGLE_ADS_*           – valfria, för sökvolymer från Keyword Planner (se sites/dagensgodanyheter/scripts/trender.mjs).
+# Bildmodellen är alltid gpt-image-2.6-flare (låst i koden, ingen reservmodell).
+# Valfria variabler (Variables): GODA_BILDSTIL (illustration/foto, standard illustration), GODA_BILDKVALITET (low/medium/high),
 #   GODA_KOSTNADSTAK (USD/natt för texterna, standard 4), GODA_BILDTAK (USD/natt för bilderna, standard 1),
 #   GODA_ANTAL (nya artiklar per natt, 1–15, standard 14)
 #
@@ -70,6 +72,22 @@ jobs:
         if: steps.tid.outputs.kor == '1'
         run: node --test "sites/dagensgodanyheter/tester/*.test.mjs"
 
+      - name: Trender som idékälla (Google Trends, Wikipedia, ev. Keyword Planner)
+        if: steps.tid.outputs.kor == '1' && github.event.inputs.skriv != 'false'
+        continue-on-error: true # utan trender blir det bara ingen aktualitetsbonus
+        timeout-minutes: 5
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # Haiku sorterar bort negativa trender (~1 cent/natt)
+          # Valfritt, se scripts/trender.mjs. Saknas någon hoppas Keyword Planner över.
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+          GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+          GOOGLE_ADS_API_VERSION: ${{ vars.GOOGLE_ADS_API_VERSION }}
+        run: npm run trender -w sites/dagensgodanyheter
+
       - name: Hämta och poängsätt kandidater
         if: steps.tid.outputs.kor == '1' && github.event.inputs.skriv != 'false'
         continue-on-error: true
@@ -95,7 +113,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # visuell kontroll av fria foton
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GODA_BILDMODELL: ${{ vars.GODA_BILDMODELL }}
+          GODA_BILDSTIL: ${{ vars.GODA_BILDSTIL }}
           GODA_BILDKVALITET: ${{ vars.GODA_BILDKVALITET }}
           GODA_BILDTAK: ${{ vars.GODA_BILDTAK || '1' }} # USD per natt för bilderna
         run: npm run bilder -w sites/dagensgodanyheter -- --max=5 # ~35 % av nattens artiklar, högst 5 nya bilder
@@ -105,7 +123,10 @@ jobs:
         run: |
           git config user.name "goda-nyheter-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sites/dagensgodanyheter/data/artiklar sites/dagensgodanyheter/data/provade.json sites/dagensgodanyheter/public/bilder || true
+          # En sökväg i taget: en saknad sökväg får inte stoppa incheckningen av de andra.
+          for p in data/artiklar data/publicerade.json data/provade.json data/trender public/bilder; do
+            [ -e "sites/dagensgodanyheter/$p" ] && git add "sites/dagensgodanyheter/$p"
+          done
           if git diff --cached --quiet; then echo "Inga nya artiklar."; exit 0; fi
           N=$(git diff --cached --name-only -- sites/dagensgodanyheter/data/artiklar | wc -l)
           git commit -m "Goda nyheter: $N nya eller bildsatta artiklar [skip ci]"

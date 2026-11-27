@@ -1,8 +1,9 @@
 ---
 // Lång guidesida: Pojknamn – populära och klassiska. Topplistor och medelålder ur SCB (CC0, 1998–2022),
 // nyare toppnamn från Skatteverket (2025) och Isof (2023), namnlagen från riksdagen.se. Granskad 2026-11-25.
-import Guide from "@natverk/core/Guide.astro";
+import Guide from "../layouts/Guide.astro";
 import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import NamnsdagCell from "../components/NamnsdagCell.astro";
 import { SITE, tal, lista } from "../site.js";
 import { NYFODDA, NYF_AR, NYF_SENAST, MEDELALDER, NYARE, ettor, tilltal, placering, nykomlingar, namnsdagFor } from "../lib/statistik.js";
@@ -22,8 +23,8 @@ const nya = nykomlingar(K, T, S).slice(0, 12);
 const ute = NYFODDA[K][T].slice(0, 60).filter(([n]) => !L.some(([m]) => m === n)).slice(0, 10).map(([n]) => n);
 const yngst = Object.entries(MEDELALDER).filter(([, v]) => v[K] && v.nM >= 5000).sort((a, b) => a[1][K] - b[1][K]).slice(0, 5).map(([n, v]) => `${n} (${String(v[K]).replace(".", ",")} år)`);
 const nd = L.map(([n]) => namnsdagFor(n));
-const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d).length;
-const saknasNamn = L.filter((_, i) => !nd[i]).slice(0, 8).map(([n]) => n);
+const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d || d.typ === "utan").length;
+const saknasNamn = L.filter((_, i) => !nd[i] || nd[i].typ === "utan").slice(0, 8).map(([n]) => n);
 const sum = (xs) => xs.reduce((s, [, x]) => s + x, 0);
 const top10Nu = sum(L.slice(0, 10)), top10Da = sum(NYFODDA[K][NYF_AR[0]].slice(0, 10));
 const ar = (n) => String(n).replace(".", ",");
@@ -54,6 +55,7 @@ const beskrivning = `Populäraste pojknamnen: Noah, Hugo och Liam toppar 2025. T
   svar={`De populäraste pojknamnen 2025 var <strong>${lista(NYARE[2025].M)}</strong>, enligt Skatteverket. ${S} låg ${L[0][0]} etta med ${tal(L[0][1])} nyfödda, enligt SCB. Bland alla män i Sverige är <strong>${klassiker[0].namn}</strong> det vanligaste tilltalsnamnet, med ${tal(klassiker[0].antal)} bärare och en medelålder på ${ar(klassiker[0].alder)} år.`}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Pojknamn", href: "/pojknamn/" }]}
   publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  jsonld={[datasetLd({ namn: "Populäraste pojknamnen i Sverige 1998–2022", beskrivning: "Topplistor över tilltalsnamn bland nyfödda pojkar per år 1998–2022 och vanligaste tilltalsnamnen bland alla män 2020 med medelålder, sammanställda ur SCB:s öppna namnstatistik.", sokvag: "/pojknamn/", tid: "1998/2022", nyckelord: ["pojknamn", "nyfödda"] })]}
   relaterat={[
     { namn: "Flicknamn", href: "/flicknamn/", text: "Populära och klassiska flicknamn" },
     { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Sök antal bärare för alla namn" },

@@ -1,0 +1,213 @@
+---
+// Lång guide: elbil eller bensin/diesel. Kostnad per mil och år med dagens drivmedelspris, brytpunkten för elpriset,
+// SCB:s elpriser för hushåll (halvår 2026H1), Skatteverkets elskatt, Transportstyrelsens fordonsskatt, Trafikanalys
+// körsträckor och laddpunkter i stationsregistret. Elbilens förbrukning är ett räkneexempel som besökaren kan ändra.
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, KEDJOR, idagPris, kr, pris, procent, datumText } from "../../pris.js";
+import { VARMEVARDEN, KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, "2026-11-27", LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+
+// Räkneexempel (kan ändras i kalkylatorn): förbrukning för en mellanstor bil.
+const B = 0.6, D = 0.5, E = 2.0; // l/mil, l/mil, kWh/mil inklusive laddförluster
+const perMilB = B * p95, perMilD = D * pd;
+const brytB = perMilB / E, brytD = perMilD / E;
+const elpriser = [1, 1.5, 2, 2.5, 3, 4, 5, 6];
+const MIL_AR = 1500;
+
+// SCB, Priser på el för hushåll efter förbrukarkategori, första halvåret 2026 (öre/kWh). Hämtad 2026-11-27.
+const SCB = {
+  url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__EN__EN0301__EN0301A/SSDHalvarElHus/",
+  period: "första halvåret 2026",
+  rader: [
+    { kat: "2 500–4 999 kWh", handel: 101.6, nat: 126.7, skatt: 36.0, moms: 66.08, total: 330.38 },
+    { kat: "5 000–14 999 kWh", handel: 97.76, nat: 77.01, skatt: 36.0, moms: 52.69, total: 263.47 },
+    { kat: "15 000 kWh eller mer", handel: 94.42, nat: 56.99, skatt: 36.0, moms: 46.85, total: 234.26 },
+  ],
+  forra: { kat: "5 000–14 999 kWh", period: "andra halvåret 2025", total: 239.84, skatt: 43.9 },
+};
+const elMellan = SCB.rader[1].total / 100;
+
+// Körsträckor 2025 (Trafikanalys).
+const tEl = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "El");
+const tB = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin");
+const tD = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Diesel");
+const kwhAr = tEl.mil * E;
+
+// Energi per mil: bensinbilen omräknad med Energimyndighetens värmevärde.
+const kwhPerMilB = B * VARMEVARDEN.bensin95;
+
+// Fordonsskatt (Transportstyrelsen): räkneexempel med 120 g CO2/km för bensinbilen, i trafik efter 1 juni 2022.
+const CO2 = 120;
+const malusB = 360 + 107 * (Math.min(CO2, 125) - 75);
+const vanligB = 360 + 22 * Math.max(0, CO2 - 111);
+
+// Jämförelse per mil med andra drivmedel (räkneexempel).
+const pe85 = idagPris("e85"), phvo = idagPris("hvo100");
+const alternativ = [
+  { namn: `Bensin 95, ${B.toLocaleString("sv-SE")} l/mil`, k: B * p95 },
+  { namn: `Diesel, ${D.toLocaleString("sv-SE")} l/mil`, k: D * pd },
+  pe85 && { namn: `E85, ${(B * 1.3).toLocaleString("sv-SE")} l/mil (30 % mer än bensin)`, k: B * 1.3 * pe85 },
+  phvo && { namn: `HVO100, ${D.toLocaleString("sv-SE")} l/mil`, k: D * phvo },
+  ...SCB.rader.map((r) => ({ namn: `El, ${E.toLocaleString("sv-SE")} kWh/mil, SCB ${r.kat}`, k: E * r.total / 100, el: true })),
+].filter(Boolean).sort((a, b) => a.k - b.k);
+const elBast = Math.max(...alternativ.filter((x) => x.el).map((x) => x.k)) < Math.min(...alternativ.filter((x) => !x.el).map((x) => x.k));
+// Laddning i stationsregistret.
+const laddning = STATIONER.filter((s) => s.drivmedel?.el === true);
+const laddKedjor = KEDJOR.map((k) => ({ ...k, n: laddning.filter((s) => s.kedja === k.namn).length })).filter((k) => k.n > 0).sort((a, b) => b.n - a.n);
+
+const avsnitt = [
+  { id: "kalkylator", rubrik: "Räkna på din bil och ditt elpris" },
+  { id: "per-mil", rubrik: "Kostnad per mil vid olika elpriser" },
+  { id: "elpris", rubrik: "Vad kostar elen hemma? SCB:s elpriser 2026" },
+  { id: "per-ar", rubrik: "Kostnad per år – elbilar körs längre" },
+  { id: "energi", rubrik: "Elbilen använder mindre energi per mil" },
+  { id: "alternativ", rubrik: "Elbil jämfört med diesel, E85 och HVO100" },
+  { id: "skatt", rubrik: "Fordonsskatt för elbil och bensinbil" },
+  { id: "ladda", rubrik: "Var kan du ladda?" },
+  { id: "kalkylen", rubrik: "Det här avgör kalkylen" },
+];
+
+const fragor = [
+  { fraga: "Är det billigare att köra elbil än bensinbil?", svar: `Med dagens bensinpris (${kr(p95)} per liter) kostar en bensinbil som drar ${B.toLocaleString("sv-SE")} liter per mil ${kr(perMilB)} per mil. En elbil som drar ${E.toLocaleString("sv-SE")} kWh per mil är billigare så länge elen kostar under ${kr(brytB)} per kWh, allt inräknat. SCB:s snittpris för hushåll som använder 5 000–14 999 kWh om året var ${kr(elMellan)} per kWh ${SCB.period}.` },
+  { fraga: "Vad kostar det att köra elbil per mil?", svar: `Multiplicera förbrukningen i kWh per mil med vad elen kostar per kWh, inklusive nätavgift, energiskatt och moms. Med ${E.toLocaleString("sv-SE")} kWh per mil och SCB:s snittpris ${kr(elMellan)} per kWh blir det ${kr(E * elMellan)} per mil.` },
+  { fraga: "Hur mycket sparar man per år med elbil?", svar: `Vid ${MIL_AR.toLocaleString("sv-SE")} mil om året kostar bensinen ${kr(perMilB * MIL_AR, 0)} med dagens pris. Med el för ${kr(elMellan)} per kWh kostar elbilens el ${kr(E * elMellan * MIL_AR, 0)}, alltså ${kr((perMilB - E * elMellan) * MIL_AR, 0)} ${perMilB > E * elMellan ? "mindre" : "mer"}. Försäkring, service och värdeminskning skiljer sig också mellan bilarna.` },
+  { fraga: "Hur hög är elskatten 2026?", svar: "Enligt Skatteverket är energiskatten på el 36,0 öre per kWh under 2026. Hushåll i vissa kommuner i norra Sverige får ett avdrag på 9,6 öre per kWh. Moms på 25 procent tillkommer." },
+  { fraga: "Hur långt kör en elbil per år?", svar: `Enligt Trafikanalys körde en elbil i genomsnitt ${tEl.mil.toLocaleString("sv-SE")} mil under ${KORSTRACKOR.ar}, mot ${tB.mil.toLocaleString("sv-SE")} mil för en bensinbil. Med ${E.toLocaleString("sv-SE")} kWh per mil motsvarar det ungefär ${Math.round(kwhAr).toLocaleString("sv-SE")} kWh el om året.` },
+  { fraga: "Lönar det sig att snabbladda?", svar: `Det beror på priset vid laddaren. Kostar laddningen mer än ${kr(brytB)} per kWh blir milen dyrare än med en bensinbil som drar ${B.toLocaleString("sv-SE")} liter per mil, och över ${kr(brytD)} per kWh dyrare än med en dieselbil som drar ${D.toLocaleString("sv-SE")} liter per mil.` },
+];
+---
+<Guide site={SITE} titel="Elbil eller bensin – vad kostar milen?"
+  beskrivning={`Bensinen kostar ${kr(perMilB)} per mil idag. Elbilen är billigare så länge elen kostar under ${kr(brytB)}/kWh. Räkna med SCB:s elpriser och ditt elavtal.`}
+  h1="Elbil eller bensin – vad kostar milen?"
+  svar={`Med dagens bensinpris (${kr(p95)} per liter) kostar en bensinbil som drar ${B.toLocaleString("sv-SE")} liter per mil <strong>${kr(perMilB)} per mil</strong>. En elbil som drar ${E.toLocaleString("sv-SE")} kWh per mil är billigare i drift så länge elen kostar under <strong>${kr(brytB)} per kWh</strong>, nätavgift, skatt och moms inräknat. SCB:s snittpris för hushåll med 5 000–14 999 kWh om året var ${kr(elMellan)} per kWh ${SCB.period}, vilket ger ${kr(E * elMellan)} per mil.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Elbil eller bensin", href: "/guider/elbil-eller-bensin/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Laddstationer", href: "/drivmedel/laddning/", text: "Stationer med laddning för elbil" },
+    { namn: "Bensin eller diesel", href: "/guider/bensin-eller-diesel/", text: "Kostnad per mil och fordonsskatt" },
+    { namn: "Lönar sig E85?", href: "/guider/lonar-sig-e85/", text: "Brytpunkten mot bensin 95" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Bränslekalkylator med dagens priser" },
+    { namn: "Spara bränsle", href: "/guider/spara-bransle/", text: "Lägre förbrukning med samma bil" },
+  ]}
+  kallor={[
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "SCB – Priser på el för hushåll efter förbrukarkategori", url: SCB.url, text: "handelspris, nätpris, elskatt, moms och totalpris, 2025H2 och 2026H1", datum: "2026-11-27" },
+    { namn: "Skatteverket – Skatt på el", url: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/energiskatter/skattpael", text: "energiskatt 36,0 öre per kWh 2026 och avdrag i norra Sverige", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "körsträcka och antal bilar per drivmedel", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll i bensin 95", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Skattens storlek", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/fordonsskatt/skattens-storlek/", text: "grundbelopp och koldioxidbelopp", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Malus", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/malus/", text: "malusbelopp de tre första åren", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer med laddning för elbil" },
+  ]}>
+
+  <h2 id="kalkylator">Räkna på din bil och ditt elpris</h2>
+  <p>Fyll i ditt totala elpris, alltså elhandel, nätavgift, energiskatt och moms per kWh, och bilarnas förbrukning. Kalkylatorn räknar ut kostnaden per mil, skillnaden per år och brytpunkten, det elpris där milen kostar lika mycket i båda bilarna. Bensinpriset är förifyllt med dagens snitt från kedjornas listpriser.</p>
+  <form class="berakning" id="elkalk" onsubmit="return false">
+    <label>Elpris (kr per kWh, allt inräknat)<input name="el" type="number" inputmode="decimal" min="0" step="0.05" value={elMellan.toFixed(2)} /></label>
+    <label>Elbilens förbrukning (kWh per mil)<input name="kwh" type="number" inputmode="decimal" min="0" step="0.1" value={E} /></label>
+    <label>Bensinbilens förbrukning (l per mil)<input name="liter" type="number" inputmode="decimal" min="0" step="0.05" value={B} /></label>
+    <label>Bensinpris (kr per liter)<input name="pris" type="number" inputmode="decimal" min="0" step="0.01" value={p95.toFixed(2)} /></label>
+    <label>Mil per år<input name="mil" type="number" inputmode="numeric" min="0" step="100" value={MIL_AR} /></label>
+    <output name="ut" aria-live="polite"></output>
+  </form>
+  <script is:inline>
+    (() => {
+      const f = document.getElementById("elkalk");
+      const kr = (v, d = 2) => v.toLocaleString("sv-SE", { minimumFractionDigits: d, maximumFractionDigits: d }) + " kr";
+      const tal = (n) => parseFloat(String(f[n].value).replace(",", ".")) || 0;
+      const rakna = () => {
+        const el = tal("kwh") * tal("el"), be = tal("liter") * tal("pris"), mil = tal("mil");
+        const skillnad = (be - el) * mil;
+        f.ut.value = `Elbil ${kr(el)} per mil · bensinbil ${kr(be)} per mil · ${skillnad >= 0 ? "elbilen sparar" : "bensinbilen sparar"} ${kr(Math.abs(skillnad), 0)} per år · brytpunkt ${kr(tal("kwh") ? be / tal("kwh") : 0)} per kWh`;
+      };
+      f.addEventListener("input", rakna); rakna();
+    })();
+  </script>
+  <p class="kalla">Elbilens förbrukning är ett räkneexempel. Ange gärna din bils verkliga förbrukning inklusive laddförluster, som du ser i bilens färddator eller på elmätaren.</p>
+
+  <h2 id="per-mil">Kostnad per mil vid olika elpriser</h2>
+  <p>Tabellen jämför elbilen med en bensinbil och en dieselbil vid åtta olika elpriser. Brytpunkten mot bensinbilen ligger idag vid {kr(brytB)} per kWh och mot dieselbilen vid {kr(brytD)} per kWh. Under de nivåerna är elbilen billigare per mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Elpris per kWh</th><th class="num">Elbil ({E.toLocaleString("sv-SE")} kWh/mil)</th><th class="num">Mot bensin ({pris(perMilB)} kr/mil)</th><th class="num">Mot diesel ({pris(perMilD)} kr/mil)</th></tr></thead>
+    <tbody>{elpriser.map((e) => (
+      <tr><td>{pris(e)} kr</td><td class="num">{pris(e * E)}</td><td class="num">{e * E < perMilB ? `${pris(perMilB - e * E)} billigare` : `${pris(e * E - perMilB)} dyrare`}</td><td class="num">{e * E < perMilD ? `${pris(perMilD - e * E)} billigare` : `${pris(e * E - perMilD)} dyrare`}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Bensinbil {B.toLocaleString("sv-SE")} l/mil med 95 för {kr(p95)}, dieselbil {D.toLocaleString("sv-SE")} l/mil med diesel för {kr(pd)} (kedjornas snittpris {LP_DATUM}). Elbil {E.toLocaleString("sv-SE")} kWh/mil inklusive laddförluster.</p>
+  <p>De lägre elpriserna i tabellen ligger nära vad hushåll betalar hemma, se nästa avsnitt. De högre motsvarar nivåer där publik laddning kan hamna, men priset vid publika laddare skiljer sig mellan operatörer, effekt och abonnemang. Kontrollera alltid priset i laddoperatörens app.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="elpris">Vad kostar elen hemma? SCB:s elpriser 2026</h2>
+  <p>SCB mäter vad hushållen i genomsnitt betalar för el, uppdelat på hur mycket el de använder per år. Priset består av fyra delar: elhandelspriset, nätpriset, energiskatten och momsen. Enligt Skatteverket sänktes energiskatten på el till 36,0 öre per kWh från den 1 januari 2026. Hushåll i vissa kommuner i norra Sverige får dessutom ett avdrag på 9,6 öre per kWh.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Elanvändning per år</th><th class="num">Elhandel</th><th class="num">Nät</th><th class="num">Elskatt</th><th class="num">Moms</th><th class="num">Totalt, kr/kWh</th><th class="num">Elbil per mil</th></tr></thead>
+    <tbody>{SCB.rader.map((r) => <tr><td>{r.kat}</td><td class="num">{pris(r.handel / 100)}</td><td class="num">{pris(r.nat / 100)}</td><td class="num">{pris(r.skatt / 100)}</td><td class="num">{pris(r.moms / 100)}</td><td class="num"><strong>{pris(r.total / 100)}</strong></td><td class="num">{pris(E * r.total / 100)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">SCB, priser på el för hushåll, {SCB.period}, omräknat från öre till kronor per kWh. Snittpriset innehåller även fasta avgifter.</p>
+  <p>Ju mer el ett hushåll använder, desto lägre blir snittpriset per kWh, eftersom de fasta avgifterna slås ut på fler kilowattimmar. Det spelar roll för elbilen: en elbil som körs {tEl.mil.toLocaleString("sv-SE")} mil om året och drar {E.toLocaleString("sv-SE")} kWh per mil behöver omkring {Math.round(kwhAr).toLocaleString("sv-SE")} kWh, vilket kan flytta hushållet till en högre förbrukningsklass. Eftersom snittet innehåller fasta avgifter kan kostnaden för just de extra kilowattimmarna bli lägre än totalpriset. Jämfört med {SCB.forra.period} steg totalpriset för klassen 5 000–14 999 kWh från {pris(SCB.forra.total / 100)} till {pris(SCB.rader[1].total / 100)} kronor per kWh, trots den lägre elskatten.</p>
+
+  <h2 id="per-ar">Kostnad per år – elbilar körs längre</h2>
+  <p>Trafikanalys statistik visar att elbilarna i trafik, {tEl.bilar.toLocaleString("sv-SE")} stycken, i genomsnitt körde {tEl.mil.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar}. Det är {procent((tEl.mil / tB.mil - 1) * 100)} längre än bensinbilarnas {tB.mil.toLocaleString("sv-SE")} mil och {procent((tEl.mil / tD.mil - 1) * 100)} längre än dieselbilarnas {tD.mil.toLocaleString("sv-SE")} mil. Ju längre du kör, desto mer betyder skillnaden i kostnad per mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bil</th><th class="num">{MIL_AR.toLocaleString("sv-SE")} mil</th><th class="num">{tEl.mil.toLocaleString("sv-SE")} mil (snitt elbil)</th></tr></thead>
+    <tbody>
+      <tr><td>Bensinbil, {B.toLocaleString("sv-SE")} l/mil</td><td class="num">{kr(perMilB * MIL_AR, 0)}</td><td class="num">{kr(perMilB * tEl.mil, 0)}</td></tr>
+      <tr><td>Dieselbil, {D.toLocaleString("sv-SE")} l/mil</td><td class="num">{kr(perMilD * MIL_AR, 0)}</td><td class="num">{kr(perMilD * tEl.mil, 0)}</td></tr>
+      {SCB.rader.map((r) => <tr><td>Elbil, el för {pris(r.total / 100)} kr/kWh (SCB, {r.kat})</td><td class="num">{kr(E * r.total / 100 * MIL_AR, 0)}</td><td class="num">{kr(E * r.total / 100 * tEl.mil, 0)}</td></tr>)}
+      {[4, 6].map((e) => <tr><td>Elbil, el för {pris(e)} kr/kWh</td><td class="num">{kr(E * e * MIL_AR, 0)}</td><td class="num">{kr(E * e * tEl.mil, 0)}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p class="kalla">Endast drivmedel och el. Dagens drivmedelspriser {LP_DATUM}.</p>
+
+  <h2 id="energi">Elbilen använder mindre energi per mil</h2>
+  <p>Enligt Energimyndigheten innehåller en liter bensin 95 {VARMEVARDEN.bensin95.toLocaleString("sv-SE")} kWh. En bensinbil som drar {B.toLocaleString("sv-SE")} liter per mil använder alltså {pris(kwhPerMilB, 1)} kWh energi per mil, mot {E.toLocaleString("sv-SE")} kWh för elbilen i räkneexemplet, {procent(E / kwhPerMilB * 100)} av bensinbilens energi. Idag kostar bensinen {kr(p95 / VARMEVARDEN.bensin95)} per kWh, mot {kr(elMellan)} för hushållsel enligt SCB:s snitt. {elMellan > p95 / VARMEVARDEN.bensin95 ? "Elbilen kan alltså vara billigare per mil trots att varje kWh el kostar mer än en kWh bensin, eftersom den behöver så mycket färre." : "Både den lägre energiförbrukningen och det lägre priset per kWh talar alltså för elbilen."}</p>
+  <p>Elbilens förbrukning varierar mer än bensinbilens med väder och körsätt, eftersom en större del av energin går till att värma batteri och kupé när det är kallt. Räkna med en högre förbrukning på vintern än på sommaren och använd ett årssnitt i kalkylatorn.</p>
+
+  <h2 id="alternativ">Elbil jämfört med diesel, E85 och HVO100</h2>
+  <p>Bensin är inte det enda alternativet till el. Tabellen visar kostnaden per mil med dagens snittpriser för alla vanliga drivmedel, sorterat från billigast. Förbrukningarna är räkneexempel för en mellanstor bil; E85 räknas med 30 procent fler liter än bensin, eftersom etanol innehåller mindre energi.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Drivmedel och förbrukning</th><th class="num">Kr per mil</th><th class="num">Per år ({MIL_AR.toLocaleString("sv-SE")} mil)</th></tr></thead>
+    <tbody>{alternativ.map((x) => <tr><td>{x.el ? <strong>{x.namn}</strong> : x.namn}</td><td class="num">{pris(x.k)}</td><td class="num">{kr(x.k * MIL_AR, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Drivmedelspriser: kedjornas snitt {LP_DATUM}. Elpris: SCB, {SCB.period}.</p>
+  <p>{elBast ? "Med hemmaladdning till SCB:s snittpriser är elbilen billigast per mil i alla tre förbrukningsklasserna." : "Med hemmaladdning till SCB:s snittpriser är elbilen inte billigast per mil i alla förbrukningsklasser idag."} Skillnaden mellan klasserna är {kr(E * (SCB.rader[0].total - SCB.rader[2].total) / 100)} per mil, vilket visar hur mycket nätavgiften och de fasta avgifterna betyder: för ett hushåll med låg elanvändning blir varje kWh dyrare. Den som byter från en dieselbil jämför med diesel, där brytpunkten idag ligger vid {kr(brytD)} per kWh.</p>
+
+  <h2 id="skatt">Fordonsskatt för elbil och bensinbil</h2>
+  <p>Enligt Transportstyrelsen betalar en personbil som tagits i trafik från den 1 juli 2018 ett grundbelopp på 360 kronor om året plus ett koldioxidbelopp på 22 kronor per gram över 111 gram per kilometer. En elbil har inga koldioxidutsläpp vid blandad körning och betalar därför bara grundbeloppet. Bensinbilar som blivit skattepliktiga från den 1 juni 2022 betalar malus de tre första åren: 107 kronor per gram mellan 75 och 125 gram och 132 kronor per gram däröver.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Fordonsskatt per år</th><th class="num">Elbil</th><th class="num">Bensinbil, {CO2} g CO2/km</th></tr></thead>
+    <tbody>
+      <tr><td>År 1–3</td><td class="num">{kr(360, 0)}</td><td class="num">{kr(malusB, 0)}</td></tr>
+      <tr><td>Från år 4</td><td class="num">{kr(360, 0)}</td><td class="num">{kr(vanligB, 0)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Räkneexempel med Transportstyrelsens regler. Den exakta skatten för en viss bil finns hos Transportstyrelsen.</p>
+  <p>För en ny bensinbil med {CO2} gram koldioxid per kilometer är skillnaden i skatt alltså {kr(malusB - 360, 0)} om året under de tre första åren. Som jämförelse sparar elbilen {kr((perMilB - E * elMellan) * tB.mil, 0)} om året på drivmedlet vid {tB.mil.toLocaleString("sv-SE")} mil, en genomsnittlig bensinbils körsträcka, med SCB:s snittpris för el.</p>
+
+  <h2 id="ladda">Var kan du ladda?</h2>
+  <p>De flesta laddar hemma eller på jobbet, men laddning finns också vid många bensinstationer. Av stationerna i vårt register anger {laddning.length.toLocaleString("sv-SE")} att de har laddning för elbil. Flest har {laddKedjor.slice(0, 2).map((k) => k.namn).join(" och ")}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer med laddning</th><th class="num">Andel av kedjans stationer</th></tr></thead>
+    <tbody>{laddKedjor.slice(0, 6).map((k) => <tr><td><a href={k.href}>{k.namn}</a></td><td class="num">{k.n}</td><td class="num">{procent(k.n / k.antal * 100)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Laddoperatörer utan bensinstation ingår inte.</p>
+  <p>Se alla stationer med laddning på <a href="/drivmedel/laddning/">laddning för elbil</a> eller sök i <a href="/">stationssökningen</a>.</p>
+
+  <h2 id="kalkylen">Det här avgör kalkylen</h2>
+  <ul>
+    <li><strong>Var du laddar.</strong> Hemma betalar du ditt elavtal plus nätavgift. Vid publika laddare sätter operatören priset, och det kan ligga över brytpunkten på {kr(brytB)} per kWh.</li>
+    <li><strong>Elavtalet.</strong> Med timpris följer kostnaden elbörsen timme för timme, och du kan välja att ladda när priset är lågt.</li>
+    <li><strong>Var i landet du bor.</strong> Nätavgiften skiljer sig mellan nätbolag, och i vissa norrländska kommuner är elskatten 9,6 öre lägre per kWh.</li>
+    <li><strong>Körsträckan.</strong> Ju fler mil, desto mer betyder den lägre kostnaden per mil. Elbilarna körs i snitt {tEl.mil.toLocaleString("sv-SE")} mil om året.</li>
+    <li><strong>Mer än drivmedlet.</strong> Fordonsskatt, försäkring, service, inköpspris och värdeminskning påverkar totalkostnaden, för många mer än drivmedlet.</li>
+  </ul>
+  <p>Ett enkelt sätt att räkna: ta reda på vad du betalar för elen allt inräknat, från din senaste elräkning och nätfaktura, och jämför med brytpunkten {kr(brytB)} per kWh. Ligger ditt pris långt under brytpunkten är elbilen billigare i drift även om du ibland laddar dyrare på vägen. Ligger det nära brytpunkten avgör andelen publik laddning och vinterförbrukningen.</p>
+  <p>Jämför också <a href="/guider/bensin-eller-diesel/">bensin eller diesel</a> och <a href="/guider/lonar-sig-e85/">E85</a>, eller räkna med egna värden i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+</Guide>

@@ -76,7 +76,7 @@
     "liten": "/bilder/nasa-spikar-design-for-karnkraftsdrivna-sr-1-freedom-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: radiatorpanel med värmerör testas i ett renrum för rymdfarkoster",
+    "alt": "Målad illustration av en stor mörk solpanel med kopparrör bakom, monterad på metallstativ i ett ljust laboratorium.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -103,10 +103,12 @@
   "bildmotiv": "a large composite radiator panel with heat pipes mounted on a test stand inside a bright spacecraft clean room",
   "bildalt": "Radiatorpanel med värmerör testas i ett renrum för rymdfarkoster",
   "poang": {
-    "positiv": 0.6,
+    "positiv": 0.5,
     "betydelse": 0.5,
     "tillit": 0.97,
-    "total": 65
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -117,5 +119,6 @@
   },
   "rattelser": [],
   "bildRymd": true,
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "rymden"
 }

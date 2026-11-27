@@ -1,8 +1,9 @@
 ---
 // Lång guidesida: Flicknamn – populära och klassiska. Topplistor och medelålder ur SCB (CC0, 1998–2022),
 // nyare toppnamn från Skatteverket (2025) och Isof (2023), namnlagen från riksdagen.se. Granskad 2026-11-25.
-import Guide from "@natverk/core/Guide.astro";
+import Guide from "../layouts/Guide.astro";
 import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import NamnsdagCell from "../components/NamnsdagCell.astro";
 import { SITE, tal, lista, ALLA_NAMN, AR, dagText, namnHref } from "../site.js";
 import { NYFODDA, NYF_AR, NYF_SENAST, MEDELALDER, NYARE, ettor, tilltal, placering, nykomlingar, namnsdagFor } from "../lib/statistik.js";
@@ -22,8 +23,8 @@ const tillbaka = L.filter(([n]) => (MEDELALDER[n]?.[K] ?? 0) >= 35).slice(0, 8).
 const nya = nykomlingar(K, T, S).slice(0, 12);
 const ute = NYFODDA[K][T].slice(0, 60).filter(([n]) => !L.some(([m]) => m === n)).slice(0, 10).map(([n]) => n);
 const nd = L.map(([n]) => namnsdagFor(n));
-const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d).length;
-const saknasNamn = L.filter((_, i) => !nd[i]).slice(0, 8).map(([n]) => n);
+const egen = nd.filter((d) => d?.typ === "egen").length, variant = nd.filter((d) => d?.typ === "variant").length, saknas = nd.filter((d) => !d || d.typ === "utan").length;
+const saknasNamn = L.filter((_, i) => !nd[i] || nd[i].typ === "utan").slice(0, 8).map(([n]) => n);
 const nya2027 = ALLA_NAMN.filter((n) => n.fran && n.fran > AR && (n.scb?.tilltal2020?.K ?? 0) > (n.scb?.tilltal2020?.M ?? 0));
 const sum = (xs) => xs.reduce((t, [, x]) => t + x, 0);
 const top10Nu = sum(L.slice(0, 10)), top10Da = sum(NYFODDA[K][NYF_AR[0]].slice(0, 10));
@@ -58,6 +59,7 @@ const beskrivning = `Populäraste flicknamnen: Vera, Astrid och Alice toppar 202
   svar={`De populäraste flicknamnen 2025 var <strong>${lista(NYARE[2025].K)}</strong>, enligt Skatteverket. Vera har legat etta sedan 2023. Enligt SCB var ${L[0][0]} vanligast ${S}, och ${alice.namn} låg etta ${alice.ar.length} år mellan ${alice.ar[0]} och ${alice.ar.at(-1)}. Bland alla kvinnor i Sverige är <strong>${vanligast[0].namn}</strong> vanligast, med ${tal(vanligast[0].antal)} bärare.`}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Flicknamn", href: "/flicknamn/" }]}
   publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  jsonld={[datasetLd({ namn: "Populäraste flicknamnen i Sverige 1998–2022", beskrivning: "Topplistor över tilltalsnamn bland nyfödda flickor per år 1998–2022 och vanligaste tilltalsnamnen bland alla kvinnor 2020 med medelålder, sammanställda ur SCB:s öppna namnstatistik.", sokvag: "/flicknamn/", tid: "1998/2022", nyckelord: ["flicknamn", "nyfödda"] })]}
   relaterat={[
     { namn: "Pojknamn", href: "/pojknamn/", text: "Populära och klassiska pojknamn" },
     { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Sök antal bärare för alla namn" },

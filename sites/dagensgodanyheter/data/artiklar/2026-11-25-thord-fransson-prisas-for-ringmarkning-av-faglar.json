@@ -62,14 +62,46 @@
   "ovrigaKallor": [],
   "publicerad": "2026-11-25T23:05:56.107Z",
   "uppdaterad": "2026-11-25T23:05:56.107Z",
-  "bild": null,
+  "bild": {
+    "fil": "/bilder/thord-fransson-prisas-for-ringmarkning-av-faglar.webp",
+    "og": "/bilder/thord-fransson-prisas-for-ringmarkning-av-faglar.jpg",
+    "liten": "/bilder/thord-fransson-prisas-for-ringmarkning-av-faglar-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Målad illustration av händer som håller en rödhake med en ny ring om benet, med fågelnät och havet bakom.",
+    "genererad": true,
+    "illustration": true,
+    "stil": "illustration",
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a small songbird with a metal identification ring on its leg, held gently at a bird ringing station in a Swedish coastal meadow",
+    "skapad": "2026-11-26T01:32:09.997Z",
+    "anvandning": {
+      "input_tokens": 250,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 250
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1174
+    },
+    "kostnadUSD": 0.02897,
+    "kontroller": [],
+    "granskningUSD": 0.00015010000000000002
+  },
   "bildmotiv": "a small songbird with a metal identification ring on its leg, held gently at a bird ringing station in a Swedish coastal meadow",
   "bildalt": "En liten sångfågel med en ring av metall runt benet vid en fågelstation",
   "poang": {
-    "positiv": 0.7,
-    "betydelse": 0.2,
+    "positiv": 0.6,
+    "betydelse": 0.3,
     "tillit": 0.82,
-    "total": 62
+    "total": 68,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -79,5 +111,6 @@
     "anmarkningar": []
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "bild",
+  "typ": "natur"
 }

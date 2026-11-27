@@ -64,10 +64,11 @@
   "bildmotiv": "rows of DNA sequencing machines and sample plates in a bright genomics laboratory",
   "bildalt": "Sekvenseringsmaskiner och provplattor i ett genetiklaboratorium",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.38,
+    "positiv": 0.7,
+    "betydelse": 0.6,
     "tillit": 0.93,
-    "total": 58
+    "total": 71,
+    "gladje": 0.6
   },
   "produktion": {
     "metod": "ai-stod",
@@ -79,5 +80,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "medicin"
 }

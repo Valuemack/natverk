@@ -63,10 +63,11 @@
   "bildmotiv": "cell culture flasks and a fluorescence microscope on a laboratory bench, soft blue light",
   "bildalt": "Odlingsflaskor och ett fluorescensmikroskop i ett laboratorium",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.3,
+    "positiv": 0.5,
+    "betydelse": 0.4,
     "tillit": 0.95,
-    "total": 53
+    "total": 57,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -78,5 +79,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "medicin"
 }

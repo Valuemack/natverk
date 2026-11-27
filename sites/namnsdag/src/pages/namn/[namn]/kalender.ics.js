@@ -1,5 +1,5 @@
 // /namn/ture/kalender.ics – lägg in namnsdagen som årligen återkommande händelse i mobilens kalender.
-import { NAMNSIDOR, ics } from "../../../lib/namnsidor.js";
+import { NAMNSIDOR, ics, sidNamn } from "../../../lib/namnsidor.js";
 import { SITE } from "../../../site.js";
 
 export function getStaticPaths() {
@@ -7,7 +7,7 @@ export function getStaticPaths() {
 }
 
 export function GET({ props }) {
-  const namn = props.typ === "variant" ? props.v.namn : props.n.namn;
+  const namn = sidNamn(props);
   return new Response(ics(namn, props.n, `${SITE.url}/namn/${props.slug}/`), {
     headers: { "Content-Type": "text/calendar; charset=utf-8" },
   });

@@ -2,14 +2,17 @@
 //   1. Fria licensbilder: NASA:s bildarkiv (public domain) och Wikimedia Commons. Varje träff granskas visuellt
 //      (visar den ämnet, är den ett riktigt foto, syns personer?) innan den används.
 //      Licens, fotograf och källa sparas alltid och visas under bilden.
-//   2. Annars en tydligt tecknad redaktionell illustration (ai-bild.mjs, kräver OPENAI_API_KEY), med bildtexten
-//      "Illustration: Dagens goda nyheter". Den föreställer aldrig verkliga personer eller händelser.
+//   2. Annars en skapad bild från gpt-image-2.6-flare (ai-bild.mjs, kräver OPENAI_API_KEY), med bildtexten
+//      BILDTEXT_GENERERAD. Den föreställer aldrig verkliga personer, platser eller händelser.
+// Varje bild får en alt-text på svenska, 80–125 tecken, som beskriver vad bilden faktiskt visar (Claude Haiku tittar
+// på bilden). Går det inte att få en godkänd alt-text används ingen bild.
 // Bara de högst poängsatta artiklarna får bild (scripts/bildsatt.mjs); övriga publiceras som ren text.
 // Bilderna sparas lokalt i public/bilder/ i 1280 och 640 px bredd (WebP), så att sajten inte är beroende av andra servrar.
-import { mkdirSync, writeFileSync, existsSync } from "node:fs";
+import { mkdirSync, writeFileSync, existsSync, readFileSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 import { hamta, textAvHtml } from "./natet.mjs";
 import { aiBild, bildnamn } from "./ai-bild.mjs";
+import { altFel, ALT_MIN, ALT_MAX } from "../../src/lib/bildtext.js";
 
 const TILLATNA = [/^public domain$/i, /^pd/i, /^cc0/i, /^cc[ -]by(?:[ -]sa)?[ -]\d/i, /^cc[ -]by(?:[ -]sa)?$/i];
 
@@ -81,11 +84,58 @@ Bedöm bilden själv, inte bara bildtiteln. Svara:
 - passar: true bara om bilden tydligt visar artikelns ämne (samma sak, art, plats, instrument eller farkost) – inte bara något närliggande.
 - foto: true om det är ett riktigt fotografi; false om det är en illustration, målning, datorgrafik, rendering eller ett diagram.
 - personer: true om det finns personer vars ansikten går att känna igen.
-- alt: en saklig alt-text på svenska, högst 120 tecken, om vad bilden faktiskt visar.`;
+- alt: en beskrivande alt-text på svenska, ${ALT_MIN}–${ALT_MAX} tecken, om vad bilden faktiskt visar (motiv, miljö, färger), i hela meningar som slutar med punkt. Upprepa inte rubriken och skriv aldrig ordet "AI".`;
 const GRANSKA_BILD_SCHEMA = {
   type: "object", additionalProperties: false, required: ["passar", "foto", "personer", "alt"],
   properties: { passar: { type: "boolean" }, foto: { type: "boolean" }, personer: { type: "boolean" }, alt: { type: "string" } },
 };
+// Alt-text för en bild som redan är vald: beskriver vad bilden faktiskt visar.
+const ALT_SYSTEM = `Du skriver alt-texter till bilder på en svensk nyhetssajt.
+Titta på bilden och skriv en beskrivande alt-text på svenska, ${ALT_MIN}–${ALT_MAX} tecken (räkna tecknen), om vad bilden faktiskt visar: motiv, miljö, ljus och färger. Skriv en eller två hela meningar som slutar med punkt.
+Om bilden är målad eller tecknad, börja med "Målad illustration av" eller "Tecknad bild av". Upprepa inte artikelns rubrik.
+Skriv aldrig ordet "AI", inga namn på verkliga personer och inget som inte syns i bilden.`;
+const ALT_SCHEMA = { type: "object", additionalProperties: false, required: ["alt"], properties: { alt: { type: "string" } } };
+
+/**
+ * Säkrar en godkänd alt-text (src/lib/bildtext.js): förslaget om det klarar reglerna (för långa kortas vid ett
+ * ordslut), annars skriver Haiku en ny utifrån bilden (högst fyra försök). Returnerar { alt, kostnad }; alt är null
+ * om ingen godkänd text gick att få.
+ */
+export const kortaAlt = (t) => {
+  t = String(t ?? "").trim();
+  if (t.length <= ALT_MAX) return t;
+  // Bara vid en satsgräns (komma, tankstreck, "och", "med"), så att texten fortfarande läses som en hel mening.
+  let basta = -1;
+  for (const m of t.slice(0, ALT_MAX + 1).matchAll(/, | – | och | med /g)) if (m.index >= ALT_MIN) basta = m.index;
+  return basta > 0 ? `${t.slice(0, basta)}.` : t;
+};
+export async function sakraAlt(data, forslag, { rubrik = "", ingress = "" } = {}) {
+  if (!altFel(kortaAlt(forslag), rubrik)) return { alt: kortaAlt(forslag), kostnad: 0 };
+  const { jsonAnrop, MODELL_POANG } = await import("./claude.mjs");
+  const sharp = (await import("sharp")).default;
+  const jpeg = await sharp(data).rotate().resize({ width: 768, withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
+  let kostnad = 0, fel = altFel(forslag, rubrik);
+  for (let forsok = 0; forsok < 4; forsok++) {
+    const svar = await jsonAnrop({
+      modell: MODELL_POANG, system: ALT_SYSTEM, schema: ALT_SCHEMA, effort: "medium", maxTokens: 2000,
+      innehall: [
+        { type: "image", source: { type: "base64", media_type: "image/jpeg", data: jpeg.toString("base64") } },
+        { type: "text", text: [
+          `ARTIKELNS RUBRIK: ${rubrik}`, `INGRESS: ${ingress}`,
+          `FÖRRA FÖRSLAGET (${String(forslag ?? "").length} tecken): ${forslag || "(inget)"} – ${fel}.`,
+          "Sikta på 90–110 tecken: en eller två korta, fullständiga meningar om motiv, miljö och färger. Skriv hellre en kort hel mening än en lång som klipps av.",
+        ].join("\n") },
+      ],
+    });
+    kostnad += svar.kostnad;
+    const alt = kortaAlt(svar.data.alt);
+    fel = altFel(alt, rubrik);
+    if (!fel) return { alt, kostnad };
+    forslag = alt;
+  }
+  return { alt: null, kostnad };
+}
+
 async function granskaBild(data, traff, { rubrik, ingress }) {
   const { jsonAnrop, MODELL_POANG } = await import("./claude.mjs");
   const sharp = (await import("sharp")).default;
@@ -144,11 +194,22 @@ export async function hittaBild({ slug, sokord = [], motiv, kategori, alt, rubri
         granskning += g.kostnad;
         kontroller.push({ url: t.kallaUrl, passar: g.passar, foto: g.foto, personer: g.personer });
         if (!g.passar || !g.foto || g.personer) continue;
+        const altSvar = await sakraAlt(data, g.alt, { rubrik, ingress });
+        granskning += altSvar.kostnad;
+        if (!altSvar.alt) continue;
         const sparad = await sparaBild(t.url, slug, publicDir, data);
-        return { ...sparad, alt: g.alt.slice(0, 140), fotograf: t.fotograf, licens: t.licens, licensUrl: t.licensUrl, kallaUrl: t.kallaUrl, kalla: t.kalla, arkivtitel: t.beskrivning, kontroller, granskningUSD: granskning, kostnadUSD: 0 };
+        return { ...sparad, alt: altSvar.alt, fotograf: t.fotograf, licens: t.licens, licensUrl: t.licensUrl, kallaUrl: t.kallaUrl, kalla: t.kalla, arkivtitel: t.beskrivning, kontroller, granskningUSD: granskning, kostnadUSD: 0 };
       } catch { /* prova nästa */ }
     }
   }
   const ill = await aiBild({ slug, motiv, kategori, alt, publicDir });
-  return ill ? { ...ill, kontroller, granskningUSD: granskning } : null;
+  if (!ill) return null;
+  const altSvar = await sakraAlt(readFileSync(join(publicDir, ill.fil)), ill.alt, { rubrik, ingress });
+  granskning += altSvar.kostnad;
+  if (!altSvar.alt) {
+    // Ingen godkänd alt-text: bilden används inte (filerna i public/bilder tas bort, artikeln blir ren text).
+    for (const f of [ill.fil, ill.og, ill.liten]) try { unlinkSync(join(publicDir, f)); } catch { /* fanns inte */ }
+    throw new Error("ingen godkänd alt-text");
+  }
+  return { ...ill, alt: altSvar.alt, kontroller, granskningUSD: granskning };
 }

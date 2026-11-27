@@ -68,7 +68,7 @@
     "liten": "/bilder/blinkande-baltespaminnare-buss-halland-lunds-universitet-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: bussäten med säkerhetsbälten och en liten röd påminnarlampa på ryggstödet",
+    "alt": "Målad illustration av en bussinteriör med blå säten och gula stolpar; genom fönstren syns gröna kullar under en ljus himmel.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -95,10 +95,11 @@
   "bildmotiv": "Interior of a modern regional bus with rows of seats fitted with seat belts and a small red indicator light on the seatback, soft daylight through windows",
   "bildalt": "Bussäten med säkerhetsbälten och en liten röd påminnarlampa på ryggstödet",
   "poang": {
-    "positiv": 0.8,
+    "positiv": 0.7,
     "betydelse": 0.3,
     "tillit": 0.95,
-    "total": 71
+    "total": 55,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -117,5 +118,6 @@
     "bus seat belt",
     "coach bus interior seats"
   ],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "manniskor"
 }

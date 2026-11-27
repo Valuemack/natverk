@@ -5,4 +5,4 @@ import { dagText } from "../site.js";
 const { namn } = Astro.props;
 const d = namnsdagFor(namn);
 ---
-<td>{d ? <a href={`/namn/${d.slug}/`}>{dagText(d.n.datum)}</a> : "–"}{d?.typ === "variant" && <small> ({d.n.namn})</small>}</td>
+<td>{d ? <a href={`/namn/${d.slug}/`}>{dagText(d.n.datum)}</a> : "–"}{d?.typ === "variant" && <small> ({d.n.namn})</small>}{d?.typ === "utan" && <small> (gemensam dag)</small>}</td>

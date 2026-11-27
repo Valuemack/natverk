@@ -58,14 +58,46 @@
   "ovrigaKallor": [],
   "publicerad": "2026-11-25T11:11:00.000Z",
   "uppdaterad": "2026-11-25T11:11:00.000Z",
-  "bild": null,
+  "bild": {
+    "fil": "/bilder/naturturism-ska-hjalpa-rodopebergen-i-bulgarien.webp",
+    "og": "/bilder/naturturism-ska-hjalpa-rodopebergen-i-bulgarien.jpg",
+    "liten": "/bilder/naturturism-ska-hjalpa-rodopebergen-i-bulgarien-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Målad illustration av en timmerstuga med vedstapel och veranda på en skogsbevuxen sluttning, med soluppgång.",
+    "genererad": true,
+    "illustration": true,
+    "stil": "illustration",
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a small wooden mountain hut on a forested slope of the Rhodope Mountains with misty valleys at sunrise",
+    "skapad": "2026-11-26T01:32:20.738Z",
+    "anvandning": {
+      "input_tokens": 247,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 247
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1171
+    },
+    "kostnadUSD": 0.028955,
+    "kontroller": [],
+    "granskningUSD": 0.00015260000000000002
+  },
   "bildmotiv": "a small wooden mountain hut on a forested slope of the Rhodope Mountains with misty valleys at sunrise",
   "bildalt": "En liten fjällstuga på en skogsklädd sluttning i Rodopebergen",
   "poang": {
-    "positiv": 0.45,
-    "betydelse": 0.38,
+    "positiv": 0.7,
+    "betydelse": 0.3,
     "tillit": 0.85,
-    "total": 44
+    "total": 69,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -77,5 +109,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "bild",
+  "typ": "natur"
 }

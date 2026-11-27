@@ -1,0 +1,23 @@
+---
+// Alla guider, grupperade efter ämne (listan finns i src/guider.js).
+import Layout from "@natverk/core/Layout.astro";
+import { SITE, UPPDATERAD } from "../../pris.js";
+import { GUIDEGRUPPER, GUIDER } from "../../guider.js";
+const verktyg = [
+  { href: "/rakna/", namn: "Bränslekalkylator", text: "Kostnad för resan, per mil och per år, med körsträcka per län." },
+  { href: "/historik/", namn: "Bensinprisets historik", text: "Veckopriser sedan 2005, rekord och priset år för år." },
+  { href: "/europa/", namn: "Bensinpris i Europa", text: "Alla EU-länder i kronor, skatt per land och Sveriges placering." },
+];
+---
+<Layout site={SITE} titel={`Guider om bensin, diesel och tankning – ${GUIDER.length} guider`}
+  beskrivning={`${GUIDER.length} guider om bensinpriset, skatterna, drivmedlen och tankning: E85, HVO100, diesel, fordonsgas, längs E4, E6 och E20, i Norge och utomlands.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }]} uppdaterad={UPPDATERAD}>
+  <h1>Guider om bensin, diesel och tankning</h1>
+  <p class="svar">{GUIDER.length} guider som räknar med dagens listpriser, EU-kommissionens veckopriser och vårt eget register med alla bensinstationer i Sverige. Varje guide anger sina källor.</p>
+  {GUIDEGRUPPER.map((g) => <>
+    <h2>{g.rubrik}</h2>
+    <div class="kort">{g.guider.map((x) => <a href={`/guider/${x.slug}/`}><strong>{x.namn}</strong><small>{x.text}</small></a>)}</div>
+  </>)}
+  <h2>Verktyg och statistik</h2>
+  <div class="kort">{verktyg.map((x) => <a href={x.href}><strong>{x.namn}</strong><small>{x.text}</small></a>)}</div>
+</Layout>

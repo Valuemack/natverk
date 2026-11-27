@@ -57,3 +57,27 @@ export function kopieradeFraser(a, kalltext) {
   }
   return fraser;
 }
+
+// ---------- nära omskrivning ----------
+// En artikel får inte vara en nära omskrivning av en annan text: samma meningar med några ord utbytta, i samma
+// ordning. Kontrollen jämför varje mening i artikeln med källans meningar (andel gemensamma innehållsord, Jaccard).
+// Den fångar omskrivningar på samma språk; översättningar mening för mening fångas av faktagranskaren ("kopia").
+export const NARA_MENING = 0.5; // en mening räknas som omskriven när minst hälften av innehållsorden är gemensamma
+export const NARA_ANDEL = 0.25; // underkänd när minst så stor andel av artikelns meningar är omskrivna
+
+const meningar = (t) => String(t).split(/(?<=[.!?])\s+|\n+/).map((m) => new Set(norm(m).split(" ").filter((o) => o.length >= 4))).filter((s) => s.size >= 5);
+const jaccard = (a, b) => { let g = 0; for (const o of a) if (b.has(o)) g++; return g / (a.size + b.size - g); };
+
+/** Andelen meningar i artikeln som ligger nära en mening i källan (0–1). */
+export function omskrivningsandel(a, kalltext) {
+  const art = meningar([a.ingress, ...a.avsnitt.flatMap((s) => s.stycken), a.varfor].join("\n"));
+  const kall = meningar(kalltext);
+  if (!art.length || !kall.length) return 0;
+  return art.filter((m) => kall.some((k) => jaccard(m, k) >= NARA_MENING)).length / art.length;
+}
+
+/** Fel om artikeln är en nära omskrivning av källtexten, annars null. */
+export function naraOmskrivning(a, kalltext) {
+  const andel = omskrivningsandel(a, kalltext);
+  return andel >= NARA_ANDEL ? `nära omskrivning av källan (${Math.round(andel * 100)} % av meningarna)` : null;
+}

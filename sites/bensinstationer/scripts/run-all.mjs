@@ -1,5 +1,5 @@
 // Nattlig körning för bensinstationer.nu.
-//   node scripts/run-all.mjs              # kedjornas stationssök + listpriser + sammanslagning (~1-2 min med varm cache, ~20 min kall)
+//   node scripts/run-all.mjs              # kedjornas stationssök + listpriser + EU-veckopriser + daglig prishistorik + sammanslagning (~1-2 min med varm cache, ~20 min kall)
 //   node scripts/run-all.mjs --priser     # bara listpriser -> data/listpriser.json (3 anrop; kan köras flera gånger/dygn)
 //   node scripts/run-all.mjs --merge      # bara sammanslagning (t.ex. efter att osm-data byggts om)
 //   node scripts/run-all.mjs circlek okq8 # bara valda kedjor + sammanslagning
@@ -20,13 +20,15 @@ function run(script, extra = []) {
 }
 
 const t0 = Date.now();
+// Prisdelen (flyttad från dagensbensinpris.se 2026-11-27): listpriser → EU:s veckopriser → daglig historik.
+const priser = () => { run('fetch-priser.mjs'); run('fetch-eu.mjs'); run('historik.mjs'); };
 if (flags.has('--priser')) {
-  run('fetch-priser.mjs');
+  priser();
 } else if (flags.has('--merge')) {
   run('merge.mjs');
 } else {
   run('fetch-kedjor.mjs', kedjor);
-  if (!kedjor.length) run('fetch-priser.mjs');
+  if (!kedjor.length) priser();
   if (!run('merge.mjs')) process.exitCode = 1;
 }
 log(`klart på ${Math.round((Date.now() - t0) / 1000)} s`);

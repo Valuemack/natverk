@@ -1,0 +1,204 @@
+---
+// Lång guide: att äga en gasbil. CNG, CBG och LBG (SCB/Energimyndigheten, leveranser 2025), kilopris omräknat till literpris
+// (Energimyndighetens värmevärden), räckvidd per kilo (räkneexempel), gastankens livslängd och besiktning (Transportstyrelsen),
+// gaskvalitet SS-EN 16723-2 (Drivkraft Sverige), dagens pris och stationer per län (sajtens register). Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { VARMEVARDEN, KORSTRACKOR } from "../../lib/fakta.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n, d = 0) => n.toLocaleString("sv-SE", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+// SCB på uppdrag av Energimyndigheten, Leveranser av fordonsgas och vätgas, helår 2025 (tabeller EN0120, hämtade 2026-11-27).
+const SCB = {
+  url: "https://www.scb.se/hitta-statistik/statistik-efter-amne/energi/tillforsel-och-anvandning-av-energi/leveranser-av-fordonsgas-och-vatgas/",
+  ar: 2025,
+  // 1 000 Nm³ komprimerad gas
+  cbg: 140654, cng: 3010,
+  cbgPublik: 55900, totPublik: 57515,
+  // 1 000 kg flytande gas
+  lbg: 41702, lng: 12169,
+  // 1 000 Nm³ efter typ av tankställe (CNG+CBG)
+  buss: 73059, publik: 57515, ickePublik: 13091,
+  // antal tankställen efter typ
+  tankstallen: [
+    { typ: "Publika tankställen", v: [228, 235, 240] },
+    { typ: "Tankställen för bussar m.fl.", v: [49, 46, 44] },
+    { typ: "Icke publika tankställen", v: [14, 14, 13] },
+  ],
+  tankAr: [2023, 2024, 2025],
+};
+const andelBio = SCB.cbg / (SCB.cbg + SCB.cng);
+const andelBioPublik = SCB.cbgPublik / SCB.totPublik;
+const andelLbg = SCB.lbg / (SCB.lbg + SCB.lng);
+const totKomp = SCB.buss + SCB.publik + SCB.ickePublik;
+
+const pg = idagPris("biogas"), p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const literBensin = VARMEVARDEN.biogas / VARMEVARDEN.bensin95; // liter bensin med samma energi som 1 kg gas
+const literDiesel = VARMEVARDEN.biogas / VARMEVARDEN.diesel;
+const motsv95 = pg != null ? pg / literBensin : null; // gaspriset uttryckt i kr per liter bensin
+const brytpunkt = p95 != null ? p95 * literBensin : null; // kilopriset där gas och 95 kostar lika per kWh
+const kedjor = LISTKEDJOR.map((c) => ({ c, g: kedjePris(c, "biogas"), b: kedjePris(c, "bensin95"), href: kedjaHref(c) })).filter((x) => x.g != null);
+
+// Räkneexempel: en bil som behöver lika mycket energi per mil som en bensinbil på 0,6 l/mil.
+const kwhMil = 0.6 * VARMEVARDEN.bensin95;
+const milPerKg = VARMEVARDEN.biogas / kwhMil;
+const tankar = [10, 15, 20];
+const gas = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Gas");
+const kgAr = gas.mil / milPerKg;
+const kostGas = pg != null ? kgAr * pg : null;
+const kostBensin = p95 != null ? gas.mil * 0.6 * p95 : null;
+
+const harG = (s) => s.drivmedel?.biogas === true;
+const nG = STATIONER.filter(harG).length;
+const nGdygn = STATIONER.filter((s) => harG(s) && s.dygnet).length;
+const nFlytande = STATIONER.filter((s) => s.drivmedel?.lng === true).length;
+const flytKedjor = Object.entries(STATIONER.filter((s) => s.drivmedel?.lng === true).reduce((m, s) => ((m[s.kedja ?? "Övriga"] = (m[s.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const lanHref = new Map(KAT.lan.map((l) => [l.namn, l.href]));
+const perLan = Object.values(STATIONER.filter((s) => s.lan).reduce((m, s) => {
+  const x = (m[s.lan] ??= { lan: s.lan, g: 0, dygn: 0, alla: 0 });
+  x.alla++;
+  if (harG(s)) { x.g++; if (s.dygnet) x.dygn++; }
+  return m;
+}, {})).sort((a, b) => b.g - a.g);
+const fa = perLan.filter((x) => x.g <= 5).map((x) => x.lan.replace(/ län$/, ""));
+const kedjeTopp = Object.entries(STATIONER.filter(harG).reduce((m, s) => ((m[s.kedja ?? "Övriga"] = (m[s.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad tankar en gasbil?" },
+  { id: "cng-cbg-lbg", rubrik: "CNG, biogas och LBG – skillnaden" },
+  { id: "kilopris", rubrik: "Kronor per kilo eller per liter?" },
+  { id: "rackvidd", rubrik: "Hur långt går ett kilo gas?" },
+  { id: "tank", rubrik: "Gastanken: tryck, livslängd och besiktning" },
+  { id: "vinter", rubrik: "Gaskvaliteten och vintern" },
+  { id: "stationer", rubrik: "Var tankar man gas? Stationer per län" },
+];
+
+const fragor = [
+  pg != null && { fraga: "Vad kostar fordonsgas idag?", svar: `Fordonsgas kostar i snitt ${kr(pg)} per kilo enligt kedjornas listpriser ${datum}. Räknat på energin motsvarar det ${kr(motsv95)} per liter bensin 95.` },
+  { fraga: "Hur många liter bensin motsvarar ett kilo fordonsgas?", svar: `Med Energimyndighetens värmevärden innehåller ett kilo biogas ${tal(VARMEVARDEN.biogas, 1)} kWh och en liter bensin 95 ${tal(VARMEVARDEN.bensin95, 2)} kWh. Ett kilo gas motsvarar alltså ${tal(literBensin, 2)} liter bensin, eller ${tal(literDiesel, 2)} liter diesel.` },
+  { fraga: "Är fordonsgas samma sak som biogas?", svar: `Fordonsgas är biogas, naturgas eller en blandning. Enligt SCB:s statistik för ${SCB.ar} var ${procent(andelBio * 100)} av den komprimerade fordonsgasen som levererades i Sverige biogas (CBG) och resten naturgas (CNG).` },
+  { fraga: "Hur länge håller tanken i en gasbil?", svar: "Enligt Transportstyrelsen anger tanktillverkarna en livslängd på högst 20 år för tankar från 2002 och senare, och högst 15 år för äldre tankar. Datumet står på tanken. När den är för gammal måste den bytas, eller så kopplas gassystemet bort permanent." },
+  { fraga: "Vad gäller vid besiktning av en gasbil?", svar: "Gastanken ska vara frilagd så att besiktningsteknikern kan se att den sitter fast, inte är skadad och inte läcker. I stället kan du visa ett intyg från en verkstad. Vid kontrollbesiktning får intyget vara högst 15 månader gammalt." },
+  { fraga: "Vad händer när gasen tar slut?", svar: "Många gasbilar har också en bensintank och kan köra vidare på bensin. Trafikanalys räknar gasbilar som bilar med gas som första eller andra drivmedel. Hur bytet går till står i bilens instruktionsbok." },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Gasbil och fordonsgas – tanka, räckvidd och tankregler"
+  beskrivning="Att äga gasbil: biogas, CNG och LBG, vad kilopriset motsvarar per liter bensin, räckvidd per kilo, gastankens livslängd, besiktning och var du kan tanka."
+  h1="Gasbil – så fungerar det att tanka fordonsgas"
+  svar={`En gasbil tankar fordonsgas, som säljs per kilo och i Sverige till ${procent(andelBio * 100)} består av biogas enligt SCB (${SCB.ar}). <strong>Ett kilo gas innehåller lika mycket energi som ${tal(literBensin, 2)} liter bensin</strong>${motsv95 != null ? `, så dagens snittpris på ${kr(pg)} per kilo motsvarar ${kr(motsv95)} per liter bensin` : ""}. Gastanken har ett bäst före-datum, och vid besiktning ska den vara frilagd eller kontrollerad av en verkstad.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Gasbil och fordonsgas", href: "/guider/fordonsgas-gasbil/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Fordonsgas – pris idag", href: "/drivmedel/fordonsgas/", text: "Pris per kilo och alla gasstationer" },
+    { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/", text: "Priserna jämförda per kWh och mil" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Räkna på din egen bil" },
+    { namn: "Spara bränsle", href: "/guider/spara-bransle/", text: "Så minskar du förbrukningen" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Jämför med bensin 95" },
+  ]}
+  kallor={[
+    { namn: "SCB – Leveranser av fordonsgas och vätgas, helår 2025", url: SCB.url, text: "leveranser av CBG, CNG, LBG och LNG samt antal tankställen 2023–2025 (statistik på uppdrag av Energimyndigheten)", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Ny statistik: leveranser av fordonsgas och vätgas för 2025", url: "https://www.energimyndigheten.se/nyhetsarkiv/2026/ny-statistik-leveranser-av-fordonsgas-och-vatgas-for-2025/", text: "publicering av helårsstatistiken", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll i biogas, bensin och diesel", datum: "2026-11-27" },
+    { namn: "Energigas Sverige – FAQ om fordonsgas och gasbilar", url: "https://www.energigas.se/fakta-om-gas/fordonsgas-och-gasbilar/faq-om-fordonsgas-och-gasbilar", text: "vad fordonsgas består av, komprimerad och flytande gas", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Gastank", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/fordonsregler/gastank/", text: "tankens livslängd, märkning och vad du gör när den gått ut", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Besiktning av gasfordon", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/aga-kopa-eller-salja-fordon/fordonsbesiktning/besiktningsregler/gasfordon/", text: "frilagd tank eller intyg, högst 15 månader", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/wp-content/uploads/2026/03/Standarder_2026_v2.pdf", text: "SS-EN 16723-2:2017, metantal och tryckvattendaggpunkt per period och region", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "antal gasbilar och körsträcka", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer som anger att de säljer fordonsgas och flytande gas" },
+  ]}>
+
+  <h2 id="vad">Vad tankar en gasbil?</h2>
+  <p>En gasbil har en bensinmotor som är anpassad för metangas. Energigas Sverige beskriver fordonsgas som biometan (biogas), naturgas eller en blandning av båda. Gasen består främst av metan, oavsett om den är biogas eller naturgas, och bilen kan därför köra på vilken blandning som helst.</p>
+  <p>Många gasbilar har också en bensintank. Trafikanalys räknar som gasbilar alla bilar som har gas som första eller andra drivmedel. {gas && <>Under {KORSTRACKOR.ar} fanns {tal(gas.bilar)} gasbilar i trafik, och de körde i snitt {tal(gas.mil)} mil, vilket är mer än snittet för bensinbilar.</>} Bensintanken gör att bilen fungerar även där det inte finns gas.</p>
+  <p>För dig som ägare betyder det tre saker som skiljer sig från en vanlig bensinbil: du köper bränslet per kilo, du har en trycktank med ett utgångsdatum, och du behöver veta var gasstationerna finns, eftersom de är betydligt färre än bensinstationerna.</p>
+
+  <h2 id="cng-cbg-lbg">CNG, biogas och LBG – skillnaden</h2>
+  <p>Fordonsgas säljs i två former. Komprimerad gas används i personbilar, lätta fordon, bussar och lastbilar. Flytande gas är nedkyld, och i vårt register säljs den bara på truckstationer. Båda kan vara fossila eller förnybara:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Form</th><th>Ursprung</th><th class="num">Levererat {SCB.ar}</th></tr></thead>
+    <tbody>
+      <tr><td>CBG (biogas)</td><td>Komprimerad</td><td>Förnybar</td><td class="num">{tal(SCB.cbg)} tusen Nm³</td></tr>
+      <tr><td>CNG (naturgas)</td><td>Komprimerad</td><td>Fossil</td><td class="num">{tal(SCB.cng)} tusen Nm³</td></tr>
+      <tr><td>LBG (flytande biogas)</td><td>Flytande</td><td>Förnybar</td><td class="num">{tal(SCB.lbg)} ton</td></tr>
+      <tr><td>LNG (flytande naturgas)</td><td>Flytande</td><td>Fossil</td><td class="num">{tal(SCB.lng)} ton</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: SCB, Leveranser av fordonsgas och vätgas, helår {SCB.ar}. Nm³ = normalkubikmeter.</p>
+  <p>Av den komprimerade gasen var {procent(andelBio * 100, 1)} biogas under {SCB.ar}. På de publika tankställena, där privatbilisterna tankar, var andelen {procent(andelBioPublik * 100, 1)}. Av den flytande gasen var {procent(andelLbg * 100)} biogas. När du tankar en personbil på en vanlig gasstation får du alltså nästan bara biogas, men gasen kan innehålla en del naturgas beroende på leverantör och ort.</p>
+  <p>Flytande gas finns på {nFlytande} stationer i vårt register, samtliga truckstationer: {flytKedjor.map(([k, n]) => `${k} (${n})`).join(", ")}. Den passar inte en personbil, som är byggd för komprimerad gas.</p>
+  <p>Statistiken visar också vem som tankar. Av den komprimerade gasen {SCB.ar} gick {procent(SCB.buss / totKomp * 100)} till tankställen för bussar och liknande, {procent(SCB.publik / totKomp * 100)} till publika tankställen och {procent(SCB.ickePublik / totKomp * 100)} till icke publika anläggningar. Bussar och liknande är alltså den största kundgruppen, och de publika stationerna, där personbilar, taxibilar och lätta lastbilar tankar, står för ungefär två femtedelar.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="kilopris">Kronor per kilo eller per liter?</h2>
+  <p>Fordonsgas säljs per kilo, bensin och diesel per liter. För att jämföra behöver priset räknas om efter energiinnehållet. Energimyndigheten anger {tal(VARMEVARDEN.biogas, 1)} kWh per kilo biogas, {tal(VARMEVARDEN.bensin95, 2)} kWh per liter bensin 95 och {tal(VARMEVARDEN.diesel, 1)} kWh per liter diesel.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>1 kilo fordonsgas motsvarar</th><th class="num">Mängd</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin 95</td><td class="num">{tal(literBensin, 2)} liter</td></tr>
+      <tr><td>Diesel</td><td class="num">{tal(literDiesel, 2)} liter</td></tr>
+      <tr><td>Energi</td><td class="num">{tal(VARMEVARDEN.biogas, 1)} kWh</td></tr>
+    </tbody>
+  </table></div>
+  {kedjor.length > 0 && <>
+    <p>Så här ser kedjornas listpriser ut {datum}, omräknade till kronor per liter bensin:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Kedja</th><th class="num">Gas (kr/kg)</th><th class="num">Motsvarar kr/l bensin</th><th class="num">Bensin 95 (kr/l)</th></tr></thead>
+      <tbody>{kedjor.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.g)}</td><td class="num">{pris(x.g / literBensin)}</td><td class="num">{x.b != null ? pris(x.b) : "–"}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Listpriser inkl. moms {LP_DATUM}. Gaspriset på en enskild station kan avvika, och många gasstationer drivs av lokala energibolag med egna priser.</p>
+  </>}
+  {brytpunkt != null && <p>Räknat på energin är gas billigare än bensin så länge kilopriset ligger under {kr(brytpunkt)}, alltså {tal(literBensin, 2)} gånger literpriset för 95. {motsv95 != null && (motsv95 < p95 ? <>Idag är gasen billigare: {kr(motsv95)} per liter bensin mot {kr(p95)}.</> : <>Idag är gasen dyrare räknat på energin: {kr(motsv95)} per liter bensin mot {kr(p95)} för 95.</>)} Jämförelsen är rättvis eftersom en gasbil med bensintank kör båda bränslena i samma motor.</p>}
+
+  <h2 id="rackvidd">Hur långt går ett kilo gas?</h2>
+  <p>Räckvidden beror på bilen och på hur stor gastank den har, och tankvolymen står i instruktionsboken. Som räkneexempel tar vi en bil som behöver lika mycket energi per mil som en bensinbil som drar 0,6 liter per mil, alltså {tal(kwhMil, 1)} kWh. Ett kilo gas räcker då {tal(milPerKg, 1)} mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Gas i tanken</th><th class="num">Räckvidd på gas</th>{pg != null && <th class="num">Full tank idag</th>}</tr></thead>
+    <tbody>{tankar.map((kg) => <tr><td class="num">{kg} kg</td><td class="num">{tal(kg * milPerKg)} mil</td>{pg != null && <td class="num">{kr(kg * pg, 0)}</td>}</tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Räkneexempel med Energimyndighetens värmevärden. Den verkliga förbrukningen beror på bil, körsätt och temperatur.</p>
+  {kostGas != null && kostBensin != null && <p>Med Trafikanalys snittkörsträcka för gasbilar, {tal(gas.mil)} mil om året, går det åt ungefär {tal(kgAr)} kilo gas i samma exempelbil. Det kostar {kr(kostGas, 0)} med dagens snittpris, mot {kr(kostBensin, 0)} om bilen hade gått på bensin 95. Räkna på din egen bil i <a href="/rakna/">bränslekalkylatorn</a>.</p>}
+  <p>En gasbil med bensintank kan köra vidare på bensin när gasen tar slut. Den totala räckvidden blir då gas plus bensin, men varje mil på bensin kostar som i en vanlig bensinbil. Planera därför tankningen efter var gasstationerna finns, inte efter när mätaren blinkar.</p>
+
+  <h2 id="tank">Gastanken: tryck, livslängd och besiktning</h2>
+  <p>Den komprimerade gasen lagras under högt tryck i bilen. Gasstandarden SS-EN 16723-2 anger kraven på gasens fuktinnehåll vid 20 000 kPa, alltså 200 bar. Eftersom tanken står under tryck gäller särskilda regler för den.</p>
+  <ul>
+    <li><strong>Livslängd.</strong> Enligt Transportstyrelsen anger tanktillverkarna en livslängd på högst 20 år för tankar från 2002 och senare. För äldre tankar var gränsen 15 år. Datumet är märkt på tanken. Några få bilar från före 2002 har omärkta tankar, och de ska provtryckas regelbundet och godkännas av ett ackrediterat kontrollorgan.</li>
+    <li><strong>När tanken gått ut.</strong> Du kan byta tanken via återförsäljare, märkesverkstad, en specialist på gastankar eller tanktillverkaren. Är bilen godkänd även för bensin kan du i stället låta koppla bort gassystemet permanent, och då måste bilen registreringsbesiktas för att godkännas för ett drivmedel.</li>
+    <li><strong>Besiktning.</strong> Tanken ska vara frilagd så att teknikern kan se att den sitter fast och inte är skadad eller läcker. Rost, nötning och bucklor räknas som skador. I stället kan en verkstad frilägga och kontrollera systemet och skriva ett intyg, som vid kontrollbesiktning får vara högst 15 månader gammalt.</li>
+  </ul>
+  <p>Köper du en begagnad gasbil, kontrollera datumet på tanken och när bilen senast besiktades med frilagd tank eller intyg.</p>
+
+  <h2 id="vinter">Gaskvaliteten och vintern</h2>
+  <p>Gasen vid pumpen ska uppfylla SS-EN 16723-2:2017. Standarden kräver bland annat ett metantal på minst 65 och sätter gränser för svavel, syre och vätgas. För vintern är vattenhalten viktigast, eftersom vatten i gasen kan frysa i tank och ledningar. Kravet anges som tryckvattendaggpunkt vid 200 bar:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Period</th><th class="num">Götaland och Svealand</th><th class="num">Norrland</th></tr></thead>
+    <tbody>
+      <tr><td>1 april–31 oktober</td><td class="num">−10 °C (klass A)</td><td class="num">−20 °C (klass B)</td></tr>
+      <tr><td>1 juni–15 augusti</td><td class="num">−10 °C (klass A)</td><td class="num">−10 °C (klass A)</td></tr>
+      <tr><td>1 november–31 mars</td><td class="num">−20 °C (klass B)</td><td class="num">−30 °C (klass C)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: SS-EN 16723-2:2017 enligt Drivkraft Sveriges standardutdrag 2026, tabell 29, återgiven som publicerad.</p>
+  <p>Det här sköter gasleverantören, och du som bilägare behöver inte välja en vintergas.</p>
+
+  <h2 id="stationer">Var tankar man gas? Stationer per län</h2>
+  <p>Enligt SCB fanns {SCB.tankstallen[0].v.at(-1)} publika tankställen för fordonsgas i Sverige {SCB.ar}, mot {SCB.tankstallen[0].v[0]} år {SCB.tankAr[0]}. Därtill finns tankställen för bussar och icke publika anläggningar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av tankställe</th>{SCB.tankAr.map((a) => <th class="num">{a}</th>)}</tr></thead>
+    <tbody>{SCB.tankstallen.map((t) => <tr><td>{t.typ}</td>{t.v.map((v) => <td class="num">{v}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p>I vårt eget register anger {tal(nG)} stationer att de säljer fordonsgas, och {tal(nGdygn)} av dem går att tanka på dygnet runt. Flest har {kedjeTopp.map(([k, n]) => `${k} (${n})`).join(", ")}, men många av stationerna drivs av kommunala bolag och lokala biogasproducenter. Stationerna är ojämnt fördelade, med flest i södra Sverige:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Med fordonsgas</th><th class="num">Dygnet runt</th><th class="num">Andel av länets stationer</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{lanHref.get(x.lan) ? <a href={lanHref.get(x.lan)}>{x.lan}</a> : x.lan}</td><td class="num">{x.g}</td><td class="num">{x.dygn}</td><td class="num">{procent(x.g / x.alla * 100, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Uppgiften om drivmedel kan saknas för vissa stationer.</p>
+  <p>I {fa.join(", ")} finns högst fem gasstationer per län i registret. Den som bor eller reser där får räkna med att köra en del på bensin. Alla gasstationer med karta finns på sidan om <a href="/drivmedel/fordonsgas/">fordonsgas</a>, och närmaste station hittar du i <a href="/">stationssökningen</a>.</p>
+</Guide>

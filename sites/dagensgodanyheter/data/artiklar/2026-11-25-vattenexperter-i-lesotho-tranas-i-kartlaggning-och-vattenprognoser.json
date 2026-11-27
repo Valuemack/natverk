@@ -71,10 +71,12 @@
   "bildmotiv": "a hydrology field station with a river gauge and data logger beside a mountain river in green southern African highlands, overcast",
   "bildalt": "En reservoar omgiven av berg i Lesothos högland",
   "poang": {
-    "positiv": 0.6,
-    "betydelse": 0.4,
+    "positiv": 0.4,
+    "betydelse": 0.3,
     "tillit": 0.94,
-    "total": 57
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -89,5 +91,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

@@ -1,39 +1,38 @@
 ---
-// De vanligaste namnen i Sverige som saknar egen namnsdag – egen sammanställning av SCB-data mot namnlängden.
-import Layout from "@natverk/core/Layout.astro";
+// Alla vanliga namn (minst 1 000 bärare) som saknar egen namnsdag – egen sammanställning av SCB-data mot namnlängden.
+import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
 import { faqLd } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
-import { SITE, UPPDATERAD, UTAN_NAMNSDAG, VARIANTER, SCB_KALLA, tal, dagText, namnHref } from "../site.js";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
+import { SITE, UPPDATERAD, UTAN_NAMNSDAG, VARIANTER, UTAN_VARIANT, SCB_KALLA, MIN_BARARE, tal, dagText, namnHref, beskriv, procent } from "../site.js";
 
-const variant = new Map(VARIANTER.map((v) => [v.namn, v]));
-const topp = UTAN_NAMNSDAG.slice(0, 200);
 const summa = UTAN_NAMNSDAG.reduce((s, x) => s + x.antal, 0);
-const [f, a, b] = topp;
+const [f, a, b] = UTAN_VARIANT;
 const fragor = [
-  { fraga: "Vilket är det vanligaste namnet utan namnsdag?", svar: `${f.namn}, som ${tal(f.antal)} personer i Sverige har som tilltalsnamn (SCB 2020). Därefter kommer ${a.namn} (${tal(a.antal)}) och ${b.namn} (${tal(b.antal)}).` },
+  { fraga: "Vilket är det vanligaste namnet utan namnsdag?", svar: `${UTAN_NAMNSDAG[0].namn}, som ${tal(UTAN_NAMNSDAG[0].antal)} personer i Sverige har som tilltalsnamn (SCB 2020), men det kan firas på ${UTAN_NAMNSDAG[0].huvud?.namn}-dagen. Vanligast helt utan almanacksform är ${f.namn} (${tal(f.antal)}), ${a.namn} och ${b.namn}.` },
   { fraga: "När har man namnsdag om namnet inte finns i almanackan?", svar: "Den 1 januari är gemensam namnsdag för alla namn som saknas i almanackan. Är namnet en stavningsvariant av ett almanacksnamn, till exempel Thomas av Tomas, kan man också fira på det namnets dag." },
-  { fraga: "Hur många bär ett namn utan namnsdag?", svar: `De ${UTAN_NAMNSDAG.length} vanligaste tilltalsnamnen som saknas i almanackan bärs tillsammans av ${tal(summa)} personer. Det är vår egen sammanställning av SCB:s namnstatistik för 2020 mot namnlängden.` },
+  { fraga: "Hur många bär ett vanligt namn utan namnsdag?", svar: `${tal(UTAN_NAMNSDAG.length)} tilltalsnamn med minst ${tal(MIN_BARARE)} bärare saknas i almanackan. De bärs tillsammans av ${tal(summa)} personer. ${tal(VARIANTER.length)} av namnen är stavningsvarianter av almanacksnamn.` },
 ];
 ---
-<Layout site={SITE} titel={`Namn utan namnsdag – de 200 vanligaste (SCB 2020)`}
-  beskrivning={`${f.namn}, ${a.namn} och ${b.namn} är de vanligaste namnen i Sverige som saknar namnsdag. Se topp 200 och vilken dag de kan firas.`}
+<Layout site={SITE} titel={`Namn utan namnsdag – alla ${UTAN_NAMNSDAG.length} vanliga namn (SCB 2020)`}
+  beskrivning={beskriv(`${UTAN_NAMNSDAG.length} vanliga namn saknar namnsdag i almanackan, bland dem ${f.namn}, ${a.namn} och ${b.namn}.`, "Se vilken dag varje namn kan firas.", "✓ Antal bärare", "✓ Stavningsvarianter")}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Namn utan namnsdag", href: "/namn-utan-namnsdag/" }]}
-  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
-  <h1>Vanligaste namnen utan namnsdag</h1>
-  <p class="svar">Det vanligaste namnet utan egen namnsdag är <strong>{f.namn}</strong> med {tal(f.antal)} bärare, följt av {a.namn} och {b.namn}. Alla namn som saknas i almanackan har gemensam namnsdag den <a href="/1-januari/">1 januari</a>. Stavningsvarianter kan också firas på huvudnamnets dag.</p>
+  jsonld={[faqLd(fragor), datasetLd({ namn: "Vanliga namn utan namnsdag i Sverige 2020", beskrivning: "Alla tilltalsnamn med minst 1 000 bärare i Sverige 2020 enligt SCB som saknas i den svenska almanackan, med antal bärare, andel kvinnor och vilken dag namnet kan firas.", sokvag: "/namn-utan-namnsdag/", tid: "2020", nyckelord: ["namnsdag saknas"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] }), itemListLd("Namn utan namnsdag", UTAN_NAMNSDAG.map((x) => ({ namn: x.namn, href: `/namn/${x.slug}/` })))]} uppdaterad={UPPDATERAD}>
+  <h1>Namn utan namnsdag</h1>
+  <p class="svar"><strong>{tal(UTAN_NAMNSDAG.length)} tilltalsnamn</strong> med minst {tal(MIN_BARARE)} bärare saknas i almanackan – sammanlagt {tal(summa)} personer. {tal(VARIANTER.length)} av dem är stavningsvarianter (som Thomas och Carl) som kan firas på almanacksnamnets dag. De övriga {tal(UTAN_VARIANT.length)}, till exempel {f.namn}, {a.namn} och {b.namn}, har gemensam namnsdag den <a href="/1-januari/">1 januari</a>.</p>
   <div class="tabell"><table>
-    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th>Kan firas</th></tr></thead>
-    <tbody>{topp.map((x, i) => {
-      const v = variant.get(x.namn);
-      return <tr><td class="num">{i + 1}</td>
-        <td>{v ? <a href={`/namn/${v.slug}/`}>{x.namn}</a> : x.namn}</td>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th>Kan firas</th></tr></thead>
+    <tbody>{UTAN_NAMNSDAG.map((x, i) => (
+      <tr><td class="num">{i + 1}</td>
+        <td><a href={`/namn/${x.slug}/`}>{x.namn}</a></td>
         <td class="num">{tal(x.antal)}</td>
-        <td>{v ? <>{dagText(v.huvud.datum)} (<a href={namnHref(v.huvud.namn)}>{v.huvud.namn}</a>)</> : "1 januari"}</td></tr>;
-    })}</tbody>
+        <td class="num">{procent(x.kvinnor, x.antal)} %</td>
+        <td>{x.huvud ? <>{dagText(x.huvud.datum)} (<a href={namnHref(x.huvud.namn)}>{x.huvud.namn}</a>)</> : "1 januari"}</td></tr>
+    ))}</tbody>
   </table></div>
-  <p class="kalla">Källa: egen sammanställning av {SCB_KALLA}, tilltalsnamn 31 december 2020, jämfört med namnlängden enligt Isof. Ett namn räknas som stavningsvariant när det bara skiljer sig i stavningen (t.ex. th/t, c/k, ph/f) från ett namn i almanackan.</p>
+  <p class="kalla">Källa: egen sammanställning av {SCB_KALLA}, tilltalsnamn 31 december 2020 (SCB:s senaste namnstatistik), jämfört med namnlängden enligt Isof. Ett namn räknas som stavningsvariant när det bara skiljer sig i stavningen (t.ex. th/t, c/k, ph/f, dubbelteckning) från ett almanacksnamn som oftast bärs av samma kön.</p>
   <Annons plats="utan-1" />
   <Faq fragor={fragor} />
 </Layout>

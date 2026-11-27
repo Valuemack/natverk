@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "trender": "node scripts/trender.mjs",
     "hamta": "node scripts/hamta.mjs",
     "skriv": "node scripts/skriv.mjs",
     "grafik": "node scripts/grafik.mjs",

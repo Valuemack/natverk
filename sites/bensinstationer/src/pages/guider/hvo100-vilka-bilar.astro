@@ -1,0 +1,198 @@
+---
+// Lång guide: vilka bilar får tanka HVO100? Tillverkarnas godkännanden (Mobility Sweden, lista 2024-12-09), XTL-märkningen
+// (direktiv 2014/94/EU, EN 16942), köldklasser för HVO (SS-EN 15940:2023 via Drivkraft Sverige), Drivkraft Sveriges faktablad,
+// dagens pris mot diesel (kedjornas listpriser) och stationer per län (sajtens register). Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { VARMEVARDEN, KORSTRACKOR } from "../../lib/fakta.js";
+import { KAT as KATALOG } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+const ph = idagPris("hvo100"), pd = idagPris("diesel");
+const diff = ph != null && pd != null ? ph - pd : null;
+const kedjor = LISTKEDJOR.map((c) => ({ c, h: kedjePris(c, "hvo100"), d: kedjePris(c, "diesel"), href: kedjaHref(c) })).filter((x) => x.h != null && x.d != null);
+const tank = 60;
+// Energiskillnaden per liter enligt Energimyndigheten: så mycket mer volym HVO som behövs för samma energi.
+const volymFaktor = VARMEVARDEN.diesel / VARMEVARDEN.hvo100;
+const milDiesel = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Diesel");
+const literDiesel = milDiesel.mil * 0.5;
+const arsDiesel = pd != null ? literDiesel * pd : null;
+const arsHvo = ph != null ? literDiesel * volymFaktor * ph : null;
+
+const harH = (s) => s.drivmedel?.hvo100 === true;
+const harD = (s) => s.drivmedel?.diesel === true;
+const nH = STATIONER.filter(harH).length;
+const nHdygn = STATIONER.filter((s) => harH(s) && s.dygnet).length;
+const lanHref = new Map(KATALOG.lan.map((l) => [l.namn, l.href]));
+const perLan = Object.values(STATIONER.filter((s) => s.lan).reduce((m, s) => {
+  const x = (m[s.lan] ??= { lan: s.lan, d: 0, h: 0 });
+  if (harD(s)) x.d++;
+  if (harH(s)) x.h++;
+  return m;
+}, {})).sort((a, b) => b.h - a.h);
+const kedjeTopp = Object.entries(STATIONER.filter(harH).reduce((m, s) => ((m[s.kedja ?? "Övriga"] = (m[s.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+// Tillverkarnas godkännanden enligt Mobility Swedens lista 2024-12-09 (uppgifterna kommer från fordonstillverkarna).
+const MARKEN = [
+  ["Alfa Romeo, Chrysler, Dodge, Fiat Professional, Jeep, Lancia", "Samtliga dieselmodeller från november 2024. Befintliga Euro 5- och Euro 6-modeller: se XTL i tanklocket. Äldre bilar med vissa Multijet-motorer är också med."],
+  ["Audi", "Modellår 2022 och senare. Vissa sexcylindriga modeller har senare startdatum."],
+  ["BMW och MINI", "Godkännande per motorvariant med startvecka i produktionen, de tidigaste från 2014–2015."],
+  ["Citroën, DS, Peugeot", "Samtliga personbilar och lätta lastbilar som uppfyller Euro 5 och Euro 6."],
+  ["Cupra, Seat, Skoda", "Modellår 2022, samtliga fyrcylindriga dieselmodeller."],
+  ["Volkswagen", "Modellår 2022, fyrcylindriga dieselmodeller och Touareg V6 Diesel. Transportbilar: alla dieselmotorer från modellår 2022."],
+  ["Volvo", "SPA- och CMA-bilar med Volvos egna fyrcylindriga dieselmotorer: XC90 från 2015, S90/V90 från 2016, XC60 från 2017, V60 och XC40 från 2018. Äldre bilar med samma modellnamn omfattas inte."],
+  ["Ford", "Lätta lastbilar samt Transit och Tourneo i personbilsversion, tillverkade från juni 2019."],
+  ["Nissan", "Samtliga personbilar och lätta lastbilar från modellår 2006."],
+  ["Opel", "Bilar med PSA-motor som uppfyller Euro 6.2 (6d-TEMP) eller högre."],
+  ["Renault och Dacia", "Dieseldrivna Renault-transportbilar tillverkade från ungefär vecka 29 2019. Ett antal personbilsmotorer från 2018–2020 finns med men är utgångna."],
+  ["Toyota", "Proace och Proace City (alla dieselversioner), Hilux från december 2022, Land Cruiser 150 från februari 2023 och Land Cruiser 250 från modellår 2024."],
+  ["Mercedes-Benz", "E 220 d (163 hk) tillverkad från januari 2018 till sommaren 2020, och vissa transportbilar enligt märkningen i tanklocket."],
+  ["Övriga på listan", "Fiat Talento, INEOS, Isuzu D-Max, Iveco transportbilar (om förberedda från fabrik), KGM Musso Grand och Rexton, MAN TGE (modellår 2022) och Maxus Deliver 9."],
+];
+
+const avsnitt = [
+  { id: "kort", rubrik: "Vilka bilar får tanka HVO100?" },
+  { id: "xtl", rubrik: "Så ser du om bilen är godkänd: XTL" },
+  { id: "marken", rubrik: "Tillverkarnas godkännanden märke för märke" },
+  { id: "ej-godkand", rubrik: "Om bilen inte är godkänd" },
+  { id: "standard", rubrik: "Vad är HVO100 enligt standarden?" },
+  { id: "kyla", rubrik: "HVO100 i kyla" },
+  { id: "pris", rubrik: "Vad kostar HVO100 jämfört med diesel idag?" },
+  { id: "stationer", rubrik: "Var finns HVO100? Stationer per län" },
+];
+
+const fragor = [
+  { fraga: "Kan jag tanka HVO100 i min dieselbil?", svar: "Bara om tillverkaren har godkänt bilen för HVO100, alltså för paraffinisk diesel enligt standarden EN 15940. Titta efter märkningen XTL i tanklocket eller i instruktionsboken. Hittar du den inte, fråga en märkesverkstad eller återförsäljaren." },
+  { fraga: "Vad betyder XTL i tanklocket?", svar: "XTL är EU:s märkning för syntetisk eller paraffinisk diesel som inte kommer från råolja, till exempel HVO100. Dieselmärkningen sitter i en kvadrat. Står XTL vid tanklocket är bilen gjord för det bränslet. B7 och B10 anger hur mycket biodiesel (FAME) vanlig diesel får innehålla." },
+  { fraga: "Vilka bilmärken har godkänt HVO100?", svar: "Enligt Mobility Swedens lista från december 2024 har bland annat Volvo, Peugeot, Citroën, DS, Nissan, Volkswagen, Audi, Skoda, Seat, Cupra, BMW, MINI och Toyota godkänt vissa modeller, ofta med ett startdatum för modellår eller tillverkningsvecka. Kontrollera alltid din egen bil." },
+  { fraga: "Vad händer om jag tankar HVO100 i en bil som inte är godkänd?", svar: "Drivkraft Sverige skriver att det är motortillverkaren som avgör om en motor tål ren HVO. Eftersom HVO saknar aromater kan packningar och gummidetaljer krympa när man kör på ren HVO. Kontakta tillverkaren innan du byter bränsle i en bil som saknar godkännande." },
+  { fraga: "Klarar HVO100 kyla?", svar: "Det beror på vilken kvalitet som säljs. Standarden SS-EN 15940 har arktiska köldklasser med CFPP ned till −26, −32 och −38 °C. Vintertid ska klass 1 eller 2 säljas i Götaland och Svealand och klass 2 eller 3 i Norrland." },
+  diff != null && { fraga: "Hur mycket dyrare är HVO100 än diesel?", svar: `Enligt kedjornas listpriser ${datum} kostar HVO100 ${kr(ph)} per liter och diesel ${kr(pd)}, alltså ${kr(diff)} mer per liter. För en tank på ${tank} liter blir det ${kr(diff * tank, 0)} mer.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="HVO100 – vilka bilar får tanka? Märken och XTL"
+  beskrivning="Vilka dieselbilar som är godkända för HVO100, märke för märke. Så känner du igen XTL, vad som händer utan godkännande, HVO i kyla och priset mot diesel."
+  h1="HVO100 – vilka bilar får tanka det?"
+  svar={`HVO100 får bara tankas i bilar som tillverkaren har godkänt för paraffinisk diesel enligt standarden EN 15940. <strong>Titta efter märkningen XTL</strong> i tanklocket eller i instruktionsboken. Volvo, Peugeot, Citroën, Nissan, Volkswagen-koncernen och BMW är några av märkena som har godkänt vissa modeller, ofta från ett visst modellår.${diff != null ? ` Idag kostar HVO100 ${kr(diff)} mer per liter än diesel.` : ""}`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "HVO100: vilka bilar", href: "/guider/hvo100-vilka-bilar/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "HVO100 – pris idag", href: "/drivmedel/hvo100/", text: "Pris per kedja och alla stationer" },
+    { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/", text: "Priserna jämförda per kWh och mil" },
+    { namn: "Vinterdiesel", href: "/guider/vinterdiesel/", text: "Köldklasserna för diesel och HVO" },
+    { namn: "Feltankning", href: "/guider/feltankning/", text: "Om fel bränsle hamnar i tanken" },
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Pris per kedja och utveckling" },
+  ]}
+  kallor={[
+    { namn: "Mobility Sweden – Dieselfordon godkända för körning på HVO100 (2024-12-09)", url: "https://mobilitysweden.se/storage/88BA7A918FABDC35B41312CE635525D30F0EA1AB080758F9441685B7EC27E2EA/e0367792a03943e39145efed2c580432/pdf/media/a1b2b1b4584641c1b0722653e5761c4c/HVO100%202024-12-9.pdf", text: "tillverkarnas godkännanden per märke och modell", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Faktablad HVO (jan 2026)", url: "https://drivkraftsverige.se/wp-content/uploads/2026/01/DS-2026-Faktablad-HVO.pdf", text: "fordonskompatibilitet, packningar, smörjförmåga, köldtillsatser, lagring", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Faktablad HVO för fritidsbåtar (jan 2026)", url: "https://drivkraftsverige.se/wp-content/uploads/2026/01/DS-2026-Faktablad-HVO-fritidsbatar.pdf", text: "FAME i HVO100, vilka bolag som säljer HVO100 utan FAME", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/wp-content/uploads/2026/03/Standarder_2026_v2.pdf", text: "SS-EN 15940:2023, klasser A och B, köldklasser och perioder", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Diesel", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/diesel/", text: "inblandad HVO godkänd för alla dieselmotorer, HVO100 kräver godkännande", datum: "2026-11-27" },
+    { namn: "EU Business – EU:s nya bränslemärkning", url: "https://www.eubusiness.com/focus/fuel-labels-13hm", text: "XTL, B7 och B10, kvadraten för diesel, märkning från 12 oktober 2018 enligt direktiv 2014/94/EU och EN 16942", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll i HVO och diesel", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för dieselbilar", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer som anger att de säljer HVO100 och diesel" },
+  ]}>
+
+  <h2 id="kort">Vilka bilar får tanka HVO100?</h2>
+  <p>HVO100 är ren förnybar diesel, och den får tankas i dieselbilar som tillverkaren uttryckligen har godkänt för bränslet. Mobility Sweden, som är fordonsbranschens organisation, skriver i sin lista att HVO100 bara får användas i fordon som tillverkaren har godkänt. Det är också vad Drivkraft Sverige säger: det är motortillverkaren som avgör om en motor kan köras på ren HVO, och vilka bränslestandarder motorn klarar står i instruktionsboken.</p>
+  <p>Det ska inte blandas ihop med den HVO som redan finns i vanlig diesel. Inblandad HVO är godkänd för alla dieselmotorer, eftersom blandningen fortfarande uppfyller dieselstandarderna SS 15 54 35 och SS-EN 590. Det är bara när du tankar <em>ren</em> HVO, alltså HVO100 enligt SS-EN 15940, som godkännandet behövs.</p>
+  <p>Kontrollera i den här ordningen:</p>
+  <ol>
+    <li><strong>Tanklocket.</strong> Står det XTL i en kvadrat är bilen gjord för paraffinisk diesel.</li>
+    <li><strong>Instruktionsboken.</strong> Leta efter EN 15940, XTL, HVO eller paraffinisk diesel bland de godkända bränslena.</li>
+    <li><strong>Tillverkarens lista.</strong> Mobility Swedens sammanställning nedan visar vilka märken och modellår som omfattas.</li>
+    <li><strong>Märkesverkstaden.</strong> Vid minsta tvekan rekommenderar Mobility Sweden att du frågar återförsäljaren.</li>
+  </ol>
+
+  <h2 id="xtl">Så ser du om bilen är godkänd: XTL</h2>
+  <p>Sedan den 12 oktober 2018 har EU-länderna en gemensam märkning av drivmedel. Den bygger på direktivet 2014/94/EU om infrastruktur för alternativa drivmedel och på den europeiska standarden EN 16942. Märkningen sitter på pumpar och pistoler, vid tanklocket på nytillverkade bilar, i instruktionsboken och hos bilhandlare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Form</th><th>Märkning</th><th>Betyder</th></tr></thead>
+    <tbody>
+      <tr><td>Kvadrat</td><td>B7</td><td>Diesel med högst 7 procent biodiesel (FAME), till exempel svensk diesel i miljöklass 1</td></tr>
+      <tr><td>Kvadrat</td><td>B10</td><td>Diesel med högst 10 procent FAME</td></tr>
+      <tr><td>Kvadrat</td><td>XTL</td><td>Syntetisk eller paraffinisk diesel som inte kommer från råolja, till exempel HVO100</td></tr>
+      <tr><td>Cirkel</td><td>E5, E10, E85</td><td>Bensin med högst 5 eller 10 procent etanol, och E85</td></tr>
+      <tr><td>Romb</td><td>CNG, LNG, LPG, H2</td><td>Gasformiga drivmedel</td></tr>
+    </tbody>
+  </table></div>
+  <p>Hittar du bara B7 vid tanklocket betyder det inte automatiskt att bilen saknar godkännande, eftersom äldre bilar kan ha godkänts i efterhand. Flera tillverkare skriver i Mobility Swedens lista att man ska se efter XTL i tanklocket, bland andra Stellantis-märkena för befintliga Euro 5- och Euro 6-modeller, Renaults transportbilar och vissa Mercedes-Benz-transportbilar. På stationen är HVO100-pistolen märkt med XTL.</p>
+  <p>Samma logik gäller B10. Sedan den 1 juli 2025 får diesel i miljöklass 3 innehålla upp till 10 procent FAME enligt standarden SS-EN 16734. Drivkraft Sverige skriver att B10 inte passar alla dieselfordon och att det framgår av instruktionsboken eller av fordonstillverkarnas organisation ACEA:s lista vilka som klarar det. Märkningen i tanklocket visar alltså tre olika saker för en dieselbil: B7 för vanlig diesel, B10 för diesel med mer biodiesel och XTL för HVO100. En bil kan vara godkänd för en, två eller alla tre.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="marken">Tillverkarnas godkännanden märke för märke</h2>
+  <p>Tabellen sammanfattar Mobility Swedens lista över personbilar och lätta lastbilar som är godkända för HVO100. Listan är daterad den 9 december 2024, och uppgifterna kommer från tillverkarna. För många märken gäller godkännandet först från ett visst modellår eller en viss tillverkningsvecka, så samma modellnamn kan vara godkänt i en årsmodell och inte i en annan.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Märke</th><th>Godkänt enligt tillverkaren</th></tr></thead>
+    <tbody>{MARKEN.map(([m, t]) => <tr><td><strong>{m}</strong></td><td>{t}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Mobility Sweden, Dieselfordon godkända för körning på HVO100, 2024-12-09. Tabellen är förkortad. Den fullständiga listan anger modell och startdatum för varje motorvariant.</p>
+  <p>Tre mönster syns i listan. <strong>Stellantis-märkena</strong> (Peugeot, Citroën, DS, Opel, Fiat Professional, Jeep med flera) har breda godkännanden kopplade till Euro 5, Euro 6 eller vissa motorer. <strong>Volkswagen-koncernen</strong> (Volkswagen, Audi, Skoda, Seat och Cupra) godkänner i regel från modellår 2022. <strong>BMW och Volvo</strong> godkänner per motor och plattform, så det avgörande är när just din bil tillverkades. Märken som inte finns med i listan har inte rapporterat något godkännande dit. Mobility Sweden skriver att många tillverkare ser över om fler dieselmodeller kan godkännas, så det kan ha tillkommit modeller efter listans datum.</p>
+
+  <h2 id="ej-godkand">Om bilen inte är godkänd</h2>
+  <p>HVO är kemiskt mycket lik fossil diesel och kan blandas med den i alla proportioner. Drivkraft Sverige pekar ändå ut två skillnader som gör att ren HVO inte är självklar i varje motor:</p>
+  <ul>
+    <li><strong>Packningar och gummi.</strong> HVO innehåller inga aromater. Därför kan packningar och elastomerer krympa när motorn körs på ren HVO. Drivkraft Sverige rekommenderar att alltid kontrollera kompatibiliteten med motor- och teknikleverantören.</li>
+    <li><strong>Smörjförmåga.</strong> Ren HVO smörjer dåligt, och smörjande tillsatser måste finnas i bränslet för att det ska klara standarden.</li>
+  </ul>
+  <p>Om du saknar godkännande är det säkra alternativet vanlig diesel. Den innehåller också förnybart, eftersom bolagen måste blanda in biodrivmedel enligt <a href="/guider/reduktionsplikt/">reduktionsplikten</a>. För äldre motorer hänvisar Drivkraft Sverige till motorleverantören. Har du redan tankat HVO100 i en bil utan godkännande, kontakta verkstaden och läs vår guide om <a href="/guider/feltankning/">feltankning</a>.</p>
+
+  <h2 id="standard">Vad är HVO100 enligt standarden?</h2>
+  <p>HVO står för hydrerad vegetabilisk olja. Den tillverkas av oljor och fetter som behandlas med vätgas, och enligt Drivkraft Sverige är vanliga råvaror rapsolja, tallolja, slaktavfall och använd frityrolja. Ren HVO säljs som HVO100 och ska uppfylla SS-EN 15940:2023, standarden för paraffinisk diesel från syntes eller hydrobehandling.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Egenskap</th><th>HVO, klass A</th><th>HVO, klass B</th><th>Diesel Mk1 (SS 15 54 35)</th></tr></thead>
+    <tbody>
+      <tr><td>Cetantal, lägst</td><td>70,0</td><td>51,0</td><td>51,0</td></tr>
+      <tr><td>Densitet vid 15 °C</td><td>765–800 kg/m³</td><td>780–810 kg/m³</td><td>800–830 kg/m³</td></tr>
+      <tr><td>FAME, högst</td><td>7,0 %</td><td>7,0 %</td><td>7,0 %</td></tr>
+      <tr><td>Energi enligt Energimyndigheten</td><td colspan="2">{VARMEVARDEN.hvo100.toLocaleString("sv-SE")} kWh/l</td><td>{VARMEVARDEN.diesel.toLocaleString("sv-SE")} kWh/l</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: utdrag ur svensk standard för drivmedel 2026, Drivkraft Sverige. Energi: Energimyndigheten.</p>
+  <p>Standarden tillåter alltså upp till 7 procent FAME även i HVO100. Enligt Drivkraft Sverige säljer bolagen Circle K, OKQ8, Neste, Preem, St1 och Qstar bara ren HVO100 utan inblandad FAME. Ren HVO är klar som vatten, medan FAME kan vara gul till grön.</p>
+  <p>Den lägre densiteten gör att en liter HVO innehåller något mindre energi än en liter diesel. Med Energimyndighetens värden behövs {procent((volymFaktor - 1) * 100, 1)} mer volym för samma energi. Drivkraft Sverige påpekar att den verkliga förbrukningen inte går att räkna fram exakt, eftersom även cetantal och viskositet spelar in.</p>
+
+  <h2 id="kyla">HVO100 i kyla</h2>
+  <p>HVO har ingen fast köldegenskap. Enligt Drivkraft Sverige beror den på tillverkningsprocessen och nästan inte alls på råvaran, och med rätt teknik kan den bli mycket god. Standarden delar in HVO i en tempererad klass och tre arktiska klasser:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Klass</th><th class="num">CFPP, högst</th><th class="num">Grumlingspunkt, högst</th><th>Säljs</th></tr></thead>
+    <tbody>
+      <tr><td>Klass D</td><td class="num">−10 °C</td><td class="num">–</td><td>Sommar: 1 april–15 oktober i Götaland och Svealand, 1 maj–15 september i Norrland</td></tr>
+      <tr><td>Klass 1</td><td class="num">−26 °C</td><td class="num">−16 °C</td><td>Vinter i Götaland och Svealand</td></tr>
+      <tr><td>Klass 2</td><td class="num">−32 °C</td><td class="num">−22 °C</td><td>Vinter i Götaland, Svealand och Norrland</td></tr>
+      <tr><td>Klass 3</td><td class="num">−38 °C</td><td class="num">−28 °C</td><td>Vinter i Norrland</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">CFPP = den lägsta temperatur då bränslet går igenom ett standardfilter. Källa: SS-EN 15940:2023 enligt Drivkraft Sverige.</p>
+  <p>Vilken vinterklass som säljs väljs efter klimatet där bränslet ska användas. En skillnad mot diesel är att köldtillsatser, så kallade cold flow improvers, har liten eller ingen effekt på HVO, eftersom molekylerna är uppbyggda på ett annat sätt. Det är därför ingen idé att hälla i dieseltillsats i en tank med HVO100. Lagringen fungerar däremot som för diesel. Drivkraft Sverige anger att HVO håller lika länge som fossil diesel och ska förvaras mörkt, torrt och svalt. Bara små mängder vatten kan lösas i HVO, och fritt vatten i en tank kan ge mikrobtillväxt, så kondensvatten i dunkar och cisterner bör tömmas regelbundet. Läs mer om köldklasserna för vanlig diesel i guiden om <a href="/guider/vinterdiesel/">vinterdiesel</a>.</p>
+
+  <h2 id="pris">Vad kostar HVO100 jämfört med diesel idag?</h2>
+  {kedjor.length > 0 && <>
+    <p>HVO100 säljs med ett eget literpris som ligger klart över dieselpriset. Tabellen visar kedjornas listpriser {datum}.</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Kedja</th><th class="num">HVO100</th><th class="num">Diesel</th><th class="num">Skillnad per liter</th><th class="num">Per tank ({tank} l)</th></tr></thead>
+      <tbody>{kedjor.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.h)}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(x.h - x.d)}</td><td class="num">{kr((x.h - x.d) * tank, 0)}</td></tr>)}
+        {diff != null && <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(ph)}</strong></td><td class="num"><strong>{pris(pd)}</strong></td><td class="num"><strong>{pris(diff)}</strong></td><td class="num"><strong>{kr(diff * tank, 0)}</strong></td></tr>}
+      </tbody>
+    </table></div>
+    <p class="kalla">Listpriser inkl. moms {LP_DATUM}, kr per liter. Priset på en enskild station kan avvika.</p>
+  </>}
+  {arsDiesel != null && arsHvo != null && <p>En dieselbil i Sverige körde i snitt {tal(milDiesel.mil)} mil under {KORSTRACKOR.ar} enligt Trafikanalys. Med en förbrukning på 0,5 liter diesel per mil blir det {tal(Math.round(literDiesel))} liter och {kr(arsDiesel, 0)} om året med dagens dieselpris. Samma körning på HVO100 kostar ungefär {kr(arsHvo, 0)}, om man räknar med att det går åt {procent((volymFaktor - 1) * 100, 1)} mer volym för samma energi. Skillnaden blir {kr(arsHvo - arsDiesel, 0)} per år, eller {procent((arsHvo / arsDiesel - 1) * 100)} mer. Prisutvecklingen per kedja finns på sidan <a href="/drivmedel/hvo100/">HVO100 pris idag</a>.</p>}
+
+  <h2 id="stationer">Var finns HVO100? Stationer per län</h2>
+  <p>Av stationerna i vårt register anger {tal(nH)} att de säljer HVO100, och {tal(nHdygn)} av dem går att tanka på dygnet runt. Flest HVO100-stationer har {kedjeTopp.map(([k, n]) => `${k} (${n})`).join(", ")}. Tabellen visar antalet per län och hur stor andel av länets dieselstationer som också har HVO100.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Med HVO100</th><th class="num">Med diesel</th><th class="num">Andel</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{lanHref.get(x.lan) ? <a href={lanHref.get(x.lan)}>{x.lan}</a> : x.lan}</td><td class="num">{x.h}</td><td class="num">{x.d}</td><td class="num">{x.d ? procent(x.h / x.d * 100) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Uppgiften om drivmedel kan saknas för vissa stationer.</p>
+  <p>Ska du köra långt på HVO100, särskilt i inlandet, kan det löna sig att kolla stationerna längs vägen innan du åker. Alla stationer med HVO100 finns på <a href="/drivmedel/hvo100/">HVO100-sidan</a>, och i <a href="/">stationssökningen</a> hittar du närmaste station.</p>
+</Guide>

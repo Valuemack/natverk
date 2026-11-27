@@ -2,8 +2,9 @@
 // Lång guidesida + verktyg: "Hur många heter …?" Söker i SCB:s namnstatistik (alla tilltals- och förnamn med
 // minst 10 bärare, 31 december 2020, CC0). Fakta om tilltalsnamn/förnamn från Isof, om SCB och Skatteverket
 // från respektive webbplats, lästa 2026-11-25.
-import Guide from "@natverk/core/Guide.astro";
+import Guide from "../layouts/Guide.astro";
 import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import { SITE, SCB_TOTALT, tal, namnHref, dagText, dagHref, lista } from "../site.js";
 import { ALLA_SCB, almanacka, BEFOLKNING, BEF_SENAST, placering, MEDELALDER } from "../lib/statistik.js";
 
@@ -73,6 +74,7 @@ const beskrivning = `Hur många heter som du? Sök bland ${tal(tilltalsnamn.leng
   svar={`Skriv ett förnamn i sökrutan så ser du hur många i Sverige som har det som <strong>tilltalsnamn</strong> och bland sina <strong>förnamn</strong>, uppdelat på kvinnor och män. Siffrorna kommer från SCB och gäller 31 december 2020. Vanligast är ${forst[0]} med ${tal(tt(forst[1]))} bärare. Totalt finns ${tal(tilltalsnamn.length)} tilltalsnamn med minst tio bärare.`}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Hur många heter", href: "/hur-manga-heter/" }]}
   publicerad={PUBLICERAD} uppdaterad={UPPDATERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  jsonld={[datasetLd({ namn: "Antal bärare per förnamn i Sverige 2020", beskrivning: "Antal personer i Sverige med varje tilltalsnamn och förnamn den 31 december 2020 (samt tilltalsnamn 2000), per kön. Alla namn med minst tio bärare enligt SCB. Sökbar per namn och nedladdningsbar som JSON per begynnelsebokstav.", sokvag: "/hur-manga-heter/", tid: "2000/2020", nyckelord: ["hur många heter", "tilltalsnamn"], filer: ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","aa","ae","oe","ovr"].map((b) => `/data/namn/${b}.json`) })]}
   relaterat={[
     { namn: "Vanligaste namnen i Sverige", href: "/vanligaste-namnen/", text: "Topplistor för kvinnor och män" },
     { namn: "Pojknamn", href: "/pojknamn/", text: "Populära och klassiska pojknamn" },

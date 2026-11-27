@@ -63,10 +63,11 @@
   "bildmotiv": "a tidy community hall in Sweden with folding tables, coffee cups and stacked chairs after an event, warm light",
   "bildalt": "En föreningslokal med bord, kaffekoppar och stolar efter en träff",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.46,
+    "positiv": 0.7,
+    "betydelse": 0.6,
     "tillit": 0.98,
-    "total": 52
+    "total": 77,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -78,5 +79,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "manniskor"
 }

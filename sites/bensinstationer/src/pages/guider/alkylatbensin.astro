@@ -1,0 +1,146 @@
+---
+// Lång guide: alkylatbensin. Standarden SS-EN 17867:2023+A1:2025 mot bensin 95 E10 (SS-EN 228:2025), båda enligt Drivkraft
+// Sveriges standardutdrag 2026. Användning och gränsvärden enligt Transportstyrelsen, bakgrund ur prop. 1995/96:202,
+// bensengränsvärdet i AFS 2023:14 (Arbetsmiljöverket). OKQ8:s listpris och stationerna med alkylat ur sajtens data. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP, LP_DATUM, STATIONER, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+const p95 = idagPris("bensin95");
+const okq8 = LP.kedjor.find((c) => c.kedja === "OKQ8")?.priser ?? {};
+const a2 = okq8.alkylat_2t ?? null, a4 = okq8.alkylat_4t ?? null;
+const okq8Href = kedjaHref("OKQ8");
+const dunk = 5;
+
+const stationer = STATIONER.filter((s) => s.drivmedel?.alkylat === true).sort((a, b) => (a.lan ?? "").localeCompare(b.lan ?? "", "sv") || (a.ort ?? "").localeCompare(b.ort ?? "", "sv"));
+const nAlla = STATIONER.length;
+const lanHref = new Map(KAT.lan.map((l) => [l.namn, l.href]));
+const lanMed = [...new Set(stationer.map((s) => s.lan).filter(Boolean))];
+const lanUtan = KAT.lan.map((l) => l.namn).filter((n) => !lanMed.includes(n));
+const perKedja = Object.entries(stationer.reduce((m, s) => ((m[s.kedja ?? "Övriga"] = (m[s.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är alkylatbensin?" },
+  { id: "motorer", rubrik: "Vilka motorer ska ha alkylat?" },
+  { id: "jamforelse", rubrik: "Alkylat jämfört med vanlig bensin" },
+  { id: "halsa", rubrik: "Hälsa och arbetsmiljö" },
+  { id: "vinter", rubrik: "Vinteralkylat" },
+  { id: "var", rubrik: "Var säljs alkylatbensin?" },
+  { id: "pris", rubrik: "Vad kostar alkylat?" },
+];
+
+const fragor = [
+  { fraga: "Vad är alkylatbensin?", svar: "En specialbensin för små motorer som nästan saknar aromater, bensen och olefiner. Den svenska standarden SS-EN 17867 tillåter högst 1,0 procent aromater och 0,08 procent bensen, mot 35 respektive 1,0 procent i vanlig bensin 95." },
+  { fraga: "Vilka motorer ska man använda alkylat i?", svar: "Enligt Transportstyrelsen är alkylat avsett för motorer utan avgasrening, till exempel utombordsmotorer, snöskotrar, gräsklippare och motorsågar, och det är särskilt viktigt i tvåtaktsmotorer. Alkylat ska inte användas i bilar." },
+  { fraga: "Vad är skillnaden mellan alkylat 2-takt och 4-takt?", svar: "Tvåtaktsalkylat är färdigblandat med 1,5–2,0 procent tvåtaktsolja enligt standarden. Alkylat för fyrtaktsmotorer innehåller ingen olja. Tanka aldrig 4-taktsalkylat i en tvåtaktsmotor som saknar separat smörjning." },
+  { fraga: "Var kan man tanka alkylatbensin?", svar: `Det är ovanligt vid pump. I vårt register anger ${stationer.length} av ${tal(nAlla)} stationer att de säljer alkylat, de flesta OKQ8-stationer. De flesta köper därför alkylat i dunk.` },
+  a2 && { fraga: "Vad kostar alkylatbensin?", svar: `OKQ8:s listpris för alkylat är ${kr(a2.pris)} per liter för 2-takt och ${a4 ? kr(a4.pris) : "–"} för 4-takt (gäller från ${datumText(a2.galler_fran)}). Bensin 95 kostar ${p95 ? kr(p95) : "–"} per liter i snitt idag.` },
+  { fraga: "Kan man tanka alkylatbensin i bilen?", svar: "Nej. Transportstyrelsen skriver att alkylat inte ska användas i bilar, och enligt regeringens lagrådsremiss från 2016 uppfyller alkylat inte specifikationen för bilbensin. Miljönyttan i en modern bilmotor med avgasrening är nästan obefintlig, och eventuella fordonsgarantier gäller inte." },
+  { fraga: "Varför är bensen farligt?", svar: "Bensen är cancerframkallande och tas också upp genom huden. Arbetsmiljöverkets nivågränsvärde för bensen i luften är sedan den 5 april 2026 0,2 ppm, mot 0,5 ppm tidigare." },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Alkylatbensin – vad är det och var kan man köpa det?"
+  beskrivning="Alkylatbensin för motorsåg, gräsklippare och båtmotor: innehållet jämfört med bensin 95, 2-takt eller 4-takt, hälsa och de få stationer som säljer den."
+  h1="Alkylatbensin – vad är det och var finns den?"
+  svar={`Alkylatbensin är en renare specialbensin för små motorer utan avgasrening, som motorsågar, gräsklippare, snöskotrar och utombordare. <strong>Den får innehålla högst 1 procent aromater och 0,08 procent bensen</strong>, mot 35 och 1 procent i bensin 95. Alkylat säljs i 2-taktsversion med olja och i 4-taktsversion utan. Bara ${stationer.length} stationer i vårt register säljer den vid pump, så de flesta köper den i dunk.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Alkylatbensin", href: "/guider/alkylatbensin/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensindunk – regler", href: "/guider/bensindunk-regler/", text: "Så får du förvara och transportera bensin" },
+    { namn: "Bensin 95 eller 98?", href: "/guider/95-eller-98/", text: "Oktantal och E10" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Pris per kedja" },
+    { namn: "Feltankning", href: "/guider/feltankning/", text: "Om fel bränsle hamnar i tanken" },
+    { namn: "Alla drivmedel", href: "/drivmedel/", text: "Priser och stationer per drivmedel" },
+  ]}
+  kallor={[
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/wp-content/uploads/2026/03/Standarder_2026_v2.pdf", text: "SS-EN 17867:2023+A1:2025 (alkylatbensin), tabell 7–8 med vinterperioder, och SS-EN 228:2025 (bensin 95 E10)", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Miljöklassade bränslen", url: "https://www.transportstyrelsen.se/sv/vagtrafik/miljo/Luftkvaliet-i-tatorter/Miljoklassade-branslen/", text: "vilka motorer alkylat är avsett för, tvåtaktsmotorers oförbrända bränsle, gränser för aromater och bensen", datum: "2026-11-27" },
+    { namn: "Regeringens proposition 1995/96:202", url: "https://lagen.nu/prop/1995/96:202", text: "alkylatbensinens bakgrund vid Arbetsmiljöinstitutet i Umeå, tillverkning och egenskaper", datum: "2026-11-27" },
+    { namn: "Regeringen – Lagrådsremiss Alkylatbensin för vinterbruk (4 maj 2016)", url: "https://www.regeringen.se/contentassets/33462c09e4fb41c4a9d632112fbf7b0f/lagradsremiss-alkylatbensin-for-vinterbruk.pdf", text: "alkylatets historia, SS 155461, alkaner, problemen med kallstart av snöskotrar", datum: "2026-11-27" },
+    { namn: "Drivmedelslag (2011:319), 5 §", url: "https://data.riksdagen.se/dokument/sfs-2011-319.text", text: "krav för alkylatbensin i miljöklass 1, ångtryck 50–95 kPa, högst 65 kPa sommartid, bensen högst 0,1 %", datum: "2026-11-27" },
+    { namn: "Arbetsmiljöverket – AFS 2023:14 Gränsvärden för luftvägsexponering (konsoliderad)", url: "https://www.av.se/globalassets/filer/publikationer/foreskrifter/konsoliderade-foreskrifter/gransvarden-luftvagsexponering-arbetsmiljon-afs2023-14-konsoliderad.pdf", text: "nivå- och korttidsgränsvärde för bensen, ikraftträdande 5 april 2026", datum: "2026-11-27" },
+    { namn: "OKQ8 – Företagspriser", url: "https://www.okq8.se/foretag/priser/", text: `listpris för alkylatbensin 2T och 4T, hämtat ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer som anger att de säljer alkylatbensin" },
+  ]}>
+
+  <h2 id="vad">Vad är alkylatbensin?</h2>
+  <p>Alkylatbensin är en specialbensin för små förbränningsmotorer. Den togs fram vid Arbetsmiljöinstitutet i Umeå, i samarbete med bland annat användare inom skogsbruket, för att skogsarbetare som andades in avgaser från motorsågar skulle utsättas för färre skadliga ämnen. Det framgår av regeringens proposition 1995/96:202, som också beskriver att alkylat tillverkas på raffinaderier med katalytisk krackning och bygger på helt andra kolväten än vanlig bensin.</p>
+  <p>Enligt propositionen skiljer sig alkylat från annan bensin främst genom lägre densitet och lägre flyktighet. Standarden tillåter bara spår av aromater, bensen och olefiner, och den mycket låga syrehalten innebär att alkylat inte innehåller etanol.</p>
+  <p>Bakgrunden beskrivs närmare i regeringens lagrådsremiss om vinteralkylat från 2016. Arbetsmiljöinstitutet gjorde under slutet av 1980-talet flera undersökningar av motorsågsavgaser, sedan det kommit rapporter om hälsobesvär vid motorsågsarbete. Det ledde till rekommendationer om hur en specialbensin för motorsågar borde vara sammansatt, och alkylatet kom i början av 1990-talet. En svensk standard för specialbensin till motordrivna arbetsredskap, SS 15 54 61, fastställdes våren 1995. Medan vanlig bensin innehåller en stor andel ringformade aromatiska föreningar som bensen, består alkylat huvudsakligen av alkaner (paraffiner), som saknar dubbelbindningar.</p>
+  <p>I dag följer alkylatbensin den europeiska standarden SS-EN 17867, som har krav både för basbensinen och för en färdig tvåtaktsblandning med olja. Drivmedelslagen har dessutom egna krav för att alkylat ska räknas till miljöklass 1.</p>
+
+  <h2 id="motorer">Vilka motorer ska ha alkylat?</h2>
+  <p>Transportstyrelsen beskriver alkylatbensin som en specialbensin för motorer som saknar avgasrening. Exemplen är utombordsmotorer, snöskotrar, gräsklippare och motorsågar. Det är särskilt viktigt i tvåtaktsmotorer, eftersom de enligt Transportstyrelsen släpper ut upp mot en tredjedel av bränslet oförbränt. I en sådan motor hamnar det som finns i bensinen alltså direkt i luften runt den som arbetar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ</th><th>Innehåll</th><th>Används i</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Alkylat 2-takt</strong></td><td>Färdigblandad med 1,5–2,0 % tvåtaktsolja enligt standarden</td><td>Motorsågar, röjsågar, trimmers, lövblåsar och andra tvåtaktsmotorer</td></tr>
+      <tr><td><strong>Alkylat 4-takt</strong></td><td>Basbensin utan olja</td><td>Gräsklippare, åkgräsklippare, snöslungor, elverk och fyrtaktsutombordare</td></tr>
+    </tbody>
+  </table></div>
+  <p>Följ alltid tillverkarens anvisning om bränsle och oljeblandning. Det viktigaste är att inte förväxla de två: tvåtaktsalkylat i en fyrtaktsmotor tillför olja som inte behövs, och fyrtaktsalkylat i en tvåtaktsmotor utan separat smörjning ger en motor helt utan smörjning. Transportstyrelsen skriver också att alkylat inte ska användas i bilar och att tillgången är begränsad.</p>
+  <p>Lagrådsremissen från 2016 återger branschens bedömning: nyttan är störst i äldre tvåtaktsmotorer med förgasare, som bara förbränner 70–80 procent av bränslet medan resten går ut mer eller mindre oförbränt i luften eller vattnet. Alkylat kan enligt samma källa användas i alla tvåtaktsutombordare och i mopeder, gräsklippare, motorsågar, andra arbetsredskap och snöskotrar. I moderna bilmotorer med avgasrening är miljönyttan däremot nästan obefintlig. Alkylat uppfyller inte specifikationerna för bilbensin, och därför gäller inte heller eventuella fordonsgarantier om man tankar det i bilen.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="jamforelse">Alkylat jämfört med vanlig bensin</h2>
+  <p>Tabellen ställer kraven i alkylatstandarden mot kraven för bensin 95 E10 i miljöklass 1. Skillnaden ligger främst i de ämnen som påverkar hälsan.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Egenskap</th><th class="num">Alkylatbensin (SS-EN 17867)</th><th class="num">Bensin 95 E10 (SS-EN 228, Mk1)</th></tr></thead>
+    <tbody>
+      <tr><td>Aromater, högst</td><td class="num">1,0 %</td><td class="num">35,0 %</td></tr>
+      <tr><td>Bensen, högst</td><td class="num">0,08 %</td><td class="num">1,00 %</td></tr>
+      <tr><td>Olefiner, högst</td><td class="num">1,0 %</td><td class="num">13,0 %</td></tr>
+      <tr><td>Syre, högst</td><td class="num">0,10 %</td><td class="num">3,7 %</td></tr>
+      <tr><td>Etanol, högst</td><td class="num">–</td><td class="num">10 %</td></tr>
+      <tr><td>Svavel, högst</td><td class="num">10 mg/kg (2-takt 20)</td><td class="num">10 mg/kg</td></tr>
+      <tr><td>Oktantal RON, lägst</td><td class="num">93,0</td><td class="num">95,0</td></tr>
+      <tr><td>Densitet vid 15 °C</td><td class="num">680–720 kg/m³</td><td class="num">720–775 kg/m³</td></tr>
+      <tr><td>Ångtryck sommar</td><td class="num">55–65 kPa</td><td class="num">Enligt flyktighetsklass</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Drivkraft Sveriges utdrag ur svensk standard för drivmedel 2026. Halterna är volymprocent utom syre (viktprocent). Olefiner för 95: drivmedelslagens värde.</p>
+  <p>Den låga syrehalten betyder att alkylat inte innehåller etanol eller andra syreföreningar. Transportstyrelsen anger gränserna 1,0 procent aromater och 0,1 procent bensen för alkylat i miljöklassningen, medan standarden har den strängare bensengränsen 0,08 procent. Oktantalet är något lägre än för 95, så följ maskintillverkarens krav.</p>
+
+  <h2 id="halsa">Hälsa och arbetsmiljö</h2>
+  <p>Bensen är det ämne i bensin som väger tyngst för hälsan. I Arbetsmiljöverkets föreskrifter om gränsvärden (AFS 2023:14) är bensen märkt som cancerframkallande och som ett ämne som kan tas upp genom huden. Sedan den 5 april 2026 är nivågränsvärdet 0,2 ppm, eller 0,66 milligram per kubikmeter luft under en arbetsdag. Tidigare var det 0,5 ppm. Korttidsgränsvärdet är 3 ppm.</p>
+  <p>Den som kör motorsåg eller röjsåg står mitt i avgaserna, och i en tvåtaktsmotor går en stor del av bränslet ut oförbränt. Med en bensin som har högst 0,08 procent bensen, mot upp till 1 procent i vanlig bensin, blir det betydligt mindre bensen att andas in. Propositionen 1995/96:202 konstaterar att alkylatet minskar utsläppen av vissa hälsopåverkande ämnen i avgaserna. Den påpekar samtidigt att det inte är visat att de totala kolväteutsläppen blir mycket mindre. Alkylat är alltså främst en arbetsmiljöfråga och en fråga om luften nära motorn.</p>
+
+  <h2 id="vinter">Vinteralkylat</h2>
+  <p>Den vanliga alkylatbensinen har ett ångtryck på högst 65 kPa. Standarden konstaterar att det kan vara för lite i kalla delar av Sverige, där motorer annars blir svåra att starta. Därför finns en vinterklass, klass E, med ångtryck på 55–95 kPa, som bör väljas under följande perioder:</p>
+  <ul>
+    <li><strong>Gävleborgs, Västernorrlands, Jämtlands, Västerbottens och Norrbottens län:</strong> 1 september–15 maj.</li>
+    <li><strong>Övriga Sverige:</strong> 16 september–30 april.</li>
+  </ul>
+  <p>Vinterklassen kom till efter att Lantmännen påpekat att det låga ångtrycket gjorde det svårt att starta snöskotrar vid temperaturer under −20 °C, medan vanlig vinterbensin med högre ångtryck fungerade. Sedan den 1 januari 2017 tillåter drivmedelslagen alkylat i miljöklass 1 med ett ångtryck på 50–95 kPa, men högst 65 kPa under sommaren. För snöskotrar och snöslungor betyder det att vinterkvalitet är att föredra under säsongen. En dunk som köptes på våren innehåller sommarkvalitet med lägre ångtryck.</p>
+
+  <h2 id="var">Var säljs alkylatbensin?</h2>
+  <p>Alkylat är ovanligt vid pump. Av {tal(nAlla)} stationer i vårt register anger {stationer.length} att de säljer alkylatbensin: {perKedja.map(([k, n]) => `${k} ${n}`).join(", ")}. Stationerna finns i {lanMed.length} av {KAT.lan.length} län.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Station</th><th>Ort</th><th>Län</th></tr></thead>
+    <tbody>{stationer.map((s) => <tr><td>{s.href ? <a href={s.href}>{s.namn}</a> : s.namn}</td><td>{s.ort ?? s.kommun ?? "–"}</td><td>{s.lan && lanHref.get(s.lan) ? <a href={lanHref.get(s.lan)}>{s.lan}</a> : s.lan ?? "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Uppgiften bygger på kedjornas egna stationsuppgifter och kan saknas för vissa stationer. Fråga gärna stationen innan du åker.</p>
+  {lanUtan.length > 0 && <p>I {lanUtan.map((l) => l.replace(/ län$/, "")).join(", ")} finns ingen station med alkylat i registret.</p>}
+  <p>Därför köper de flesta alkylat i dunk, som säljs i bland annat bygg-, järn- och trädgårdshandeln och hos återförsäljare av skogs- och trädgårdsmaskiner. Kontrollera att dunken är märkt 2-takt eller 4-takt efter vad maskinen behöver. Ska du tanka alkylat vid pump och ta med i en egen dunk, läs om <a href="/guider/bensindunk-regler/">reglerna för bensindunkar</a>.</p>
+
+  <h2 id="pris">Vad kostar alkylat?</h2>
+  {a2 || a4 ? <>
+    <p>OKQ8 är den kedja som publicerar ett listpris för alkylatbensin vid pump. Så här ser det ut jämfört med bensin 95:</p>
+    <div class="tabell"><table>
+      <thead><tr><th>Produkt</th><th class="num">Kr per liter</th><th class="num">{dunk} liter</th>{p95 && <th class="num">Mot bensin 95</th>}</tr></thead>
+      <tbody>
+        {a2 && <tr><td>{okq8Href ? <a href={okq8Href}>OKQ8</a> : "OKQ8"} alkylat 2-takt</td><td class="num">{pris(a2.pris)}</td><td class="num">{kr(a2.pris * dunk, 0)}</td>{p95 && <td class="num">+{procent((a2.pris / p95 - 1) * 100)}</td>}</tr>}
+        {a4 && <tr><td>{okq8Href ? <a href={okq8Href}>OKQ8</a> : "OKQ8"} alkylat 4-takt</td><td class="num">{pris(a4.pris)}</td><td class="num">{kr(a4.pris * dunk, 0)}</td>{p95 && <td class="num">+{procent((a4.pris / p95 - 1) * 100)}</td>}</tr>}
+        {p95 && <tr><td>Bensin 95, snitt</td><td class="num">{pris(p95)}</td><td class="num">{kr(p95 * dunk, 0)}</td><td class="num">–</td></tr>}
+      </tbody>
+    </table></div>
+    <p class="kalla">OKQ8:s listpris inkl. moms{a2 ? `, gäller från ${a2.galler_fran}` : ""}. Bensin 95: kedjornas snitt {LP_DATUM}.</p>
+    {a2 && p95 && <p>Tvåtaktsalkylat vid pump kostar alltså {tal(Math.round(a2.pris / p95 * 10) / 10)} gånger så mycket per liter som bensin 95, men då är oljan redan inblandad. Priset i dunk sätts av varje butik och varierar med förpackningsstorleken.</p>}
+  </> : <p>Ingen kedja publicerar just nu ett listpris för alkylat. Priset vid pump och i dunk sätts av varje säljare.</p>}
+</Guide>

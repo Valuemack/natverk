@@ -74,10 +74,12 @@
   "bildmotiv": "A modern European container port with cranes and stacked colourful shipping containers under a clear evening sky",
   "bildalt": "Containerhamn med kranar och staplade containrar, en symbol för handel och ekonomisk integration i Europa",
   "poang": {
-    "positiv": 0.45,
-    "betydelse": 0.4,
+    "positiv": 0.5,
+    "betydelse": 0.3,
     "tillit": 0.97,
-    "total": 55
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -90,5 +92,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

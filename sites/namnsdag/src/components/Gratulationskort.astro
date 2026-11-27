@@ -1,0 +1,43 @@
+---
+// Delbart gratulationskort: namn och datum på ett festligt kort (SVG/CSS, inga bilder), med
+// knappar för att dela (Web Share), kopiera länken och lägga in dagen i kalendern.
+const { namn, datum, text = "Grattis på namnsdagen", url, ics, icsNamn, ovan = "" } = Astro.props;
+---
+<div class="gkort" data-dela={url} data-namn={namn}>
+  <svg class="kort-dekor" viewBox="0 0 320 60" aria-hidden="true" focusable="false">
+    <path d="M0 6 Q40 34 80 10 T160 10 T240 10 T320 6" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".55" />
+    {[18, 58, 98, 138, 178, 218, 258, 298].map((x, i) => (
+      <path d={`M${x} ${i % 2 ? 14 : 20} l7 0 l-3.5 12 z`} class={`flagga f${i % 4}`} />
+    ))}
+  </svg>
+  {ovan && <p class="kort-ovan">{ovan}</p>}
+  <p class="kort-text">{text}</p>
+  <p class="kort-namn">{namn}!</p>
+  <p class="kort-datum">{datum}</p>
+  <div class="kort-knappar">
+    <button type="button" class="knapp" data-gor="dela" hidden>Dela</button>
+    <button type="button" class="knapp sekundar" data-gor="kopiera">Kopiera länk</button>
+    {ics && <a class="knapp sekundar" href={ics} download={icsNamn}>Lägg in i kalendern</a>}
+  </div>
+  <p class="kort-status" aria-live="polite"></p>
+</div>
+<script is:inline>
+  (() => {
+    for (const k of document.querySelectorAll(".gkort[data-dela]")) {
+      if (k.dataset.klar) continue;
+      k.dataset.klar = "1";
+      const url = new URL(k.dataset.dela, location.href).href;
+      const status = k.querySelector(".kort-status");
+      const dela = k.querySelector('[data-gor="dela"]');
+      const text = `${k.querySelector(".kort-text").textContent} ${k.dataset.namn}!`;
+      if (navigator.share) {
+        dela.hidden = false;
+        dela.addEventListener("click", () => navigator.share({ title: text, text, url }).catch(() => {}));
+      }
+      k.querySelector('[data-gor="kopiera"]').addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(url); status.textContent = "Länken är kopierad."; }
+        catch { status.textContent = url; }
+      });
+    }
+  })();
+</script>

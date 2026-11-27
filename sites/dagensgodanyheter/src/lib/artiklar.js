@@ -1,6 +1,7 @@
-// Läser artiklarna (data/artiklar/*.json) vid byggtid och räknar fram läsvärdet som startsidan sorteras efter.
+// Läser artiklarna (data/artiklar/*.json) vid byggtid och räknar fram ordningen (glädje först) som startsidan sorteras efter.
 import { KAT, KAT_SLUGS } from "./kategorier.js";
 import { AMNESHUBBAR, hubbFor } from "./amnen.js";
+import { viktadPoang } from "./vikter.js";
 
 const filer = import.meta.glob("../../data/artiklar/*.json", { eager: true, import: "default" });
 
@@ -10,12 +11,11 @@ export const NU = process.env.BYGGTID ? new Date(process.env.BYGGTID) : new Date
 const farskhet = (iso) => Math.pow(0.5, Math.max(0, (NU - new Date(iso)) / 3.6e6) / 36); // halveringstid 36 h
 
 /**
- * Läsvärde 0–100: källans och nyhetens egna poäng (positiv, betydelse, tillit) vägs ihop med hur färsk artikeln är nu.
- * Samma vikter som i scripts/lib/poang.mjs, så att ordningen på startsidan följer poängsättningen.
+ * Läsvärde 0–100: nyhetens egna poäng (glädje, betydelse, tillit, aktualitet) vägs ihop med hur färsk
+ * artikeln är nu. Samma vikter som nattens urval (src/lib/vikter.js).
  */
 export function lasvarde(a) {
-  const p = a.poang ?? {};
-  return Math.round(100 * (0.35 * (p.positiv ?? 0.6) + 0.25 * (p.betydelse ?? 0.5) + 0.2 * farskhet(a.publicerad) + 0.2 * (p.tillit ?? 0.85)));
+  return viktadPoang({ ...(a.poang ?? {}), farskhet: farskhet(a.publicerad) });
 }
 
 export const ordAv = (a) => [a.ingress, ...a.avsnitt.flatMap((s) => [s.rubrik, ...s.stycken]), a.varfor].join(" ").split(/\s+/).filter(Boolean).length;
@@ -37,6 +37,16 @@ export const ARTIKLAR = Object.values(filer)
     ogBild: a.bild?.og ?? `/delning/${a.kategori}.jpg`,
   }))
   .sort((a, b) => new Date(b.publicerad) - new Date(a.publicerad));
+
+/** Antal artiklar per listsida i avdelningarna (sidan 1 = avdelningens förstasida). */
+export const PER_SIDA = 60;
+/** Avdelningens äldre artiklar, uppdelade i sidor 2, 3, … – samma uppdelning som avdelningssidan. */
+export function avdelningsSidor(slug, toppSlugar) {
+  const resten = ARTIKLAR.filter((a) => a.kategori === slug && !toppSlugar.has(a.slug));
+  const sidor = [];
+  for (let i = PER_SIDA; i < resten.length; i += PER_SIDA) sidor.push(resten.slice(i, i + PER_SIDA));
+  return sidor; // sidor[0] = sida 2
+}
 
 export const efterLasvarde = (lista) => [...lista].sort((a, b) => b.lasvarde - a.lasvarde || new Date(b.publicerad) - new Date(a.publicerad));
 export const iKategori = (slug) => ARTIKLAR.filter((a) => a.kategori === slug);

@@ -1,8 +1,180 @@
 ---
-import KatalogKommun from "@natverk/core/katalog/KatalogKommun.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA, TITEL_ORD } from "../../site.js";
+// Kommunsidan – sajtens tjockaste sidtyp. Allt på sidan räknas ur kommunens egna stationer, kedjornas listpriser
+// och grannkommunerna, så att två kommuner bara liknar varandra om deras data gör det.
+// dagensbensinpris.se/ort/<kommun>/ och stationssidor som inte klarar kvalitetsgrinden 301-omdirigeras hit.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import OppetNu from "@natverk/core/katalog/OppetNu.astro";
+import OppetNuSkript from "@natverk/core/katalog/OppetNuSkript.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { adressRad, veckoSammanfattning, kmText, telLank, rakna, talText, invanarePer, FOLK_SVERIGE, avstandKm } from "@natverk/core/katalog.js";
+import Karta from "../../components/Karta.astro";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../site.js";
+import { LP_DATUM, LISTKEDJOR, DAGAR, idagPris, kedjePris, kr, pris, andring, datumText, kedjaHref, SENASTE_VECKA, FORRA_VECKAN } from "../../pris.js";
+import { FUNKTIONER, funktion, sammanfatta, narmastMed, grannkommuner, tjansterText, drivmedelText, typText, stationsPris, dygnetRunt } from "../../stationsfakta.js";
+import { KORSTRACKOR } from "../../lib/fakta.js";
 
 export const getStaticPaths = () => KAT.kommuner.map((k) => ({ params: { kommun: k.slug }, props: { kommun: k } }));
-const { kommun } = Astro.props;
+const { kommun: k } = Astro.props;
+const lan = KAT.lan.find((l) => l.slug === k.lanSlug);
+const E = k.enheter;
+const S = sammanfatta(E);
+const n = E.length;
+const datum = datumText(LP_DATUM);
+const b95 = S.billigast("bensin95"), bd = S.billigast("diesel"), be85 = S.billigast("e85");
+const snitt95 = idagPris("bensin95"), snittD = idagPris("diesel");
+const orter = rakna(E, (e) => e.ort);
+const perOrt = n > 10 && orter.length > 1;
+const dygn = S.per["dygnet-runt"];
+const stationer = (x) => (x === 1 ? "1 station" : `${talText(x)} stationer`);
+const listaNamn = (arr, max = 4) => arr.slice(0, max).map((e) => e.namn).join(", ") + (arr.length > max ? ` och ${arr.length - max} till` : "");
+
+// Grannkommuner med deras billigaste listpriskedja – den lokala prisjämförelsen.
+const grannar = grannkommuner(k, KAT.kommuner, 8).map((g) => {
+  const s = sammanfatta(g.enheter);
+  return { g, s, km: avstandKm(k, g), b: s.billigast("bensin95"), dygn: s.per["dygnet-runt"].length };
+});
+// Det som saknas i kommunen: närmaste station med just det, räknat från kommunens mittpunkt.
+const saknas = FUNKTIONER.filter((f) => ["e85", "hvo100", "fordonsgas", "adblue", "laddning", "lastbil", "dygnet-runt", "biltvatt"].includes(f.id) && S.per[f.id].length === 0)
+  .map((f) => ({ f, narmast: narmastMed(k, f.test, k.namn) })).filter((x) => x.narmast);
+const finns = FUNKTIONER.filter((f) => S.per[f.id].length > 0);
+
+// Pris per kedja i kommunen (kedjor med listpris) och skillnad mot snittet i landet.
+const kedjeRader = S.medListpris.length ? S.kedjor.map(([c, antal]) => ({ c, antal, lp: LISTKEDJOR.includes(c), href: kedjaHref(c) }))
+  : LISTKEDJOR.map((c) => ({ c, antal: "–", lp: true, href: kedjaHref(c) })); // inga listpriser i kommunen: visa de stora kedjornas
+const narmastLp = S.medListpris.length ? null : grannkommuner(k, KAT.kommuner, 30).map((g) => ({ g, km: avstandKm(k, g), b: sammanfatta(g.enheter).billigast("bensin95") })).filter((x) => x.b).sort((a, b) => a.km - b.km)[0];
+const skillnad95 = b95 ? b95.pris - snitt95 : null;
+const tank = 50;
+const milLan = KORSTRACKOR.perLan.find(([l]) => l === k.lan)?.[1];
+const arsKostnad = (p) => (milLan ? milLan * 0.6 * p : null); // räkneexempel 0,6 l/mil, se texten
+
+// Daglig utveckling för kedjorna som finns i kommunen (när historiken är minst två veckor lång).
+const FARG = { OKQ8: "#1f4f8f", "Circle K": "#d9480f", Preem: "#2b8a3e" };
+const trend = S.medListpris.map((c) => ({ namn: `${c} 95`, farg: FARG[c] ?? "#555", punkter: DAGAR.filter((d) => d.kedjor?.[c]?.bensin95 != null).map((d) => ({ x: d.datum, y: d.kedjor[c].bensin95 })) })).filter((l) => l.punkter.length >= 14);
+const v = SENASTE_VECKA, fv = FORRA_VECKAN;
+
+const folk = k.folk, per = invanarePer(folk, n);
+const perRiket = invanarePer(FOLK_SVERIGE, KAT.enheter.length);
+
+// Datadriven ingress: meningar som bara skrivs när datan finns.
+const ingress = [
+  `I ${k.namn} kommun finns ${stationer(n)}${orter.length > 1 ? ` på ${orter.length} orter` : ""}${S.kedjor[0] && S.kedjor[0][1] > 1 ? `, flest hos ${S.kedjor[0][0]} (${S.kedjor[0][1]})` : ""}.`,
+  b95 ? `Billigast listpris på bensin 95 bland kedjorna här har ${b95.kedjor.join(" och ")}: ${kr(b95.pris)} per liter, ${Math.abs(skillnad95) < 0.005 ? "samma som" : `${kr(Math.abs(skillnad95))} ${skillnad95 < 0 ? "under" : "över"}`} snittet i landet (${kr(snitt95)}).` : `Ingen av kedjorna i ${k.namn} publicerar listpris, så priset sätts på varje station. Snittet i landet för 95 är ${kr(snitt95)}.`,
+  dygn.length ? `${dygn.length === n ? "Alla" : dygn.length} ${dygn.length === 1 && dygn.length !== n ? "station går" : "går"} att tanka dygnet runt.` : `Ingen station i kommunen har tankning dygnet runt enligt våra uppgifter.`,
+].join(" ");
+
+const fragor = [
+  { fraga: `Hur många bensinstationer finns i ${k.namn}?`, svar: `Det finns ${stationer(n)} i ${k.namn} kommun: ${S.kedjor.slice(0, 6).map(([c, x]) => `${c} ${x}`).join(", ")}${S.kedjor.length > 6 ? " med flera" : ""}.` },
+  { fraga: `Vad kostar bensin i ${k.namn} idag?`, svar: b95 ? `Lägst listpris för 95 bland kedjorna i ${k.namn} har ${b95.kedjor.join(" och ")} med ${kr(b95.pris)} per liter den ${datum}.${bd ? ` Diesel kostar från ${kr(bd.pris)}.` : ""} Priset vid pumpen sätts per station och kan avvika.` : `Kedjorna i ${k.namn} publicerar inga listpriser. Snittet i landet är ${kr(snitt95)} per liter 95 den ${datum}.` },
+  { fraga: `Var kan man tanka dygnet runt i ${k.namn}?`, svar: dygn.length ? `${dygn.length} stationer har tankning dygnet runt: ${listaNamn(dygn, 5)}.` : `Enligt våra uppgifter har ingen station i ${k.namn} tankning dygnet runt.${saknas.find((x) => x.f.id === "dygnet-runt") ? ` Närmast är ${saknas.find((x) => x.f.id === "dygnet-runt").narmast.enhet.namn} i ${saknas.find((x) => x.f.id === "dygnet-runt").narmast.enhet.kommun}, cirka ${kmText(saknas.find((x) => x.f.id === "dygnet-runt").narmast.km)} fågelvägen.` : ""}` },
+  ...["e85", "hvo100", "fordonsgas"].map((id) => {
+    const f = funktion(id), st = S.per[id], s = saknas.find((x) => x.f.id === id);
+    return { fraga: `Var kan man tanka ${f.kort} i ${k.namn}?`, svar: st.length ? `${st.length === 1 ? "En station" : `${st.length} stationer`} säljer ${f.kort}: ${listaNamn(st)}.` : `Ingen station i ${k.namn} säljer ${f.kort} enligt våra uppgifter.${s ? ` Närmast är ${s.narmast.enhet.namn} i ${s.narmast.enhet.kommun}, cirka ${kmText(s.narmast.km)} fågelvägen.` : ""}` };
+  }),
+  S.per.biltvatt.length > 0 && { fraga: `Vilka bensinstationer har biltvätt i ${k.namn}?`, svar: `${listaNamn(S.per.biltvatt, 6)}.` },
+  grannar[0]?.b && b95 && { fraga: `Är bensinen billigare i grannkommunerna?`, svar: `Lägst listpris i ${grannar.filter((x) => x.b).slice(0, 3).map((x) => `${x.g.namn} (${x.b.kedjor[0]} ${kr(x.b.pris)})`).join(", ")}, jämfört med ${kr(b95.pris)} i ${k.namn}. Lågpriskedjor och obemannade stationer publicerar inga priser och syns inte i jämförelsen.` },
+].filter(Boolean);
+
+const titel = [`Bensinstationer i ${k.namn} – ${n} st, bensinpris idag`, `Bensinstationer i ${k.namn} – ${n} st och priser`, `Bensinstationer i ${k.namn} – ${n} st`].find((t) => t.length <= 60) ?? `Bensinstationer ${k.namn}`;
+const beskrivning = besk(`${n === 1 ? "Den enda bensinstationen" : `Alla ${n} bensinstationer`} i ${k.namn} med adress, öppettider och dagens listpris per kedja.`,
+  b95 && `✓ Billigast 95: ${kr(b95.pris)}`, dygn.length > 0 && `✓ ${dygn.length} dygnet runt`, S.per.e85.length > 0 && "✓ E85", S.per.hvo100.length > 0 && "✓ HVO100", "✓ Karta");
+const smulor = [{ namn: "Start", href: "/" }, ...(lan ? [{ namn: lan.kortnamn, href: lan.href }] : []), { namn: k.namn, href: k.href }];
+const itemList = { "@context": "https://schema.org", "@type": "ItemList", name: `Bensinstationer i ${k.namn}`, numberOfItems: n,
+  itemListElement: E.slice(0, 100).map((e, i) => ({ "@type": "ListItem", position: i + 1, item: { "@type": "GasStation", name: e.namn, url: new URL(e.href, SITE.url).href, ...(e.gatuadress && { address: { "@type": "PostalAddress", streetAddress: e.gatuadress, postalCode: e.postnummer ?? undefined, addressLocality: e.ort ?? k.namn, addressCountry: "SE" } }), ...(e.lat != null && { geo: { "@type": "GeoCoordinates", latitude: e.lat, longitude: e.lon } }), ...(e.kedja && { brand: { "@type": "Brand", name: e.kedja } }) } })) };
+const grupper = perOrt ? [...orter.map(([ort]) => ({ rubrik: `Bensinstationer i ${ort}`, enheter: E.filter((e) => e.ort === ort) })), ...(E.some((e) => !e.ort) ? [{ rubrik: "Övriga stationer i kommunen", enheter: E.filter((e) => !e.ort) }] : [])]
+  : [{ rubrik: `Alla bensinstationer i ${k.namn}`, enheter: E }];
 ---
-<KatalogKommun site={SITE} kat={KAT} kommun={kommun} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} titelOrd={TITEL_ORD} />
+<Layout site={SITE} titel={titel} beskrivning={beskrivning} smulor={smulor} jsonld={[faqLd(fragor), itemList]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinstationer i {k.namn}</h1>
+  <p class="svar">{ingress}</p>
+
+  <div class="lank-rad">
+    <a href="#pris">Pris idag</a>
+    {finns.filter((f) => ["dygnet-runt", "e85", "hvo100", "fordonsgas", "adblue", "laddning", "lastbil", "biltvatt"].includes(f.id)).map((f) => <a href={`#${f.id}`}>{f.kort} ({S.per[f.id].length})</a>)}
+    <a href="#karta">Karta</a>
+    <a href="#stationer">Alla stationer</a>
+  </div>
+
+  <h2 id="pris">Bensinpris i {k.namn} idag</h2>
+  {S.medListpris.length === 0 && <>
+    <p>Ingen av kedjorna med stationer i {k.namn} ({S.kedjor.map(([c]) => c).join(", ")}) publicerar listpris, så priset står bara på prisskylten. Som jämförelse är detta de stora kedjornas listpriser i dag{narmastLp && <>; närmaste kommun med en sådan station är <a href={narmastLp.g.href}>{narmastLp.g.namn}</a>, cirka {kmText(narmastLp.km)} bort, där {narmastLp.b.kedjor.join(" och ")} har {kr(narmastLp.b.pris)} för 95</>}.</p>
+  </>}
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">95</th><th class="num">Diesel</th><th class="num">E85</th><th class="num">HVO100</th></tr></thead>
+    <tbody>{kedjeRader.map((x) => <tr>
+      <td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{x.antal}</td>
+      {x.lp ? ["bensin95", "diesel", "e85", "hvo100"].map((d) => { const p = kedjePris(x.c, d); const best = S.billigast(d); return <td class="num">{p == null ? "–" : best && best.kedjor.includes(x.c) && best.alla.length > 1 ? <strong>{pris(p)}</strong> : pris(p)}</td>; })
+        : <td class="num" colspan="4"><small>sätter pris per station</small></td>}
+    </tr>)}
+    <tr><td><em>Snitt i Sverige</em></td><td class="num"></td>{["bensin95", "diesel", "e85", "hvo100"].map((d) => <td class="num"><em>{pris(idagPris(d))}</em></td>)}</tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter inkl. moms. Kedjornas publicerade listpriser för företagskunder den {LP_DATUM}; lägst i kommunen i fetstil. Pumppriset sätts per station och kan avvika.</p>
+  {b95 && <p>{b95.kedjor.join(" och ")} har lägst listpris i {k.namn} med {kr(b95.pris)} per liter 95. {Math.abs(skillnad95) >= 0.005 ? <>Det är {kr(Math.abs(skillnad95))} {skillnad95 < 0 ? "billigare" : "dyrare"} än snittet i landet, {kr(Math.abs(skillnad95) * tank)} per tank på {tank} liter.</> : <>Det är samma som snittet i landet.</>}{milLan && <> En privatbil i {k.lan} körs i snitt {talText(milLan)} mil per år enligt Trafikanalys. Med en förbrukning på 0,6 liter per mil (räkneexempel) blir det ungefär {kr(arsKostnad(b95.pris), 0)} per år i bensin till dagens lägsta listpris.</>}</p>}
+  {S.obemannade.length > 0 && <p>{S.obemannade.length === n ? "Alla" : S.obemannade.length} av stationerna i {k.namn} är obemannade{rakna(S.obemannade, (e) => e.kedja).length > 0 && <> ({rakna(S.obemannade, (e) => e.kedja).slice(0, 4).map(([c, x]) => `${c} ${x}`).join(", ")})</>}. Obemannade kedjor publicerar sällan priser – jämför på prisskylten. Läs <a href="/guider/billigaste-bensinen/">så hittar du billigaste bensinen</a>.</p>}
+  <p class="kalla">Veckosnittet för hela Sverige (EU-kommissionen) var {kr(v.b95)} för 95 och {kr(v.diesel)} för diesel veckan som började {datumText(v.datum)}, {andring(v.b95 - fv.b95)} respektive {andring(v.diesel - fv.diesel)} mot veckan innan. <a href="/bensinpris/">Dagens pris i hela landet</a> · <a href="/dieselpris/">dieselpris</a>.</p>
+  {trend.length > 0 && <Kurva titel={`Listpris för 95 hos kedjorna i ${k.namn}`} linjer={trend} />}
+
+  <Annons plats="kommun-1" />
+
+  <h2 id="karta">Karta över bensinstationerna i {k.namn}</h2>
+  <Karta punkter={E.map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.href, rad: [e.kedja, adressRad(e)].filter(Boolean).join(" · ") }))} />
+
+  {grupper.map((g, gi) => <>
+    <h2 id={gi === 0 ? "stationer" : undefined}>{g.rubrik}</h2>
+    <ul class="enheter">
+      {g.enheter.map((e) => {
+        const vs = veckoSammanfattning(e.oppettider);
+        const extra = drivmedelText(e).filter((x) => !["95", "diesel"].includes(x));
+        const tj = tjansterText(e);
+        const p95 = stationsPris(e, "bensin95"), pd = stationsPris(e, "diesel");
+        return <li id={e.egenSida ? undefined : e.slug}>
+          <h3 class="namn" style="margin:0;font-size:1.05rem">{e.egenSida ? <a href={e.href}>{e.namn}</a> : e.namn}</h3>
+          <span class="rad">{[e.kedja, typText(e), dygnetRunt(e) && "tankning dygnet runt"].filter(Boolean).join(" · ")}</span>
+          {adressRad(e) && <span class="rad">{adressRad(e)}</span>}
+          {vs && <span class="rad">Öppet {vs}</span>}
+          {extra.length > 0 && <span class="rad">Drivmedel: {drivmedelText(e).join(", ")}</span>}
+          {tj.length > 0 && <span class="rad">Service: {tj.join(", ")}</span>}
+          {(p95 || pd) && <span class="rad">{e.kedja}s listpris idag: {[p95 && `95 ${kr(p95)}`, pd && `diesel ${kr(pd)}`].filter(Boolean).join(" · ")}</span>}
+          {e.extra?.max_fordonslangd_m > 0 && <span class="rad">Max fordonslängd {String(e.extra.max_fordonslangd_m).replace(".", ",")} m</span>}
+          {!e.egenSida && e.telefonEgen && <span class="rad">Telefon <a href={telLank(e.telefonEgen)}>{e.telefonEgen}</a></span>}
+          <OppetNu enhet={e} />
+        </li>;
+      })}
+    </ul>
+    {gi === 0 && grupper.length > 1 && <Annons plats="kommun-2" />}
+  </>)}
+
+  {finns.filter((f) => f.id !== "luft").map((f) => <>
+    <h2 id={f.id}>{f.namn} i {k.namn}</h2>
+    <p>{S.per[f.id].length === n ? `Alla ${n}` : `${S.per[f.id].length} av ${n}`} {S.per[f.id].length === 1 && n !== 1 ? "station har" : "stationer har"} {f.kort}{f.href && <> – se <a href={f.href}>alla stationer med {f.kort} i Sverige</a></>}.</p>
+    <ul class="kolumner">{S.per[f.id].map((e) => <li><a href={e.href}>{e.namn}</a>{e.ort && e.ort !== k.namn && <small> – {e.ort}</small>}</li>)}</ul>
+  </>)}
+
+  {saknas.length > 0 && <>
+    <h2>Det finns inte i {k.namn} – närmaste alternativ</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Saknas i kommunen</th><th>Närmaste station</th><th class="num">Avstånd</th></tr></thead>
+      <tbody>{saknas.map((x) => <tr><td>{x.f.namn}</td><td><a href={x.narmast.enhet.href}>{x.narmast.enhet.namn}</a>, {x.narmast.enhet.kommun}</td><td class="num">{kmText(x.narmast.km)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Fågelvägen från kommunens mittpunkt (medel av stationernas lägen). Vägen är längre.</p>
+  </>}
+
+  {per && perRiket && <p>I {k.namn} går det en bensinstation på ungefär {talText(per)} invånare (folkmängd {talText(folk)} enligt SCB). I hela landet är det en på {talText(perRiket)}, så {k.namn} har {per < perRiket * 0.9 ? "fler" : per > perRiket * 1.1 ? "färre" : "ungefär lika många"} stationer per invånare än snittet.</p>}
+
+  {grannar.length > 0 && <>
+    <h2>Bensinstationer i grannkommunerna</h2>
+    <div class="tabell"><table>
+      <thead><tr><th>Kommun</th><th class="num">Stationer</th><th class="num">Dygnet runt</th><th>Lägst listpris 95</th><th class="num">Avstånd</th></tr></thead>
+      <tbody>{grannar.map((x) => <tr><td><a href={x.g.href}>{x.g.namn}</a></td><td class="num">{x.s.n}</td><td class="num">{x.dygn}</td><td>{x.b ? `${x.b.kedjor.join("/")} ${pris(x.b.pris)}` : "–"}</td><td class="num">{kmText(x.km)}</td></tr>)}</tbody>
+    </table></div>
+    <p class="kalla">Avstånd fågelvägen mellan kommunernas mittpunkter.{lan && <> Alla kommuner i <a href={lan.href}>{lan.namn}</a>.</>}</p>
+  </>}
+
+  <Annons plats="kommun-3" />
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Listpriser från {LISTKEDJOR.join(", ")}. Hittar du ett fel? <a href="/om/#kontakt">Tipsa oss</a>.</p>
+  <OppetNuSkript slot="skript" />
+</Layout>

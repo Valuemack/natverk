@@ -1,6 +1,7 @@
 // Strukturerad data för en nyhetssajt: NewsMediaOrganization, WebSite, NewsArticle, CollectionPage och BreadcrumbList.
 import { abs } from "@natverk/core/seo.js";
 import { SITE } from "../site.js";
+import { BILDTEXT_GENERERAD } from "./bildtext.js";
 
 export const ORG_ID = `${SITE.url}/#organisation`;
 
@@ -41,8 +42,22 @@ export const breadcrumbLd = (smulor) => ({
 });
 
 export function nyhetsartikelLd(a) {
-  // Artiklar utan bild: sajtens logga som bild i schemat (ingen platshållargrafik).
-  const bild = a.bild ? [abs(SITE, a.bild.og)] : [`${SITE.url}/logo-512.png`];
+  // Bild som ImageObject med bildtext (samma som under bilden). Artiklar utan bild: sajtens logga (ingen platshållargrafik).
+  const b = a.bild;
+  const genererad = Boolean(b?.genererad || b?.illustration);
+  const bild = b?.fil
+    ? [{
+      "@type": "ImageObject",
+      url: abs(SITE, b.og ?? b.fil),
+      contentUrl: abs(SITE, b.og ?? b.fil),
+      width: 1280,
+      height: 720,
+      caption: genererad ? BILDTEXT_GENERERAD : [String(b.alt ?? "").replace(/[.!]$/, ""), b.fotograf && `Foto: ${b.fotograf}`, b.licens].filter(Boolean).join(". "),
+      description: b.alt,
+      creditText: genererad ? SITE.namn : b.fotograf ?? b.kalla,
+      ...(b.licensUrl && { license: b.licensUrl }),
+    }]
+    : [`${SITE.url}/logo-512.png`];
   return {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -61,7 +76,7 @@ export function nyhetsartikelLd(a) {
     author: { "@type": "Organization", name: SITE.redaktion, url: `${SITE.url}/om/#redaktionen` },
     publisher: { "@id": ORG_ID, "@type": "NewsMediaOrganization", name: SITE.namn, logo: { "@type": "ImageObject", url: `${SITE.url}/logo-512.png` } },
     isBasedOn: { "@type": "CreativeWork", name: a.kalla.rubrik || a.kalla.namn, url: a.kalla.url, publisher: { "@type": "Organization", name: a.kalla.namn, url: a.kalla.hem } },
-    citation: [a.kalla.url, ...(a.ovrigaKallor ?? []).map((k) => k.url)],
+    citation: [a.kalla.url, ...(a.via ? [a.via.url] : []), ...(a.ovrigaKallor ?? []).map((k) => k.url), ...(a.bakgrund ?? []).map((b) => b.kalla.url)],
     ...(a.rattelser?.length && { correction: a.rattelser.map((r) => ({ "@type": "CorrectionComment", text: r.text, datePublished: r.datum })) }),
   };
 }

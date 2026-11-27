@@ -1,0 +1,110 @@
+---
+// Pressvinklar: egna sammanställningar av SCB:s namnstatistik och namnlängden, fria att citera.
+import Layout from "../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
+import { SITE, UPPDATERAD, ALLA_NAMN, UTAN_NAMNSDAG, ANDRINGAR, DAGAR, namnPaDag, dagText, dagHref, namnHref, tal, lista, beskriv, procent, SCB_KALLA, AR } from "../site.js";
+import { scb, medelalder, nyfodda } from "../lib/namndata.js";
+import { BARNNAMN } from "../lib/barnnamn.js";
+
+const komma = (x) => String(x).replace(".", ",");
+const sida = (namn) => ALLA_NAMN.find((n) => n.namn === namn)?.slug ?? UTAN_NAMNSDAG.find((x) => x.namn === namn)?.slug;
+const kon = (x) => (x.K >= x.M ? "K" : "M");
+
+// 1. Namn som ökar mest bland nyfödda (minst 300 barn 2018–2022 och 100 under 2013–2017).
+const okar = (k) => BARNNAMN.filter((x) => kon(x) === k && x.K + x.M >= 300 && x.fore >= 100).sort((a, b) => b.trend - a.trend).slice(0, 5);
+// 2. Almanacksnamn som nästan inga nyfödda får längre.
+const glomda = ALLA_NAMN.map((n) => ({ namn: n.namn, datum: n.datum, s: scb(n.namn), nyf: nyfodda(n.namn).filter((r) => r.ar >= 2018).reduce((s, r) => s + r.x, 0) }))
+  .filter((x) => x.s && x.s.tilltal >= 2000 && x.nyf === 0).sort((a, b) => b.s.tilltal - a.s.tilltal).slice(0, 10);
+// 3–4. Äldsta och yngsta vanliga namnen (medelålder, minst 5 000 bärare).
+const medel = [...ALLA_NAMN.map((n) => n.namn), ...UTAN_NAMNSDAG.map((x) => x.namn)]
+  .map((namn) => ({ namn, s: scb(namn), a: medelalder(namn)?.total })).filter((x) => x.s && x.s.tilltal >= 5000 && x.a);
+const aldst = [...medel].sort((a, b) => b.a - a.a).slice(0, 8);
+const yngst = [...medel].sort((a, b) => a.a - b.a).slice(0, 8);
+// 5. Namnsdagen med flest och färst firare.
+const dagar = DAGAR.map((k) => ({ k, namn: namnPaDag(k), n: namnPaDag(k).reduce((s, x) => s + (scb(x.namn)?.tilltal ?? 0), 0) })).filter((d) => d.namn.length);
+const flestDag = [...dagar].sort((a, b) => b.n - a.n).slice(0, 5);
+const farstDag = [...dagar].sort((a, b) => a.n - b.n).slice(0, 5);
+// 6. Vanligaste namnen utan namnsdag.
+const utan = UTAN_NAMNSDAG.filter((x) => !x.huvud).slice(0, 8);
+const utanSumma = UTAN_NAMNSDAG.reduce((s, x) => s + x.antal, 0);
+// 7. Könsneutrala namn: minst 1 000 bärare och minst 15 procent av det mindre vanliga könet.
+const neutrala = Object.entries(Object.fromEntries([...ALLA_NAMN.map((n) => n.namn), ...UTAN_NAMNSDAG.map((x) => x.namn)].map((n) => [n, scb(n)])))
+  .filter(([, s]) => s && s.tilltal >= 1000 && Math.min(s.K, s.M) / s.tilltal >= 0.15).sort((a, b) => b[1].tilltal - a[1].tilltal).slice(0, 8);
+// 8. Nya namn 2027.
+const nya = ANDRINGAR.filter((a) => a.ar === 2027 && a.nytt).map((a) => ({ ...a, s: scb(a.nytt), nyf: nyfodda(a.nytt).at(-1)?.x ?? 0 }));
+
+const K1 = okar("K")[0], M1 = okar("M")[0];
+const fragor = [
+  { fraga: "Får jag citera siffrorna?", svar: "Ja. Uppgifterna bygger på SCB:s öppna namnstatistik (CC0) och namnlängden från Isof. Ange gärna dagensnamnsdagar.se och SCB som källa. Sammanställningarna är våra egna." },
+  { fraga: "Hur färsk är statistiken?", svar: "SCB slutade publicera namnstatistik 2024. De senaste siffrorna gäller folkbokförda 31 december 2020 (tilltalsnamn och medelålder) och nyfödda 2022. Skatteverket publicerar numera topplistor för nyfödda." },
+  { fraga: "Vilket namn ökar mest bland nyfödda?", svar: `Bland flicknamnen ökade ${K1.namn} mest (+${K1.trend} procent 2018–2022 jämfört med 2013–2017), bland pojknamnen ${M1.namn} (+${M1.trend} procent). Bara namn som minst 300 barn fick under perioden räknas.` },
+];
+---
+<Layout site={SITE} titel="Namnstatistik för press – nyhetsvinklar ur SCB:s data"
+  beskrivning={beskriv(`Färdiga nyhetsvinklar om svenska förnamn: namn som ökar mest, almanacksnamn som försvinner, äldsta och yngsta namnen och vem som firar mest.`, "✓ Fritt att citera")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Press", href: "/press/" }]} jsonld={[faqLd(fragor), datasetLd({ namn: "Namnstatistik för press – nyhetsvinklar 1998–2022", beskrivning: "Sammanställda nyhetsvinklar ur SCB:s namnstatistik: stigande och fallande namn bland nyfödda, namn som försvunnit, vanliga namn utan namnsdag och nya namn i almanackan 2027.", sokvag: "/press/", tid: "1998/2022", nyckelord: ["namnstatistik", "press"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] })]} uppdaterad={UPPDATERAD}>
+  <h1>Namnstatistik för press</h1>
+  <p class="svar">Här är färdiga vinklar ur <strong>SCB:s namnstatistik</strong> och almanackans namnlängd, sammanställda av dagensnamnsdagar.se. Siffrorna är fria att citera med källa. Tilltalsnamn och medelålder gäller 31 december 2020, nyfödda 1998–2022 – de senaste uppgifter SCB publicerat.</p>
+
+  <h2>1. Namnen som ökar mest bland nyfödda</h2>
+  <p>{K1.namn} och {M1.namn} är de namn som ökat mest: fler barn fick dem 2018–2022 än under de fem åren innan, räknat bland namn som minst 300 barn fick.</p>
+  <div class="tva-rutor">
+    {[["Flicknamn", okar("K")], ["Pojknamn", okar("M")]].map(([rub, xs]) => <div class="tabell"><table>
+      <caption>{rub}</caption>
+      <thead><tr><th>Namn</th><th class="num">2013–17</th><th class="num">2018–22</th><th class="num">Ökning</th></tr></thead>
+      <tbody>{xs.map((x) => <tr><td>{sida(x.namn) ? <a href={`/namn/${sida(x.namn)}/`}>{x.namn}</a> : x.namn}</td><td class="num">{tal(x.fore)}</td><td class="num">{tal(x.K + x.M)}</td><td class="num">+{x.trend} %</td></tr>)}</tbody>
+    </table></div>)}
+  </div>
+
+  <h2>2. Almanacksnamnen som nästan inga nyfödda får</h2>
+  <p>{glomda.length} namn i almanackan med minst 2 000 bärare gavs inget av åren 2018–2022 till fler än ett nyfött barn (SCB redovisar bara namn som minst två barn fått ett visst år). Vanligast av dem är {sida(glomda[0].namn) ? <a href={`/namn/${sida(glomda[0].namn)}/`}>{glomda[0].namn}</a> : glomda[0].namn} med {tal(glomda[0].s.tilltal)} bärare.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Namnsdag</th><th class="num">Bärare 2020</th><th class="num">Medelålder</th></tr></thead>
+    <tbody>{glomda.map((x) => <tr><td>{sida(x.namn) ? <a href={`/namn/${sida(x.namn)}/`}>{x.namn}</a> : x.namn}</td><td><a href={dagHref(x.datum)}>{dagText(x.datum)}</a></td><td class="num">{tal(x.s.tilltal)}</td><td class="num">{medelalder(x.namn)?.total ? komma(medelalder(x.namn).total) : "–"}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>3. Äldsta och yngsta vanliga namnen</h2>
+  <p>Bland namn med minst 5 000 bärare har {sida(aldst[0].namn) ? <a href={`/namn/${sida(aldst[0].namn)}/`}>{aldst[0].namn}</a> : aldst[0].namn} högst medelålder, {komma(aldst[0].a)} år. Lägst har {sida(yngst[0].namn) ? <a href={`/namn/${sida(yngst[0].namn)}/`}>{yngst[0].namn}</a> : yngst[0].namn}, {komma(yngst[0].a)} år.</p>
+  <div class="tva-rutor">
+    {[["Högst medelålder", aldst], ["Lägst medelålder", yngst]].map(([rub, xs]) => <div class="tabell"><table>
+      <caption>{rub}</caption>
+      <thead><tr><th>Namn</th><th class="num">Medelålder</th><th class="num">Bärare</th></tr></thead>
+      <tbody>{xs.map((x) => <tr><td>{sida(x.namn) ? <a href={`/namn/${sida(x.namn)}/`}>{x.namn}</a> : x.namn}</td><td class="num">{komma(x.a)}</td><td class="num">{tal(x.s.tilltal)}</td></tr>)}</tbody>
+    </table></div>)}
+  </div>
+
+  <h2>4. Dagen då flest – och färst – firar namnsdag</h2>
+  <p>Den {dagText(flestDag[0].k)} kan flest fira namnsdag: {tal(flestDag[0].n)} personer har {lista(flestDag[0].namn.map((n) => n.namn))} som tilltalsnamn. Färst firar den {dagText(farstDag[0].k)} ({lista(farstDag[0].namn.map((n) => n.namn))}, {farstDag[0].n ? `${tal(farstDag[0].n)} personer` : "färre än 10 personer"}).</p>
+  <div class="tva-rutor">
+    {[["Flest firare", flestDag], ["Färst firare", farstDag]].map(([rub, xs]) => <div class="tabell"><table>
+      <caption>{rub}</caption>
+      <thead><tr><th>Dag</th><th>Namn</th><th class="num">Bärare</th></tr></thead>
+      <tbody>{xs.map((d) => <tr><td><a href={dagHref(d.k)}>{dagText(d.k)}</a></td><td>{lista(d.namn.map((n) => n.namn))}</td><td class="num">{d.n ? tal(d.n) : "färre än 10"}</td></tr>)}</tbody>
+    </table></div>)}
+  </div>
+
+  <h2>5. Vanliga namn som saknar namnsdag</h2>
+  <p>{tal(UTAN_NAMNSDAG.length)} tilltalsnamn med minst 1 000 bärare finns inte i almanackan – sammanlagt {tal(utanSumma)} personer. Vanligast utan någon almanacksform är {lista(utan.slice(0, 3).map((x) => x.namn))}. De har gemensam namnsdag 1 januari.</p>
+  <ul class="namnchips">{utan.map((x) => <li><a href={`/namn/${x.slug}/`}>{x.namn}<small>{tal(x.antal)}</small></a></li>)}</ul>
+
+  <h2>6. Könsneutrala namn</h2>
+  <p>Namn med minst 1 000 bärare där minst 15 procent bärs av det andra könet:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th class="num">Bärare</th><th class="num">Kvinnor</th><th class="num">Män</th></tr></thead>
+    <tbody>{neutrala.map(([n, s]) => <tr><td>{sida(n) ? <a href={`/namn/${sida(n)}/`}>{n}</a> : n}</td><td class="num">{tal(s.tilltal)}</td><td class="num">{procent(s.K, s.tilltal)} %</td><td class="num">{procent(s.M, s.tilltal)} %</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>7. De sex nya namnen i almanackan 2027</h2>
+  <p>Från 2027 får {lista(nya.map((a) => a.nytt))} namnsdag. Tillsammans hade de {tal(nya.reduce((s, a) => s + (a.s?.tilltal ?? 0), 0))} bärare 2020, och {tal(nya.reduce((s, a) => s + a.nyf, 0))} nyfödda fick något av namnen 2022.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Namn</th><th>Namnsdag</th><th class="num">Bärare 2020</th><th class="num">Nyfödda 2022</th></tr></thead>
+    <tbody>{nya.map((a) => <tr><td>{sida(a.nytt) ? <a href={`/namn/${sida(a.nytt)}/`}>{a.nytt}</a> : a.nytt}</td><td>{dagText(a.datum)}</td><td class="num">{a.s ? tal(a.s.tilltal) : "–"}</td><td class="num">{tal(a.nyf)}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>Källor och metod</h2>
+  <p>{SCB_KALLA}. Nyfödda: SCB BE0001Nyfodda (namn som minst två barn fått ett visst år). Medelålder: SCB BE0001T08AR. Namnlängden: Institutet för språk och folkminnen. Alla sammanställningar och urval är dagensnamnsdagar.se:s egna och görs om vid varje bygge ({AR}). Läs mer under <a href="/om/#kallor">källor och metod</a>.</p>
+  <Faq fragor={fragor} />
+</Layout>

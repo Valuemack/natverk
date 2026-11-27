@@ -60,14 +60,46 @@
   "ovrigaKallor": [],
   "publicerad": "2026-11-25T10:41:00.000Z",
   "uppdaterad": "2026-11-25T10:41:00.000Z",
-  "bild": null,
+  "bild": {
+    "fil": "/bilder/elektrisk-sjoglidare-har-flugit-over-vattnet.webp",
+    "og": "/bilder/elektrisk-sjoglidare-har-flugit-over-vattnet.jpg",
+    "liten": "/bilder/elektrisk-sjoglidare-har-flugit-over-vattnet-640.webp",
+    "bredd": 1536,
+    "hojd": 864,
+    "alt": "Målad illustration av en vit, vingad elektrisk sjöglidare som glider över vattnet vid solnedgång.",
+    "genererad": true,
+    "illustration": true,
+    "stil": "illustration",
+    "licens": "Illustration: Dagens goda nyheter",
+    "fotograf": null,
+    "modell": "gpt-image-2.6-flare",
+    "motiv": "a sleek electric wing-in-ground-effect craft skimming low over a calm coastal bay at dawn, no visible markings",
+    "skapad": "2026-11-26T01:32:31.076Z",
+    "anvandning": {
+      "input_tokens": 247,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 247
+      },
+      "output_tokens": 924,
+      "output_tokens_details": {
+        "image_tokens": 924,
+        "text_tokens": 0
+      },
+      "total_tokens": 1171
+    },
+    "kostnadUSD": 0.028955,
+    "kontroller": [],
+    "granskningUSD": 0.0003058
+  },
   "bildmotiv": "a sleek electric wing-in-ground-effect craft skimming low over a calm coastal bay at dawn, no visible markings",
   "bildalt": "Elektrisk sjöglidare som flyger lågt över en lugn havsvik",
   "poang": {
-    "positiv": 0.45,
+    "positiv": 0.7,
     "betydelse": 0.3,
     "tillit": 0.93,
-    "total": 61
+    "total": 65,
+    "gladje": 0.6
   },
   "produktion": {
     "metod": "ai-stod",
@@ -79,5 +111,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "bild",
+  "typ": "klimat"
 }

@@ -1,13 +1,14 @@
 ---
 // A–Ö-register över alla namn i almanackan plus vanliga stavningsvarianter.
-import Layout from "@natverk/core/Layout.astro";
+import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import { faqLd } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import { SITE, UPPDATERAD, ALLA_NAMN, VARIANTER, AR, dagText, namnHref, tal, barare } from "../site.js";
 
 const poster = [
-  ...ALLA_NAMN.map((n) => ({ namn: n.namn, href: `/namn/${n.slug}/`, dag: dagText(n.datum), fran: n.fran })),
+  ...ALLA_NAMN.map((n) => ({ namn: n.namn, href: namnHref(n.namn), dag: dagText(n.datum), fran: n.fran })),
   ...VARIANTER.map((v) => ({ namn: v.namn, href: `/namn/${v.slug}/`, dag: dagText(v.huvud.datum), se: v.huvud.namn })),
 ].sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
 const grupper = new Map();
@@ -16,14 +17,14 @@ const antalAlm = ALLA_NAMN.filter((n) => !n.fran || n.fran <= AR).length;
 const nya = ALLA_NAMN.filter((n) => n.fran && n.fran > AR);
 const storsta = [...ALLA_NAMN].sort((a, b) => barare(b) - barare(a))[0];
 const fragor = [
-  { fraga: "Hur många namn finns i almanackan?", svar: `Den svenska namnlängden har ${antalAlm} namn ${AR}.${nya.length ? ` Från ${nya[0].fran} tillkommer ${nya.length} namn, så att det blir ${antalAlm + nya.length}.` : ""} Några dagar, som juldagen och midsommardagen, saknar namn.` },
+  { fraga: "Hur många namn finns i almanackan?", svar: `Den svenska namnlängden har ${antalAlm} namn ${AR}.${nya.length ? ` Från ${nya[0].fran} tillkommer ${nya.length} namn, så att det blir ${antalAlm + nya.length}.` : ""} Några dagar, som juldagen och kyndelsmässodagen, saknar namn.` },
   { fraga: "Vilket namn i almanackan har flest bärare?", svar: `${storsta.namn}, med ${tal(barare(storsta))} personer som har namnet som tilltalsnamn (SCB 2020). Namnsdagen är den ${dagText(storsta.datum)}.` },
 ];
 ---
 <Layout site={SITE} titel={`Alla namn A–Ö – ${antalAlm} namnsdagar i almanackan ${AR}`}
   beskrivning={`Alla ${antalAlm} namn i den svenska almanackan i bokstavsordning, med datum för namnsdagen. Även ${VARIANTER.length} vanliga stavningsvarianter som Thomas och Carl.`}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Alla namn", href: "/alla-namn/" }]}
-  jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  jsonld={[faqLd(fragor), itemListLd("Alla namn i almanackan A–Ö", [...ALLA_NAMN].sort((a, b) => a.namn.localeCompare(b.namn, "sv")).map((n) => ({ namn: `${n.namn} – ${dagText(n.datum)}`, href: namnHref(n.namn) })))]} uppdaterad={UPPDATERAD}>
   <h1>Alla namn i almanackan A–Ö</h1>
   <p class="svar">Almanackan har <strong>{antalAlm} namn</strong> med namnsdag {AR}{nya.length > 0 && <>, och {nya.length} nya namn tillkommer {nya[0].fran}</>}. Här är alla i bokstavsordning. Namn i grått är vanliga stavningsvarianter som inte står i almanackan men kan firas på huvudnamnets dag.</p>
   <nav class="alfabet" aria-label="Hoppa till bokstav">{[...grupper.keys()].map((b) => <a href={`#${b}`}>{b}</a>)}</nav>

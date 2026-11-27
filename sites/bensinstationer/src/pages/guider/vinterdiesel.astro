@@ -1,0 +1,176 @@
+---
+// Lång guide: vinterdiesel. Köldklasser och perioder i SS 155435:2022 (diesel Mk1), arktiska klasser i SS-EN 590:2025 (Mk3)
+// och SS-EN 15940:2023 (HVO), allt enligt Drivkraft Sveriges standardutdrag 2026. Grumlingspunkt, CFPP och råd från
+// Drivkraft Sverige. Dagens klass per region räknas fram ur prisdatumet. Stationer ur sajtens register. Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, STATIONER, idagPris, kr, procent, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+const pd = idagPris("diesel");
+
+// SS 155435:2022, tabell 10 och 11 (Drivkraft Sveriges utdrag 2026). CFPP och högsta grumlingstemperatur i °C.
+const KLASS = {
+  C: { cfpp: -5, cloud: 0, typ: "sommar" },
+  D: { cfpp: -10, cloud: 0, typ: "sommar" },
+  1: { cfpp: -26, cloud: -16, typ: "vinter" },
+  2: { cfpp: -32, cloud: -22, typ: "vinter" },
+  3: { cfpp: -32, cloud: -30, typ: "vinter" },
+};
+// Perioder som [från MM-DD, till MM-DD, klass]. Perioder som går över årsskiftet delas i två.
+const REGION = [
+  { id: "syd", namn: "Götaland och Svealand", lan: ["Stockholms län", "Uppsala län", "Södermanlands län", "Östergötlands län", "Jönköpings län", "Kronobergs län", "Kalmar län", "Gotlands län", "Blekinge län", "Skåne län", "Hallands län", "Västra Götalands län", "Värmlands län", "Örebro län", "Västmanlands län", "Dalarnas län"],
+    perioder: [["01-01", "03-31", "1"], ["04-01", "04-30", "D"], ["05-01", "09-15", "C"], ["09-16", "10-15", "D"], ["10-16", "12-31", "1"]] },
+  { id: "mitt", namn: "Gävleborg, Västernorrland och Jämtland", lan: ["Gävleborgs län", "Västernorrlands län", "Jämtlands län"],
+    perioder: [["01-01", "03-15", "2"], ["03-16", "04-30", "1"], ["05-01", "05-31", "D"], ["06-01", "08-15", "C"], ["08-16", "09-15", "D"], ["09-16", "11-30", "1"], ["12-01", "12-31", "2"]] },
+  { id: "nord", namn: "Västerbotten och Norrbotten", lan: ["Västerbottens län", "Norrbottens län"],
+    perioder: [["01-01", "03-01", "3"], ["03-02", "04-30", "2"], ["05-01", "05-31", "D"], ["06-01", "08-15", "C"], ["08-16", "09-15", "D"], ["09-16", "12-14", "2"], ["12-15", "12-31", "3"]] },
+];
+const md = LP_DATUM.slice(5);
+const klassIdag = (r) => r.perioder.find(([f, t]) => f <= md && md <= t)?.[2];
+const dagMan = (s) => { const [m, d] = s.split("-").map(Number); return `${d} ${["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"][m - 1]}`; };
+// Läsbara perioder (slå ihop perioden över årsskiftet).
+const periodText = (r) => {
+  const p = r.perioder;
+  const ut = [];
+  for (let i = 0; i < p.length; i++) {
+    const [f, t, k] = p[i];
+    if (f === "01-01") continue;
+    if (t === "12-31" && p[0][2] === k) ut.push([f, p[0][1], k]);
+    else ut.push([f, t, k]);
+  }
+  return ut;
+};
+const harD = (s) => s.drivmedel?.diesel === true;
+const harH = (s) => s.drivmedel?.hvo100 === true;
+const regionData = REGION.map((r) => {
+  const st = STATIONER.filter((s) => r.lan.includes(s.lan));
+  return { ...r, klass: klassIdag(r), d: st.filter(harD).length, h: st.filter(harH).length, dygn: st.filter((s) => harD(s) && s.dygnet).length };
+});
+const lanHref = new Map(KAT.lan.map((l) => [l.namn, l.href]));
+const nordLan = REGION.find((r) => r.id === "nord").lan.map((namn) => {
+  const st = STATIONER.filter((s) => s.lan === namn);
+  return { namn, href: lanHref.get(namn), d: st.filter(harD).length, dygn: st.filter((s) => harD(s) && s.dygnet).length, h: st.filter(harH).length };
+});
+const syd = regionData[0], nord = regionData[2];
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är vinterdiesel?" },
+  { id: "klasser", rubrik: "Köldklasserna i svensk standard" },
+  { id: "perioder", rubrik: "När byts dieseln till vinterkvalitet?" },
+  { id: "begrepp", rubrik: "Grumlingspunkt och CFPP" },
+  { id: "arktisk", rubrik: "Arktisk diesel och Europadiesel" },
+  { id: "hvo", rubrik: "HVO100 på vintern" },
+  { id: "rad", rubrik: "Så undviker du dieselstopp i kyla" },
+  { id: "norr", rubrik: "Tanka diesel i de kallaste länen" },
+];
+
+const fragor = [
+  { fraga: "När byter stationerna till vinterdiesel?", svar: "I Götaland och Svealand ska dieseln uppfylla vinterklass 1 från 16 oktober till 31 mars. I Gävleborgs, Västernorrlands och Jämtlands län gäller vinterklasser från 16 september till 30 april, och i Västerbottens och Norrbottens län också från 16 september till 30 april, med den kallaste klassen 3 från 15 december till 1 mars." },
+  { fraga: "Hur kall får det bli med vinterdiesel?", svar: "Vinterklass 1 ska klara filtertestet CFPP ned till −26 °C och ha en grumlingspunkt på högst −16 °C. Klass 2 klarar −32 °C med grumlingspunkt −22 °C, och klass 3 har samma CFPP men en grumlingspunkt på högst −30 °C." },
+  { fraga: "Vad är skillnaden mellan grumlingspunkt och CFPP?", svar: "Vid grumlingspunkten börjar de första paraffinkristallerna bildas och dieseln blir grumlig, men filtret täpps inte igen. CFPP är den lägsta temperatur där dieseln fortfarande går igenom ett standardfilter. Drivkraft Sverige anser att CFPP bäst speglar köldegenskaperna." },
+  { fraga: "Kan jag köra med sommardiesel på vintern?", svar: "Sommarklasserna C och D klarar bara CFPP −5 respektive −10 °C. Drivkraft Sverige råder den som tankar sällan eller lagrar diesel länge att se till att sommardiesel inte används på vintern. Har du dunkar eller en cistern från sommaren, förbruka den innan kylan kommer." },
+  { fraga: "Hjälper dieseltillsats mot kyla i HVO100?", svar: "Nej, enligt Drivkraft Sverige har köldtillsatser liten eller ingen effekt på HVO på grund av hur molekylerna är uppbyggda. HVO100 säljs i stället i arktiska klasser ned till CFPP −38 °C." },
+  pd != null && { fraga: "Vad kostar diesel idag?", svar: `Diesel kostar i snitt ${kr(pd)} per liter enligt kedjornas listpriser ${datum}. Vinterdieseln har inget eget pris, eftersom det är samma produkt som byter köldklass under året.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Vinterdiesel – köldklasser, datum och råd i kyla"
+  beskrivning="När vinterdieseln kommer i ditt län, köldklasserna ned till −32 °C, grumlingspunkt och CFPP, arktisk diesel, HVO100 i kyla och råd inför vintern."
+  h1="Vinterdiesel – när byts den och hur kallt klarar den?"
+  svar={`Svensk diesel (miljöklass 1) säljs i köldklasser enligt standarden SS 15 54 35. <strong>I Götaland och Svealand ska vinterdiesel klara −26 °C från 16 oktober till 31 mars</strong>. Längre norrut börjar vinterperioden 16 september, och i Västerbotten och Norrbotten gäller den kallaste klassen från 15 december till 1 mars. ${syd.klass && nord.klass ? `Idag gäller klass ${syd.klass} i söder och klass ${nord.klass} i de nordligaste länen.` : ""}`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Vinterdiesel", href: "/guider/vinterdiesel/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Pris per kedja och utveckling" },
+    { namn: "HVO100 – vilka bilar?", href: "/guider/hvo100-vilka-bilar/", text: "Godkännanden och XTL" },
+    { namn: "HVO100 – pris idag", href: "/drivmedel/hvo100/", text: "Stationer och pris" },
+    { namn: "Varför är diesel dyrare?", href: "/guider/varfor-ar-diesel-dyrare/", text: "Skatt och världsmarknad" },
+    { namn: "Bensin eller diesel?", href: "/guider/bensin-eller-diesel/", text: "Kostnad per mil och år" },
+  ]}
+  kallor={[
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/wp-content/uploads/2026/03/Standarder_2026_v2.pdf", text: "SS 155435:2022 tabell 10–11 med perioder, SS-EN 590:2025 tabell 13–14, SS-EN 15940:2023 tabell 25–26", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Standarder", url: "https://drivkraftsverige.se/fakta-statistik/standarder/", text: "standardutdragen publiceras med tillstånd från SIS", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Diesel", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/diesel/", text: "miljöklass 1 och 3, grumlingspunkt, CFPP, paraffiner och råd inför kyla", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Faktablad HVO (jan 2026)", url: "https://drivkraftsverige.se/wp-content/uploads/2026/01/DS-2026-Faktablad-HVO.pdf", text: "köldegenskaper, köldtillsatser och lagring av HVO", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Miljöklassade bränslen", url: "https://www.transportstyrelsen.se/sv/vagtrafik/miljo/Luftkvaliet-i-tatorter/Miljoklassade-branslen/", text: "miljöklass 1 dominerande sedan 1995, B7 och B10", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `OKQ8, Circle K och Preem, hämtade ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer med diesel och HVO100 per län" },
+  ]}>
+
+  <h2 id="vad">Vad är vinterdiesel?</h2>
+  <p>Vinterdiesel är ingen egen produkt med eget pris. Det är samma diesel som säljs året om, men med köldegenskaper som anpassas efter årstid och var i landet den säljs. Drivkraft Sverige påpekar att diesel är känsligare för kyla än bensin. Ju kallare det är, desto lättare fälls paraffiner ut som vaxkristaller som kan sätta igen bränslefiltret.</p>
+  <p>Den diesel som dominerar i Sverige är miljöklass 1. Enligt Transportstyrelsen har den varit den vanligaste på svenska marknaden sedan 1995. Den ska uppfylla den svenska standarden SS 15 54 35, och det är den som anger vilka köldklasser som ska säljas när och var. Det sköter bolagen, så du som bilist behöver inte välja något vid pumpen. Det du behöver tänka på är diesel som blivit stående sedan sommaren, i tanken, i dunkar eller i en cistern.</p>
+
+  <h2 id="klasser">Köldklasserna i svensk standard</h2>
+  <p>SS 15 54 35 har två sommarklasser och tre vinterklasser. Kraven gäller den färdiga dieseln, inklusive tillsatser och inblandad biodiesel.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Klass</th><th>Period</th><th class="num">CFPP, högst</th><th class="num">Grumlingspunkt, högst</th></tr></thead>
+    <tbody>{Object.entries(KLASS).map(([k, x]) => <tr><td>Klass {k}</td><td>{x.typ === "sommar" ? "Sommar" : "Vinter"}</td><td class="num">{x.cfpp} °C</td><td class="num">{x.cloud} °C</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: SS 155435:2022, tabell 10 och 11, enligt Drivkraft Sveriges standardutdrag 2026. Värdena återges som de är publicerade.</p>
+  <p>Klass 3, som säljs i de nordligaste länen mitt i vintern, har samma CFPP som klass 2 i utdraget, men en betydligt lägre grumlingspunkt, −30 °C, och en lägre gräns för sluttemperaturen vid destillationen (325 °C mot 340 °C). Det gör den till den mest köldtåliga dieseln i den svenska standarden.</p>
+
+  <h2 id="perioder">När byts dieseln till vinterkvalitet?</h2>
+  <p>Standarden delar Sverige i tre områden. Under varje period ska dieseln minst uppfylla kraven för den angivna klassen. Mellan sommar och vinter finns en övergång med klass D. Sista kolumnen visar vilken klass som gäller {datum}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Område</th><th>Perioder och klass</th><th class="num">Idag</th></tr></thead>
+    <tbody>{regionData.map((r) => <tr><td><strong>{r.namn}</strong></td><td>{periodText(r).map(([f, t, k]) => `${dagMan(f)}–${dagMan(t)}: klass ${k}`).join("; ")}</td><td class="num">{r.klass ? `Klass ${r.klass}` : "–"}{r.klass && KLASS[r.klass] && <><br /><small>CFPP {KLASS[r.klass].cfpp} °C</small></>}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Götaland och Svealand omfattar här alla län utom de fem norrländska. Källa: SS 155435:2022 enligt Drivkraft Sverige.</p>
+  <p>Ett par saker är värda att notera. I södra Sverige finns bara en vinterklass, och den gäller ett halvår, från mitten av oktober till sista mars. I Gävleborg, Västernorrland och Jämtland skärps kravet till klass 2 under december till mitten av mars. Västerbotten och Norrbotten har vinterdiesel i sju och en halv månad, från 16 september till 30 april, och klass 3 under den kallaste perioden. Kör du norrut under vintern tankar du därför automatiskt en mer köldtålig diesel ju längre upp du kommer.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="begrepp">Grumlingspunkt och CFPP</h2>
+  <p>Diesel består enligt Drivkraft Sverige till 50–70 procent av paraffiner, 30–45 procent av naftener och 3–5 procent av aromater. Raka paraffiner har högst cetantal, vilket ger bra tändning, men sämst köldegenskaper. Därför handlar vinterdiesel om att hålla paraffinerna lösta i kyla. Två mått används:</p>
+  <ul>
+    <li><strong>Grumlingspunkten</strong> (cloud point) är den temperatur där de första paraffinkristallerna syns som ett grumligt skikt. Kristallerna är då för små för att täppa till filtret.</li>
+    <li><strong>CFPP</strong> (cold filter plugging point) är den lägsta temperatur där dieseln fortfarande går igenom ett standardfilter. Metoden togs fram på 1960-talet, och enligt Drivkraft Sverige är det fortfarande den parameter som bäst speglar hur dieseln beter sig i kyla.</li>
+  </ul>
+  <p>Skillnaden mellan måtten är praktisk. Ser dieseln grumlig ut en kall morgon betyder det inte att motorn kommer att stanna. Först när temperaturen närmar sig CFPP-värdet ökar risken för att filtret sätts igen. För klass 1 är avståndet mellan de två värdena tio grader.</p>
+  <p>En annan sak att hålla isär är grumlighet som beror på vatten. Drivkraft Sverige skriver att diesel som är grumlig av annat än kyla troligen innehåller mer vatten än standarden tillåter och ökar risken för skador, och att man inte ska använda diesel där vatten kan finnas.</p>
+
+  <h2 id="arktisk">Arktisk diesel och Europadiesel</h2>
+  <p>Utöver miljöklass 1 finns diesel i miljöklass 3, som ofta kallas Europadiesel och följer den europeiska standarden SS-EN 590. Den har egna köldklasser, både tempererade och arktiska. Drivkraft Sverige påpekar att Mk3-diesel har en nordisk vinterkvalitet som skiljer sig från den som säljs på kontinenten.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>SS-EN 590, arktiska klasser</th><th class="num">CFPP, högst</th><th class="num">Grumlingspunkt, högst</th></tr></thead>
+    <tbody>
+      <tr><td>Klass 0</td><td class="num">−20 °C</td><td class="num">−10 °C</td></tr>
+      <tr><td>Klass 1</td><td class="num">−26 °C</td><td class="num">−16 °C</td></tr>
+      <tr><td>Klass 2</td><td class="num">−32 °C</td><td class="num">−22 °C</td></tr>
+      <tr><td>Klass 3</td><td class="num">−38 °C</td><td class="num">−28 °C</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: SS-EN 590:2025, tabell 14, enligt Drivkraft Sveriges standardutdrag 2026.</p>
+  <p>För Mk3-diesel i Sverige anger standardutdraget att vinterdiesel i Götaland och Svealand ska vara av arktisk klass 1 eller 2, och i Norrland av klass 1, 2 eller 3. Vinterklassen ska väljas efter klimatet där dieseln ska användas. Den arktiska klass 3 i Europadieseln har alltså lägre CFPP än den svenska klass 3 i utdraget. Det som i dagligt tal kallas arktisk diesel är just dessa klasser. Den som kör i fjällen eller i Norrbottens inland en kall vinter har nytta av att veta att det är klassen, inte varumärket, som avgör köldtåligheten.</p>
+
+  <h2 id="hvo">HVO100 på vintern</h2>
+  <p>HVO100 följer en egen standard, SS-EN 15940, med en sommarklass (CFPP −10 °C) och tre arktiska klasser: −26, −32 och −38 °C i CFPP och −16, −22 och −28 °C i grumlingspunkt. På vintern ska klass 1 eller 2 säljas i Götaland och Svealand och klass 2 eller 3 i Norrland. Sommarperioden är 1 april–15 oktober i söder och 1 maj–15 september i Norrland.</p>
+  <p>Enligt Drivkraft Sverige beror HVO:s köldegenskaper på tillverkningsprocessen och nästan inte alls på råvaran. Köldtillsatser som fungerar i vanlig diesel har liten eller ingen effekt på HVO. HVO100 får dessutom bara tankas i bilar som tillverkaren har godkänt. Se guiden <a href="/guider/hvo100-vilka-bilar/">HVO100 – vilka bilar får tanka</a>.</p>
+
+  <h2 id="rad">Så undviker du dieselstopp i kyla</h2>
+  <p>Drivkraft Sverige ger några råd inför vintern. Här är de, med vad de betyder i praktiken:</p>
+  <ol>
+    <li><strong>Planera tankningen.</strong> Se till att tanken har vinterdiesel när kylan kommer. Kör du lite och tankar sällan kan det finnas sommardiesel kvar i tanken långt in på hösten.</li>
+    <li><strong>Använd inte sommardiesel på vintern.</strong> Det gäller särskilt dunkar och cisterner som fylldes på sommaren. Sommarklass C klarar bara CFPP −5 °C.</li>
+    <li><strong>Serva bilen enligt tillverkaren.</strong> Drivkraft Sverige kallar det ett grundkrav för att bilen ska fungera i kyla. Bränslefiltret är den del som först påverkas av paraffinkristaller.</li>
+    <li><strong>Håll vattnet borta.</strong> Använd inte diesel som kan innehålla vatten, och töm lagringstankar på kondensvatten regelbundet.</li>
+    <li><strong>Tänk på var du tankar inför en resa.</strong> Köldklassen följer regionen där dieseln säljs. Tankar du fullt i söder och kör till fjällen har du klass 1 i tanken, medan stationerna i Norrland säljer klass 2 eller 3 under den kallaste delen av vintern.</li>
+  </ol>
+
+  <h2 id="norr">Tanka diesel i de kallaste länen</h2>
+  <p>I vårt register finns {tal(nord.d)} stationer med diesel i Västerbottens och Norrbottens län, där den kallaste vinterklassen gäller. {tal(nord.dygn)} av dem går att tanka på dygnet runt, och {tal(nord.h)} har även HVO100.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Område</th><th class="num">Stationer med diesel</th><th class="num">Dygnet runt</th><th class="num">Med HVO100</th></tr></thead>
+    <tbody>
+      {nordLan.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.namn}</a> : x.namn}</td><td class="num">{x.d}</td><td class="num">{x.dygn}</td><td class="num">{x.h}</td></tr>)}
+      {regionData.map((r) => <tr><td>{r.namn} (totalt)</td><td class="num">{r.d}</td><td class="num">{r.dygn}</td><td class="num">{r.h}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Dygnet runt betyder att stationen anger tankning dygnet runt eller är obemannad.</p>
+  <p>Avstånden mellan stationerna är långa i inlandet, och en station som är obemannad kräver kort. Planera resan i <a href="/">stationssökningen</a> och jämför dagens pris på <a href="/dieselpris/">dieselpriset idag</a>.{pd != null && <> Idag kostar diesel i snitt {kr(pd)} per liter.</>}</p>
+</Guide>

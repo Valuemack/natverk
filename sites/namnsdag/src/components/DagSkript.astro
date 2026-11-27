@@ -1,0 +1,50 @@
+---
+// Rättar dagsberoende innehåll i webbläsaren om sidan byggdes en tidigare dag (cache eller innan
+// nattbygget kl. 03:15 har körts). Den statiska HTML:en är redan rätt för byggdagen, så sökmotorer
+// och AI-crawlers utan JavaScript ser korrekt innehåll. Datum räknas i svensk tid (Europe/Stockholm).
+// Fält som rättas (data-falt): datum, namn, korttext, kortnamn, kortrad, svar, imorgon, veckan, dela. Sektionen med
+// data-dagsida har data-byggdag (ISO) och data-forskjutning (0 = idag, 1 = imorgon).
+---
+<script is:inline>
+  (async () => {
+    const rot = document.querySelector("[data-dagsida]");
+    if (!rot) return;
+    const nu = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    if (rot.dataset.byggdag === nu) return;
+    try {
+      const d = await (await fetch("/data/namnsdagar.json")).json();
+      const [y, m, dd] = nu.split("-").map(Number);
+      const f = Number(rot.dataset.forskjutning || 0);
+      const dag = (o) => { const t = new Date(Date.UTC(y, m - 1, dd + f + o)); return { t, k: t.toISOString().slice(5, 10) }; };
+      const VD = ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"];
+      const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+      const txt = (t) => `${t.getUTCDate()} ${MN[t.getUTCMonth()]}`;
+      const namn = (o) => { const { t, k } = dag(o); return (d.dagar[k] || []).filter((x) => !x[2] || t.getUTCFullYear() >= x[2]); };
+      const lank = (x) => `<a href="/namn/${x[1]}/">${x[0]}</a>`;
+      const lista = (xs) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " och " + xs.at(-1);
+      const falt = (n) => document.querySelectorAll(`[data-falt="${n}"]`);
+      const satt = (n, html) => falt(n).forEach((el) => { el.innerHTML = html; });
+      const i0 = dag(0), n0 = namn(0), n1 = namn(1), i1 = dag(1);
+      const rub = f === 0 ? ["Idag", "Imorgon"] : ["Imorgon", "Övermorgon"];
+      satt("datum", `${VD[i0.t.getUTCDay()]} ${txt(i0.t)} ${i0.t.getUTCFullYear()}`);
+      satt("namn", n0.length ? lista(n0.map(lank)) : (d.utan[i0.k] || "Ingen namnsdag"));
+      satt("korttext", n0.length ? "Grattis" : rub[0]);
+      satt("kortrad", n0.length ? `har namnsdag ${rub[0].toLowerCase()}: ${lista(n0.map(lank))}` : `Ingen har namnsdag i almanackan ${rub[0].toLowerCase()}.`);
+      falt("brevnamn").forEach((el) => { el.textContent = n0.length ? `Gratulera ${lista(n0.map((x) => x[0]))} med ett riktigt brev` : "Skicka ett riktigt brev"; });
+      satt("kortnamn", n0.length ? lista(n0.map((x) => x[0])) + "!" : (d.utan[i0.k] || "Ingen namnsdag"));
+      satt("svar", `${rub[0]}, ${VD[i0.t.getUTCDay()]} ${txt(i0.t)} ${i0.t.getUTCFullYear()}, ${n0.length ? `har <strong>${lista(n0.map((x) => x[0]))}</strong> namnsdag.` : "finns inget namn i almanackan."} ${rub[1]}, ${VD[i1.t.getUTCDay()]} ${txt(i1.t)}, har ${n1.length ? lista(n1.map((x) => x[0])) : "ingen"} namnsdag.`);
+      satt("imorgon", n1.length ? `${lista(n1.map(lank))} <span>(${VD[i1.t.getUTCDay()]} ${txt(i1.t)})</span>` : `ingen namnsdag <span>(${VD[i1.t.getUTCDay()]} ${txt(i1.t)})</span>`);
+      falt("imorgonlank").forEach((el) => { el.href = `/${i1.t.getUTCDate()}-${MN[i1.t.getUTCMonth()]}/`; el.textContent = `Allt om ${txt(i1.t)} →`; });
+      falt("dela").forEach((el) => { if (n0[0]) { el.dataset.dela = `/namn/${n0[0][1]}/`; el.dataset.namn = lista(n0.map((x) => x[0])); } });
+      falt("veckan").forEach((el) => {
+        el.innerHTML = [0, 1, 2, 3, 4, 5, 6].map((o) => {
+          const { t, k } = dag(o), ns = namn(o);
+          const r = o === 0 ? rub[0] : o === 1 ? rub[1] : VD[t.getUTCDay()];
+          return `<li${o === 0 ? ' aria-current="date"' : ""}><span class="vd"><a href="/${t.getUTCDate()}-${MN[t.getUTCMonth()]}/">${r} ${txt(t)}</a></span><span>${ns.length ? ns.map(lank).join(", ") : `<em>${d.utan[k] || "ingen namnsdag"}</em>`}</span></li>`;
+        }).join("");
+      });
+      // Fakta som gäller byggdagens namn döljs när dagen har bytts.
+      document.querySelectorAll("[data-byggdagsfakta]").forEach((el) => { el.hidden = true; });
+    } catch {}
+  })();
+</script>

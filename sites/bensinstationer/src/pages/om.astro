@@ -1,15 +1,30 @@
 ---
 import Layout from "@natverk/core/Layout.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../site.js";
+import { SITE, KAT, ORD, UPPDATERAD, KALLA, LISTPRISER } from "../site.js";
+import { EU, LISTKEDJOR, DAGAR, datumText } from "../pris.js";
+const egna = KAT.enheter.filter((e) => e.egenSida).length;
 ---
 <Layout site={SITE} titel={`Om ${SITE.visningsnamn} – källor och metod`}
-  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om ${ORD.plur} i Sverige: källor, uppdatering och rättelser.`}
+  beskrivning={`Så samlar ${SITE.visningsnamn} in uppgifter om bensinstationer och bensinpriset: kedjornas stationssök, listpriser, EU-kommissionens veckopriser och OpenStreetMap.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Om", href: "/om/" }]} uppdaterad={UPPDATERAD}>
   <h1>Om {SITE.visningsnamn}</h1>
   <p class="ingress">{SITE.beskrivning}</p>
+  <p>Sajten är oberoende och inte ansluten till någon kedja, myndighet eller branschorganisation. Allt hämtas och räknas om automatiskt varje natt. I november 2026 slogs prissajten dagensbensinpris.se ihop med {SITE.visningsnamn}, så att stationer och priser finns på ett ställe. Alla gamla adresser leder hit.</p>
+
   <h2 id="kallor">Källor och metod</h2>
-  <p>{KALLA}</p>
-  <p>Just nu listar vi {KAT.enheter.length} {ORD.plur} i {KAT.kommuner.length} kommuner. Uppgifterna hämtas och kontrolleras automatiskt varje natt. Öppettider kan avvika vid helgdagar – kontrollera gärna med verksamheten innan du åker.</p>
+  <h3>Stationerna</h3>
+  <p>{KALLA} Just nu listar vi {KAT.enheter.length.toLocaleString("sv-SE")} {ORD.plur} i {KAT.kommuner.length} kommuner. Varje kommun har en sida med alla stationer, kedjornas listpris och karta.</p>
+  <p>En station får en egen sida bara när vi har uppgifter som inte redan står på kommunsidan: bemannade öppettider eller butikstider, eller en adress tillsammans med minst två av stationens eget telefonnummer, en egen stationssida hos kedjan och minst tre tjänster eller extra drivmedel. Det gäller i dag {egna.toLocaleString("sv-SE")} stationer. Övriga visas med alla uppgifter vi har på kommunsidan.</p>
+  <h3>Dagens pris</h3>
+  <p>Dagens pris är kedjornas publicerade listpriser inklusive moms från {LISTKEDJOR.join(", ")} (senast hämtade {LISTPRISER.datum}). Listpriset är kedjans riktpris för företagskunder. Priset vid pumpen på en enskild station sätts lokalt och kan vara både högre och lägre. Snittpriset är medelvärdet av kedjornas listpriser. Vi visar aldrig påhittade stationspriser.</p>
+  <h3>Veckopris, historik och Europa</h3>
+  <p>Veckopriser, historik sedan 2005, skatteandelar och jämförelsen med andra länder bygger på EU-kommissionens <a href={EU.kalla_url} rel="nofollow">Weekly Oil Bulletin</a> (licens CC BY 4.0), med det genomsnittliga pumppriset med och utan skatter som varje medlemsland rapporterar varje måndag. Priserna räknas om till kronor med samma veckas växelkurs ur samma källa. Senaste veckan i datan: {datumText(EU.senaste)}.</p>
+  <h3>Guiderna</h3>
+  <p>Guiderna räknar med datan ovan och med fakta från förstahandskällor som Skatteverket, Energimyndigheten, Trafikanalys, Transportstyrelsen, SCB, Drivkraft Sverige och kedjornas egna sidor. Varje guide listar sina källor och datum för faktagranskningen. Vi gör inga prisprognoser.</p>
+
+  <h2 id="data">Öppna prisdata</h2>
+  <p>Den dagliga prishistoriken finns som JSON på <a href="/data/dagspriser.json">/data/dagspriser.json</a> ({DAGAR.length} dagar hittills): en rad per dag med snittpriset och varje kedjas listpris per drivmedel, i kronor per liter (fordonsgas per kilo) inklusive moms. Stationernas lägen för sökningen "nära mig" finns på <a href="/narmaste.json">/narmaste.json</a>. Använd gärna datan och ange {SITE.visningsnamn} som källa; EU-datan har licensen CC BY 4.0 och stationslägena bygger delvis på OpenStreetMap (ODbL).</p>
+
   <h2 id="kontakt">Kontakt och rättelser</h2>
-  <p>Har du hittat ett fel eller saknas något? Hör av dig så rättar vi det.</p>
+  <p>Har du hittat ett fel eller saknas något? Hör av dig så rättar vi det. Ändrar en kedja sin webbplats kan priser eller öppettider saknas en natt; de kommer tillbaka när hämtningen fungerar igen.</p>
 </Layout>

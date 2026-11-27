@@ -1,4 +1,4 @@
-KÄLLOR OCH LICENSER – sites/namnsdag (namnsdagsidag.se)
+KÄLLOR OCH LICENSER – sites/namnsdag (dagensnamnsdagar.se)
 =========================================================
 
 1. NAMNLÄNGDEN (data/namnlangd.json)
@@ -48,10 +48,44 @@ KÄLLOR OCH LICENSER – sites/namnsdag (namnsdagsidag.se)
    Används: /hur-manga-heter/ (sökfiler /data/namn/<bokstav>.json), /pojknamn/, /flicknamn/,
             /vanligaste-namnen/, /ovanliga-namn/.
 
-3. FLAGGDAGAR OCH HELGDAGAR (src/site.js -> FASTA_DAGAR)
+2c. NYFÖDDA FÖR ALLA NAMN (data/nyfodda-alla.json) – tillagt 2026-11-26
+   Källa:   SCB, BE0001Nyfodda (CC0), alla 12 842 namn 1998–2022 per kön. Skript: scripts/04-scb-nyfodda-alla.mjs.
+   Obs:     SCB redovisar bara namn som minst två barn fått ett visst år; 0 i filen = färre än 2.
+   Används: diagrammen på namnsidorna, /hitta-barnnamn/ (/data/barnnamn.json), /press/.
+   Namnsidor finns för almanackans namn och för alla tilltalsnamn med minst 1 000 bärare 2020
+   (src/site.js -> UTAN_NAMNSDAG, 606 namn). Stavningsvariant = samma stavningsnyckel (se 2, plus
+   dubbelteckning och slut-f/v) OCH samma vanligaste kön som almanacksnamnet. Övriga: gemensam dag 1 januari.
+
+2d. NAMNENS BETYDELSE (data/wikipedia-namn.json) – tillagt 2026-11-26
+   Källa:   Svenska Wikipedia, artiklar om respektive förnamn. API sv.wikipedia.org/w/api.php (inledningen).
+            Skript: scripts/05-wikipedia-namn.mjs.
+   Licens:  CC BY-SA 4.0. Sajten citerar högst två meningar ORDAGRANT, med länk till artikeln och
+            licenslänk direkt under citatet. Inga ändringar i texten (bara urval av meningar enligt
+            src/lib/namndata.js -> rensaUrsprung). Inga egna förklaringar: saknas ursprungsmening visas inget.
+   Hämtning: beskrivande User-Agent enligt Wikimedias policy, maxlag=5, paus mellan anrop.
+
+2e. KÄNDA PERSONER (data/wikidata-personer.json) – tillagt 2026-11-26
+   Källa:   Wikidata (CC0) via wikidata.org/w/api.php och query.wikidata.org. Skript: scripts/06-wikidata-personer.mjs.
+   Urval:   människor (P31 Q5) med förnamnet (P735) och en artikel på svenska Wikipedia. Högst 8 per namn,
+            upp till 5 svenska först, ordnade efter antal språkversioner. Bara personer med uppslagsartikel,
+            inga privatpersoner. Länkar går till svenska Wikipedia; beskrivning = Wikidatas svenska beskrivning.
+
+2f. FÖDDA PER DAG (data/wikipedia-datum.json) – tillagt 2026-11-26
+   Källa:   Svenska Wikipedia, datumartiklarna ("26 november"), avsnittet Födda. Skript: scripts/07-wikipedia-datum.mjs.
+   Licens:  CC BY-SA 4.0 – källa och licens anges under listan på varje datumsida. Upp till 8 per dag,
+            i första hand svenska. Namn och beskrivning återges som i artikeln.
+
+2g. FN:S INTERNATIONELLA DAGAR (data/fn-dagar.json) – tillagt 2026-11-26
+   Källa:   Förenta nationerna, https://www.un.org/en/observances/list-days-weeks. Skript: scripts/08-fn-dagar.mjs.
+   Urval:   220 dagar med fast datum. Varje dag kontrolleras mot FN-listan (titel + datum); skriptet stoppar
+            vid avvikelse. Svensk benämning är redaktionens översättning där etablerat svenskt namn saknas.
+
+3. FLAGGDAGAR OCH HELGDAGAR (src/site.js -> FASTA_DAGAR, src/lib/dagdata.js)
    Förordning (1982:270) om allmänna flaggdagar, lag (1989:253) om allmänna helgdagar.
+   Rörliga dagar beräknas med sites/rodadagar/src/lib/helgdagar.js (importeras, ändras inte).
+   Dag för val till riksdagen (andra söndagen i september vart fjärde år från 2026) räknas som flaggdag.
    Författningstext är inte upphovsrättsskyddad (URL 9 §).
 
 4. UPPDATERING
-   npm run data  (kör scripts/run-all.mjs). Startsidan och llms.txt beror på dagens datum
+   npm run data  (kör scripts/run-all.mjs; 05–07 tar 15–60 min p.g.a. Wikimedias gränser, 06 kan återupptas). Startsidan och llms.txt beror på dagens datum
    och måste byggas om varje natt; övriga sidor ändras bara när datan ändras.

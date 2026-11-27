@@ -1,8 +1,14 @@
 // Namnsdagssajten: data, slugs och hjälpfunktioner för alla sidor.
-import { idagStockholm, iso, datum, plusDagar, veckodag, MANADER, VECKODAGAR, dagarMellan } from "@natverk/core/datum.js";
+import { idagStockholm, iso, datum, plusDagar, veckodag, MANADER, VECKODAGAR, dagarMellan, isoVecka } from "@natverk/core/datum.js";
 // Datan importeras som JSON så att Vite buntar in den (filerna kan bytas ut utan kodändringar).
 import NL from "../data/namnlangd.json";
 import SCB from "../data/scb.json";
+// De stora SCB-filerna läses med fs vid bygget (en Vite-import av dem gav "heap out of memory").
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+const lasData = (f) => JSON.parse(readFileSync(join(process.cwd(), "data", f), "utf8"));
+/** Alla tilltals- och förnamn 2020 (SCB): { namn: [tilltalK, tilltalM, förnamnK, förnamnM, tilltal2000] } */
+export const SCB_ALLA = lasData("scb-alla.json").namn;
 
 export const IDAG = idagStockholm();
 export const AR = IDAG.getUTCFullYear();
@@ -14,11 +20,11 @@ export const SITE = {
   tagline: "Vem har namnsdag idag?",
   tjanstText: "Oberoende namnsdagskalender · Namnlängden enligt Isof · Namnstatistik från SCB",
   kallor: ["Institutet för språk och folkminnen (namnlängden)", "SCB:s statistikdatabas (namnstatistik, CC0)"],
-  namn: "Namnsdag idag",
-  visningsnamn: "namnsdagsidag.se",
-  url: "https://namnsdagsidag.se",
+  namn: "Dagens namnsdagar",
+  visningsnamn: "dagensnamnsdagar.se",
+  url: "https://dagensnamnsdagar.se",
   beskrivning: "Vem har namnsdag idag? Alla namnsdagar i den svenska almanackan dag för dag, när varje namn har namnsdag och hur många som bär namnet enligt SCB.",
-  organisation: "namnsdagsidag.se",
+  organisation: "dagensnamnsdagar.se",
   farg: "#7a2e5a",
   meny: [
     { namn: "Idag", href: "/" },
@@ -29,9 +35,9 @@ export const SITE = {
     { namn: "Om namnsdagar", href: "/namnsdag/" },
   ],
   sidfot: [
-    { namn: "Om namnsdagsidag.se", href: "/om/" },
+    { namn: "Om dagensnamnsdagar.se", href: "/om/" },
     { namn: "Källor och metod", href: "/om/#kallor" },
-    { namn: "Integritet och cookies", href: "/integritet/" },
+    { namn: "Integritet och cookies", href: "/om/#integritet" },
   ],
   sidfotText: "Namnlängden fastställs av Namnlängdskommittén och publiceras av Institutet för språk och folkminnen. Antal bärare kommer från SCB. Sajten är en oberoende tjänst och inte knuten till Svenska Akademien, Isof eller SCB.",
   natverk: [],
@@ -50,7 +56,7 @@ export const dagText = (k) => { const { m, d } = delMmdd(k); return `${d} ${MANA
 /** URL för en dag: /3-januari/ */
 export const dagHref = (k) => { const { m, d } = delMmdd(k); return `/${d}-${MANADER[m - 1]}/`; };
 export const manadHref = (m) => `/${MANADER[m - 1]}/`;
-export const namnHref = (n) => `/namn/${SLUG_AV.get(n) ?? slug(n)}/`;
+export const namnHref = (n) => (SAMMANSLAGNA.has(n) ? dagHref(SAMMANSLAGNA.get(n)) : `/namn/${SLUG_AV.get(n) ?? slug(n)}/`);
 
 // ---------- Namnlängden ----------
 /** Alla namn, även de som tillkommer senare (fran = första året). */
@@ -63,9 +69,14 @@ const unikSlug = (namn) => {
 };
 export const ALLA_NAMN = NL.namn.map((n) => ({ ...n, slug: unikSlug(n.namn), scb: SCB.namn[n.namn] ?? null }));
 const SLUG_AV = new Map(ALLA_NAMN.map((n) => [n.namn, n.slug]));
+/** Almanacksnamn som SCB inte redovisar alls (varken som tilltalsnamn eller förnamn) får ingen egen namnsida –
+ *  sidan skulle bli tunn. De visas på sin datumsida i stället, och den gamla adressen 301-omdirigeras dit. */
+export const SAMMANSLAGNA = new Map(ALLA_NAMN.filter((n) => !SCB_ALLA[n.namn]).map((n) => [n.namn, n.datum]));
 export const NAMN_KALLA = NL.kalla;
 export const ANDRINGAR = NL.andringar;
 export const UTAN_NAMN = NL.utanNamn;
+/** Dagens namn mitt i en mening: "juldagen", men "Marie bebådelsedag (vårfrudagen)" och "Johannes Döparens dag". */
+export const helgnamn = (s) => (s ?? "").replace(/^(?!Marie |Johannes |Kristi |Sveriges |Gustav |Nelson |FN|EU)./, (c) => c.toLowerCase()).replace(/\((\p{Lu})/u, (_, c) => `(${c.toLowerCase()}`);
 
 /** Gäller namnet ett visst år? */
 export const giltigt = (n, ar = AR) => !n.fran || ar >= n.fran;
@@ -132,7 +143,6 @@ export const FASTA_DAGAR = {
 // ---------- SCB ----------
 export const SCB_KALLA = SCB.kalla;
 export const SCB_TOTALT = { namn: SCB.antalTilltalsnamn2020, personer: SCB.personerMedTilltalsnamn2020 };
-export const UTAN_NAMNSDAG = SCB.vanligasteUtanNamnsdag;
 const summa = (x) => (x ? (x.K ?? 0) + (x.M ?? 0) : 0);
 /** Antal med namnet som tilltalsnamn 2020 (kvinnor + män). */
 export const barare = (n) => summa(n.scb?.tilltal2020);
@@ -146,19 +156,80 @@ export function bararText(n) {
   return `${tal(b)} personer i Sverige har ${n.namn} som tilltalsnamn (SCB 2020)`;
 }
 
-// ---------- Stavningsvarianter ----------
-// Vanliga namn som saknas i almanackan men bara skiljer sig i stavning från ett almanacksnamn
-// (Thomas/Tomas, Carl/Karl, Sarah/Sara). Språkligt samhöriga namn firas på almanacksnamnets dag
-// (jfr Isofs utökade namnlista). Bara namn med minst 1 000 bärare får egen sida.
+// ---------- Namn som saknas i almanackan ----------
+// Alla tilltalsnamn med minst 1 000 bärare 2020 som inte står i almanackan får en egen sida.
+// Stavningsvarianter (Thomas/Tomas, Carl/Karl, Sarah/Sara) kan firas på almanacksnamnets dag
+// (språkligt samhöriga namn, jfr Isofs utökade namnlista). Övriga har gemensam namnsdag 1 januari.
+export const MIN_BARARE = 1000;
 const norm = (s) => s.toLowerCase().replace(/chr/g, "kr").replace(/th/g, "t").replace(/ph/g, "f")
   .replace(/ck/g, "k").replace(/c(?![eiy])/g, "k").replace(/h$/, "").replace(/w/g, "v");
 const ALM_NORM = new Map();
 for (const n of ALLA_NAMN) if (!ALM_NORM.has(norm(n.namn))) ALM_NORM.set(norm(n.namn), n);
-const ALM_SLUGS = new Set(ALLA_NAMN.map((n) => n.slug));
-export const VARIANTER = UTAN_NAMNSDAG
-  .map((x) => ({ ...x, slug: slug(x.namn), huvud: ALM_NORM.get(norm(x.namn)) }))
-  .filter((x) => x.huvud && x.huvud.namn !== x.namn && x.antal >= 1000 && !ALM_SLUGS.has(x.slug));
+/** Stavningsnyckel för att hitta liknande namn (Matilda/Mathilda, Rebecka/Rebecca, Gustav/Gustaf). */
+// Dubbla bokstäver slås ihop utom ii/ee (finska Riitta och Leena är egna namn, inte Rita och Lena).
+export const stavNyckel = (s) => norm(slug(s)).replace(/([^ie])\1/g, "$1").replace(/-/g, "").replace(/f$/, "v");
+const ALM_NYCKEL = new Map();
+for (const n of ALLA_NAMN) if (!ALM_NYCKEL.has(stavNyckel(n.namn))) ALM_NYCKEL.set(stavNyckel(n.namn), n);
+const ALM_VARIANT = new Map(ALLA_NAMN.flatMap((n) => (n.varianter ?? []).map((v) => [v, n])));
+// En variant måste oftast bäras av samma kön som almanacksnamnet (Janne är inte en form av Jane).
+const sammaKon = (x, n) => {
+  if (!n) return null;
+  const t = n.scb?.tilltal2020;
+  if (!t) return n;
+  return (x.kvinnor >= x.man) === ((t.K ?? 0) >= (t.M ?? 0)) ? n : null;
+};
+const ALM_NAMN = new Set(ALLA_NAMN.map((n) => n.namn));
+const anvSlug = new Set(ALLA_NAMN.map((n) => n.slug));
+/** Alla vanliga namn utan egen namnsdag, flest bärare först: { namn, antal, kvinnor, man, slug, huvud|null } */
+export const UTAN_NAMNSDAG = Object.entries(SCB_ALLA)
+  .map(([namn, a]) => ({ namn, kvinnor: a[0], man: a[1], antal: a[0] + a[1] }))
+  .filter((x) => x.antal >= MIN_BARARE && !x.namn.includes(" ") && !ALM_NAMN.has(x.namn))
+  .sort((a, b) => b.antal - a.antal || a.namn.localeCompare(b.namn, "sv"))
+  .map((x) => ({ ...x, slug: slug(x.namn), huvud: ALM_VARIANT.get(x.namn) ?? sammaKon(x, ALM_NORM.get(norm(x.namn)) ?? ALM_NYCKEL.get(stavNyckel(x.namn))) }))
+  // Två namn med samma slug (René/Rene): bara det vanligaste får sida, det andra nämns som stavning.
+  .filter((x) => x.slug && !anvSlug.has(x.slug) && anvSlug.add(x.slug));
+/** Stavningsvarianter av almanacksnamn (kan firas på huvudnamnets dag). */
+export const VARIANTER = UTAN_NAMNSDAG.filter((x) => x.huvud);
+/** Namn utan namnsdag som inte är en stavningsvariant (gemensam namnsdag 1 januari). */
+export const UTAN_VARIANT = UTAN_NAMNSDAG.filter((x) => !x.huvud);
 /** Variant för ett almanacksnamn: [{ namn, antal }] */
 export const varianterTill = (n) => VARIANTER.filter((v) => v.huvud.namn === n.namn);
 
-export { iso, datum, plusDagar, veckodag, dagarMellan };
+// ---------- Antal namn i almanackan ----------
+export const ANTAL_NU = ALLA_NAMN.filter((n) => giltigt(n)).length;
+export const ANTAL_SEN = ALLA_NAMN.length;
+export const NYA_AR = Math.max(...ALLA_NAMN.map((n) => n.fran ?? 0));
+
+// ---------- Språkhjälp ----------
+/** Genitiv: Linus → Linus, Max → Max, Inez → Inez, Anna → Annas. */
+export const genitiv = (namn) => (/[sxz]$/i.test(namn) ? namn : `${namn}s`);
+/** Andel i hela procent ("under 1" för små andelar). */
+export const procent = (del, hel) => { const p = (del / hel) * 100; return p > 0 && p < 1 ? "under 1" : String(Math.round(p)); };
+/** Kön som andelar: "92 procent kvinnor och 8 procent män". */
+export function konAndel(K = 0, M = 0) {
+  const s = K + M;
+  if (!s) return null;
+  if (!M) return "100 procent kvinnor";
+  if (!K) return "100 procent män";
+  return K >= M ? `${procent(K, s)} procent kvinnor och ${procent(M, s)} procent män` : `${procent(M, s)} procent män och ${procent(K, s)} procent kvinnor`;
+}
+
+export { iso, datum, plusDagar, veckodag, dagarMellan, isoVecka };
+
+/**
+ * Metabeskrivning på 140–160 tecken: delarna läggs till i ordning så länge texten ryms inom 160
+ * tecken, och slutar när den nått 145. Längre första del kortas av Layout (kortaBesk).
+ */
+export function beskriv(...delar) {
+  const d = delar.flat().filter(Boolean).map((x) => String(x).trim());
+  let t = d.shift() ?? "";
+  for (const x of d) {
+    if (t.length >= 145) break;
+    if ((t + " " + x).length <= 160) t += " " + x;
+  }
+  return t;
+}
+
+/** Året för den utskrivbara kalendern som länkas: nästa år från oktober, annars innevarande. */
+export const KALENDER_AR = IDAG.getUTCMonth() >= 9 ? AR + 1 : AR;
+export const kalenderHref = (y = KALENDER_AR) => `/namnsdagar-${y}/`;

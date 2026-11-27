@@ -1,0 +1,145 @@
+---
+// Lång guide: bensin 95 eller 98. Dagens prisskillnad per kedja, merkostnad per tank och år (Trafikanalys körsträckor),
+// standarden SS-EN 228:2025 via Drivkraft Sverige, E10/E5 och Energimyndighetens värmevärden. Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP, LP_DATUM, LISTKEDJOR, STATIONER, BENSINSTATIONER_URL, idagPris, kedjePris, kr, pris, procent, datumText } from "../../pris.js";
+import { VARMEVARDEN, KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const p95 = idagPris("bensin95"), p98 = idagPris("bensin98");
+const diff = p98 - p95;
+const kedjor = LISTKEDJOR.map((c) => ({ c, a: kedjePris(c, "bensin95"), b: kedjePris(c, "bensin98") })).filter((x) => x.a != null && x.b != null).sort((x, y) => (x.b - x.a) - (y.b - y.a));
+const tank = 50;
+const premium = LP.kedjor.map((c) => ({ c: c.kedja, p: c.priser?.bensin98_premium?.pris })).filter((x) => x.p);
+const milBensin = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin").mil;
+const scenarier = [500, milBensin, 1500, 2000].map((m) => ({ m, l: m * 0.6 }));
+const n95 = STATIONER.filter((s) => s.drivmedel?.bensin95 === true).length;
+const n98 = STATIONER.filter((s) => s.drivmedel?.bensin98 === true).length;
+const nAlla = STATIONER.length;
+const perLan = Object.values(STATIONER.filter((s) => s.lan).reduce((m, s) => { const x = (m[s.lan] ??= { lan: s.lan, alla: 0, n98: 0 }); x.alla++; if (s.drivmedel?.bensin98 === true) x.n98++; return m; }, {})).sort((a, b) => b.n98 / b.alla - a.n98 / a.alla);
+
+const avsnitt = [
+  { id: "skillnad", rubrik: "Vad är skillnaden mellan 95 och 98?" },
+  { id: "pris", rubrik: "Vad kostar 98 jämfört med 95 idag?" },
+  { id: "per-ar", rubrik: "Vad kostar det att tanka 98 i stället för 95?" },
+  { id: "oktan", rubrik: "Vad betyder oktantalet?" },
+  { id: "energi", rubrik: "Blir bilen snålare med 98?" },
+  { id: "e10", rubrik: "E10 eller E5 – vilken bil tål vad?" },
+  { id: "valja", rubrik: "Vilken bensin ska jag tanka?" },
+  { id: "lan", rubrik: "Var finns bensin 98?" },
+  { id: "sasong", rubrik: "Sommar- och vinterbensin" },
+];
+
+const fragor = [
+  { fraga: "Vad är skillnaden mellan bensin 95 och 98?", svar: "Oktantalet och ofta etanolhalten. Bensin 95 ska ha minst 95 i oktantal (RON) och är oftast E10, med högst 10 procent etanol. Bensin 98 ska ha minst 98 och säljs ofta som E5, med högst 5 procent etanol." },
+  { fraga: "Hur mycket dyrare är 98 än 95?", svar: `Idag kostar 98 i snitt ${kr(p98)} per liter mot ${kr(p95)} för 95, alltså ${kr(diff)} mer per liter. För en tank på ${tank} liter blir det ${kr(diff * tank, 0)} mer.` },
+  { fraga: "Kan jag tanka 98 i en bil som går på 95?", svar: "Ja. Bensin 98 har minst 98 i oktantal och uppfyller därmed ett krav på minst 95. Det kostar mer, och enligt Energimyndighetens värmevärden innehåller 95 och 98 lika mycket energi per liter." },
+  { fraga: "Kan jag tanka 95 i en bil som kräver 98?", svar: "Följ instruktionsboken. Står det att motorn kräver 98 ska du tanka 98. Står det att 98 rekommenderas men 95 är tillåtet, framgår det oftast där vad som gäller." },
+  { fraga: "Vad betyder E10 och E5?", svar: "Märkningen anger hur mycket etanol bensinen högst innehåller: E10 upp till 10 volymprocent och E5 upp till 5 procent. Enligt Drivkraft Sverige är pumpen alltid märkt med antingen E10 eller E5." },
+  { fraga: "Tål min bil E10?", svar: "Enligt Drivkraft Sverige är ungefär 94 procent av de bensindrivna personbilarna godkända för E10, men det finns undantag. Kontrollera instruktionsboken eller tanklocket. Om bilen inte tål E10 kan du tanka E5, som ofta är bensin 98." },
+  { fraga: "Är 98 alltid E5?", svar: "Nej, inte alltid. Drivkraft Sverige skriver att 98 ofta säljs som E5. Titta på märkningen vid pumpen, som alltid visar E5 eller E10." },
+];
+---
+<Guide site={SITE} titel={`Bensin 95 eller 98 – skillnad och pris idag (${pris(diff)} kr/l)`}
+  beskrivning={`98 kostar ${kr(diff)} mer per liter än 95 idag. Skillnaden i oktantal och etanol (E10/E5), vilka bilar som behöver 98 och vad det kostar per tank och år.`}
+  h1="Bensin 95 eller 98 – vad är skillnaden?"
+  svar={`Bensin 98 har högre oktantal än 95 (minst 98 mot minst 95 RON) och säljs ofta som E5 med högst 5 procent etanol, medan 95 oftast är E10. <strong>Idag kostar 98 ${kr(diff)} mer per liter</strong>, ${kr(diff * tank, 0)} mer för en tank på ${tank} liter. Tanka det som står i bilens instruktionsbok.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensin 95 eller 98", href: "/guider/95-eller-98/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensin 95 – pris idag", href: "/bensinpris/", text: "Pris per kedja och utveckling" },
+    { namn: "Bensin 98 – pris idag", href: "/drivmedel/bensin-98/", text: "Pris per kedja" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Bränslekalkylator med dagens priser" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Därför blandas etanol i bensinen" },
+    { namn: "Så hittar du billigaste bensinen", href: "/guider/billigaste-bensinen/", text: "Kedjor och obemannade stationer" },
+  ]}
+  kallor={[
+    { namn: "Drivkraft Sverige – Bensin", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/bensin/", text: "oktantal, E10 och E5, andel bilar godkända för E10", datum: "2026-11-25" },
+    { namn: "Drivkraft Sverige – Utdrag ur svensk standard för drivmedel 2026", url: "https://drivkraftsverige.se/fakta-statistik/standarder/", text: "SS-EN 228:2025 för bensin 95 E10 och 98 E5, sommar- och vinterperioder", datum: "2026-11-25" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll för motorbensin 95 och 98", datum: "2026-11-25" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för bensinbilar", datum: "2026-11-25" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", url: BENSINSTATIONER_URL, text: "stationer som säljer 95 och 98" },
+  ]}>
+
+  <h2 id="skillnad">Vad är skillnaden mellan 95 och 98?</h2>
+  <p>Siffran i namnet är oktantalet. Enligt den svenska standarden för bensin, SS-EN 228:2025, ska bensin 95 ha ett oktantal (RON) på minst 95 och bensin 98 minst 98. Den andra skillnaden gäller etanolen. Bensin 95 är i Sverige oftast E10, som får innehålla upp till 10 volymprocent etanol, medan bensin 98 ofta säljs som E5 med högst 5 procent.</p>
+  <p>Båda ska uppfylla kraven för miljöklass 1 i drivmedelslagen. En skillnad i standarden är att 98 E5 får innehålla högst 2,7 viktprocent syre, mot 3,7 procent för 95 E10. Båda kvaliteterna säljs i en sommar- och en vinterversion.</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th>Bensin 95</th><th>Bensin 98</th></tr></thead>
+    <tbody>
+      <tr><td>Oktantal, lägst (RON)</td><td>95</td><td>98</td></tr>
+      <tr><td>Etanol, högst</td><td>10 % (E10)</td><td>5 % (E5), oftast</td></tr>
+      <tr><td>Energi enligt Energimyndigheten</td><td>{VARMEVARDEN.bensin95.toLocaleString("sv-SE")} kWh/l</td><td>{VARMEVARDEN.bensin98.toLocaleString("sv-SE")} kWh/l</td></tr>
+      <tr><td>Snittpris idag</td><td>{kr(p95)}</td><td>{kr(p98)}</td></tr>
+      <tr><td>Stationer i registret</td><td>{n95.toLocaleString("sv-SE")}</td><td>{n98.toLocaleString("sv-SE")}</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="pris">Vad kostar 98 jämfört med 95 idag?</h2>
+  <p>Skillnaden sätts av varje kedja och ändras när listpriserna justeras. Tabellen visar kedjornas listpriser {datum}, sorterade efter minst skillnad.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">95</th><th class="num">98</th><th class="num">Skillnad per liter</th><th class="num">Per tank ({tank} l)</th></tr></thead>
+    <tbody>{kedjor.map((x) => <tr><td><a href={`/kedja/${x.c.toLowerCase().replace(/\s+/g, "-")}/`}>{x.c}</a></td><td class="num">{pris(x.a)}</td><td class="num">{pris(x.b)}</td><td class="num">{pris(x.b - x.a)}</td><td class="num">{kr((x.b - x.a) * tank, 0)}</td></tr>)}
+      <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(p95)}</strong></td><td class="num"><strong>{pris(p98)}</strong></td><td class="num"><strong>{pris(diff)}</strong></td><td class="num"><strong>{kr(diff * tank, 0)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms {LP_DATUM}. Priset på en enskild station sätts lokalt och kan avvika.</p>
+  <p>I procent är 98 idag {procent((p98 / p95 - 1) * 100)} dyrare än 95. {premium.length > 0 && <>{premium.map((x) => x.c).join(" och ")} publicerar dessutom ett listpris för en premiumvariant av 98, {premium.map((x) => kr(x.p)).join(" och ")} per liter.</>}</p>
+
+  <h2 id="per-ar">Vad kostar det att tanka 98 i stället för 95?</h2>
+  <p>En bensinbil i Sverige körde i genomsnitt {milBensin.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar} enligt Trafikanalys. Med en förbrukning på 0,6 liter per mil blir det ungefär {Math.round(milBensin * 0.6)} liter om året. Så här mycket mer kostar 98 per år med dagens prisskillnad:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Mil per år</th><th class="num">Liter (0,6 l/mil)</th><th class="num">Med 95</th><th class="num">Med 98</th><th class="num">Merkostnad</th></tr></thead>
+    <tbody>{scenarier.map((x) => <tr><td class="num">{x.m.toLocaleString("sv-SE")}{x.m === milBensin && " (snitt)"}</td><td class="num">{Math.round(x.l).toLocaleString("sv-SE")}</td><td class="num">{kr(x.l * p95, 0)}</td><td class="num">{kr(x.l * p98, 0)}</td><td class="num">{kr(x.l * diff, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Räkna på din egen förbrukning och körsträcka i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="oktan">Vad betyder oktantalet?</h2>
+  <p>Drivkraft Sverige beskriver oktantalet som bensinens knackningsresistens, alltså hur väl bensinen motstår knackning, när bränslet antänds okontrollerat i motorn. Ju högre oktantal, desto större motstånd.</p>
+  <p>Det finns två mätmetoder, RON och MON. Enligt Drivkraft Sverige är det RON som anges på pumpen, och MON används inte i detaljhandeln i Sverige. Standarden kräver ändå ett lägsta MON-värde för båda kvaliteterna.</p>
+  <p>Det är biltillverkaren som anger vilket oktantal motorn behöver. Uppgiften finns i instruktionsboken och ofta på en dekal vid tanklocket.</p>
+
+  <h2 id="energi">Blir bilen snålare med 98?</h2>
+  <p>Oktantalet säger ingenting om hur mycket energi bensinen innehåller. Energimyndigheten anger samma värmevärde för motorbensin 95 och 98, {VARMEVARDEN.bensin95.toLocaleString("sv-SE")} kWh per liter. Om bilen är gjord för 95 finns det alltså inget i bränslets energiinnehåll som gör att den går längre på en liter 98.</p>
+  <p>För att 98 ska löna sig rent ekonomiskt i en bil som klarar 95 måste förbrukningen bli minst {procent((1 - p95 / p98) * 100, 1)} lägre, eftersom 98 kostar så mycket mer per liter idag. Vill du testa på din egen bil: kör en hel tank med vardera och jämför förbrukningen under liknande förhållanden.</p>
+
+  <h2 id="e10">E10 eller E5 – vilken bil tål vad?</h2>
+  <p>Sedan den 1 maj 2011 får bensin i Sverige innehålla upp till 10 procent etanol, och den 1 augusti 2021 blev E10 standardbensin. Enligt Drivkraft Sverige är ungefär 94 procent av alla bensindrivna personbilar godkända för E10, men det finns undantag.</p>
+  <ul>
+    <li><strong>Bilen är godkänd för E10:</strong> du kan tanka 95 E10, och 98 om du vill eller behöver.</li>
+    <li><strong>Bilen är inte godkänd för E10:</strong> tanka E5. Den finns ofta som 98, men E5 behöver inte finnas på varje station.</li>
+    <li><strong>Flexifuelbil:</strong> kan köra på både E10 och E85. Se <a href="/guider/lonar-sig-e85/">lönar sig E85</a>.</li>
+  </ul>
+  <p>Instruktionsboken eller en dekal vid tanklocket visar vad din bil tål. Drivkraft Sverige hänvisar också till branschorganisationen Mobility Sweden för listor över godkända bilar.</p>
+
+  <h2 id="valja">Vilken bensin ska jag tanka?</h2>
+  <ol>
+    <li><strong>Läs instruktionsboken.</strong> Kräver motorn 98 ska du tanka 98.</li>
+    <li><strong>Kontrollera E10.</strong> Är bilen inte godkänd för E10, välj E5.</li>
+    <li><strong>Annars räcker 95.</strong> Bensin 95 uppfyller kraven för en bil som är gjord för 95, och den är billigare per liter.</li>
+    <li><strong>Jämför stationerna.</strong> Av de {nAlla.toLocaleString("sv-SE")} stationerna i vårt register anger {n95.toLocaleString("sv-SE")} att de säljer 95 och {n98.toLocaleString("sv-SE")} att de säljer 98.</li>
+  </ol>
+
+  <h2 id="lan">Var finns bensin 98?</h2>
+  <p>Bensin 98 finns inte på alla stationer. Det spelar roll för den som har en bil som kräver 98 eller som inte tål E10 och därför behöver E5. Tabellen visar hur stor andel av stationerna i varje län som anger att de säljer 98, enligt vårt stationsregister.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Stationer</th><th class="num">Med 98</th><th class="num">Andel</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{x.lan}</td><td class="num">{x.alla}</td><td class="num">{x.n98}</td><td class="num">{procent(x.n98 / x.alla * 100)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationer i registret hos bensinstationer.nu. Uppgiften om drivmedel kan saknas för vissa stationer.</p>
+  <p>Ska du köra långt med en bil som behöver 98 kan det vara värt att kontrollera stationerna längs vägen i förväg. Sök station i <a href="/">stationssökningen</a>.</p>
+
+  <h2 id="sasong">Sommar- och vinterbensin</h2>
+  <p>Både 95 och 98 säljs i sommar- och vinterkvalitet, som skiljer sig i flyktighet (ångtryck). Enligt standardutdraget gäller:</p>
+  <ul>
+    <li><strong>Norrlandslänen</strong> (Gävleborg, Västernorrland, Jämtland, Västerbotten och Norrbotten): sommar 16 maj–31 augusti, vinter 16 oktober–31 mars.</li>
+    <li><strong>Övriga Sverige:</strong> sommar 1 maj–15 september, vinter 1 november–15 mars.</li>
+  </ul>
+  <p>Mellan perioderna finns övergångstider då båda kvaliteterna får säljas. Du behöver inte göra något själv, eftersom stationerna byter kvalitet.</p>
+</Guide>

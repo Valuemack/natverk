@@ -68,7 +68,7 @@
     "liten": "/bilder/cambridge-praktikplatser-unga-utan-jobb-eller-studier-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: historiska universitetsbyggnader i Cambridge vid en grön gräsmatta en höstmorgon",
+    "alt": "Målad illustration av ett ljust kontor med bärbara datorer, anteckningsbok, ID-kort på bordet.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -95,10 +95,11 @@
   "bildmotiv": "a bright shared office at a university with desks, laptops, notebooks and visitor lanyards on the table, nobody present",
   "bildalt": "Historiska universitetsbyggnader i Cambridge vid en grön gräsmatta en höstmorgon",
   "poang": {
-    "positiv": 0.8,
-    "betydelse": 0.4,
+    "positiv": 0.6,
+    "betydelse": 0.2,
     "tillit": 0.93,
-    "total": 72
+    "total": 48,
+    "gladje": 0.3
   },
   "produktion": {
     "metod": "ai-stod",
@@ -111,5 +112,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "manniskor"
 }

@@ -71,10 +71,12 @@
   "bildmotiv": "a sunny inner courtyard of a southern European university campus with stone benches, potted olive trees and parked bicycles, nobody in focus",
   "bildalt": "Takåsar i Montpellier i södra Frankrike, där universiteten i ELLS samlades.",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.38,
+    "positiv": 0.3,
+    "betydelse": 0.2,
     "tillit": 0.95,
-    "total": 49
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -87,5 +89,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

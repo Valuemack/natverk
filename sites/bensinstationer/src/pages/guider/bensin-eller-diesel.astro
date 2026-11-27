@@ -1,0 +1,210 @@
+---
+// Lång guide: bensin eller diesel. Dagens listpriser per kedja, kostnad per mil och år (Trafikanalys körsträckor),
+// pris per kWh (Energimyndighetens värmevärden), fordonsskatt (Transportstyrelsen), skatt per liter (Skatteverket)
+// och veckohistorik sedan 2005 (EU Weekly Oil Bulletin). Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Kurva from "../../components/Kurva.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, VECKOR, SENASTE_VECKA, AR_LISTA, arSammanfattning, skattedelar, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { VARMEVARDEN, KORSTRACKOR, SKATTESATSER, MOMS, summa, periodFor } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, "2026-11-27", LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const dieselDyrare = pd > p95;
+const literDiff = pd - p95;
+
+// Kostnad per mil: räkneexempel där dieselbilen drar 20 procent mindre än motsvarande bensinbil.
+const fall = [[0.5, 0.4], [0.6, 0.48], [0.7, 0.56], [0.8, 0.64]];
+const brytpunkt = (fb) => (fb * p95) / pd; // dieselförbrukning där kostnaden per mil blir lika
+const kravSnalare = 1 - p95 / pd; // hur mycket mindre diesel bilen måste dra
+const fmtL = (v) => v.toLocaleString("sv-SE", { maximumFractionDigits: 2 });
+
+// Kedjornas listpriser idag.
+const kedjor = LISTKEDJOR.map((c) => ({ c, href: kedjaHref(c), b: kedjePris(c, "bensin95"), d: kedjePris(c, "diesel") })).filter((x) => x.b != null && x.d != null);
+
+// Energi och pris per kWh (Energimyndigheten).
+const kwhB = VARMEVARDEN.bensin95, kwhD = VARMEVARDEN.diesel;
+const merEnergi = kwhD / kwhB - 1;
+
+// Körsträckor 2025 (Trafikanalys).
+const tb = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin");
+const td = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Diesel");
+const arsfall = [500, tb.mil, 1500, td.mil, 2500].sort((a, b) => a - b).map((m) => ({ m, b: m * 0.6 * p95, d: m * 0.48 * pd }));
+
+// Skatt per liter: dagens period hos Skatteverket och EU-veckans uppdelning.
+const per = periodFor(LP_DATUM);
+const sb = skattedelar(SENASTE_VECKA, "b95"), sd = skattedelar(SENASTE_VECKA, "diesel");
+
+// Historik: årsmedel och veckor då diesel var dyrare än 95.
+const arsrader = AR_LISTA.map((ar) => {
+  const s = arSammanfattning(ar);
+  if (!s?.b95 || !s?.diesel) return null;
+  const v = s.veckor.filter((x) => x.diesel);
+  return { ar, b: s.b95.medel, d: s.diesel.medel, dyr: v.filter((x) => x.diesel > x.b95).length, n: v.length, komplett: s.komplett };
+}).filter(Boolean);
+const senaste10 = arsrader.slice(-10);
+const allaV = VECKOR.filter((x) => x.diesel);
+const dyrV = allaV.filter((x) => x.diesel > x.b95).length;
+const fore2018 = allaV.filter((x) => x.datum < "2018-01-01"), fran2018 = allaV.filter((x) => x.datum >= "2018-01-01");
+const andelFore = fore2018.filter((x) => x.diesel > x.b95).length / fore2018.length;
+const andelEfter = fran2018.filter((x) => x.diesel > x.b95).length / fran2018.length;
+const serie = VECKOR.slice(-261);
+
+// Fordonsskatt enligt Transportstyrelsen, räkneexempel med 120 g CO2/km (blandad körning), bil i trafik efter 1 juni 2022.
+const CO2 = 120;
+const malus = 360 + 107 * (Math.min(CO2, 125) - 75) + Math.max(0, CO2 - 125) * 132;
+const vanlig = 360 + 22 * Math.max(0, CO2 - 111);
+const bransle = 13.52 * CO2, miljo = 250;
+const skatt = { bMalus: malus, dMalus: malus + bransle + miljo, bSen: vanlig, dSen: vanlig + bransle + miljo };
+
+// Totalkostnad per år (bränsle + fordonsskatt från år 4) och HVO100.
+const fb0 = 0.6, fd0 = 0.42; // dieselbil 30 procent snålare
+const perMilVinst = fb0 * p95 - fd0 * pd; // kr per mil som dieseln vinner (negativt = förlorar)
+const skattDiff = skatt.dSen - skatt.bSen;
+const brytMil = perMilVinst > 0 ? skattDiff / perMilVinst : null;
+const totRader = [1000, 1500, 2000, 3000].map((m) => ({ m, b: m * fb0 * p95 + skatt.bSen, d: m * fd0 * pd + skatt.dSen }));
+const phvo = idagPris("hvo100");
+// Stationer i registret.
+const nB = STATIONER.filter((s) => s.drivmedel?.bensin95 === true).length;
+const nD = STATIONER.filter((s) => s.drivmedel?.diesel === true).length;
+const nHvo = STATIONER.filter((s) => s.drivmedel?.hvo100 === true).length;
+
+const avsnitt = [
+  { id: "idag", rubrik: "Bensin- och dieselpris idag" },
+  { id: "per-mil", rubrik: "Vad kostar milen med bensin och diesel?" },
+  { id: "energi", rubrik: "Därför drar en dieselbil färre liter" },
+  { id: "per-ar", rubrik: "Kostnad per år – och hur långt svenskarna kör" },
+  { id: "skatt", rubrik: "Fordonsskatt: dieselbilen betalar mer" },
+  { id: "historik", rubrik: "Har diesel alltid varit dyrare?" },
+  { id: "varfor", rubrik: "Varför kostar diesel mer per liter just nu?" },
+  { id: "valja", rubrik: "Så väljer du mellan bensin och diesel" },
+];
+
+const fragor = [
+  { fraga: "Är diesel eller bensin billigast?", svar: `Per liter är diesel ${dieselDyrare ? "dyrare" : "billigare"} idag: ${kr(pd)} mot ${kr(p95)} för 95 (kedjornas snitt ${datum}). En dieselbil drar oftast färre liter per mil. Drar bensinbilen 0,6 liter per mil måste dieselbilen dra under ${fmtL(brytpunkt(0.6))} liter per mil för att bli billigare i drift.` },
+  { fraga: "Hur mycket snålare måste en dieselbil vara?", svar: `Med dagens priser måste dieselbilen dra minst ${procent(kravSnalare * 100, 1)} färre liter per mil än bensinbilen för att milen ska kosta lika mycket. Diesel innehåller ungefär ${procent(merEnergi * 100)} mer energi per liter än bensin 95 enligt Energimyndigheten.` },
+  { fraga: "Hur ofta har diesel varit dyrare än bensin?", svar: `Under ${dyrV.toLocaleString("sv-SE")} av ${allaV.length.toLocaleString("sv-SE")} veckor sedan ${allaV[0].datum.slice(0, 4)} var genomsnittspriset för diesel högre än för 95. Före 2018 gällde det ${procent(andelFore * 100)} av veckorna, från 2018 ${procent(andelEfter * 100)}.` },
+  { fraga: "Är fordonsskatten högre för dieselbilar?", svar: `Ja. Enligt Transportstyrelsen betalar dieselbilar i trafik från 1 juli 2018 ett bränsletillägg på 13,52 kronor per gram koldioxid per kilometer och ett miljötillägg på 250 kronor. För en bil som släpper ut ${CO2} gram blir det ${kr(bransle + miljo, 0)} mer per år än för en bensinbil med samma utsläpp.` },
+  { fraga: "Hur långt kör en dieselbil per år?", svar: `Enligt Trafikanalys körde en dieselbil i genomsnitt ${td.mil.toLocaleString("sv-SE")} mil under ${KORSTRACKOR.ar}, mot ${tb.mil.toLocaleString("sv-SE")} mil för en bensinbil.` },
+  { fraga: "Varför är diesel dyrare än bensin?", svar: `Det är produktpriset, inte skatten. EU:s veckosiffror för ${datumText(SENASTE_VECKA.datum)} visar ${kr(sd.produkt)} per liter diesel före skatt mot ${kr(sb.produkt)} för 95. Skatten per liter är i stället lägre på diesel.` },
+];
+---
+<Guide site={SITE} titel={`Bensin eller diesel – vad är billigast per mil?`}
+  beskrivning={`Diesel kostar ${kr(pd)}/l och 95 ${kr(p95)}/l idag. Kostnad per mil och år, brytpunkten för förbrukningen, fordonsskatten och dieselns pris sedan 2005.`}
+  h1="Bensin eller diesel – vad är billigast?"
+  svar={`Idag kostar diesel <strong>${kr(pd)}</strong> och bensin 95 <strong>${kr(p95)}</strong> per liter i kedjornas snitt. En dieselbil blir billigare i drift bara om den drar minst <strong>${procent(kravSnalare * 100, 1)} färre liter</strong> per mil än bensinbilen: mot en bensinbil som drar 0,6 liter per mil går gränsen vid ${fmtL(brytpunkt(0.6))} liter. Dieselbilen har dessutom högre fordonsskatt, så den lönar sig främst för den som kör långt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensin eller diesel", href: "/guider/bensin-eller-diesel/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Pris per kedja och utveckling" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Bensin 95 per kedja" },
+    { namn: "Varför är diesel dyrare?", href: "/guider/varfor-ar-diesel-dyrare/", text: "Produktpris, skatt och reduktionsplikt" },
+    { namn: "Elbil eller bensin", href: "/guider/elbil-eller-bensin/", text: "Vid vilket elpris elbilen blir billigare" },
+    { namn: "Kostnad per mil", href: "/rakna/", text: "Bränslekalkylator med dagens priser" },
+  ]}
+  kallor={[
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "veckopriser i Sverige sedan 2005, med och utan skatt", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: VARMEVARDEN.kalla, text: "energiinnehåll för bensin 95, diesel MK1 och HVO100", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka och antal bilar per drivmedel", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Skattens storlek", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/fordonsskatt/skattens-storlek/", text: "grundbelopp, koldioxidbelopp, bränsletillägg, bränslefaktor och miljötillägg", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Malus", url: "https://www.transportstyrelsen.se/sv/vagtrafik/fordon/skatter-och-avgifter/malus/", text: "malusbelopp de tre första åren", datum: "2026-11-27" },
+    { namn: "Skatteverket – Skattesatser på bränslen", url: SKATTESATSER.kalla, text: "energi- och koldioxidskatt per liter 2026", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Beräkningsfaktorer 2026", url: "https://drivkraftsverige.se/wp-content/uploads/2026/07/Berakningsfaktorer-2026_V1.pdf", text: "koldioxid per liter bensin och diesel", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Analys av drivmedelspriser, slutredovisning (december 2024)", url: "https://www.konj.se/media/wr1bnjnc/specialstudie-111-slutredovisning-drivmedelsuppdrag.pdf", text: "dieselpriset och reduktionsplikten 2024", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer som säljer bensin 95, diesel och HVO100" },
+  ]}>
+
+  <h2 id="idag">Bensin- och dieselpris idag</h2>
+  <p>De tre kedjor som publicerar listpriser varje dag har idag ett snitt på {kr(p95)} för bensin 95 och {kr(pd)} för diesel. Diesel är alltså {kr(Math.abs(literDiff))} {dieselDyrare ? "dyrare" : "billigare"} per liter, {procent(Math.abs(pd / p95 - 1) * 100)} {dieselDyrare ? "mer" : "mindre"} än bensinen. För en tank på 50 liter blir skillnaden {kr(Math.abs(literDiff) * 50, 0)}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Bensin 95</th><th class="num">Diesel</th><th class="num">Skillnad per liter</th></tr></thead>
+    <tbody>{kedjor.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.b)}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(x.d - x.b)}</td></tr>)}
+      <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(p95)}</strong></td><td class="num"><strong>{pris(pd)}</strong></td><td class="num"><strong>{pris(literDiff)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms {LP_DATUM}. Pumppriset på en enskild station sätts lokalt och kan avvika.</p>
+  <p>Mellan billigaste och dyraste kedja skiljer det idag {kr(Math.max(...kedjor.map((x) => x.d)) - Math.min(...kedjor.map((x) => x.d)))} per liter på diesel och {kr(Math.max(...kedjor.map((x) => x.b)) - Math.min(...kedjor.map((x) => x.b)))} på bensin 95. Pumppriset på din station kan avvika åt båda hållen.</p>
+  <p>Literpriset avgör ändå inte frågan. Det som räknas är vad en mil kostar, och där spelar förbrukningen lika stor roll som priset.</p>
+
+  <h2 id="per-mil">Vad kostar milen med bensin och diesel?</h2>
+  <p>Kostnaden per mil är förbrukningen i liter per mil gånger literpriset. Tabellen jämför fyra bensinbilar med dieselbilar som drar 20 procent mindre. Det är ett räkneexempel, inte en regel: hur mycket snålare dieselversionen är skiljer sig mellan bilmodeller, så jämför helst de förbrukningssiffror som gäller just de bilar du väljer mellan.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bensinbil</th><th class="num">Kr/mil</th><th>Dieselbil</th><th class="num">Kr/mil</th><th class="num">Brytpunkt diesel</th><th class="num">Per år (1 500 mil)</th></tr></thead>
+    <tbody>{fall.map(([fb, fd]) => { const kb = fb * p95, kd = fd * pd; return (
+      <tr><td>{fmtL(fb)} l/mil</td><td class="num">{pris(kb)}</td><td>{fmtL(fd)} l/mil</td><td class="num">{pris(kd)}</td><td class="num">{fmtL(brytpunkt(fb))} l/mil</td><td class="num">{kd < kb ? "diesel " : "bensin "}{kr(Math.abs(kb - kd) * 1500, 0)} billigare</td></tr>
+    ); })}</tbody>
+  </table></div>
+  <p class="kalla">Snittpriser från kedjornas listpriser {LP_DATUM}. Brytpunkten är den dieselförbrukning där milen kostar lika mycket som med bensinbilen.</p>
+  <p>Brytpunkten räknas ut som bensinbilens förbrukning gånger bensinpriset delat med dieselpriset. Med dagens priser motsvarar det att dieselbilen måste dra {procent(kravSnalare * 100, 1)} färre liter. {dieselDyrare && kravSnalare > 0.2 ? "En dieselbil som är 20 procent snålare räcker alltså inte för att vinna på bränslet just nu." : "En dieselbil som är 20 procent snålare vinner alltså på bränslet med dagens priser."} Räkna på dina egna siffror i <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <h2 id="energi">Därför drar en dieselbil färre liter</h2>
+  <p>En förklaring är att diesel innehåller mer energi per liter. Energimyndigheten anger {kwhD.toLocaleString("sv-SE")} kWh per liter för diesel i miljöklass 1 och {kwhB.toLocaleString("sv-SE")} kWh per liter för bensin 95, alltså ungefär {procent(merEnergi * 100)} mer i varje liter diesel. Resten av skillnaden i förbrukning beror på motorn och hur bilen körs.</p>
+  <p>Räknat per kWh energi blir jämförelsen rättvisare än per liter:</p>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Pris per liter</th><th class="num">kWh per liter</th><th class="num">Pris per kWh</th></tr></thead>
+    <tbody>
+      <tr><td>Bensin 95</td><td class="num">{pris(p95)}</td><td class="num">{kwhB.toLocaleString("sv-SE")}</td><td class="num">{pris(p95 / kwhB)}</td></tr>
+      <tr><td>Diesel</td><td class="num">{pris(pd)}</td><td class="num">{kwhD.toLocaleString("sv-SE")}</td><td class="num">{pris(pd / kwhD)}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Per kWh är diesel idag {procent(Math.abs((pd / kwhD) / (p95 / kwhB) - 1) * 100)} {pd / kwhD > p95 / kwhB ? "dyrare" : "billigare"} än bensin. Skillnaden i energiinnehåll täcker alltså bara en del av prisgapet; resten måste dieselmotorns effektivitet stå för. Även utsläppen skiljer sig per liter. Enligt Drivkraft Sveriges beräkningsfaktorer gav en liter diesel i miljöklass 1 i genomsnitt 2,31 kg koldioxid från avgasröret 2025, mot 2,18 kg för en liter bensin.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="per-ar">Kostnad per år – och hur långt svenskarna kör</h2>
+  <p>Ju längre du kör, desto mer väger bränslekostnaden. Enligt Trafikanalys körde de {td.bilar.toLocaleString("sv-SE")} dieseldrivna personbilarna i trafik i genomsnitt {td.mil.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar}, mot {tb.mil.toLocaleString("sv-SE")} mil för de {tb.bilar.toLocaleString("sv-SE")} bensinbilarna. Dieselbilarna körs alltså i snitt {procent((td.mil / tb.mil - 1) * 100)} längre per år, och det är just vid långa körsträckor som en lägre förbrukning per mil gör mest skillnad.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Mil per år</th><th class="num">Bensin (0,6 l/mil)</th><th class="num">Diesel (0,48 l/mil)</th><th class="num">Skillnad</th></tr></thead>
+    <tbody>{arsfall.map((x) => <tr><td class="num">{x.m.toLocaleString("sv-SE")}{x.m === tb.mil && " (snitt bensinbil)"}{x.m === td.mil && " (snitt dieselbil)"}</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.d, 0)}</td><td class="num">{x.d < x.b ? "diesel " : "bensin "}{kr(Math.abs(x.b - x.d), 0)} billigare</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Dagens snittpriser. Dieselbilen antas dra 20 procent mindre än bensinbilen. Körsträckor: Trafikanalys, {KORSTRACKOR.ar}.</p>
+  <p>Lägger du ihop bränsle och fordonsskatt blir bilden tydligare. Tabellen jämför en bensinbil som drar {fmtL(fb0)} liter per mil med en dieselbil som drar {fmtL(fd0)} liter, alltså 30 procent mindre, och räknar med skatten från år 4 i exemplet med {CO2} gram koldioxid per kilometer nedan.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Mil per år</th><th class="num">Bensinbil, bränsle + skatt</th><th class="num">Dieselbil, bränsle + skatt</th><th>Billigast</th></tr></thead>
+    <tbody>{totRader.map((x) => <tr><td class="num">{x.m.toLocaleString("sv-SE")}</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.d, 0)}</td><td>{x.d < x.b ? "Diesel" : "Bensin"}</td></tr>)}</tbody>
+  </table></div>
+  <p>{brytMil ? <>Med dagens priser vinner dieselbilen {kr(perMilVinst)} per mil, och den högre skatten är intjänad efter ungefär {Math.round(brytMil).toLocaleString("sv-SE")} mil om året.</> : <>Med dagens priser kostar dieselbilen mer per mil även när den är 30 procent snålare, så den högre skatten tjänas aldrig in på bränslet. Det ändras om dieselpriset sjunker i förhållande till bensinpriset.</>}</p>
+  <p>Kör du många mil i tjänsten kan <a href="/guider/milersattning/">milersättningen</a> också påverka kalkylen.</p>
+
+  <h2 id="skatt">Fordonsskatt: dieselbilen betalar mer</h2>
+  <p>Bränslet är bara en del av kostnaden. Enligt Transportstyrelsen betalar en personbil som tagits i trafik från den 1 juli 2018 ett grundbelopp på 360 kronor och ett koldioxidbelopp på 22 kronor per gram över 111 gram per kilometer. En dieselbil betalar dessutom ett bränsletillägg, koldioxidutsläppet i gram per kilometer gånger 13,52, och ett miljötillägg på 250 kronor. De tre första åren gäller i stället malus för bilar som blivit skattepliktiga från den 1 juni 2022: 107 kronor per gram mellan 75 och 125 gram och 132 kronor per gram över 125 gram, plus grundbeloppet och för diesel bränsle- och miljötillägget.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Exempel: {CO2} g CO2/km</th><th class="num">Bensinbil</th><th class="num">Dieselbil</th><th class="num">Dieselbilen betalar mer</th></tr></thead>
+    <tbody>
+      <tr><td>År 1–3 (malus)</td><td class="num">{kr(skatt.bMalus, 0)}</td><td class="num">{kr(skatt.dMalus, 0)}</td><td class="num">{kr(skatt.dMalus - skatt.bMalus, 0)}</td></tr>
+      <tr><td>Från år 4</td><td class="num">{kr(skatt.bSen, 0)}</td><td class="num">{kr(skatt.dSen, 0)}</td><td class="num">{kr(skatt.dSen - skatt.bSen, 0)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Räknat med Transportstyrelsens regler. Bilar som kan köras på E85 eller fordonsgas har andra regler. Exakt skatt för en viss bil finns hos Transportstyrelsen.</p>
+  <p>För äldre dieselbilar, i trafik före den 1 juli 2018, multipliceras i stället grundbeloppet och koldioxidbeloppet med bränslefaktorn 2,37, och miljötillägget är 500 kronor för bilar i trafik före 2008. Med dagens prisskillnad per mil och {kr(skatt.dSen - skatt.bSen, 0)} i högre skatt per år måste dieselbilen alltså köras långt för att vinna på totalen.</p>
+
+  <h2 id="historik">Har diesel alltid varit dyrare?</h2>
+  <p>Nej. EU-kommissionens veckopriser visar att diesel var dyrare än bensin 95 under {dyrV.toLocaleString("sv-SE")} av {allaV.length.toLocaleString("sv-SE")} veckor sedan {allaV[0].datum.slice(0, 4)}. Före 2018 gällde det bara {procent(andelFore * 100)} av veckorna, från 2018 och framåt {procent(andelEfter * 100)}. Tabellen visar årsmedel för de senaste tio åren. Alla år finns under <a href="/historik/">historik</a>.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Bensin 95</th><th class="num">Diesel</th><th class="num">Diesel minus 95</th><th class="num">Veckor diesel dyrare</th></tr></thead>
+    <tbody>{senaste10.map((x) => <tr><td><a href={`/historik/${x.ar}/`}>{x.ar}</a>{!x.komplett && " (hittills)"}</td><td class="num">{pris(x.b)}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(Math.abs(x.d - x.b) < 0.005 ? 0 : x.d - x.b)}</td><td class="num">{x.dyr} av {x.n}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Årsmedel av veckopriser inkl. skatt, EU Weekly Oil Bulletin, omräknat till kronor med veckans växelkurs.</p>
+  <Kurva titel="Bensin 95 och diesel, veckopris de senaste fem åren" linjer={[
+    { namn: "Bensin 95", farg: "#d97706", punkter: serie.map((x) => ({ x: x.datum, y: x.b95 })) },
+    { namn: "Diesel", farg: "#334155", punkter: serie.map((x) => ({ x: x.datum, y: x.diesel })) },
+  ]} />
+
+  <h2 id="varfor">Varför kostar diesel mer per liter just nu?</h2>
+  <p>Det är produktpriset, alltså priset före skatt, som skiljer. Veckan som började {datumText(SENASTE_VECKA.datum)} var produktpriset {kr(sd.produkt)} per liter diesel mot {kr(sb.produkt)} för bensin 95. Skatten per liter är i stället lägre på diesel: {per ? <>under perioden {per.text} är energi- och koldioxidskatten {kr(summa(per.diesel))} per liter diesel mot {kr(summa(per.bensin))} för bensin, enligt Skatteverket.</> : <>energi- och koldioxidskatten är lägre på diesel än på bensin, enligt Skatteverket.</>} Momsen på {procent(MOMS * 100)} läggs på hela priset, så ett högre produktpris ger också mer moms i kronor.</p>
+  <p>Reduktionsplikten påverkar också. Konjunkturinstitutet konstaterade i sin slutrapport i december 2024 att det svenska dieselpriset gick från att vara bland de högsta till att efter årsskiftet 2023/2024 vara bland de lägsta jämfört med grannländerna, när plikten för diesel sänktes från 30,5 till 6 procent. Mer om bakgrunden i guiden om <a href="/guider/reduktionsplikt/">reduktionsplikten</a> och i <a href="/guider/varfor-ar-diesel-dyrare/">varför diesel är dyrare</a>.</p>
+
+  <h2 id="valja">Så väljer du mellan bensin och diesel</h2>
+  <ol>
+    <li><strong>Jämför förbrukningen för de bilar du väljer mellan.</strong> Räkna ut brytpunkten: bensinbilens förbrukning gånger {pris(p95 / pd, 3)} (dagens prisförhållande) är den högsta dieselförbrukning som lönar sig.</li>
+    <li><strong>Räkna på din körsträcka.</strong> Vid {tb.mil.toLocaleString("sv-SE")} mil om året, en genomsnittlig bensinbils körsträcka, är bränsleskillnaden ofta mindre än skillnaden i fordonsskatt.</li>
+    <li><strong>Lägg till fordonsskatten.</strong> Dieselbilen betalar bränsle- och miljötillägg varje år, i exemplet ovan {kr(bransle + miljo, 0)}.</li>
+    <li><strong>Tänk på priset över tid.</strong> Prisrelationen ändras. Sedan 2018 har diesel varit dyrare än bensin under {procent(andelEfter * 100)} av veckorna.</li>
+    <li><strong>Kolla möjligheten till HVO100.</strong> Många dieselbilar kan köras på förnybar diesel. Av stationerna i vårt register anger {nHvo.toLocaleString("sv-SE")} att de säljer <a href="/drivmedel/hvo100/">HVO100</a>, och {nD.toLocaleString("sv-SE")} säljer diesel mot {nB.toLocaleString("sv-SE")} med bensin 95. Se <a href="/guider/hvo100-vilka-bilar/">vilka bilar som tål HVO100</a>.</li>
+  </ol>
+  <p>HVO100 är dyrare än vanlig diesel per liter, idag {kr(phvo)} mot {kr(pd)}. För en dieselbil som drar 0,48 liter per mil och kör {td.mil.toLocaleString("sv-SE")} mil om året blir merkostnaden {kr((phvo - pd) * 0.48 * td.mil, 0)} per år. Enligt Energimyndigheten innehåller HVO100 {VARMEVARDEN.hvo100.toLocaleString("sv-SE")} kWh per liter, nästan lika mycket som diesel, så förbrukningen påverkas lite. Att byta till HVO100 kostar alltså mer per mil, men förbrukningen blir ungefär densamma.</p>
+  <p>Kör du mest korta sträckor väger de fasta kostnaderna tyngre än bränslet. Kör du långt kan dieselbilen fortfarande vara billigast, förutsatt att den är tillräckligt mycket snålare. Jämför också med <a href="/guider/elbil-eller-bensin/">elbil</a>, och tänk på <a href="/guider/vinterdiesel/">vinterdiesel</a> om du kör i kyla.</p>
+</Guide>

@@ -1,0 +1,385 @@
+---
+// Lång guide: tanka längs E4 från Helsingborg till Haparanda. Stationerna väljs ur sajtens eget register vid byggtid:
+// alla stationer som ligger högst MAX_KM fågelvägen från vägens linje (haversine + avstånd punkt–linjesegment).
+// Vägens linje är E4 enligt OpenStreetMap (vägar med ref "E 4", hämtade 2026-11-27 via Overpass API, kortaste väg längs
+// E4-vägarna från färjeläget i Helsingborg till riksgränsen i Haparanda, förenklad med Douglas–Peucker 250 m).
+// © OpenStreetMap-bidragsgivare, ODbL. Motorvägen Helsingborg–Gävle: Trafikverket 2025-06-24. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, STATIONER, LANDER, SENASTE_VECKA, landPris, kedjePris, kedjaHref, kr, pris, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+
+// E4 söderut till norrut, [lat, lon]. Brytpunkter längs vägen ur OpenStreetMap (se kommentaren överst).
+const LINJE = [
+  [56.0388, 12.6953], [56.0332, 12.6995], [56.0349, 12.7149], [56.0163, 12.7414], [56.0226, 12.7831], [56.0788, 12.7783], [56.0875, 12.7883], [56.1013, 12.8506],
+  [56.1245, 12.9078], [56.1585, 12.9587], [56.1785, 13.0068], [56.1824, 13.0316], [56.211, 13.12], [56.2278, 13.148], [56.2413, 13.1882], [56.2571, 13.2153],
+  [56.2599, 13.285], [56.2671, 13.3182], [56.2874, 13.347], [56.2984, 13.386], [56.3294, 13.4467], [56.3581, 13.4742], [56.3702, 13.4984], [56.3861, 13.5098],
+  [56.4004, 13.5353], [56.4249, 13.5566], [56.4567, 13.6227], [56.4786, 13.6463], [56.5096, 13.6556], [56.5234, 13.6805], [56.5531, 13.7155], [56.5842, 13.7235],
+  [56.6107, 13.7503], [56.6209, 13.7805], [56.637, 13.7971], [56.6823, 13.8327], [56.7193, 13.8406], [56.7411, 13.8538], [56.7604, 13.8794], [56.7847, 13.8839],
+  [56.8093, 13.9014], [56.8305, 13.9069], [56.8651, 13.9504], [56.888, 13.955], [56.9224, 13.9747], [56.9406, 13.9962], [56.9592, 14.0037], [56.9712, 14.0173],
+  [56.9851, 14.0193], [57.0047, 14.0363], [57.0592, 14.0634], [57.1239, 14.0594], [57.1854, 14.081], [57.2152, 14.0838], [57.235, 14.0769], [57.2799, 14.0824],
+  [57.3562, 14.1057], [57.4726, 14.0989], [57.5182, 14.1127], [57.6386, 14.1884], [57.6511, 14.1867], [57.6949, 14.1575], [57.758, 14.1568], [57.7608, 14.1851],
+  [57.7732, 14.1958], [57.7801, 14.2267], [57.7872, 14.2384], [57.7903, 14.2634], [57.8044, 14.2719], [57.8633, 14.2679], [57.909, 14.3023], [57.9624, 14.3567],
+  [57.9895, 14.4159], [57.9939, 14.4405], [58.0284, 14.4872], [58.0924, 14.5496], [58.1701, 14.585], [58.2, 14.617], [58.2097, 14.6412], [58.2283, 14.6679],
+  [58.2558, 14.8236], [58.2672, 14.8568], [58.2827, 14.8714], [58.2902, 14.8899], [58.3128, 15.0316], [58.3385, 15.1324], [58.3421, 15.1704], [58.3552, 15.217],
+  [58.3898, 15.4074], [58.4355, 15.5315], [58.439, 15.568], [58.4332, 15.6311], [58.4338, 15.6812], [58.4551, 15.7739], [58.4757, 15.836], [58.4932, 15.9667],
+  [58.5024, 15.9854], [58.522, 16.0042], [58.5344, 16.0366], [58.5642, 16.0668], [58.5859, 16.1255], [58.604, 16.1275], [58.6192, 16.1486], [58.6444, 16.1672],
+  [58.6679, 16.2089], [58.6718, 16.2211], [58.671, 16.2449], [58.6774, 16.2672], [58.6807, 16.3175], [58.6883, 16.3329], [58.7032, 16.3429], [58.7375, 16.4251],
+  [58.744, 16.4978], [58.7549, 16.5583], [58.7548, 16.6467], [58.7591, 16.6869], [58.7522, 16.7525], [58.7585, 16.7935], [58.7577, 16.8491], [58.7452, 16.9382],
+  [58.7496, 16.9718], [58.7682, 16.9966], [58.7757, 17.0386], [58.806, 17.1188], [58.8517, 17.2035], [58.8748, 17.2299], [58.8931, 17.2687], [58.921, 17.3822],
+  [58.9372, 17.4256], [58.956, 17.4436], [58.9636, 17.4954], [58.9757, 17.5261], [59.0489, 17.5668], [59.0731, 17.5918], [59.113, 17.611], [59.1342, 17.6452],
+  [59.1653, 17.6496], [59.1821, 17.6418], [59.1999, 17.6638], [59.2064, 17.6874], [59.214, 17.7736], [59.2282, 17.7915], [59.2402, 17.8342], [59.2542, 17.8617],
+  [59.2559, 17.8842], [59.2821, 17.9249], [59.289, 17.9553], [59.2895, 17.989], [59.3018, 18.0196], [59.3216, 17.9966], [59.3301, 18.0097], [59.3446, 18.0099],
+  [59.3446, 18.0266], [59.3529, 18.0392], [59.3879, 18.0011], [59.4197, 17.9282], [59.4281, 17.9212], [59.4398, 17.9239], [59.4638, 17.9107], [59.5238, 17.9263],
+  [59.5503, 17.8994], [59.6286, 17.9003], [59.6763, 17.8698], [59.6934, 17.8669], [59.766, 17.7904], [59.7982, 17.7707], [59.8322, 17.7346], [59.8571, 17.7296],
+  [59.8989, 17.6537], [59.9115, 17.6501], [59.9384, 17.6602], [60.0111, 17.6243], [60.0427, 17.6279], [60.079, 17.6014], [60.0957, 17.57], [60.1158, 17.5501],
+  [60.1577, 17.5371], [60.1883, 17.4994], [60.2773, 17.5013], [60.3103, 17.5213], [60.3239, 17.5121], [60.3511, 17.4742], [60.3776, 17.482], [60.4017, 17.4738],
+  [60.4331, 17.4264], [60.4667, 17.4084], [60.497, 17.3243], [60.5176, 17.2832], [60.5529, 17.2578], [60.5729, 17.2307], [60.5909, 17.1929], [60.6346, 17.1467],
+  [60.6475, 17.1208], [60.6631, 17.11], [60.6746, 17.0902], [60.7088, 17.0854], [60.7259, 17.0742], [60.7453, 17.0814], [60.775, 17.0716], [60.7945, 17.083],
+  [60.83, 17.0828], [60.8839, 17.0439], [60.9039, 17.0161], [60.93, 17.0103], [60.96, 17.0344], [61.0073, 16.9847], [61.051, 16.9583], [61.0744, 16.9653],
+  [61.0975, 16.9866], [61.1129, 17.0114], [61.1755, 17.048], [61.2039, 17.0483], [61.2293, 17.0321], [61.2577, 17.035], [61.2913, 17.0225], [61.3172, 17.0351],
+  [61.3363, 17.0172], [61.3644, 17.0121], [61.381, 16.9937], [61.4081, 16.9939], [61.4254, 16.9841], [61.4473, 16.993], [61.5091, 16.9857], [61.531, 16.9707],
+  [61.5446, 16.9798], [61.5792, 16.9763], [61.6093, 17.0123], [61.6608, 17.0194], [61.6912, 17.0561], [61.7141, 17.0489], [61.7244, 17.0638], [61.7514, 17.0807],
+  [61.7712, 17.1022], [61.7796, 17.1283], [61.7887, 17.1413], [61.7953, 17.1665], [61.8122, 17.1885], [61.8601, 17.2063], [61.8974, 17.1847], [61.9081, 17.1852],
+  [61.9176, 17.2109], [61.9393, 17.22], [61.9545, 17.2403], [62.0065, 17.2363], [62.0162, 17.2502], [62.0481, 17.2679], [62.0663, 17.2666], [62.0916, 17.303],
+  [62.1181, 17.3278], [62.161, 17.3553], [62.1851, 17.3566], [62.195, 17.3691], [62.2076, 17.3735], [62.2526, 17.3713], [62.2707, 17.3456], [62.2935, 17.3502],
+  [62.3183, 17.3394], [62.3646, 17.3675], [62.3775, 17.361], [62.3937, 17.3382], [62.4077, 17.3375], [62.4241, 17.3496], [62.4404, 17.3367], [62.4558, 17.3456],
+  [62.4744, 17.3117], [62.4902, 17.3254], [62.5156, 17.3825], [62.5169, 17.4581], [62.5281, 17.4798], [62.5332, 17.5063], [62.5349, 17.5404], [62.5581, 17.6506],
+  [62.5635, 17.7273], [62.6072, 17.825], [62.6127, 17.8484], [62.6102, 17.873], [62.613, 17.8979], [62.6252, 17.9273], [62.6294, 17.9316], [62.6382, 17.921],
+  [62.6595, 17.8611], [62.672, 17.8398], [62.7029, 17.8591], [62.7135, 17.9033], [62.7235, 17.9217], [62.7302, 17.921], [62.7388, 17.9065], [62.7535, 17.9019],
+  [62.7863, 17.9203], [62.8145, 17.9665], [62.8387, 17.9717], [62.8455, 17.996], [62.8728, 18.0469], [62.8821, 18.0838], [62.9215, 18.0993], [62.9502, 18.0945],
+  [62.9557, 18.1034], [62.9662, 18.156], [62.9948, 18.1644], [63.0113, 18.1902], [63.0148, 18.2096], [63.0043, 18.2423], [63.0075, 18.2859], [63.0262, 18.2995],
+  [63.0346, 18.3255], [63.0526, 18.327], [63.063, 18.3549], [63.1084, 18.3736], [63.1208, 18.3969], [63.167, 18.4246], [63.2166, 18.504], [63.2489, 18.5149],
+  [63.2728, 18.5359], [63.284, 18.5565], [63.2875, 18.6122], [63.2979, 18.6448], [63.2954, 18.6889], [63.2906, 18.7067], [63.292, 18.7194], [63.3015, 18.7214],
+  [63.3068, 18.772], [63.3163, 18.8005], [63.3096, 18.8398], [63.2971, 18.871], [63.2961, 18.8842], [63.3133, 18.9414], [63.3148, 19], [63.3233, 19.0444],
+  [63.339, 19.0786], [63.3394, 19.1062], [63.3532, 19.1596], [63.3701, 19.1885], [63.4437, 19.2164], [63.4719, 19.2827], [63.4967, 19.3233], [63.5262, 19.3879],
+  [63.5728, 19.442], [63.5779, 19.4631], [63.5841, 19.5487], [63.5847, 19.6423], [63.5898, 19.6882], [63.6162, 19.8271], [63.6408, 19.9227], [63.6495, 19.9459],
+  [63.6666, 19.9695], [63.7251, 20.0826], [63.7524, 20.153], [63.7957, 20.2222], [63.8026, 20.2424], [63.8032, 20.2625], [63.7989, 20.2832], [63.8062, 20.3223],
+  [63.8467, 20.3416], [63.9012, 20.5712], [63.9173, 20.6001], [63.9308, 20.6378], [63.9533, 20.6681], [63.9672, 20.7056], [63.9847, 20.7344], [63.9988, 20.7876],
+  [64.0197, 20.8368], [64.0443, 20.8485], [64.0634, 20.8486], [64.0817, 20.8671], [64.1016, 20.8708], [64.1426, 20.8966], [64.169, 20.9279], [64.1846, 20.99],
+  [64.2033, 21.0155], [64.2318, 21.017], [64.2552, 21.0449], [64.2728, 21.0492], [64.2926, 21.0814], [64.297, 21.1156], [64.3326, 21.2068], [64.3349, 21.2682],
+  [64.3496, 21.2922], [64.3791, 21.3043], [64.3907, 21.2977], [64.4038, 21.3005], [64.434, 21.28], [64.4659, 21.2928], [64.4782, 21.2892], [64.5085, 21.2572],
+  [64.5374, 21.2577], [64.6003, 21.2046], [64.615, 21.1805], [64.6336, 21.1739], [64.6832, 21.0666], [64.7001, 21.0056], [64.7434, 20.9603], [64.7588, 20.9662],
+  [64.7622, 21.0047], [64.7664, 21.0153], [64.7928, 21.0218], [64.8059, 21.0324], [64.8237, 21.0251], [64.8394, 20.9915], [64.847, 20.989], [64.9235, 21.1069],
+  [64.9424, 21.1574], [64.9732, 21.2735], [64.9834, 21.2898], [65.0273, 21.3306], [65.0412, 21.3543], [65.0645, 21.4291], [65.1099, 21.5227], [65.1242, 21.5248],
+  [65.1611, 21.4924], [65.208, 21.5198], [65.2179, 21.5194], [65.3081, 21.4078], [65.316, 21.4126], [65.3297, 21.4406], [65.3682, 21.4293], [65.3821, 21.435],
+  [65.397, 21.4605], [65.422, 21.5462], [65.4299, 21.5851], [65.4333, 21.6309], [65.4402, 21.6584], [65.492, 21.7609], [65.5244, 21.7813], [65.5333, 21.7962],
+  [65.5567, 21.8688], [65.5665, 21.9141], [65.5798, 21.9466], [65.5837, 22.0017], [65.5951, 22.0396], [65.6071, 22.053], [65.6388, 22.0676], [65.6644, 22.0973],
+  [65.6953, 22.1131], [65.743, 22.1671], [65.7761, 22.1692], [65.7971, 22.1847], [65.8142, 22.2056], [65.8371, 22.2499], [65.8498, 22.3157], [65.8729, 22.3701],
+  [65.872, 22.4657], [65.8781, 22.5476], [65.9004, 22.6074], [65.908, 22.6391], [65.9178, 22.7587], [65.9087, 22.8297], [65.881, 22.9422], [65.8834, 22.9688],
+  [65.8704, 23.0286], [65.8699, 23.0622], [65.8515, 23.117], [65.8537, 23.1448], [65.8407, 23.1765], [65.8376, 23.2025], [65.8244, 23.2451], [65.8211, 23.2806],
+  [65.8276, 23.3305], [65.8308, 23.4189], [65.8489, 23.4613], [65.8588, 23.5071], [65.8565, 23.5459], [65.8446, 23.6122], [65.8431, 23.7023], [65.8318, 23.7738],
+  [65.8181, 23.8257], [65.8115, 23.8857], [65.8097, 23.9906], [65.8239, 24.0652], [65.8404, 24.1148], [65.8411, 24.145],
+];
+// Längden längs den fullständiga OSM-geometrin (före förenklingen), uppmätt 2026-11-27. Kilometertalen nedan skalas till den.
+const LANGD_OSM = 1578.4;
+// Ett stationsläge räknas som "längs E4" om det ligger högst så här många km fågelvägen från vägens linje.
+const MAX_KM = 2;
+// Orter som delar vägen i sträckor (ungefärligt centrum). De projiceras på linjen; start och slut är linjens ändar.
+const ORTER = [
+  { namn: "Helsingborg", p: [56.044, 12.694] },
+  { namn: "Ljungby", p: [56.833, 13.941] },
+  { namn: "Jönköping", p: [57.782, 14.161] },
+  { namn: "Linköping", p: [58.411, 15.621] },
+  { namn: "Norrköping", p: [58.588, 16.192] },
+  { namn: "Nyköping", p: [58.753, 17.008] },
+  { namn: "Södertälje", p: [59.196, 17.626] },
+  { namn: "Stockholm", p: [59.329, 18.069] },
+  { namn: "Uppsala", p: [59.858, 17.639] },
+  { namn: "Gävle", p: [60.675, 17.141] },
+  { namn: "Hudiksvall", p: [61.729, 17.104] },
+  { namn: "Sundsvall", p: [62.391, 17.307] },
+  { namn: "Örnsköldsvik", p: [63.29, 18.716] },
+  { namn: "Umeå", p: [63.826, 20.263] },
+  { namn: "Skellefteå", p: [64.75, 20.95] },
+  { namn: "Piteå", p: [65.317, 21.48] },
+  { namn: "Luleå", p: [65.584, 22.155] },
+  { namn: "Haparanda", p: [65.845, 24.145] },
+];
+
+// ---------- Geometri: haversine och avstånd från punkt till linjesegment ----------
+const R = 6371.0088, rad = (d) => (d * Math.PI) / 180;
+const hav = (a, b) => { const h = Math.sin(rad(b[0] - a[0]) / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(rad(b[1] - a[1]) / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const KM0 = [0]; for (let i = 1; i < LINJE.length; i++) KM0.push(KM0[i - 1] + hav(LINJE[i - 1], LINJE[i]));
+const skala = LANGD_OSM / KM0.at(-1);
+const KM = KM0.map((k) => k * skala);
+const LANGD = LANGD_OSM;
+/** Närmaste punkt på linjen: avstånd i km (d) och position längs vägen i km från start (km). */
+function projicera(p) {
+  let bast = { d: Infinity, km: 0 };
+  for (let i = 1; i < LINJE.length; i++) {
+    const a = LINJE[i - 1], b = LINJE[i], c = Math.cos(rad((a[0] + b[0]) / 2));
+    const dx = (b[1] - a[1]) * c, dy = b[0] - a[0], L = dx * dx + dy * dy;
+    const t = L ? Math.max(0, Math.min(1, (((p[1] - a[1]) * c) * dx + (p[0] - a[0]) * dy) / L)) : 0;
+    const d = hav(p, [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])]);
+    if (d < bast.d) bast = { d, km: KM[i - 1] + t * (KM[i] - KM[i - 1]) };
+  }
+  return bast;
+}
+
+// ---------- Stationerna längs vägen ----------
+const FLYTANDE = ["bensin95", "bensin98", "diesel", "hvo100", "e85"];
+const baraGasEl = (s) => !FLYTANDE.some((k) => s.drivmedel?.[k] === true) && ["biogas", "lng", "lpg", "vatgas", "el"].some((k) => s.drivmedel?.[k] === true);
+const EXTRA = new Map(KAT.enheter.map((e) => [e.href, e.extra ?? {}]));
+const ALLA = STATIONER.filter((s) => s.lat != null && s.lon != null)
+  .map((s) => ({ ...s, ...projicera([s.lat, s.lon]), maxLangd: Number(EXTRA.get(s.href)?.max_fordonslangd_m) || null }))
+  .filter((s) => s.d <= MAX_KM).sort((a, b) => a.km - b.km);
+/** Stationer med bensin eller diesel, eller där utbudet saknas i datan (inte rena gas-, el- eller vätgasstationer). */
+const TANK = ALLA.filter((s) => !baraGasEl(s));
+const EGENSKAP = {
+  dygnet: (s) => s.dygnet && !baraGasEl(s),
+  e85: (s) => s.drivmedel?.e85 === true,
+  hvo100: (s) => s.drivmedel?.hvo100 === true,
+  biogas: (s) => s.drivmedel?.biogas === true,
+  el: (s) => s.drivmedel?.el === true || s.tjanster?.laddning === true,
+  adblue: (s) => s.drivmedel?.adblue === true || s.tjanster?.adblue === true,
+  truck: (s) => s.tjanster?.truckdiesel === true,
+  butik: (s) => s.tjanster?.butik === true,
+  toalett: (s) => s.tjanster?.toalett === true,
+};
+const ort = ORTER.map((o, i) => ({ ...o, km: i === 0 ? 0 : i === ORTER.length - 1 ? LANGD : projicera(o.p).km }));
+const ETAPPER = ort.slice(1).map((o, i) => {
+  const a = ort[i].km, b = o.km, sist = i === ort.length - 2;
+  const st = ALLA.filter((s) => s.km >= a && (s.km < b || (sist && s.km <= b)));
+  const tank = st.filter((s) => !baraGasEl(s));
+  const n = Object.fromEntries(Object.entries(EGENSKAP).map(([k, f]) => [k, st.filter(f).length]));
+  return { namn: `${ort[i].namn}–${o.namn}`, fran: ort[i].namn, till: o.namn, a, b, km: b - a, st, tank, n };
+});
+/** Avstånden mellan stationerna i listan, längs vägen, från start till slut. Störst först. */
+function luckor(lista) {
+  const pos = [{ km: 0, namn: `start (${ORTER[0].namn})` }, ...lista, { km: LANGD, namn: `slut (${ORTER.at(-1).namn})` }];
+  return pos.slice(1).map((s, i) => ({ fran: pos[i], till: s, km: s.km - pos[i].km })).sort((x, y) => y.km - x.km);
+}
+const LUCKA = {
+  alla: luckor(TANK), dygnet: luckor(ALLA.filter(EGENSKAP.dygnet)), hvo100: luckor(ALLA.filter(EGENSKAP.hvo100)),
+  e85: luckor(ALLA.filter(EGENSKAP.e85)), biogas: luckor(ALLA.filter(EGENSKAP.biogas)), truck: luckor(ALLA.filter(EGENSKAP.truck)),
+};
+const ANTAL = Object.fromEntries(Object.entries(EGENSKAP).map(([k, f]) => [k, ALLA.filter(f).length]));
+const kedjor = Object.entries(TANK.reduce((m, s) => ((m[s.kedja || "Utan kedja"] = (m[s.kedja || "Utan kedja"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const listkedjor = LISTKEDJOR.map((c) => ({ c, n: TANK.filter((s) => s.kedja === c).length, b95: kedjePris(c, "bensin95"), diesel: kedjePris(c, "diesel") }));
+const langaFordon = ALLA.filter((s) => s.maxLangd != null && s.maxLangd >= 24);
+
+// Söder och norr om Gävle: där motorvägen slutar enligt Trafikverket.
+const gavleKm = ort.find((o) => o.namn === "Gävle").km;
+const soder = TANK.filter((s) => s.km < gavleKm), norr = TANK.filter((s) => s.km >= gavleKm);
+const luckorNorr = LUCKA.alla.filter((l) => l.fran.km >= gavleKm);
+const luckorNorrDygnet = LUCKA.dygnet.filter((l) => l.fran.km >= gavleKm);
+const elNorr = ALLA.filter((s) => s.km >= gavleKm && EGENSKAP.el(s)).length;
+const over50 = LUCKA.dygnet.filter((l) => l.km >= 50);
+
+// Finland: EU:s veckopriser, samma vecka för båda länderna.
+const FI = LANDER.find((l) => l.kod === "FI");
+const fiPris = FI ? landPris("FI") : null;
+const sistaSverige = TANK.filter((s) => s.km >= LANGD - 40).reverse();
+
+// Hur nära vägen: stationerna fördelade på avstånd och typ, och luckorna om man bara räknar stationer inom 500 m.
+const ZONER = [[0, 0.5, "Högst 500 m"], [0.5, 1, "0,5–1 km"], [1, MAX_KM + 1e-9, `1–${MAX_KM} km`]].map(([a, b, t]) => {
+  const z = TANK.filter((s) => s.d >= a && s.d < b);
+  return { t, n: z.length, dygnet: z.filter((s) => s.dygnet).length, truck: z.filter((s) => s.tjanster?.truckdiesel === true).length };
+});
+const TYPER = [["obemannad", "Obemannad"], ["bemannad", "Bemannad"], ["truckstation", "Truckstation"], [null, "Uppgift saknas"]]
+  .map(([k, t]) => ({ t, n: TANK.filter((s) => (s.typ ?? null) === k).length, dygnet: TANK.filter((s) => (s.typ ?? null) === k && s.dygnet).length }));
+const NARA = TANK.filter((s) => s.d <= 0.5);
+const luckaNara = luckor(NARA);
+const luckaNaraDygnet = luckor(NARA.filter((s) => s.dygnet));
+
+// Förslag på tankstopp: var STEG km väljs den station inom 500 m från vägen som går att tanka på dygnet runt och ligger närmast målpunkten (högst 25 km före eller efter).
+const STEG = 150;
+const STOPP = [];
+for (let mal = STEG; mal < LANGD - 30; mal += STEG) {
+  const kand = NARA.filter((s) => s.dygnet && Math.abs(s.km - mal) <= 25).sort((a, b) => Math.abs(a.km - mal) - Math.abs(b.km - mal));
+  STOPP.push({ mal, s: kand[0] ?? null });
+}
+
+// ---------- Formatering ----------
+const n0 = (x) => Math.round(x).toLocaleString("sv-SE");
+const km1 = (x) => x.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const ja = (v) => (v ? "ja" : "");
+const utbud = (s) => [EGENSKAP.e85(s) && "E85", EGENSKAP.hvo100(s) && "HVO100", EGENSKAP.biogas(s) && "fordonsgas", EGENSKAP.el(s) && "laddning", EGENSKAP.adblue(s) && "AdBlue", EGENSKAP.truck(s) && "truckdiesel"].filter(Boolean).join(", ");
+const per10mil = (n, km) => (km > 0 ? (n / (km / 100)).toLocaleString("sv-SE", { maximumFractionDigits: 1 }) : "–");
+const glesast = [...ETAPPER].sort((a, b) => a.tank.length / a.km - b.tank.length / b.km)[0];
+const tatast = [...ETAPPER].sort((a, b) => b.tank.length / b.km - a.tank.length / a.km)[0];
+const literB = (LANGD / 10) * 0.6, literD = (LANGD / 10) * 0.5;
+const billB = listkedjor.filter((x) => x.b95 != null).sort((a, b) => a.b95 - b.b95);
+const billD = listkedjor.filter((x) => x.diesel != null).sort((a, b) => a.diesel - b.diesel);
+
+const avsnitt = [
+  { id: "snabbfakta", rubrik: "E4 i siffror" },
+  { id: "strackor", rubrik: "Stationer per sträcka" },
+  { id: "luckor", rubrik: "Längsta avstånden utan station" },
+  { id: "norrland", rubrik: "Norr om Gävle: planera tankningen" },
+  { id: "nara", rubrik: "Hur nära vägen ligger stationerna?" },
+  { id: "stopp", rubrik: "Förslag på tankstopp var 15:e mil" },
+  { id: "alternativa", rubrik: "E85, HVO100, fordonsgas och laddning" },
+  { id: "lastbil", rubrik: "Lastbil, husbil och släp" },
+  { id: "pris", rubrik: "Vad kostar det att tanka längs E4?" },
+  { id: "finland", rubrik: "Sista stationerna före Finland" },
+  { id: "lista", rubrik: "Alla stationer längs E4" },
+  { id: "metod", rubrik: "Så har vi räknat" },
+];
+
+const fragor = [
+  { fraga: "Hur många bensinstationer finns längs E4?", svar: `I vårt register ligger ${n0(TANK.length)} stationer med bensin eller diesel högst ${MAX_KM} km fågelvägen från E4 mellan Helsingborg och Haparanda. ${n0(soder.length)} av dem ligger söder om Gävle och ${n0(norr.length)} norr om Gävle.` },
+  { fraga: "Var är det längst mellan bensinstationerna på E4?", svar: `Den längsta sträckan utan station inom ${MAX_KM} km från vägen är ${n0(LUCKA.alla[0].km)} km, mellan ${LUCKA.alla[0].fran.namn} och ${LUCKA.alla[0].till.namn}, mätt längs vägen.` },
+  { fraga: "Kan man tanka dygnet runt längs hela E4?", svar: `${n0(ANTAL.dygnet)} stationer längs E4 går att tanka på dygnet runt enligt vår data. Längst mellan två sådana är det ${n0(LUCKA.dygnet[0].km)} km, mellan ${LUCKA.dygnet[0].fran.namn} och ${LUCKA.dygnet[0].till.namn}.` },
+  { fraga: "Finns det HVO100 längs E4 i Norrland?", svar: `Ja. Längs hela E4 anger ${n0(ANTAL.hvo100)} stationer att de säljer HVO100. Den längsta luckan mellan två av dem är ${n0(LUCKA.hvo100[0].km)} km, mellan ${LUCKA.hvo100[0].fran.namn} och ${LUCKA.hvo100[0].till.namn}.` },
+  { fraga: "Hur lång är E4 genom Sverige?", svar: `Längs den linje vi har hämtat ur OpenStreetMap är E4 cirka ${n0(LANGD)} km från färjeläget i Helsingborg till gränsen vid Haparanda. Enligt Trafikverket är vägen motorväg hela vägen från Helsingborg till Gävle sedan sommaren 2025.` },
+  fiPris && { fraga: "Är det billigare att tanka i Sverige än i Finland?", svar: `Veckan som började ${datumText(fiPris.datum)} kostade bensin 95 i snitt ${kr(fiPris.b95)} per liter i Finland mot ${kr(SENASTE_VECKA.b95)} i Sverige, enligt EU-kommissionens Weekly Oil Bulletin omräknat till kronor.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel={`Tanka längs E4 – ${n0(TANK.length)} stationer Helsingborg–Haparanda`}
+  beskrivning={`${n0(TANK.length)} stationer inom ${MAX_KM} km från E4. Per sträcka: dygnet runt, E85, HVO100, fordonsgas, laddning och AdBlue – och längsta luckorna norr om Gävle.`}
+  h1="Tanka längs E4 – stationer från Helsingborg till Haparanda"
+  svar={`Längs E4 mellan Helsingborg och Haparanda, cirka ${n0(LANGD)} km, ligger <strong>${n0(TANK.length)} bensinstationer</strong> högst ${MAX_KM} km från vägen: ${n0(soder.length)} söder om Gävle och ${n0(norr.length)} norr om. ${n0(ANTAL.dygnet)} går att tanka på dygnet runt. Längst utan station är det ${n0(LUCKA.alla[0].km)} km, mellan ${LUCKA.alla[0].fran.namn} och ${LUCKA.alla[0].till.namn}.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Tanka längs E4", href: "/guider/tanka-langs-e4/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Tanka längs E6", href: "/guider/tanka-langs-e6/", text: "Trelleborg–Svinesund" },
+    { namn: "Tanka längs E20", href: "/guider/tanka-langs-e20/", text: "Malmö–Göteborg–Stockholm" },
+    { namn: "Tanka utomlands", href: "/guider/tanka-utomlands/", text: "Bränslenamn, betalning och tullregler" },
+    { namn: "Vinterdiesel", href: "/guider/vinterdiesel/", text: "Diesel i kyla" },
+    { namn: "Obemannade stationer", href: "/guider/obemannad-bensinstation/", text: "Så tankar du i automat" },
+  ]}
+  kallor={[
+    { namn: "OpenStreetMap – E4 i Sverige", url: "https://www.openstreetmap.org/", text: "vägens sträckning (vägar märkta E 4), hämtad via Overpass API. © OpenStreetMap-bidragsgivare, ODbL", datum: "2026-11-27" },
+    { namn: "Trafikverket – Motorvägen är klar: E4 förbi Ljungby är invigd", url: "https://www.trafikverket.se/om-oss/nyheter/nationella-nyheter/2025/juni/motorvagen-ar-klar--e4-forbi-ljungby-ar-invigd/", text: "motorväg från Helsingborg till Gävle, nyhet 24 juni 2025", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "veckopriser för Sverige och Finland (CC BY 4.0)", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", url: "/", text: "stationernas läge, drivmedel, tjänster och öppettider från kedjornas stationssök och OpenStreetMap" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+  ]}>
+
+  <h2 id="snabbfakta">E4 i siffror</h2>
+  <p>E4 är huvudleden genom östra Sverige. Den börjar vid färjeläget i Helsingborg, går upp genom Småland till Jönköping, fortsätter via Linköping, Norrköping och Nyköping till Stockholm och följer sedan Norrlandskusten till Haparanda, där den går över gränsen till Torneå i Finland. Längs den linje vi har hämtat ur OpenStreetMap är den svenska delen cirka {n0(LANGD)} km.</p>
+  <p>Vägens standard skiljer sig mellan södra och norra delen. Enligt Trafikverket blev E4 motorväg hela vägen från Helsingborg till Gävle när sträckan förbi Ljungby invigdes i juni 2025. Norr om Gävle är standarden blandad. Vi har räknat på alla {n0(STATIONER.length)} stationer i vårt register, och med gränsen {MAX_KM} km fågelvägen från vägen blir resultatet:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Längs E4 (högst {MAX_KM} km från vägen)</th><th class="num">Antal</th><th class="num">Per 10 mil</th></tr></thead>
+    <tbody>
+      <tr><td>Stationer med bensin eller diesel</td><td class="num">{n0(TANK.length)}</td><td class="num">{per10mil(TANK.length, LANGD)}</td></tr>
+      <tr><td>– söder om Gävle ({n0(gavleKm)} km)</td><td class="num">{n0(soder.length)}</td><td class="num">{per10mil(soder.length, gavleKm)}</td></tr>
+      <tr><td>– norr om Gävle ({n0(LANGD - gavleKm)} km)</td><td class="num">{n0(norr.length)}</td><td class="num">{per10mil(norr.length, LANGD - gavleKm)}</td></tr>
+      <tr><td>Tankning dygnet runt</td><td class="num">{n0(ANTAL.dygnet)}</td><td class="num">{per10mil(ANTAL.dygnet, LANGD)}</td></tr>
+      <tr><td>E85</td><td class="num">{n0(ANTAL.e85)}</td><td class="num">{per10mil(ANTAL.e85, LANGD)}</td></tr>
+      <tr><td>HVO100</td><td class="num">{n0(ANTAL.hvo100)}</td><td class="num">{per10mil(ANTAL.hvo100, LANGD)}</td></tr>
+      <tr><td>Fordonsgas</td><td class="num">{n0(ANTAL.biogas)}</td><td class="num">{per10mil(ANTAL.biogas, LANGD)}</td></tr>
+      <tr><td>Laddning</td><td class="num">{n0(ANTAL.el)}</td><td class="num">{per10mil(ANTAL.el, LANGD)}</td></tr>
+      <tr><td>AdBlue</td><td class="num">{n0(ANTAL.adblue)}</td><td class="num">{per10mil(ANTAL.adblue, LANGD)}</td></tr>
+      <tr><td>Truckdiesel (lastbilspump)</td><td class="num">{n0(ANTAL.truck)}</td><td class="num">{per10mil(ANTAL.truck, LANGD)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. En station räknas bara för ett drivmedel eller en tjänst om uppgiften finns i datan, så de verkliga talen kan vara högre.</p>
+
+  <h2 id="strackor">Stationer per sträcka</h2>
+  <p>Vi har delat vägen vid de större orterna. Glesast är {glesast.namn} med {per10mil(glesast.tank.length, glesast.km)} stationer per 10 mil, tätast {tatast.namn} med {per10mil(tatast.tank.length, tatast.km)}. Att sträckorna kring Stockholm och Uppsala ser täta ut beror delvis på att E4 där går genom eller förbi tätorter, där många stationer hamnar inom två kilometer utan att ligga direkt vid en avfart.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Sträcka</th><th class="num">km</th><th class="num">Stationer</th><th class="num">Dygnet runt</th><th class="num">E85</th><th class="num">HVO100</th><th class="num">Gas</th><th class="num">Laddning</th><th class="num">AdBlue</th><th class="num">Truck</th><th class="num">Butik</th><th class="num">Toalett</th></tr></thead>
+    <tbody>{ETAPPER.map((e) => <tr><td>{e.namn}</td><td class="num">{n0(e.km)}</td><td class="num">{e.tank.length}</td><td class="num">{e.n.dygnet}</td><td class="num">{e.n.e85}</td><td class="num">{e.n.hvo100}</td><td class="num">{e.n.biogas}</td><td class="num">{e.n.el}</td><td class="num">{e.n.adblue}</td><td class="num">{e.n.truck}</td><td class="num">{e.n.butik}</td><td class="num">{e.n.toalett}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Sträckorna går mellan orternas närmaste punkt på E4. "Stationer" omfattar inte rena gas- och laddstationer; de räknas i kolumnerna Gas och Laddning.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="luckor">Längsta avstånden utan station</h2>
+  <p>Vi har sorterat stationerna efter läge längs vägen och mätt avståndet mellan varje par. Det här är de fem längsta luckorna bland stationer med bensin eller diesel på hela E4:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Lucka</th><th>Från</th><th>Till</th><th class="num">Vid km</th></tr></thead>
+    <tbody>{LUCKA.alla.slice(0, 5).map((l) => <tr><td class="num">{n0(l.km)} km</td><td>{l.fran.href ? <a href={l.fran.href}>{l.fran.namn}</a> : l.fran.namn}</td><td>{l.till.href ? <a href={l.till.href}>{l.till.namn}</a> : l.till.namn}</td><td class="num">{n0(l.fran.km)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Luckan blir längre om du behöver ett visst drivmedel eller tankar på natten:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Om du behöver</th><th class="num">Stationer</th><th class="num">Längsta lucka</th><th>Mellan</th></tr></thead>
+    <tbody>
+      {[["Tankning dygnet runt", "dygnet"], ["E85", "e85"], ["HVO100", "hvo100"], ["Fordonsgas", "biogas"], ["Truckdiesel", "truck"]].map(([t, k]) => <tr><td>{t}</td><td class="num">{n0(ANTAL[k])}</td><td class="num">{n0(LUCKA[k][0].km)} km</td><td>{LUCKA[k][0].fran.namn} – {LUCKA[k][0].till.namn}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p>Kilometertalet "vid km" räknas från färjeläget i Helsingborg. Vill du veta var på vägen du är, jämför med orterna i tabellen över sträckor ovan.</p>
+
+  <h2 id="norrland">Norr om Gävle: planera tankningen</h2>
+  <p>Söder om Gävle ligger i genomsnitt {per10mil(soder.length, gavleKm)} stationer per 10 mil längs E4, norr om Gävle {per10mil(norr.length, LANGD - gavleKm)}. Skillnaden syns tydligast på natten. {over50.length > 0 ? <>{over50.length === 1 ? "En sträcka" : `${over50.length} sträckor`} längs E4 är minst 50 km långa utan någon station som enligt vår data går att tanka på dygnet runt.</> : <>Ingen sträcka längs E4 är längre än 50 km mellan två stationer som går att tanka på dygnet runt enligt vår data.</>}</p>
+  {luckorNorrDygnet.length > 0 && (
+    <div class="tabell"><table>
+      <thead><tr><th class="num">Lucka utan dygnet-runt-tankning</th><th>Från</th><th>Till</th></tr></thead>
+      <tbody>{luckorNorrDygnet.slice(0, 5).map((l) => <tr><td class="num">{n0(l.km)} km</td><td>{l.fran.href ? <a href={l.fran.href}>{l.fran.namn}</a> : l.fran.namn}</td><td>{l.till.href ? <a href={l.till.href}>{l.till.namn}</a> : l.till.namn}</td></tr>)}</tbody>
+    </table></div>
+  )}
+  <p>Råd för den som kör E4 genom Norrland, särskilt vintertid:</p>
+  <ul>
+    <li><strong>Tanka när mätaren visar halv tank,</strong> inte när lampan tänds. Då klarar du även den längsta luckan i tabellen ovan med marginal.</li>
+    <li><strong>Ha ett betalkort som fungerar i automat.</strong> Många stationer längs Norrlandskusten är obemannade på kvällen eller helt obemannade. Se <a href="/guider/obemannad-bensinstation/">så fungerar en obemannad station</a>.</li>
+    <li><strong>Dieselbil i kyla:</strong> läs om dieselkvaliteter och kallstarter i <a href="/guider/vinterdiesel/">guiden om vinterdiesel</a>.</li>
+    <li><strong>Elbil:</strong> norr om Gävle har {n0(elNorr)} av stationerna längs E4 laddning enligt vår data, mot {n0(ANTAL.el - elNorr)} söder om Gävle. Räkna med de publika laddnätverken också, inte bara laddare vid bensinstationer.</li>
+  </ul>
+  {luckorNorr.length > 0 && <p>Den längsta luckan norr om Gävle bland alla stationer med bensin eller diesel är {n0(luckorNorr[0].km)} km, mellan {luckorNorr[0].fran.namn} och {luckorNorr[0].till.namn}.</p>}
+
+  <h2 id="nara">Hur nära vägen ligger stationerna?</h2>
+  <p>Två kilometer fågelvägen är en generös gräns. En station 1,8 km från E4 kan ligga mitt i en tätort, med rondeller och trafikljus emellan, medan en station 300 meter från vägen oftast ligger vid själva avfarten. Så här fördelar sig stationerna längs E4:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Avstånd från E4</th><th class="num">Stationer</th><th class="num">Andel</th><th class="num">Dygnet runt</th><th class="num">Truckdiesel</th></tr></thead>
+    <tbody>{ZONER.map((z) => <tr><td>{z.t}</td><td class="num">{z.n}</td><td class="num">{TANK.length ? Math.round((z.n / TANK.length) * 100) : 0} %</td><td class="num">{z.dygnet}</td><td class="num">{z.truck}</td></tr>)}</tbody>
+  </table></div>
+  <p>Räknar man bara de {n0(NARA.length)} stationer som ligger högst 500 meter från vägen blir den längsta luckan {n0(luckaNara[0].km)} km, mellan {luckaNara[0].fran.namn} och {luckaNara[0].till.namn}. Bland dem som dessutom går att tanka på dygnet runt är den längsta luckan {n0(luckaNaraDygnet[0].km)} km. Det är de siffrorna som gäller om du vill tanka utan att leta dig in i en tätort.</p>
+  <p>Stationerna längs E4 fördelar sig så här på typ. Obemannade stationer har bara automater och räknas i vår data som öppna dygnet runt. Bemannade stationer har personal och oftast butik, men bara ett fåtal av dem anger tankning dygnet runt.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ av station</th><th class="num">Stationer</th><th class="num">Varav dygnet runt</th></tr></thead>
+    <tbody>{TYPER.filter((x) => x.n > 0).map((x) => <tr><td>{x.t}</td><td class="num">{x.n}</td><td class="num">{x.dygnet}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Typ enligt kedjornas egna uppgifter. "Uppgift saknas" gäller främst stationer som bara finns i OpenStreetMap.</p>
+
+  <h2 id="stopp">Förslag på tankstopp var 15:e mil</h2>
+  <p>Vill du planera resan i förväg kan du utgå från ett stopp ungefär var 15:e mil. För varje punkt har vi valt den station som ligger högst 500 meter från E4, går att tanka på dygnet runt och ligger närmast punkten. Kilometertalen räknas från Helsingborg.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Runt km</th><th>Station</th><th class="num">Vid km</th><th>Kommun</th><th>Utbud</th></tr></thead>
+    <tbody>{STOPP.map((x) => <tr><td class="num">{n0(x.mal)}</td>{x.s ? <><td><a href={x.s.href}>{x.s.namn}</a></td><td class="num">{n0(x.s.km)}</td><td>{x.s.kommun}</td><td>{utbud(x.s)}</td></> : <><td colspan="4">Ingen station som uppfyller villkoren inom 25 km</td></>}</tr>)}</tbody>
+  </table></div>
+  <p>Förslagen är ett sätt att dela upp resan, inte en rekommendation av en viss kedja. Har du en bil med lång räckvidd kan du hoppa över vartannat stopp, och kör du på dagtid går det lika bra att välja en bemannad station i närheten. {STOPP.some((x) => !x.s) && "Där tabellen saknar station finns ingen dygnet-runt-station inom 500 meter från vägen nära punkten, och då är det klokt att tanka vid stoppet före."}</p>
+
+  <h2 id="alternativa">E85, HVO100, fordonsgas och laddning</h2>
+  <p>E85 finns på {n0(ANTAL.e85)} stationer längs E4. Längst mellan två av dem är det {n0(LUCKA.e85[0].km)} km, från {LUCKA.e85[0].fran.namn} till {LUCKA.e85[0].till.namn}. En flexifuelbil kan alltid växla till bensin, så luckorna är ett mindre problem än för gas. Se <a href="/drivmedel/e85/">E85-priser</a> och <a href="/guider/lonar-sig-e85/">om E85 lönar sig</a>.</p>
+  <p>HVO100 finns på {n0(ANTAL.hvo100)} stationer, med en längsta lucka på {n0(LUCKA.hvo100[0].km)} km. Kör du en dieselbil som är godkänd för HVO100 kan du blanda med vanlig diesel där HVO100 saknas. Läs <a href="/guider/hvo100-vilka-bilar/">vilka bilar som tål HVO100</a>.</p>
+  <p>Fordonsgas är det svåraste drivmedlet att planera efter. {n0(ANTAL.biogas)} stationer längs E4 har gas enligt vår data, och längsta luckan är {n0(LUCKA.biogas[0].km)} km, mellan {LUCKA.biogas[0].fran.namn} och {LUCKA.biogas[0].till.namn}. De flesta gasbilar har en bensintank som reserv. Mer på <a href="/drivmedel/fordonsgas/">sidan om fordonsgas</a> och i <a href="/guider/fordonsgas-gasbil/">guiden om gasbil</a>.</p>
+  <p>Laddning finns vid {n0(ANTAL.el)} av stationerna längs E4 enligt vår data. Det är bara laddare vid bensinstationer, se <a href="/drivmedel/laddning/">laddning vid bensinstationer</a>.</p>
+
+  <h2 id="lastbil">Lastbil, husbil och släp</h2>
+  <p>{n0(ANTAL.truck)} stationer längs vägen har truckdiesel, alltså pumpar avsedda för lastbilar, och {n0(ANTAL.adblue)} har AdBlue. Längst mellan två truckdieselstationer är det {n0(LUCKA.truck[0].km)} km, mellan {LUCKA.truck[0].fran.namn} och {LUCKA.truck[0].till.namn}.</p>
+  <p>{langaFordon.length > 0 ? <>{n0(langaFordon.length)} stationer längs E4 anger att fordon på minst 24 meter kan tanka där. Uppgiften finns bara för en del av stationerna, så andra stationer kan också fungera.</> : <>Uppgift om största fordonslängd finns inte för stationerna längs E4 i vår data.</>} Se <a href="/guider/truckdiesel-lastbil/">guiden om truckdiesel</a> och <a href="/drivmedel/adblue/">AdBlue-stationer</a>.</p>
+
+  <h2 id="pris">Vad kostar det att tanka längs E4?</h2>
+  <p>Kedjornas listpriser gäller hela landet och är desamma i Helsingborg som i Luleå, men den enskilda stationen kan ha ett annat pris. Tabellen visar listpriserna {datum} och hur många av kedjornas stationer som ligger längs E4.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer längs E4</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{listkedjor.map((x) => <tr><td>{kedjaHref(x.c) ? <a href={kedjaHref(x.c)}>{x.c}</a> : x.c}</td><td class="num">{x.n}</td><td class="num">{pris(x.b95)}</td><td class="num">{pris(x.diesel)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms i kr/l, {LP_DATUM}.</p>
+  <p>Hela E4 genom Sverige motsvarar cirka {pris(literB, 0)} liter bensin för en bil som drar 0,6 liter per mil, eller {pris(literD, 0)} liter diesel med 0,5 liter per mil. {billB[0] && <>Till {billB[0].c}s listpris blir bensinen {kr(literB * billB[0].b95, 0)}</>}{billD[0] && <> och dieseln {kr(literD * billD[0].diesel, 0)}</>}. Med en tank på 50 liter blir det ungefär {Math.ceil(literB / 50)} tankningar för bensinbilen.</p>
+  <p>Flest stationer längs vägen har {kedjor.slice(0, 5).map(([k, n], i) => <>{i > 0 && ", "}{kedjaHref(k) ? <a href={kedjaHref(k)}>{k}</a> : k} ({n})</>)}. Om pris spelar roll, se <a href="/guider/billigaste-bensinen/">så hittar du billigaste bensinen</a> och <a href="/guider/nar-ar-bensinen-billigast/">när bensinen är billigast</a>.</p>
+
+  <h2 id="finland">Sista stationerna före Finland</h2>
+  <p>I Haparanda fortsätter E4 över gränsen till Torneå i Finland.{fiPris && <> Veckan som började {datumText(fiPris.datum)} kostade bensin 95 i snitt {kr(fiPris.b95)} per liter i Finland och {kr(SENASTE_VECKA.b95)} i Sverige, och diesel {kr(fiPris.diesel)} mot {kr(SENASTE_VECKA.diesel)}, enligt EU-kommissionens veckopriser omräknade till kronor. Se <a href={`/europa/${FI.slug}/`}>bensinpriset i Finland</a>.</>}</p>
+  {sistaSverige.length > 0 && (
+    <div class="tabell"><table>
+      <thead><tr><th>Station</th><th class="num">Före gränsen</th><th class="num">Från vägen</th><th>Dygnet runt</th><th>Utbud</th></tr></thead>
+      <tbody>{sistaSverige.slice(0, 6).map((s) => <tr><td><a href={s.href}>{s.namn}</a></td><td class="num">{n0(LANGD - s.km)} km</td><td class="num">{km1(s.d)} km</td><td>{ja(s.dygnet)}</td><td>{utbud(s)}</td></tr>)}</tbody>
+    </table></div>
+  )}
+  <p>Vad som gäller för bränsle i tanken och i reservdunk när du åker över gränsen står i <a href="/guider/tanka-utomlands/">guiden om att tanka utomlands</a>.</p>
+
+  <h2 id="lista">Alla stationer längs E4</h2>
+  <p>Listan är sorterad från söder till norr. Kilometertalet räknas från Helsingborg längs vägen, och "från vägen" är avståndet fågelvägen till närmaste punkt på E4. Öppna en sträcka för att se stationerna och klicka på en station för adress och öppettider.</p>
+  {ETAPPER.map((e) => (
+    <details>
+      <summary><strong>{e.namn}</strong> – {e.st.length} stationer</summary>
+      <div class="tabell"><table>
+        <thead><tr><th class="num">km</th><th>Station</th><th>Kommun</th><th class="num">Från vägen</th><th>Dygnet runt</th><th>Utbud</th></tr></thead>
+        <tbody>{e.st.map((s) => <tr><td class="num">{n0(s.km)}</td><td><a href={s.href}>{s.namn}</a></td><td>{s.kommun}</td><td class="num">{km1(s.d)} km</td><td>{ja(s.dygnet)}</td><td>{utbud(s)}</td></tr>)}</tbody>
+      </table></div>
+    </details>
+  ))}
+
+  <h2 id="metod">Så har vi räknat</h2>
+  <p>Vägens sträckning kommer från OpenStreetMap. Vi hämtade alla vägavsnitt i Sverige som är märkta E 4, letade upp den kortaste sammanhängande vägen längs dem från färjeläget i Helsingborg till riksgränsen i Haparanda och förenklade linjen till {LINJE.length} brytpunkter, så att ingen del av vägen avviker mer än 250 meter från linjen. Brytpunkterna står i sidans källkod.</p>
+  <p>För varje station räknade vi ut avståndet till närmaste punkt på linjen med haversineformeln och avståndet från en punkt till ett linjesegment. Stationer inom {MAX_KM} km kom med. Det är fågelvägen; körvägen via avfarten kan vara längre, och på motorväg ligger en station ibland bara på ena sidan.</p>
+  <p>Luckorna mäts längs vägen mellan stationernas närmaste punkter på linjen. Uppgifter om drivmedel, tjänster och öppettider kommer från kedjornas stationssök och OpenStreetMap. Saknas en uppgift räknas den inte, så talen är snarare för låga än för höga. Kontrollera gärna i kedjans app innan en lång etapp.</p>
+</Guide>

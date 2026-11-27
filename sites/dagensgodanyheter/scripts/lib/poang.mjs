@@ -1,5 +1,7 @@
-// Poängsättning av kandidater: hur positiv, hur betydelsefull, hur färsk och hur pålitlig källan är.
-// Heuristiken används alltid; när ANTHROPIC_API_KEY finns ersätts positiv/betydelse av en billig modells bedömning.
+// Poängsättning av kandidater: hur glad läsaren blir, hur betydelsefull, hur färsk och hur pålitlig källan är.
+// Heuristiken används alltid; när ANTHROPIC_API_KEY finns ersätts positiv/glädje/betydelse av en billig modells bedömning.
+// Vikterna finns i src/lib/vikter.js och delas med förstasidan och policysidan.
+import { viktadPoang } from "../../src/lib/vikter.js";
 
 const POSITIVA = [
   // svenska
@@ -47,7 +49,7 @@ export function heuristik(kandidat, kalla, nu = Date.now()) {
   const betydelse = Math.max(0, Math.min(1, 0.3 + 0.08 * traffar(text, BETYDELSE) + (kalla.typ === "myndighet" || kalla.typ === "rymd" ? 0.1 : 0)));
   const farskhet = farskhetAv(kandidat.datum, nu);
   const tillit = kalla.tillit ?? 0.8;
-  return { positiv: rund(positiv), betydelse: rund(betydelse), farskhet: rund(farskhet), tillit, metod: "heuristik" };
+  return { positiv: rund(positiv), gladje: rund(positiv), betydelse: rund(betydelse), farskhet: rund(farskhet), tillit, metod: "heuristik" };
 }
 
 /** Halveringstid 36 timmar. Saknat datum räknas som ganska gammalt. */
@@ -57,9 +59,7 @@ export function farskhetAv(datum, nu = Date.now()) {
   return Math.pow(0.5, timmar / 36);
 }
 
-/** Totalpoäng 0–100 för en kandidat. */
-export function total(p) {
-  return Math.round(100 * (0.35 * p.positiv + 0.25 * p.betydelse + 0.2 * p.farskhet + 0.2 * p.tillit));
-}
+/** Totalpoäng 0–100 för en kandidat (med eventuell aktualitetsbonus). */
+export const total = (p) => viktadPoang(p);
 
 const rund = (x) => Math.round(x * 100) / 100;

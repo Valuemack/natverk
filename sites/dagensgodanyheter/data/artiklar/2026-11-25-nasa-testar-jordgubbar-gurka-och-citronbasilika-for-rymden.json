@@ -80,7 +80,7 @@
     "liten": "/bilder/nasa-testar-jordgubbar-gurka-och-citronbasilika-for-rymden-640.webp",
     "bredd": 1280,
     "hojd": 720,
-    "alt": "Växtodlingskåp med rosa LED-belysning och grönsaksplantor i Nasas laboratorium för växtbiologi i rymden, med en man som står bredvid.",
+    "alt": "Man i svart t-shirt tittar på två vita växtskåp i ett laboratorium, ett med rosa belysning och ett med vitt ljus.",
     "fotograf": "NASA/Kim Shiflett",
     "licens": "Public domain (NASA)",
     "licensUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
@@ -101,10 +101,11 @@
   "bildmotiv": "strawberry plants with red berries growing under pink LED lights inside a compact plant growth chamber in a laboratory",
   "bildalt": "Zinnior odlas under rosa LED-ljus i en av NASA:s odlingskammare",
   "poang": {
-    "positiv": 0.7,
-    "betydelse": 0.4,
+    "positiv": 0.6,
+    "betydelse": 0.5,
     "tillit": 0.97,
-    "total": 72
+    "total": 75,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -123,5 +124,6 @@
     "Advanced Plant Habitat"
   ],
   "bildRymd": true,
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "ovrigt"
 }

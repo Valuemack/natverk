@@ -68,10 +68,11 @@
   "bildmotiv": "an empty pram parked on a gravel path in a Swedish park in late autumn, fallen leaves, a wooden bench nearby",
   "bildalt": "En tom barnvagn står parkerad på en grusgång i en park på hösten",
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.54,
+    "positiv": 0.6,
+    "betydelse": 0.4,
     "tillit": 0.95,
-    "total": 53
+    "total": 57,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -83,5 +84,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "manniskor"
 }

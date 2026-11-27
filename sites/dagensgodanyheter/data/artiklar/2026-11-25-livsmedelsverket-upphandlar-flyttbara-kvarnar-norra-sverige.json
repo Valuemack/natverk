@@ -66,10 +66,12 @@
   "bildmotiv": "A compact mobile grain mill machine grinding wheat into flour inside a simple farm building, with sacks of grain nearby",
   "bildalt": "En flyttbar kvarn som mal vete till mjöl, med säckar med spannmål bredvid",
   "poang": {
-    "positiv": 0.55,
+    "positiv": 0.5,
     "betydelse": 0.4,
     "tillit": 0.95,
-    "total": 54
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -82,5 +84,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

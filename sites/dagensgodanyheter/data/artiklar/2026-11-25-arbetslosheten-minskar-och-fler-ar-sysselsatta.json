@@ -63,10 +63,11 @@
   "bildmotiv": "a modern Swedish industrial workshop with machines, workbenches and fresh timber in morning light",
   "bildalt": "En verkstadshall med maskiner och arbetsbänkar i morgonljus",
   "poang": {
-    "positiv": 0.45,
-    "betydelse": 0.46,
+    "positiv": 0.8,
+    "betydelse": 0.8,
     "tillit": 0.98,
-    "total": 49
+    "total": 81,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -78,5 +79,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "siffror"
 }

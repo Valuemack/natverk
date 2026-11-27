@@ -4,7 +4,7 @@ import Kort from "../../components/Kort.astro";
 import Rad from "../../components/Rad.astro";
 import Annons from "@natverk/core/Annons.astro";
 import { KATEGORIER } from "../../lib/kategorier.js";
-import { iKategori, efterLasvarde, senaste, AMNEN } from "../../lib/artiklar.js";
+import { iKategori, efterLasvarde, senaste, AMNEN, PER_SIDA } from "../../lib/artiklar.js";
 import { samlingLd } from "../../lib/ld.js";
 
 export function getStaticPaths() {
@@ -15,9 +15,12 @@ const alla = iKategori(k.slug);
 const veckan = alla.filter((a) => senaste(24 * 7).includes(a));
 const topp = efterLasvarde(veckan.length ? veckan : alla).slice(0, 3);
 const toppSet = new Set(topp.map((a) => a.slug));
-// Den största puffen får en artikel med bild om någon finns (sorteringen är stabil, så läsvärdet styr annars).
+// Den största puffen får en artikel med bild om någon finns (sorteringen är stabil, så ordningen styr annars).
 const toppVisning = [...topp].sort((a, b) => Number(b.harBild) - Number(a.harBild));
-const ovriga = alla.filter((a) => !toppSet.has(a.slug)).slice(0, 60);
+// Alla artiklar finns kvar: de 60 senaste här, äldre på /{avdelning}/sida/2/, /sida/3/ … (se sida/[nr].astro).
+const resten = alla.filter((a) => !toppSet.has(a.slug));
+const ovriga = resten.slice(0, PER_SIDA);
+const finnsAldre = resten.length > PER_SIDA;
 const amnen = AMNEN.filter((x) => x.artiklar.some((a) => a.kategori === k.slug)).slice(0, 12);
 const namnLiten = k.namn.toLowerCase();
 const titel = `Goda nyheter: ${k.namn} – positiva nyheter idag`;
@@ -37,8 +40,8 @@ const tunn = alla.length < 2;
     </header>
 
     {topp.length > 0 ? (
-      <section class="sektion" aria-label={`Mest läsvärt inom ${namnLiten}`}>
-        <h2 class="sektion-rubrik">Mest läsvärt just nu</h2>
+      <section class="sektion" aria-label={`Det bästa inom ${namnLiten}`}>
+        <h2 class="sektion-rubrik">Det bästa just nu</h2>
         <div class="puffar">{toppVisning.map((a, i) => <Kort a={a} storlek={i === 0 ? "stor" : "liten"} ladda={i === 0 ? "eager" : "lazy"} />)}</div>
       </section>
     ) : (
@@ -51,6 +54,7 @@ const tunn = alla.length < 2;
       <section class="sektion" aria-labelledby="senaste-kat">
         <h2 class="sektion-rubrik" id="senaste-kat">Senaste inom {namnLiten}</h2>
         <ul class="lista">{ovriga.map((a) => <Rad a={a} visaKat={false} />)}</ul>
+        {finnsAldre && <p><a class="spalt-lank" href={`/${k.slug}/sida/2/`}>Äldre nyheter inom {namnLiten} →</a></p>}
       </section>
     )}
 

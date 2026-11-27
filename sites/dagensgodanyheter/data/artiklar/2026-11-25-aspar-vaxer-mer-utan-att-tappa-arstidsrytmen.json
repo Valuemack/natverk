@@ -63,10 +63,11 @@
   "bildmotiv": "a stand of young European aspen trees (Populus tremula) with grey-green bark and yellowing leaves in a Swedish forest research plot, late October",
   "bildalt": "Unga aspar med gula höstlöv i en svensk skog",
   "poang": {
-    "positiv": 0.65,
-    "betydelse": 0.38,
+    "positiv": 0.6,
+    "betydelse": 0.3,
     "tillit": 0.95,
-    "total": 61
+    "total": 55,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -78,5 +79,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "natur"
 }

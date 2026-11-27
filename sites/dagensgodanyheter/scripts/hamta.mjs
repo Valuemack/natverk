@@ -1,10 +1,10 @@
-// Steg 1 i nattbygget: hämtar förstahandskällornas flöden, tar bort dubbletter och poängsätter kandidaterna.
+// Steg 1 i nattbygget: hämtar källornas flöden (förstahandskällor och etablerade medier), tar bort dubbletter och poängsätter kandidaterna.
 //
 //   node scripts/hamta.mjs            # hämta och poängsätt → data/raw/kandidater.json
 //   node scripts/hamta.mjs --testa    # prova varje flöde och föreslå nya adresser för trasiga (skriver data/raw/flodesstatus.json)
 //   node scripts/hamta.mjs --utan-ai  # bara heuristisk poäng, även om ANTHROPIC_API_KEY finns
 //
-// Regler: bara källorna i kallor.mjs (inga tidningar), robots.txt respekteras, högst 1 anrop/s, generisk User-Agent.
+// Regler: bara källorna i kallor.mjs (förstahandskällor och godkända medier), robots.txt respekteras, högst 1 anrop/s, generisk User-Agent.
 // Poängsättningen använder den billiga modellen (Claude Haiku 5.5) när ANTHROPIC_API_KEY finns.
 import { likhet, SAMMA_NYHET } from "./lib/likhet.mjs";
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
@@ -17,6 +17,7 @@ import { tolkaFlode, hittaFloden } from "./lib/rss.mjs";
 import { heuristik, total } from "./lib/poang.mjs";
 import { laddaEnv } from "./lib/env.mjs";
 import { KAT_SLUGS } from "../src/lib/kategorier.js";
+import { laddaTrender, anvandbara, mojligaTrender, allmannaNycklar } from "./trender.mjs";
 
 const ROT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const RAW = join(ROT, "data", "raw");
@@ -74,7 +75,10 @@ if (TESTA) {
 const redanSkrivna = new Set();
 if (existsSync(ARTIKLAR)) {
   for (const f of readdirSync(ARTIKLAR).filter((f) => f.endsWith(".json"))) {
-    try { redanSkrivna.add(normUrl(JSON.parse(readFileSync(join(ARTIKLAR, f), "utf8")).kalla.url)); } catch { /* trasig fil hoppas över */ }
+    try {
+      const a = JSON.parse(readFileSync(join(ARTIKLAR, f), "utf8"));
+      for (const u of [a.kalla.url, a.kalla.kandidatUrl, a.via?.url]) if (u) redanSkrivna.add(normUrl(u));
+    } catch { /* trasig fil hoppas över */ }
   }
 }
 
@@ -114,6 +118,22 @@ for (const c of unika) {
 }
 unika.sort((a, b) => b.poang.total - a.poang.total);
 
+// ---------- trender (idékälla, scripts/trender.mjs) ----------
+// Ett ordfilter föreslår möjliga trender per kandidat; den billiga modellen avgör om nyheten verkligen handlar om
+// samma sak. Bara kandidater från våra egna källor kan få bonusen – en trend blir aldrig en artikel på egen hand.
+// Negativa trender (brott, olyckor, krig, dödsfall) är redan bortsorterade av anvandbara().
+const trendLogg = laddaTrender(nu);
+const trender = anvandbara(trendLogg?.logg);
+const ignorera = allmannaNycklar(unika, trender);
+for (const c of unika) {
+  const m = mojligaTrender(c, trender, { ignorera });
+  if (!m.length) continue;
+  c.mojligaTrender = m;
+  c.trendAmne = m.map((term) => trender.find((t) => t.term === term)?.amne ?? "");
+}
+if (trendLogg) console.log(`Trender: ${trender.length} användbara, ${unika.filter((c) => c.mojligaTrender).length} kandidater med möjlig träff.`);
+else console.log("Trender: ingen trendlogg för i dag (kör scripts/trender.mjs först) – ingen aktualitetsbonus.");
+
 if (!UTAN_AI) {
   const { bedomKandidater } = await import("./lib/ai-poang.mjs");
   const urval = unika.filter((c) => !c.skriven).slice(0, 80);
@@ -123,9 +143,14 @@ if (!UTAN_AI) {
       const b = bedomda.get(c.id);
       if (!b) continue;
       c.poang.positiv = b.positiv / 10;
+      c.poang.gladje = b.gladje / 10;
       c.poang.betydelse = b.betydelse / 10;
+      if (b.byrakratisk) c.poang.byrakratisk = true;
+      c.typ = b.typ;
+      if (b.trend) { c.trend = b.trend; c.poang.aktualitet = 1; }
       c.poang.metod = "claude-haiku-5-5";
-      c.lamplig = b.lamplig;
+      // Byråkratiska nyheter (upphandlingar, namnbyten, jubileer, tal, konferenser …) skrivs inte.
+      c.lamplig = b.lamplig && !b.byrakratisk;
       c.skal = b.skal;
       if (KAT_SLUGS.includes(b.kategori)) c.kat = b.kategori;
       c.poang.total = total(c.poang);
@@ -135,6 +160,27 @@ if (!UTAN_AI) {
     console.error(`AI-poängsättningen misslyckades, heuristiken används: ${e.message}`);
   }
   unika.sort((a, b) => b.poang.total - a.poang.total);
+} else {
+  // Utan modellen: bonus bara när trendens hela term står i rubriken.
+  for (const c of unika) {
+    const t = c.mojligaTrender?.find((t) => ` ${c.titel.toLowerCase()} `.includes(` ${t.toLowerCase()} `));
+    if (t) { c.trend = t; c.poang.aktualitet = 1; c.poang.total = total(c.poang); }
+  }
+  unika.sort((a, b) => b.poang.total - a.poang.total);
+}
+
+// Idéloggen: vilka trender som matchade vilka kandidater (och vilka förslag modellen avvisade).
+if (trendLogg) {
+  const logg = trendLogg.logg;
+  logg.matchningar = unika.filter((c) => c.mojligaTrender).map((c) => ({
+    trend: c.trend ?? null, forslag: c.mojligaTrender, beslut: c.trend ? "match" : c.poang.metod === "heuristik" && !UTAN_AI ? "ej bedömd" : "ingen match",
+    kandidat: c.titel, url: c.url, kalla: c.kalla, total: c.poang.total,
+  }));
+  const matchade = new Set(unika.filter((c) => c.trend).map((c) => c.trend.toLowerCase()));
+  for (const t of logg.trender ?? []) t.matchade = matchade.has(t.term.toLowerCase());
+  logg.matchningarUppdaterade = new Date().toISOString();
+  writeFileSync(trendLogg.fil, JSON.stringify(logg, null, 2) + "\n");
+  console.log(`Trendmatchningar: ${matchade.size} trender matchade ${unika.filter((c) => c.trend).length} kandidater.`);
 }
 
 writeFileSync(join(RAW, "kandidater.json"), JSON.stringify({ hamtad: new Date(nu).toISOString(), antal: unika.length, flodesfel, kandidater: unika }, null, 2));

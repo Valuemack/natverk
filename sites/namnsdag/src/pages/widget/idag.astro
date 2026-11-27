@@ -1,0 +1,55 @@
+---
+// Inbäddningsbar widget (iframe): dagens namnsdag med synlig länk till dagensnamnsdagar.se.
+// Egen minimal sida utan layout (canonical till startsidan, inte i sitemap). ?tema=mork ger mörk variant.
+import { SITE, IDAG, namnPaDag, mmddAv, dagText, veckodag, lista, iso, UTAN_NAMN } from "../../site.js";
+const k = mmddAv(IDAG);
+const namn = namnPaDag(k);
+const text = namn.length ? lista(namn.map((n) => n.namn)) : UTAN_NAMN[k]?.split(" –")[0] ?? "Ingen namnsdag";
+---
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="canonical" href={`${SITE.url}/`} />
+  <title>Namnsdag idag – widget från dagensnamnsdagar.se</title>
+  <style>
+    :root { --farg: #7a2e5a; --text: #1c1b1f; --dampad: #5f5d66; --bg: #fff; --kant: #ead5e0; }
+    html.mork { --farg: #f0c7dc; --text: #ecebef; --dampad: #b2afba; --bg: #1d1c21; --kant: #4a3442; }
+    html, body { margin: 0; height: 100%; }
+    body { font: 15px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); }
+    .w { box-sizing: border-box; height: 100%; border: 1px solid var(--kant); border-top: 4px solid var(--farg); border-radius: 8px; padding: 8px 12px; display: grid; align-content: center; gap: 2px; }
+    .d { color: var(--dampad); font-size: 13px; }
+    .d::first-letter { text-transform: uppercase; }
+    .n { font: 700 22px/1.15 Georgia, serif; color: var(--farg); overflow-wrap: anywhere; }
+    .l { font-size: 12px; color: var(--dampad); }
+    a { color: var(--farg); }
+  </style>
+  <script is:inline>if (/[?&]tema=mork/.test(location.search)) document.documentElement.classList.add("mork");</script>
+</head>
+<body>
+  <div class="w" data-byggdag={iso(IDAG)}>
+    <div class="d" id="d">Namnsdag idag, {veckodag(IDAG)} {dagText(k)}</div>
+    <div class="n" id="n">{text}</div>
+    <div class="l">Från <a href={`${SITE.url}/`} target="_blank" rel="noopener">dagensnamnsdagar.se</a></div>
+  </div>
+  <script is:inline>
+    (async () => {
+      const w = document.querySelector(".w");
+      const nu = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+      if (w.dataset.byggdag === nu) return;
+      try {
+        const d = await (await fetch("/data/namnsdagar.json")).json();
+        const [y, m, dd] = nu.split("-").map(Number);
+        const t = new Date(Date.UTC(y, m - 1, dd)), k = nu.slice(5);
+        const VD = ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"];
+        const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+        const ns = (d.dagar[k] || []).filter((x) => !x[2] || y >= x[2]).map((x) => x[0]);
+        const lista = (xs) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " och " + xs.at(-1);
+        document.getElementById("d").textContent = `Namnsdag idag, ${VD[t.getUTCDay()]} ${dd} ${MN[m - 1]}`;
+        document.getElementById("n").textContent = ns.length ? lista(ns) : (d.utan[k] || "Ingen namnsdag");
+      } catch {}
+    })();
+  </script>
+</body>
+</html>

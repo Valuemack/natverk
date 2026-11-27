@@ -1,0 +1,179 @@
+---
+// Lång guide: vilken dag är bensinen billigast? Bygger på OKQ8:s egen prishistorik för företagspris (listpris inkl. moms),
+// en notering per dag 1 aug 2007–26 nov 2026 (fil prishistorik-foretag_2026_11_26.xlsx från okq8.se/foretag/priser/).
+// Sammanställningen nedan är räknad ur den filen 2026-11-27: antal prisändringar, ändringar per veckodag och genomsnittlig
+// avvikelse per veckodag från samma veckas medelpris (bara hela veckor, ISO-veckor). Dessutom kedjornas listpriser idag (LP) och
+// den dagliga historiken (DAGAR) som växer för varje natt. Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP, LP_DATUM, DAGAR, LISTKEDJOR, STATIONER, idagPris, kedjePris, kr, pris, procent, datumText } from "../../pris.js";
+import { KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const DAG = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+const KORT = ["mån", "tis", "ons", "tor", "fre", "lör", "sön"];
+
+// OKQ8, beräknat ur prishistoriken. dag = [antal ändringar, varav upp, varav ned] per veckodag mån–sön.
+// avvikelse = öre per liter mot veckans medelpris, mån–sön. ar = [år, antal ändringar, snittändring kr, avvikelse mån–sön].
+const OKQ8 = {
+  fran: "2007-08-01", till: "2026-11-26",
+  b95: {
+    alla: { antal: 2371, upp: 1217, ned: 1154, snitt: 0.17, median: 0.1, dag: [[523, 298, 225], [468, 223, 245], [412, 179, 233], [493, 245, 248], [468, 267, 201], [2, 2, 0], [5, 3, 2]], avvikelse: [0.9, 0.6, -1.1, -1.0, 0.1, 0.2, 0.3], veckor: 998 },
+    sedan2024: { antal: 430, upp: 220, ned: 210, snitt: 0.22, median: 0.15, dag: [[87, 45, 42], [89, 44, 45], [86, 33, 53], [77, 42, 35], [91, 56, 35], [0, 0, 0], [0, 0, 0]], avvikelse: [2.9, 2.7, -3.5, -2.3, 0.1, 0.1, 0.1], veckor: 151 },
+    ar: [[2008, 133, 0.15, [2.9, 2.9, 0.6, -1, -1.9, -1.9, -1.9]], [2009, 153, 0.13, [-2.6, -2.4, -2.6, -0.1, 2.5, 2.5, 2.5]], [2010, 85, 0.12, [-1.3, -1.3, -1, -0.1, 1.2, 1.2, 1.2]], [2011, 91, 0.14, [-1, -0.3, 0, 0.4, 0.4, 0.4, 0.4]], [2012, 99, 0.13, [-0.1, 1, 0.9, -1.1, -0.2, -0.2, -0.2]], [2013, 105, 0.13, [1.1, 0.7, -0.1, -2.3, 0.2, 0.2, 0.2]], [2014, 99, 0.12, [3.6, 2, 0.4, -0.6, -1.8, -1.8, -1.8]], [2015, 114, 0.13, [1.9, 0.3, -0.7, -1, -0.2, -0.2, -0.2]], [2016, 113, 0.13, [0.4, 0.9, -1.2, -1.7, 0.5, 0.5, 0.5]], [2017, 103, 0.12, [1.8, 0.9, 0.4, -0.8, -0.7, -0.7, -0.7]], [2018, 111, 0.13, [1.4, 2.2, 0.4, 0.2, -1.4, -1.4, -1.4]], [2019, 111, 0.14, [-1, -0.9, 0.1, 0.6, 0.4, 0.4, 0.4]], [2020, 119, 0.14, [2, -1.2, 0.2, 0, -0.4, -0.4, -0.4]], [2021, 116, 0.14, [-1.5, -1.2, -0.5, 0.6, 0.9, 0.9, 0.9]], [2022, 190, 0.32, [2.9, -0.8, -3.7, -3.9, 1.3, 3.9, 0.3]], [2023, 159, 0.19, [2.9, 3.4, -0.5, -2.4, -1.1, -1.1, -1.1]], [2024, 151, 0.16, [1.8, 0.6, -1.3, -1.3, 0.1, 0.1, 0.1]], [2025, 119, 0.16, [1.4, 2.4, -1.3, -1.1, -0.5, -0.5, -0.5]], [2026, 160, 0.32, [5, 4.8, -7.8, -3.9, 0.6, 0.6, 0.6]]],
+  },
+  diesel: {
+    alla: { antal: 2294, upp: 1173, ned: 1121, snitt: 0.2, median: 0.15, dag: [[519, 282, 237], [434, 215, 219], [414, 185, 229], [477, 242, 235], [441, 243, 198], [4, 3, 1], [5, 3, 2]], avvikelse: [0.0, 0.3, -1.1, -0.8, 0.3, 0.5, 0.7], veckor: 999 },
+    sedan2024: { antal: 435, upp: 218, ned: 217, snitt: 0.31, median: 0.2, dag: [[93, 47, 46], [78, 37, 41], [97, 38, 59], [82, 44, 38], [85, 52, 33], [0, 0, 0], [0, 0, 0]], avvikelse: [-0.2, 0.7, -4.5, -2.9, 2.3, 2.3, 2.3], veckor: 151 },
+    ar: [[2008, 142, 0.21, [1.3, 2.1, 3.7, 1.2, -2.8, -2.8, -2.8]], [2009, 152, 0.13, [-1.4, -2.1, -1.3, -0.6, 1.9, 1.7, 1.7]], [2010, 81, 0.12, [-2.2, -1.8, -1.5, 0.4, 1.7, 1.7, 1.7]], [2011, 67, 0.15, [-2.7, -1.2, -0.1, 1.3, 1, 1, 1]], [2012, 84, 0.12, [-0.7, 0.2, 0.2, -1, 0.5, 0.5, 0.5]], [2013, 95, 0.13, [0.4, 0.1, -0.1, -1.9, 0.5, 0.5, 0.5]], [2014, 79, 0.11, [2.3, 2.2, 0.9, 0.2, -1.9, -1.9, -1.9]], [2015, 111, 0.13, [2.4, 0.2, 0, -1.4, -0.4, -0.4, -0.4]], [2016, 102, 0.13, [-1.1, 0.1, -1.7, -0.9, 1.2, 1.2, 1.2]], [2017, 85, 0.12, [1.1, 0.4, 0.3, -0.2, -0.5, -0.5, -0.5]], [2018, 109, 0.13, [0.6, 1.5, 0.5, -0.2, -0.8, -0.8, -0.8]], [2019, 105, 0.12, [-1.8, -1, 0.4, 1, 0.5, 0.5, 0.5]], [2020, 108, 0.13, [2.9, 1.1, 1.7, 0, -1.9, -1.9, -1.9]], [2021, 101, 0.14, [-2.2, -1.1, 0.1, 0.4, 0.9, 0.9, 0.9]], [2022, 213, 0.38, [-0.1, 1.3, -6, 1.8, 0.5, 3, -0.5]], [2023, 178, 0.23, [7.5, 5.8, -0.6, -4.5, -2.7, -2.7, -2.7]], [2024, 138, 0.21, [0.2, -0.2, -1.5, -1.5, 1, 1, 1]], [2025, 122, 0.19, [3.8, 2.5, -0.6, -2.5, -1.1, -1.1, -1.1]], [2026, 175, 0.47, [-4.3, 0.7, -11.8, -4.7, 6.7, 6.7, 6.7]]],
+  },
+};
+const b = OKQ8.b95, d = OKQ8.diesel;
+// Månad: kr per liter mot årets medelpris, jan–dec, snitt för helåren 2008–2025. billigastJan/Dec = antal år då månaden var billigast för 95.
+const MANAD = {
+  b95: [-0.41, -0.21, -0.02, 0.17, 0.24, 0.4, 0.3, 0.16, 0.03, 0.02, -0.2, -0.49],
+  diesel: [-0.29, -0.19, -0.05, -0.11, -0.18, 0.07, 0.08, 0.06, 0.15, 0.38, 0.23, -0.15],
+  ar: 18, billigastJan: 6, billigastDec: 6,
+};
+const MAN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+const minI = (a) => a.indexOf(Math.min(...a)), maxI = (a) => a.indexOf(Math.max(...a));
+// Billigaste dag(ar) ett år: alla dagar med lägsta avvikelsen (fredag–söndag har ofta samma pris).
+const billigast = (dv) => { const m = Math.min(...dv); return dv.map((v, i) => (v === m ? i : -1)).filter((i) => i >= 0); };
+const namn = (ix) => (ix.length === 3 && ix[0] === 4 ? "fredag–söndag" : ix.map((i) => DAG[i]).join(", "));
+const mittVecka = b.ar.filter(([, , , dv]) => billigast(dv).some((i) => i === 2 || i === 3)).length;
+const spann = (dv) => Math.max(...dv) - Math.min(...dv);
+const helg = b.alla.dag[5][0] + b.alla.dag[6][0];
+const vardag = b.alla.dag.slice(0, 5).reduce((s, x) => s + x[0], 0);
+const tank = 50;
+const ons24 = b.sedan2024.avvikelse[2], mon24 = b.sedan2024.avvikelse[0];
+
+// Idag: senaste prisändringen per kedja enligt kedjans egen "gäller från"-uppgift.
+const andrat = LP.kedjor.map((k) => ({ kedja: k.kedja, b: k.priser?.bensin95, d: k.priser?.diesel })).filter((x) => x.b);
+const veckodag = (s) => DAG[(new Date(`${s}T12:00:00Z`).getUTCDay() + 6) % 7];
+const p95 = idagPris("bensin95");
+const kedjePriser = LISTKEDJOR.map((k) => ({ k, p: kedjePris(k, "bensin95") })).filter((x) => x.p != null).sort((x, y) => x.p - y.p);
+const kedjeSpann = kedjePriser.length > 1 ? kedjePriser.at(-1).p - kedjePriser[0].p : 0;
+// Ett år för en genomsnittlig bensinbil (Trafikanalys) med 0,6 l/mil som uttalat exempel.
+const milB = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin").mil, litAr = milB * 0.6;
+const obemannade = STATIONER.filter((s) => s.typ === "obemannad").length;
+
+// Egen daglig historik: hur ofta snittpriset ändrats sedan insamlingen började.
+const dagar = DAGAR.filter((x) => x.snitt?.bensin95 != null);
+const egnaAndringar = dagar.slice(1).filter((x, i) => Math.abs(x.snitt.bensin95 - dagar[i].snitt.bensin95) > 0.004).length;
+
+const avsnitt = [
+  { id: "svaret", rubrik: "Finns det en billigaste veckodag?" },
+  { id: "veckodag", rubrik: "Prisändringar per veckodag" },
+  { id: "ar-for-ar", rubrik: "Billigaste veckodag år för år" },
+  { id: "hur-ofta", rubrik: "Hur ofta ändras bensinpriset?" },
+  { id: "manad", rubrik: "Vilken månad är bensinen billigast?" },
+  { id: "tid", rubrik: "Vilken tid på dygnet?" },
+  { id: "idag", rubrik: "När ändrades priset senast?" },
+  { id: "spara", rubrik: "Det som sparar mer än rätt veckodag" },
+];
+
+const fragor = [
+  { fraga: "Vilken dag är bensinen billigast?", svar: `Ingen dag är alltid billigast. I OKQ8:s listpriser sedan 2007 har onsdag och torsdag i snitt varit billigast, men bara med ungefär en öre per liter. Mitten av veckan var billigast ${mittVecka} av ${b.ar.length} år, och andra år var det måndag, tisdag eller helgen.` },
+  { fraga: "Är bensinen billigare på helgen?", svar: `Inte i sig. OKQ8 har sedan 2024 inte ändrat listpriset en enda gång på en lördag eller söndag, så helgen har samma pris som fredagen. Sedan 2007 har bara ${helg} av ${(helg + vardag).toLocaleString("sv-SE")} prisändringar skett på en helgdag.` },
+  { fraga: "Hur ofta ändras bensinpriset?", svar: `OKQ8 ändrade listpriset på bensin 95 ${b.ar.at(-2)[1]} gånger under ${b.ar.at(-2)[0]} och ${b.ar.at(-1)[1]} gånger hittills under ${b.ar.at(-1)[0]}. En typisk ändring är ${pris(b.sedan2024.median * 100, 0)} öre per liter.` },
+  { fraga: "Vilken månad är bensinen billigast?", svar: `I OKQ8:s listpriser 2008–2025 har december och januari i snitt varit billigast för bensin 95, omkring 40–50 öre per liter under årets medelpris, och juni dyrast. Mönstret håller inte varje år, eftersom prisrörelser på världsmarknaden och skatteändringar ofta väger tyngre.` },
+  { fraga: "Vilken tid på dagen är bensinen billigast?", svar: "Det går inte att belägga med offentliga data. Kedjornas listpriser anger bara vilken dag ett pris gäller från, inte klockslag, och de stora kedjorna publicerar inte längre sina dagliga priser för privatkunder på webben." },
+  { fraga: "Hur mycket sparar man på att tanka en viss dag?", svar: `Sedan 2024 har onsdagen i snitt legat ${pris(Math.abs(ons24), 1)} öre under veckans medelpris för 95 hos OKQ8. På en tank på ${tank} liter blir det ${kr((Math.abs(ons24) / 100) * tank)}. Skillnaden mellan kedjornas listpriser idag är ${kr(kedjeSpann)} per liter.` },
+];
+---
+<Guide site={SITE} titel="Vilken dag är bensinen billigast? Vi har räknat på 19 år"
+  beskrivning="Är bensinen billigast på onsdagar eller helgen? Vi har gått igenom över 7 000 dagars listpriser: hur ofta priset ändras, vilken dag och vad det sparar."
+  h1="När är bensinen billigast? Veckodag, helg och tid på dygnet"
+  svar={`<strong>Ingen veckodag är alltid billigast.</strong> I OKQ8:s listpriser för varje dag sedan 2007 har onsdag och torsdag i genomsnitt varit billigast, men bara med cirka <strong>en öre per liter</strong> under veckans snitt. Sedan 2024 är skillnaden ${pris(Math.abs(ons24), 1)} öre på onsdagar, ungefär ${kr((Math.abs(ons24) / 100) * tank)} för en hel tank. Mitten av veckan var billigast ${mittVecka} av ${b.ar.length} år. Priset ändras nästan aldrig på helgen. Valet av station och kedja betyder mer än veckodagen.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "När är bensinen billigast?", href: "/guider/nar-ar-bensinen-billigast/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpriser per kedja, uppdateras varje natt" },
+    { namn: "Så hittar du billigaste bensinen", href: "/guider/billigaste-bensinen/", text: "Obemannade stationer och lågpriskedjor" },
+    { namn: "Hitta en station", href: "/", text: "Alla stationer i Sverige med drivmedel och tjänster" },
+    { namn: "Vad påverkar bensinpriset?", href: "/guider/vad-paverkar-bensinpriset/", text: "Världsmarknaden, dollarn och skatterna" },
+    { namn: "Bensinprisets historik", href: "/historik/", text: "Veckopriser sedan 2005" },
+  ]}
+  kallor={[
+    { namn: "OKQ8 – Priser företagskunder, Prishistorik företag (excel)", url: "https://www.okq8.se/foretag/priser/", text: `listpris för bensin 95 och diesel inkl. moms per dag ${datumText(OKQ8.fran)}–${datumText(OKQ8.till)}; vår sammanställning`, datum: "2026-11-27" },
+    { namn: "Vi Bilägare – Ledande bensinbolag slutar publicera priser (31 januari 2025)", url: "https://www.vibilagare.se/nyheter/ledande-bensinbolag-slutar-publicera-priser", text: "Konkurrensverkets granskning, kedjornas åtagande att sluta publicera dagliga priser och att Circle K publicerade sina priser först", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, med uppgift om från vilket datum priset gäller, hämtade ${datumText(LP_DATUM)}` },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för bensinbilar", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "obemannade stationer" },
+  ]}>
+
+  <h2 id="svaret">Finns det en billigaste veckodag?</h2>
+  <p>Frågan dyker upp varje gång bensinpriset rör sig: lönar det sig att vänta till onsdag, eller att tanka på söndagen? För att svara behövs priser för varje dag under lång tid. Den bästa offentliga källan vi har hittat är OKQ8:s egen prishistorik för företagspriset, som är kedjans listpris med moms. Den har en notering för varje dag från {datumText(OKQ8.fran)} till {datumText(OKQ8.till)}, nästan 20 år.</p>
+  <p>För att mäta veckodagseffekten har vi för varje hel vecka räknat ut medelpriset och jämfört varje dag med det. Då spelar det ingen roll att priset i stort har gått upp och ner över åren. Resultatet är tydligt: skillnaderna mellan veckodagarna finns, men de är små.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Veckodag</th><th class="num">95, sedan 2007</th><th class="num">95, sedan 2024</th><th class="num">Diesel, sedan 2007</th><th class="num">Diesel, sedan 2024</th></tr></thead>
+    <tbody>{DAG.map((n, i) => (
+      <tr><td>{n}</td><td class="num">{pris(b.alla.avvikelse[i], 1)}</td><td class="num">{pris(b.sedan2024.avvikelse[i], 1)}</td><td class="num">{pris(d.alla.avvikelse[i], 1)}</td><td class="num">{pris(d.sedan2024.avvikelse[i], 1)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Öre per liter jämfört med samma veckas medelpris. Negativt = billigare än snittet. OKQ8:s listpris inkl. moms, {b.alla.veckor.toLocaleString("sv-SE")} hela veckor sedan 2007 och {b.sedan2024.veckor} sedan 2024.</p>
+  <p>Räknat över alla år har onsdag och torsdag legat ungefär en öre under veckosnittet för bensin 95, och måndag knappt en öre över. Sedan 2024 är mönstret lite starkare: onsdagen har legat {pris(Math.abs(ons24), 1)} öre under snittet och måndagen {pris(mon24, 1)} öre över. Det motsvarar {kr(((mon24 - ons24) / 100) * tank)} mellan en tank på måndagen och en på onsdagen. Helgen har samma pris som fredagen.</p>
+
+  <h2 id="veckodag">Prisändringar per veckodag</h2>
+  <p>Varför ser det ut så? Tabellen visar hur många gånger OKQ8 har ändrat listpriset på bensin 95 varje veckodag, och om ändringen var en höjning eller sänkning.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Veckodag</th><th class="num">Ändringar sedan 2007</th><th class="num">Höjningar</th><th class="num">Sänkningar</th><th class="num">Ändringar sedan 2024</th><th class="num">Höjningar</th><th class="num">Sänkningar</th></tr></thead>
+    <tbody>{DAG.map((n, i) => (
+      <tr><td>{n}</td><td class="num">{b.alla.dag[i][0]}</td><td class="num">{b.alla.dag[i][1]}</td><td class="num">{b.alla.dag[i][2]}</td><td class="num">{b.sedan2024.dag[i][0]}</td><td class="num">{b.sedan2024.dag[i][1]}</td><td class="num">{b.sedan2024.dag[i][2]}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Bensin 95, OKQ8:s listpris. En ändring = ett nytt pris jämfört med dagen innan.</p>
+  <p>Priset ändras på vardagar, och nästan aldrig på helgen: {helg} av {(helg + vardag).toLocaleString("sv-SE")} ändringar sedan 2007 skedde en lördag eller söndag, och ingen alls sedan 2024. Onsdagen sticker ut genom att ha fler sänkningar än höjningar, sedan 2024 {b.sedan2024.dag[2][2]} sänkningar mot {b.sedan2024.dag[2][1]} höjningar. Fredagen har det omvända mönstret. Det förklarar varför onsdag och torsdag i snitt blir något billigare, och varför helgen ärver fredagens ofta lite högre pris.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="ar-for-ar">Billigaste veckodag år för år</h2>
+  <p>Ett mönster som bara syns i genomsnittet över många år är svårt att använda. Därför har vi räknat ut vilken veckodag som var billigast varje enskilt år.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th>Billigast, 95</th><th class="num">Skillnad billigast–dyrast</th><th>Billigast, diesel</th><th class="num">Skillnad billigast–dyrast</th></tr></thead>
+    <tbody>{b.ar.map(([y, , , dv], i) => { const dd = d.ar[i][3]; return <tr><td>{y}{y === 2026 && " *"}</td><td>{namn(billigast(dv))}</td><td class="num">{pris(spann(dv), 1)} öre</td><td>{namn(billigast(dd))}</td><td class="num">{pris(spann(dd), 1)} öre</td></tr>; })}</tbody>
+  </table></div>
+  <p class="kalla">Veckodagen med lägst genomsnittlig avvikelse från veckans medelpris. Skillnad = dyraste minus billigaste veckodag, öre per liter. * = till och med {datumText(OKQ8.till)}.</p>
+  <p>För bensin 95 var onsdag eller torsdag billigast {mittVecka} av {b.ar.length} år. Andra år vann måndagen, tisdagen eller helgen. Skillnaden mellan billigaste och dyraste veckodag var de flesta år mellan 1,5 och 6 öre per liter. Det största utslaget, {pris(spann(b.ar.at(-1)[3]), 1)} öre under 2026, beror till stor del på skatteändringarna: den 1 juli 2026, när koldioxidskatten sänktes med 2,40 kronor per liter, var en onsdag. Sådana engångshändelser kan inte användas för att välja dag framåt.</p>
+
+  <h2 id="hur-ofta">Hur ofta ändras bensinpriset?</h2>
+  <p>Hos OKQ8 ändrades listpriset på bensin 95 mellan {Math.min(...b.ar.slice(0, -1).map((x) => x[1]))} och {Math.max(...b.ar.slice(0, -1).map((x) => x[1]))} gånger per hela år, alltså mellan en och en halv och knappt fyra gånger i veckan. Ungefär lika många ändringar var höjningar som sänkningar. De flesta ändringar är små: medianen sedan 2024 är {pris(b.sedan2024.median * 100, 0)} öre per liter för bensin och {pris(d.sedan2024.median * 100, 0)} öre för diesel.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Ändringar 95</th><th class="num">Snittändring 95</th><th class="num">Ändringar diesel</th><th class="num">Snittändring diesel</th></tr></thead>
+    <tbody>{b.ar.map(([y, n, s], i) => <tr><td>{y}{y === 2026 && " *"}</td><td class="num">{n}</td><td class="num">{pris(s)}</td><td class="num">{d.ar[i][1]}</td><td class="num">{pris(d.ar[i][2])}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">OKQ8:s listpris. Snittändring i kronor per liter, höjningar och sänkningar räknade utan tecken. * = till och med {datumText(OKQ8.till)}.</p>
+  <p>År med stora svängningar på världsmarknaden ger både fler och större ändringar. Under 2022 ändrades priset på 95 {b.ar.find((x) => x[0] === 2022)[1]} gånger med i snitt {kr(b.ar.find((x) => x[0] === 2022)[2])} per gång, mot omkring 100 gånger och 12–14 öre ett normalår under 2010-talet. Även 2026 har haft stora ändringar, delvis på grund av flera skatteändringar under året.</p>
+
+  <h2 id="manad">Vilken månad är bensinen billigast?</h2>
+  <p>Veckodagen betyder lite, men hur ser det ut över året? Med samma prishistorik har vi för varje helt år från 2008 till 2025 räknat ut årets medelpris och jämfört varje månad med det. Ett genomsnitt över {MANAD.ar} år visar om vissa månader brukar ligga högre eller lägre än resten av året.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Månad</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{MAN.map((m, i) => <tr><td>{m}</td><td class="num">{pris(MANAD.b95[i])}</td><td class="num">{pris(MANAD.diesel[i])}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter jämfört med samma års medelpris, genomsnitt för {MANAD.ar} hela år 2008–2025. Negativt = billigare än årssnittet. OKQ8:s listpris inkl. moms.</p>
+  <p>Här är mönstret tydligare än för veckodagarna. För bensin 95 har {MAN[minI(MANAD.b95)]} och januari i snitt legat {pris(Math.abs(MANAD.b95[11]))} respektive {pris(Math.abs(MANAD.b95[0]))} kronor under årets medelpris, och {MAN[maxI(MANAD.b95)]} {pris(MANAD.b95[5])} kronor över. Vintern har alltså i genomsnitt varit billigare än sommaren. Januari var den billigaste månaden {MANAD.billigastJan} av {MANAD.ar} år och december lika många år. För diesel är skillnaderna mindre och följer ett annat mönster: {MAN[maxI(MANAD.diesel)]} och november har i snitt varit dyrast, och januari billigast.</p>
+  <p>Ett genomsnitt döljer stora variationer. Under år när priset stiger eller faller kraftigt, som 2008, 2014–2015 och 2022, påverkar den allmänna rörelsen under året mer än säsongen. Skatteändringar slår också igenom på bestämda datum, ofta vid årsskiftet eller den 1 juli. Det går därför inte att räkna med att en viss månad blir billig ett enskilt år, och vi gör inga prognoser. Det är heller sällan möjligt att flytta sin tankning flera månader.</p>
+
+  <h2 id="tid">Vilken tid på dygnet?</h2>
+  <p>Här finns inget att belägga med offentliga data. Kedjornas listpriser anger vilket datum ett pris gäller från, men inte klockslag. Enligt Vi Bilägare i januari 2025 var det tidigare Circle K som publicerade sina priser först, och OKQ8 och Preem brukade följa en timme senare. Efter en granskning av Konkurrensverket åtog sig de tre kedjorna att sluta publicera sina dagliga priser på webben. Listpriserna för företagskunder publiceras fortfarande, och det är dem vi använder. Pumppriset på en enskild station kan dessutom sättas lokalt och avvika från listpriset, så ett råd om ett visst klockslag går inte att ge.</p>
+
+  <h2 id="idag">När ändrades priset senast?</h2>
+  <p>Kedjorna anger från vilket datum dagens listpris gäller. Så här ser det ut i den senaste hämtningen, {datumText(LP_DATUM)}:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Bensin 95</th><th>Gäller från</th><th class="num">Diesel</th><th>Gäller från</th></tr></thead>
+    <tbody>{andrat.map((x) => <tr><td>{x.kedja}</td><td class="num">{pris(x.b.pris)}</td><td>{x.b.galler_fran ? `${veckodag(x.b.galler_fran)} ${datumText(x.b.galler_fran)}` : "–"}</td><td class="num">{x.d ? pris(x.d.pris) : "–"}</td><td>{x.d?.galler_fran ? `${veckodag(x.d.galler_fran)} ${datumText(x.d.galler_fran)}` : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter, kedjornas listpriser inkl. moms.</p>
+  <p>Vi sparar kedjornas listpriser varje natt i en egen daglig historik. {dagar.length > 1 ? <>Hittills finns {dagar.length} dagar i den, och snittpriset för 95 har ändrats {egnaAndringar} gånger.</> : <>Insamlingen började {datumText(dagar[0]?.datum ?? LP_DATUM)}, så den är ännu för kort för att säga något om veckodagar.</>} När den har vuxit kan vi jämföra alla tre kedjorna på samma sätt som OKQ8 ovan.</p>
+
+  <h2 id="spara">Det som sparar mer än rätt veckodag</h2>
+  <p>Några öre per liter är verkliga pengar för den som tankar mycket, men veckodagen är inte det enda att välja. Idag skiljer det {kr(kedjeSpann)} per liter mellan den billigaste och den dyraste kedjan i listpriserna, att jämföra med några öre mellan veckodagarna{kedjePriser.length ? <> ({kedjePriser[0].k} {kr(kedjePriser[0].p)} och {kedjePriser.at(-1).k} {kr(kedjePriser.at(-1).p)})</> : ""}. Snittpriset är {kr(p95)}.</p>
+  <ul>
+    <li><strong>Välj station.</strong> Enligt kedjorna kan pumppriset på en enskild station avvika från listpriset, eftersom det sätts lokalt. I vårt register finns {obemannade.toLocaleString("sv-SE")} obemannade stationer. Läs mer i guiden om <a href="/guider/billigaste-bensinen/">billigaste bensinen</a> och hitta stationer nära dig via <a href="/">stationssöket</a>.</li>
+    <li><strong>Räkna på ett helt år.</strong> En bensinbil körde enligt Trafikanalys i snitt {milB.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar}. Med 0,6 liter per mil som exempel blir det {Math.round(litAr).toLocaleString("sv-SE")} liter. Att alltid tanka på onsdagen i stället för måndagen hade med skillnaden sedan 2024 sparat {kr(((mon24 - ons24) / 100) * litAr, 0)} på ett år. Att tanka hos den billigaste i stället för den dyraste kedjan i dagens listpriser motsvarar {kr(kedjeSpann * litAr, 0)}.</li>
+    <li><strong>Undvik att vänta in en dag.</strong> Eftersom höjningar och sänkningar är ungefär lika vanliga på alla vardagar kan en väntan lika gärna kosta som spara.</li>
+    <li><strong>Håll koll på skatteändringar.</strong> Skatten ändras på bestämda datum. Den 1 december 2026 höjs koldioxidskatten med 2,40 kronor per liter, se <a href="/guider/bensinpriset-2027/">bensinpriset 2027</a>.</li>
+  </ul>
+</Guide>

@@ -1,0 +1,36 @@
+---
+// Äldre artiklar i en avdelning: /{avdelning}/sida/2/, /sida/3/ … Inga artiklar faller bort från avdelningen;
+// sidan 1 är avdelningens förstasida ([kategori]/index.astro) med de 60 senaste.
+import Tidning from "../../../components/Tidning.astro";
+import Rad from "../../../components/Rad.astro";
+import { KATEGORIER } from "../../../lib/kategorier.js";
+import { iKategori, efterLasvarde, senaste, avdelningsSidor } from "../../../lib/artiklar.js";
+
+export function getStaticPaths() {
+  return KATEGORIER.flatMap((k) => {
+    const alla = iKategori(k.slug);
+    const veckan = alla.filter((a) => senaste(24 * 7).includes(a));
+    const topp = new Set(efterLasvarde(veckan.length ? veckan : alla).slice(0, 3).map((a) => a.slug));
+    const sidor = avdelningsSidor(k.slug, topp);
+    return sidor.map((artiklar, i) => ({ params: { kategori: k.slug, nr: String(i + 2) }, props: { k, artiklar, nr: i + 2, sista: i === sidor.length - 1 } }));
+  });
+}
+const { k, artiklar, nr, sista } = Astro.props;
+const namnLiten = k.namn.toLowerCase();
+const forra = nr === 2 ? `/${k.slug}/` : `/${k.slug}/sida/${nr - 1}/`;
+---
+<Tidning titel={`${k.namn} – äldre goda nyheter, sida ${nr}`} beskrivning={`Äldre positiva nyheter om ${namnLiten}, sida ${nr}.`} aktiv={k.slug}
+  smulor={[{ namn: "Start", href: "/" }, { namn: k.namn, href: `/${k.slug}/` }, { namn: `Sida ${nr}`, href: `/${k.slug}/sida/${nr}/` }]}>
+  <div style={`--kat:${k.farg}`}>
+    <header class="sidhuvud">
+      <p class="vinjett">Avdelning · sida {nr}</p>
+      <h1 class="sidrubrik">{k.namn}: äldre nyheter</h1>
+    </header>
+    <ul class="lista">{artiklar.map((a) => <Rad a={a} visaKat={false} />)}</ul>
+    <p class="knapprad">
+      <a href={forra}>← Nyare</a>
+      {!sista && <a href={`/${k.slug}/sida/${nr + 1}/`}>Äldre →</a>}
+      <a href="/arkiv/">Hela arkivet</a>
+    </p>
+  </div>
+</Tidning>

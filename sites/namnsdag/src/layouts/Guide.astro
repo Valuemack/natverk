@@ -1,0 +1,54 @@
+---
+// Namnsdagssajtens kopia av @natverk/core/Guide.astro som använder ./Sida.astro (OG-bild, WebPage m.m.).
+// Mall för långa guidesidor (1 500–1 900 ord) som svarar på en sökintention.
+// Ordning: H1 → svarsruta → innehållsförteckning → avsnitt (slot, H2/H3) → relaterat → FAQ → källor.
+// JSON-LD: Article (+ FAQPage om fragor, + HowTo om steg, + egna via jsonld). Brödsmulor via Layout.
+// Regler: se Langa-sidor-experiment.md. Fyll aldrig ut; varje avsnitt ska ha egen data eller konkret nytta.
+// uppdaterad = dagen då innehållet eller datan faktiskt ändrades (inte byggdagen). Google ser datumbyten utan ändring som en varningssignal.
+import Layout from "./Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { artikelLd, faqLd, howToLd } from "@natverk/core/seo.js";
+
+const {
+  site, titel, beskrivning, h1, svar, smulor = [], sokvag = Astro.url.pathname,
+  publicerad, uppdaterad, avsnitt = [], fragor = [], kallor = [], relaterat = [], steg = null, jsonld = [],
+  granskad = uppdaterad,
+} = Astro.props;
+const ld = [
+  artikelLd(site, { titel, beskrivning, sokvag, publicerad, uppdaterad, avsnitt }),
+  ...(fragor.length ? [faqLd(fragor)] : []),
+  ...(steg ? [howToLd(steg)] : []),
+  ...jsonld,
+];
+const fmt = (d) => (d ? new Date(`${d}T12:00:00Z`).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : null);
+---
+<Layout site={site} titel={titel} beskrivning={beskrivning} smulor={smulor} sokvag={sokvag} jsonld={ld} uppdaterad={uppdaterad} ogTyp="article">
+  <article class="guide">
+    <h1>{h1 ?? titel}</h1>
+    <p class="guide-meta">Av redaktionen på <a href="/om/">{site.visningsnamn ?? site.namn}</a>{publicerad && <> · Publicerad <time datetime={publicerad}>{fmt(publicerad)}</time></>}{uppdaterad && uppdaterad !== publicerad && <> · Uppdaterad <time datetime={uppdaterad}>{fmt(uppdaterad)}</time></>}</p>
+    {svar && <p class="svar" set:html={svar} />}
+    <slot name="fore" />
+    {avsnitt.length > 2 && (
+      <nav class="toc" aria-label="Innehåll">
+        <strong>Innehåll</strong>
+        <ol>{avsnitt.map((a) => <li><a href={`#${a.id}`}>{a.rubrik}</a></li>)}</ol>
+      </nav>
+    )}
+    <slot />
+    {relaterat.length > 0 && (
+      <section class="relaterat">
+        <h2>Läs också</h2>
+        <div class="kort">{relaterat.map((r) => <a href={r.href}><strong>{r.namn}</strong>{r.text && <small>{r.text}</small>}</a>)}</div>
+      </section>
+    )}
+    {fragor.length > 0 && <Faq fragor={fragor} />}
+    {kallor.length > 0 && (
+      <section class="kallor">
+        <h2>Källor</h2>
+        <ul>{kallor.map((k) => <li>{k.url ? <a href={k.url} rel="noopener">{k.namn}</a> : k.namn}{k.text && <> – {k.text}</>}{k.datum && <> (hämtad {fmt(k.datum)})</>}</li>)}</ul>
+        {granskad && <p class="kalla">Faktagranskad mot källorna {fmt(granskad)}. Hittar du ett fel? Kontakta oss via <a href="/om/">Om-sidan</a>.</p>}
+      </section>
+    )}
+  </article>
+  <slot name="skript" slot="skript" />
+</Layout>

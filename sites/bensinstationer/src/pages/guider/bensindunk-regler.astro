@@ -1,0 +1,164 @@
+---
+// Lång guide: regler för bensindunk. Förvaring hemma och transport enligt Myndigheten för civilt försvar (tidigare MSB),
+// införsel i reservdunk enligt Skatteverket, Tullverket och norska Tolletaten, råd vid pumpen från MSB:s handbok och en
+// biltillverkares instruktionsbok. Priser för en dunk ur kedjornas listpriser och EU:s Weekly Oil Bulletin. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, SENASTE_VECKA, LANDER, landPris, idagPris, kedjePris, kr, pris, datumText } from "../../pris.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const vecka = datumText(SENASTE_VECKA.datum);
+
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const alk4 = kedjePris("OKQ8", "alkylat_4t"), alk2 = kedjePris("OKQ8", "alkylat_2t");
+const dunkar = [5, 10, 20, 25].map((l) => ({ l, b: l * p95, d: l * pd }));
+
+// En reservdunk på 10 liter i grannländerna, jämfört med Sverige samma vecka (EU Weekly Oil Bulletin).
+const se = SENASTE_VECKA;
+const grannar = ["DK", "FI", "DE", "PL"].map((kod) => {
+  const l = LANDER.find((x) => x.kod === kod), p = landPris(kod);
+  return l && p ? { namn: l.namn, href: `/europa/${l.slug}/`, b95: p.b95, diesel: p.diesel } : null;
+}).filter(Boolean);
+
+const avsnitt = [
+  { id: "hemma", rubrik: "Hur mycket bensin får man ha hemma?" },
+  { id: "bostad", rubrik: "Var får dunken stå?" },
+  { id: "bil", rubrik: "Hur mycket bensin får man ha i bilen?" },
+  { id: "pumpen", rubrik: "Att fylla en dunk vid pumpen" },
+  { id: "dunken", rubrik: "Vilken dunk ska man använda?" },
+  { id: "granser", rubrik: "Bensindunk över gränsen" },
+  { id: "kostnad", rubrik: "Vad kostar en full dunk?" },
+];
+
+const fragor = [
+  { fraga: "Hur mycket bensin får man förvara hemma?", svar: "Utan tillstånd får en privatperson hantera högst 100 liter brandfarlig vätska med flampunkt upp till 60 °C, till exempel bensin, enligt Myndigheten för civilt försvar. Bränslet i bilens tank och i en reservdunk räknas inte. Det finns också gränser för hur stora behållarna får vara på olika platser." },
+  { fraga: "Får man ha en bensindunk i lägenheten?", svar: "Inne i lägenheten får behållaren rymma högst 5 liter brandfarlig vätska. På den egna balkongen får den rymma högst 25 liter. En inglasad balkong räknas som inomhus." },
+  { fraga: "Får man ha bensindunk i garaget i ett flerbostadshus?", svar: "I garage, källare och vind i ett flerbostadshus med flera plan får du inte hantera brandfarlig vätska med flampunkt under 30 °C, alltså inte bensin. Fordon i garaget får ändå ha bränsle i tanken och i en reservdunk." },
+  { fraga: "Hur mycket bensin får man transportera i bilen?", svar: "Högst 60 liter per återfyllningsbar behållare och högst 240 liter brandfarlig vätska för eget bruk på fordonet. Utöver det får du ha en behållare på högst 60 liter reservbränsle till fordonet. Godset ska vara lastsäkrat." },
+  { fraga: "Får man ta med en bensindunk från ett annat land?", svar: "Ja, upp till 10 liter i en reservdunk utan skatt. Det gäller enligt Skatteverket från andra EU-länder och enligt Tullverket per privat bil eller motorcykel. Norge tillåter också 10 liter i en godkänd reservdunk per fordon in i landet." },
+  { fraga: "Ska bensindunken stå på marken när man tankar?", svar: "Ja. Kia skriver i sin instruktionsbok att en godkänd reservdunk ska ställas på marken innan du fyller den, eftersom statisk elektricitet från dunken kan antända bränsleångorna." },
+];
+---
+<Guide site={SITE} titel="Bensindunk – regler för förvaring och transport"
+  beskrivning="Hur mycket bensin får du ha hemma, i garaget och i bilen? Reglerna från Myndigheten för civilt försvar, gränsen på 10 liter och hur du fyller dunken."
+  h1="Bensindunk – regler för förvaring, transport och tankning"
+  svar={`Hemma får du utan tillstånd ha <strong>högst 100 liter</strong> brandfarlig vätska som bensin, men bränslet i bilens tank och en reservdunk räknas inte. I lägenheten får behållaren rymma högst 5 liter och på balkongen 25 liter. I bilen får du ha <strong>högst 60 liter per dunk och 240 liter totalt</strong>, plus en reservdunk på högst 60 liter. Från ett annat land får du ta med 10 liter i reservdunk utan skatt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensindunk – regler", href: "/guider/bensindunk-regler/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Alkylatbensin", href: "/guider/alkylatbensin/", text: "Bensin för gräsklippare och motorsåg" },
+    { namn: "Tanka utomlands", href: "/guider/tanka-utomlands/", text: "Priser och regler i Europa" },
+    { namn: "Tanka i Norge", href: "/guider/tanka-i-norge/", text: "Pris och regler vid gränsen" },
+    { namn: "Obemannad bensinstation", href: "/guider/obemannad-bensinstation/", text: "Så fungerar automaten" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpris per kedja" },
+  ]}
+  kallor={[
+    { namn: "Myndigheten för civilt försvar – Mängd brandfarlig vätska och gas du får förvara hemma", url: "https://www.mcf.se/sv/rad-till-privatpersoner/brandsakerhet/brandfarliga-gaser-och-vatskor-i-hem--och-fritidsmiljo/mangd-brandfarlig-vatska-och-gas-du-far-forvara-hemma/", text: "100 liter, 10 000 liter, tillstånd (senast granskad 29 juni 2026)", datum: "2026-11-27" },
+    { namn: "Myndigheten för civilt försvar – Förvaring av brandfarliga gaser och vätskor hemma", url: "https://www.mcf.se/sv/rad-till-privatpersoner/brandsakerhet/brandfarliga-gaser-och-vatskor-i-hem--och-fritidsmiljo/forvaring-av-brandfarliga-gaser-och-vatskor-hemma/", text: "gränser per bostadstyp och checklista (senast granskad 14 juli 2026)", datum: "2026-11-27" },
+    { namn: "Myndigheten för civilt försvar – Transportera farligt gods som privatperson", url: "https://www.mcf.se/sv/amnesomraden/skydd-mot-olyckor-och-farliga-amnen/farligt-gods/undantag-och-lattnader/transportera-farligt-gods-som-privatperson/", text: "60 liter per behållare, 240 liter, reservbränsle (senast granskad 11 augusti 2026)", datum: "2026-11-27" },
+    { namn: "Skatteverket – Föra in bränsle till Sverige från ett annat land i EU", url: "https://www.skatteverket.se/privat/skatter/skattpabransleforprivatpersoner/forainbransletillsverigefranettannatlandieu.4.48cfd212185efbb440b1d16.html", text: "reservdunk på högst tio liter utan skatt", datum: "2026-11-27" },
+    { namn: "Tullverket – Drivmedel till fordon och specialbehållare", url: "https://www.tullverket.se/privat/varor/seallavaror/drivmedeltillfordonochspecialbehallare.4.7df61c5915510cfe9e710988.html", text: "10 liter i bärbara behållare per fordon, villkor", datum: "2026-11-27" },
+    { namn: "Tolletaten (Norge) – Petrol and diesel", url: "https://toll.no/en/goods/motor-vehicles/petrol-and-diesel", text: "under 600 liter i tanken, 10 liter i godkänd reservdunk", datum: "2026-11-27" },
+    { namn: "MSB – Handbok: Hantering av brandfarliga gaser och vätskor på bensinstationer (mars 2015)", url: "https://rib.msb.se/filer/pdf/27549.pdf", text: "statisk elektricitet, lösa dunkar vid sjöbensinstationer", datum: "2026-11-27" },
+    { namn: "Kia – Instruktionsbok Optima SW PHEV (MY20)", url: "https://www.kia.com/content/dam/kwcms/kme/se/sv/assets/contents/service/Instruktionsbocker/Optima/OptimaSW-PHEV-MY20.pdf", text: "ställ reservdunken på marken, godkända bränsledunkar", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `OKQ8, Circle K och Preem, ${datum}` },
+    { namn: "Europeiska kommissionen – Weekly Oil Bulletin", text: `veckopris med skatt, vecka till ${vecka}` },
+  ]}>
+
+  <h2 id="hemma">Hur mycket bensin får man ha hemma?</h2>
+  <p>Reglerna finns i lagen om brandfarliga och explosiva varor och i föreskrifterna till den. Den myndighet som ger råd om reglerna heter numera Myndigheten för civilt försvar, tidigare MSB. Lagen talar om hantering, vilket omfattar både användning och förvaring.</p>
+  <p>Utan tillstånd från kommunen får du som privatperson hantera:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Vara</th><th>Exempel</th><th class="num">Högst utan tillstånd</th></tr></thead>
+    <tbody>
+      <tr><td>Brandfarlig vätska, flampunkt upp till 60 °C</td><td>Bensin, etanol, lösningsmedel</td><td class="num">100 liter</td></tr>
+      <tr><td>Brandfarlig vätska, flampunkt över 60 °C</td><td>Eldningsolja eller diesel för uppvärmning eller elproduktion</td><td class="num">10 000 liter</td></tr>
+      <tr><td>Gasol</td><td>Gasolflaskor (behållarens volym räknas)</td><td class="num">60 liter</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Myndigheten för civilt försvar.</p>
+  <p>Bränsle i ett fordons tank eller reservdunk räknas inte in i gränserna, och inte heller förpackningar med mindre än 50 ml. Myndigheten rekommenderar ändå att du bara har så mycket du behöver, normalt en behållare som används och en i reserv. Även under gränserna gäller lagens aktsamhetskrav: du ska vara försiktig och göra det du kan för att undvika olyckor. Bryter du mot lagen kan du dömas till böter eller fängelse.</p>
+  <p>Vill du ha mer måste du söka tillstånd hos kommunen, ofta via räddningstjänsten. Då krävs bland annat en föreståndare, en utredning om risker, ett låst utrymme, en brandsläckare och skyltning.</p>
+
+  <h2 id="bostad">Var får dunken stå?</h2>
+  <p>Utöver totalgränsen finns regler för hur stor behållaren får vara på olika platser. De är strängare i flerbostadshus med flera våningar, eftersom fler människor kan drabbas om det börjar brinna.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Plats</th><th>Brandfarlig vätska, som bensin</th></tr></thead>
+    <tbody>
+      <tr><td>Inne i en lägenhet (flera plan)</td><td>Behållare på högst 5 liter</td></tr>
+      <tr><td>Inglasad balkong</td><td>Som inomhus: högst 5 liter</td></tr>
+      <tr><td>Öppen balkong som hör till lägenheten</td><td>Behållare på högst 25 liter</td></tr>
+      <tr><td>Eget brandavskilt utrymme i lägenheten (minst EI 60)</td><td>Behållare på högst 25 liter</td></tr>
+      <tr><td>Vind, garage, källare och förråd i flerbostadshus</td><td>Ingen vätska med flampunkt under 30 °C, alltså ingen bensin. Fordon får ha bränsle i tanken och en reservdunk.</td></tr>
+      <tr><td>Gemensamt garage eller förråd för flera hushåll</td><td>Tillåtet om det är oåtkomligt för obehöriga</td></tr>
+      <tr><td>Villa, radhus, fritidshus, hus i ett plan</td><td>Behållare på högst 25 liter i bostaden. Inte på vinden. Källare och garage under mark bara om de är tillräckligt ventilerade.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Myndigheten för civilt försvar, Förvaring av brandfarliga gaser och vätskor hemma.</p>
+  <p>Myndighetens checklista för förvaringen:</p>
+  <ul>
+    <li>Se till att barn och obehöriga inte kommer åt dunken.</li>
+    <li>Förvara brandfarliga vätskor på ett ställe, gärna i ett skåp med ventilation upptill och nertill och i ett tätt tråg av brandsäkert material som samlar upp spill.</li>
+    <li>Ställ aldrig bensin i kylskåp, svalskåp eller frys, där utrustningen kan ge gnistor.</li>
+    <li>Skruva på korken ordentligt, och håll värme och gnistor borta.</li>
+    <li>Förvara inte bensinen tillsammans med gasol eller frätande och giftiga ämnen. Större mängder papper, tyg eller papp får inte finnas i förvaringsutrymmet.</li>
+  </ul>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="bil">Hur mycket bensin får man ha i bilen?</h2>
+  <p>Bensin och diesel är farligt gods, men privatpersoner har lättnader när de transporterar för eget bruk i sitt eget fordon. Två villkor gäller enligt Myndigheten för civilt försvar: godset ska vara förpackat i detaljhandelsförpackningar och vara avsett för personligt bruk, hushållsbruk eller sport och fritid. För bensin och diesel i återfyllningsbara behållare gäller dessutom gränserna i tabellen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Regel</th><th class="num">Gräns</th></tr></thead>
+    <tbody>
+      <tr><td>Per behållare</td><td class="num">60 liter</td></tr>
+      <tr><td>Totalt brandfarlig vätska för eget bruk på fordonet</td><td class="num">240 liter</td></tr>
+      <tr><td>Därutöver: en behållare reservbränsle till fordonet</td><td class="num">60 liter</td></tr>
+      <tr><td>Farligt avfall till återvinningscentralen</td><td class="num">30 kg</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Myndigheten för civilt försvar, Transportera farligt gods som privatperson.</p>
+  <p>Dunkarna ska skyddas och lastsäkras så att de inte kan glida eller välta. Större förpackningar som IBC-behållare, storförpackningar och tankar räknas inte som detaljhandelsförpackningar och får inte transporteras på det här sättet. Det är inte förbjudet att ta med en dunk på bussen eller i en taxi, men bolagen kan ha egna regler som stoppar det. Ska du skicka bensin med ett fraktbolag gäller hela regelverket för farligt gods, vilket oftast kräver särskild utbildning.</p>
+
+  <h2 id="pumpen">Att fylla en dunk vid pumpen</h2>
+  <p>När du fyller en dunk är det statisk elektricitet du ska se upp med. MSB:s handbok för bensinstationer konstaterar att statisk elektricitet har orsakat mindre bränder, så kallade puffar, vid tankning av fordon. Handboken anger också att markbeläggning som asfalt, betong och marksten leder bort statisk elektricitet tillräckligt bra. Därför ska dunken stå på marken när du fyller den.</p>
+  <ul>
+    <li><strong>Ställ dunken på marken.</strong> Kia skriver i sin svenska instruktionsbok att en godkänd reservdunk ska ställas på marken innan du fyller den, eftersom statiska urladdningar från dunken kan antända bränsleångor.</li>
+    <li><strong>Lyft upp dunken ur båten.</strong> Vid sjöbensinstationer ska lösa dunkar enligt MSB:s handbok alltid lyftas ur båten och fyllas på land.</li>
+    <li><strong>Stäng av motorn och rök inte.</strong> Kia råder också att du inte använder mobilen medan du tankar.</li>
+    <li><strong>Skruva på locket ordentligt</strong> innan dunken lastas, så minskar risken för spill.</li>
+  </ul>
+  <p>Vi har inte hittat några särskilda regler för dunkar publicerade på kedjornas webbplatser. Följ skyltningen på stationen, som kan säga mer om vad som gäller just där.</p>
+
+  <h2 id="dunken">Vilken dunk ska man använda?</h2>
+  <p>Regelverket för transport utgår från detaljhandelsförpackningar, alltså förpackningar som säljs till privatpersoner för produkten. En dunk som är tillverkad och såld för bensin uppfyller det. Kia skriver att du bara ska använda godkända bränsledunkar i plast som är konstruerade för att transportera och förvara bränsle. En vattendunk eller en flaska som varit till något annat är inte gjord för bensin.</p>
+  <p>Storleken styrs av var dunken ska stå. Ska den förvaras i en lägenhet får den rymma högst 5 liter, på en balkong eller i en villa 25 liter. I bilen är gränsen 60 liter per dunk. Ska du över gränsen är det 10 liter i reservdunken som är skattefritt.</p>
+  <p>För gräsklippare, motorsågar och andra småmotorer finns också alkylatbensin. OKQ8:s listpris idag är {kr(alk4)} per liter för fyrtaktsalkylat och {kr(alk2)} för tvåtaktsalkylat ({datum}). Läs mer i <a href="/guider/alkylatbensin/">guiden om alkylatbensin</a>.</p>
+
+  <h2 id="granser">Bensindunk över gränsen</h2>
+  <p>När du kör in i Sverige är bränslet i bilens ordinarie tank skattefritt. För en reservdunk finns en gräns på 10 liter:</p>
+  <ul>
+    <li><strong>Från ett annat EU-land:</strong> enligt Skatteverket får du föra in motorbränsle i en reservdunk som rymmer högst tio liter utan att betala skatt. Mer än så måste anmälas i förväg, och du betalar energi- och koldioxidskatt.</li>
+    <li><strong>Från ett land utanför EU, till exempel Norge:</strong> Tullverket tillåter tull- och skattefritt bränsle i bärbara behållare i privatbilar och motorcyklar, högst 10 liter per fordon. Bränslet får bara användas i det fordon det fördes in med, får inte säljas eller lämnas bort och får inte tas ur fordonet för förvaring.</li>
+    <li><strong>In i Norge:</strong> den norska tullen tillåter under 600 liter i fordonets standardtank och upp till 10 liter i en godkänd reservdunk per fordon.</li>
+  </ul>
+
+  <h2 id="kostnad">Vad kostar en full dunk?</h2>
+  <p>Med kedjornas snittpriser {datum}, {kr(p95)} för bensin 95 och {kr(pd)} för diesel, kostar en full dunk så här mycket:</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Dunk</th><th class="num">Bensin 95</th><th class="num">Diesel</th></tr></thead>
+    <tbody>{dunkar.map((x) => <tr><td class="num">{x.l} liter</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.d, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Den skattefria reservdunken på 10 liter är just nu ingen stor affär. Så här mycket kostar 10 liter i några grannländer, enligt EU:s veckostatistik ({vecka}), jämfört med Sverige samma vecka:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th class="num">10 l bensin 95</th><th class="num">Mot Sverige</th><th class="num">10 l diesel</th><th class="num">Mot Sverige</th></tr></thead>
+    <tbody>
+      <tr><td>Sverige</td><td class="num">{kr(10 * se.b95, 0)}</td><td class="num">–</td><td class="num">{kr(10 * se.diesel, 0)}</td><td class="num">–</td></tr>
+      {grannar.map((x) => <tr><td><a href={x.href}>{x.namn}</a></td><td class="num">{kr(10 * x.b95, 0)}</td><td class="num">{x.b95 < se.b95 ? "−" : "+"}{kr(Math.abs(10 * (x.b95 - se.b95)), 0)}</td><td class="num">{x.diesel ? kr(10 * x.diesel, 0) : "–"}</td><td class="num">{x.diesel ? <>{x.diesel < se.diesel ? "−" : "+"}{kr(Math.abs(10 * (x.diesel - se.diesel)), 0)}</> : "–"}</td></tr>)}
+    </tbody>
+  </table></div>
+  <p class="kalla">Snittpris med skatt per vecka enligt Europeiska kommissionens Weekly Oil Bulletin, omräknat till kronor med veckans kurs. Priset vid en enskild station kan avvika.</p>
+  <p>Jämför fler länder på sidan om <a href="/europa/">bensinpriser i Europa</a>.</p>
+</Guide>

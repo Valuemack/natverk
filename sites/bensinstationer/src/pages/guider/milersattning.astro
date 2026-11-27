@@ -1,0 +1,161 @@
+---
+// Lång guide: skattefri milersättning (bilersättning) 2026 för egen bil och förmånsbil enligt Skatteverket, jämförd med
+// verklig bränslekostnad per mil med dagens listpriser. Förbrukningen är uttalade exempel (ingen källa påstås).
+// Drivmedelsförmån enligt Skatteverket (marknadsvärde × 1,2). 2027 års belopp var inte publicerade 2026-11-27.
+// Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, idagPris, kr, pris, datumText } from "../../pris.js";
+import { KORSTRACKOR, VARMEVARDEN as V } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+
+// Skatteverket, inkomstår 2025 och 2026 (oförändrat sedan 2023). Kronor per mil.
+const ERS = { egen: 25, formanEl: 9.5, forman: 12, foreTjugotre: 18.5 };
+const BELOPP_AR = "2026";
+
+const p95 = idagPris("bensin95"), pd = idagPris("diesel"), pe85 = idagPris("e85"), phvo = idagPris("hvo100");
+// Exempelförbrukning i liter per mil – inte uppmätta värden, bara räkneexempel.
+const forb = [0.4, 0.5, 0.6, 0.7, 0.8, 1.0];
+const rad = (l) => ({ l, b: l * p95, d: pd ? l * pd : null });
+const rader = forb.map(rad);
+const brytEgenB = ERS.egen / p95, brytEgenD = ERS.egen / pd;
+const brytFormB = ERS.forman / p95, brytFormD = ERS.forman / pd;
+const mil = KORSTRACKOR.snitt;
+// Andra drivmedel: förbrukning uppräknad efter energiinnehåll (antagande: samma energi per mil som bensin- resp. dieselbilen).
+const fE85 = V.bensin95 / V.e85, fHvo = V.diesel / V.hvo100;
+const andra = [0.5, 0.6, 0.7].map((l) => ({ l, b: l * p95, e: pe85 ? l * fE85 * pe85 : null, d: l * pd, h: phvo ? l * fHvo * phvo : null }));
+// Exempel: 1 000 mil i tjänsten med egen bil, 0,6 l/mil bensin.
+const tjanst = 1000, exL = 0.6;
+const exBransle = tjanst * exL * p95, exErs = tjanst * ERS.egen;
+// Per år: ersättning och bränsle för olika tjänstekörning, 0,6 l/mil.
+const arMil = [500, 1000, 2000, 3000].map((m) => ({ m, ers: m * ERS.egen, b: m * exL * p95, d: m * exL * pd, f: m * ERS.forman }));
+// Drivmedelsförmån, Skatteverkets modell: 100 mil privat av 300 mil, kostnad = dagens pris × 0,6 l/mil.
+const privat = 100, totalt = 300;
+const kostnadManad = totalt * exL * p95;
+const privatDel = kostnadManad * (privat / totalt);
+const forman = privatDel * 1.2;
+
+const avsnitt = [
+  { id: "belopp", rubrik: `Milersättning ${BELOPP_AR}: beloppen` },
+  { id: "bransle", rubrik: "Vad kostar bränslet per mil?" },
+  { id: "andra", rubrik: "E85 och HVO100 per mil" },
+  { id: "egen-bil", rubrik: "Egen bil: räcker 25 kronor per mil?" },
+  { id: "formansbil", rubrik: "Förmånsbil: 12 kronor eller 9,50 kronor" },
+  { id: "drivmedelsforman", rubrik: "Drivmedelsförmån när arbetsgivaren betalar bränslet" },
+  { id: "over-schablon", rubrik: "Om arbetsgivaren betalar mer" },
+  { id: "2027", rubrik: "Milersättning 2027" },
+];
+
+const fragor = [
+  { fraga: `Hur mycket är milersättningen ${BELOPP_AR}?`, svar: `Den skattefria milersättningen är ${ERS.egen} kronor per mil för egen bil. För förmånsbil är den ${ERS.forman} kronor per mil, eller ${pris(ERS.formanEl)} kronor om bilen drivs helt med el. Beloppen gäller inkomstår 2025 och 2026 enligt Skatteverket.` },
+  { fraga: "Vad kostar bensinen per mil?", svar: `Med dagens snittpris för 95 (${kr(p95)}) kostar en bil som drar 0,6 liter per mil ${kr(0.6 * p95)} per mil i bränsle. Med 0,8 liter per mil blir det ${kr(0.8 * p95)}.` },
+  { fraga: "Täcker milersättningen bränslet?", svar: `För egen bil räcker ${ERS.egen} kronor per mil till bränslet så länge bilen drar mindre än ${pris(brytEgenB, 2)} liter bensin eller ${pris(brytEgenD, 2)} liter diesel per mil med dagens priser. Ersättningen ska också räcka till bilens övriga kostnader.` },
+  { fraga: "Får man milersättning för förmånsbil?", svar: `Ja, ${ERS.forman} kronor per mil, eller ${pris(ERS.formanEl)} kronor för en bil som drivs helt med el, men bara om du själv har betalat allt drivmedel. Från 1 juli 2026 får en laddhybrid ersättning även om den har laddats på arbetsplatsen.` },
+  { fraga: "Hur beskattas fri bensin i förmånsbil?", svar: "Drivmedel som arbetsgivaren betalar för privata resor är en drivmedelsförmån. Den värderas till marknadsvärdet för det drivmedel som gått åt till privatkörningen gånger 1,2." },
+  { fraga: "Vad blir milersättningen 2027?", svar: "Skatteverket hade inte publicerat några belopp för inkomstår 2027 när vi kontrollerade den 27 november 2026. Sidan uppdateras när beloppen finns." },
+];
+---
+<Guide site={SITE} titel={`Milersättning ${BELOPP_AR}: 25 kr/mil mot verklig bränslekostnad`}
+  beskrivning={`Skattefri milersättning ${BELOPP_AR}: 25 kr/mil för egen bil, 12 kr för förmånsbil och 9,50 kr för elbil – jämfört med vad bränslet kostar per mil idag.`}
+  h1={`Milersättning ${BELOPP_AR} – räcker den till bränslet?`}
+  svar={`Den skattefria milersättningen är <strong>${ERS.egen} kronor per mil för egen bil</strong>, ${ERS.forman} kronor för förmånsbil och ${pris(ERS.formanEl)} kronor för förmånsbil som drivs helt med el (Skatteverket, inkomstår 2025 och 2026). Med dagens snittpris för bensin 95, ${kr(p95)}, kostar bränslet <strong>${kr(0.6 * p95)} per mil</strong> för en bil som drar 0,6 liter per mil. För förmånsbilen räcker 12 kronor till bensin upp till ${pris(brytFormB, 2)} liter per mil, men för diesel bara upp till ${pris(brytFormD, 2)} liter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Milersättning", href: "/guider/milersattning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bränslekalkylator", href: "/rakna/", text: "Kostnad per mil och per år för din bil" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpriser per kedja" },
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Listpriser per kedja" },
+    { namn: "Elbil eller bensin?", href: "/guider/elbil-eller-bensin/", text: "Kostnad per mil med el och bensin" },
+    { namn: "Bensinpriset 2027", href: "/guider/bensinpriset-2027/", text: "Skatteändringarna vid årsskiftet" },
+  ]}
+  kallor={[
+    { namn: "Skatteverket – Traktamente och bilersättning", url: "https://www.skatteverket.se/foretag/arbetsgivare/lonochersattning/traktamenteochbilersattning", text: "schablonbelopp för egen bil och förmånsbil 2025 och 2026, villkor för förmånsbil och laddhybrid från 1 juli 2026, belopp över schablon", datum: "2026-11-27" },
+    { namn: "Skatteverket – Belopp och procent 2026", url: "https://www.skatteverket.se/privat/skatter/beloppochprocent/2026.4.1522bf3f19aea8075ba89.html", text: "bilersättning, reseavdrag och drivmedelsförmån inkomstår 2026", datum: "2026-11-27" },
+    { namn: "Skatteverket – Belopp och procent 2023", url: "https://skatteverket.se/privat/skatter/beloppochprocent/2023.4.1997e70d1848dabbac91bc9.html", text: "25 kronor per mil för egen bil från 2023", datum: "2026-11-27" },
+    { namn: "Sveriges riksdag – Svar på skriftlig fråga: Höjd milersättning", url: "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svar-pa-skriftlig-fraga/hojd-milersattning_h912853/", text: "tidigare nivå 18,50 kronor per mil", datum: "2026-11-27" },
+    { namn: "Skatteverket – Drivmedelsförmån", url: "https://www.skatteverket.se/privat/skatter/arbeteochinkomst/formaner/bilforman/drivmedelsforman", text: "värdering × 1,2, exempel, laddning på arbetsplatsen skattefri permanent från 1 juli 2026", datum: "2026-11-27" },
+    { namn: "Skatteverket – Drivmedelsförmån (arbetsgivare)", url: "https://www.skatteverket.se/foretag/arbetsgivare/lonochersattning/formaner/bilforman/drivmedelsforman.4.3016b5d91791bf546791a89.html", text: "underlag för arbetsgivaravgifter och skatteavdrag", datum: "2026-11-27" },
+    { namn: "Energimyndigheten – Värmevärden och densiteter", url: V.kalla, text: "energiinnehåll i kWh per liter för bensin 95, E85, diesel och HVO", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka per personbil", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, ${datumText(LP_DATUM)}` },
+  ]}>
+
+  <h2 id="belopp">Milersättning {BELOPP_AR}: beloppen</h2>
+  <p>Milersättning, som Skatteverket kallar bilersättning, är det arbetsgivaren betalar när du kör i tjänsten. Upp till ett schablonbelopp är ersättningen skattefri för dig och arbetsgivaren betalar inga arbetsgivaravgifter på den. Beloppen är desamma för inkomstår 2025 och 2026:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bil</th><th class="num">Skattefritt per mil</th><th>Villkor</th></tr></thead>
+    <tbody>
+      <tr><td>Egen bil (även el- och hybridbil)</td><td class="num">{kr(ERS.egen)}</td><td>Du kör din egen bil i tjänsten</td></tr>
+      <tr><td>Förmånsbil, inte helt eldriven</td><td class="num">{kr(ERS.forman)}</td><td>Du har betalat allt drivmedel själv</td></tr>
+      <tr><td>Förmånsbil som drivs helt med el</td><td class="num">{kr(ERS.formanEl)}</td><td>Du har betalat all el själv</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: Skatteverket. En mil är tio kilometer.</p>
+  <p>Ersättningen för egen bil höjdes till {ERS.egen} kronor per mil från inkomstår 2023. Innan dess var den {pris(ERS.foreTjugotre)} kronor. Samma belopp, {ERS.egen} kronor per mil, används också när du gör reseavdrag för resor mellan bostad och arbete med egen bil. Där får du bara dra av den del av kostnaderna som överstiger 15 000 kronor för inkomstår 2026. Kör du till exempel {tjanst.toLocaleString("sv-SE")} mil om året till och från jobbet blir kostnaden enligt schablonen {kr(tjanst * ERS.egen, 0)}, och om villkoren för reseavdrag är uppfyllda får du dra av {kr(tjanst * ERS.egen - 15000, 0)}. Avdraget minskar den beskattningsbara inkomsten, det är inte en ersättning i pengar.</p>
+
+  <h2 id="bransle">Vad kostar bränslet per mil?</h2>
+  <p>Kostnaden per mil är förbrukningen i liter per mil gånger literpriset. Förbrukningen varierar mycket mellan bilar, körsätt och årstid, så tabellen visar räkneexempel med kedjornas genomsnittliga listpriser den {datumText(LP_DATUM)}: {kr(p95)} för bensin 95 och {kr(pd)} för diesel. Siffrorna i första kolumnen är inte uppmätta värden för någon bilmodell.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Förbrukning (exempel)</th><th class="num">Bensin 95, kr/mil</th><th class="num">Diesel, kr/mil</th><th class="num">Kvar av 25 kr, bensin</th><th class="num">Kvar av 12 kr, bensin</th></tr></thead>
+    <tbody>{rader.map((x) => (
+      <tr><td>{pris(x.l, 1)} l/mil</td><td class="num">{pris(x.b)}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(ERS.egen - x.b)}</td><td class="num">{pris(ERS.forman - x.b)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Kronor. Dagens listpriser inkl. moms. Negativt tal = ersättningen räcker inte till bränslet.</p>
+  <p>Den egna förbrukningen hittar du enklast genom att fylla tanken, nollställa trippmätaren och tanka fullt nästa gång: antal liter delat med antal körda mil. Vill du räkna på flera drivmedel samtidigt finns <a href="/rakna/">bränslekalkylatorn</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="andra">E85 och HVO100 per mil</h2>
+  <p>Kör du på E85 eller HVO100 går det fler liter per mil, eftersom bränslet innehåller mindre energi per liter. Enligt Energimyndighetens värmevärden innehåller en liter bensin 95 {pris(V.bensin95)} kWh och en liter E85 {pris(V.e85)} kWh. För diesel är siffrorna {pris(V.diesel)} kWh per liter och för HVO {pris(V.hvo100)} kWh. Om bilen behöver lika mycket energi per mil oavsett bränsle går det alltså {pris(fE85)} gånger så många liter E85 som bensin, och {pris(fHvo)} gånger så många liter HVO100 som diesel. Det är ett förenklat antagande: verklig förbrukning beror på motorn, och en tillverkare kan ange andra värden.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Förbrukning bensin eller diesel (exempel)</th><th class="num">Bensin 95</th><th class="num">E85</th><th class="num">Diesel</th><th class="num">HVO100</th></tr></thead>
+    <tbody>{andra.map((x) => <tr><td>{pris(x.l, 1)} l/mil</td><td class="num">{pris(x.b)}</td><td class="num">{x.e != null ? pris(x.e) : "–"}</td><td class="num">{pris(x.d)}</td><td class="num">{x.h != null ? pris(x.h) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per mil med kedjornas genomsnittliga listpriser {datumText(LP_DATUM)}. E85 och HVO100 uppräknade efter energiinnehåll enligt Energimyndigheten.</p>
+  <p>Med dagens priser {pe85 && pe85 * fE85 < p95 ? "blir E85 billigare per mil än bensin" : "blir E85 inte billigare per mil än bensin"} och HVO100 {phvo && phvo * fHvo < pd ? "billigare" : "dyrare"} per mil än diesel, räknat på det här sättet. Den dyraste raden i tabellen, {pris(Math.max(...andra.map((x) => x.h ?? 0)))} kronor per mil med HVO100, ligger fortfarande under {ERS.egen} kronor. För förmånsbil räcker {ERS.forman} kronor däremot bara till en del av raderna. Mer om bränslena finns under <a href="/drivmedel/e85/">E85</a> och <a href="/drivmedel/hvo100/">HVO100</a>.</p>
+
+  <h2 id="egen-bil">Egen bil: räcker 25 kronor per mil?</h2>
+  <p>För bränslet räcker {ERS.egen} kronor per mil med god marginal för de flesta bilar. Med dagens priser går gränsen vid {pris(brytEgenB, 2)} liter bensin eller {pris(brytEgenD, 2)} liter diesel per mil. Det är långt över förbrukningen i räkneexemplen ovan.</p>
+  <p>Bränslet är bara en del av vad bilen kostar. Med egen bil står du själv för värdeminskning, däck, service, försäkring och skatt, och de kostnaderna ökar med körsträckan. Ett exempel: kör du {tjanst.toLocaleString("sv-SE")} mil i tjänsten med en bensinbil som drar {pris(exL, 1)} liter per mil, får du {kr(exErs, 0)} skattefritt. Bränslet kostar {kr(exBransle, 0)} med dagens pris. Kvar blir {kr(exErs - exBransle, 0)}, eller {kr(ERS.egen - exL * p95)} per mil, till bilens övriga kostnader.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Tjänstekörning per år</th><th class="num">Skattefri ersättning, egen bil</th><th class="num">Bensin, 0,6 l/mil</th><th class="num">Diesel, 0,6 l/mil</th><th class="num">Ersättning förmånsbil</th></tr></thead>
+    <tbody>{arMil.map((x) => <tr><td>{x.m.toLocaleString("sv-SE")} mil</td><td class="num">{kr(x.ers, 0)}</td><td class="num">{kr(x.b, 0)}</td><td class="num">{kr(x.d, 0)}</td><td class="num">{kr(x.f, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Exempel med dagens listpriser. Bränslekostnaden ändras med priset, ersättningen gör det inte.</p>
+  <p>Tabellen visar att skillnaden mellan ersättning och bränsle växer med körsträckan. För egen bil är det den skillnaden som ska täcka slitage och värdeminskning. För förmånsbil står arbetsgivaren för bilen, och ersättningen gäller bara drivmedlet du själv har betalat. Med diesel och 0,6 liter per mil räcker den inte ens till bränslet: vid {tjanst.toLocaleString("sv-SE")} mil kostar dieseln {kr(tjanst * exL * pd, 0)} mot {kr(tjanst * ERS.forman, 0)} i skattefri ersättning.</p>
+  <p>En genomsnittlig personbil i Sverige körde enligt Trafikanalys {mil.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar}, privat och i tjänst sammanlagt. Hur stor del som är tjänsteresor varierar förstås mycket.</p>
+
+  <h2 id="formansbil">Förmånsbil: 12 kronor eller 9,50 kronor</h2>
+  <p>För förmånsbil är det skattefria beloppet lägre, och villkoret är att du själv har betalat drivmedlet. Jämfört med bränslekostnaden är marginalen därför betydligt mindre:</p>
+  <ul>
+    <li><strong>Bensin:</strong> {ERS.forman} kronor räcker till {pris(brytFormB, 2)} liter per mil med dagens pris på {kr(p95)}.</li>
+    <li><strong>Diesel:</strong> {ERS.forman} kronor räcker bara till {pris(brytFormD, 2)} liter per mil med dagens pris på {kr(pd)}. En dieselbil som drar 0,6 liter per mil kostar {kr(0.6 * pd)} per mil i bränsle, alltså {kr(0.6 * pd - ERS.forman)} mer än ersättningen.</li>
+    <li><strong>El:</strong> {pris(ERS.formanEl)} kronor per mil för bilar som drivs helt med el. Vad det räcker till beror på ditt elpris och var du laddar, se <a href="/drivmedel/laddning/">laddning</a>.</li>
+  </ul>
+  <p>Villkoret är att du själv har betalat allt drivmedel. Har arbetsgivaren betalat en del, till exempel laddning på jobbet, får du ingen skattefri ersättning alls, och det som betalas ut blir lön. Ett undantag gäller från den 1 juli 2026: en laddhybrid som förmånsbil kan få skattefri ersättning även om den har laddats på arbetsplatsen. Skattefri ersättning för de faktiska drivmedelskostnaderna är inte tillåten, utan det är schablonen som gäller.</p>
+
+  <h2 id="drivmedelsforman">Drivmedelsförmån när arbetsgivaren betalar bränslet</h2>
+  <p>Betalar arbetsgivaren drivmedlet till förmånsbilen även för privata resor får du en drivmedelsförmån, som beskattas utöver bilförmånen. Värdet är marknadsvärdet för det drivmedel som har gått åt till privatkörningen, gånger 1,2. Arbetsgivaravgifterna räknas däremot på marknadsvärdet utan påslag. Med körjournal betalar du bara skatt för den privata delen, annars för allt drivmedel som bilen har använt under året.</p>
+  <p>Räkneexempel med dagens bensinpris och Skatteverkets modell: du kör {totalt} mil på en månad, varav {privat} privat, i en bil som drar {pris(exL, 1)} liter per mil.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Steg</th><th class="num">Belopp</th></tr></thead>
+    <tbody>
+      <tr><td>Bränsle för {totalt} mil ({pris(totalt * exL, 0)} liter × {pris(p95)} kr)</td><td class="num">{kr(kostnadManad, 0)}</td></tr>
+      <tr><td>Privat andel ({privat} av {totalt} mil)</td><td class="num">{kr(privatDel, 0)}</td></tr>
+      <tr><td><strong>Förmånsvärde (× 1,2)</strong></td><td class="num"><strong>{kr(forman, 0)}</strong></td></tr>
+      <tr><td>Underlag för arbetsgivaravgifter (utan påslag)</td><td class="num">{kr(privatDel, 0)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Exempel. Förmånsvärdet läggs på lönen och beskattas som inkomst.</p>
+  <p>Betalar du tillbaka till arbetsgivaren minskar förmånen med det du betalar. Betalar du {kr(forman, 0)} i exemplet blir förmånsvärdet noll. Om arbetsgivaren i stället betalar bränsle till din egen bil är förmånen marknadsvärdet utan påslaget på 1,2. Laddning på arbetsplatsen är enligt Skatteverket permanent skattefri från den 1 juli 2026, både för förmånsbil och egen bil, men laddning vid bostaden omfattas inte.</p>
+
+  <h2 id="over-schablon">Om arbetsgivaren betalar mer</h2>
+  <p>En arbetsgivare får betala mer än schablonen, men den del som överstiger schablonbeloppet räknas som lön. Arbetsgivaren ska då göra skatteavdrag och betala arbetsgivaravgifter på överskottet. Betalar arbetsgivaren till exempel 30 kronor per mil för egen bil är {ERS.egen} kronor skattefria och 5 kronor per mil lön.</p>
+  <p>Den skattefria delen redovisas inte som belopp, utan arbetsgivaren kryssar i en ruta i arbetsgivardeklarationen på individnivå.</p>
+
+  <h2 id="2027">Milersättning 2027</h2>
+  <p>När vi kontrollerade den 27 november 2026 hade Skatteverket inte publicerat några belopp för inkomstår 2027. Myndighetens sidor om bilersättning anger beloppen för 2025 och 2026. Beloppen har varit oförändrade sedan 2023. Vad som händer med drivmedelspriset vid årsskiftet går däremot att räkna på: skatten höjs den 1 december 2026 och igen den 1 januari 2027, se <a href="/guider/bensinpriset-2027/">bensinpriset 2027</a>. Med dagens produktpris skulle det höja bränslekostnaden per mil, men även efter höjningen räcker 25 kronor väl till bränslet för exempelbilen på 0,6 liter bensin per mil. Den här sidan räknar om alla kostnader per mil varje natt med kedjornas nya listpriser.</p>
+</Guide>

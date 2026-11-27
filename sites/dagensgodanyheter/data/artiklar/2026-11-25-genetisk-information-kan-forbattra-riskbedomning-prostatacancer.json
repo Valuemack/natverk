@@ -66,7 +66,7 @@
     "liten": "/bilder/genetisk-information-kan-forbattra-riskbedomning-prostatacancer-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: blodprovsrör i ett laboratorium, där prover kan analyseras för PSA och genetiska riskmarkörer",
+    "alt": "Målad illustration av provrör med rött lock och blodliknande vätska i ett vitt stativ, framför en laboratorieapparat.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -96,7 +96,8 @@
     "positiv": 0.6,
     "betydelse": 0.5,
     "tillit": 0.95,
-    "total": 65
+    "total": 59,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -110,5 +111,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "medicin"
 }

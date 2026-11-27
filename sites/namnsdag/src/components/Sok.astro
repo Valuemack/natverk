@@ -1,11 +1,11 @@
 ---
 // Verktyget "När har … namnsdag?": söker bland almanackans namn och vanliga stavningsvarianter.
 // Datalistan ger förslag direkt; själva svaret slås upp i /data/namnsdagar.json.
-import { ALLA_NAMN, VARIANTER } from "../site.js";
+import { ALLA_NAMN, UTAN_NAMNSDAG } from "../site.js";
 const { rubrik = "När har ditt namn namnsdag?" } = Astro.props;
-const alla = [...ALLA_NAMN.map((n) => n.namn), ...VARIANTER.map((v) => v.namn)].sort((a, b) => a.localeCompare(b, "sv"));
+const alla = [...ALLA_NAMN.map((n) => n.namn), ...UTAN_NAMNSDAG.map((v) => v.namn)].sort((a, b) => a.localeCompare(b, "sv"));
 ---
-<form class="sokruta" id="namnsok" role="search" action="/alla-namn/" onsubmit="return false">
+<form class="sokruta" id="namnsok" role="search" action="/" method="get">
   <label for="namnfalt">{rubrik}</label>
   <div class="rad">
     <input id="namnfalt" name="namn" list="namnlista" autocomplete="off" placeholder="Skriv ett förnamn, t.ex. Ture" />
@@ -31,8 +31,10 @@ const alla = [...ALLA_NAMN.map((n) => n.namn), ...VARIANTER.map((v) => v.namn)].
       const d = await ladda();
       const traff = d.namn.find((n) => norm(n[0]) === q);
       if (traff) {
-        const [namn, slug, k, ar, huvud] = traff;
-        ut.innerHTML = huvud
+        const [namn, slug, k, ar, huvud, utan] = traff;
+        ut.innerHTML = utan
+          ? `<strong>${namn}</strong> saknas i almanackan och har gemensam namnsdag den <a href="/1-januari/">1 januari</a>. <a href="/namn/${slug}/">Mer om namnet ${namn} →</a>`
+          : huvud
           ? `<strong>${namn}</strong> saknas i almanackan men kan firas på <a href="/namn/${slug}/">${huvud}-dagen den ${dagText(k)}</a>.`
           : `<strong>${namn}</strong> har namnsdag <a href="${dagHref(k)}">${dagText(k)}</a>${ar ? ` (från ${ar})` : ""}. <a href="/namn/${slug}/">Mer om namnet ${namn} →</a>`;
         if (skickad) location.href = `/namn/${slug}/`;
@@ -45,5 +47,8 @@ const alla = [...ALLA_NAMN.map((n) => n.namn), ...VARIANTER.map((v) => v.namn)].
     };
     falt.addEventListener("input", () => visa(false));
     f.addEventListener("submit", (e) => { e.preventDefault(); visa(true); });
+    // Sökning från Google (SearchAction): /?namn=Ture går direkt till namnsidan.
+    const q0 = new URLSearchParams(location.search).get("namn");
+    if (q0) { falt.value = q0.slice(0, 40); visa(true); }
   })();
 </script>

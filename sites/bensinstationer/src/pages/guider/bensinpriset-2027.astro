@@ -1,0 +1,189 @@
+---
+// Lång guide: vad som ändras för bensin- och dieselpriset vid årsskiftet 2026/2027. Bara mekaniska effekter av beslutade
+// skattesatser (lib/fakta.js, Skatteverket) räknade på dagens listpriser – ingen prognos. Reduktionsplikten 2027 enligt lagen
+// (REDUKTIONSPLIKT) och riksdagens beslut maj 2025. Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, VECKOR, idagPris, kedjePris, skattedelar, kr, pris, procent, datumText } from "../../pris.js";
+import { SKATTESATSER, MOMS, ML_URL, KORSTRACKOR, REDUKTIONSPLIKT, summa, periodFor } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const P = SKATTESATSER.perioder;
+const dec = P.find((p) => p.fran === "2026-12-01");
+const jan = P.find((p) => p.fran === "2027-01-01");
+const jan26 = P.find((p) => p.fran === "2026-01-01");
+const nu = periodFor(LP_DATUM) ?? dec;
+const okt = P.find((p) => p.fran === "2026-10-01");
+const inkl = (x) => x * (1 + MOMS);
+
+// Steg för steg: dagens period → 1 december → 1 januari, punktskatt + moms på den, bensin och diesel.
+const steg = (typ) => {
+  const a = summa(nu[typ]), b = summa(dec[typ]), c = summa(jan[typ]);
+  return { nu: a, dec: b, jan: c, tillDec: inkl(b - a), tillJan: inkl(c - b), totalt: inkl(c - a), motJan26: inkl(c - summa(jan26[typ])) };
+};
+const B = steg("bensin"), D = steg("diesel");
+// Decemberhöjningen räknad mot oktober–november, oberoende av vilken period dagens listpris ligger i.
+const decB = inkl(summa(dec.bensin) - summa(okt.bensin)), decD = inkl(summa(dec.diesel) - summa(okt.diesel));
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const tank = 50;
+
+// Årskostnad för en genomsnittlig bil (Trafikanalys) med en uttalad förbrukning som exempel.
+const milB = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin").mil;
+const milD = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Diesel").mil;
+const forbB = 0.6, forbD = 0.5;
+const litB = milB * forbB, litD = milD * forbD;
+const kedjor = LISTKEDJOR.map((k) => ({ k, b: kedjePris(k, "bensin95"), d: kedjePris(k, "diesel") })).filter((x) => x.b != null);
+const rp = REDUKTIONSPLIKT.nivaer;
+// Slog 2026 års skatteändringar igenom? Veckan före och efter varje ändring i EU-serien (måndagspriser).
+const genomslag = P.filter((p) => p.fran > "2026-01-01" && p.fran <= (VECKOR.at(-1)?.datum ?? "")).map((p) => {
+  const fore = VECKOR.filter((v) => v.datum < p.fran).at(-1), efter = VECKOR.find((v) => v.datum >= p.fran);
+  const forra = P[P.indexOf(p) - 1];
+  if (!fore || !efter || !forra) return null;
+  const a = skattedelar(fore, "b95"), b = skattedelar(efter, "b95");
+  return { p, fore, efter, vantat: inkl(summa(p.bensin) - summa(forra.bensin)), faktiskt: b.pris - a.pris, produkt: (b.produkt - a.produkt) * (1 + MOMS) };
+}).filter(Boolean);
+// Punktskatt per liter (energi + CO2) som årsmedel ur EU:s veckopriser: pris inkl. moms / 1,25 − pris utan skatt.
+const punktAr = (y, typ) => { const w = VECKOR.filter((v) => v.datum.startsWith(`${y}-`)).map((v) => skattedelar(v, typ)).filter(Boolean); return w.length ? w.reduce((s, x) => s + x.punkt, 0) / w.length : null; };
+const skattAr = Array.from({ length: 2026 - 2014 + 1 }, (_, i) => 2014 + i).map((y) => ({ y, b: punktAr(y, "b95"), d: punktAr(y, "diesel") })).filter((x) => x.b != null);
+const hogstB = skattAr.reduce((a, x) => (x.b > a.b ? x : a), skattAr[0]);
+const lagstB = skattAr.reduce((a, x) => (x.b < a.b ? x : a), skattAr[0]);
+const rp26 = rp.find((x) => x.ar === "2026"), rp27 = rp.find((x) => x.ar === "2027–2030");
+
+const avsnitt = [
+  { id: "andringar", rubrik: "Det här ändras vid årsskiftet" },
+  { id: "pumppris", rubrik: "Så mycket påverkas pumppriset" },
+  { id: "kedjor", rubrik: "Dagens listpriser med 2027 års skatt" },
+  { id: "per-ar", rubrik: "Vad det betyder per tank och per år" },
+  { id: "reduktionsplikt", rubrik: "Reduktionsplikten 2027" },
+  { id: "biodrivmedel", rubrik: "E85, HVO100 och fordonsgas 2027" },
+  { id: "genomslag", rubrik: "Slog skatteändringarna 2026 igenom?" },
+  { id: "jamfort", rubrik: "Skatten 2027 jämfört med tidigare år" },
+  { id: "inte-prognos", rubrik: "Därför är det här ingen prognos" },
+];
+
+const fragor = [
+  { fraga: "Blir bensinen dyrare 2027?", svar: `Skatten höjs. Från den 1 januari 2027 är energi- och koldioxidskatten ${kr(summa(jan.bensin))} per liter bensin, mot ${kr(summa(dec.bensin))} i december 2026. Med moms blir det ${kr(B.tillJan)} mer per liter. Om pumppriset faktiskt blir högre beror också på världsmarknaden och kronan.` },
+  { fraga: "Hur mycket höjs skatten på diesel 2027?", svar: `Från ${kr(summa(dec.diesel), 3)} till ${kr(summa(jan.diesel), 3)} per liter, alltså ${kr(summa(jan.diesel) - summa(dec.diesel), 3)} före moms och ${kr(D.tillJan)} med moms.` },
+  { fraga: "Varför höjs bensinpriset 1 december 2026?", svar: `Den tillfälliga sänkningen av koldioxidskatten gäller till och med 30 november 2026. Den 1 december går koldioxidskatten på bensin tillbaka från ${kr(okt.bensin.co2)} till ${kr(dec.bensin.co2)} per liter, vilket med moms gör ${kr(decB)} per liter.` },
+  { fraga: "Ändras reduktionsplikten 2027?", svar: `Nej. Enligt lagen är reduktionsplikten ${rp27 ? rp27.bensin : 10} procent för både bensin och diesel 2027–2030, samma nivå som sedan 1 juli 2025.` },
+  { fraga: "Är HVO100 och E85 fortfarande skattebefriade 2027?", svar: "Ja, för den förnybara delen. EU-kommissionen har förlängt Sveriges godkännande att skattebefria rena och höginblandade biodrivmedel till och med 2032. Det tidigare godkännandet gick ut vid slutet av 2026." },
+  { fraga: "Hur mycket dyrare blir en tank bensin i januari 2027?", svar: `Bara av skatten: ${kr(B.totalt * tank, 0)} mer för ${tank} liter jämfört med dagens skattesats, varav ${kr(B.tillJan * tank, 0)} från höjningen vid nyår.` },
+];
+---
+<Guide site={SITE} titel="Bensinpriset 2027: så påverkar skatterna pumppriset"
+  beskrivning={`Från 1 januari 2027 är skatten ${pris(summa(jan.bensin))} kr per liter bensin och ${pris(summa(jan.diesel), 3)} kr för diesel. Effekten i kr/l med moms, per tank och per år – räknat på dagens priser.`}
+  h1="Bensinpriset 2027 – det här ändras vid årsskiftet"
+  svar={`Den 1 januari 2027 höjs skatten på bensin från ${kr(summa(dec.bensin))} till <strong>${kr(summa(jan.bensin))} per liter</strong> och på diesel från ${kr(summa(dec.diesel), 3)} till <strong>${kr(summa(jan.diesel), 3)}</strong>. Med moms gör det <strong>${kr(B.tillJan)} per liter bensin</strong> och ${kr(D.tillJan)} per liter diesel. Den större förändringen kommer redan den 1 december 2026, när den tillfälliga sänkningen av koldioxidskatten upphör: ${kr(decB)} per liter bensin och ${kr(decD)} per liter diesel med moms. Reduktionsplikten ligger kvar på 10 procent.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Bensinpriset 2027", href: "/guider/bensinpriset-2027/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinskatt", href: "/guider/vad-bestar-bensinpriset-av/", text: "Hur stor del av dagens pris som är skatt" },
+    { namn: "Reduktionsplikten", href: "/guider/reduktionsplikt/", text: "Nivåerna sedan 2018 och vad de betyder" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Kedjornas listpriser, uppdateras varje natt" },
+    { namn: "Bensinpriset genom åren", href: "/guider/bensinpris-genom-aren/", text: "Pris per år sedan 1960 i dagens penningvärde" },
+    { namn: "Milersättning", href: "/guider/milersattning/", text: "Skattefri ersättning mot verklig bränslekostnad" },
+  ]}
+  kallor={[
+    { namn: "Skatteverket – Skattesatser och vissa belopp", url: SKATTESATSER.kalla, text: "energiskatt och koldioxidskatt för bensin och diesel i miljöklass 1 per period 2026 och från 1 januari 2027, naturgas som motorbränsle 2027", datum: "2026-11-27" },
+    { namn: "Skatteverket – Tillfälligt sänkt koldioxidskatt på bensin och diesel", url: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/nyheterinompunktskatter/2026/nyheterinompunktskatter/tillfalligtsanktkoldioxidskattpabensinochdiesel.5.3129d65419ef1497c06893.html", text: "sänkningen 1 juli–30 november 2026", datum: "2026-11-27" },
+    { namn: "Mervärdesskattelag (2023:200)", url: ML_URL, text: "moms 25 procent, även på punktskatterna", datum: "2026-11-27" },
+    { namn: "Lag (2017:1201) om reduktion av växthusgasutsläpp", url: REDUKTIONSPLIKT.lag, text: "reduktionsnivå 10 procent för bensin och diesel 2027–2030", datum: "2026-11-27" },
+    { namn: "Sveriges riksdag – Reduction obligation levels to be changed (22 maj 2025)", url: "https://www.riksdagen.se/en/news/articles/2025/may/22/reduction-obligation-levels-to-be-changed_cmsbf961ca9-6a59-4bce-8930-9c85b2a1e1daen/", text: "beslutet om 10 procent från 1 juli 2025 och 2027–2030", datum: "2026-11-27" },
+    { namn: "Konjunkturinstitutet – Priseffekten av den förändrade reduktionsplikten 2025 (Specialstudie 121, december 2025)", url: "https://www.konj.se/media/ha5n5p4s/specialstudie-121-priseffekten-av-den-forandrade-reduktionsplikten-2025.pdf", text: "uppskattad priseffekt av höjningen från 6 till 10 procent", datum: "2026-11-27" },
+    { namn: "Regeringen – EU förlänger Sveriges godkännande att skattebefria biodrivmedel (16 april 2026)", url: "https://www.regeringen.se/pressmeddelanden/2026/04/eu-forlanger-sveriges-godkannande-att-skattebefria-biodrivmedel/", text: "skattebefrielsen för rena och höginblandade biodrivmedel förlängd till och med 2032", datum: "2026-11-27" },
+    { namn: "Drivkraft Sverige – Nya reduktionsplikten, ETS 2 och ett nationellt utsläppshandelssystem (februari 2026)", url: "https://drivkraftsverige.se/wp-content/uploads/2026/02/DS-2026-Analys-Reduktionsplikten-ETS-2.pdf", text: "första överlämningen av utsläppsrätter i ETS 2 uppskjuten från 2028 till 2029", datum: "2026-11-27" },
+    { namn: "Skatteverket – Energiskatter", url: "https://www.skatteverket.se/foretag/skatterochavdrag/punktskatter/energiskatter.4.18e1b10334ebe8bc8000843.html", text: "avdrag för biomassadelen och för biogas", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för bensin- och dieselbilar", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, ${datumText(LP_DATUM)}` },
+  ]}>
+
+  <h2 id="andringar">Det här ändras vid årsskiftet</h2>
+  <p>Två skatteändringar ligger nära varandra. Den 30 november 2026 upphör den tillfälliga sänkningen av koldioxidskatten, så den 1 december går skatten tillbaka till samma nivå som i början av 2026. Den 1 januari 2027 börjar sedan nya skattesatser gälla för hela året. Tabellen visar Skatteverkets belopp per liter för bensin och diesel i miljöklass 1, som är det som säljs vid svenska pumpar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Period</th><th class="num">Bensin: energi</th><th class="num">Bensin: CO₂</th><th class="num">Bensin totalt</th><th class="num">Diesel: energi</th><th class="num">Diesel: CO₂</th><th class="num">Diesel totalt</th></tr></thead>
+    <tbody>{P.map((p) => (
+      <tr><td>{p === nu ? <strong>{p.text} (gäller nu)</strong> : p === jan ? <strong>{p.text}</strong> : p.text}</td><td class="num">{pris(p.bensin.energi)}</td><td class="num">{pris(p.bensin.co2)}</td><td class="num">{pris(summa(p.bensin))}</td><td class="num">{pris(p.diesel.energi, 3)}</td><td class="num">{pris(p.diesel.co2, 3)}</td><td class="num">{pris(summa(p.diesel), 3)}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter före moms. Skatteverket anger diesel i kronor per kubikmeter; här delat med 1 000.</p>
+  <p>För bensin är det energiskatten som höjs vid nyår, från {kr(dec.bensin.energi)} till {kr(jan.bensin.energi)}, medan koldioxidskatten är oförändrad på {kr(jan.bensin.co2)}. För diesel höjs båda: energiskatten med {kr(jan.diesel.energi - dec.diesel.energi, 3)} och koldioxidskatten med {kr(jan.diesel.co2 - dec.diesel.co2, 3)} per liter. Jämfört med januari 2026 är skatten på bensin {kr(summa(jan.bensin) - summa(jan26.bensin))} högre per liter och på diesel {kr(summa(jan.diesel) - summa(jan26.diesel), 3)} högre.</p>
+
+  <h2 id="pumppris">Så mycket påverkas pumppriset</h2>
+  <p>Energiskatt och koldioxidskatt är fasta belopp per liter. Moms på 25 procent tas sedan ut på hela priset, alltså även på skatterna. En skattehöjning på 10 öre blir därför 12,5 öre vid pumpen. Räknat från den skattesats som gäller idag ({nu.text}) ser stegen ut så här:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Steg</th><th class="num">Bensin, kr/l</th><th class="num">Diesel, kr/l</th></tr></thead>
+    <tbody>
+      <tr><td>Skatt idag ({nu.text})</td><td class="num">{pris(B.nu)}</td><td class="num">{pris(D.nu, 3)}</td></tr>
+      <tr><td>1 december 2026: koldioxidskatten tillbaka, inkl. moms</td><td class="num">+{pris(B.tillDec)}</td><td class="num">+{pris(D.tillDec)}</td></tr>
+      <tr><td>1 januari 2027: nya skattesatser, inkl. moms</td><td class="num">+{pris(B.tillJan)}</td><td class="num">+{pris(D.tillJan)}</td></tr>
+      <tr><td><strong>Totalt från idag till januari 2027</strong></td><td class="num"><strong>+{pris(B.totalt)}</strong></td><td class="num"><strong>+{pris(D.totalt)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Effekt på pumppriset om produktpriset och bolagens marginal är oförändrade. Uträkning: skillnad i punktskatt × 1,25.</p>
+  <p>Exempel för bensin vid nyår: ({pris(summa(jan.bensin))} − {pris(summa(dec.bensin))}) × 1,25 = {pris(B.tillJan)} kronor. För diesel: ({pris(summa(jan.diesel), 3)} − {pris(summa(dec.diesel), 3)}) × 1,25 = {pris(D.tillJan)} kronor. Höjningen vid nyår är alltså liten jämfört med decemberhöjningen, som är {kr(decB)} per liter för bensin.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="kedjor">Dagens listpriser med 2027 års skatt</h2>
+  <p>Om man lägger skatteskillnaden ovanpå kedjornas listpriser den {datumText(LP_DATUM)} får man vad samma liter skulle kosta med 2027 års skattesats, allt annat lika. Det är en ren räkning på skatten, inte ett pris som någon kedja har aviserat.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">95 idag</th><th class="num">95 med 2027 års skatt</th><th class="num">Diesel idag</th><th class="num">Diesel med 2027 års skatt</th></tr></thead>
+    <tbody>
+      {kedjor.map((x) => <tr><td>{x.k}</td><td class="num">{pris(x.b)}</td><td class="num">{pris(x.b + B.totalt)}</td><td class="num">{x.d != null ? pris(x.d) : "–"}</td><td class="num">{x.d != null ? pris(x.d + D.totalt) : "–"}</td></tr>)}
+      <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(p95)}</strong></td><td class="num"><strong>{pris(p95 + B.totalt)}</strong></td><td class="num"><strong>{pris(pd)}</strong></td><td class="num"><strong>{pris(pd + D.totalt)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Kronor per liter. Kedjornas listpriser {LP_DATUM} plus skatteskillnaden med moms. Pumppriset på enskilda stationer kan avvika.</p>
+  <p>Skatten utgör en mindre andel av priset idag än den kommer att göra i januari. Med dagens listpris är punktskatten på bensin {procent((B.nu / p95) * 100)} av pumppriset. Med 2027 års skatt och samma produktpris blir andelen {procent((B.jan / (p95 + B.totalt)) * 100)}. Hur skatten fördelar sig på en liter idag visas i guiden om <a href="/guider/vad-bestar-bensinpriset-av/">bensinskatten</a>.</p>
+
+  <h2 id="per-ar">Vad det betyder per tank och per år</h2>
+  <p>Enligt Trafikanalys körde en bensinbil i genomsnitt {milB.toLocaleString("sv-SE")} mil och en dieselbil {milD.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar}. Med en förbrukning på {pris(forbB, 1)} liter per mil för bensinbilen och {pris(forbD, 1)} liter per mil för dieselbilen, som vi använder som exempel, blir det cirka {Math.round(litB).toLocaleString("sv-SE")} respektive {Math.round(litD).toLocaleString("sv-SE")} liter om året.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Mer i skatt inkl. moms</th><th class="num">Bensin</th><th class="num">Diesel</th></tr></thead>
+    <tbody>
+      <tr><td>En tank ({tank} liter), nyårshöjningen</td><td class="num">{kr(B.tillJan * tank, 0)}</td><td class="num">{kr(D.tillJan * tank, 0)}</td></tr>
+      <tr><td>En tank ({tank} liter), från idag till januari</td><td class="num">{kr(B.totalt * tank, 0)}</td><td class="num">{kr(D.totalt * tank, 0)}</td></tr>
+      <tr><td>Ett år, 2027 mot januari–april 2026</td><td class="num">{kr(B.motJan26 * litB, 0)}</td><td class="num">{kr(D.motJan26 * litD, 0)}</td></tr>
+      <tr><td>Ett år, 2027 mot december 2026</td><td class="num">{kr(B.tillJan * litB, 0)}</td><td class="num">{kr(D.tillJan * litD, 0)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Årsraderna: genomsnittlig körsträcka enligt Trafikanalys och exempelförbrukningen ovan.</p>
+  <p>Kör du mer eller har en bil som drar mer ökar beloppen i samma proportion. I <a href="/rakna/">bränslekalkylatorn</a> kan du räkna med din egen körsträcka och förbrukning.</p>
+
+  <h2 id="reduktionsplikt">Reduktionsplikten 2027</h2>
+  <p>Reduktionsplikten styr hur mycket biodrivmedel som blandas in i vanlig bensin och diesel. Riksdagen röstade i maj 2025 igenom regeringens förslag om en ny reduktionsplikt. Nivån blev 10 procent för både bensin och diesel från den 1 juli 2025, och enligt beslutet gäller 10 procent även 2027–2030. Vid årsskiftet 2026/2027 ändras alltså inte plikten{rp26 && rp27 && rp26.bensin === rp27.bensin ? `, som är ${rp26.bensin} procent både 2026 och 2027` : ""}.</p>
+  <p>Höjningen från 6 till 10 procent år 2025 påverkade priset. Konjunkturinstitutet uppskattade i december 2025 att den gjorde diesel 0,5–0,7 kronor och bensin 0,4–0,8 kronor dyrare per liter vid pumpen. Samtidigt justerades skatten för att kompensera, och den sammanlagda effekten blev enligt samma studie 0,1–0,3 kronor per liter. Eftersom nivån inte ändras vid nyår finns ingen motsvarande effekt 2027. Mer om nivåerna år för år finns i guiden om <a href="/guider/reduktionsplikt/">reduktionsplikten</a>.</p>
+  <p>EU:s nya utsläppshandel för vägtransporter och byggnader, ETS 2, påverkar inte heller skattesatserna i tabellen ovan. Enligt Drivkraft Sverige har den första överlämningen av utsläppsrätter skjutits upp från 2028 till 2029.</p>
+
+  <h2 id="biodrivmedel">E85, HVO100 och fordonsgas 2027</h2>
+  <p>Rena och höginblandade biodrivmedel, som HVO100 och E85, får avdrag för energi- och koldioxidskatten på den förnybara delen. Det kräver ett statsstödsgodkännande från EU, och det godkännande som fanns gällde till slutet av 2026. Regeringen meddelade i april 2026 att EU-kommissionen har förlängt godkännandet till och med 2032. Skattebefrielsen fortsätter alltså 2027.</p>
+  <p>I E85 är det bara bensindelen som beskattas. För naturgas som motorbränsle anger Skatteverket från 2027 en koldioxidskatt på 31,0 öre per kilowattimme och ingen energiskatt. Fordonsgas som är biogas får enligt Skatteverket avdrag för hela energi- och koldioxidskatten. Dagens priser för alternativen finns på sidorna om <a href="/drivmedel/e85/">E85</a>, <a href="/drivmedel/hvo100/">HVO100</a> och <a href="/drivmedel/fordonsgas/">fordonsgas</a>.</p>
+
+  <h2 id="genomslag">Slog skatteändringarna 2026 igenom?</h2>
+  <p>Räkningarna ovan förutsätter att hela skatteändringen syns i pumppriset. Under 2026 ändrades skatten flera gånger, så det går att kontrollera. Tabellen jämför EU:s veckopris för bensin 95 veckan före och veckan efter varje ändring. Vi delar upp den faktiska förändringen i skattens effekt och förändringen i produktpriset, båda med moms.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Skatteändring</th><th class="num">Väntad effekt av skatten</th><th class="num">Faktisk ändring av pumppriset</th><th class="num">Varav produktpris</th></tr></thead>
+    <tbody>{genomslag.map((x) => (
+      <tr><td>{datumText(x.p.fran)}</td><td class="num">{x.vantat >= 0 ? "+" : "−"}{pris(Math.abs(x.vantat))}</td><td class="num">{x.faktiskt >= 0 ? "+" : "−"}{pris(Math.abs(x.faktiskt))}</td><td class="num">{x.produkt >= 0 ? "+" : "−"}{pris(Math.abs(x.produkt))}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Bensin 95, kronor per liter. Veckopriser från EU-kommissionens Weekly Oil Bulletin, veckan närmast före och efter ändringen. Produktpris = pris utan skatt, med moms på förändringen.</p>
+  <p>Mönstret är att skatten slår igenom, men att produktpriset rör sig samtidigt. Den faktiska förändringen är skatteeffekten plus förändringen i produktpriset, och de två kan dra åt olika håll. Vid sänkningen av koldioxidskatten den 1 juli 2026 föll pumppriset kraftigt, men något mindre än skatteeffekten eftersom produktpriset steg samma vecka. Därför går det inte att säga i förväg exakt vad en liter kostar i januari, bara hur mycket skatten bidrar med.</p>
+
+  <h2 id="jamfort">Skatten 2027 jämfört med tidigare år</h2>
+  <p>Är 2027 års skatt hög eller låg? EU-kommissionens veckopriser anger både pris med skatt och pris utan skatt, så det går att räkna fram hur stor punktskatten har varit i genomsnitt varje år. Tabellen visar energi- och koldioxidskatt per liter före moms, i kronor för respektive år och alltså inte justerat för inflation.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Bensin 95, kr/l</th><th class="num">Diesel, kr/l</th></tr></thead>
+    <tbody>
+      {skattAr.map((x) => <tr><td>{x.y}{x.y === 2026 && " *"}</td><td class="num">{pris(x.b)}</td><td class="num">{x.d != null ? pris(x.d) : "–"}</td></tr>)}
+      <tr><td><strong>2027 (beslutat)</strong></td><td class="num"><strong>{pris(summa(jan.bensin))}</strong></td><td class="num"><strong>{pris(summa(jan.diesel))}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Årsmedel av veckorna i EU-kommissionens Weekly Oil Bulletin: pris inkl. moms delat med 1,25 minus pris utan skatt. Kan avvika några öre från Skatteverkets skattesatser eftersom EU:s siffror är avrundade. * = hittills i år. 2027: Skatteverkets skattesats.</p>
+  <p>Mellan {skattAr[0].y} och {lagstB.y} låg skatten på bensin mellan {pris(lagstB.b)} och {pris(hogstB.b)} kronor per liter som årsmedel. Lägst var den {lagstB.y}, när skatten var tillfälligt sänkt från maj till november. Högst var den {hogstB.y}. Med {pris(summa(jan.bensin))} kronor per liter ligger 2027 års skatt på bensin {summa(jan.bensin) < hogstB.b ? `${pris(hogstB.b - summa(jan.bensin))} kronor under toppen ${hogstB.y}, men ${pris(summa(jan.bensin) - lagstB.b)} kronor över snittet för ${lagstB.y}` : "på den högsta nivån under perioden"}. För diesel är skatten fortfarande lägre än för bensin, och skillnaden förklaras i guiden om <a href="/guider/varfor-ar-diesel-dyrare/">varför diesel är dyrare</a>. Eftersom priserna i övrigt har stigit sedan 2014 är skatten mätt i dagens penningvärde lägre än siffrorna antyder.</p>
+
+  <h2 id="inte-prognos">Därför är det här ingen prognos</h2>
+  <p>Allt på den här sidan är räknat på beslutade skattesatser och dagens listpriser. Det säger hur mycket skatten ändrar priset, inte vad pumppriset blir. Produktpriset, alltså bensinen själv, frakten och bolagens marginal, följer världsmarknaden och kronans kurs och kan på några veckor röra sig mer än skatteändringen. Hur stora de svängningarna brukar vara syns i <a href="/historik/">historiken med veckopriser</a> och i guiden om <a href="/guider/vad-paverkar-bensinpriset/">vad som påverkar bensinpriset</a>.</p>
+  <p>Skatteeffekten i sig är däremot beslutad. Höjningen av koldioxidskatten den 1 december är lika stor som sänkningen i juli 2026, fast åt andra hållet, och nyårshöjningen kommer ovanpå den. Sidan uppdateras varje natt med kedjornas nya listpriser, så tabellen över dagens priser med 2027 års skatt räknas om automatiskt.</p>
+</Guide>

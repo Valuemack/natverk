@@ -1,0 +1,114 @@
+---
+// Hitta barnnamn: filtrera alla namn som nyfödda fått 2018–2022 (SCB) efter kön, första bokstav,
+// längd, popularitet, trend och namnsdagsmånad. Filtreringen sker i webbläsaren; listorna nedan
+// (stigande och ovanliga namn med namnsdag) finns i statisk HTML.
+import Layout from "../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
+import { SITE, UPPDATERAD, MANADER, tal, dagText, lista, beskriv } from "../site.js";
+import { BARNNAMN } from "../lib/barnnamn.js";
+import { NYF_KALLA } from "../lib/namndata.js";
+
+const tot = (x) => x.K + x.M;
+const kon = (x) => (x.K >= x.M ? "K" : "M");
+const stigande = (k) => BARNNAMN.filter((x) => kon(x) === k && x.fore >= 50 && tot(x) >= 200 && x.trend != null).sort((a, b) => b.trend - a.trend).slice(0, 10);
+const ovanligaMedDag = (k) => BARNNAMN.filter((x) => kon(x) === k && x.typ === "egen" && tot(x) >= 25 && tot(x) <= 120).sort((a, b) => b.trend - a.trend).slice(0, 10);
+const SK = stigande("K"), SM = stigande("M"), OK = ovanligaMedDag("K"), OM = ovanligaMedDag("M");
+const antal = BARNNAMN.length;
+const medDag = BARNNAMN.filter((x) => x.datum).length;
+const fragor = [
+  { fraga: "Vilka barnnamn ökar mest?", svar: `Bland flicknamn som minst 200 barn fick 2018–2022 ökade ${lista(SK.slice(0, 3).map((x) => `${x.namn} (+${x.trend} %)`))} mest jämfört med 2013–2017. Bland pojknamnen ökade ${lista(SM.slice(0, 3).map((x) => `${x.namn} (+${x.trend} %)`))} mest.` },
+  { fraga: "Hur hittar jag ett ovanligt namn som har namnsdag?", svar: `Välj "har namnsdag" och popularitet "ovanligt" i verktyget. Exempel på ovanliga flicknamn med egen namnsdag är ${lista(OK.slice(0, 4).map((x) => x.namn))}, och bland pojknamnen ${lista(OM.slice(0, 4).map((x) => x.namn))}.` },
+  { fraga: "Varifrån kommer siffrorna?", svar: `Från SCB:s statistik över nyfödda efter tilltalsnamn. Verktyget räknar ihop åren 2018–2022, som är de senaste SCB har publicerat, och jämför med 2013–2017. Namn som färre än två barn fick ett visst år redovisas inte av SCB.` },
+  { fraga: "Får man ge sitt barn vilket namn som helst?", svar: "Nej. Enligt lagen (2016:1013) om personnamn kan Skatteverket säga nej till ett förnamn som kan väcka anstöt, kan antas leda till obehag för barnet eller av någon annan anledning är olämpligt. Förnamnet ska anmälas inom tre månader från födseln." },
+];
+---
+<Layout site={SITE} titel="Hitta barnnamn – filtrera bland alla namn nyfödda får"
+  beskrivning={beskriv(`Hitta barnnamn bland ${tal(antal)} namn som nyfödda fått 2018–2022 enligt SCB.`, "Filtrera på kön, bokstav, längd, popularitet, trend och namnsdagsmånad.", "✓ Gratis")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Hitta barnnamn", href: "/hitta-barnnamn/" }]} jsonld={[faqLd(fragor), datasetLd({ namn: "Namn som nyfödda fått i Sverige 2013–2022", beskrivning: "Alla tilltalsnamn som minst tio nyfödda fick 2018–2022 enligt SCB, med antal flickor och pojkar, förändring mot 2013–2017 och namnsdag enligt almanackan. Nedladdningsbar som JSON.", sokvag: "/hitta-barnnamn/", tid: "2013/2022", nyckelord: ["barnnamn", "nyfödda"], filer: ["/data/barnnamn.json"] })]} uppdaterad={UPPDATERAD}>
+  <h1>Hitta barnnamn</h1>
+  <p class="svar">Verktyget söker bland <strong>{tal(antal)} namn</strong> som minst tio nyfödda fick under 2018–2022 enligt SCB. {tal(medDag)} av dem har namnsdag, egen eller som stavningsvariant. Välj kön, första bokstav, längd, hur vanligt namnet ska vara, om det ska öka eller minska och vilken månad namnsdagen ska ligga i.</p>
+
+  <form class="sokruta filter" id="barnnamn" onsubmit="return false">
+    <div class="filterrad">
+      <label>Kön<select name="kon"><option value="">Alla</option><option value="K">Flicka</option><option value="M">Pojke</option></select></label>
+      <label>Börjar på<select name="bokstav"><option value="">Alla</option>{"ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ".split("").map((b) => <option>{b}</option>)}</select></label>
+      <label>Längd<select name="langd"><option value="">Alla</option><option value="1-3">1–3 bokstäver</option><option value="4-5">4–5</option><option value="6-7">6–7</option><option value="8-99">8 eller fler</option></select></label>
+      <label>Popularitet<select name="pop"><option value="">Alla</option><option value="vanligt">Vanligt (minst 1 000 barn)</option><option value="mellan">Mellan (200–999)</option><option value="ovanligt">Ovanligt (10–199)</option></select></label>
+      <label>Trend<select name="trend"><option value="">Alla</option><option value="upp">Ökar</option><option value="ner">Minskar</option></select></label>
+      <label>Namnsdag<select name="manad"><option value="">Spelar ingen roll</option><option value="har">Har namnsdag</option><option value="saknar">Saknar namnsdag</option>{MANADER.map((m, i) => <option value={String(i + 1).padStart(2, "0")}>i {m}</option>)}</select></label>
+      <label>Sortera<select name="sort"><option value="pop">Vanligast först</option><option value="trend">Mest ökande först</option><option value="abc">A–Ö</option></select></label>
+    </div>
+    <output aria-live="polite"><noscript>Verktyget kräver JavaScript. Listorna nedan fungerar utan.</noscript></output>
+  </form>
+  <p class="kalla">Antal = nyfödda som fick namnet som tilltalsnamn 2018–2022. Trend = förändring mot 2013–2017. Källa: {NYF_KALLA}.</p>
+
+  <Annons plats="barnnamn-1" />
+
+  <h2>Namn som ökar mest</h2>
+  <div class="tva-rutor">
+    {[["Flicknamn", SK], ["Pojknamn", SM]].map(([rub, xs]) => <div class="tabell"><table>
+      <caption>{rub}</caption>
+      <thead><tr><th>Namn</th><th class="num">2018–2022</th><th class="num">Ökning</th><th>Namnsdag</th></tr></thead>
+      <tbody>{xs.map((x) => <tr><td>{x.slug ? <a href={`/namn/${x.slug}/`}>{x.namn}</a> : x.namn}</td><td class="num">{tal(tot(x))}</td><td class="num">+{x.trend} %</td><td>{x.datum ? dagText(x.datum) : "–"}</td></tr>)}</tbody>
+    </table></div>)}
+  </div>
+
+  <h2>Ovanliga namn som har egen namnsdag</h2>
+  <p>De här namnen står i almanackan men fick bara 25–120 barn under fem år – ovanliga utan att vara udda.</p>
+  <div class="tva-rutor">
+    {[["Flicknamn", OK], ["Pojknamn", OM]].map(([rub, xs]) => <div class="tabell"><table>
+      <caption>{rub}</caption>
+      <thead><tr><th>Namn</th><th class="num">2018–2022</th><th>Namnsdag</th></tr></thead>
+      <tbody>{xs.map((x) => <tr><td>{x.slug ? <a href={`/namn/${x.slug}/`}>{x.namn}</a> : x.namn}</td><td class="num">{tal(tot(x))}</td><td>{dagText(x.datum)}</td></tr>)}</tbody>
+    </table></div>)}
+  </div>
+  <p>Fler listor: <a href="/flicknamn/">flicknamn</a>, <a href="/pojknamn/">pojknamn</a>, <a href="/ovanliga-namn/">ovanliga namn</a> och <a href="/vanligaste-namnen/">vanligaste namnen</a>.</p>
+
+  <Faq fragor={fragor} />
+
+  <script slot="skript" is:inline>
+    (() => {
+      const f = document.getElementById("barnnamn");
+      if (!f) return;
+      const ut = f.querySelector("output");
+      const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+      const dag = (k) => `${Number(k.slice(3))} ${MN[Number(k.slice(0, 2)) - 1]}`;
+      const tal = (x) => x.toLocaleString("sv-SE");
+      let data;
+      const kor = async () => {
+        data ??= await (await fetch("/data/barnnamn.json")).json();
+        const v = Object.fromEntries(new FormData(f));
+        const [lmin, lmax] = (v.langd || "0-99").split("-").map(Number);
+        let r = data.filter(([n, , K, M, t, d]) => {
+          const tot = K + M;
+          if (v.kon === "K" && K < M) return false;
+          if (v.kon === "M" && M <= K) return false;
+          if (v.bokstav && n[0].toUpperCase() !== v.bokstav) return false;
+          if (n.length < lmin || n.length > lmax) return false;
+          if (v.pop === "vanligt" && tot < 1000) return false;
+          if (v.pop === "mellan" && (tot < 200 || tot >= 1000)) return false;
+          if (v.pop === "ovanligt" && tot >= 200) return false;
+          if (v.trend === "upp" && !(t > 10)) return false;
+          if (v.trend === "ner" && !(t < -10)) return false;
+          if (v.manad === "har" && !d) return false;
+          if (v.manad === "saknar" && d) return false;
+          if (/^\d\d$/.test(v.manad || "") && d.slice(0, 2) !== v.manad) return false;
+          return true;
+        });
+        if (v.sort === "trend") r = r.filter((x) => x[4] != null).sort((a, b) => b[4] - a[4]);
+        if (v.sort === "abc") r = [...r].sort((a, b) => a[0].localeCompare(b[0], "sv"));
+        const visa = r.slice(0, 120);
+        ut.innerHTML = r.length
+          ? `<p><strong>${tal(r.length)} namn</strong> matchar${r.length > visa.length ? ` – de ${visa.length} första visas` : ""}.</p><ul class="traffar">${visa.map(([n, s, K, M, t, d, varr]) =>
+              `<li>${s ? `<a href="/namn/${s}/">${n}</a>` : `<strong>${n}</strong>`}<small>${tal(K + M)} barn${t != null ? ` · ${t > 0 ? "+" : ""}${t} %` : ""}${d ? ` · ${varr ? "kan firas " : ""}${dag(d)}` : ""}</small></li>`).join("")}</ul>`
+          : "<p>Inga namn matchar. Prova att ta bort ett filter.</p>";
+      };
+      f.addEventListener("change", kor);
+      kor();
+    })();
+  </script>
+</Layout>

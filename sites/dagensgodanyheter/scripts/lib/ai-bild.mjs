@@ -1,18 +1,23 @@
-// AI-genererade bilder via OpenAI:s bild-API (POST /v1/images/generations). Används när ingen fri bild finns.
+// Skapade bilder via OpenAI:s bild-API (POST /v1/images/generations). Används när ingen fri bild finns.
 //
 //   OPENAI_API_KEY      – nyckeln (natverk/.env lokalt, GitHub-secret i nattbygget). Skrivs aldrig ut.
-//   GODA_BILDMODELL     – modell, standard "gpt-image-2.6-flare" (snabb). "gpt-image-2.6-sunburst" ger fler detaljer.
 //   GODA_BILDKVALITET   – low | medium | high, standard "medium".
+//   GODA_BILDSTIL       – "illustration" (standard) eller "foto", se src/lib/bildtext.js.
+//
+// Modellen är alltid gpt-image-2.6-flare. Det finns ingen reservmodell: svarar modellen inte publiceras artikeln
+// utan bild.
 //
 // Regler som alltid gäller:
-//   - Bilden är en tydligt tecknad/målad redaktionell illustration, aldrig något som ser ut som ett foto.
-//     Den visas med bildtexten "Illustration: Dagens goda nyheter" (illustration: true i datan).
+//   - Bildtexten är BILDTEXT_GENERERAD (src/lib/bildtext.js), genererad: true i datan.
+//   - Stil "illustration": en tydligt målad redaktionell illustration. Stil "foto": en hyperrealistisk bild av en
+//     allmän motivscen – aldrig något som kan tas för ett foto av den verkliga händelsen.
 //   - Den visar ämnet – plats, djurart, instrument, teknik, landskap – aldrig verkliga, namngivna personer,
 //     och den iscensätter inte den verkliga händelsen.
 //   - Inga ansikten som går att känna igen, ingen text, inga logotyper.
 //   - Hur bilden togs fram (modell, motiv, tid) sparas i artikeldatan för vår egen dokumentation.
-import { mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { BILDSTIL, BILDTEXT_GENERERAD } from "../../src/lib/bildtext.js";
 
 /** Filnamn för artikelns bild: slugen utan ordet "ai" (det ska inte synas vid bilderna, inte heller i filnamnet). */
 export const bildnamn = (slug) => String(slug).split("-").filter((d) => d !== "ai").join("-") || "bild";
@@ -20,9 +25,9 @@ export const bildnamn = (slug) => String(slug).split("-").filter((d) => d !== "a
 export const BILD_ENDPOINT = "https://api.openai.com/v1/images/generations";
 export const STANDARDMODELL = "gpt-image-2.6-flare";
 export const BILDSTORLEK = "1536x864"; // 16:9, multiplar av 16, minst 1200 px bred (Discover)
-/** Ungefärlig kostnad per bild i USD vid medium kvalitet (OpenAI anger tokenpris; gpt-image-2 1536×1024 medium ≈ 0,041). */
+/** Ungefärlig kostnad per bild i USD vid medium kvalitet (OpenAI anger tokenpris; 1536×1024 medium ≈ 0,041). */
 export const UPPSKATTAD_KOSTNAD = { low: 0.006, medium: 0.04, high: 0.16 };
-/** Tokenpriser i USD per miljon token för gpt-image-2.6 (bild ut 30; text in 5; bild in 10). Uppdatera om priserna ändras. */
+/** Tokenpriser i USD per miljon token för gpt-image-2.6-flare (bild ut 30; text in 5; bild in 10). Uppdatera om priserna ändras. */
 export const BILDPRIS = { textIn: 5, bildIn: 10, bildUt: 30 };
 /** Kostnad ur API-svarets usage-fält (input_tokens med text/bild-uppdelning, output_tokens). */
 export function bildkostnad(usage) {
@@ -55,11 +60,20 @@ export function rensaMotiv(motiv, kategori) {
   return m;
 }
 
-export function byggPrompt(motiv, kategori) {
+export function byggPrompt(motiv, kategori, stil = BILDSTIL) {
+  const stilrader = stil === "foto"
+    ? [
+      `Hyperrealistic editorial photograph of a generic, representative scene: ${rensaMotiv(motiv, kategori)}.`,
+      "Style: natural light, true-to-life colours, documentary nature and science photography, sharp detail, warm and hopeful mood, 16:9.",
+      "It is a generic illustrative scene of the subject, not a picture of a specific real place, project or event.",
+    ]
+    : [
+      `Editorial newspaper illustration of: ${rensaMotiv(motiv, kategori)}.`,
+      "Style: a hand-painted gouache and ink illustration for the features pages of a quality newspaper – visible brush strokes, slightly textured paper, simplified shapes, confident ink outlines, a restrained palette of muted earthy colours with one warm accent, calm and optimistic mood, 16:9.",
+      "It must read immediately as a drawn or painted illustration, never as a photograph: no photorealism, no camera look, no depth-of-field blur, no glossy 3D render.",
+    ];
   return [
-    `Editorial newspaper illustration of: ${rensaMotiv(motiv, kategori)}.`,
-    "Style: a hand-painted gouache and ink illustration for the features pages of a quality newspaper – visible brush strokes, slightly textured paper, simplified shapes, confident ink outlines, a restrained palette of muted earthy colours with one warm accent, calm and optimistic mood, 16:9.",
-    "It must read immediately as a drawn or painted illustration, never as a photograph: no photorealism, no camera look, no depth-of-field blur, no glossy 3D render.",
+    ...stilrader,
     "Show the subject itself and keep it factually recognisable (correct species, materials and equipment) – the place, the species, the instrument, the technology or the landscape.",
     "No identifiable people: no faces; at most hands at work or small distant figures seen from behind.",
     "No text, letters, numbers, signs, logos, flags, watermarks or brand names.",
@@ -68,7 +82,8 @@ export function byggPrompt(motiv, kategori) {
 }
 
 export const bildInstallningar = () => ({
-  modell: process.env.GODA_BILDMODELL || STANDARDMODELL,
+  modell: STANDARDMODELL, // alltid – ingen annan modell, ingen reserv
+  stil: BILDSTIL,
   kvalitet: ["low", "medium", "high"].includes(process.env.GODA_BILDKVALITET) ? process.env.GODA_BILDKVALITET : "medium",
   storlek: BILDSTORLEK,
 });
@@ -80,8 +95,8 @@ export const bildInstallningar = () => ({
 export async function aiBild({ slug, motiv, kategori, alt, publicDir, hamtare = fetch }) {
   const nyckel = process.env.OPENAI_API_KEY;
   if (!nyckel) return null;
-  const { modell, kvalitet, storlek } = bildInstallningar();
-  const prompt = byggPrompt(motiv, kategori);
+  const { modell, kvalitet, storlek, stil } = bildInstallningar();
+  const prompt = byggPrompt(motiv, kategori, stil);
   const svar = await hamtare(BILD_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${nyckel}` },
@@ -100,12 +115,16 @@ export async function aiBild({ slug, motiv, kategori, alt, publicDir, hamtare = 
   const sharp = (await import("sharp")).default;
   const dir = join(publicDir, "bilder");
   mkdirSync(dir, { recursive: true });
-  await sharp(data).resize({ width: 1536, height: 864, fit: "cover" }).webp({ quality: 80 }).toFile(join(dir, `${bildnamn(slug)}.webp`));
-  await sharp(data).resize({ width: 1280, height: 720, fit: "cover" }).jpeg({ quality: 82, mozjpeg: true }).toFile(join(dir, `${bildnamn(slug)}.jpg`));
-  await sharp(data).resize({ width: 640, height: 360, fit: "cover" }).webp({ quality: 76 }).toFile(join(dir, `${bildnamn(slug)}-640.webp`));
+  // Huvudbilden sparas som OpenAI levererade den (WebP 1536×864), så att ursprungsmetadatan (C2PA, IPTC/XMP) finns
+  // kvar. Bara om formatet eller storleken avviker räknas den om. De mindre storlekarna behåller EXIF/XMP/IPTC.
+  const meta = await sharp(data).metadata();
+  if (meta.format === "webp" && meta.width === 1536 && meta.height === 864) writeFileSync(join(dir, `${bildnamn(slug)}.webp`), data);
+  else await sharp(data).resize({ width: 1536, height: 864, fit: "cover" }).keepMetadata().webp({ quality: 80 }).toFile(join(dir, `${bildnamn(slug)}.webp`));
+  await sharp(data).resize({ width: 1280, height: 720, fit: "cover" }).keepMetadata().jpeg({ quality: 82, mozjpeg: true }).toFile(join(dir, `${bildnamn(slug)}.jpg`));
+  await sharp(data).resize({ width: 640, height: 360, fit: "cover" }).keepMetadata().webp({ quality: 76 }).toFile(join(dir, `${bildnamn(slug)}-640.webp`));
   return {
     fil: `/bilder/${bildnamn(slug)}.webp`, og: `/bilder/${bildnamn(slug)}.jpg`, liten: `/bilder/${bildnamn(slug)}-640.webp`, bredd: 1536, hojd: 864,
-    alt, illustration: true, licens: "Illustration: Dagens goda nyheter", fotograf: null, modell, motiv: rensaMotiv(motiv, kategori), skapad: new Date().toISOString(),
+    alt, genererad: true, illustration: stil === "illustration", stil, licens: BILDTEXT_GENERERAD, fotograf: null, modell, motiv: rensaMotiv(motiv, kategori), skapad: new Date().toISOString(),
     anvandning: json.usage ?? null, kostnadUSD: bildkostnad(json.usage),
   };
 }

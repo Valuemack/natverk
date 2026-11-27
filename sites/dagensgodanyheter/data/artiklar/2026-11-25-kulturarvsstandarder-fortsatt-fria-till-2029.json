@@ -62,10 +62,12 @@
   "bildmotiv": "archival boxes, old maps and conservation tools on a table in a museum archive, warm daylight",
   "bildalt": "Arkivlådor, gamla kartor och konserveringsverktyg i ett museiarkiv",
   "poang": {
-    "positiv": 0.65,
-    "betydelse": 0.4,
+    "positiv": 0.2,
+    "betydelse": 0.2,
     "tillit": 0.95,
-    "total": 61
+    "total": 25,
+    "gladje": 0.1,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -77,5 +79,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "ovrigt"
 }

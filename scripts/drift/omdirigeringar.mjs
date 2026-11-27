@@ -3,6 +3,14 @@
 //   - <projekt>.pages.dev       → https://<huvuddomän>      (sökvägen behålls, även förhandsadresser)
 //   - omdirigeringsdomänerna (+ www) → målet i OMDIR
 // Körs om när som helst: listan ersätts helt och regeln skapas om den saknas.
+//
+// Omdirigeringar på sidnivå ligger INTE här utan i respektive Pages-projekts dist/_redirects, som skrivs vid varje bygge
+// och publiceras med sajten (ingen API-nyckel eller körning av det här skriptet behövs):
+//   - bensinstationer.nu: stationssidor som inte klarar kvalitetsgrinden → kommunsidan (sites/bensinstationer/scripts/omdirigeringar.mjs)
+//   - dagensbensinpris.se: alla 372 gamla URL:er → bästa sida på bensinstationer.nu (sites/dagensbensinpris/scripts/bygg.mjs)
+// Kedjan för dagensbensinpris blir www.dagensbensinpris.se → dagensbensinpris.se (Bulk Redirect här) → bensinstationer.nu (_redirects).
+// Skulle bensinstationers statiska regler någon gång passera Pages gräns på 2 000 stoppas bygget; flytta då
+// överskottet till en egen lista här (Bulk Redirects, gratisplanen: 5 listor, 15 regler, 10 000 poster per konto).
 //   node --env-file=.env scripts/drift/omdirigeringar.mjs
 import { domainToASCII } from "node:url";
 import { cf, KONTO, vanta } from "./api.mjs";

@@ -1,0 +1,177 @@
+---
+// Lång guide: betala vid pumpen hos de sju största kedjorna. Appar, kundklubbar, tankkort, rabatter och kortreservationer
+// enligt kedjornas egna sidor (hämtade 2026-11-27). Antal stationer och dygnet runt-stationer ur STATIONER. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, STATIONER, kedjaHref, kedjePris, kr, pris, procent, datumText } from "../../pris.js";
+import { KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+
+// Stationsdata per kedja ur registret.
+const NAMN = ["OKQ8", "Circle K", "Preem", "St1", "Ingo", "Qstar", "Tanka"];
+const kedjor = NAMN.map((namn) => {
+  const s = STATIONER.filter((x) => x.kedja === namn);
+  return {
+    namn, href: kedjaHref(namn), antal: s.length,
+    dygnet: s.filter((x) => x.dygnet).length,
+    obemannade: s.filter((x) => x.typ === "obemannad").length,
+    bemannade: s.filter((x) => x.typ === "bemannad").length,
+  };
+}).sort((a, b) => b.antal - a.antal);
+const k = Object.fromEntries(kedjor.map((x) => [x.namn, x]));
+const summa = kedjor.reduce((s, x) => s + x.antal, 0);
+const summaDygnet = kedjor.reduce((s, x) => s + x.dygnet, 0);
+
+// Reservationer på bankkort enligt kedjornas egna sidor.
+const reservationer = [
+  { kedja: "OKQ8", belopp: 1800, text: "Vanligtvis 1 800 kr. Släpps normalt inom några minuter efter tankningen." },
+  { kedja: "Tanka", belopp: 1800, text: "1 800 kr sedan 6 maj 2025 (tidigare 2 500 kr). Ska släppas inom några minuter." },
+  { kedja: "St1", belopp: 2000, text: "Utomhusterminalen begär 2 000 kr, eller det som finns kvar på kontot." },
+  { kedja: "Ingo", belopp: 2000, text: "Upp till 2 000 kr. Saknas täckning kan du tanka för saldot minus 5 kr." },
+  { kedja: "Qstar", belopp: 1500, text: "1 500 kr som standard. Beloppet kan ändras uppåt eller nedåt i appen." },
+  { kedja: "Circle K", belopp: null, text: "Belopp anges inte. Finns reservationen kvar efter 3–5 dagar: kontakta banken." },
+  { kedja: "Preem", belopp: null, text: "Inget belopp publicerat på Preems kundsidor." },
+];
+
+// Rabatt i kronor per år för en genomsnittlig bensinbil (Trafikanalys) med 0,6 liter per mil.
+const milBensin = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin").mil;
+const literAr = milBensin * 0.6;
+const rabatter = [
+  { kort: "OK-medlem (OKQ8)", bem: 0.25, obem: 0.10 },
+  { kort: "Preem Mastercard", bem: 0.25, obem: 0.10 },
+  { kort: "Preem Privatkort", bem: 0.15, obem: 0.10 },
+];
+const p95 = (c) => kedjePris(c, "bensin95");
+const tank = 50;
+const extraStart = 0.5 * tank * 3; // Circle K Extra: 50 öre/l på de tre första tankningarna
+
+const avsnitt = [
+  { id: "oversikt", rubrik: "Så betalar du hos de sju största kedjorna" },
+  { id: "reservation", rubrik: "Hur mycket reserveras på bankkortet?" },
+  { id: "okq8", rubrik: "OKQ8: appen och OK-medlemskapet" },
+  { id: "circle-k", rubrik: "Circle K: Extra och appen" },
+  { id: "preem", rubrik: "Preem: Mastercard och Privatkort" },
+  { id: "st1-ingo", rubrik: "St1 och Ingo: betala med appen" },
+  { id: "qstar-tanka", rubrik: "Qstar och Tanka: egna kort och CarPay" },
+  { id: "lonar-sig", rubrik: "Vad är rabatten värd per år?" },
+];
+
+const fragor = [
+  { fraga: "Hur mycket reserveras på kortet när jag tankar?", svar: "Det beror på kedjan. OKQ8 och Tanka anger 1 800 kr, St1 och Ingo upp till 2 000 kr och Qstar 1 500 kr som standard. Har du mindre pengar på kontot reserveras i stället det som finns. Du debiteras bara för det du faktiskt tankar." },
+  { fraga: "Hur länge ligger reservationen kvar?", svar: "OKQ8 och Tanka skriver att den normalt försvinner inom några minuter efter tankningen. Qstar säger att du ska kontakta banken om den ligger kvar efter 3–5 helgfria vardagar, och Circle K efter 3–5 dagar. Det är alltid den bank som gett ut kortet som kan ta bort reservationen." },
+  { fraga: "Kan jag betala tankningen med mobilen?", svar: "Ja, hos flera kedjor. OKQ8-appen tar kort och Apple Pay, Circle K-appen betalar vid pumpen, St1 Mobility tar Visa, Mastercard och Apple Pay, INGO-appen tar Visa och Mastercard, Qstar-appen tar bland annat Qstars egna kort, Apple Pay och Google Pay, och hos Tanka betalar du med appen CarPay." },
+  { fraga: "Får jag rabatt på obemannade stationer?", svar: "Ibland. Preem Mastercard, Preem Privatkort och OK-medlemskapet ger 10 öre per liter på obemannade stationer, mot 15–25 öre på bemannade. Circle K Extra ger rabatt på drivmedel bara på Circle K:s bemannade stationer." },
+  { fraga: "Finns St1 Privatkort kvar?", svar: "Nej. St1 skriver att Privatkortet har ersatts av appen St1 Mobility, och att St1 Mastercard avslutades den 4 december 2023." },
+  { fraga: `Hur många stationer har kedjorna öppna dygnet runt?`, svar: `I vårt register har de sju kedjorna tillsammans ${tal(summa)} stationer, varav ${tal(summaDygnet)} går att tanka på dygnet runt. Ingo, Qstar och Tanka har bara obemannade stationer i registret, så alla deras stationer är öppna dygnet runt.` },
+];
+---
+<Guide site={SITE} titel="Tankkort och appar – så betalar du hos varje kedja"
+  beskrivning="Betala vid pumpen hos OKQ8, Circle K, Preem, St1, Ingo, Qstar och Tanka: appar, tankkort, rabatt per liter och hur mycket som reserveras på bankkortet."
+  h1="Tankkort och appar – så betalar du vid pumpen"
+  svar={`Hos alla sju stora kedjor kan du betala med bankkort direkt vid pumpen, och de flesta har en app där du väljer pump och betalar med mobilen. Med bankkort reserveras ett belopp på kontot medan du tankar: <strong>1 800 kr hos OKQ8 och Tanka, upp till 2 000 kr hos St1 och Ingo och 1 500 kr hos Qstar</strong>, enligt kedjornas egna sidor. Rabatt per liter får du främst med kedjornas kort och kundklubbar, oftast 25 öre på bemannade och 10 öre på obemannade stationer.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Tankkort och appar", href: "/guider/tankkort-och-appar/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Obemannad bensinstation", href: "/guider/obemannad-bensinstation/", text: "Så fungerar automaten och reservationen" },
+    { namn: "Så hittar du billigaste bensinen", href: "/guider/billigaste-bensinen/", text: "Kedjor och obemannade stationer" },
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpris per kedja" },
+    { namn: "Alla kedjor", href: "/kedja/", text: "Stationer per kedja" },
+    { namn: "Spara bränsle", href: "/guider/spara-bransle/", text: "Det som sparar mer än rabatten" },
+  ]}
+  kallor={[
+    { namn: "OKQ8 Kundservice – Reservation vid tankning av kort", url: "https://kundservice.privat.okq8.se/Privatkort/OKQ8_VISA-kort/Reservation_vid_tankning_av_kort", text: "reservation 1 800 kr, när den släpps", datum: "2026-11-27" },
+    { namn: "OKQ8-appen (App Store, utvecklare OKQ8)", url: "https://apps.apple.com/se/app/okq8/id1033117611", text: "betala tankning med kort eller Apple Pay", datum: "2026-11-27" },
+    { namn: "OK – Medlemsförmåner", url: "https://www.ok.se/medlem/medlemsformaner", text: "25 öre/l bemannade, 10 öre/l obemannade", datum: "2026-11-27" },
+    { namn: "Circle K – Appen", url: "https://www.circlek.se/produkter-tjanster/app", text: "betala drivmedel vid pumpen i appen", datum: "2026-11-27" },
+    { namn: "Circle K – Extra", url: "https://www.circlek.se/extra", text: "rabattnivåer, bemannade stationer, startrabatt", datum: "2026-11-27" },
+    { namn: "Circle K – Extra Mastercard, bonus och erbjudanden", url: "https://www.circlek.se/circle-k-extra-mastercard/bonus-och-erbjudanden", text: "bonus, drivmedel undantaget", datum: "2026-11-27" },
+    { namn: "Circle K – Pengar har reserverats på mitt konto", url: "https://www.circlek.se/faq/pengar-har-reserverats-p%C3%A5-mitt-konto-hur-g%C3%B6r-jag", text: "3–5 dagar, kontakta banken", datum: "2026-11-27" },
+    { namn: "Preem – Preem Mastercard", url: "https://www.preem.se/preem-medlem/preem-mastercard/", text: "25 och 10 öre/l, ingen årsavgift", datum: "2026-11-27" },
+    { namn: "Preem – Preem Privatkort", url: "https://www.preem.se/preem-medlem/preem-privatkort/", text: "15 och 10 öre/l, faktura", datum: "2026-11-27" },
+    { namn: "Preem – Preem-appen", url: "https://www.preem.se/kundservice/appar/preem-appen-privat/", text: "medlemserbjudanden och stämpelkort", datum: "2026-11-27" },
+    { namn: "St1 – Frågor och svar", url: "https://st1.se/vanliga-fragor-och-svar", text: "reservation 2 000 kr, St1 Mobility, avslutade kort", datum: "2026-11-27" },
+    { namn: "INGO – Reservation på bankkort", url: "https://www.ingo.se/faq/varf%C3%B6r-har-det-reserverats-ett-belopp-p%C3%A5-mitt-bankkort-i-samband-med-tankningen", text: "upp till 2 000 kr, tanka för saldot minus 5 kr", datum: "2026-11-27" },
+    { namn: "INGO – Mobilbetalning", url: "https://www.ingo.se/mobilbetalning", text: "INGO-appen, maxbelopp, Visa och Mastercard", datum: "2026-11-27" },
+    { namn: "Qstar – Vanliga frågor", url: "https://qstar.se/faq/", text: "reservation 1 500 kr, appen, Tankkort och Smartkort", datum: "2026-11-27" },
+    { namn: "Tanka – Aktuellt", url: "https://tanka.se/aktuellt", text: "reservation 1 800 kr från 6 maj 2025, CarPay", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för bensinbilar", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `OKQ8, Circle K och Preem, ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "antal stationer och dygnet runt-stationer per kedja" },
+  ]}>
+
+  <h2 id="oversikt">Så betalar du hos de sju största kedjorna</h2>
+  <p>De sju kedjorna i tabellen har tillsammans {tal(summa)} av stationerna i vårt register. Alla tar bankkort vid pumpen. Skillnaderna ligger i vilka egna kort och appar som finns, var rabatten gäller och hur stort belopp som spärras på kontot medan du tankar. Uppgifterna kommer från kedjornas egna webbplatser och appbeskrivningar.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th>App för att betala vid pumpen</th><th>Eget kort eller kundklubb</th><th class="num">Stationer</th><th class="num">Dygnet runt</th></tr></thead>
+    <tbody>
+      <tr><td><a href={k["OKQ8"].href}>OKQ8</a></td><td>OKQ8-appen: kort eller Apple Pay</td><td>OK-medlemskap, OKQ8-kort</td><td class="num">{tal(k["OKQ8"].antal)}</td><td class="num">{tal(k["OKQ8"].dygnet)}</td></tr>
+      <tr><td><a href={k["St1"].href}>St1</a></td><td>St1 Mobility: Visa, Mastercard, Apple Pay</td><td>Inga privatkort kvar</td><td class="num">{tal(k["St1"].antal)}</td><td class="num">{tal(k["St1"].dygnet)}</td></tr>
+      <tr><td><a href={k["Circle K"].href}>Circle K</a></td><td>Circle K-appen</td><td>Circle K Extra, Extra Mastercard, Betalkort</td><td class="num">{tal(k["Circle K"].antal)}</td><td class="num">{tal(k["Circle K"].dygnet)}</td></tr>
+      <tr><td><a href={k["Preem"].href}>Preem</a></td><td>Ingen betalfunktion beskriven</td><td>Preem Mastercard, Preem Privatkort</td><td class="num">{tal(k["Preem"].antal)}</td><td class="num">{tal(k["Preem"].dygnet)}</td></tr>
+      <tr><td><a href={k["Qstar"].href}>Qstar</a></td><td>Qstar-appen: egna kort, Visa, Mastercard, Apple Pay, Google Pay</td><td>Qstar Tankkort och Smartkort</td><td class="num">{tal(k["Qstar"].antal)}</td><td class="num">{tal(k["Qstar"].dygnet)}</td></tr>
+      <tr><td><a href={k["Ingo"].href}>Ingo</a></td><td>INGO-appen: Visa, Mastercard</td><td>INGO-kort (inte i appen)</td><td class="num">{tal(k["Ingo"].antal)}</td><td class="num">{tal(k["Ingo"].dygnet)}</td></tr>
+      <tr><td><a href={k["Tanka"].href}>Tanka</a></td><td>CarPay (Volvofinans Bank)</td><td>Volvokort och CarPay-kortet</td><td class="num">{tal(k["Tanka"].antal)}</td><td class="num">{tal(k["Tanka"].dygnet)}</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Stationer och dygnet runt-stationer enligt registret hos bensinstationer.nu. Appar och kort enligt kedjornas sidor, hämtade 27 november 2026.</p>
+  <p>Ingo, Qstar och Tanka har bara obemannade stationer i registret, så där är alla stationer öppna dygnet runt. Hos OKQ8 är {tal(k["OKQ8"].obemannade)} av {tal(k["OKQ8"].antal)} stationer obemannade, och hos St1 {tal(k["St1"].obemannade)} av {tal(k["St1"].antal)}. Under eget namn har Circle K nästan bara bemannade stationer och truckstationer i registret, {tal(k["Circle K"].bemannade)} bemannade och bara {tal(k["Circle K"].obemannade)} obemannade. Ändå går {tal(k["Circle K"].dygnet)} av Circle K:s stationer att tanka på dygnet runt, främst truckstationerna.</p>
+
+  <h2 id="reservation">Hur mycket reserveras på bankkortet?</h2>
+  <p>När du sätter in ett bankkort i pumpen vet automaten inte hur mycket du tänker tanka. Därför ber den din bank att reservera ett belopp. Pengarna dras inte, men de går inte att använda förrän reservationen ersatts med det du faktiskt tankade för. Ingo skriver att det är ett krav från Visa och Mastercard, eftersom kunder tidigare kunde övertrassera sina konton på bankens bekostnad.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Reserverat belopp</th><th>Vad kedjan skriver</th></tr></thead>
+    <tbody>{reservationer.map((r) => <tr><td>{r.kedja}</td><td class="num">{r.belopp ? kr(r.belopp, 0) : "–"}</td><td>{r.text}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Enligt kedjornas kundtjänstsidor, hämtade 27 november 2026.</p>
+  <p>Beloppen skiljer sig mellan kedjorna. Tanka skriver att branschstandarden ändrades den 6 maj 2025 från 2 500 till 1 800 kr, men St1 och Ingo anger fortfarande 2 000 kr på sina sidor och Qstar 1 500 kr. Alla är eniga om två saker. Har du mindre pengar på kontot än beloppet reserverar banken det som finns. Och om reservationen inte försvinner är det banken som gett ut kortet du ska kontakta, inte stationen.</p>
+  <p>Vill du slippa en stor reservation kan appen vara ett alternativ. I INGO-appen väljer du själv ett maxbelopp innan du tankar, annars gäller 2 000 kr. Qstar har 1 500 kr som standard i sin app men låter dig ändra beloppet uppåt eller nedåt.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="okq8">OKQ8: appen och OK-medlemskapet</h2>
+  <p>OKQ8 är störst i registret med {tal(k["OKQ8"].antal)} stationer, varav {tal(k["OKQ8"].dygnet)} går att tanka på dygnet runt. I OKQ8-appen kopplar du ett betalkort och betalar tankningen med mobilen, med kort eller Apple Pay, och kvittot sparas i appen.</p>
+  <p>Rabatten på drivmedel kommer via medlemskapet i den kooperativa föreningen OK. Medlemmar får enligt OK 25 öre per liter på bemannade stationer och 10 öre per liter på obemannade, och dessutom 2 procent på övriga köp. Rabatten betalas ut som återbäring, och ju mer du handlar desto mer får du tillbaka. Medlemskapet ger också en belöning efter vart sjätte köp i butiken och rabatt på biltvätt.</p>
+  <p>Med kort vid pumpen reserverar OKQ8 vanligtvis 1 800 kr. Reservationen tas normalt bort inom några minuter efter tankningen, men kan ibland ta längre tid.</p>
+
+  <h2 id="circle-k">Circle K: Extra och appen</h2>
+  <p>Circle K har {tal(k["Circle K"].antal)} stationer i registret. I Circle K-appen väljer du station och pumpnummer och betalar för drivmedel, laddning, biltvätt och spolarvätska direkt vid pumpen. Första gången anger du kortuppgifterna.</p>
+  <p>Kundklubben Circle K Extra ger rabatt när du betalar med det kort som du registrerat i klubben. Rabatten på drivmedel gäller bara på Circle K:s bemannade stationer. Rabattnivån stiger med antalet besök: efter 7 besök höjs nivån och efter 16 besök, räknat på de senaste 90 dagarna, når du den högsta. Circle K anger inte rabatten i öre per nivå på sidan. Nya medlemmar får 50 öre per liter på sina tre första tankningar, giltigt i två månader. Rabattnivån gäller också när du tankar på Circle K i Polen, Lettland, Estland, Litauen, Danmark och Norge, med en sats anpassad till landet.</p>
+  <p>Kreditkortet Circle K Extra Mastercard ger 5 procent bonus i Circle K:s butiker, men drivmedel ger aldrig bonus. Om en reservation ligger kvar på ditt konto 3–5 dagar efter tankningen ber Circle K dig kontakta din bank.</p>
+
+  <h2 id="preem">Preem: Mastercard och Privatkort</h2>
+  <p>Preem har {tal(k["Preem"].antal)} stationer i registret, {tal(k["Preem"].obemannade)} av dem obemannade. Preem-appen visar medlemserbjudanden, stämpelkort och köp. Preems sida beskriver däremot ingen funktion för att betala tankningen i appen.</p>
+  <p>Rabatt får du med Preems egna kort, som båda hanteras av Ikano Bank:</p>
+  <ul>
+    <li><strong>Preem Mastercard:</strong> 25 öre per liter på bemannade stationer och 10 öre på automatstationer. Ingen årsavgift och 0,5 procent bonus på vardagsköp.</li>
+    <li><strong>Preem Privatkort:</strong> 15 öre per liter på bemannade stationer och 10 öre på automatstationer. Alla köp samlas på en faktura och kan delbetalas.</li>
+  </ul>
+
+  <h2 id="st1-ingo">St1 och Ingo: betala med appen</h2>
+  <p>St1 har {tal(k["St1"].antal)} stationer i registret, och {tal(k["St1"].dygnet)} av dem går att tanka på dygnet runt. Alla stationer tar Visa, Mastercard och andra stora bank- och kreditkort. St1 Privatkort finns inte längre och ersätts av appen St1 Mobility, och St1 Mastercard avslutades den 4 december 2023. I appen lägger du in ett Visa- eller Mastercard, och Apple Pay fungerar också. Tankar du med appen får du erbjudanden i St1:s butiker PLOQ och Välkommen in. Vid utomhusterminalen skickas en förfrågan om 2 000 kr till kortutgivaren.</p>
+  <p>Ingo har {tal(k["Ingo"].antal)} obemannade stationer i registret. Så betalar du med INGO-appen:</p>
+  <ol>
+    <li>Lägg in ett Visa- eller Mastercard under Mina kort och godkänn en transaktion på 0 kr med Mobilt BankID. Inga pengar dras.</li>
+    <li>Tryck på pumpikonen och välj tanka och pumpnummer.</li>
+    <li>Välj kort och ett maxbelopp. Väljer du inget gäller 2 000 kr.</li>
+    <li>Använd eventuella frilitrar och tanka.</li>
+  </ol>
+  <p>INGO-kortet går ännu inte att lägga in i appen, och American Express fungerar inte där.</p>
+
+  <h2 id="qstar-tanka">Qstar och Tanka: egna kort och CarPay</h2>
+  <p>Qstar har {tal(k["Qstar"].antal)} stationer i registret, alla obemannade. Där kan du betala med Qstars egna kort, Visa och Mastercard, och Truxtop-kort för lastbil tas på alla stationer. Qstar har två privatkort: Tankkortet faktureras i efterhand, medan Smartkortet laddas med pengar i förväg via bankgiro eller plusgiro. Korten har ingen bestämd giltighetstid. Appen kräver Mobilt BankID och medlemskap, som du kan teckna i appen, och tar Smartkort, Tankkort, Visa, Mastercard, Apple Pay och Google Pay. Den fungerar bara på Qstars stationer.</p>
+  <p>Tanka har {tal(k["Tanka"].antal)} obemannade stationer i registret och får sitt drivmedel från OKQ8. Där betalar du med mobilen via appen CarPay: du loggar in med Mobilt BankID, väljer pump och startar tankningen. CarPay är kopplad till Volvokort Visa från Volvofinans Bank. Sedan 2020 finns också CarPay-kortet för bilägare oavsett märke, som enligt Tanka ger rabatt vid tankning. Tanka anger inte rabattens storlek på sidan, och kedjan publicerar sedan januari 2025 inga rekommenderade priser på webben, så det är prisskylten vid stationen som gäller.</p>
+
+  <h2 id="lonar-sig">Vad är rabatten värd per år?</h2>
+  <p>En bensinbil körde i genomsnitt {tal(milBensin)} mil under {KORSTRACKOR.ar} enligt Trafikanalys. Med en förbrukning på 0,6 liter per mil blir det ungefär {tal(Math.round(literAr))} liter om året. Så mycket ger de publicerade rabatterna om du tankar allt hos samma kedja:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kort eller medlemskap</th><th class="num">Öre/l bemannad</th><th class="num">Per år, bemannad</th><th class="num">Öre/l obemannad</th><th class="num">Per år, obemannad</th></tr></thead>
+    <tbody>{rabatter.map((r) => <tr><td>{r.kort}</td><td class="num">{Math.round(r.bem * 100)}</td><td class="num">{kr(r.bem * literAr, 0)}</td><td class="num">{Math.round(r.obem * 100)}</td><td class="num">{kr(r.obem * literAr, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Räkneexempel: {tal(Math.round(literAr))} liter per år ({tal(milBensin)} mil × 0,6 l/mil). Rabattsatser enligt OK och Preem, hämtade 27 november 2026.</p>
+  <p>Startrabatten hos Circle K Extra, 50 öre per liter på tre tankningar, är värd {kr(extraStart, 0)} om du tankar {tank} liter varje gång.</p>
+  <p>Rabatten är alltså värd {kr(0.10 * literAr, 0)}–{kr(0.25 * literAr, 0)} om året för en genomsnittlig bensinbil. Det kan vara mindre än skillnaden i pris mellan två stationer. Idag är listpriset på bensin 95 {kr(p95("OKQ8"))} hos OKQ8, {kr(p95("Circle K"))} hos Circle K och {kr(p95("Preem"))} hos Preem ({datum}), och den lokala prissättningen kan göra skillnaden större än så. Om du kan välja mellan en bemannad station med 25 öre i rabatt och en obemannad med 10 öre, så lönar sig den bemannade bara om pumppriset där är högst 15 öre högre. Jämför priserna på <a href="/bensinpris/">bensinpris idag</a>, och läs om fler sätt att sänka kostnaden i guiden <a href="/guider/spara-bransle/">spara bränsle</a>.</p>
+</Guide>

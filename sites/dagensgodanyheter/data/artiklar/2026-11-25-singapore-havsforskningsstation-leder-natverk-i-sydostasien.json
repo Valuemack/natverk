@@ -76,7 +76,7 @@
     "liten": "/bilder/singapore-havsforskningsstation-leder-natverk-i-sydostasien-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: forskningsfartyg vid en tropisk ö med korallrev i klart vatten",
+    "alt": "Målad illustration av en vit forskningsbåt med kran på blått vatten, med korallrev, palmer.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -103,10 +103,12 @@
   "bildmotiv": "a small marine research vessel anchored near a tropical island with coral reef visible through clear turquoise water",
   "bildalt": "Forskningsfartyg vid en tropisk ö med korallrev i klart vatten",
   "poang": {
-    "positiv": 0.6,
-    "betydelse": 0.5,
+    "positiv": 0.3,
+    "betydelse": 0.2,
     "tillit": 0.92,
-    "total": 67
+    "total": 25,
+    "gladje": 0.1,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -123,5 +125,6 @@
     "Singapore coral reef",
     "St John's Island Singapore"
   ],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "ovrigt"
 }

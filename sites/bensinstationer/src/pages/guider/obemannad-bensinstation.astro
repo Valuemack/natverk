@@ -1,0 +1,183 @@
+---
+// Lång guide: obemannade stationer (automatstationer). Hur betalningen och kortreservationen fungerar enligt kedjornas sidor,
+// säkerhetskraven enligt MSB:s handbok för bensinstationer, och andelen obemannade och dygnet runt-stationer per kedja,
+// län och kommun ur STATIONER. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, STATIONER, kedjaHref, procent } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const tal = (n) => n.toLocaleString("sv-SE");
+const andel = (a, b) => procent((a / b) * 100);
+
+const nAlla = STATIONER.length;
+const nObem = STATIONER.filter((s) => s.typ === "obemannad").length;
+const nBem = STATIONER.filter((s) => s.typ === "bemannad").length;
+const nTruck = STATIONER.filter((s) => s.typ === "truckstation").length;
+const nOkand = STATIONER.filter((s) => s.typ == null).length;
+const nDygnet = STATIONER.filter((s) => s.dygnet).length;
+const nKand = nAlla - nOkand;
+
+// Per kedja (kedjor med minst 20 stationer i registret).
+const perKedja = Object.values(STATIONER.filter((s) => s.kedja).reduce((m, s) => {
+  const x = (m[s.kedja] ??= { namn: s.kedja, alla: 0, obem: 0, dygnet: 0 });
+  x.alla++; if (s.typ === "obemannad") x.obem++; if (s.dygnet) x.dygnet++;
+  return m;
+}, {})).filter((x) => x.alla >= 20).map((x) => ({ ...x, href: kedjaHref(x.namn) })).sort((a, b) => b.obem / b.alla - a.obem / a.alla || b.alla - a.alla);
+
+// Per län.
+const lanHref = Object.fromEntries(KAT.lan.map((l) => [l.namn, l.href]));
+const perLan = Object.values(STATIONER.filter((s) => s.lan).reduce((m, s) => {
+  const x = (m[s.lan] ??= { lan: s.lan, alla: 0, obem: 0, dygnet: 0 });
+  x.alla++; if (s.typ === "obemannad") x.obem++; if (s.dygnet) x.dygnet++;
+  return m;
+}, {})).sort((a, b) => b.obem / b.alla - a.obem / a.alla);
+const lanTopp = perLan[0], lanBotten = perLan.at(-1);
+
+// Per kommun.
+const komHref = Object.fromEntries(KAT.kommuner.map((k) => [k.namn, k.href]));
+const perKom = Object.values(STATIONER.filter((s) => s.kommun).reduce((m, s) => {
+  const x = (m[s.kommun] ??= { namn: s.kommun, alla: 0, obem: 0, bem: 0, dygnet: 0 });
+  x.alla++; if (s.typ === "obemannad") x.obem++; if (s.typ === "bemannad") x.bem++; if (s.dygnet) x.dygnet++;
+  return m;
+}, {}));
+const bara = perKom.filter((x) => x.obem === x.alla).sort((a, b) => b.alla - a.alla || a.namn.localeCompare(b.namn, "sv"));
+const utanDygnet = perKom.filter((x) => x.dygnet === 0).sort((a, b) => a.namn.localeCompare(b.namn, "sv"));
+const utanBem = perKom.filter((x) => x.bem === 0).length;
+const flestDygnet = [...perKom].sort((a, b) => b.dygnet - a.dygnet).slice(0, 10);
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är en obemannad bensinstation?" },
+  { id: "antal", rubrik: "Hur många stationer är obemannade?" },
+  { id: "kedjor", rubrik: "Andel obemannade per kedja" },
+  { id: "tanka", rubrik: "Så tankar du på en automatstation" },
+  { id: "reservation", rubrik: "Reservationen på kortet" },
+  { id: "nekas", rubrik: "Om kortet nekas eller pengarna inte räcker" },
+  { id: "lan", rubrik: "Obemannade stationer per län" },
+  { id: "dygnet", rubrik: "Var kan man tanka dygnet runt?" },
+  { id: "problem", rubrik: "Om något går fel vid pumpen" },
+];
+
+const fragor = [
+  { fraga: "Hur fungerar en obemannad bensinstation?", svar: "Pumparna styrs av en kort- eller sedelautomat i stället för en kassa. Du väljer pump, sätter in kortet och slår din kod, och banken reserverar ett belopp. Efter tankningen ersätts reservationen med det du faktiskt tankade för." },
+  { fraga: "Hur mycket reserveras på kortet vid en automatstation?", svar: "Det skiljer sig mellan kedjorna. OKQ8 och Tanka anger 1 800 kr, St1 och Ingo upp till 2 000 kr och Qstar 1 500 kr. Har du mindre på kontot reserveras det som finns." },
+  { fraga: "Kan jag tanka om jag har mindre än 1 800 kr på kontot?", svar: "Ja. Kedjorna skriver att banken då reserverar det belopp som finns tillgängligt. Hos Ingo kan du tanka för det tillgängliga beloppet minus 5 kr." },
+  { fraga: "Hur många bensinstationer är obemannade?", svar: `I vårt register är ${tal(nObem)} av ${tal(nAlla)} stationer obemannade, och ${tal(nDygnet)} stationer går att tanka på dygnet runt. För ${tal(nOkand)} stationer saknas uppgift om stationstyp.` },
+  { fraga: "Vilka kedjor har bara obemannade stationer?", svar: `Bland de stora kedjorna är alla stationer hos Ingo, Qstar och Tanka obemannade i registret. OKQ8 har ${tal(perKedja.find((x) => x.namn === "OKQ8")?.obem ?? 0)} obemannade och St1 ${tal(perKedja.find((x) => x.namn === "St1")?.obem ?? 0)}.` },
+  { fraga: "Vem ringer jag om pumpen krånglar på natten?", svar: "En obemannad station ska enligt MSB:s handbok ha en skylt med telefonnummer till en kontaktperson som kan agera vid läckage eller annan fara. Vid brand, olycka eller ett stort spill ringer du 112." },
+];
+---
+<Guide site={SITE} titel={`Obemannad bensinstation – så fungerar automaten`}
+  beskrivning={`${tal(nObem)} av ${tal(nAlla)} stationer i Sverige är obemannade. Så fungerar automaten och reservationen, vad som gäller om kortet nekas och var du tankar dygnet runt.`}
+  h1="Obemannad bensinstation – så fungerar det"
+  svar={`På en obemannad station, en automatstation, styrs pumparna av en kort- eller sedelautomat i stället för en kassa. När du betalar med bankkort reserverar banken ett belopp, <strong>1 500–2 000 kr beroende på kedja</strong>, som ersätts med det du faktiskt tankar för. I vårt register är <strong>${tal(nObem)} av ${tal(nAlla)} stationer obemannade</strong> och ${tal(nDygnet)} går att tanka på dygnet runt.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Obemannad bensinstation", href: "/guider/obemannad-bensinstation/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Tankkort och appar", href: "/guider/tankkort-och-appar/", text: "Betala vid pumpen hos varje kedja" },
+    { namn: "Så hittar du billigaste bensinen", href: "/guider/billigaste-bensinen/", text: "Kedjor och obemannade stationer" },
+    { namn: "Hitta station", href: "/", text: "Sök station nära dig" },
+    { namn: "Alla kedjor", href: "/kedja/", text: "Stationer per kedja" },
+    { namn: "Bensindunk – regler", href: "/guider/bensindunk-regler/", text: "Förvara och transportera bensin" },
+  ]}
+  kallor={[
+    { namn: "MSB – Handbok: Hantering av brandfarliga gaser och vätskor på bensinstationer (mars 2015)", url: "https://rib.msb.se/filer/pdf/27549.pdf", text: "definition av automatstation, nödstopp, skylt på obemannade stationer", datum: "2026-11-27" },
+    { namn: "OKQ8 Kundservice – Reservation vid tankning av kort", url: "https://kundservice.privat.okq8.se/Privatkort/OKQ8_VISA-kort/Reservation_vid_tankning_av_kort", text: "1 800 kr, släpps inom några minuter", datum: "2026-11-27" },
+    { namn: "Tanka – Aktuellt", url: "https://tanka.se/aktuellt", text: "1 800 kr från 6 maj 2025, tidigare 2 500 kr", datum: "2026-11-27" },
+    { namn: "St1 – Frågor och svar", url: "https://st1.se/vanliga-fragor-och-svar", text: "förfrågan om 2 000 kr vid utomhusterminal", datum: "2026-11-27" },
+    { namn: "INGO – Reservation på bankkort", url: "https://www.ingo.se/faq/varf%C3%B6r-har-det-reserverats-ett-belopp-p%C3%A5-mitt-bankkort-i-samband-med-tankningen", text: "upp till 2 000 kr, saldot minus 5 kr, krav från Visa och Mastercard", datum: "2026-11-27" },
+    { namn: "INGO – Mobilbetalning", url: "https://www.ingo.se/mobilbetalning", text: "välj maxbelopp i appen", datum: "2026-11-27" },
+    { namn: "Qstar – Vanliga frågor", url: "https://qstar.se/faq/", text: "1 500 kr, 3–5 vardagar, kvitton, felanmälan", datum: "2026-11-27" },
+    { namn: "Circle K – Pengar har reserverats på mitt konto", url: "https://www.circlek.se/faq/pengar-har-reserverats-p%C3%A5-mitt-konto-hur-g%C3%B6r-jag", text: "3–5 dagar, uppgifter till formuläret", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationstyp (obemannad, bemannad, truckstation) och tankning dygnet runt per station" },
+  ]}>
+
+  <h2 id="vad">Vad är en obemannad bensinstation?</h2>
+  <p>En obemannad bensinstation kallas också automatstation. I den handbok om bensinstationer som MSB gav ut 2015 definieras den som en station där mätarskåpen, alltså pumparna, styrs endast från kort- eller sedelautomater. På en bemannad station finns i stället en byggnad där personal driver verksamheten och sköter kassan.</p>
+  <p>Handboken konstaterar också att det är vanligt att en bemannad station byggs om till en automatstation. Butiken kan då fortsätta som en annan verksamhet eller försvinna helt. För dig som kund betyder det att du betalar vid pumpen och att det kanske inte finns någon att fråga på plats.</p>
+
+  <h2 id="antal">Hur många stationer är obemannade?</h2>
+  <p>Vårt register har {tal(nAlla)} stationer. Så här fördelar de sig efter typ:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Typ</th><th class="num">Stationer</th><th class="num">Andel av alla</th><th class="num">Andel av kända</th></tr></thead>
+    <tbody>
+      <tr><td>Obemannad</td><td class="num">{tal(nObem)}</td><td class="num">{andel(nObem, nAlla)}</td><td class="num">{andel(nObem, nKand)}</td></tr>
+      <tr><td>Bemannad</td><td class="num">{tal(nBem)}</td><td class="num">{andel(nBem, nAlla)}</td><td class="num">{andel(nBem, nKand)}</td></tr>
+      <tr><td>Truckstation</td><td class="num">{tal(nTruck)}</td><td class="num">{andel(nTruck, nAlla)}</td><td class="num">{andel(nTruck, nKand)}</td></tr>
+      <tr><td>Uppgift saknas</td><td class="num">{tal(nOkand)}</td><td class="num">{andel(nOkand, nAlla)}</td><td class="num">–</td></tr>
+      <tr><td><strong>Tankning dygnet runt</strong></td><td class="num"><strong>{tal(nDygnet)}</strong></td><td class="num"><strong>{andel(nDygnet, nAlla)}</strong></td><td class="num">–</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Dygnet runt omfattar obemannade stationer och de bemannade stationer och truckstationer där pumparna är öppna dygnet runt.</p>
+  <p>Av de stationer där typen är känd är alltså mer än hälften obemannade. Det betyder också att en majoritet av stationerna i landet går att tanka mitt i natten, om du har ett kort som automaten tar.</p>
+
+  <h2 id="kedjor">Andel obemannade per kedja</h2>
+  <p>Hur stor andel som är obemannad skiljer sig mycket mellan kedjorna. Tabellen visar kedjor med minst 20 stationer i registret.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">Obemannade</th><th class="num">Andel</th><th class="num">Dygnet runt</th></tr></thead>
+    <tbody>{perKedja.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.namn}</a> : x.namn}</td><td class="num">{tal(x.alla)}</td><td class="num">{tal(x.obem)}</td><td class="num">{andel(x.obem, x.alla)}</td><td class="num">{tal(x.dygnet)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Stationer utan uppgift om typ räknas som ej obemannade.</p>
+  <p>Ingo, Qstar och Tanka är rena automatkedjor i registret. OKQ8 och St1 har både bemannade och obemannade stationer, och hos Circle K är nästan alla stationer bemannade eller truckstationer. Rabatterna kan skilja sig mellan stationstyperna: hos Preem och OK ger kortet eller medlemskapet 10 öre per liter på obemannade stationer mot 25 öre på bemannade. Det går vi igenom i <a href="/guider/tankkort-och-appar/">guiden om tankkort och appar</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="tanka">Så tankar du på en automatstation</h2>
+  <p>Ordningen kan variera lite mellan automaterna, men stegen är i stort sett desamma:</p>
+  <ol>
+    <li><strong>Välj pump och drivmedel.</strong> Kontrollera märkningen på pistolen innan du börjar.</li>
+    <li><strong>Sätt in kortet och slå din kod.</strong> Automaten skickar en förfrågan till din bank om att reservera ett belopp.</li>
+    <li><strong>Tanka.</strong> Häng tillbaka pistolen när du är klar, så avslutas köpet.</li>
+    <li><strong>Ta kvittot.</strong> Hos Qstar trycker du på kvittoknappen på terminalen. Har du valt digitala kvitton där skrivs inget kvitto ut.</li>
+  </ol>
+  <p>Betalar du med en app väljer du i stället pump i mobilen. Hos Ingo och Qstar bestämmer du då själv det högsta beloppet. Det kan vara ett sätt att undvika en stor reservation om du bara ska tanka lite.</p>
+
+  <h2 id="reservation">Reservationen på kortet</h2>
+  <p>Reservationen är inget köp. Ingo förklarar att varken stationen eller banken får några pengar när beloppet reserveras, och att kravet kommer från Visa och Mastercard. När tankningen är klar skickas det slutliga beloppet till banken, och reservationen ska då ersättas med det.</p>
+  <ul>
+    <li><strong>OKQ8:</strong> vanligtvis 1 800 kr, normalt borta inom några minuter.</li>
+    <li><strong>Tanka:</strong> 1 800 kr sedan 6 maj 2025, då branschstandarden sänktes från 2 500 kr.</li>
+    <li><strong>St1:</strong> 2 000 kr begärs när kortet sätts in i utomhusterminalen.</li>
+    <li><strong>Ingo:</strong> upp till 2 000 kr.</li>
+    <li><strong>Qstar:</strong> 1 500 kr som standard.</li>
+  </ul>
+  <p>Om reservationen ligger kvar är det banken som gett ut kortet som kan ta bort den. Qstar säger att du ska kontakta banken om den finns kvar efter 3–5 helgfria vardagar, och Circle K anger 3–5 dagar. Har du redan pratat med banken ber Circle K dig skicka in betalsätt, de sex första och fyra sista siffrorna i kortnumret, datum, station, köpbelopp och reserverat belopp via ett formulär.</p>
+
+  <h2 id="nekas">Om kortet nekas eller pengarna inte räcker</h2>
+  <p>Om det inte finns täckning för hela reservationen beskriver kedjorna samma lösning: banken reserverar då i stället det som finns tillgängligt på kontot. Ingo skriver att du då kan tanka för det tillgängliga beloppet minus 5 kr.</p>
+  <p>Några saker att tänka på om kortet inte går igenom:</p>
+  <ul>
+    <li><strong>Tänk på reservationen före en lång resa.</strong> Med 1 800 kr reserverat per tankning kan ett konto med litet utrymme snabbt låsas om flera reservationer ligger kvar samtidigt.</li>
+    <li><strong>Prova appen.</strong> Där väljer du maxbelopp själv hos Ingo och Qstar.</li>
+    <li><strong>Kontrollera vilka kort automaten tar.</strong> Qstar tar sina egna kort, Visa, Mastercard och Truxtop-kort. INGO-appen tar bara Visa och Mastercard.</li>
+    <li><strong>Om ett Qstar-kort spärras efter fel kod</strong> ska du kontakta Qstars kundservice.</li>
+  </ul>
+
+  <h2 id="lan">Obemannade stationer per län</h2>
+  <p>Andelen obemannade stationer varierar mellan länen. I {lanTopp.lan} är {andel(lanTopp.obem, lanTopp.alla)} av stationerna obemannade, i {lanBotten.lan} {andel(lanBotten.obem, lanBotten.alla)}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Stationer</th><th class="num">Obemannade</th><th class="num">Andel</th><th class="num">Dygnet runt</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{lanHref[x.lan] ? <a href={lanHref[x.lan]}>{x.lan}</a> : x.lan}</td><td class="num">{tal(x.alla)}</td><td class="num">{tal(x.obem)}</td><td class="num">{andel(x.obem, x.alla)}</td><td class="num">{andel(x.dygnet, x.alla)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Andelen kan vara lägre i län där många stationer saknar uppgift om typ.</p>
+
+  <h2 id="dygnet">Var kan man tanka dygnet runt?</h2>
+  <p>{tal(perKom.length)} kommuner har minst en station i registret. I {tal(perKom.length - utanDygnet.length)} av dem finns minst en station där du kan tanka dygnet runt. {utanDygnet.length > 0 && <>Undantagen är {utanDygnet.map((x, i) => <>{i > 0 && (i === utanDygnet.length - 1 ? " och " : ", ")}<a href={komHref[x.namn]}>{x.namn}</a></>)}, där ingen station i registret har pumpar öppna hela dygnet.</>}</p>
+  <p>I {tal(utanBem)} kommuner finns ingen station som är registrerad som bemannad. I {tal(bara.length)} kommuner är alla stationer i registret obemannade: {bara.map((x, i) => <>{i > 0 && ", "}<a href={komHref[x.namn]}>{x.namn}</a> ({x.alla})</>)}. Där behöver du alltså ett kort som automaten tar, eller en app.</p>
+  <p>Flest stationer med tankning dygnet runt har dessa kommuner:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Dygnet runt</th><th class="num">Alla stationer</th></tr></thead>
+    <tbody>{flestDygnet.map((x) => <tr><td><a href={komHref[x.namn]}>{x.namn}</a></td><td class="num">{tal(x.dygnet)}</td><td class="num">{tal(x.alla)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Sök fram stationerna nära dig i <a href="/">stationssökningen</a>. På kommunsidorna ser du vilka stationer som är obemannade.</p>
+
+  <h2 id="problem">Om något går fel vid pumpen</h2>
+  <p>På en obemannad station finns ingen personal som kan stänga av anläggningen. MSB:s handbok anger därför att obemannade stationer behöver ha en skylt med telefonnummer till en kontaktperson som kan agera vid läckage eller annat som hotar säkerheten. Läs skylten innan du behöver den.</p>
+  <p>Handboken beskriver också nödstoppet. Det ska finnas väl synligt vid pumpöarna, ofta med rött manöverdon på gul bakgrund, och bryter strömmen till alla pumpar. Den röda STOP-knappen på själva pumpen räknas inte som nödstopp, eftersom den bara stoppar den pumpen tillfälligt. Ett riktigt nödstopp kan bara återställas av behörig personal.</p>
+  <ul>
+    <li><strong>Litet spill eller fel på terminalen:</strong> ring numret på skylten. Qstar har till exempel en kundservice som enligt kedjan svarar även kvällar och helger, och tar emot felanmälan via webbplatsen.</li>
+    <li><strong>Stort spill, brand eller olycka:</strong> tryck på nödstoppet och ring 112.</li>
+    <li><strong>Pengar reserverade men ingen tankning:</strong> kontakta din bank.</li>
+  </ul>
+</Guide>

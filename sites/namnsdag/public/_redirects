@@ -1,0 +1,10 @@
+# 301 för sidor som slagits ihop (ägarens regel 2026-11-27: inga tunna sidor, ingen noindex).
+# Integritet och cookies är nu ett avsnitt på Om-sidan.
+/integritet /om/ 301
+/integritet/ /om/ 301
+# "Namnsdag imorgon" fanns redan på startsidan och på morgondagens datumsida.
+/namnsdag-imorgon / 301
+/namnsdag-imorgon/ / 301
+# Gustav Adolf saknas i SCB:s statistik (dubbelnamn) – namnet visas på sin datumsida.
+/namn/gustav-adolf /6-november/ 301
+/namn/gustav-adolf/* /6-november/ 301

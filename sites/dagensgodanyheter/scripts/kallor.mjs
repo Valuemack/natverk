@@ -1,5 +1,11 @@
-// Förstahandskällor: myndigheter, lärosäten, forskningsinstitut, internationella organisationer och
-// rymdorganisationer. INGA tidningar eller nyhetsbyråer – deras artiklar skrivs aldrig om här.
+// Källorna: förstahandskällor (myndigheter, lärosäten, forskningsinstitut, internationella organisationer och
+// rymdorganisationer) och etablerade medier (typ "medium").
+//
+// Medier: bara redaktioner med rättelserutiner och medier som bevakar goda nyheter, med öppna flöden vars
+// villkor och robots.txt tillåter oss att läsa dem. Inga betalväggar och inga nyhetsbyråer vars villkor
+// förbjuder återanvändning. Medier har lägre tillit än förstahandskällor. skriv.mjs spårar alltid
+// förstahandskällan bakom mediets nyhet; hittas den inte skrivs artikeln som "enligt [medium]". Aldrig
+// kopierad text, aldrig nära omskrivning (scripts/lib/forstahand.mjs, kontroll.mjs).
 //
 // Fält:
 //   id       kort nyckel (används i data och på /kallor/)
@@ -9,7 +15,8 @@
 //   kat      förvald kategori (modellen får byta om innehållet säger annat)
 //   tillit   0–1: hur pålitlig och förstahandsnära källan är (myndighet/lärosäte ≈ 0,95, organisation ≈ 0,85, företag ≈ 0,7)
 //   land     "se" = svensk källa (Inrikes), "int" = internationell
-//   typ      "myndighet" | "larosate" | "forskning" | "organisation" | "rymd" | "foretag" | "statistik"
+//   typ      "myndighet" | "larosate" | "forskning" | "organisation" | "rymd" | "foretag" | "statistik" | "medium"
+//   kortnamn (medier) namnet i "enligt …", t.ex. "The Guardian"
 //
 // Listan provas med `node scripts/hamta.mjs --testa`. Flöden som slutar fungera markeras med `av: true`
 // och en kort `orsak` i stället för att tas bort, så att historiken syns.
@@ -141,11 +148,47 @@ export const KALLOR = [
   { id: "cancerfonden", namn: "Cancerfonden", url: "https://via.tt.se/rss/releases/latest?publisherId=3236459", hem: "https://www.cancerfonden.se", kat: "halsa", tillit: 0.85, land: "se", typ: "organisation" },
   { id: "hjart-lung", namn: "Hjärt-Lungfonden", url: "https://www.mynewsdesk.com/se/rss/current_news/4956", hem: "https://www.hjart-lungfonden.se", kat: "halsa", tillit: 0.85, land: "se", typ: "organisation" },
   { id: "nordens-ark", namn: "Nordens Ark", url: "https://www.mynewsdesk.com/se/nordens_ark/rss/pressreleases", hem: "https://nordensark.se", kat: "djur-natur", tillit: 0.85, land: "se", typ: "organisation", av: true, orsak: "inget flöde" },
-  { id: "kolmarden", namn: "Kolmården", url: "https://www.mynewsdesk.com/se/kolmarden/rss/pressreleases", hem: "https://www.kolmarden.com", kat: "djur-natur", tillit: 0.75, land: "se", typ: "foretag", av: true, orsak: "inget flöde" },
+  { id: "kolmarden", namn: "Kolmården", url: "https://www.mynewsdesk.com/se/rss/current_news/5218", hem: "https://www.kolmarden.com", kat: "djur-natur", tillit: 0.75, land: "se", typ: "foretag" },
   { id: "skansen", namn: "Skansen", url: "https://via.tt.se/rss/releases/latest?publisherId=303403", hem: "https://www.skansen.se", kat: "djur-natur", tillit: 0.8, land: "se", typ: "organisation" },
   { id: "nationalmuseum", namn: "Nationalmuseum", url: "https://www.mynewsdesk.com/se/rss/current_news/87", hem: "https://www.nationalmuseum.se", kat: "kultur", tillit: 0.9, land: "se", typ: "myndighet" },
   { id: "sfi", namn: "Svenska Filminstitutet", url: "https://www.filminstitutet.se/sv/rss/nyheter/", hem: "https://www.filminstitutet.se", kat: "kultur", tillit: 0.9, land: "se", typ: "organisation", av: true, orsak: "inget flöde" },
   { id: "europeana", namn: "Europeana", url: "https://www.europeana.eu/en/blog/rss", hem: "https://www.europeana.eu", kat: "kultur", tillit: 0.85, land: "int", typ: "organisation", av: true, orsak: "inget flöde" },
+  // ---------- Människor som gör fina saker, natur som kommer tillbaka, framsteg (tillagda 2026-11-26) ----------
+  { id: "raddabarnen", namn: "Rädda Barnen", url: "https://press.raddabarnen.se/rss/current_news/5399", hem: "https://www.raddabarnen.se", kat: "inrikes", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "sjoraddning", namn: "Sjöräddningssällskapet", url: "https://www.mynewsdesk.com/se/rss/current_news/11177", hem: "https://www.sjoraddning.se", kat: "inrikes", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "livraddning", namn: "Svenska Livräddningssällskapet", url: "https://www.mynewsdesk.com/se/rss/current_news/5301", hem: "https://www.svenskalivraddningssallskapet.se", kat: "inrikes", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "rodakorset", namn: "Svenska Röda Korset", url: "https://via.tt.se/rss/releases/latest?publisherId=3235745", hem: "https://www.rodakorset.se", kat: "inrikes", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "stadsmissionerna", namn: "Sveriges Stadsmissioner", url: "https://www.mynewsdesk.com/se/rss/current_news/126180", hem: "https://www.stadsmissionen.se", kat: "inrikes", tillit: 0.82, land: "se", typ: "organisation" },
+  { id: "barncancerfonden", namn: "Barncancerfonden", url: "https://www.mynewsdesk.com/se/rss/current_news/125226", hem: "https://www.barncancerfonden.se", kat: "halsa", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "hjartebarnsfonden", namn: "Hjärtebarnsfonden", url: "https://www.mynewsdesk.com/se/rss/current_news/28330", hem: "https://www.hjartebarnsfonden.se", kat: "halsa", tillit: 0.82, land: "se", typ: "organisation" },
+  { id: "geblod", namn: "GeBlod", url: "https://geblod.nu/feed/", hem: "https://geblod.nu", kat: "halsa", tillit: 0.85, land: "se", typ: "organisation" },
+  { id: "mentor", namn: "Mentor Sverige", url: "https://mentor.se/feed/", hem: "https://mentor.se", kat: "inrikes", tillit: 0.8, land: "se", typ: "organisation" },
+  { id: "unicef-se", namn: "UNICEF Sverige", url: "https://via.tt.se/rss/releases/latest?publisherId=3242049", hem: "https://unicef.se", kat: "utrikes", tillit: 0.88, land: "se", typ: "organisation" },
+  { id: "artdatabanken", namn: "SLU Artdatabanken", url: "https://www.slu.se/artdatabanken/arter-och-natur/artiklar/rss?id=31569", hem: "https://www.slu.se/artdatabanken/", kat: "djur-natur", tillit: 0.95, land: "se", typ: "larosate" },
+  { id: "lansstyrelsen-stockholm", namn: "Länsstyrelsen Stockholm", url: "https://www.lansstyrelsen.se/api/getnews?whichlst=Stockholm&local=3.710ed317161746d8052c682&type=rss&state=rss&sv.contenttype=text/xml;charset=UTF-8", hem: "https://www.lansstyrelsen.se/stockholm.html", kat: "inrikes", tillit: 0.93, land: "se", typ: "myndighet" },
+  { id: "rewild", namn: "Re:wild", url: "https://www.rewild.org/feed", hem: "https://www.rewild.org", kat: "djur-natur", tillit: 0.85, land: "int", typ: "organisation" },
+  { id: "ember", namn: "Ember (energitankesmedja)", url: "https://ember-energy.org/feed/?post_type=insight_page", hem: "https://ember-energy.org", kat: "miljo", tillit: 0.88, land: "int", typ: "forskning" },
+  { id: "gates", namn: "Gates Foundation", url: "https://www.gatesfoundation.org/feed", hem: "https://www.gatesfoundation.org", kat: "halsa", tillit: 0.85, land: "int", typ: "organisation" },
+  { id: "malaria-consortium", namn: "Malaria Consortium", url: "https://www.malariaconsortium.org/feeds/news.xml", hem: "https://www.malariaconsortium.org", kat: "halsa", tillit: 0.85, land: "int", typ: "organisation" },
+
+  // ---------- Etablerade medier och goda nyheter-medier (tillagda 2026-11-26) ----------
+  // Tipskällor med lägre tillit. Villkor och robots.txt provade 2026-11-26. Medier som blockerar automatisk eller
+  // AI-baserad läsning, eller vars villkor bara tillåter personligt, icke-kommersiellt bruk, är avstängda med orsak.
+  { id: "svt-vetenskap", namn: "SVT Nyheter – Vetenskap", kortnamn: "SVT", url: "https://www.svt.se/nyheter/vetenskap/rss.xml", hem: "https://www.svt.se", kat: "vetenskap", tillit: 0.8, land: "se", typ: "medium" },
+  { id: "goodgoodgood", namn: "Good Good Good", kortnamn: "Good Good Good", url: "https://www.goodgoodgood.co/articles/rss.xml", hem: "https://www.goodgoodgood.co", kat: "utrikes", tillit: 0.65, land: "int", typ: "medium" },
+  { id: "goodnewsnetwork", namn: "Good News Network", kortnamn: "Good News Network", url: "https://www.goodnewsnetwork.org/feed/", hem: "https://www.goodnewsnetwork.org", kat: "utrikes", tillit: 0.6, land: "int", typ: "medium" },
+  { id: "optimistdaily", namn: "The Optimist Daily", kortnamn: "The Optimist Daily", url: "https://www.optimistdaily.com/feed/", hem: "https://www.optimistdaily.com", kat: "utrikes", tillit: 0.6, land: "int", typ: "medium" },
+  { id: "positivenews", namn: "Positive News", url: "https://www.positive.news/feed/", hem: "https://www.positive.news", kat: "utrikes", tillit: 0.65, land: "int", typ: "medium", av: true, orsak: "villkoren: bara personligt, icke-kommersiellt bruk, ingen automatisk läsning" },
+  { id: "rtbc", namn: "Reasons to be Cheerful", url: "https://reasonstobecheerful.world/feed/", hem: "https://reasonstobecheerful.world", kat: "utrikes", tillit: 0.65, land: "int", typ: "medium", av: true, orsak: "robots.txt blockerar AI-baserad läsning" },
+  { id: "theconversation", namn: "The Conversation", url: "https://theconversation.com/global/articles.atom", hem: "https://theconversation.com", kat: "vetenskap", tillit: 0.7, land: "int", typ: "medium", av: true, orsak: "robots.txt blockerar AI-baserad läsning; CC BY-ND" },
+  { id: "fixthenews", namn: "Fix the News", url: "https://fixthenews.com/feed", hem: "https://fixthenews.com", kat: "utrikes", tillit: 0.6, land: "int", typ: "medium", av: true, orsak: "robots.txt blockerar AI-baserad läsning; sammanfattningar bara för personligt bruk" },
+  { id: "mongabay", namn: "Mongabay", url: "https://news.mongabay.com/feed", hem: "https://news.mongabay.com", kat: "djur-natur", tillit: 0.7, land: "int", typ: "medium", av: true, orsak: "villkoren: bara personligt, icke-kommersiellt bruk" },
+  { id: "anthropocene", namn: "Anthropocene Magazine", url: "https://www.anthropocenemagazine.org/feed/", hem: "https://www.anthropocenemagazine.org", kat: "miljo", tillit: 0.7, land: "int", typ: "medium", av: true, orsak: "robots.txt svarar inte (räknas som nej); återanvändning kräver tillstånd" },
+  { id: "euronews-earth", namn: "Euronews", url: "https://www.euronews.com/rss?level=vertical&name=earth", hem: "https://www.euronews.com", kat: "miljo", tillit: 0.7, land: "int", typ: "medium", av: true, orsak: "villkoren: bara personligt, icke-kommersiellt bruk" },
+  { id: "sr-ekot", namn: "Sveriges Radio Ekot", url: "https://api.sr.se/api/rss/program/83", hem: "https://sverigesradio.se", kat: "inrikes", tillit: 0.8, land: "se", typ: "medium", av: true, orsak: "API-villkoren: bara länkning; robots.txt blockerar AI-baserad läsning" },
+  { id: "guardian", namn: "The Guardian", url: "https://www.theguardian.com/world/series/the-upside/rss", hem: "https://www.theguardian.com", kat: "utrikes", tillit: 0.8, land: "int", typ: "medium", av: true, orsak: "flöden bara för personligt bruk; robots.txt förbjuder AI och kommersiellt bruk" },
+  { id: "bbc", namn: "BBC News", url: "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml", hem: "https://www.bbc.com", kat: "utrikes", tillit: 0.8, land: "int", typ: "medium", av: true, orsak: "kommersiellt bruk av flödena kräver tillstånd; förbjuder AI-sammanfattningar" },
+  { id: "npr", namn: "NPR", url: "https://feeds.npr.org/1001/rss.xml", hem: "https://www.npr.org", kat: "utrikes", tillit: 0.8, land: "int", typ: "medium", av: true, orsak: "flödet: For Personal Use Only" },
 ];
 
 /** Källor som får användas: allt utom avstängda. */

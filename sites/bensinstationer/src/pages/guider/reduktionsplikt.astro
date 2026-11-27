@@ -1,0 +1,135 @@
+---
+// Lång guide: reduktionsplikten. Nivåer ur lagen (2017:1201), avgifter ur förordningen (2025:589), och en egen jämförelse
+// av svenska produktpriser mot EU-snittet kring ändringarna 1 januari 2024 och 1 juli 2025 (EU Weekly Oil Bulletin).
+// Granskad 2026-11-25.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, EU, VECKOR, SENASTE_VECKA, kr, pris, procent, datumText } from "../../pris.js";
+import { REDUKTIONSPLIKT as R } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const nu = R.nivaer.find((x) => x.ar === "2026");
+
+// Produktpris utan skatt i Sverige och snittet i övriga EU-länder (kr/l) veckan före och efter en ändring.
+const kurs = new Map(EU.lander.SE.serie.map((r) => [r[0], r[5]]));
+const euSnitt = (datum, kol) => {
+  const v = Object.entries(EU.lander).filter(([k]) => k !== "SE").map(([, l]) => l.serie.find((r) => r[0] === datum)?.[kol]).filter((x) => x);
+  return v.length ? v.reduce((s, x) => s + x, 0) / v.length / kurs.get(datum) : null;
+};
+const vecka = (fore, datum) => (fore ? VECKOR.filter((x) => x.datum < datum).at(-1) : VECKOR.find((x) => x.datum >= datum));
+const handelse = (datum, text) => {
+  const a = vecka(true, datum), b = vecka(false, datum);
+  if (!a || !b) return null;
+  const rad = (kol, euKol) => ({ se: b[kol] - a[kol], eu: euSnitt(b.datum, euKol) - euSnitt(a.datum, euKol), fore: a[kol], efter: b[kol] });
+  return { datum, text, a, b, diesel: rad("dieselutan", 4), bensin: rad("b95utan", 3) };
+};
+const h2024 = handelse("2024-01-01", "Sänkning till 6 % (diesel från 30,5 %, bensin från 7,8 %)");
+const h2025 = handelse("2025-07-01", "Höjning från 6 till 10 %");
+const handelser = [h2024, h2025].filter(Boolean);
+const tecken = (x) => `${x >= 0 ? "+" : "−"}${pris(Math.abs(x))}`;
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är reduktionsplikten?" },
+  { id: "nivaer", rubrik: "Reduktionsnivåerna år för år" },
+  { id: "procent", rubrik: "Vad betyder 10 procent?" },
+  { id: "pris", rubrik: "Hur påverkar reduktionsplikten priset?" },
+  { id: "omfattas", rubrik: "Vilka drivmedel omfattas?" },
+  { id: "avgift", rubrik: "Reduktionspliktsavgiften" },
+  { id: "framat", rubrik: "Vad händer efter 2026?" },
+  { id: "tanka", rubrik: "Så ser du vad du tankar" },
+];
+
+const fragor = [
+  { fraga: "Vad är reduktionsplikten?", svar: "Reduktionsplikten är ett krav i lag (2017:1201) på att den som säljer bensin och diesel ska minska bränslets växthusgasutsläpp med en viss procent, räknat över hela livscykeln. Kravet uppfylls genom inblandning av biodrivmedel." },
+  { fraga: `Hur hög är reduktionsplikten ${nu.ar}?`, svar: `${procent(nu.bensin)} för både bensin och diesel. Nivån har gällt sedan den 1 juli 2025 och ligger enligt lagen kvar på ${procent(nu.diesel)} till och med 2030.` },
+  { fraga: "Varför sänktes reduktionsplikten 2024?", svar: "Den 1 januari 2024 sänktes plikten till 6 procent för både bensin och diesel, från 7,8 respektive 30,5 procent. Enligt Drivkraft Sverige var skälet de höga drivmedelspriserna." },
+  h2024 && { fraga: "Blev dieseln billigare när reduktionsplikten sänktes?", svar: `Veckan efter sänkningen 1 januari 2024 föll det svenska dieselpriset utan skatt med ${kr(Math.abs(h2024.diesel.se))} per liter enligt EU:s statistik, medan snittet i övriga EU-länder ändrades med ${kr(h2024.diesel.eu)}. Även andra faktorer kan ha spelat in.` },
+  { fraga: "Gäller reduktionsplikten HVO100?", svar: "Nej. Lagen gäller bensin och diesel med högst 98 volymprocent biodrivmedel. Ren HVO100 ligger därför utanför. Plikten styr hur mycket HVO som blandas in i vanlig diesel." },
+  { fraga: "Vad händer om ett bolag inte uppfyller reduktionsplikten?", svar: `Bolaget får betala reduktionspliktsavgift: ${R.avgiftBensin} kronor per kilo koldioxidekvivalenter som inte reducerats för bensin och ${R.avgiftDiesel} kronor för diesel, enligt förordningen (2025:589).` },
+  { fraga: "Gäller reduktionsplikten flygbränsle?", svar: "Inte längre. Enligt Energimyndigheten omfattas flygfotogen i stället av EU:s förordning ReFuelEU Aviation." },
+].filter(Boolean);
+---
+<Guide site={SITE} titel={`Reduktionsplikt ${nu.ar} – ${procent(nu.bensin)} för bensin och diesel`}
+  beskrivning={`Reduktionsplikten är ${procent(nu.bensin)} för bensin och diesel ${nu.ar}. Nivåerna sedan 2018, vad plikten betyder för priset, vilka bränslen som omfattas och vad som händer framåt.`}
+  h1="Reduktionsplikten – så fungerar den"
+  svar={`Reduktionsplikten kräver att den som säljer bensin och diesel minskar bränslets växthusgasutsläpp genom att blanda in biodrivmedel. <strong>${nu.ar} är kravet ${procent(nu.bensin)} för både bensin och diesel</strong>, och enligt lagen (2017:1201) ligger det kvar på den nivån till och med 2030. Plikten sänktes till 6 procent 2024 och höjdes igen den 1 juli 2025.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Reduktionsplikt", href: "/guider/reduktionsplikt/" }]}
+  publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinskatt", href: "/guider/vad-bestar-bensinpriset-av/", text: "Så stor del av priset är skatt" },
+    { namn: "HVO100, E85 och fordonsgas", href: "/guider/hvo100-e85-fordonsgas/", text: "Priser och skillnader" },
+    { namn: "Bensin 95 eller 98", href: "/guider/95-eller-98/", text: "E10, E5 och oktantal" },
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Kedjornas listpriser" },
+    { namn: "Bensinprisets historik", href: "/historik/", text: "Veckopriser sedan 2005" },
+  ]}
+  kallor={[
+    { namn: "Lag (2017:1201) om reduktion av växthusgasutsläpp från bensin och diesel", url: R.lag, text: "definitioner, undantag, reduktionsnivåer (5 §) och avgiftstak (10 §), lydelse t.o.m. SFS 2025:576", datum: "2026-11-25" },
+    { namn: "Förordning (2025:589) om reduktion av växthusgasutsläpp", url: R.forordning, text: "reduktionspliktsavgift och förseningsavgift", datum: "2026-11-25" },
+    { namn: "Energimyndigheten – Reduktionsplikt", url: R.energimyndigheten, text: "vad plikten innebär, rapportering och flygfotogen", datum: "2026-11-25" },
+    { namn: "Energimyndigheten – EU ETS2", url: "https://www.energimyndigheten.se/klimat/eus-utslappshandelssystem-eu-ets/om-eu-ets-och-hur-utslappshandeln-fungerar/vad-ar-eu-ets/eu-ets2/", text: "preliminära datum för utsläppshandeln för vägtransporter", datum: "2026-11-25" },
+    { namn: "Drivkraft Sverige – Reduktionsplikten", url: R.drivkraft, text: "nivåer vid införandet 2018 och skälet till sänkningen 2024", datum: "2026-11-25" },
+    { namn: "Drivkraft Sverige – Bensin", url: "https://drivkraftsverige.se/fakta-statistik/drivmedel/bensin/", text: "E10 och E5 vid pumpen", datum: "2026-11-25" },
+    { namn: "Regeringen – SOU 2026:33 Vägen mot utfasning", url: "https://www.regeringen.se/rattsliga-dokument/statens-offentliga-utredningar/2026/05/sou-202633/", text: "utredningen om styrmedel och reduktionsplikten", datum: "2026-11-25" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: EU.kalla_url, text: "produktpriser utan skatt i Sverige och övriga EU (CC BY 4.0)", datum: "2026-11-25" },
+  ]}>
+
+  <h2 id="vad">Vad är reduktionsplikten?</h2>
+  <p>Reduktionsplikten infördes den 1 juli 2018 genom lagen (2017:1201) om reduktion av växthusgasutsläpp från bensin och diesel. Den innebär att den som är skattskyldig för bensin och diesel varje år måste minska växthusgasutsläppen från bränslet med en viss procent. Utsläppen räknas i ett livscykelperspektiv, alltså från framställning av råvaran till förbränning i motorn.</p>
+  <p>Kravet uppfylls genom att bolagen blandar in biodrivmedel med lägre utsläpp än fossil bensin och diesel. I bensin blandas etanol in, och i diesel HVO och FAME (RME). Bolagen rapporterar sina volymer och utsläpp till Energimyndigheten.</p>
+  <p>Reduktionsplikten är alltså inget krav på att en viss andel av bränslet ska vara förnybart, utan på hur mycket utsläppen ska minska jämfört med om bränslet hade varit helt fossilt.</p>
+
+  <h2 id="nivaer">Reduktionsnivåerna år för år</h2>
+  <p>Nivåerna har ändrats flera gånger sedan starten. Fram till 2023 var kravet för diesel mångdubbelt högre än för bensin.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>År</th><th class="num">Bensin</th><th class="num">Diesel</th><th>Anmärkning</th></tr></thead>
+    <tbody>{R.nivaer.map((x) => <tr><td>{x.ar === nu.ar ? <strong>{x.ar}</strong> : x.ar}</td><td class="num">{procent(x.bensin, 1).replace(",0 ", " ")}</td><td class="num">{procent(x.diesel, 1).replace(",0 ", " ")}</td><td>{x.not ?? ""}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Minskning av växthusgasutsläppen i procent. 2018 enligt Drivkraft Sverige, 2020 och framåt enligt lagens 5 §.</p>
+  <p>Den största förändringen kom den 1 januari 2024, när kravet för diesel sänktes från 30,5 till 6 procent och för bensin från 7,8 till 6 procent. Enligt Drivkraft Sverige var skälet de höga drivmedelspriserna. Från den 1 juli 2025 är nivån 10 procent för båda bränslena.</p>
+
+  <h2 id="procent">Vad betyder 10 procent?</h2>
+  <p>Att reduktionsplikten är 10 procent betyder att utsläppen från all bensin respektive all diesel som ett bolag säljer ska vara 10 procent lägre än om bränslet hade varit helt fossilt. Hur stor volym biodrivmedel som krävs beror på hur mycket varje biokomponent minskar utsläppen. Ett biodrivmedel med låga livscykelutsläpp ger mer reduktion per liter än ett med höga, och bolagen kan därför välja olika råvaror och blandningar.</p>
+  <p>I bensin begränsas inblandningen av att bensin 95 får innehålla högst 10 volymprocent etanol (E10). Den gränsen har gällt sedan 2011, och E10 blev standardbensin i Sverige den 1 augusti 2021 enligt Drivkraft Sverige.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="pris">Hur påverkar reduktionsplikten priset?</h2>
+  <p>Biodrivmedel är i dag dyrare än fossila bränslen, och enligt Drivkraft Sverige innebär en hög reduktionsplikt därför ett högre pris. Hur mycket är svårt att mäta, eftersom världsmarknaden och kronkursen ändras samtidigt. Men EU:s veckostatistik gör det möjligt att jämföra det svenska produktpriset utan skatt med snittet i övriga EU-länder kring de två senaste ändringarna.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Ändring</th><th>Drivmedel</th><th class="num">Sverige före</th><th class="num">Sverige efter</th><th class="num">Ändring Sverige</th><th class="num">Ändring EU-snitt</th></tr></thead>
+    <tbody>{handelser.flatMap((h) => [
+      <tr><td rowspan="2">{datumText(h.datum)}<br /><small>{h.text}</small></td><td>Diesel</td><td class="num">{pris(h.diesel.fore)}</td><td class="num">{pris(h.diesel.efter)}</td><td class="num">{tecken(h.diesel.se)}</td><td class="num">{tecken(h.diesel.eu)}</td></tr>,
+      <tr><td>Bensin 95</td><td class="num">{pris(h.bensin.fore)}</td><td class="num">{pris(h.bensin.efter)}</td><td class="num">{tecken(h.bensin.se)}</td><td class="num">{tecken(h.bensin.eu)}</td></tr>,
+    ])}</tbody>
+  </table></div>
+  <p class="kalla">Pris utan skatt i kronor per liter, veckan före och veckan efter ändringen. EU-snitt = enkelt medel av övriga medlemsländer, omräknat med samma veckas kurs.</p>
+  {h2024 && <p>När dieselns krav sänktes från 30,5 till 6 procent föll det svenska dieselpriset utan skatt med <strong>{kr(Math.abs(h2024.diesel.se))} per liter</strong> på en vecka, medan snittet i resten av EU ändrades med {kr(h2024.diesel.eu)}. För bensin, där sänkningen var liten, var effekten också liten. Vid höjningen 2025 syns ingen tydlig förändring från en vecka till nästa. Jämförelsen visar samband i tid, inte exakt hur stor del som beror på reduktionsplikten.</p>}
+
+  <h2 id="omfattas">Vilka drivmedel omfattas?</h2>
+  <p>Lagen gäller bensin och diesel som innehåller högst 98 volymprocent biodrivmedel. Det betyder att i stort sett all bensin och diesel vid pumpen omfattas, men inte rena biodrivmedel. Lagen undantar också:</p>
+  <ul>
+    <li>bensin och diesel som används av Försvarsmakten eller motsvarande utländska myndigheter,</li>
+    <li>alkylatbensin, som används i bland annat gräsklippare och motorsågar,</li>
+    <li>diesel som har försetts med märk- och färgämnen.</li>
+  </ul>
+  <p>Ren HVO100 ligger utanför eftersom den består av biodrivmedel till 100 procent. Flygfotogen har tidigare omfattats av en egen reduktionsplikt, men enligt Energimyndigheten gäller i stället EU:s förordning ReFuelEU Aviation för flygbränsle.</p>
+
+  <h2 id="avgift">Reduktionspliktsavgiften</h2>
+  <p>Ett bolag som inte når kravet ska betala en reduktionspliktsavgift för de utsläpp som inte har minskats. Lagen sätter ett tak på {R.avgiftTak} kronor per kilo koldioxidekvivalenter. Regeringen har i förordningen (2025:589) bestämt beloppen:</p>
+  <ul>
+    <li><strong>Bensin:</strong> {R.avgiftBensin} kronor per kilo koldioxidekvivalenter som inte reducerats.</li>
+    <li><strong>Diesel:</strong> {R.avgiftDiesel} kronor per kilo koldioxidekvivalenter.</li>
+    <li><strong>Förseningsavgift:</strong> 20 000 kronor för den som lämnar sin rapport för sent.</li>
+  </ul>
+
+  <h2 id="framat">Vad händer efter 2026?</h2>
+  <p>Enligt lagen ligger nivån kvar på 10 procent för både bensin och diesel varje år till och med 2030. Det kan ändras genom nya beslut i riksdagen. Två saker är på gång:</p>
+  <h3>Utredningen Vägen mot utfasning</h3>
+  <p>I maj 2026 lämnade en statlig utredning betänkandet SOU 2026:33, Vägen mot utfasning – Styrmedel för ett fossilfritt samhälle. Enligt regeringen föreslår utredningen bland annat hur reduktionsplikten kan bli mer flexibel och kostnadseffektiv, och hur nivåerna kan justeras för att Sverige ska nå sitt åtagande enligt EU:s ansvarsfördelningsförordning. Remisstiden gick ut den 30 juni 2026 och förslagen analyseras i Regeringskansliet.</p>
+  <h3>EU:s utsläppshandel för vägtransporter</h3>
+  <p>EU inför ett nytt system för utsläppshandel, ETS2, som omfattar bränslen för vägtransporter och byggnader. Enligt Energimyndigheten är planen att auktioneringen av utsläppsrätter börjar den 1 januari 2027, men myndigheten påpekar att datumen är preliminära. Hur ETS2 och reduktionsplikten ska samverka är en av frågorna i den svenska debatten. Drivkraft Sverige, som företräder drivmedelsbranschen, har under hösten 2026 argumenterat för en högre reduktionsplikt.</p>
+
+  <h2 id="tanka">Så ser du vad du tankar</h2>
+  <p>Som bilist märker du reduktionsplikten mest genom priset och genom märkningen vid pumpen. Enligt Drivkraft Sverige är pumpen för bensin alltid märkt E10 eller E5, efter hur mycket etanol bensinen högst innehåller. Bensin 95 är oftast E10 och bensin 98 ofta E5. Ungefär 94 procent av de bensindrivna personbilarna är godkända för E10. Läs mer i guiden <a href="/guider/95-eller-98/">bensin 95 eller 98</a>.</p>
+  <p>Den som vill tanka ett bränsle som är förnybart till större del kan välja <a href="/drivmedel/hvo100/">HVO100</a> i en godkänd dieselbil, <a href="/drivmedel/e85/">E85</a> i en flexifuelbil eller <a href="/drivmedel/fordonsgas/">fordonsgas</a> i en gasbil. Dagens priser och skillnader finns i guiden om <a href="/guider/hvo100-e85-fordonsgas/">HVO100, E85 och fordonsgas</a>. Senaste veckan kostade diesel {kr(SENASTE_VECKA.diesel)} och bensin 95 {kr(SENASTE_VECKA.b95)} per liter i snitt.</p>
+</Guide>

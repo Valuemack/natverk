@@ -1,8 +1,86 @@
 ---
-import KatalogLan from "@natverk/core/katalog/KatalogLan.astro";
-import { SITE, KAT, ORD, UPPDATERAD, KALLA } from "../../../site.js";
+// Länssida: alla kommuner i länet med stationer, kedjor, listpris, dygnet runt och förnybara drivmedel,
+// plus körsträcka per län (Trafikanalys) och karta. Allt räknas ur datan.
+import Layout from "@natverk/core/Layout.astro";
+import Annons from "@natverk/core/Annons.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd, besk } from "@natverk/core/seo.js";
+import { talText, invanarePer, FOLK_SVERIGE, FOLKMANGD_AR, adressRad } from "@natverk/core/katalog.js";
+import Karta from "../../../components/Karta.astro";
+import { SITE, KAT, UPPDATERAD, KALLA } from "../../../site.js";
+import { LP_DATUM, LISTKEDJOR, idagPris, kedjePris, kr, pris, datumText, kedjaHref } from "../../../pris.js";
+import { FUNKTIONER, sammanfatta } from "../../../stationsfakta.js";
+import { KORSTRACKOR } from "../../../lib/fakta.js";
 
 export const getStaticPaths = () => KAT.lan.map((l) => ({ params: { lan: l.slug }, props: { lan: l } }));
-const { lan } = Astro.props;
+const { lan: l } = Astro.props;
+const E = l.kommuner.flatMap((k) => k.enheter);
+const S = sammanfatta(E);
+const R = sammanfatta(KAT.enheter);
+const datum = datumText(LP_DATUM);
+const rader = l.kommuner.map((k) => ({ k, s: sammanfatta(k.enheter) })).sort((a, b) => b.s.n - a.s.n);
+const VISA = ["dygnet-runt", "e85", "hvo100", "fordonsgas", "adblue", "laddning", "lastbil", "biltvatt"];
+const andel = (x, n) => (n ? Math.round((x / n) * 100) : 0);
+const b95 = S.billigast("bensin95");
+const perLan = invanarePer(l.folk, l.antal), perRiket = invanarePer(FOLK_SVERIGE, KAT.enheter.length);
+const lanRang = [...KAT.lan].filter((x) => x.folk).sort((a, b) => b.antal / b.folk - a.antal / a.folk);
+const rang = lanRang.indexOf(l) + 1;
+const mil = KORSTRACKOR.perLan.find(([n]) => n === l.namn)?.[1];
+const milRang = [...KORSTRACKOR.perLan].sort((a, b) => b[1] - a[1]).findIndex(([n]) => n === l.namn) + 1;
+const utanFunk = (id) => rader.filter((x) => x.s.per[id].length === 0).map((x) => x.k);
+const fragor = [
+  { fraga: `Hur många bensinstationer finns i ${l.namn}?`, svar: `Det finns ${talText(S.n)} bensinstationer i ${l.namn}, fördelade på ${l.kommuner.length} kommuner. Flest har ${rader[0].k.namn} (${rader[0].s.n}).` },
+  { fraga: `Vilka kedjor finns i ${l.namn}?`, svar: `${S.kedjor.slice(0, 8).map(([c, n]) => `${c} (${n})`).join(", ")}.` },
+  b95 && { fraga: `Vad kostar bensin i ${l.namn} idag?`, svar: `Lägst listpris på 95 bland kedjorna i länet har ${b95.kedjor.join(" och ")} med ${kr(b95.pris)} per liter (${datum}). Snittet i landet är ${kr(idagPris("bensin95"))}. Pumppriset sätts per station.` },
+  { fraga: `Var i ${l.namn} kan man tanka E85, HVO100 och fordonsgas?`, svar: `${S.per.e85.length} stationer i länet säljer E85, ${S.per.hvo100.length} HVO100 och ${S.per.fordonsgas.length} fordonsgas.${utanFunk("fordonsgas").length ? ` ${utanFunk("fordonsgas").length} av ${l.kommuner.length} kommuner saknar fordonsgas.` : ""}` },
+  { fraga: `Hur många stationer i ${l.namn} har öppet dygnet runt?`, svar: `${S.per["dygnet-runt"].length} av ${S.n} stationer (${andel(S.per["dygnet-runt"].length, S.n)} %) har tankning dygnet runt, mot ${andel(R.per["dygnet-runt"].length, R.n)} % i hela landet.` },
+  mil && { fraga: `Hur långt kör man i ${l.namn}?`, svar: `En privatägd personbil i ${l.namn} kördes i snitt ${talText(mil)} mil under ${KORSTRACKOR.ar} enligt Trafikanalys, plats ${milRang} av 21 län.` },
+].filter(Boolean);
+const titel = [`Bensinstationer i ${l.namn} – ${S.n} st per kommun`, `Bensinstationer i ${l.kortnamn} – ${S.n} st`].find((t) => t.length <= 60) ?? `Bensinstationer i ${l.kortnamn}`;
 ---
-<KatalogLan site={SITE} kat={KAT} lan={lan} ord={ORD} uppdaterad={UPPDATERAD} kallaText={KALLA} />
+<Layout site={SITE} titel={titel}
+  beskrivning={besk(`Alla ${S.n} bensinstationer i ${l.namn} per kommun med kedjornas listpris idag.`, `✓ ${S.per["dygnet-runt"].length} dygnet runt`, `✓ E85, HVO100 och fordonsgas per kommun`, "✓ Karta", "Uppdateras varje natt.")}
+  smulor={[{ namn: "Start", href: "/" }, { namn: l.kortnamn, href: l.href }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Bensinstationer i {l.namn}</h1>
+  <p class="svar">{l.namn} har <strong>{talText(S.n)} bensinstationer</strong> i {l.kommuner.length} kommuner. Flest finns i {rader[0].k.namn} ({rader[0].s.n}){rader[1] && <> och {rader[1].k.namn} ({rader[1].s.n})</>}. {S.per["dygnet-runt"].length} går att tanka dygnet runt{b95 && <>, och lägst listpris på 95 har {b95.kedjor.join(" och ")} med <strong>{kr(b95.pris)}</strong></>}.</p>
+
+  <h2>Kommunerna i {l.namn}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Stationer</th><th class="num">Dygnet runt</th><th class="num">E85</th><th class="num">HVO100</th><th class="num">Gas</th><th class="num">Lastbil</th><th>Lägst 95</th></tr></thead>
+    <tbody>{rader.map(({ k, s }) => { const b = s.billigast("bensin95"); return <tr>
+      <td><a href={k.href}>{k.namn}</a></td><td class="num">{s.n}</td><td class="num">{s.per["dygnet-runt"].length}</td><td class="num">{s.per.e85.length}</td><td class="num">{s.per.hvo100.length}</td><td class="num">{s.per.fordonsgas.length}</td><td class="num">{s.per.lastbil.length}</td><td>{b ? `${b.kedjor.join("/")} ${pris(b.pris)}` : "–"}</td>
+    </tr>; })}</tbody>
+  </table></div>
+  <p class="kalla">Lägst 95 = lägsta listpris (kr/l) bland kedjorna med publicerat pris som finns i kommunen, {LP_DATUM}. "–" betyder att kommunens kedjor sätter pris per station.</p>
+
+  <h2>Vad finns i {l.namn} jämfört med hela landet?</h2>
+  <div class="tabell"><table>
+    <thead><tr><th></th><th class="num">Stationer i länet</th><th class="num">Andel i länet</th><th class="num">Andel i Sverige</th><th class="num">Kommuner utan</th></tr></thead>
+    <tbody>{FUNKTIONER.filter((f) => VISA.includes(f.id)).map((f) => <tr><td>{f.href ? <a href={f.href}>{f.namn}</a> : f.namn}</td><td class="num">{S.per[f.id].length}</td><td class="num">{andel(S.per[f.id].length, S.n)} %</td><td class="num">{andel(R.per[f.id].length, R.n)} %</td><td class="num">{utanFunk(f.id).length}</td></tr>)}</tbody>
+  </table></div>
+  {utanFunk("e85").length > 0 && utanFunk("e85").length < l.kommuner.length && <p>Kommuner i länet utan E85: {utanFunk("e85").map((k, i) => <>{i > 0 && ", "}<a href={k.href}>{k.namn}</a></>)}. Kommunsidorna visar närmaste station med E85.</p>}
+
+  <Annons plats="lan-1" />
+
+  <h2>Kedjorna i {l.namn}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">Andel</th><th class="num">95 idag</th><th class="num">Diesel idag</th></tr></thead>
+    <tbody>{S.kedjor.slice(0, 15).map(([c, n]) => <tr><td>{kedjaHref(c) ? <a href={kedjaHref(c)}>{c}</a> : c}</td><td class="num">{n}</td><td class="num">{andel(n, S.n)} %</td><td class="num">{LISTKEDJOR.includes(c) ? pris(kedjePris(c, "bensin95")) : "–"}</td><td class="num">{LISTKEDJOR.includes(c) ? pris(kedjePris(c, "diesel")) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p>{S.obemannade.length} av stationerna i länet ({andel(S.obemannade.length, S.n)} %) är obemannade, mot {andel(R.obemannade.length, R.n)} % i hela Sverige.</p>
+
+  {(perLan || mil) && <>
+    <h2>Stationer per invånare och körsträcka</h2>
+    <p>{perLan && perRiket && <>I {l.namn} går det en bensinstation på ungefär {talText(perLan)} invånare (SCB, folkmängd 31 december {FOLKMANGD_AR}), mot en på {talText(perRiket)} i hela landet – plats {rang} av {lanRang.length} län räknat från flest stationer per invånare. </>}
+    {mil && <>En privatägd personbil registrerad i länet kördes i snitt {talText(mil)} mil under {KORSTRACKOR.ar} enligt Trafikanalys, plats {milRang} av 21 län. Med 0,6 liter per mil (räkneexempel) och dagens snittpris för 95 blir det ungefär {kr(mil * 0.6 * idagPris("bensin95"), 0)} per år i bensin. <a href="/rakna/">Räkna på din egen bil</a>.</>}</p>
+  </>}
+
+  <h2>Karta över stationerna i {l.namn}</h2>
+  <Karta hojd={420} punkter={E.map((e) => ({ namn: e.namn, lat: e.lat, lon: e.lon, href: e.href, rad: [e.kedja, adressRad(e) || e.kommun].filter(Boolean).join(" · ") }))} />
+
+  <h2>Största kommunerna</h2>
+  <div class="kort">{rader.slice(0, 6).map(({ k, s }) => <a href={k.href}><strong>Bensinstationer i {k.namn}</strong><small>{s.n} st · {s.per["dygnet-runt"].length} dygnet runt</small></a>)}</div>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">{KALLA} Körsträckor: Trafikanalys, Körsträckor {KORSTRACKOR.ar}. Listpriser från {LISTKEDJOR.join(", ")}.</p>
+</Layout>

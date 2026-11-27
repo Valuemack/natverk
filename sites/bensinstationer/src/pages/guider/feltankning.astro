@@ -1,0 +1,147 @@
+---
+// Lång guide: feltankning (bensin i dieselbil, diesel i bensinbil, AdBlue i bränsletanken). Råd och munstycksmått från ADAC,
+// villkor från Folksam, Volvia, Hedvig och Assistancekåren, AdBlue-priser ur kedjornas listpriser och stationer med AdBlue,
+// diesel och bensin ur STATIONER. Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, STATIONER, idagPris, kedjePris, kr, pris, procent, datumText } from "../../pris.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+
+const p95 = idagPris("bensin95"), pd = idagPris("diesel");
+const tank = 50;
+const adblue = ["OKQ8", "Preem"].map((c) => ({ c, p: kedjePris(c, "adblue") })).filter((x) => x.p != null);
+
+const nAlla = STATIONER.length;
+const nDiesel = STATIONER.filter((s) => s.drivmedel?.diesel === true).length;
+const n95 = STATIONER.filter((s) => s.drivmedel?.bensin95 === true).length;
+const nBada = STATIONER.filter((s) => s.drivmedel?.bensin95 === true && s.drivmedel?.diesel === true).length;
+const abSt = STATIONER.filter((s) => s.drivmedel?.adblue === true);
+const nAdblue = abSt.length;
+const abKedja = Object.entries(abSt.reduce((m, s) => { if (s.kedja) m[s.kedja] = (m[s.kedja] || 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+const avsnitt = [
+  { id: "direkt", rubrik: "Tankat fel? Gör så här direkt" },
+  { id: "bensin-i-diesel", rubrik: "Bensin i dieselbil" },
+  { id: "diesel-i-bensin", rubrik: "Diesel i bensinbil" },
+  { id: "munstycken", rubrik: "Därför passar fel pistol" },
+  { id: "adblue", rubrik: "AdBlue i bränsletanken" },
+  { id: "forsakring", rubrik: "Vad betalar försäkringen?" },
+  { id: "kostnad", rubrik: "Vad kostar en feltankning?" },
+  { id: "undvik", rubrik: "Så undviker du att tanka fel" },
+];
+
+const fragor = [
+  { fraga: "Vad ska jag göra om jag tankat fel?", svar: "Starta inte motorn och slå inte på tändningen. Låt bilen stå, eller skjut den åt sidan, och ring din försäkrings- eller assistansjour för bärgning till verkstad. Där töms och rengörs tanken och bränslesystemet." },
+  { fraga: "Är det värst med bensin i en dieselbil eller diesel i en bensinbil?", svar: "Försäkringsbolaget Hedvig skriver att bensin i en dieselbil generellt är värre, eftersom dieseln smörjer bränslesystemet. Tyska ADAC varnar för att bensinen tvättar bort smörjfilmen och kan förstöra högtryckspumpen. Diesel i en bensinbil kan också skada insprutningen och avgasreningen." },
+  { fraga: "Går det att köra vidare om det bara är lite fel bränsle?", svar: "Nej, räkna inte med det. ADAC skriver att tumregeln att små mängder bensin i diesel är ofarliga inte gäller för moderna dieselmotorer. Undantaget är äldre förkammar- och virvelkammardiesel." },
+  { fraga: "Betalar försäkringen en feltankning?", svar: "Ofta delvis. Hos Folksam ingår bärgning och tömning och rengöring av tank, ledningar och filter i Bilförsäkring Stor, men inte drivmedlet och inte motorskador utan maskinskadeförsäkring. Volvia ersätter upp till 15 000 kr i helförsäkringen före självrisk. Hos Hedvig krävs drulle-tillägget för saneringen." },
+  { fraga: "Vad händer om AdBlue hamnar i dieseltanken?", svar: "Slå inte på tändningen. Enligt ADAC räcker det oftast med en grundlig rengöring av tanken om tändningen inte har slagits på. Har den det kan AdBlue nå insprutningssystemet och ge dyra skador." },
+  { fraga: "Varför passar dieselpistolen i bensinbilen?", svar: "Enligt ADAC är bensinpistolen 21 millimeter och dieselpistolen 25 millimeter i diameter. Den grövre dieselpistolen går ofta att föra in i den övre delen av påfyllningsröret på en bensinbil, och på vissa modeller fastnar den där." },
+];
+---
+<Guide site={SITE} titel="Feltankning – diesel i bensinbil, bensin i diesel"
+  beskrivning="Tankat diesel i bensinbilen, bensin i dieselbilen eller AdBlue i tanken? Så gör du direkt, vad försäkringen betalar och hur du undviker att tanka fel."
+  h1="Feltankning – så gör du om du tankat fel"
+  svar={`<strong>Starta inte motorn och slå inte på tändningen.</strong> Ring din försäkrings- eller assistansjour och låt bärga bilen till en verkstad som tömmer och rengör tanken och bränslesystemet. Har motorn inte gått räcker det ofta med det, och Hedvig uppger verkstadskostnader på 3 000–10 000 kr i det läget. Har bilen körts kan högtryckspump och insprutning behöva bytas. Bärgning och sanering ingår ofta i hel- eller allriskförsäkringen, men själva bränslet ersätts inte.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Feltankning", href: "/guider/feltankning/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensin eller diesel", href: "/guider/bensin-eller-diesel/", text: "Kostnad per mil och brytpunkt" },
+    { namn: "Bensin 95 eller 98", href: "/guider/95-eller-98/", text: "Oktantal, E10 och E5" },
+    { namn: "AdBlue – var finns det?", href: "/drivmedel/adblue/", text: "Stationer med AdBlue i pump" },
+    { namn: "HVO100 – vilka bilar?", href: "/guider/hvo100-vilka-bilar/", text: "Förnybar diesel och godkännanden" },
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Listpris per kedja" },
+  ]}
+  kallor={[
+    { namn: "ADAC – Falsch getankt? Benzin und Diesel vertauscht (26 augusti 2025)", url: "https://www.adac.de/verkehr/tanken-kraftstoff-antrieb/tipps-zum-tanken/falsch-getankt/", text: "munstycksmått 21 och 25 mm, AdBlue-röret 19,75 mm, skador och råd", datum: "2026-11-27" },
+    { namn: "Folksam – Täcker bilförsäkringen feltankning?", url: "https://www.folksam.se/forsakringar/bilforsakring/feltankning", text: "Bilförsäkring Stor, drivmedel och maskinskada", datum: "2026-11-27" },
+    { namn: "Volvia – Feltankning", url: "https://www.volvia.se/vid-skada/skadehandelse/feltankning", text: "helförsäkring, upp till 15 000 kr, AdBlue-tanken", datum: "2026-11-27" },
+    { namn: "Hedvig – Feltankning", url: "https://www.hedvig.com/se/forsakringar/bilforsakring/feltankning", text: "steg, drulle-tillägg, 3 000–10 000 kr", datum: "2026-11-27" },
+    { namn: "Assistancekåren – Feltankning", url: "https://assistancekaren.se/feltankning/", text: "kostnader, självrisk, etanol i fel bil", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – E10", url: "https://www.transportstyrelsen.se/sv/vagtrafik/miljo/klimat-och-energi/e10/", text: "E10 och E5, märkning vid pumpen", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `OKQ8, Circle K och Preem, ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationer med diesel, bensin 95 och AdBlue i pump" },
+  ]}>
+
+  <h2 id="direkt">Tankat fel? Gör så här direkt</h2>
+  <p>Det viktigaste är vad du gör de första minuterna. Så länge det felaktiga bränslet ligger kvar i tanken handlar det oftast om att tömma och rengöra. När motorn har gått har bränslet sugits ut i ledningar, pump och spridare, och då blir det betydligt dyrare. Försäkringsbolagen, assistansbolagen och den tyska motororganisationen ADAC ger samma råd:</p>
+  <ol>
+    <li><strong>Sluta tanka</strong> så fort du märker felet.</li>
+    <li><strong>Starta inte motorn och slå inte på tändningen.</strong> ADAC påpekar att bränslepumpen på vissa bilar startar redan när förardörren öppnas. Instruktionsboken visar om det gäller din bil.</li>
+    <li><strong>Låt bilen stå vid pumpen</strong> om det går, annars kan den skjutas åt sidan.</li>
+    <li><strong>Ring jouren</strong> hos ditt försäkringsbolag eller assistansbolag och be om bärgning till verkstad. Folksam rekommenderar att du också kontaktar en märkesverkstad för råd.</li>
+    <li><strong>Har du redan kört iväg:</strong> stanna där det är säkert och stäng av motorn så fort du märker att något är fel.</li>
+  </ol>
+  <p>På verkstaden töms tanken och bränslesystemet spolas. Hedvig nämner också byte av bränslefilter.</p>
+
+  <h2 id="bensin-i-diesel">Bensin i dieselbil</h2>
+  <p>Försäkringsbolaget Hedvig beskriver det här som det generellt värre fallet. Dieseln smörjer högtryckspumpen och spridarna i en dieselmotor. Bensin fungerar i stället som ett lösningsmedel. ADAC skriver att bensinen tvättar bort smörjfilmen och kan få pumpen att haverera, och att hela insprutningssystemet kan behöva bytas om motorn har gått: högtryckspump, spridare, ledningar och tank.</p>
+  <p>Den gamla tumregeln att lite bensin i dieseln inte gör något gäller inte längre, enligt ADAC. Undantaget är äldre dieselmotorer med förkammare eller virvelkammare, där några liter oftast är ofarliga. Assistancekåren skriver att även små mängder kan skada en modern motor.</p>
+  <p>Typiska tecken på att du kört på bensinblandad diesel är enligt Hedvig dålig acceleration, ryckig gång, ovanliga motorljud, svart rök och efter en stund en varningslampa.</p>
+
+  <h2 id="diesel-i-bensin">Diesel i bensinbil</h2>
+  <p>Dieselpistolen är grövre än bensinpistolen, men ADAC skriver att det ändå går att tanka diesel i många bensinbilar, eftersom pistolen ofta kan föras in i påfyllningsrörets övre del. Bilen kan gå en kort stund på blandningen, men Assistancekåren varnar för att risken för dyra fel ökar snabbt. ADAC skriver att skador på insprutningen och avgasreningen inte kan uteslutas.</p>
+  <p>Samma försiktighet gäller för etanol. Assistancekåren påpekar att bara bilar byggda för etanoldrift tål E85, och att det i andra bilar kan skada packningar, slangar och spridare. Läs mer om vilka bilar som klarar E85 i <a href="/guider/lonar-sig-e85/">guiden om E85</a>.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="munstycken">Därför passar fel pistol</h2>
+  <p>Pistolerna har olika diameter för att göra det svårare att tanka fel. Måtten enligt ADAC:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Pistol eller påfyllning</th><th class="num">Diameter</th><th>Vad det betyder</th></tr></thead>
+    <tbody>
+      <tr><td>Bensinpistol</td><td class="num">21 mm</td><td>Passar i dieselbilens påfyllningsrör om bilen saknar feltankningsskydd</td></tr>
+      <tr><td>Dieselpistol</td><td class="num">25 mm</td><td>Kan ofta föras in i övre delen av en bensinbils påfyllningsrör</td></tr>
+      <tr><td>AdBlue-påfyllning i bilen</td><td class="num">19,75 mm</td><td>Varken bensin- eller dieselpistolen passar</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Källa: ADAC, 26 augusti 2025.</p>
+  <p>Måtten förklarar varför det är så lätt att tanka bensin i en dieselbil: den smalare bensinpistolen går ner i det vidare dieselröret. Vissa dieselbilar har ett feltankningsskydd i påfyllningsröret som stoppar den smala pistolen, men det finns inte på alla.</p>
+
+  <h2 id="adblue">AdBlue i bränsletanken</h2>
+  <p>AdBlue är en ureavätska som många dieselbilar behöver för att rena kväveoxider i avgaserna. Den ska fyllas i en egen, tydligt märkt tank. Volvia skriver att AdBlue endast får fyllas på i den tanken. Att AdBlue-röret är smalare än bränslepistolerna skyddar bara åt ena hållet: AdBlue från en dunk eller en egen pistol kan fortfarande hällas i fel rör.</p>
+  <p>Enligt ADAC räcker det oftast med en grundlig rengöring av tanken om tändningen inte har slagits på. Har den slagits på kan AdBlue ha nått insprutningssystemet, och då kan skadorna bli dyra. Råden är alltså desamma som vid bensin och diesel: ingen tändning, ingen motorstart, bärgning till verkstad.</p>
+  <p>AdBlue finns i pump på {tal(nAdblue)} av stationerna i vårt register. Listpriset idag är {adblue.map((x, i) => <>{i > 0 && " och "}{kr(x.p)} per liter hos {x.c}</>)} ({datum}). Flest stationer med AdBlue i pump har:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer med AdBlue i pump</th></tr></thead>
+    <tbody>{abKedja.map(([c, n]) => <tr><td>{c}</td><td class="num">{tal(n)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Se alla stationer med AdBlue på sidan om <a href="/drivmedel/adblue/">AdBlue</a>.</p>
+
+  <h2 id="forsakring">Vad betalar försäkringen?</h2>
+  <p>Villkoren skiljer sig mellan bolagen. Så här beskriver fyra bolag vad som gäller:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Bolag</th><th>Vilket skydd</th><th>Vad som ingår</th><th>Vad som inte ingår</th></tr></thead>
+    <tbody>
+      <tr><td>Folksam</td><td>Bilförsäkring Stor</td><td>Bärgning till verkstad, tömning och rengöring av tank, ledningar och filter. Du betalar självrisken.</td><td>Drivmedlet. Motorskador kräver maskinskadeförsäkring.</td></tr>
+      <tr><td>Volvia</td><td>Helförsäkring</td><td>Upp till 15 000 kr före avdrag för självrisk.</td><td>Det som överstiger 15 000 kr.</td></tr>
+      <tr><td>Hedvig</td><td>Halv- och helförsäkring, drulle-tillägg</td><td>Bärgning ingår i halv och hel. Tömning, sanering och byte av bränslefilter kräver drulle-tillägget. En självrisk, den högsta.</td><td>Följdskador på motorn.</td></tr>
+      <tr><td>Assistancekåren</td><td>Väghjälp, från 529 kr per år</td><td>Bärgning vid feltankning med 0 kr självrisk upp till två gånger per år.</td><td>–</td></tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Enligt bolagens webbplatser, hämtade 27 november 2026. Läs alltid villkoren för din egen försäkring.</p>
+  <p>Gemensamt är att det lönar sig att inte starta bilen. Ersättningen gäller i första hand att tömma och rengöra, medan skador på motorn ofta faller utanför bilförsäkringen. Assistancekåren uppger att självrisken i en halv- eller helförsäkring ofta ligger kring 1 000–1 500 kr.</p>
+
+  <h2 id="kostnad">Vad kostar en feltankning?</h2>
+  <p>Hur dyrt det blir beror nästan helt på om motorn har gått. Uppgifterna från bolagen:</p>
+  <ul>
+    <li><strong>Motorn har inte startats:</strong> 3 000–10 000 kr i verkstadskostnad enligt Hedvig.</li>
+    <li><strong>Sanering av bränslesystemet:</strong> 20 000–25 000 kr enligt Assistancekåren.</li>
+    <li><strong>Spannet i stort:</strong> från några tusen till tiotusentals kronor, beroende på om bilen körts, enligt Folksam.</li>
+    <li><strong>Hela insprutningssystemet:</strong> flera tusen euro enligt ADAC.</li>
+  </ul>
+  <p>Till det kommer bränslet som pumpas ur. Folksam ersätter inte drivmedlet. En full tank på {tank} liter kostar idag {kr(tank * pd, 0)} med diesel och {kr(tank * p95, 0)} med bensin 95, räknat på kedjornas snittpris {datum}. Har du tankat fel bränsle ovanpå en halvfull tank försvinner alltså båda delarna.</p>
+
+  <h2 id="undvik">Så undviker du att tanka fel</h2>
+  <ul>
+    <li><strong>Läs märkningen på pistolen</strong> och på pumpen, inte bara färgen. Transportstyrelsen påpekar att bensin med mer än 5 procent etanol ska vara märkt väl synligt där den säljs.</li>
+    <li><strong>Kontrollera tanklocket.</strong> Där står ofta vilket drivmedel bilen ska ha. Instruktionsboken anger vad som gäller.</li>
+    <li><strong>Var extra uppmärksam i hyrbil, tjänstebil och lånad bil</strong>, och när du kör en annan drivlina än vanligt.</li>
+    <li><strong>Tanka inte på rutin.</strong> Om pistolen tar emot konstigt i påfyllningsröret, stanna och kontrollera.</li>
+  </ul>
+  <p>I vårt register anger {tal(nDiesel)} av {tal(nAlla)} stationer att de säljer diesel och {tal(n95)} att de säljer bensin 95. {tal(nBada)} stationer anger båda, och där gäller det att välja rätt pistol. Vill du veta mer om skillnaderna mellan drivmedlen, läs <a href="/guider/bensin-eller-diesel/">bensin eller diesel</a> och <a href="/guider/95-eller-98/">95 eller 98</a>.</p>
+</Guide>

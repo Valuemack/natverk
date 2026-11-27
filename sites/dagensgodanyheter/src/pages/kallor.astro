@@ -4,25 +4,25 @@ import { AKTIVA } from "../../scripts/kallor.mjs";
 import { KAT } from "../lib/kategorier.js";
 import { ARTIKLAR } from "../lib/artiklar.js";
 
-const TYP = { myndighet: "Myndighet", larosate: "Lärosäte", forskning: "Forskning", organisation: "Organisation", rymd: "Rymdorganisation", foretag: "Företag", statistik: "Statistik" };
+const TYP = { myndighet: "Myndighet", larosate: "Lärosäte", forskning: "Forskning", organisation: "Organisation", rymd: "Rymdorganisation", foretag: "Företag", statistik: "Statistik", medium: "Medium" };
 const antal = (id) => ARTIKLAR.filter((a) => a.kalla.id === id).length;
 const grupper = [
   { namn: "Svenska källor", lista: AKTIVA.filter((k) => k.land === "se") },
   { namn: "Internationella källor", lista: AKTIVA.filter((k) => k.land !== "se") },
 ];
 ---
-<Tidning titel="Källor – förstahandskällorna bakom nyheterna"
-  beskrivning={`De ${AKTIVA.length} förstahandskällor som Dagens goda nyheter bevakar: myndigheter, lärosäten, forskningsinstitut, rymdorganisationer och FN-organ.`}
+<Tidning titel="Källor – källorna bakom nyheterna"
+  beskrivning={`De ${AKTIVA.length} källor som Dagens goda nyheter bevakar: myndigheter, lärosäten, forskningsinstitut, rymdorganisationer, FN-organ och etablerade medier.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Källor", href: "/kallor/" }]}>
   <div class="textsida" style="max-width:none">
     <h1 class="sidrubrik">Källor</h1>
-    <p class="sidingress">Vi bevakar {AKTIVA.length} förstahandskällor. Inga tidningar eller nyhetsbyråer finns med – deras artiklar skrivs aldrig om här. Källornas tillit (0–1) är en del av <a href="/redaktionell-policy/#lasvarde">läsvärdet</a>.</p>
+    <p class="sidingress">Vi bygger på förstahandskällor och etablerade medier, och länkar alltid till källan. Här är de {AKTIVA.length} källor vi bevakar. När en nyhet kommer via ett medium letar vi upp originalet bakom den – studien, myndigheten eller organisationen – och länkar båda.</p>
     {grupper.map((g) => (
       <section>
         <h2>{g.namn} ({g.lista.length})</h2>
         <div class="tabell"><table>
-          <thead><tr><th>Källa</th><th>Typ</th><th>Avdelning</th><th>Tillit</th><th>Artiklar</th></tr></thead>
-          <tbody>{g.lista.map((k) => <tr><td><a href={k.hem} rel="nofollow noopener">{k.namn}</a></td><td>{TYP[k.typ] ?? k.typ}</td><td>{KAT[k.kat]?.namn}</td><td>{k.tillit.toFixed(2).replace(".", ",")}</td><td>{antal(k.id)}</td></tr>)}</tbody>
+          <thead><tr><th>Källa</th><th>Typ</th><th>Avdelning</th><th>Artiklar</th></tr></thead>
+          <tbody>{g.lista.map((k) => <tr><td><a href={k.hem} rel="nofollow noopener">{k.namn}</a></td><td>{TYP[k.typ] ?? k.typ}</td><td>{KAT[k.kat]?.namn}</td><td>{antal(k.id)}</td></tr>)}</tbody>
         </table></div>
       </section>
     ))}

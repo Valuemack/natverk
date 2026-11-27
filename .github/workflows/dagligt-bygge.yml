@@ -60,16 +60,19 @@ jobs:
           # forskolor och komvux hämtar samma Skolverket-underlag och delar därför cache.
           - { sajt: forskolor, projekt: forskolor, cache: skolor }
           - { sajt: komvux, projekt: komvux, cache: skolor }
+          # bensinstationer.nu hämtar sedan 2026-11-27 även prisdatan (listpriser, EU:s veckopriser, daglig historik) som dagensbensinpris.se hade.
+          # Bygget skriver dist/_redirects (301 för stationssidor som tagits bort, se sites/bensinstationer/scripts/omdirigeringar.mjs).
           - { sajt: bensinstationer, projekt: bensinstationer }
           - { sajt: simhallar, projekt: simhallar }
           - { sajt: pollenlaget, projekt: pollenlaget }
           - { sajt: parkeringar, projekt: parkeringar }
           - { sajt: lekplatserna, projekt: lekplatserna }
-          # dagensbensinpris hämtar kedjornas listpriser via bensinstationers skript och läser dess stationsregister.
-          - { sajt: dagensbensinpris, projekt: dagensbensinpris }
+          # dagensbensinpris.se är sammanslagen med bensinstationer.nu: bygget är bara dist/_redirects (301 för alla gamla URL:er),
+          # ingen datahämtning, ingen sitemap och därför ingen IndexNow (omdir: true).
+          - { sajt: dagensbensinpris, projekt: dagensbensinpris, omdir: true }
           # jourapotek kör apoteken.nus datahämtning och delar därför dess cache.
           - { sajt: jourapotek, projekt: jourapotek, cache: apoteken }
-          # namnsdagsidag.se: namnlängden (Isof) och namnstatistik (SCB), datan är incheckad i repot.
+          # dagensnamnsdagar.se (tidigare namnsdagsidag.se): namnlängden (Isof) och namnstatistik (SCB), datan är incheckad i repot.
           - { sajt: namnsdag, projekt: namnsdag }
     steps:
       - uses: actions/checkout@v4
@@ -113,6 +116,7 @@ jobs:
         run: npm run build -w sites/${{ matrix.sajt }}
 
       - name: Sitemap-lastmod och IndexNow-förberedelse
+        if: ${{ !matrix.omdir }}
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }}
@@ -125,7 +129,7 @@ jobs:
 
       - name: Pinga IndexNow (Bing m.fl.)
         # Pingar bara när domänerna är aktiva: sätt repovariabeln INDEXNOW_PA till 1.
-        if: ${{ vars.INDEXNOW_PA == '1' }}
+        if: ${{ vars.INDEXNOW_PA == '1' && !matrix.omdir }}
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: node packages/core/scripts/indexnow.mjs sites/${{ matrix.sajt }} --skicka

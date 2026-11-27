@@ -67,7 +67,7 @@
     "liten": "/bilder/euclid-hittar-den-mest-avlagsna-kvasaren-hittills-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: en stor teleskopspegel i ett renrum",
+    "alt": "Målad illustration av en blank metallskiva på en stålställning i en verkstad, omgiven av mätverktyg, gråa textilier.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -94,10 +94,11 @@
   "bildmotiv": "a single round silver telescope mirror resting on a padded test stand in an optics laboratory, protective covers and measuring tools nearby, nobody present",
   "bildalt": "En stor teleskopspegel i ett renrum",
   "poang": {
-    "positiv": 0.85,
-    "betydelse": 0.56,
+    "positiv": 0.8,
+    "betydelse": 0.6,
     "tillit": 0.97,
-    "total": 76
+    "total": 82,
+    "gladje": 0.8
   },
   "produktion": {
     "metod": "ai-stod",
@@ -114,5 +115,6 @@
     "Euclid spacecraft clean room"
   ],
   "bildRymd": true,
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "rymden"
 }

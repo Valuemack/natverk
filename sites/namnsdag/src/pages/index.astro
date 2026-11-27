@@ -1,21 +1,25 @@
 ---
-// Startsidan: namnsdag idag (byggs om varje natt, rättas i webbläsaren om sidan är äldre än dagens datum),
-// verktyget "När har … namnsdag?" och veckans namnsdagar.
-import Layout from "@natverk/core/Layout.astro";
+// Startsidan: namnsdag idag med gratulationskort, imorgon, veckans namnsdagar och sökverktyget.
+// Byggs varje natt; DagSkript rättar innehållet i webbläsaren om sidan är äldre än dagens datum.
+import Layout from "../layouts/Sida.astro";
 import Faq from "@natverk/core/Faq.astro";
 import Annons from "@natverk/core/Annons.astro";
-import { faqLd, websiteLd } from "@natverk/core/seo.js";
+import { faqLd, websiteLd, valjTitel } from "@natverk/core/seo.js";
 import "../styles/sajt.css";
 import {
-  SITE, IDAG, AR, UPPDATERAD, MANADER, ALLA_NAMN, VARIANTER, namnPaDag, mmddAv, dagText, dagHref, namnHref, manadHref,
-  lista, plusDagar, veckodag, iso, barare, tal, UTAN_NAMN, giltigt,
+  SITE, IDAG, AR, UPPDATERAD, MANADER, VARIANTER, UTAN_NAMNSDAG, namnPaDag, mmddAv, dagText, dagHref, namnHref, manadHref,
+  lista, plusDagar, veckodag, iso, barare, tal, UTAN_NAMN, helgnamn, ANTAL_NU, ANTAL_SEN, NYA_AR, beskriv, konAndel, kalenderHref, KALENDER_AR,
 } from "../site.js";
 import Sok from "../components/Sok.astro";
+import BrevKnapp from "../components/BrevKnapp.astro";
+import DagSkript from "../components/DagSkript.astro";
+import { nyfodda, trend, medelalder, scb, ursprung } from "../lib/namndata.js";
 
 const k = mmddAv(IDAG);
 const idag = namnPaDag(k);
-const imorgonK = mmddAv(plusDagar(IDAG, 1));
-const imorgon = namnPaDag(imorgonK, plusDagar(IDAG, 1).getUTCFullYear());
+const imorgonDt = plusDagar(IDAG, 1);
+const imorgonK = mmddAv(imorgonDt);
+const imorgon = namnPaDag(imorgonK, imorgonDt.getUTCFullYear());
 const datumrad = `${veckodag(IDAG)} ${dagText(k)} ${AR}`;
 const vecka = Array.from({ length: 7 }, (_, i) => {
   const dt = plusDagar(IDAG, i);
@@ -23,38 +27,82 @@ const vecka = Array.from({ length: 7 }, (_, i) => {
   return { dt, k: kk, namn: namnPaDag(kk, dt.getUTCFullYear()) };
 });
 const idagText = idag.length ? lista(idag.map((n) => n.namn)) : null;
-const flestBarare = [...idag].sort((a, b) => barare(b) - barare(a))[0];
-const antalNu = ALLA_NAMN.filter((n) => giltigt(n)).length;
-const antal2027 = ALLA_NAMN.length;
+const imorgonText = imorgon.length ? lista(imorgon.map((n) => n.namn)) : null;
+const flest = [...idag].sort((a, b) => barare(b) - barare(a))[0];
+const kortDatum = `${IDAG.getUTCDate()} ${MANADER[IDAG.getUTCMonth()].slice(0, 3)}`;
+
+// "Visste du?" – en fakta om dagens namn, räknad ur SCB:s statistik (byggdagens namn).
+const komma = (x) => String(x).replace(".", ",");
+const fakta = idag.flatMap((n) => {
+  const s = scb(n.namn), serie = nyfodda(n.namn), tr = trend(serie), al = medelalder(n.namn);
+  const topp = serie.reduce((a, r) => (r.x > (a?.x ?? 0) ? r : a), null);
+  const ut = [];
+  if (topp?.x && serie.at(-1)) ut.push(`${n.namn} var som populärast bland nyfödda ${topp.ar}, då ${tal(topp.x)} barn fick namnet. ${serie.at(-1).ar} var det ${tal(serie.at(-1).x)}.`);
+  if (s?.t2000 && s.tilltal) ut.push(`${tal(s.tilltal)} personer heter ${n.namn} – ${s.tilltal > s.t2000 ? `${tal(s.tilltal - s.t2000)} fler` : `${tal(s.t2000 - s.tilltal)} färre`} än år 2000.`);
+  if (al?.total) ut.push(`Medelåldern bland dem som heter ${n.namn} är ${komma(al.total)} år${s ? `, och ${konAndel(s.K, s.M)}` : ""}.`);
+  if (tr && tr.ord !== "ligger ungefär still") ut.push(`${n.namn} ${tr.ord} bland nyfödda: i snitt ${tal(Math.round(tr.nu))} barn per år 2018–2022 mot ${tal(Math.round(tr.fore))} åren 2013–2017.`);
+  return ut;
+});
+const visste = fakta[IDAG.getUTCDate() % Math.max(1, fakta.length)] ?? null;
+const urs = flest ? ursprung(flest.namn) : null;
 
 const fragor = [
-  { fraga: "Vem har namnsdag idag?", svar: idagText ? `Idag, ${datumrad}, har ${idagText} namnsdag.` : `Idag, ${datumrad}, finns inget namn i almanackan – det är ${UTAN_NAMN[k]?.toLowerCase() ?? "en dag utan namn"}.` },
-  { fraga: "Vem har namnsdag imorgon?", svar: imorgon.length ? `Imorgon, ${veckodag(plusDagar(IDAG, 1))} ${dagText(imorgonK)}, har ${lista(imorgon.map((n) => n.namn))} namnsdag.` : `Imorgon, ${dagText(imorgonK)}, finns inget namn i almanackan.` },
-  { fraga: "Hur många namn finns i almanackan?", svar: `Den svenska namnlängden har ${antalNu} namn ${AR}. Från 2027 blir det ${antal2027}, när Cassandra, Eira, Flora, Mio, Vilgot och Zackarias kommer in.` },
+  { fraga: "Vem har namnsdag idag?", svar: idagText ? `Idag, ${datumrad}, har ${idagText} namnsdag.` : `Idag, ${datumrad}, finns inget namn i almanackan – det är ${UTAN_NAMN[k] ? helgnamn(UTAN_NAMN[k]) : "en dag utan namn"}.` },
+  { fraga: "Vem har namnsdag imorgon?", svar: imorgonText ? `Imorgon, ${veckodag(imorgonDt)} ${dagText(imorgonK)}, har ${imorgonText} namnsdag.` : `Imorgon, ${dagText(imorgonK)}, finns inget namn i almanackan.` },
+  { fraga: "Hur många namn finns i almanackan?", svar: `Den svenska namnlängden har ${ANTAL_NU} namn ${AR}. Från ${NYA_AR} blir det ${ANTAL_SEN}, när Cassandra, Eira, Flora, Mio, Vilgot och Zackarias kommer in.` },
   { fraga: "Vad gör man om man inte har någon namnsdag?", svar: "Den 1 januari finns inget namn i almanackan. Dagen är i stället gemensam namnsdag för alla namn som saknas i namnlängden. Många firar också på dagen för ett närbesläktat namn, till exempel firar många som heter Thomas på Tomas-dagen." },
 ];
+const titel = idagText
+  ? valjTitel(`Namnsdag idag: ${idagText} (${kortDatum}) – och vem har imorgon?`, `Namnsdag idag: ${idagText} (${kortDatum}) – vem har imorgon?`, `Namnsdag idag: ${idagText} (${kortDatum})`, `Namnsdag idag ${dagText(k)}`)
+  : valjTitel(`Namnsdag idag (${kortDatum}): ingen – och vem har imorgon?`, `Namnsdag idag ${dagText(k)}`);
 ---
-<Layout site={SITE} titel={`Namnsdag idag ${dagText(k)} – ${idagText ?? "ingen namnsdag"} | Alla namnsdagar ${AR}`}
-  beskrivning={`Vem har namnsdag idag, ${datumrad}? ${idagText ? `${idagText}.` : "Ingen namnsdag idag."} ✓ Sök när ditt namn har namnsdag ✓ Veckans namnsdagar ✓ Alla ${antalNu} namn i almanackan.`}
-  smulor={[{ namn: "Namnsdag idag", href: "/" }]} jsonld={[websiteLd(SITE), faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+<Layout site={SITE} titel={titel}
+  beskrivning={beskriv(`Vem har namnsdag idag, ${datumrad}? ${idagText ? `${idagText}.` : "Ingen namnsdag idag."}`, imorgonText && `Imorgon: ${imorgonText}.`, "✓ Sök ditt namn", "✓ Veckans namnsdagar", `✓ Alla ${ANTAL_NU} namn`, "✓ Grattiskort att dela")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD} ogBild={`/og/dag${dagHref(k).slice(0, -1)}.png`}>
   <h1>Namnsdag idag</h1>
 
-  <section class="idag" id="idag" data-byggdag={iso(IDAG)} aria-live="polite">
-    <span class="datumrad" data-falt="datum">{datumrad}</span>
-    <p class="stornamn" data-falt="namn">{idag.length
-      ? idag.map((n, i) => <>{i > 0 && (i === idag.length - 1 ? " och " : ", ")}<a href={namnHref(n.namn)}>{n.namn}</a></>)
-      : <span>{UTAN_NAMN[k]?.split(" –")[0] ?? "Ingen namnsdag"}</span>}</p>
-    <p class="extra" data-falt="extra">{idag.length ? "har namnsdag idag." : "Ingen har namnsdag i almanackan idag."}</p>
+  <section class="gkort kort-idag" id="idag" data-dagsida data-byggdag={iso(IDAG)} data-forskjutning="0" data-falt="dela"
+    data-dela={flest ? namnHref(flest.namn) : "/"} data-namn={idagText ?? ""} aria-live="polite">
+    <svg class="kort-dekor" viewBox="0 0 320 60" aria-hidden="true" focusable="false">
+      <path d="M0 6 Q40 34 80 10 T160 10 T240 10 T320 6" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".55" />
+      {[18, 58, 98, 138, 178, 218, 258, 298].map((x, i) => <path d={`M${x} ${i % 2 ? 14 : 20} l7 0 l-3.5 12 z`} class={`flagga f${i % 4}`} />)}
+    </svg>
+    <p class="kort-ovan" data-falt="datum">{datumrad}</p>
+    <p class="kort-text" data-falt="korttext">{idag.length ? "Grattis" : "Idag"}</p>
+    <p class="kort-namn" data-falt="kortnamn">{idagText ? `${idagText}!` : (UTAN_NAMN[k]?.split(" –")[0] ?? "Ingen namnsdag")}</p>
+    <p class="kort-datum" data-falt="kortrad">{idag.length ? <>har namnsdag idag: {idag.map((n, i) => <>{i > 0 && (i === idag.length - 1 ? " och " : ", ")}<a href={namnHref(n.namn)}>{n.namn}</a></>)}</> : "Ingen har namnsdag i almanackan idag."}</p>
+    <div class="kort-knappar">
+      <button type="button" class="knapp" data-gor="dela" hidden>Dela grattis</button>
+      <button type="button" class="knapp sekundar" data-gor="kopiera">Kopiera länk</button>
+      <a class="knapp sekundar" href="/grattis-pa-namnsdagen/">Skriv en hälsning</a>
+    </div>
+    <p class="kort-status" aria-live="polite"></p>
   </section>
 
+  {idagText && <BrevKnapp namn={idagText} falt="brevnamn" />}
+
   <p class="svar" data-falt="svar">Idag, {datumrad}, {idagText ? <>har <strong>{idagText}</strong> namnsdag.</> : <>finns inget namn i almanackan.</>}
-    {flestBarare && barare(flestBarare) > 0 && <> {tal(barare(flestBarare))} personer i Sverige har {flestBarare.namn} som tilltalsnamn.</>}
-    {" "}Imorgon har {imorgon.length ? lista(imorgon.map((n) => n.namn)) : "ingen"} namnsdag.</p>
+    {" "}Imorgon, {veckodag(imorgonDt)} {dagText(imorgonK)}, har {imorgonText ?? "ingen"} namnsdag.</p>
+
+  <div class="tva-rutor">
+    <div class="ruta">
+      <h2>Imorgon</h2>
+      <p class="imorgon" data-falt="imorgon">{imorgon.length ? imorgon.map((n, i) => <>{i > 0 && (i === imorgon.length - 1 ? " och " : ", ")}<a href={namnHref(n.namn)}>{n.namn}</a></>) : "ingen namnsdag"} <span>({veckodag(imorgonDt)} {dagText(imorgonK)})</span></p>
+      <p><a href={dagHref(imorgonK)} data-falt="imorgonlank">Allt om {dagText(imorgonK)} →</a></p>
+    </div>
+    {visste && <div class="ruta visste" data-byggdagsfakta>
+      <h2>Visste du?</h2>
+      <p>{visste}</p>
+      <p class="kalla">SCB:s namnstatistik (folkbokförda 2020, nyfödda 1998–2022).</p>
+    </div>}
+  </div>
+
+  {urs && <p data-byggdagsfakta><strong>Vad betyder {flest.namn}?</strong> {urs.ursprung} <small>(<a href={urs.url} rel="noopener">svenska Wikipedia</a>, CC BY-SA 4.0) · <a href={namnHref(flest.namn)}>Allt om namnet {flest.namn}</a></small></p>}
 
   <Sok />
 
   <h2>Namnsdagar de närmaste sju dagarna</h2>
-  <ul class="veckan" id="veckan">
+  <ul class="veckan" data-falt="veckan">
     {vecka.map((d, i) => (
       <li aria-current={i === 0 ? "date" : undefined}>
         <span class="vd"><a href={dagHref(d.k)}>{i === 0 ? "Idag" : i === 1 ? "Imorgon" : veckodag(d.dt)} {dagText(d.k)}</a></span>
@@ -68,54 +116,42 @@ const fragor = [
   <h2>Namnsdagar månad för månad</h2>
   <div class="lank-rad">{MANADER.map((m, i) => <a href={manadHref(i + 1)} aria-current={i === IDAG.getUTCMonth() ? "page" : undefined}>{m[0].toUpperCase() + m.slice(1)}</a>)}</div>
 
-  <h2>Mer om namnsdagar</h2>
-  <ul>
-    <li><a href="/alla-namn/">Alla {antal2027} namn i almanackan från A till Ö</a></li>
-    <li><a href="/vanligaste-namnen/#almanackan">Almanackans vanligaste namn</a> – hur många som bär varje namn enligt SCB</li>
-    <li><a href="/nya-namn/">Nya namn i almanackan</a> – alla ändringar sedan 2001 och de sex nya namnen 2027</li>
-    <li><a href="/namn-utan-namnsdag/">Vanliga namn som saknar namnsdag</a> – och vilken dag de kan firas ({VARIANTER.length} stavningsvarianter)</li>
-    <li><a href="/namnsdagar.ics">Alla namnsdagar som kalenderfil</a> för mobilen eller Outlook</li>
+  <h2>Verktyg och listor</h2>
+  <ul class="genvagar">
+    <li><a href="/alla-namn/"><strong>Alla namn A–Ö</strong><span>{ANTAL_NU} namn i almanackan {AR}, {ANTAL_SEN} från {NYA_AR}</span></a></li>
+    <li><a href={kalenderHref()}><strong>Namnsdagar {KALENDER_AR}</strong><span>kalender att skriva ut, månad eller helår</span></a></li>
+    <li><a href="/hitta-barnnamn/"><strong>Hitta barnnamn</strong><span>filtrera bland SCB:s namn</span></a></li>
+    <li><a href="/namn-utan-namnsdag/"><strong>Namn utan namnsdag</strong><span>{UTAN_NAMNSDAG.length} vanliga namn, {VARIANTER.length} stavningsvarianter</span></a></li>
+    <li><a href="/hur-manga-heter/"><strong>Hur många heter …?</strong><span>sök i SCB:s namnstatistik</span></a></li>
+    <li><a href="/namnsdagar.ics"><strong>Kalenderfil</strong><span>alla namnsdagar i mobilen eller Outlook</span></a></li>
+    <li><a href="/widget/"><strong>Namnsdag på din sajt</strong><span>gratis widget</span></a></li>
   </ul>
 
   <h2>Guider om namn och namnsdagar</h2>
   <ul>
     <li><a href="/namnsdag/">Namnsdag – historia och almanackan</a>: från helgonkalendern till namnlängden 2001 och vem som bestämmer namnen</li>
-    <li><a href="/hur-manga-heter/">Hur många heter …?</a> – sök bland alla förnamn i SCB:s namnstatistik</li>
     <li><a href="/pojknamn/">Pojknamn</a> och <a href="/flicknamn/">flicknamn</a> – populära och klassiska namn med topplistor sedan 1998</li>
     <li><a href="/vanligaste-namnen/">Vanligaste namnen i Sverige</a> – topp 20 för kvinnor och män</li>
     <li><a href="/grattis-pa-namnsdagen/">Grattis på namnsdagen</a> – hälsningar, presentidéer och traditionen</li>
     <li><a href="/ovanliga-namn/">Ovanliga namn och namnens betydelse</a></li>
+    <li><a href="/nya-namn/">Nya namn i almanackan</a> – alla ändringar sedan 2001</li>
+    <li><a href="/press/">Namnstatistik för press</a> – nyhetsvinklar ur SCB:s data</li>
   </ul>
 
   <Faq fragor={fragor} />
 
   <script slot="skript" is:inline>
-    // Rättar "idag" om sidan är byggd en tidigare dag (cache eller nattbygget har inte körts än).
-    (async () => {
-      const el = document.getElementById("idag");
-      const nu = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Stockholm", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-      if (!el || el.dataset.byggdag === nu) return;
-      try {
-        const d = await (await fetch("/data/namnsdagar.json")).json();
-        const [y, m, dd] = nu.split("-").map(Number);
-        const dag = (o) => { const t = new Date(Date.UTC(y, m - 1, dd + o)); return { t, k: t.toISOString().slice(5, 10) }; };
-        const VD = ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"];
-        const MN = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
-        const txt = (t) => `${t.getUTCDate()} ${MN[t.getUTCMonth()]}`;
-        const namn = (o) => { const { t, k } = dag(o); return (d.dagar[k] || []).filter((x) => !x[2] || t.getUTCFullYear() >= x[2]); };
-        const lank = (x) => `<a href="/namn/${x[1]}/">${x[0]}</a>`;
-        const lista = (xs) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " och " + xs.at(-1);
-        const i0 = dag(0), n0 = namn(0), n1 = namn(1);
-        el.querySelector('[data-falt="datum"]').textContent = `${VD[i0.t.getUTCDay()]} ${txt(i0.t)} ${y}`;
-        el.querySelector('[data-falt="namn"]').innerHTML = n0.length ? lista(n0.map(lank)) : (d.utan[i0.k] || "Ingen namnsdag");
-        el.querySelector('[data-falt="extra"]').textContent = n0.length ? "har namnsdag idag." : "Ingen har namnsdag i almanackan idag.";
-        document.querySelector('[data-falt="svar"]').innerHTML = `Idag, ${VD[i0.t.getUTCDay()]} ${txt(i0.t)} ${y}, ${n0.length ? `har <strong>${lista(n0.map((x) => x[0]))}</strong> namnsdag.` : "finns inget namn i almanackan."} Imorgon har ${n1.length ? lista(n1.map((x) => x[0])) : "ingen"} namnsdag.`;
-        document.getElementById("veckan").innerHTML = [0, 1, 2, 3, 4, 5, 6].map((o) => {
-          const { t } = dag(o), ns = namn(o);
-          const rub = o === 0 ? "Idag" : o === 1 ? "Imorgon" : VD[t.getUTCDay()];
-          return `<li${o === 0 ? ' aria-current="date"' : ""}><span class="vd">${rub} ${txt(t)}</span><span>${ns.length ? ns.map(lank).join(", ") : "<em>ingen namnsdag</em>"}</span></li>`;
-        }).join("");
-      } catch {}
+    (() => {
+      const k = document.getElementById("idag");
+      if (!k) return;
+      const status = k.querySelector(".kort-status"), dela = k.querySelector('[data-gor="dela"]');
+      const url = () => new URL(k.dataset.dela || "/", location.href).href;
+      const text = () => (k.dataset.namn ? `Grattis på namnsdagen, ${k.dataset.namn}!` : "Namnsdag idag");
+      if (navigator.share) { dela.hidden = false; dela.addEventListener("click", () => navigator.share({ title: text(), text: text(), url: url() }).catch(() => {})); }
+      k.querySelector('[data-gor="kopiera"]').addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(url()); status.textContent = "Länken är kopierad."; } catch { status.textContent = url(); }
+      });
     })();
   </script>
+  <DagSkript slot="skript" />
 </Layout>

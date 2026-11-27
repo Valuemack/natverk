@@ -2,6 +2,7 @@ import { idagStockholm, iso } from "@natverk/core/datum.js";
 import { laddaKatalog, veckoSammanfattning } from "@natverk/core/katalog.js";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { harEgenSida } from "./grind.js";
 
 export const IDAG = idagStockholm();
 export const UPPDATERAD = iso(IDAG);
@@ -15,7 +16,7 @@ export const KALLA = "Källor: bensinbolagens egna stationsuppgifter och OpenStr
 /** Drivmedel i visningsordning: nyckel, kort namn, långt namn, slug för drivmedelssida (null = ingen egen sida). */
 export const DRIVMEDEL = [
   ["bensin95", "95", "Bensin 95", null],
-  ["bensin98", "98", "Bensin 98", null],
+  ["bensin98", "98", "Bensin 98", "bensin-98"],
   ["diesel", "diesel", "Diesel", null],
   ["hvo100", "HVO100", "HVO100", "hvo100"],
   ["e85", "E85", "Etanol E85", "e85"],
@@ -53,8 +54,13 @@ const kedjaNamn = (k) => (k ? KEDJENAMN[k.toLowerCase().replace(/\s+ab$/, "")] ?
 const versaler = (s) => (s ? s.replace(/(^|[\s,(\/-])([A-ZÅÄÖÉ]{4,})(?=[\s.,)\/-]|$)/g, (m, fore, w) => fore + w[0] + w.slice(1).toLowerCase()) : s);
 const fixaNamn = versaler;
 
+// Hur många stationer som delar samma webbadress (kedjans startsida räknas inte som stationens egen sida).
+const WEBB = new Map();
+for (const e of JSON.parse(readFileSync(resolve(process.cwd(), process.env.DATAFIL ?? "data/stationer.json"), "utf8"))) if (e.webb) WEBB.set(e.webb, (WEBB.get(e.webb) ?? 0) + 1);
+
 export const KAT = laddaKatalog("data/stationer.json", {
-  harEgenSida: (e) => !!(e.gatuadress && (e.oppettider || !e.extra?.endast_osm || e.telefon)),
+  // Kvalitetsgrinden (src/grind.js) körs på rådatan, innan kundtjänstnumret fylls i som telefon.
+  harEgenSida: (e) => e.grind === true,
   forbered: (e) => {
     const x = e.extra ?? {};
     const kedja = kedjaNamn(e.kedja);
@@ -65,6 +71,9 @@ export const KAT = laddaKatalog("data/stationer.json", {
     const butikAnnan = x.oppettider_butik && e.oppettider && JSON.stringify(x.oppettider_butik) !== JSON.stringify(e.oppettider);
     return {
       ...e,
+      grind: harEgenSida(e, WEBB),
+      typRa: e.typ ?? null,
+      telefonEgen: e.telefon ?? null,
       namn: fixaNamn(e.namn),
       gatuadress: versaler(e.gatuadress),
       ort: e.ort && e.ort === e.ort.toUpperCase() ? e.ort[0] + e.ort.slice(1).toLowerCase() : e.ort,
@@ -90,17 +99,19 @@ export const SITE = {
   tema: "bensin",
   tagline: "Alla bensinstationer i Sverige",
   tjanstText: "Oberoende guide till tankställen · Uppdateras varje natt",
-  kallor: ["Bensinbolagens stationssök","© OpenStreetMap-bidragsgivare (ODbL)"],
+  kallor: ["Bensinbolagens stationssök","Kedjornas publicerade listpriser","EU-kommissionen, Weekly Oil Bulletin (CC BY 4.0)","© OpenStreetMap-bidragsgivare (ODbL)"],
   namn: "Bensinstationer",
   visningsnamn: "bensinstationer.nu",
   url: "https://bensinstationer.nu",
-  beskrivning: "Alla bensinstationer och tankställen i Sverige med adress, öppettider och drivmedel – hitta närmaste mack med diesel, E85, HVO100 eller laddning. Uppdateras varje natt.",
+  beskrivning: "Alla bensinstationer i Sverige med adress, öppettider och drivmedel, dagens bensin- och dieselpris per kedja, prishistorik sedan 2005 och priser i Europa. Uppdateras varje natt.",
   organisation: "bensinstationer.nu",
   farg: "#1f4f8f",
-  meny: [{"namn":"Bensinpris idag","href":"/bensinpris/"},{"namn":"Drivmedel","href":"/drivmedel/"},{"namn":"Kedjor","href":"/kedja/"},{"namn":"Om","href":"/om/"}],
+  meny: [{"namn":"Bensinpris idag","href":"/bensinpris/"},{"namn":"Dieselpris","href":"/dieselpris/"},{"namn":"Drivmedel","href":"/drivmedel/"},{"namn":"Kedjor","href":"/kedja/"},{"namn":"Historik","href":"/historik/"},{"namn":"Räkna","href":"/rakna/"},{"namn":"Guider","href":"/guider/"}],
   sidfot: [
     { namn: "Om bensinstationer.nu", href: "/om/" },
-    { namn: "Källor", href: "/om/#kallor" },
+    { namn: "Källor och metod", href: "/om/#kallor" },
+    { namn: "Bensinpris i Europa", href: "/europa/" },
+    { namn: "Öppna prisdata (JSON)", href: "/om/#data" },
     { namn: "Integritet och cookies", href: "/integritet/" },
   ],
   sidfotText: "Källor: bensinbolagens egna stationsuppgifter och OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL).",

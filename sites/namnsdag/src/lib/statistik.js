@@ -5,7 +5,7 @@ import { join } from "node:path";
 const las = (f) => JSON.parse(readFileSync(join(process.cwd(), "data", f), "utf8"));
 const TOPP = las("scb-topp.json");
 const ALLA = las("scb-alla.json");
-import { ALLA_NAMN, VARIANTER } from "../site.js";
+import { ALLA_NAMN, UTAN_NAMNSDAG } from "../site.js";
 
 export const TOPP_KALLA = TOPP.kalla;
 export const ALLA_KALLA = ALLA.kalla;
@@ -59,10 +59,11 @@ export const NYARE = {
   2025: { K: ["Vera", "Astrid", "Alice", "Olivia", "Elsa"], M: ["Noah", "Hugo", "Liam", "Nils", "Alfred"], kalla: "Skatteverket" },
 };
 
-/** Namnsdag för ett namn: egen dag i almanackan, stavningsvariant (kan firas på huvudnamnets dag) eller null. */
+/** Namnsdag för ett namn: egen dag, stavningsvariant (kan firas på huvudnamnets dag), utan (egen sida, 1 januari) eller null. */
 export function namnsdagFor(namn) {
   const a = almanacka(namn);
   if (a) return { typ: "egen", n: a, slug: a.slug };
-  const v = VARIANTER.find((x) => x.namn === namn);
-  return v ? { typ: "variant", n: v.huvud, slug: v.slug } : null;
+  const v = UTAN_NAMNSDAG.find((x) => x.namn === namn);
+  if (!v) return null;
+  return v.huvud ? { typ: "variant", n: v.huvud, slug: v.slug } : { typ: "utan", n: { namn, datum: "01-01" }, slug: v.slug };
 }

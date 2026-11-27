@@ -15,7 +15,7 @@ const dagNamn = visadDag ? dagText(new Date(`${visadDag}T12:00:00Z`)) : "";
 const tidigare = dagar.filter((d) => d !== visadDag).slice(0, 6);
 ---
 <Tidning titel={`Glada nyheter idag – ${dagNamn}`}
-  beskrivning={`Glada och positiva nyheter ${arIdag ? "idag" : dagNamn}: ${dagens.length} goda nyheter, rangordnade efter läsvärde. ${dagens[0] ? dagens[0].rubrik : ""}`}
+  beskrivning={`Glada och positiva nyheter ${arIdag ? "idag" : dagNamn}: ${dagens.length} goda nyheter. ${dagens[0] ? dagens[0].rubrik : ""}`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Glada nyheter idag", href: "/glada-nyheter-idag/" }]}
   ogBild={dagens[0]?.ogBild}
   jsonld={[samlingLd({ namn: "Glada nyheter idag", beskrivning: `Dagens goda nyheter ${dagNamn}`, href: "/glada-nyheter-idag/", artiklar: dagens })]}>
@@ -23,7 +23,7 @@ const tidigare = dagar.filter((d) => d !== visadDag).slice(0, 6);
   <h1 class="sidrubrik">Glada nyheter idag</h1>
   <p class="sidingress">
     {arIdag
-      ? <>{versal(dagNamn)} har vi publicerat {dagens.length} {dagens.length === 1 ? "glad nyhet" : "glada nyheter"}, sorterade efter läsvärde. Nya artiklar kommer varje natt.</>
+      ? <>{versal(dagNamn)} har vi publicerat {dagens.length} {dagens.length === 1 ? "glad nyhet" : "glada nyheter"} – de gladaste först.</>
       : <>Inga nya artiklar har publicerats idag än. Här är de {dagens.length} senaste glada nyheterna, från {dagNamn}. Nästa omgång publiceras i natt.</>}
     {" "}Världen blir bättre på fler sätt än nyhetsflödet visar – här är dagens bevis.
   </p>

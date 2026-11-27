@@ -1,5 +1,5 @@
 ---
-// "Positiva nyheter": veckans mest läsvärda nyheter, per avdelning, och vad vi räknar som en positiv nyhet.
+// "Positiva nyheter": veckans bästa goda nyheter, per avdelning, och vad vi räknar som en positiv nyhet.
 import Tidning from "../components/Tidning.astro";
 import Kort from "../components/Kort.astro";
 import Siffror from "../components/Siffror.astro";
@@ -8,17 +8,17 @@ import { ARTIKLAR, efterLasvarde, senaste, iKategori } from "../lib/artiklar.js"
 import { samlingLd } from "../lib/ld.js";
 
 const veckan = senaste(24 * 7);
-const urval = efterLasvarde(veckan.length >= 6 ? veckan : ARTIKLAR).slice(0, 12);
+const urval = efterLasvarde((veckan.length >= 6 ? veckan : ARTIKLAR).filter((a) => !a.poang?.byrakratisk)).slice(0, 12);
 const perKat = KATEGORIER.map((k) => ({ k, antal: iKategori(k.slug).length })).filter((x) => x.antal);
 ---
-<Tidning titel="Positiva nyheter – veckans mest läsvärda goda nyheter"
-  beskrivning={`Veckans positiva nyheter: ${urval.length} goda nyheter om vetenskap, miljö, hälsa och samhälle, rangordnade efter läsvärde och skrivna utifrån förstahandskällor.`}
+<Tidning titel="Positiva nyheter – veckans bästa goda nyheter"
+  beskrivning={`Veckans positiva nyheter: ${urval.length} goda nyheter om natur, människor, vetenskap, hälsa och samhälle, skrivna utifrån förstahandskällor.`}
   smulor={[{ namn: "Start", href: "/" }, { namn: "Positiva nyheter", href: "/positiva-nyheter/" }]}
   ogBild={urval[0]?.ogBild}
-  jsonld={[samlingLd({ namn: "Positiva nyheter – veckans mest läsvärda", beskrivning: "Veckans mest läsvärda positiva nyheter.", href: "/positiva-nyheter/", artiklar: urval })]}>
+  jsonld={[samlingLd({ namn: "Positiva nyheter – veckans bästa", beskrivning: "Veckans bästa positiva nyheter.", href: "/positiva-nyheter/", artiklar: urval })]}>
   <header class="sidhuvud">
     <h1 class="sidrubrik">Positiva nyheter</h1>
-    <p class="sidingress">Veckans mest läsvärda goda nyheter från Sverige och världen, från alla avdelningar. Listan räknas om varje natt.</p>
+    <p class="sidingress">Veckans bästa goda nyheter från Sverige och världen, från alla avdelningar.</p>
   </header>
 
   <div class="rutnat">{urval.map((a, i) => <Kort a={a} rubrikNiva="h2" ladda={i < 3 ? "eager" : "lazy"} />)}</div>
@@ -28,7 +28,6 @@ const perKat = KATEGORIER.map((k) => ({ k, antal: iKategori(k.slug).length })).f
   <section class="sektion textsida">
     <h2 class="sektion-rubrik">Vad är en positiv nyhet?</h2>
     <p>En positiv nyhet handlar om något som faktiskt har blivit bättre eller kan bli det: en upptäckt, en lösning, ett beslut som hjälper många, en art som återhämtar sig eller ett kulturarv som räddas. Långsamma framsteg är lätta att missa i nyhetsflödet, och därför tror många att världen blir sämre när mätningarna ofta visar motsatsen. En positiv nyhet är ändå inte detsamma som en mysig nyhet – vi väljer nyheter som har betydelse, och vi skriver lika sakligt om dem som om vilken nyhet som helst.</p>
-    <p>Varje nyhet bedöms på fyra saker: hur tydligt positiv den är, hur många den berör, hur pålitlig källan är och hur färsk den är. Läs mer i vår <a href="/redaktionell-policy/#lasvarde">redaktionella policy</a>.</p>
   </section>
 
   <section class="sektion">

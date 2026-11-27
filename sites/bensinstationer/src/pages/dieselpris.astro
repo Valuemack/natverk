@@ -1,0 +1,54 @@
+---
+// Dieselpris idag (dagensbensinpris.se/diesel/ 301-omdirigeras hit). Pris per kedja, utveckling, skatt och var det finns diesel.
+import Layout from "@natverk/core/Layout.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import DrivmedelPris from "../components/DrivmedelPris.astro";
+import Prisrutor from "../components/Prisrutor.astro";
+import {
+  SITE, UPPDATERAD, AKTUELL, LP_DATUM, LISTKEDJOR, idagPris, dagsAndring, kedjePris, kr, andring, riktning, procent, pris,
+  datumText, SENASTE_VECKA, FORRA_VECKAN, skattedelar, arSammanfattning, AR, STATIONER, billigastBland,
+} from "../pris.js";
+import { KAT } from "../site.js";
+
+const datum = datumText(LP_DATUM);
+const p = idagPris("diesel"), p95 = idagPris("bensin95"), hvo = idagPris("hvo100");
+const a = dagsAndring("diesel");
+const b = billigastBland(LISTKEDJOR, "diesel");
+const v = SENASTE_VECKA, fv = FORRA_VECKAN;
+const skatt = skattedelar(v, "diesel");
+const ifjol = arSammanfattning(AR - 1)?.diesel;
+const st = STATIONER.filter((s) => s.drivmedel?.diesel === true);
+const truck = STATIONER.filter((s) => s.tjanster?.truckdiesel === true);
+const perLan = KAT.lan.map((l) => ({ l, n: st.filter((s) => s.lan === l.namn).length, t: truck.filter((s) => s.lan === l.namn).length, hvo: STATIONER.filter((s) => s.lan === l.namn && s.drivmedel?.hvo100 === true).length })).sort((x, y) => y.n - x.n);
+
+const fragor = [
+  { fraga: "Vad kostar diesel idag?", svar: `Diesel kostar i snitt ${kr(p)} per liter den ${datum} enligt kedjornas listpriser. Lägst listpris har ${b.kedjor.join(" och ")} med ${kr(b.pris)}.` },
+  { fraga: "Är diesel dyrare än bensin?", svar: `Idag kostar diesel ${p > p95 ? `${kr(p - p95)} mer` : `${kr(p95 - p)} mindre`} per liter än bensin 95 (${kr(p95)}). Varför skillnaden uppstår förklaras i guiden om varför diesel är dyrare än bensin.` },
+  { fraga: "Har dieselpriset gått upp?", svar: `Genomsnittspriset vid pump var ${kr(v.diesel)} veckan som började ${datumText(v.datum)}, ${andring(v.diesel - fv.diesel)} mot veckan innan.${ifjol ? ` Snittet för hela ${AR - 1} var ${kr(ifjol.medel)}.` : ""}` },
+  skatt && { fraga: "Hur mycket skatt är det på diesel?", svar: `Ungefär ${procent(skatt.andelSkatt * 100)} av dieselpriset är skatt: ${kr(skatt.punkt)} i energi- och koldioxidskatt och ${kr(skatt.moms)} i moms per liter (senaste veckan).` },
+  hvo && { fraga: "Vad kostar HVO100 jämfört med diesel?", svar: `HVO100 kostar ${kr(hvo)} per liter idag, ${kr(hvo - p)} mer än vanlig diesel.` },
+  { fraga: "Hur många stationer säljer diesel?", svar: `${st.length.toLocaleString("sv-SE")} stationer i vårt register säljer diesel, och ${truck.length.toLocaleString("sv-SE")} har lastbilsdiesel. Flest finns i ${perLan[0].l.namn} (${perLan[0].n}).` },
+].filter(Boolean);
+---
+<Layout site={SITE} titel={`Dieselpris idag ${datum} – ${pris(p)} kr/l, alla kedjor`}
+  beskrivning={`Diesel kostar ${kr(p)} per liter idag (${datum}). ✓ Pris per kedja ✓ Utveckling och skatt ✓ HVO100 ✓ ${st.length.toLocaleString("sv-SE")} stationer med diesel.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Bensinpris idag", href: "/bensinpris/" }, { namn: "Dieselpris idag", href: "/dieselpris/" }]} jsonld={[faqLd(fragor)]} uppdaterad={UPPDATERAD}>
+  <h1>Dieselpris idag</h1>
+  <p class="svar">Diesel kostar i snitt <strong>{kr(p)}</strong> per liter {AKTUELL ? "idag" : "enligt senaste listpriserna"}, {datum}.{a && Math.abs(a.varde) > 0.004 && <> Det är <span class={riktning(a.varde)}>{andring(a.varde)}</span> jämfört med {datumText(a.mot)}.</>} Billigast listpris har {b.kedjor.join(" och ")} med {kr(b.pris)}. Bensin 95 kostar {kr(p95)}.</p>
+  <Prisrutor />
+
+  <DrivmedelPris nyckel="diesel" />
+
+  <h2>Var finns diesel och lastbilsdiesel?</h2>
+  <p>{st.length.toLocaleString("sv-SE")} stationer säljer diesel och {truck.length.toLocaleString("sv-SE")} har lastbilsdiesel med högflödespump. Så fördelar de sig per län:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Diesel</th><th class="num">Lastbilsdiesel</th><th class="num">HVO100</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td><a href={x.l.href}>{x.l.namn}</a></td><td class="num">{x.n}</td><td class="num">{x.t}</td><td class="num">{x.hvo}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret bygger på kedjornas stationsuppgifter och OpenStreetMap och kan vara ofullständigt.</p>
+  <p>Läs mer: <a href="/guider/varfor-ar-diesel-dyrare/">varför diesel är dyrare än bensin</a>, <a href="/guider/bensin-eller-diesel/">bensin eller diesel</a>, <a href="/guider/vinterdiesel/">vinterdiesel</a>, <a href="/guider/truckdiesel-lastbil/">truckdiesel för lastbil</a> och <a href="/guider/hvo100-vilka-bilar/">vilka bilar får tanka HVO100</a>.</p>
+
+  <Faq fragor={fragor} />
+  <p class="kalla">Källor: kedjornas publicerade listpriser ({LISTKEDJOR.join(", ")}), European Commission, Weekly Oil Bulletin (CC BY 4.0) och sajtens stationsregister.</p>
+</Layout>

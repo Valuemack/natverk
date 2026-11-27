@@ -1,0 +1,179 @@
+---
+// Lång guide: truckdiesel och tankställen för lastbil. Antal stationer med lastbilsdiesel, truckstationer, AdBlue, HVO100,
+// flytande gas, lastbilsparkering, dusch och angiven max fordonslängd per län (sajtens register, KAT.enheter).
+// Kör- och vilotider och fordonslängder enligt Transportstyrelsen, AdBlue enligt VDA. Dagens listpriser. Faktagranskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP_DATUM, LISTKEDJOR, idagPris, kedjePris, kedjaHref, kr, pris, procent, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+
+const PUBLICERAD = "2026-11-27";
+const uppdaterad = [PUBLICERAD, LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tal = (n) => n.toLocaleString("sv-SE");
+
+const E = KAT.enheter;
+const dm = (e, k) => e.extra?.drivmedel?.[k] === true;
+const tj = (e, k) => e.extra?.tjanster?.[k] === true;
+const dygnet = (e) => e.extra?.obemannad_dygnet_runt === true || e.extra?.tankning_dygnet_runt === true || e.typRa === "obemannad";
+const adblue = (e) => dm(e, "adblue") || tj(e, "adblue");
+const langd = (e) => Number(e.extra?.max_fordonslangd_m) || null;
+
+const truck = E.filter((e) => tj(e, "truckdiesel"));
+const nTruck = truck.length;
+const nTruckstation = E.filter((e) => e.typRa === "truckstation").length;
+const nDygn = truck.filter(dygnet).length;
+const nAdblue = truck.filter(adblue).length;
+const nHvo = truck.filter((e) => dm(e, "hvo100")).length;
+const nLangd = E.filter(langd).length;
+const langdFord = Object.entries(E.filter(langd).reduce((m, e) => ((m[langd(e)] = (m[langd(e)] ?? 0) + 1), m), {})).sort((a, b) => b[0] - a[0]);
+const langdKedjor = Object.entries(E.filter(langd).reduce((m, e) => ((m[e.kedja ?? "Övriga"] = (m[e.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]);
+const parkering = E.filter((e) => tj(e, "lastbilsparkering")).sort((a, b) => (a.lan ?? "").localeCompare(b.lan ?? "", "sv") || (a.ort ?? "").localeCompare(b.ort ?? "", "sv"));
+const dusch = E.filter((e) => tj(e, "dusch"));
+const laddLastbil = E.filter((e) => tj(e, "laddning_lastbil")).length;
+const flytgas = E.filter((e) => dm(e, "lng")).length;
+const TRUCKKEDJOR = ["Såifa", "IDS", "TRB", "Fundins"].map((k) => ({ k, alla: E.filter((e) => e.kedja === k).length, ts: E.filter((e) => e.kedja === k && e.typRa === "truckstation").length })).filter((x) => x.alla > 0);
+const tsButik = E.filter((e) => e.typRa === "truckstation" && tj(e, "butik")).length;
+const vanliga = truck.filter((e) => e.typRa !== "truckstation");
+const service = [["butik", "butik"], ["toalett", "toalett"], ["mat", "mat"], ["luft_vatten", "luft och vatten"]].map(([k, namn]) => ({ namn, n: vanliga.filter((e) => tj(e, k)).length }));
+const andelTruck = perLanAndel();
+function perLanAndel() {
+  const m = {};
+  for (const e of E) { if (!e.lan) continue; const x = (m[e.lan] ??= { lan: e.lan, alla: 0, t: 0 }); x.alla++; if (tj(e, "truckdiesel")) x.t++; }
+  return Object.values(m).map((x) => ({ ...x, a: x.t / x.alla })).sort((a, b) => b.a - a.a);
+}
+const snittfart = 70;
+const typer = [["truckstation", "truckstationer"], ["obemannad", "obemannade stationer"], ["bemannad", "bemannade stationer"]].map(([t, namn]) => ({ namn, n: truck.filter((e) => e.typRa === t).length }));
+const kedjeTopp = Object.entries(truck.reduce((m, e) => ((m[e.kedja ?? "Övriga"] = (m[e.kedja ?? "Övriga"] ?? 0) + 1), m), {})).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+const lanHref = new Map(KAT.lan.map((l) => [l.namn, l.href]));
+const perLan = Object.values(E.filter((e) => e.lan).reduce((m, e) => {
+  const x = (m[e.lan] ??= { lan: e.lan, t: 0, ts: 0, dygn: 0, ad: 0, l24: 0, park: 0 });
+  if (tj(e, "truckdiesel")) { x.t++; if (dygnet(e)) x.dygn++; if (adblue(e)) x.ad++; }
+  if (e.typRa === "truckstation") x.ts++;
+  if (langd(e) >= 24) x.l24++;
+  if (tj(e, "lastbilsparkering")) x.park++;
+  return m;
+}, {})).sort((a, b) => b.t - a.t);
+const topp = perLan[0];
+
+const pd = idagPris("diesel"), ph = idagPris("hvo100");
+const prisRader = LISTKEDJOR.map((c) => ({ c, href: kedjaHref(c), d: kedjePris(c, "diesel"), h: kedjePris(c, "hvo100"), a: kedjePris(c, "adblue") }));
+const harAdbluePris = prisRader.some((x) => x.a != null);
+const adPris = prisRader.filter((x) => x.a != null);
+
+// Transportstyrelsen, Regler om kör- och vilotider (förordning (EG) nr 561/2006).
+const VILA = [
+  ["Körtid per dag", "Högst 9 timmar, två gånger per vecka högst 10 timmar"],
+  ["Körtid per vecka", "Högst 56 timmar, och högst 90 timmar under två veckor i följd"],
+  ["Rast", "45 minuter efter 4 timmar och 30 minuters körning, kan delas i 15 + 30 minuter"],
+  ["Dygnsvila", "Minst 11 timmar i följd (eller 3 + 9 timmar), får minskas till 9 timmar högst tre gånger mellan två veckovilor"],
+  ["Veckovila", "Minst 45 timmar, eller reducerad minst 24 timmar som ska kompenseras"],
+  ["Veckovila i fordonet", "Normal veckovila får inte tas i fordonet, reducerad veckovila får det"],
+];
+
+const avsnitt = [
+  { id: "vad", rubrik: "Vad är truckdiesel?" },
+  { id: "lan", rubrik: "Flest truckstationer: län för län" },
+  { id: "langd", rubrik: "Fordonslängd: får ekipaget plats?" },
+  { id: "adblue", rubrik: "AdBlue, HVO100 och gas för lastbil" },
+  { id: "pris", rubrik: "Dieselpris för lastbil idag" },
+  { id: "vila", rubrik: "Rast och vila: var kan man stå?" },
+  { id: "kedjor", rubrik: "Kedjorna med flest lastbilspumpar" },
+];
+
+const fragor = [
+  { fraga: "Hur många stationer har diesel för lastbil?", svar: `I vårt register anger ${tal(nTruck)} stationer att de har lastbilsdiesel (truckdiesel), och ${tal(nTruckstation)} är rena truckstationer. Flest finns i ${topp.lan} med ${topp.t} stationer.` },
+  { fraga: "Var finns AdBlue för lastbil?", svar: `${tal(nAdblue)} av de ${tal(nTruck)} stationerna med lastbilsdiesel anger att de också har AdBlue. Kontrollera på stationen om AdBlue finns vid lastbilspumpen eller bara i dunk.` },
+  { fraga: "Hur långa fordon får man köra i Sverige?", svar: "Enligt Transportstyrelsen får fordonståg vara upp till 25,25 meter, med särskilda krav över 24 meter. På ett utpekat vägnät som väghållaren beslutar om får fordonståg vara upp till 34,5 meter." },
+  { fraga: "Var kan lastbilar parkera över natten?", svar: `${parkering.length} stationer i vårt register anger lastbilsparkering. Tänk på att normal veckovila på minst 45 timmar inte får tas i fordonet enligt kör- och vilotidsreglerna.` },
+  { fraga: "Hur länge får man köra lastbil innan rast?", svar: "Efter 4 timmar och 30 minuters körning ska föraren ta minst 45 minuters rast, som kan delas i 15 och 30 minuter. Körtiden per dag är högst 9 timmar, två gånger per vecka 10 timmar." },
+  { fraga: "Vilka stationer tar emot 24 meter långa fordon?", svar: `${tal(nLangd)} stationer i vårt register anger en högsta fordonslängd, och ${tal(E.filter((e) => langd(e) >= 24).length)} av dem 24 meter. Uppgiften finns främst hos ${langdKedjor.slice(0, 3).map(([k]) => k).join(", ")}. Länstabellen visar hur många det finns i varje län.` },
+  pd != null && { fraga: "Vad kostar diesel för lastbil idag?", svar: `Kedjornas listpris för diesel är ${kr(pd)} per liter inklusive moms ${datum}. Den som har avtal via tankkort kan ha ett annat pris.` },
+].filter(Boolean);
+---
+<Guide site={SITE} titel="Truckdiesel – tankställen för lastbil per län"
+  beskrivning="Stationer med lastbilsdiesel per län, max fordonslängd, AdBlue vid lastbilspumpen, parkering och dusch, dagens dieselpris och reglerna för rast och vila."
+  h1="Truckdiesel – var tankar man lastbil?"
+  svar={`${tal(nTruck)} stationer i vårt register har lastbilsdiesel, så kallad truckdiesel, och ${tal(nTruckstation)} av dem är rena truckstationer. <strong>Flest finns i ${topp.lan} (${topp.t})</strong>. ${tal(nAdblue)} har även AdBlue och ${tal(nDygn)} går att tanka dygnet runt. ${tal(nLangd)} stationer anger hur långa fordon som får plats, de flesta 24 meter.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Truckdiesel för lastbil", href: "/guider/truckdiesel-lastbil/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "AdBlue – stationer och pris", href: "/drivmedel/adblue/", text: "Var du tankar AdBlue" },
+    { namn: "Dieselpris idag", href: "/dieselpris/", text: "Pris per kedja och utveckling" },
+    { namn: "Tankkort och appar", href: "/guider/tankkort-och-appar/", text: "Rabatter och företagskort" },
+    { namn: "Tanka längs E4", href: "/guider/tanka-langs-e4/", text: "Stationer längs Sveriges längsta väg" },
+    { namn: "Vinterdiesel", href: "/guider/vinterdiesel/", text: "Köldklasser i norr och söder" },
+  ]}
+  kallor={[
+    { namn: "Transportstyrelsen – Regler om kör- och vilotider", url: "https://www.transportstyrelsen.se/sv/vagtrafik/yrkestrafik/kor-och-vilotider/regler-om-kor--och-vilotider/", text: "körtid, rast, dygns- och veckovila, veckovila i fordonet, förordning (EG) nr 561/2006", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – Längd- och breddbestämmelser", url: "https://www.transportstyrelsen.se/sv/vagtrafik/yrkestrafik/gods-och-buss/matt-och-vikt/langd-och-breddbestammelser/", text: "fordonståg upp till 24, 25,25 och 34,5 meter", datum: "2026-11-27" },
+    { namn: "Transportstyrelsen – 34,5 meter långa fordonståg", url: "https://www.transportstyrelsen.se/sv/vagtrafik/yrkestrafik/gods-och-buss/matt-och-vikt/langd-och-breddbestammelser/34-meter-langa-fordonstag/", text: "utpekat vägnät sedan hösten 2023", datum: "2026-11-27" },
+    { namn: "VDA QMC – AdBlue", url: "https://vda-qmc.de/en/vda-zertifizierungen/adblue/", text: "AdBlue (AUS 32) enligt ISO 22241 för SCR-system, varumärket och kvalitetsrisker", datum: "2026-11-27" },
+    { namn: "Kedjornas listpriser", text: `${LISTKEDJOR.join(", ")}, hämtade ${datum}` },
+    { namn: "Stationsregister: bensinstationer.nu", text: "lastbilsdiesel, truckstationer, AdBlue, parkering, dusch och max fordonslängd enligt kedjornas stationsuppgifter" },
+  ]}>
+
+  <h2 id="vad">Vad är truckdiesel?</h2>
+  <p>Truckdiesel, eller lastbilsdiesel, är ingen annan diesel än den som säljs till personbilar. Skillnaden är pumpen och platsen. En lastbilspump är placerad så att ett tungt fordon kan köra fram och ut igen, och på en ren truckstation är det i regel bara pumparna som finns. {tsButik === 0 ? "Ingen av truckstationerna i registret anger att den har butik." : `${tal(tsButik)} av truckstationerna i registret anger att de har butik.`}</p>
+  <p>I vårt register finns två sätt att se om en station passar för lastbil. {tal(nTruck)} stationer anger att de har lastbilsdiesel, alltså en pump för tunga fordon, oavsett om stationen i övrigt är en vanlig bensinstation. {tal(nTruckstation)} stationer är dessutom klassade som rena truckstationer, som främst finns till för yrkestrafik. Fördelningen är {typer.map((x) => `${tal(x.n)} ${x.namn}`).join(", ")}, och för resten saknas uppgift om typ. Av stationerna med lastbilsdiesel kan {tal(nDygn)}, eller {procent(nDygn / nTruck * 100)}, användas dygnet runt.</p>
+  <p>För yrkesförare handlar valet av station om mer än priset: om ekipaget får plats, om det finns AdBlue vid pumpen, om stationen är öppen när man kommer och om det finns någonstans att ta rast. Guiden går igenom just det, län för län.</p>
+
+  <h2 id="lan">Flest truckstationer: län för län</h2>
+  <p>Tabellen visar alla län sorterade efter antalet stationer med lastbilsdiesel. {topp.lan} har flest, följt av {perLan[1].lan} och {perLan[2].lan}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Lastbilsdiesel</th><th class="num">Truckstationer</th><th class="num">Dygnet runt</th><th class="num">Med AdBlue</th><th class="num">24 m angivet</th><th class="num">Parkering</th></tr></thead>
+    <tbody>{perLan.map((x) => <tr><td>{lanHref.get(x.lan) ? <a href={lanHref.get(x.lan)}>{x.lan}</a> : x.lan}</td><td class="num">{x.t}</td><td class="num">{x.ts}</td><td class="num">{x.dygn}</td><td class="num">{x.ad}</td><td class="num">{x.l24}</td><td class="num">{x.park}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu. Dygnet runt och AdBlue räknas bland stationerna med lastbilsdiesel. 24 m angivet = stationen uppger en max fordonslängd på minst 24 meter. Uppgifterna kommer från kedjornas egna stationslistor och kan saknas för vissa stationer.</p>
+  <p>Räknat som andel av alla stationer i länet ligger {andelTruck[0].lan} högst, där {procent(andelTruck[0].a * 100)} av stationerna har lastbilsdiesel, följt av {andelTruck[1].lan} ({procent(andelTruck[1].a * 100)}) och {andelTruck[2].lan} ({procent(andelTruck[2].a * 100)}). Lägst andel har {andelTruck.at(-1).lan} med {procent(andelTruck.at(-1).a * 100)}. Klicka på ett län för att se alla stationer där, med öppettider och drivmedel.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="langd">Fordonslängd: får ekipaget plats?</h2>
+  <p>Enligt Transportstyrelsen får fordonståg i Sverige vara upp till 25,25 meter. Upp till 24 meter finns inga särskilda krav som följer av längden, men över 24 meter gäller särskilda krav på de ingående fordonen. Sedan en ändring i trafikförordningen hösten 2023 får fordonståg vara upp till 34,5 meter på ett utpekat vägnät, som Trafikverket eller kommunen som väghållare beslutar om.</p>
+  <p>Stationen behöver alltså vara byggd för långa ekipage. {tal(nLangd)} stationer i registret anger en högsta fordonslängd: {langdFord.map(([m, n]) => `${n} stationer ${String(m).replace(".", ",")} meter`).join(" och ")}. Uppgiften finns främst hos {langdKedjor.slice(0, 4).map(([k, n]) => `${k} (${n})`).join(", ")}.</p>
+  <ul>
+    <li><strong>24 meter:</strong> stationen tar emot ett fullängds fordonståg enligt den vanliga gränsen. För 25,25 meter och längre, kontrollera infarten och utfarten med stationen eller kedjan.</li>
+    <li><strong>15 meter:</strong> passar en lastbil eller buss utan släp, men inte ett fordonståg.</li>
+    <li><strong>Ingen uppgift:</strong> de flesta stationer anger ingen längd alls. Fråga stationen eller kedjan om du kör ett långt ekipage och är osäker.</li>
+  </ul>
+
+  <h2 id="adblue">AdBlue, HVO100 och gas för lastbil</h2>
+  <p>Dieselmotorer med SCR-katalysator behöver AdBlue för att rena avgaserna från kväveoxider. Enligt den tyska fordonsindustrins organisation VDA, som äger varumärket, är AdBlue ureaprodukten AUS 32 och ska tillverkas enligt standarden ISO 22241. VDA varnar för produkter som inte håller ISO-kvalitet, eftersom de i värsta fall kan förstöra SCR-systemet.</p>
+  <p>{tal(nAdblue)} av de {tal(nTruck)} stationerna med lastbilsdiesel anger att de också har AdBlue, alltså {procent(nAdblue / nTruck * 100)}. Uppgiften säger inte alltid om AdBlue finns i en pump vid lastbilsfilen eller bara i dunk i butiken, så den som behöver fylla en stor tank bör kontrollera det. Alla stationer med AdBlue finns på <a href="/drivmedel/adblue/">AdBlue-sidan</a>.</p>
+  {adPris.length > 0 && <p>{adPris.map((x) => `${x.c} publicerar ett listpris för AdBlue på ${kr(x.a)} per liter`).join(", och ")} ({datum}). Hur mycket AdBlue ett fordon förbrukar står i tillverkarens anvisningar. Med ett pris i den nivån blir varje 100 liter AdBlue {adPris.map((x) => kr(x.a * 100, 0)).join(" respektive ")}.</p>}
+  <p>Även förnybara alternativ finns vid lastbilspumparna. {tal(nHvo)} av stationerna med lastbilsdiesel har också HVO100, som bara får tankas i fordon som tillverkaren har godkänt. {flytgas} stationer säljer flytande gas (LNG eller LBG), som används av gaslastbilar, och {laddLastbil} stationer anger laddning för lastbil. Läs mer om <a href="/drivmedel/hvo100/">HVO100</a> och <a href="/drivmedel/fordonsgas/">fordonsgas</a>.</p>
+
+  <h2 id="pris">Dieselpris för lastbil idag</h2>
+  <p>Kedjornas listpriser är deras publicerade företagspriser inklusive moms. Den som har avtal via tankkort kan ha ett annat pris.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Diesel</th><th class="num">HVO100</th>{harAdbluePris && <th class="num">AdBlue</th>}</tr></thead>
+    <tbody>
+      {prisRader.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(x.h)}</td>{harAdbluePris && <td class="num">{pris(x.a)}</td>}</tr>)}
+      <tr><td><strong>Snitt</strong></td><td class="num"><strong>{pris(pd)}</strong></td><td class="num"><strong>{pris(ph)}</strong></td>{harAdbluePris && <td class="num">–</td>}</tr>
+    </tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms {LP_DATUM}, kr per liter. – = kedjan publicerar inget pris. Priset på en enskild station kan avvika.</p>
+  {pd != null && <p>Utan moms motsvarar dagens snittpris för diesel {kr(pd / 1.25)} per liter. En fyllning på 500 liter kostar {kr(pd * 500, 0)} inklusive moms, och varje krona i prisskillnad per liter blir 500 kronor per fyllning. Följ utvecklingen på <a href="/dieselpris/">dieselpriset idag</a> och läs om rabatter i guiden om <a href="/guider/tankkort-och-appar/">tankkort och appar</a>.</p>}
+
+  <h2 id="vila">Rast och vila: var kan man stå?</h2>
+  <p>För lastbilar över 3,5 ton gäller EU:s regler om kör- och vilotider, och från den 1 juli 2026 även fordon på 2,5–3,5 ton i internationell trafik och cabotage. Så här sammanfattar Transportstyrelsen huvudreglerna:</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Regel</th><th>Krav</th></tr></thead>
+    <tbody>{VILA.map(([a, b]) => <tr><td>{a}</td><td>{b}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: Transportstyrelsen, Regler om kör- och vilotider. Förkortad sammanfattning, undantag finns.</p>
+  <p>Reglerna gör att föraren regelbundet behöver en plats att stanna på. {parkering.length} stationer i vårt register anger särskild lastbilsparkering, och {dusch.length} har dusch. Normal veckovila får inte tas i fordonet, och tas den borta ska företaget betala boendet. Reducerad veckovila och dygnsvila får tas i hytten.</p>
+  <p>Som räkneexempel: med en snittfart på {snittfart} km/h hinner en förare {tal(Math.round(4.5 * snittfart / 10))} mil innan den första rasten och {tal(Math.round(9 * snittfart / 10))} mil på en vanlig körtid per dag, eller {tal(Math.round(10 * snittfart / 10))} mil de två dagar i veckan då tio timmar är tillåtet. På de längsta transporterna genom landet räcker alltså inte en dag, och dygnsvilan behöver planeras in. Det är där en station med parkering, toalett och mat gör skillnad.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Station med lastbilsparkering</th><th>Ort</th><th>Län</th><th>Dusch</th></tr></thead>
+    <tbody>{parkering.map((e) => <tr><td>{e.href ? <a href={e.href}>{e.namn}</a> : e.namn}</td><td>{e.ort ?? e.kommun ?? "–"}</td><td>{e.lan ?? "–"}</td><td>{tj(e, "dusch") ? "Ja" : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationsregistret hos bensinstationer.nu, enligt kedjornas stationsuppgifter.</p>
+
+  <h2 id="kedjor">Kedjorna med flest lastbilspumpar</h2>
+  <p>Lastbilsdiesel finns hos både de stora kedjorna och hos regionala truckkedjor. Så här fördelar sig stationerna med lastbilsdiesel i registret:</p>
+  <ul>{kedjeTopp.map(([k, n]) => <li>{kedjaHref(k) ? <a href={kedjaHref(k)}>{k}</a> : k}: {n} stationer</li>)}</ul>
+  <p>Hos truckkedjorna är nästan alla stationer rena truckstationer: {TRUCKKEDJOR.map((x) => `${x.k} ${x.ts} av ${x.alla}`).join(", ")}. De stora kedjorna har i stället lastbilspumpar på en del av sina vanliga stationer, Av de {tal(vanliga.length)} vanliga stationerna med lastbilsdiesel anger {service.map((x) => `${tal(x.n)} ${x.namn}`).join(", ")}. Vilken som passar bäst beror på om du behöver tanka snabbt med kort eller vill kombinera tankningen med rasten. Sök fram stationerna längs din rutt i <a href="/">stationssökningen</a>, eller se guiderna för <a href="/guider/tanka-langs-e4/">E4</a>, <a href="/guider/tanka-langs-e6/">E6</a> och <a href="/guider/tanka-langs-e20/">E20</a>.</p>
+</Guide>

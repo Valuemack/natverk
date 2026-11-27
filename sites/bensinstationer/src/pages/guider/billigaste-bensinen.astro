@@ -1,0 +1,178 @@
+---
+// Lång guide: så hittar du billigaste bensinen. Dagens listpriser per kedja, obemannade stationer och kedjor per län
+// ur stationsregistret, besparing per tank och år (Trafikanalys), Ingos egen prispolicy och Sverige mot EU-länderna.
+// Granskad 2026-11-27.
+import Guide from "@natverk/core/Guide.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { SITE, LP, LP_DATUM, LISTKEDJOR, STATIONER, KEDJOR, SENASTE_VECKA, LANDER, landPris, kedjePris, kedjaHref, idagPris, kr, pris, procent, datumText } from "../../pris.js";
+import { KAT } from "../../site.js";
+import { KORSTRACKOR } from "../../lib/fakta.js";
+
+const PUBLICERAD = "2026-11-25";
+const uppdaterad = [PUBLICERAD, "2026-11-27", LP_DATUM].sort().at(-1);
+const datum = datumText(LP_DATUM);
+const tank = 50;
+const p95 = idagPris("bensin95");
+
+// Kedjornas listpriser idag, billigast först.
+const kedjor95 = LISTKEDJOR.map((c) => ({ c, href: kedjaHref(c), p: kedjePris(c, "bensin95"), d: kedjePris(c, "diesel"), e: kedjePris(c, "e85"), url: LP.kedjor.find((k) => k.kedja === c)?.url })).filter((x) => x.p != null).sort((a, b) => a.p - b.p);
+const billigast = kedjor95[0], dyrast = kedjor95.at(-1);
+const spann = dyrast.p - billigast.p;
+const lista = (a) => (a.length > 1 ? `${a.slice(0, -1).join(", ")} och ${a.at(-1)}` : a.join(""));
+const omvagBryt = p95 * 0.6 / tank;
+const lika = kedjor95.filter((x) => x.p === billigast.p).map((x) => x.c);
+
+// Stationstyper i registret.
+const nAlla = STATIONER.length;
+const obem = STATIONER.filter((s) => s.typ === "obemannad");
+const nDygnet = STATIONER.filter((s) => s.dygnet).length;
+
+// Kedjor: antal stationer, andel obemannade, E85 och laddning.
+const kedjeRader = KEDJOR.filter((k) => k.antal >= 50).map((k) => {
+  const st = STATIONER.filter((s) => s.kedja === k.namn);
+  const o = st.filter((s) => s.typ === "obemannad").length;
+  return { ...k, o, andel: o / st.length, b95: st.filter((s) => s.drivmedel?.bensin95 === true).length };
+}).sort((a, b) => b.andel - a.andel || b.antal - a.antal);
+const helt = kedjeRader.filter((k) => k.andel === 1);
+
+// Obemannade stationer per län och vanligaste kedjor bland dem.
+const lanRader = KAT.lan.map((l) => {
+  const st = STATIONER.filter((s) => s.lan === l.namn);
+  const o = st.filter((s) => s.typ === "obemannad");
+  const k = Object.entries(o.reduce((m, s) => { if (s.kedja) m[s.kedja] = (m[s.kedja] ?? 0) + 1; return m; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  return { namn: l.namn, href: l.href, n: st.length, o: o.length, k };
+}).filter((x) => x.n > 0).sort((a, b) => b.o / b.n - a.o / a.n);
+const topKommuner = KAT.kommuner.map((k) => { const st = STATIONER.filter((s) => s.kommun === k.namn); return { namn: k.namn, href: k.href, n: st.length, o: st.filter((s) => s.typ === "obemannad").length, folk: k.folk }; }).sort((a, b) => b.o - a.o).slice(0, 10);
+const lanTathet = KAT.lan.filter((l) => l.folk).map((l) => ({ namn: l.namn, href: l.href, per: STATIONER.filter((s) => s.lan === l.namn).length / l.folk * 10000 })).sort((a, b) => b.per - a.per);
+const landet = STATIONER.length / KAT.lan.reduce((s, l) => s + (l.folk ?? 0), 0) * 10000;
+const kommunerUtan = KAT.kommuner.filter((k) => !STATIONER.some((s) => s.kommun === k.namn && s.typ === "obemannad"));
+
+// Besparing: prisskillnad per liter gånger tank och årsförbrukning för en genomsnittlig bensinbil.
+const milBensin = KORSTRACKOR.perDrivmedel.find((x) => x.namn === "Bensin").mil;
+const literAr = milBensin * 0.6;
+const skillnader = [0.1, 0.25, 0.5, 1, 1.5];
+
+// Sverige mot EU-länderna samma vecka (EU Weekly Oil Bulletin).
+const eu = LANDER.map((l) => ({ ...l, p: landPris(l.kod, SENASTE_VECKA.datum)?.b95 })).filter((x) => x.p != null);
+const sePris = SENASTE_VECKA.b95;
+const billigareLand = eu.filter((x) => x.p < sePris).sort((a, b) => a.p - b.p);
+const grannar = eu.filter((x) => ["DK", "FI", "DE", "PL"].includes(x.kod));
+
+const avsnitt = [
+  { id: "idag", rubrik: "Billigaste kedjan idag" },
+  { id: "listpris", rubrik: "Listpris och pumppris – därför skiljer stationerna sig" },
+  { id: "spara", rubrik: "Hur mycket sparar du på att välja rätt station?" },
+  { id: "obemannat", rubrik: "Obemannade stationer i ditt län" },
+  { id: "kedjor", rubrik: "Kedjorna med obemannade stationer" },
+  { id: "kommuner", rubrik: "Kommunerna med flest obemannade stationer" },
+  { id: "tips", rubrik: "Sju sätt att betala mindre för bensinen" },
+  { id: "utland", rubrik: "Är bensinen billigare utomlands?" },
+];
+
+const fragor = [
+  { fraga: "Var är bensinen billigast idag?", svar: `Bland kedjorna som publicerar listpriser varje dag har ${lika.join(" och ")} lägst pris på bensin 95 idag, ${kr(billigast.p)} per liter. Skillnaden mot den dyraste kedjan är ${kr(spann)} per liter. Priset vid pumpen sätts lokalt och kan avvika från listpriset.` },
+  { fraga: "Är obemannade stationer billigare?", svar: `Det finns ingen samlad prisstatistik per station, så det går inte att säga generellt. Lågpriskedjan Ingo, vars stationer alla är obemannade i vårt register, skriver att dess priser ska ligga i det lägsta prisskiktet på orten. I registret finns ${obem.length.toLocaleString("sv-SE")} obemannade stationer.` },
+  { fraga: "Hur mycket sparar man på att tanka på billigaste stationen?", svar: `Varje krona i prisskillnad per liter blir ${kr(tank, 0)} på en tank på ${tank} liter. För en genomsnittlig bensinbil, som enligt Trafikanalys körde ${milBensin.toLocaleString("sv-SE")} mil ${KORSTRACKOR.ar}, blir 50 öre per liter ungefär ${kr(literAr * 0.5, 0)} om året med en förbrukning på 0,6 liter per mil.` },
+  { fraga: "Vilka kedjor har bara obemannade stationer?", svar: `I vårt register är alla stationer obemannade hos ${lista(helt.map((k) => `${k.namn} (${k.antal})`))}.` },
+  { fraga: "Varför skiljer sig priset mellan stationer i samma kedja?", svar: "Kedjornas listpriser är riktpriser. Pumppriset sätts per station och följer konkurrensen på orten. Ingo skriver till exempel att priserna kan skilja sig mellan dess egna stationer på grund av lokal konkurrens." },
+  { fraga: "Är bensinen billigare i grannländerna?", svar: `Veckan som började ${datumText(SENASTE_VECKA.datum)} kostade 95 i snitt ${kr(sePris)} per liter i Sverige. Av ${eu.length} andra EU-länder var det billigare i ${billigareLand.length}${billigareLand.length ? ` (${billigareLand.map((x) => x.namn).join(", ")})` : ""}.` },
+];
+---
+<Guide site={SITE} titel={`Billigaste bensinen idag – så hittar du lägsta priset`}
+  beskrivning={`${lika[0]} har lägst listpris på bensin 95 idag (${kr(billigast.p)}/l). Obemannade stationer och lågpriskedjor i varje län, och vad du sparar per tank och år.`}
+  h1="Så hittar du billigaste bensinen"
+  svar={`Idag har <strong>${lika.join(" och ")}</strong> lägst listpris på bensin 95 bland kedjorna som publicerar priser dagligen: <strong>${kr(billigast.p)}</strong> per liter, ${kr(spann)} under den dyraste. Pumppriset sätts dock lokalt per station, så den billigaste bensinen hittar du genom att jämföra stationerna där du bor, särskilt de ${obem.length.toLocaleString("sv-SE")} obemannade stationerna och lågpriskedjorna.`}
+  smulor={[{ namn: "Start", href: "/" }, { namn: "Guider", href: "/guider/" }, { namn: "Billigaste bensinen", href: "/guider/billigaste-bensinen/" }]}
+  publicerad={PUBLICERAD} uppdaterad={uppdaterad} granskad="2026-11-27" avsnitt={avsnitt} fragor={fragor}
+  relaterat={[
+    { namn: "Bensinpris idag", href: "/bensinpris/", text: "Listpris per kedja och utveckling" },
+    { namn: "Obemannade bensinstationer", href: "/guider/obemannad-bensinstation/", text: "Så fungerar det att tanka utan personal" },
+    { namn: "När är bensinen billigast?", href: "/guider/nar-ar-bensinen-billigast/", text: "Veckodag, månad och säsong" },
+    { namn: "Tankkort och appar", href: "/guider/tankkort-och-appar/", text: "Kedjornas kort och rabatter" },
+    { namn: "Alla kedjor", href: "/kedja/", text: "Stationer per kedja" },
+  ]}
+  kallor={[
+    ...kedjor95.map((x) => ({ namn: `${x.c} – listpriser`, url: x.url, text: `bensin 95, diesel och E85, ${datum}`, datum: "2026-11-27" })),
+    { namn: "Ingo – Våra låga priser", url: "https://www.ingo.se/v%C3%A5ra-l%C3%A5ga-priser/v%C3%A5ra-l%C3%A5ga-priser", text: "Ingos prissättning och lokala priser", datum: "2026-11-27" },
+    { namn: "Qstar – startsida", url: "https://www.qstar.se/", text: "ägare (DCC Energy)", datum: "2026-11-27" },
+    { namn: "SCB – Folkmängd 31 december 2024 (BE0101)", url: "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0101__BE0101A/BefolkningNy/", text: "invånare per kommun och län", datum: "2026-11-27" },
+    { namn: "Trafikanalys – Körsträckor 2025", url: KORSTRACKOR.kalla, text: "genomsnittlig körsträcka för bensinbilar", datum: "2026-11-27" },
+    { namn: "EU-kommissionen – Weekly Oil Bulletin", url: "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en", text: "veckopris på bensin 95 i EU-länderna", datum: "2026-11-27" },
+    { namn: "Stationsregister: bensinstationer.nu", text: "stationstyp, kedja och län för alla stationer" },
+  ]}>
+
+  <h2 id="idag">Billigaste kedjan idag</h2>
+  <p>Varje dag hämtar vi listpriserna från {lista(LISTKEDJOR)}, som publicerar dem på sina webbplatser. Idag är skillnaden mellan billigaste och dyraste kedja {kr(spann)} per liter bensin 95, eller {kr(spann * tank, 0)} på en tank på {tank} liter. Tabellen visar även diesel och E85, eftersom den billigaste kedjan för ett drivmedel inte alltid är billigast för ett annat.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Bensin 95</th><th class="num">Mot billigast</th><th class="num">Diesel</th><th class="num">E85</th></tr></thead>
+    <tbody>{kedjor95.map((x) => <tr><td>{x.href ? <a href={x.href}>{x.c}</a> : x.c}</td><td class="num">{pris(x.p)}</td><td class="num">{x.p === billigast.p ? "billigast" : `+${pris(x.p - billigast.p)}`}</td><td class="num">{pris(x.d)}</td><td class="num">{pris(x.e)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Listpriser inkl. moms {LP_DATUM}, enligt respektive kedjas prissida. Snittet för 95 är {kr(p95)}.</p>
+  <p>För övriga kedjor, bland dem St1, Ingo, Qstar och Tanka, har vi inga dagliga listpriser. Deras priser syns på prisskyltarna vid stationen. Följ utvecklingen på <a href="/bensinpris/">bensinpris idag</a>.</p>
+
+  <h2 id="listpris">Listpris och pumppris – därför skiljer stationerna sig</h2>
+  <p>Kedjornas listpriser är företagspriser inklusive moms, alltså riktpriser. Pumppriset på en enskild station kan avvika, eftersom det sätts lokalt. Därför kan två stationer från samma kedja ha olika pris samma dag.</p>
+  <p>Ingo beskriver sin prissättning öppet. Kedjan utgår från ett ordinarie lågpris, och priset på orten visas på stationens prisskylt. På grund av lokal konkurrens kan priset skilja mellan Ingos egna stationer, och enligt kedjan ska priset alltid ligga i det lägsta prisskiktet på orten. Ingo skriver också att skyltpriset gäller oavsett om du betalar med Ingo-kort, bankkort eller kontanter.</p>
+  <p>Listpriserna ändras också. När produktpriset på världsmarknaden eller kronans kurs rör sig justerar kedjorna listpriset, och när skatten ändras följer pumppriset med. Det betyder att stationen som var billigast i förra veckan inte behöver vara det idag. Den som tankar regelbundet tjänar mer på att känna till vilka stationer i närområdet som brukar ligga lågt än på att jaga enstaka kampanjpriser.</p>
+  <p>Slutsatsen för dig som bilist: listpriset visar ungefär var nivån ligger idag, men det billigaste priset hittar du genom att jämföra skyltarna på stationerna i ditt område.</p>
+
+  <h2 id="spara">Hur mycket sparar du på att välja rätt station?</h2>
+  <p>Varje öre per liter räknas om du tankar ofta. En bensinbil i Sverige körde i genomsnitt {milBensin.toLocaleString("sv-SE")} mil under {KORSTRACKOR.ar} enligt Trafikanalys. Med 0,6 liter per mil blir det runt {Math.round(literAr).toLocaleString("sv-SE")} liter om året.</p>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">Prisskillnad per liter</th><th class="num">Per tank ({tank} l)</th><th class="num">Per år ({Math.round(literAr).toLocaleString("sv-SE")} l)</th><th class="num">Per år (1 500 mil)</th></tr></thead>
+    <tbody>{skillnader.map((d) => <tr><td class="num">{pris(d)} kr</td><td class="num">{kr(d * tank, 0)}</td><td class="num">{kr(d * literAr, 0)}</td><td class="num">{kr(d * 1500 * 0.6, 0)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Kör du mer än genomsnittet växer beloppen i samma takt. Vid 1 500 mil om året och 0,6 liter per mil tankar du 900 liter, och då blir varje krona i lägre pris per liter 900 kronor om året. Det motsvarar ungefär {Math.round(900 / tank)} tankningar på {tank} liter.</p>
+  <p>Samtidigt kostar det att köra omvägar. Med dagens snittpris kostar en mil {kr(p95 * 0.6)} i bensin för en bil som drar 0,6 liter per mil. En omväg på en mil tur och retur lönar sig alltså på en tank på {tank} liter först när priset är minst {kr(omvagBryt)} lägre per liter. Med 10 öre i skillnad sparar du {kr(0.1 * tank, 0)} men kör för {kr(p95 * 0.6, 0)}. Ligger stationen på vägen du ändå kör är varje öre en ren vinst.</p>
+
+  <Annons plats="guide-1" />
+
+  <h2 id="obemannat">Obemannade stationer i ditt län</h2>
+  <p>Av de {nAlla.toLocaleString("sv-SE")} stationerna i vårt register är {obem.length.toLocaleString("sv-SE")} obemannade, alltså {procent(obem.length / nAlla * 100)}. Obemannade stationer har ingen butik med personal, och du betalar med kort eller app vid pumpen. {nDygnet.toLocaleString("sv-SE")} stationer har tankning dygnet runt. Bara {kommunerUtan.length} av {KAT.kommuner.length} kommuner med stationer saknar obemannad station. Tabellen visar andelen per län och de vanligaste kedjorna bland de obemannade.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Län</th><th class="num">Stationer</th><th class="num">Obemannade</th><th class="num">Andel</th><th>Vanligaste kedjor (obemannade)</th></tr></thead>
+    <tbody>{lanRader.map((x) => <tr><td><a href={x.href}>{x.namn}</a></td><td class="num">{x.n}</td><td class="num">{x.o}</td><td class="num">{procent(x.o / x.n * 100)}</td><td>{x.k.map(([k, n], i) => <>{i > 0 && ", "}{kedjaHref(k) ? <a href={kedjaHref(k)}>{k}</a> : k} ({n})</>)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Stationstyp enligt vårt stationsregister. För {STATIONER.filter((s) => s.typ == null).length.toLocaleString("sv-SE")} stationer saknas uppgift om typ.</p>
+  <p>På en obemannad station betalar du vid pumpen med bankkort, kedjans eget kort eller app. Det finns ingen kassa att gå till om något krånglar, så det är bra att ha ett reservkort med sig. Läs mer i guiden om <a href="/guider/obemannad-bensinstation/">obemannade bensinstationer</a>.</p>
+  <p>Klicka på ditt län för att se alla stationer kommun för kommun, eller sök närmaste station i <a href="/">stationssökningen</a>.</p>
+
+  <h2 id="kedjor">Kedjorna med obemannade stationer</h2>
+  <p>Några kedjor driver bara obemannade stationer, andra har en blandning. I vårt register är samtliga stationer obemannade hos {helt.map((k, i) => <>{i > 0 && (i === helt.length - 1 ? " och " : ", ")}<a href={k.href}>{k.namn}</a></>)}. Qstar ingår enligt sin egen webbplats i DCC Energy.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kedja</th><th class="num">Stationer</th><th class="num">Obemannade</th><th class="num">Andel</th><th class="num">Med bensin 95</th></tr></thead>
+    <tbody>{kedjeRader.map((k) => <tr><td><a href={k.href}>{k.namn}</a></td><td class="num">{k.antal}</td><td class="num">{k.o}</td><td class="num">{procent(k.andel * 100)}</td><td class="num">{k.b95}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Kedjor med minst 50 stationer i registret. Uppgiften om drivmedel kan saknas för vissa stationer.</p>
+  <p>Även OKQ8, St1 och Preem har många obemannade stationer under sitt eget namn. Det betyder att en obemannad station inte automatiskt är en lågpriskedja: jämför priset på skylten.</p>
+
+  <h2 id="kommuner">Kommunerna med flest obemannade stationer</h2>
+  <p>I de stora städerna finns flest obemannade stationer att välja mellan, och där är det också lättast att hitta en station på vägen i stället för att köra en omväg. Tabellen visar de tio kommuner som har flest obemannade stationer i vårt register, och hur stor andel av kommunens stationer de utgör.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Kommun</th><th class="num">Stationer</th><th class="num">Obemannade</th><th class="num">Andel</th></tr></thead>
+    <tbody>{topKommuner.map((x) => <tr><td><a href={x.href}>{x.namn}</a></td><td class="num">{x.n}</td><td class="num">{x.o}</td><td class="num">{procent(x.o / x.n * 100)}</td></tr>)}</tbody>
+  </table></div>
+  <p>Antalet stationer per invånare skiljer sig också mycket. I landet som helhet finns {pris(landet, 1)} stationer per 10 000 invånare. Tätast är det i {lanTathet.slice(0, 2).map((x, i) => <>{i > 0 && " och "}<a href={x.href}>{x.namn}</a> ({pris(x.per, 1)})</>)}, glesast i <a href={lanTathet.at(-1).href}>{lanTathet.at(-1).namn}</a> ({pris(lanTathet.at(-1).per, 1)}). I glesbygd ligger stationerna längre ifrån varandra, så där är det oftare den närmaste stationen som blir billigast när du räknar in körsträckan. I städerna har du fler alternativ inom samma avstånd, och då lönar det sig mer att jämföra skyltarna.</p>
+  <p class="kalla">Folkmängd 31 december 2024 enligt SCB. Stationer enligt vårt register.</p>
+
+  <h2 id="tips">Sju sätt att betala mindre för bensinen</h2>
+  <ol>
+    <li><strong>Jämför stationerna där du bor.</strong> Pumppriset sätts lokalt. Öppna din kommun via länstabellen ovan och se vilka kedjor som finns.</li>
+    <li><strong>Prova kedjorna med bara obemannade stationer.</strong> {helt.slice(0, 3).map((k, i) => <>{i > 0 && (i === Math.min(helt.length, 3) - 1 ? " och " : ", ")}<a href={k.href}>{k.namn}</a></>)} har bara obemannade stationer i registret, och Ingo säger uttryckligen att den ska ligga i det lägsta prisskiktet på orten.</li>
+    <li><strong>Kör inte omvägar för småsummor.</strong> Som räkneexemplet visar äter en mils omväg upp en prisskillnad på upp till {kr(omvagBryt)} per liter på en full tank.</li>
+    <li><strong>Tanka 95 om bilen klarar det.</strong> Bensin 98 kostar idag {kr(idagPris("bensin98") - p95)} mer per liter. Se <a href="/guider/95-eller-98/">95 eller 98</a>.</li>
+    <li><strong>Räkna på E85 om du har flexifuelbil.</strong> Se <a href="/guider/lonar-sig-e85/">lönar sig E85</a> för dagens brytpunkt.</li>
+    <li><strong>Använd kedjans kort eller app.</strong> Villkoren skiljer sig mellan kedjorna. Se <a href="/guider/tankkort-och-appar/">tankkort och appar</a>.</li>
+    <li><strong>Kör snålare.</strong> En lägre förbrukning sparar på varje liter, oavsett station. Se <a href="/guider/spara-bransle/">spara bränsle</a>.</li>
+  </ol>
+  <p>Priset ändras ofta, både mellan veckor och över året. När skatterna ändras följer priset med. Läs mer i <a href="/guider/nar-ar-bensinen-billigast/">när är bensinen billigast</a> och <a href="/guider/vad-paverkar-bensinpriset/">vad påverkar bensinpriset</a>.</p>
+
+  <h2 id="utland">Är bensinen billigare utomlands?</h2>
+  <p>EU-kommissionens veckopriser gör det möjligt att jämföra. Veckan som började {datumText(SENASTE_VECKA.datum)} kostade bensin 95 i snitt {kr(sePris)} per liter i Sverige. Av {eu.length} andra EU-länder var det billigare i {billigareLand.length}{billigareLand.length > 0 && <>: {billigareLand.map((x, i) => <>{i > 0 && ", "}<a href={`/europa/${x.slug}/`}>{x.namn}</a> ({pris(x.p)})</>)}</>}.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Land</th><th class="num">Bensin 95, kr/l</th><th class="num">Mot Sverige</th></tr></thead>
+    <tbody>{grannar.map((x) => <tr><td><a href={`/europa/${x.slug}/`}>{x.namn}</a></td><td class="num">{pris(x.p)}</td><td class="num">{x.p > sePris ? "+" : "−"}{pris(Math.abs(x.p - sePris))}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Veckopris inkl. skatt, omräknat till kronor med veckans växelkurs.</p>
+  <p>Ska du ändå åka över gränsen, se <a href="/guider/tanka-utomlands/">tanka utomlands</a>, <a href="/guider/tanka-i-norge/">tanka i Norge</a> och regler för att ha med <a href="/guider/bensindunk-regler/">bensin i dunk</a>. Alla länder finns på <a href="/europa/">bensinpris i Europa</a>.</p>
+</Guide>

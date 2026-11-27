@@ -4,6 +4,7 @@ import Kort from "../../components/Kort.astro";
 import Annons from "@natverk/core/Annons.astro";
 import { ARTIKLAR, relaterade, datumTid, datumText, AMNE_SLUGAR, hubbSlug, hubbarFor, sidtitel } from "../../lib/artiklar.js";
 import { nyhetsartikelLd } from "../../lib/ld.js";
+import { BILDTEXT_GENERERAD } from "../../lib/bildtext.js";
 
 export function getStaticPaths() {
   return ARTIKLAR.map((a) => ({ params: { kategori: a.kategori, slug: a.slug }, props: { a } }));
@@ -33,11 +34,11 @@ const ai = a.produktion?.metod?.startsWith("ai");
 
     {a.harBild && (
       <figure class="huvudbild">
-        <img src={a.bildUrl} alt={b.alt ?? ""} width="1280" height="720" fetchpriority="high" decoding="async" />
+        <img src={a.bildUrl} srcset={a.bildLiten && a.bildLiten !== a.bildUrl ? `${a.bildLiten} 640w, ${a.bildUrl} ${b.bredd ?? 1280}w` : undefined} sizes="(max-width: 800px) calc(100vw - 32px), 760px" alt={b.alt ?? ""} width="1280" height="720" fetchpriority="high" decoding="async" />
         <figcaption>
-          {b.illustration
-            ? <>Illustration: Dagens goda nyheter</>
-            : <>{b.alt}. Foto: {b.fotograf}, {b.licensUrl ? <a href={b.licensUrl} rel="license nofollow">{b.licens}</a> : b.licens}{b.kallaUrl && <>, via <a href={b.kallaUrl} rel="nofollow">{b.kalla}</a></>}.</>}
+          {b.genererad || b.illustration
+            ? <>{BILDTEXT_GENERERAD}</>
+            : <>{String(b.alt ?? "").replace(/[.!]$/, "")}. Foto: {b.fotograf}, {b.licensUrl ? <a href={b.licensUrl} rel="license nofollow">{b.licens}</a> : b.licens}{b.kallaUrl && <>, via <a href={b.kallaUrl} rel="nofollow">{b.kalla}</a></>}.</>}
         </figcaption>
       </figure>
     )}
@@ -79,8 +80,10 @@ const ai = a.produktion?.metod?.startsWith("ai");
     <section class="kallruta" aria-labelledby="kalla-rubrik">
       <h2 id="kalla-rubrik">Källa</h2>
       <p><a href={a.kalla.url} rel="noopener">{a.kalla.rubrik || a.kalla.namn}</a> – {a.kalla.namn}{a.kalla.publicerad && <>, publicerad {datumText(a.kalla.publicerad)}</>}.</p>
+      {a.via && <p>Nyheten uppmärksammades av <a href={a.via.url} rel="noopener">{a.via.namn}</a>{a.via.publicerad && <>, {datumText(a.via.publicerad)}</>}.</p>}
+      {a.bakgrund?.length > 0 && <p>Bakgrundsfakta: {a.bakgrund.map((b, i) => <>{i > 0 && "; "}{b.text} (<a href={b.kalla.url} rel="noopener">{b.kalla.namn}</a>)</>)}</p>}
       {a.ovrigaKallor?.length > 0 && <p>Samma nyhet finns också hos: {a.ovrigaKallor.map((k, i) => <>{i > 0 && ", "}<a href={k.url} rel="noopener">{k.namn}</a></>)}.</p>}
-      <p class="meta">Artikeln är skriven med egna ord utifrån källan ovan och kontrollerad mot källtexten före publicering. Läs originalet för alla detaljer. <a href="/redaktionell-policy/">Så arbetar vi</a> · <a href="/rattelser/">Hittat ett fel?</a></p>
+      <p class="meta">Artikeln är skriven med egna ord utifrån {a.via ? "källorna" : "källan"} ovan och kontrollerad mot källtexten före publicering. Läs originalet för alla detaljer. <a href="/redaktionell-policy/">Så arbetar vi</a> · <a href="/rattelser/">Hittat ett fel?</a></p>
     </section>
 
     {a.taggar?.length > 0 && (

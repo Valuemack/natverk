@@ -1,0 +1,3277 @@
+{
+  "skapad": "2026-11-26T01:09:56.662Z",
+  "klassning": "claude-haiku-5-5",
+  "kostnadUSD": 0.0073,
+  "kallor": [
+    {
+      "kalla": "google-SE",
+      "antal": 10
+    },
+    {
+      "kalla": "google-US",
+      "antal": 10
+    },
+    {
+      "kalla": "google-GB",
+      "antal": 10
+    },
+    {
+      "kalla": "google-IN",
+      "antal": 10
+    },
+    {
+      "kalla": "google-AU",
+      "antal": 10
+    },
+    {
+      "kalla": "google-CA",
+      "antal": 10
+    },
+    {
+      "kalla": "google-ZA",
+      "antal": 10
+    },
+    {
+      "kalla": "google-NG",
+      "antal": 10
+    },
+    {
+      "kalla": "google-KE",
+      "antal": 10
+    },
+    {
+      "kalla": "google-BR",
+      "antal": 10
+    },
+    {
+      "kalla": "google-JP",
+      "antal": 10
+    },
+    {
+      "kalla": "google-DE",
+      "antal": 10
+    },
+    {
+      "kalla": "wikipedia-sv",
+      "dag": "2026-11-24",
+      "antal": 40
+    },
+    {
+      "kalla": "wikipedia-en",
+      "dag": "2026-11-24",
+      "antal": 40
+    }
+  ],
+  "nyckelordsplanerare": {
+    "status": "hoppad",
+    "saknas": [
+      "GOOGLE_ADS_DEVELOPER_TOKEN",
+      "GOOGLE_ADS_CLIENT_ID",
+      "GOOGLE_ADS_CLIENT_SECRET",
+      "GOOGLE_ADS_REFRESH_TOKEN",
+      "GOOGLE_ADS_CUSTOMER_ID",
+      "GOOGLE_ADS_API_VERSION"
+    ]
+  },
+  "sammanfattning": {
+    "totalt": 186,
+    "positiva": 7,
+    "neutrala": 140,
+    "negativa_bortsorterade": 39
+  },
+  "trender": [
+    {
+      "term": "night sky",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "How and when to watch November’s beaver moon",
+        "What to Know About The Supermoon Appearing This Thanksgiving Week",
+        "November's full moon dazzles skywatchers with a stunning Beaver Moon supermoon (photos)"
+      ],
+      "ton": "positiv",
+      "amne": "Beaver Moon supermåne",
+      "nyckelord": [
+        "Beaver Moon",
+        "supermåne",
+        "fullmåne"
+      ]
+    },
+    {
+      "term": "hera spacecraft",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Hera mission images from asteroid crash show stadium-sized crater",
+        "Remember when NASA slammed a spacecraft into an asteroid? We now have close-up images of the aftermath",
+        "ESA mission reveals stadium-size crater left by first planetary defense test"
+      ],
+      "ton": "positiv",
+      "amne": "Hera-uppdraget asteroid",
+      "nyckelord": [
+        "Hera",
+        "ESA",
+        "Didymos"
+      ]
+    },
+    {
+      "term": "asteroid",
+      "kallor": [
+        "google-NG"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Hera mission images from asteroid crash show stadium-sized crater",
+        "ESA mission reveals stadium-size crater left by first planetary defense test",
+        "Nasa knocked an asteroid off course. New closeup photos shed light on aftermath"
+      ],
+      "ton": "positiv",
+      "amne": "Asteroid och Hera-uppdraget",
+      "nyckelord": [
+        "Hera",
+        "ESA",
+        "DART",
+        "asteroid",
+        "planetärt försvar"
+      ]
+    },
+    {
+      "term": "太陽",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "積水化学･西田専務、ペロブスカイト太陽電池「技術革新で投資抑制」",
+        "日東工が反発、次世代型ペロブスカイト太陽電池の実証実験を開始",
+        "ペロブスカイト太陽電池、千葉県庁食堂で試験展示 原材料ヨウ素の産地「産業発展に」"
+      ],
+      "ton": "positiv",
+      "amne": "Perovskitsolceller",
+      "nyckelord": [
+        "Perovskit",
+        "solceller",
+        "Sekisui Chemical",
+        "Japan"
+      ]
+    },
+    {
+      "term": "Björn Frantzén",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1440,
+      "ton": "positiv",
+      "amne": "Björn Frantzén",
+      "nyckelord": [
+        "Björn Frantzén",
+        "krog",
+        "stjärnkock"
+      ]
+    },
+    {
+      "term": "Änglar, finns dom?",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1126,
+      "ton": "positiv",
+      "amne": "Änglar finns dom",
+      "nyckelord": [
+        "Änglar finns dom",
+        "bok",
+        "andlighet"
+      ]
+    },
+    {
+      "term": "Ansel Adams",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 77398,
+      "ton": "positiv",
+      "amne": "Ansel Adams",
+      "nyckelord": [
+        "Ansel Adams",
+        "fotograf",
+        "naturfotografi"
+      ]
+    },
+    {
+      "term": "thanksgiving",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Live Updates: Macy’s Thanksgiving Day Parade Postponed as NYC Faces Storm",
+        "Storms push Macy’s Thanksgiving Day Parade in New York City to Saturday",
+        "Macy's Thanksgiving parade postponed for the first time in the event's history"
+      ],
+      "ton": "neutral",
+      "amne": "Macy's Thanksgiving-paraden",
+      "nyckelord": [
+        "Macy's",
+        "Thanksgiving Day Parade",
+        "New York"
+      ]
+    },
+    {
+      "term": "poängställning i sporting lissabon mot man utd",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Champions League talking points: Was this a good result for Man United?",
+        "'Disgrace' decisions, divots and howlers - Man Utd chaos against Sporting",
+        "Sporting 2-2 Man Utd: Mauricio Pochettino denied first win by Senne Lammens howler in Champions League"
+      ],
+      "ton": "neutral",
+      "amne": "Sporting mot Manchester United",
+      "nyckelord": [
+        "Sporting CP",
+        "Manchester United",
+        "Champions League",
+        "Senne Lammens"
+      ]
+    },
+    {
+      "term": "bayern munchen",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Own goal seals Lille comeback win over Bayern Munich",
+        "Licensable picture: UEFA Champions League, LOSC Lille - FC Bayern München",
+        "Max Eberl confident for LOSC Lille tilt despite Bayern Munich’s injury-hit squad"
+      ],
+      "ton": "neutral",
+      "amne": "Lille mot Bayern München",
+      "nyckelord": [
+        "LOSC Lille",
+        "Bayern München",
+        "Champions League",
+        "Max Eberl"
+      ]
+    },
+    {
+      "term": "luis suárez",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Sporting CP 2 - Manchester United 2: resumen, resultado y goles del partido",
+        "¡Nuevo técnico, mismos problemas! El equipo en crisis de Champions ya cae",
+        "El Manchester United sigue sin ganar con Mauricio Pochettino"
+      ],
+      "ton": "neutral",
+      "amne": "Sporting mot Manchester United",
+      "nyckelord": [
+        "Sporting CP",
+        "Manchester United",
+        "Mauricio Pochettino"
+      ]
+    },
+    {
+      "term": "liverpool fc",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Club Brugge 0-3 Liverpool: Alexander Isak and Florian Wirtz score in Champions League win",
+        "Team news: Confirmed Liverpool line-up v Club Brugge",
+        "Club Brugge 0-3 Liverpool: Alexander Isak and Florian Wirtz on target in dominant Champions League win"
+      ],
+      "ton": "neutral",
+      "amne": "Club Brugge mot Liverpool",
+      "nyckelord": [
+        "Club Brugge",
+        "Liverpool",
+        "Alexander Isak",
+        "Florian Wirtz"
+      ]
+    },
+    {
+      "term": "fenerbahçe",
+      "kallor": [
+        "google-SE",
+        "google-ZA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "İngiltere’de Fenerbahçe fırtınası! Sarı-lacivertliler, Arda Turan’ın çalıştırdığı Shakhtar’ı tek golle geçti",
+        "\"Çok değerli bir galibiyet aldık\"",
+        "Emre Belözoğlu: Fenerbahçe'ye bu yakışıyor"
+      ],
+      "ton": "neutral",
+      "amne": "Fenerbahçe mot Shakhtar",
+      "nyckelord": [
+        "Fenerbahçe",
+        "Shakhtar",
+        "Arda Turan"
+      ]
+    },
+    {
+      "term": "sabah fk vs fc barcelona standings",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Sabah suffer 7-0 defeat to Barcelona in UEFA Youth League",
+        "Barcelona run riot with 7-0 UEFA Youth League demolition of Sabah",
+        "UEFA Youth League: Sabah's U-19 team defeated by Barcelona"
+      ],
+      "ton": "neutral",
+      "amne": "Sabah mot Barcelona",
+      "nyckelord": [
+        "Sabah FK",
+        "FC Barcelona",
+        "UEFA Youth League"
+      ]
+    },
+    {
+      "term": "anthony edwards",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Timberwolves rumors: Minnesota insider makes Anthony Edwards injury return prediction, and it’s looking like 2027",
+        "Can a Healthy Timberwolves Team Really Challenge the Spurs?",
+        "Anthony Edwards working through rehab, is unsure when he'll be back in lineup"
+      ],
+      "ton": "neutral",
+      "amne": "Anthony Edwards skada",
+      "nyckelord": [
+        "Anthony Edwards",
+        "Timberwolves",
+        "rehab"
+      ]
+    },
+    {
+      "term": "lonzo ball",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "I already played in the NBA, I lived out my dream. …",
+        "“We could have done something special” – Lonzo Ball reflects on the Bulls’ biggest what-if",
+        "Former Los Angeles Lakers Star Lonzo Ball Opens Up On Choosing Knee Surgery Over NBA Career"
+      ],
+      "ton": "neutral",
+      "amne": "Lonzo Ball",
+      "nyckelord": [
+        "Lonzo Ball",
+        "Bulls",
+        "knäoperation"
+      ]
+    },
+    {
+      "term": "tony romo",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Former Cowboys quarterback Tony Romo lands new job nearly two months after CBS departure",
+        "Tony Romo joins Jake Paul’s sports betting company in first post-CBS job - The Athletic",
+        "Tony Romo lands new job at sports gaming company Betr months after his CBS departure over OWI arrest"
+      ],
+      "ton": "neutral",
+      "amne": "Tony Romo nytt jobb",
+      "nyckelord": [
+        "Tony Romo",
+        "Betr",
+        "CBS"
+      ]
+    },
+    {
+      "term": "myles garrett",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Myles Garrett admits his knee probably won't be 'even 90% this season'",
+        "Myles Garrett’s Knee Injury Remains a Concern as Rams Enter Critical Stretch",
+        "Myles Garrett Active Sunday"
+      ],
+      "ton": "neutral",
+      "amne": "Myles Garrett knäskada",
+      "nyckelord": [
+        "Myles Garrett",
+        "Browns",
+        "knä"
+      ]
+    },
+    {
+      "term": "is wemby playing tonight",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Morant Remains Out, Wembanyama Questionable to Play in Blazers-Spurs Game",
+        "Where to watch Spurs vs. Trail Blazers basketball for free today",
+        "Game Preview: San Antonio Spurs vs Portland Trail Blazers"
+      ],
+      "ton": "neutral",
+      "amne": "Wembanyama mot Blazers",
+      "nyckelord": [
+        "Victor Wembanyama",
+        "Spurs",
+        "Trail Blazers"
+      ]
+    },
+    {
+      "term": "florida panthers",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Aleksander Barkov, Brad Marchand returning from injuries against Senators",
+        "What’s Brewing: Barkov & Marchand nearing return; Turkey 5kate",
+        "Barkov and Marchand Set to Return Wednesday vs Senators"
+      ],
+      "ton": "neutral",
+      "amne": "Barkov och Marchand återkomst",
+      "nyckelord": [
+        "Aleksander Barkov",
+        "Brad Marchand",
+        "Florida Panthers"
+      ]
+    },
+    {
+      "term": "smu basketball",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Utah State squares off against SMU",
+        "SMU Men’s Basketball Ready To Hit The Road",
+        "SMU Mustangs vs LSU Tigers Prediction, 11/26/2026 College Basketball Picks, Best Bets & Odds"
+      ],
+      "ton": "neutral",
+      "amne": "SMU basket",
+      "nyckelord": [
+        "SMU Mustangs",
+        "Utah State",
+        "basket"
+      ]
+    },
+    {
+      "term": "tutu atwell",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Fantasy Football: 8 stats that may go overlooked from Week 11, including 2 involving rookie wideouts",
+        "Fantasy football Week 11 recap, early waivers speed run: The time is now to trade McConkey",
+        "Ten Things We Learned From Week 11 (Fantasy Football)"
+      ],
+      "ton": "neutral",
+      "amne": "Fantasy football vecka 11",
+      "nyckelord": [
+        "Tutu Atwell",
+        "fantasy football",
+        "NFL"
+      ]
+    },
+    {
+      "term": "wake forest basketball",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Wake Forest vs Mississippi State basketball preview",
+        "Mississippi State Bulldogs and the Wake Forest Demon Deacons meet in Nassau, Bahamas",
+        "Trip to Bahamas no vacation for Wake Forest, Mississippi State"
+      ],
+      "ton": "neutral",
+      "amne": "Wake Forest basket",
+      "nyckelord": [
+        "Wake Forest",
+        "Mississippi State",
+        "Nassau"
+      ]
+    },
+    {
+      "term": "thunder vs timberwolves",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Minnesota Timberwolves vs Oklahoma City Thunder Prediction, Picks & Odds | NBA Wednesday",
+        "Timberwolves vs. Thunder Livestream: How to Watch the Basketball Game Online",
+        "The Thunder Must Show They Can Still Win Big Games"
+      ],
+      "ton": "neutral",
+      "amne": "Timberwolves mot Thunder",
+      "nyckelord": [
+        "Timberwolves",
+        "Thunder",
+        "NBA"
+      ]
+    },
+    {
+      "term": "knicks vs cavaliers",
+      "kallor": [
+        "google-GB",
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Knicks could be without five players for NBA Cup clash with Cavs",
+        "Tyrese Proctor And Cavaliers Take On Knicks On Nov. 25",
+        "Cavs at Knicks: How to watch, odds, and injury report"
+      ],
+      "ton": "neutral",
+      "amne": "Knicks mot Cavaliers",
+      "nyckelord": [
+        "Knicks",
+        "Cavaliers",
+        "NBA Cup"
+      ]
+    },
+    {
+      "term": "miami heat",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Sixers look to get back on track as they resume NBA cup play vs. Miami",
+        "“He’s ill. I do not know whether he’s going to Indiana …",
+        "Final Update on Giannis & Embiid's Status as Heat face Philadelphia 76ers: Injuries, Odds, How to Watch"
+      ],
+      "ton": "neutral",
+      "amne": "Heat mot 76ers",
+      "nyckelord": [
+        "Miami Heat",
+        "Philadelphia 76ers",
+        "Giannis Antetokounmpo",
+        "Joel Embiid"
+      ]
+    },
+    {
+      "term": "rams vs packers",
+      "kallor": [
+        "google-GB",
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Packers vs. Rams | How to watch, stream & listen | Week 12",
+        "Packers vs. Rams odds: Thanksgiving Eve anytime touchdown scorer picks include Matthew Golden, Tyler Higbee",
+        "Matthew Stafford has to play well against the Green Bay blitz"
+      ],
+      "ton": "neutral",
+      "amne": "Packers mot Rams",
+      "nyckelord": [
+        "Packers",
+        "Rams",
+        "Matthew Stafford"
+      ]
+    },
+    {
+      "term": "lebron james",
+      "kallor": [
+        "google-GB",
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "76ers 111-104 Heat (Nov 25, 2026) Game Recap",
+        "LeBron James hits the 3-pointer vs. Miami Heat",
+        "He's he 13th player in NBA history with a …"
+      ],
+      "ton": "neutral",
+      "amne": "LeBron James",
+      "nyckelord": [
+        "LeBron James",
+        "Lakers",
+        "NBA"
+      ]
+    },
+    {
+      "term": "hornets vs bulls",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Game Preview: Hornets Homestand Continues vs. Bulls",
+        "Charlotte Hornets vs Chicago Bulls: Game 17 NBA Cup preview and discussion",
+        "Naz Reid And Hornets Face Bulls On Nov. 25"
+      ],
+      "ton": "neutral",
+      "amne": "Hornets mot Bulls",
+      "nyckelord": [
+        "Charlotte Hornets",
+        "Chicago Bulls",
+        "Naz Reid"
+      ]
+    },
+    {
+      "term": "bill murray",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Bill Murray: ‘I’m not always a good guy. My friends probably suffer a great deal’",
+        "Mike Zito Joins Studio STL to Talk About Bill Murray and the Blood Brothers Bringing their Blues-Rock Tour Finale to St. Louis",
+        "Bill Murray Expands His Career Through Music Film and Television"
+      ],
+      "ton": "neutral",
+      "amne": "Bill Murray",
+      "nyckelord": [
+        "Bill Murray",
+        "Blood Brothers",
+        "skådespelare"
+      ]
+    },
+    {
+      "term": "गोचर",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Shani Margi 2026: दिसंबर में शनि होंगे मार्गी, कठिन दौर से गुजरने वाली हैं ये 4 राशियां",
+        "केतु का महागोचर: 25 नवंबर को कर्क राशि और अश्लेषा नक्षत्र में केतु की एंट्री, इन 3 राशियों के लिए बेहद शुभ,",
+        "5 दिसंबर को रात 10:32 बजे राहु-केतु का राशि परिवर्तन, 2028 तक रहेगा प्रभाव"
+      ],
+      "ton": "neutral",
+      "amne": "Planetgoccher och astrologi",
+      "nyckelord": [
+        "Shani",
+        "Ketu",
+        "Rahu"
+      ]
+    },
+    {
+      "term": "आज सोने का भाव",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Gold-Silver Rates Crash: अचानक रेट क्रैश, सोना 1.20 लाख से नीचे फिसला, 100g चांदी सिर्फ 13800 रुपये में",
+        "आज फिर सस्ता हुआ सोना और चांदी, 1.44 लाख रुपये के नीचे आया सिल्वर का भाव, चेक करें गोल्ड के ताजा रेट",
+        "सोने की रंगत पड़ी फीकी, खरीदारों के चमके चेहरे; 55 हजार रुपये प्रति 10 ग्राम तक गिरे सोने के दाम"
+      ],
+      "ton": "neutral",
+      "amne": "Guld- och silverpriser idag",
+      "nyckelord": [
+        "guldpris",
+        "silverpris",
+        "MCX"
+      ]
+    },
+    {
+      "term": "ஆஸ்திரேலியா தேசிய கிரிக்கெட் அணி",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "ஐபிஎல் ஏலத்தில் பங்கேற்கும் இங்கிலாந்தின் 'இளம் புயல்’ சோனி பேக்கர்!",
+        "ஐபிஎல் ஏலம் 2027 ஸ்டோக்சுக்கு கிராக்கி",
+        "2027ஆம் ஆண்டின் IPL ஏலத்திற்கு பதிவு செய்த வீரர்கள் பட்டியல் வெளியீடு"
+      ],
+      "ton": "neutral",
+      "amne": "IPL-auktion 2027",
+      "nyckelord": [
+        "IPL",
+        "Sonny Baker",
+        "Ben Stokes"
+      ]
+    },
+    {
+      "term": "बोनस शेयर",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "एक महीने में 171% चढ़ा शेयर, कंपनी को मिला ऑर्डर, 4 बोनस शेयर देने की है तैयारी",
+        "एक महीने में ₹30.88 को ₹83.54 बना चुका है यह शेयर, एक ऑर्डर ने पहुंचा दिया 52 हफ्ते के पीक पर",
+        "एससी एग्रोटेक ने 86 करोड़ रुपये की आपूर्ति आदेश की घोषणा की, शेयरों में लगभग 5 प्रतिशत की वृद्धि हुई।"
+      ],
+      "ton": "neutral",
+      "amne": "Aktie med bonusemission",
+      "nyckelord": [
+        "SC Agrotech",
+        "bonusaktie",
+        "orderstock"
+      ]
+    },
+    {
+      "term": "ന്യൂസ്",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "'സമൂഹമാധ്യമത്തില്‍ തനിക്കെതിരായ വ്യാജപ്രചാരണം ഒരു പ്രധാന വ്യക്തിയുടെ നേതൃത്വത്തില്‍': മുഖ്യമന്ത്രി",
+        "'ഞാനീ നാട്ടുകാരനല്ലേ...'; കോണ്‍ഗ്രസ് തര്‍ക്കങ്ങളില്‍ മുഖ്യനെ രക്ഷിച്ച 'മാവിലായി'; സതീശൻ എങ്ങനെ മാവിലായിക്കാരനായി",
+        "കെപിസിസി പ്രസിഡന്റിനോട് ചോദിച്ചാൽ മതി; പാർട്ടിയിലെ ഗ്രൂപ്പ് പോരിൽ മറുപടി പറയാതെ ഒഴിഞ്ഞുമാറി മുഖ്യമന്ത്രി"
+      ],
+      "ton": "neutral",
+      "amne": "Kerala politik",
+      "nyckelord": [
+        "Pinarayi Vijayan",
+        "Congress",
+        "V.D. Satheesan"
+      ]
+    },
+    {
+      "term": "प्याज",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Special : नेपाल तक पहुंचा अलवर का लाल प्याज, फिर भी किसानों के हाथ खाली...आखिर कहां अटका मुनाफा ?",
+        "गरोठ मंडी में प्याज लेकर पहुंचे 150 से ज्यादा ट्रैक्टर: सड़क पर लगी कतार, SDM ने व्यवस्थाएं देखीं और सुधार ...",
+        "गरोठ कृषि उपज मंडी में प्याज की बंपर आवक, एक दिन में पहुंचे 150 ट्रैक्टर"
+      ],
+      "ton": "neutral",
+      "amne": "Lökpriser och marknader",
+      "nyckelord": [
+        "lök",
+        "Garoth mandi",
+        "Alwar"
+      ]
+    },
+    {
+      "term": "real estate market",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Adelaide overtakes Sydney as least affordable capital city for housing",
+        "Why the property downturn hasn’t made it much easier to buy a home",
+        "Adelaide overtakes Sydney as least affordable property market"
+      ],
+      "ton": "neutral",
+      "amne": "Bostadsmarknad i Australien",
+      "nyckelord": [
+        "Adelaide",
+        "Sydney",
+        "bostadspriser"
+      ]
+    },
+    {
+      "term": "angelina jolie",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Brad Pitt and Angelina Jolie end 10-year legal battle with surprising joint statement",
+        "Grapes of wrath: Pitt and Jolie settle winery lawsuit",
+        "Angelina Jolie and Brad Pitt’s proxy war ends with winery settlement"
+      ],
+      "ton": "neutral",
+      "amne": "Jolie och Pitt vinerirättegång",
+      "nyckelord": [
+        "Angelina Jolie",
+        "Brad Pitt",
+        "Miraval"
+      ]
+    },
+    {
+      "term": "suburb",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "The most liveable, affordable suburbs for property buyers",
+        "Brisbane property: Bargain homes found from $510k",
+        "New report shows Sydney’s top affordable suburbs"
+      ],
+      "ton": "neutral",
+      "amne": "Billiga förorter i Australien",
+      "nyckelord": [
+        "Brisbane",
+        "Sydney",
+        "förorter"
+      ]
+    },
+    {
+      "term": "south australia vs victoria",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "South Australia Men v Victoria - Australian Sheffield Shield, Match 15 - Cricket Score Centre - Live Cricket Scores",
+        "Handscomb, Macdonald pile runs on South Australia",
+        "Handscomb and Macdonald put Victoria in control"
+      ],
+      "ton": "neutral",
+      "amne": "South Australia mot Victoria",
+      "nyckelord": [
+        "Sheffield Shield",
+        "South Australia",
+        "Victoria"
+      ]
+    },
+    {
+      "term": "james sutherland",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Former Cricket Australia CEO James Sutherland says they ‘did the best we could’ on 2018 sandpaper saga",
+        "Sutherland responds to Sandpapergate claims ahead of McIlroy-mania",
+        "'Totally inappropriate': Ex-CA chief finally breaks Sandpaper silence in call over investigation"
+      ],
+      "ton": "neutral",
+      "amne": "Sandpaper-skandalen",
+      "nyckelord": [
+        "James Sutherland",
+        "Cricket Australia",
+        "Sandpapergate"
+      ]
+    },
+    {
+      "term": "tesla",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "EU postpones discussion to approve Tesla's self-driving tech",
+        "EU meeting on Tesla driver-assistance approval delayed to December 15, Reuters reports",
+        "European Union Meeting to Approve Tesla's FSD Across Bloc Postponed"
+      ],
+      "ton": "neutral",
+      "amne": "Tesla självkörning i EU",
+      "nyckelord": [
+        "Tesla",
+        "FSD",
+        "Europeiska unionen"
+      ]
+    },
+    {
+      "term": "predators vs stars",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Predators at Stars projected lineups",
+        "Nashville Predators vs Dallas Stars, live updates, score, how to watch",
+        "Predators Prepare for Important Divisional Clash Against Dallas"
+      ],
+      "ton": "neutral",
+      "amne": "Predators mot Stars",
+      "nyckelord": [
+        "Nashville Predators",
+        "Dallas Stars",
+        "NHL"
+      ]
+    },
+    {
+      "term": "suns vs rockets",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Suns Reveal Starters for NBA Cup Game vs Rockets",
+        "NBA Prop Bet for Miles Bridges on Wednesday, November 25",
+        "Suns try to wrap perfect road trip against Kevin Durant, Rockets"
+      ],
+      "ton": "neutral",
+      "amne": "Suns mot Rockets",
+      "nyckelord": [
+        "Phoenix Suns",
+        "Houston Rockets",
+        "Kevin Durant"
+      ]
+    },
+    {
+      "term": "tyrel bauer",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Jets’ Bauer and Bruins’ Jeannot trade haymakers in heavyweight tilt",
+        "Tanner Jeannot drops the gloves with Tyrell Bauer in a fiery heavyweight clash",
+        "Fight of the year erupts as heavyweights Tyrel Bauer and Tanner Jeannot trade bombs!"
+      ],
+      "ton": "neutral",
+      "amne": "Bauer mot Jeannot slagsmål",
+      "nyckelord": [
+        "Tyler Bauer",
+        "Tanner Jeannot",
+        "Winnipeg Jets"
+      ]
+    },
+    {
+      "term": "nets vs bucks",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Bucks vs Nets Injury Report And Game Preview",
+        "Nets vs. Bucks NBA Cup Odds, Prediction and Picks: Herro Gives Milwaukee a Spark",
+        "Brooklyn Nets Must Perform in Battle of East's Worst Teams"
+      ],
+      "ton": "neutral",
+      "amne": "Nets mot Bucks",
+      "nyckelord": [
+        "Brooklyn Nets",
+        "Milwaukee Bucks",
+        "Tyler Herro"
+      ]
+    },
+    {
+      "term": "micah parsons",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "How will Packers use Micah Parsons in return from torn ACL?",
+        "Micah Parsons active for Green Bay | Packers-Rams inactives",
+        "NFL Thanksgiving injury report: Micah Parsons cleared for season debut, Chiefs' Kenneth Walker III out"
+      ],
+      "ton": "neutral",
+      "amne": "Micah Parsons comeback",
+      "nyckelord": [
+        "Micah Parsons",
+        "Packers",
+        "ACL"
+      ]
+    },
+    {
+      "term": "clippers vs grizzlies",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Los Angeles Clippers @ Memphis Grizzlies Odds",
+        "Memphis Grizzlies-LA Clippers Preview: Injuries, Odds, How to Watch & Starters",
+        "Grizzlies vs Clippers score updates, NBA Cup highlights, TV channel"
+      ],
+      "ton": "neutral",
+      "amne": "Clippers mot Grizzlies",
+      "nyckelord": [
+        "LA Clippers",
+        "Memphis Grizzlies",
+        "NBA Cup"
+      ]
+    },
+    {
+      "term": "toluca - atlas",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Toluca recibe al Atlas en la Ida de Cuartos de Final de la Liga MX",
+        "Los Zorros llegan entre insultos y abucheos",
+        "Pachuca vs. Chivas, EN VIVO: dónde ver por TV y ONLINE"
+      ],
+      "ton": "neutral",
+      "amne": "Toluca mot Atlas",
+      "nyckelord": [
+        "Toluca",
+        "Atlas",
+        "Liga MX"
+      ]
+    },
+    {
+      "term": "jabari walker",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Jabari Walker scores 10 points in spot start",
+        "Jabari Walker Posts 10 Points in 76ers' Loss vs Trail Blazers on Nov 23"
+      ],
+      "ton": "neutral",
+      "amne": "Jabari Walker",
+      "nyckelord": [
+        "Jabari Walker",
+        "76ers",
+        "NBA"
+      ]
+    },
+    {
+      "term": "76ers vs heat",
+      "kallor": [
+        "google-ZA",
+        "google-NG"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "“He’s ill. I do not know whether he’s going to Indiana …",
+        "Clinching, elimination scenarios for Sixers vs. Heat in the NBA Cup",
+        "Final Update on Giannis & Embiid's Status as Heat face Philadelphia 76ers: Injuries, Odds, How to Watch"
+      ],
+      "ton": "neutral",
+      "amne": "76ers mot Heat NBA Cup",
+      "nyckelord": [
+        "Philadelphia 76ers",
+        "Miami Heat",
+        "NBA Cup"
+      ]
+    },
+    {
+      "term": "europa league",
+      "kallor": [
+        "google-ZA"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Inside Torreense's key players, new manager and tactic Celtic can exploit",
+        "Martin O’Neill: We’re here to try and win",
+        "Hogh to start and Trusty returns in Celtic’s predicted XI against Torreense"
+      ],
+      "ton": "neutral",
+      "amne": "Torreense mot Celtic",
+      "nyckelord": [
+        "Torreense",
+        "Celtic",
+        "Europa League"
+      ]
+    },
+    {
+      "term": "sundowns fc",
+      "kallor": [
+        "google-ZA"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Mokwana slays Sundowns to set up Chiefs-Pirates finale",
+        "Sundowns Knocked Out of Carling Knockout Cup Semifinal After Extra Time",
+        "Carling Knockout Final Set for Soweto Derby"
+      ],
+      "ton": "neutral",
+      "amne": "Sundowns FC och Carling Knockout",
+      "nyckelord": [
+        "Mamelodi Sundowns",
+        "Carling Knockout Cup",
+        "Kaizer Chiefs",
+        "Orlando Pirates",
+        "Mokwana"
+      ]
+    },
+    {
+      "term": "psg vs as roma standings",
+      "kallor": [
+        "google-ZA",
+        "google-NG"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Paris St-Germain 2-2 Roma: Donyell Malen penalty earns visitors a point at Parc des Princes",
+        "Malen and Roma deny injury-hit PSG in Champions League draw",
+        "PSG vs AS Roma: The tactics board - stalemates and substitution masterclasses at the Parc des Princes"
+      ],
+      "ton": "neutral",
+      "amne": "PSG mot AS Roma",
+      "nyckelord": [
+        "Paris Saint-Germain",
+        "AS Roma",
+        "Donyell Malen",
+        "Champions League",
+        "Parc des Princes"
+      ]
+    },
+    {
+      "term": "atlético madrid vs viking fk standings",
+      "kallor": [
+        "google-ZA",
+        "google-NG",
+        "google-KE"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Alvarez scores as Atletico cruise to victory over Viking",
+        "How will Atlético line up against Viking in the Champions League?",
+        "Uncertainty grows: Simeone's future hinges on move by Atletico Madrid 'strongman'"
+      ],
+      "ton": "neutral",
+      "amne": "Atlético Madrid mot Viking",
+      "nyckelord": [
+        "Atlético Madrid",
+        "Viking FK",
+        "Álvarez",
+        "Diego Simeone",
+        "Champions League"
+      ]
+    },
+    {
+      "term": "florian wirtz",
+      "kallor": [
+        "google-ZA",
+        "google-NG"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Champions League: Round-up - Sommer-Fehler leitet Brügge-Niederlage ein, PSG gibt Punkte ab",
+        "Virgili gegen Muñoz: zwei Ex-Barça-Talente in der Champions League",
+        "Liverpool beendet Brügges Siegesserie – Ngoy zaubert gegen die Bayern"
+      ],
+      "ton": "neutral",
+      "amne": "Florian Wirtz",
+      "nyckelord": [
+        "Florian Wirtz",
+        "Bayer Leverkusen",
+        "Liverpool",
+        "Club Brügge",
+        "Champions League"
+      ]
+    },
+    {
+      "term": "watford",
+      "kallor": [
+        "google-ZA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Watford 0-1 Blackburn Rovers: Todd Cantwell penalty gives Blackburn win",
+        "Johnson Rules Atcheson Out of Blackburn Trip to Watford",
+        "Blackburn interim boss Johnson on Watford win"
+      ],
+      "ton": "neutral",
+      "amne": "Watford mot Blackburn Rovers",
+      "nyckelord": [
+        "Watford FC",
+        "Blackburn Rovers",
+        "Todd Cantwell",
+        "Championship"
+      ]
+    },
+    {
+      "term": "the mosquito bowl",
+      "kallor": [
+        "google-NG"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Netflix’s ‘The Mosquito Bowl’ Tells the True Story of College Football Stars Who Went From the Field to WWII Combat",
+        "Peter Berg Talks the Power of Football, an Unreleased Rihanna Doc, and More",
+        "‘The Mosquito Bowl’ Netflix Review: Stream It or Skip It?"
+      ],
+      "ton": "neutral",
+      "amne": "The Mosquito Bowl",
+      "nyckelord": [
+        "The Mosquito Bowl",
+        "Netflix",
+        "Peter Berg",
+        "amerikansk fotboll"
+      ]
+    },
+    {
+      "term": "table champions league",
+      "kallor": [
+        "google-NG"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Man City 2-2 Napoli: Ayyoub Bouaddi and Rayan Cherki score for hosts",
+        "Champions League recap: Arsenal drop points vs. Dortmund, Madrid go top",
+        "Manchester City 2 Napoli 2: Cherki and Doku provide a spark, but City still labour - The Athletic"
+      ],
+      "ton": "neutral",
+      "amne": "Champions League-tabellen",
+      "nyckelord": [
+        "Manchester City",
+        "SSC Napoli",
+        "Champions League",
+        "Rayan Cherki",
+        "Ayyoub Bouaddi"
+      ]
+    },
+    {
+      "term": "stoke city",
+      "kallor": [
+        "google-NG"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Championship: Stoke City 2-1 Millwall - George Hirst nets twice to send Potters second",
+        "Stoke City 2-1 Millwall: Potters beat Lions to make it five wins a in row",
+        "Stoke City vs Millwall: Where to Watch, TV Channel, Live Stream and Kick-off Time"
+      ],
+      "ton": "neutral",
+      "amne": "Stoke City mot Millwall",
+      "nyckelord": [
+        "Stoke City",
+        "Millwall",
+        "George Hirst",
+        "Championship"
+      ]
+    },
+    {
+      "term": "ethan mbappé",
+      "kallor": [
+        "google-NG"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Davide Ancelotti says Lille’s Ethan Mbappé ‘has to progress physically’",
+        "Davide Ancelotti respalda a Ethan Mbappé: \"Estamos aquí para acompañarle y ayudarle\"",
+        "Ancelotti Urges Ethan Mbappe to Improve Physical Strength"
+      ],
+      "ton": "neutral",
+      "amne": "Ethan Mbappé",
+      "nyckelord": [
+        "Ethan Mbappé",
+        "LOSC Lille",
+        "Davide Ancelotti"
+      ]
+    },
+    {
+      "term": "livescore",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "1000+",
+      "ton": "neutral",
+      "amne": "Livescore",
+      "nyckelord": [
+        "Livescore",
+        "resultat",
+        "live"
+      ]
+    },
+    {
+      "term": "flashscore",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Piers Morgan labels Chelsea star Cole Palmer a ‘d***head’ and slams ‘rotten attitude’ after Leeds United humiliation",
+        "'Really poor' - Tony Cascarino identifies Chelsea's biggest problem player",
+        "Palmer's dwindling Chelsea form becoming harder to ignore"
+      ],
+      "ton": "neutral",
+      "amne": "Cole Palmer och Chelsea",
+      "nyckelord": [
+        "Cole Palmer",
+        "Chelsea FC",
+        "Leeds United",
+        "Piers Morgan"
+      ]
+    },
+    {
+      "term": "sofascore",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Matheus Pucinelli de Almeida Carlos Maria Zarate live score and H2H results",
+        "Thomas Faurel Nikita Belozertsev live score and H2H results",
+        "Enrique Carrascosa Diaz Roberto Pérez Socas live score and H2H results"
+      ],
+      "ton": "neutral",
+      "amne": "Live-resultat och H2H",
+      "nyckelord": [
+        "Sofascore",
+        "Pucinelli",
+        "Zarate",
+        "Faurel"
+      ]
+    },
+    {
+      "term": "man u vs",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Champions League LIVE: Sporting vs Man Utd & Club Brugge vs Liverpool score & updates from seven other games",
+        "Champions League recap: Another night of mayhem for Pochettino's Man United",
+        "Club Brugge 0-3 Liverpool, Lille 2-1 Bayern, PSG 2-2 Roma: Champions League clockwatch – as it happened"
+      ],
+      "ton": "neutral",
+      "amne": "Champions League-kvällen",
+      "nyckelord": [
+        "Manchester United",
+        "Sporting CP",
+        "Club Brügge",
+        "Liverpool",
+        "Champions League"
+      ]
+    },
+    {
+      "term": "manu",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Transfer Rumors: Real Madrid’s Haaland Boost; European Giants Battle for Fernandes",
+        "Latest transfer news today: Arsenal in 'talks' over £67m winger as Chelsea target 19-y/o midfield gem",
+        "Transfer Rumors: Real Madrid Eye Haaland Price Slash; PSG Raid Europe in Winter Splurge"
+      ],
+      "ton": "neutral",
+      "amne": "Transferrykten",
+      "nyckelord": [
+        "Real Madrid",
+        "Erling Haaland",
+        "Bruno Fernandes",
+        "PSG",
+        "transfer"
+      ]
+    },
+    {
+      "term": "sporting",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Paulo Fonseca: «Fica a sensação de que poderíamos ter vencido o jogo»",
+        "Sporting empata com o Man. United numa noite em que Bruno Fernandes ia estragando tudo",
+        "Fonseca explica como se preparou para a «incerteza» do United"
+      ],
+      "ton": "neutral",
+      "amne": "Sporting och Paulo Fonseca",
+      "nyckelord": [
+        "Sporting CP",
+        "Paulo Fonseca",
+        "Manchester United",
+        "Bruno Fernandes"
+      ]
+    },
+    {
+      "term": "mirassol futebol clube",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Série A tem um gigante rebaixado e quase 50% de chance de \"dobradinha\" na B",
+        "Alicia Klein: Podemos ter dois campeões brasileiros na Série B",
+        "Internacional pode ser rebaixado já na próxima rodada após goleada; veja contas"
+      ],
+      "ton": "neutral",
+      "amne": "Mirassol Futebol Clube",
+      "nyckelord": [
+        "Mirassol FC",
+        "Série A",
+        "Série B",
+        "Brasileirão"
+      ]
+    },
+    {
+      "term": "mirassol x",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Palpites e dicas para Mirassol x Athletico-PR pelo Brasileirão",
+        "Treino do Mirassol: Elenco retorna com atividades internas",
+        "Campeonato brasileiro: Mirassol cada vez mais perto do rebaixamento"
+      ],
+      "ton": "neutral",
+      "amne": "Mirassol mot Athletico-PR",
+      "nyckelord": [
+        "Mirassol FC",
+        "Athletico Paranaense",
+        "Brasileirão"
+      ]
+    },
+    {
+      "term": "corinthians feminino",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Corinthians feminino estuda contratação de técnico da base do Palmeiras masculino para 2027",
+        "Corinthians encaminha contratação de campeão pelo Palmeiras",
+        "Cotado para assumir o Corinthians, Gustavo Pineda avalia opções no mercado"
+      ],
+      "ton": "neutral",
+      "amne": "Corinthians feminino",
+      "nyckelord": [
+        "Corinthians",
+        "Gustavo Pineda",
+        "Palmeiras",
+        "futebol feminino"
+      ]
+    },
+    {
+      "term": "jogo agora",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Play Store libera 5 jogos grátis por tempo limitado! Resgate agora (25)",
+        "Cinco jogos gratuitos se destacam na Play Store",
+        "Android: 5 jogos grátis em alta para baixar na Play Store esta semana (23)"
+      ],
+      "ton": "neutral",
+      "amne": "Gratis spel i Play Store",
+      "nyckelord": [
+        "Google Play Store",
+        "Android",
+        "gratis spel"
+      ]
+    },
+    {
+      "term": "brasileiro 2026",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Ao vivo: São Paulo x Remo | Rodada 37 | Campeonato Brasileiro",
+        "Botafogo 1-1 São Paulo em tempo real :: Brasileirão Série A 2026",
+        "Botafogo 1-1 São Paulo ao Vivo :: Brasileirão Série A 2026"
+      ],
+      "ton": "neutral",
+      "amne": "Brasileirão 2026",
+      "nyckelord": [
+        "Botafogo",
+        "São Paulo FC",
+        "Remo",
+        "Brasileirão Série A"
+      ]
+    },
+    {
+      "term": "knicks x cavaliers",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "New York Knicks x Cleveland Cavaliers: onde assistir ao jogo da NBA hoje (25)",
+        "Palpite NY Knicks x Cleveland Cavaliers - NBA, 25/11/2026",
+        "Knicks x Cavs hoje: horário e onde assistir"
+      ],
+      "ton": "neutral",
+      "amne": "Knicks mot Cavaliers",
+      "nyckelord": [
+        "New York Knicks",
+        "Cleveland Cavaliers",
+        "NBA"
+      ]
+    },
+    {
+      "term": "aroldo",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Em 'Por você', Aroldo aprontará com os filhos e terá envolvimento com Vanessa, adianta o diretor da novela, André Câmara",
+        "Por Você: Aroldo conquista proeza impossível e une Bela e Peixe contra ele",
+        "Resumo de ‘Por Você’: Capítulo desta quarta-feira (25/11/2026)"
+      ],
+      "ton": "neutral",
+      "amne": "Por Você och Aroldo",
+      "nyckelord": [
+        "Por Você",
+        "Aroldo",
+        "TV Globo",
+        "André Câmara"
+      ]
+    },
+    {
+      "term": "ジョナサン・ウィートリー",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "【Ｆ１】アストンマーティン＆ホンダが〝巨大補強〟名将ウィートリーを電撃招聘「魅力は理解できる」＝英メディア（東スポWEB）",
+        "【Ｆ１】アストンマーティン＆ホンダが〝巨大補強〟名将ウィートリーを電撃招聘「魅力は理解できる」＝英メディア",
+        "【Ｆ１】アストンマーティン＆ホンダが〝巨大補強〟名将ウィートリーを電撃招聘「魅力は理解できる」＝英メディア"
+      ],
+      "ton": "neutral",
+      "amne": "Jonathan Wheatley och Aston Martin",
+      "nyckelord": [
+        "Jonathan Wheatley",
+        "Aston Martin",
+        "Honda",
+        "F1"
+      ]
+    },
+    {
+      "term": "海上自衛隊",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "海上自衛隊の未来を担う「巨大艦」ついに起工！ 艦隊を支える“縁の下の力持ち”が世代交代へ",
+        "画像ギャラリー | まるで宇宙船！ 海自「最新護衛艦」SF映画さながらの艦内ショットが公開 「太平洋の対岸」から要人が視察",
+        "まるで宇宙船！ 海自「最新護衛艦」SF映画さながらの艦内ショットが公開 「太平洋の対岸」から要人が視察"
+      ],
+      "ton": "neutral",
+      "amne": "Japanska marinen",
+      "nyckelord": [
+        "Japanska marinen",
+        "fregatt",
+        "Kaigun",
+        "JMSDF"
+      ]
+    },
+    {
+      "term": "ホーネッツ 対 ブルズ",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Dallas Mavericks vs Denver Nuggets Nov 24, 2026 Box Scores",
+        "Dallas Mavericks vs Denver Nuggets Nov 24, 2026 Play-by-Play",
+        "Boston Celtics vs Washington Wizards Nov 24, 2026 Play-by-Play"
+      ],
+      "ton": "neutral",
+      "amne": "NBA-matcher",
+      "nyckelord": [
+        "Dallas Mavericks",
+        "Denver Nuggets",
+        "Boston Celtics",
+        "Washington Wizards",
+        "NBA"
+      ]
+    },
+    {
+      "term": "再放送",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "2000+",
+      "ton": "neutral",
+      "amne": "Repriser",
+      "nyckelord": [
+        "repris",
+        "TV",
+        "sändning"
+      ]
+    },
+    {
+      "term": "rams – packers",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Los Angeles Rams vs. Green Bay Packers: How to watch, listen to and live stream Week 12",
+        "How to watch Green Bay Packers vs Los Angeles Rams Thanksgiving Eve game",
+        "Week 12 NFL betting promos: Get almost $4,000 in bonuses from betting apps, sportsbooks for Packers vs. Rams"
+      ],
+      "ton": "neutral",
+      "amne": "Rams mot Packers",
+      "nyckelord": [
+        "Los Angeles Rams",
+        "Green Bay Packers",
+        "NFL"
+      ]
+    },
+    {
+      "term": "kalkbuster wasserhahn entkalker",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "\"Die Millionenidee\"-Sieger von Folge 3: Dieses Produkt verlängert die Lebensmittel-Haltbarkeit",
+        "Nach 20 Jahren: Sonya Kraus kehrt in alten Job zurück",
+        "Studentin erfindet Haushaltshelfer – jetzt steht er bundesweit im Regal"
+      ],
+      "ton": "neutral",
+      "amne": "Kalkbuster vattenkokare",
+      "nyckelord": [
+        "Kalkbuster",
+        "Die Millionenidee",
+        "Sonya Kraus"
+      ]
+    },
+    {
+      "term": "hm",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "H&M: Advancing an Already Mature Business in North America",
+        "Macy Grimshaw’s Custom Pieces Have Already Charmed Harry Styles and Emma Corrin, Now She’s Won H&M’s Design Award",
+        "What we learned from the winner of the H&M Design Award 2026, Macy Grimshaw"
+      ],
+      "ton": "neutral",
+      "amne": "H&M",
+      "nyckelord": [
+        "H&M",
+        "Macy Grimshaw",
+        "H&M Design Award"
+      ]
+    },
+    {
+      "term": "sandra maischberger heute gäste",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "maischberger - maischberger am 24.11.2026 - hier anschauen",
+        "Kretschmer und Brantner zoffen sich bei „Maischberger“ „Ich bin hier in keinem Inquisitorium“",
+        "Faktencheck zu \"maischberger\" vom 18.11.2026"
+      ],
+      "ton": "neutral",
+      "amne": "Maischberger",
+      "nyckelord": [
+        "Maischberger",
+        "ARD",
+        "Michael Kretschmer",
+        "Franziska Brantner"
+      ]
+    },
+    {
+      "term": "nasdaq plug",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Exclusive: Plug Power CEO sees demand rebound as turnaround remains in focus",
+        "Plug Power CFO Reiterates Q4 2026 Positive EBITDAS Target",
+        "Plug Power Hosts Symposium on Energy Security and Hydrogen Independence as Global Projects Advance"
+      ],
+      "ton": "neutral",
+      "amne": "Plug Power",
+      "nyckelord": [
+        "Plug Power",
+        "vätgas",
+        "Nasdaq"
+      ]
+    },
+    {
+      "term": "claudia wittig",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "BSW und AfD: Wagenknecht erklärt die roten Linien",
+        "Vor Bundesparteitag in Dresden: BSW-Positionspapier zu AfD-Kooperation sorgt für Sprengstoff",
+        "\"Lassen uns nicht zu Tode umarmen\" – BSW ringt weiter um AfD-Kurs in Sachsen-Anhalt"
+      ],
+      "ton": "neutral",
+      "amne": "BSW och AfD",
+      "nyckelord": [
+        "BSW",
+        "Sahra Wagenknecht",
+        "AfD",
+        "Bundesparteitag"
+      ]
+    },
+    {
+      "term": "jessica alba",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Jessica Alba’s Daughter Haven, 15, Looks Just Like Her in Sweet New Photo",
+        "Jessica Alba Shares Sweet Family Photos with Her 2 Younger Kids as She Rounds Up Her ‘November Moments’",
+        "Jessica Alba's daughter Haven, 15, looks just like her famous mom in new photo"
+      ],
+      "ton": "neutral",
+      "amne": "Jessica Alba",
+      "nyckelord": [
+        "Jessica Alba",
+        "Haven Warren",
+        "Honest Company"
+      ]
+    },
+    {
+      "term": "Ken Fagerberg",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 8780,
+      "ton": "neutral",
+      "amne": "Ken Fagerberg",
+      "nyckelord": [
+        "Ken Fagerberg",
+        "svensk",
+        "musiker"
+      ]
+    },
+    {
+      "term": "Evy Palm",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 7785,
+      "ton": "neutral",
+      "amne": "Evy Palm",
+      "nyckelord": [
+        "Evy Palm",
+        "svensk",
+        "artist"
+      ]
+    },
+    {
+      "term": "Riemannhypotesen",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 3550,
+      "ton": "neutral",
+      "amne": "Riemannhypotesen",
+      "nyckelord": [
+        "Riemannhypotesen",
+        "Bernhard Riemann",
+        "primtal",
+        "matematik"
+      ]
+    },
+    {
+      "term": "Mackan Edlund",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 2435,
+      "ton": "neutral",
+      "amne": "Mackan Edlund",
+      "nyckelord": [
+        "Mackan Edlund",
+        "svensk",
+        "artist"
+      ]
+    },
+    {
+      "term": "Julia Wiberg",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 2264,
+      "ton": "neutral",
+      "amne": "Julia Wiberg",
+      "nyckelord": [
+        "Julia Wiberg",
+        "svensk",
+        "programledare"
+      ]
+    },
+    {
+      "term": "Ida Gabrielsson",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 2024,
+      "ton": "neutral",
+      "amne": "Ida Gabrielsson",
+      "nyckelord": [
+        "Ida Gabrielsson",
+        "svensk",
+        "artist"
+      ]
+    },
+    {
+      "term": "Elisabeth Thand Ringqvist",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1989,
+      "ton": "neutral",
+      "amne": "Elisabeth Thand Ringqvist",
+      "nyckelord": [
+        "Elisabeth Thand Ringqvist",
+        "Liberalerna",
+        "politik"
+      ]
+    },
+    {
+      "term": "Karolina Ramqvist",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1852,
+      "ton": "neutral",
+      "amne": "Karolina Ramqvist",
+      "nyckelord": [
+        "Karolina Ramqvist",
+        "svensk",
+        "författare"
+      ]
+    },
+    {
+      "term": "Nooshi Dadgostar",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1752,
+      "ton": "neutral",
+      "amne": "Nooshi Dadgostar",
+      "nyckelord": [
+        "Nooshi Dadgostar",
+        "Vänsterpartiet",
+        "politik"
+      ]
+    },
+    {
+      "term": "Sam Saunders",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1519,
+      "ton": "neutral",
+      "amne": "Sam Saunders",
+      "nyckelord": [
+        "Sam Saunders",
+        "golf"
+      ]
+    },
+    {
+      "term": "Markus Krunegård",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1417,
+      "ton": "neutral",
+      "amne": "Markus Krunegård",
+      "nyckelord": [
+        "Markus Krunegård",
+        "musik",
+        "artist"
+      ]
+    },
+    {
+      "term": "Jensen Huang",
+      "kallor": [
+        "wikipedia-sv",
+        "wikipedia-en"
+      ],
+      "visningar": 1356,
+      "nyheter": [],
+      "ton": "neutral",
+      "amne": "Jensen Huang",
+      "nyckelord": [
+        "Jensen Huang",
+        "Nvidia",
+        "vd"
+      ]
+    },
+    {
+      "term": "Hans Fahlén",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1311,
+      "ton": "neutral",
+      "amne": "Hans Fahlén",
+      "nyckelord": [
+        "Hans Fahlén"
+      ]
+    },
+    {
+      "term": "Maffia (TV-serie)",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1308,
+      "ton": "neutral",
+      "amne": "Maffia TV-serie",
+      "nyckelord": [
+        "Maffia",
+        "TV-serie",
+        "SVT"
+      ]
+    },
+    {
+      "term": "Magdalena Andersson",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1280,
+      "ton": "neutral",
+      "amne": "Magdalena Andersson",
+      "nyckelord": [
+        "Magdalena Andersson",
+        "Socialdemokraterna",
+        "partiledare"
+      ]
+    },
+    {
+      "term": "You Can See Everything",
+      "kallor": [
+        "wikipedia-sv",
+        "wikipedia-en"
+      ],
+      "visningar": 1116,
+      "nyheter": [],
+      "ton": "neutral",
+      "amne": "You Can See Everything",
+      "nyckelord": [
+        "You Can See Everything",
+        "album",
+        "musik"
+      ]
+    },
+    {
+      "term": "Opinionsundersökningar inför riksdagsvalet i Sverige 2030",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1106,
+      "ton": "neutral",
+      "amne": "Opinionsundersökningar riksdagsvalet 2030",
+      "nyckelord": [
+        "opinionsmätning",
+        "riksdagsvalet",
+        "väljarstöd"
+      ]
+    },
+    {
+      "term": "Mikael Bolyos",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1102,
+      "ton": "neutral",
+      "amne": "Mikael Bolyos",
+      "nyckelord": [
+        "Mikael Bolyos",
+        "komiker"
+      ]
+    },
+    {
+      "term": "Janne Jingryd",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1036,
+      "ton": "neutral",
+      "amne": "Janne Jingryd",
+      "nyckelord": [
+        "Janne Jingryd",
+        "programledare"
+      ]
+    },
+    {
+      "term": "Gunnar Strömmer",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 1003,
+      "ton": "neutral",
+      "amne": "Gunnar Strömmer",
+      "nyckelord": [
+        "Gunnar Strömmer",
+        "justitieminister",
+        "Moderaterna"
+      ]
+    },
+    {
+      "term": "Sverige",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 996,
+      "ton": "neutral",
+      "amne": "Sverige",
+      "nyckelord": [
+        "Sverige",
+        "land",
+        "regering"
+      ]
+    },
+    {
+      "term": "Julkalendern i Sveriges Television",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 941,
+      "ton": "neutral",
+      "amne": "Julkalendern i SVT",
+      "nyckelord": [
+        "julkalender",
+        "SVT",
+        "Sveriges Television"
+      ]
+    },
+    {
+      "term": "Deniz Gül",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 920,
+      "ton": "neutral",
+      "amne": "Deniz Gül",
+      "nyckelord": [
+        "Deniz Gül",
+        "skådespelare"
+      ]
+    },
+    {
+      "term": "Samernas ursprung",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 860,
+      "ton": "neutral",
+      "amne": "Samernas ursprung",
+      "nyckelord": [
+        "samer",
+        "urfolk",
+        "DNA"
+      ]
+    },
+    {
+      "term": "Ellen Bergström",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 855,
+      "ton": "neutral",
+      "amne": "Ellen Bergström",
+      "nyckelord": [
+        "Ellen Bergström"
+      ]
+    },
+    {
+      "term": "Per Svensson (journalist)",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 832,
+      "ton": "neutral",
+      "amne": "Per Svensson journalist",
+      "nyckelord": [
+        "Per Svensson",
+        "journalist"
+      ]
+    },
+    {
+      "term": "Linnéa Claeson",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 819,
+      "ton": "neutral",
+      "amne": "Linnéa Claeson",
+      "nyckelord": [
+        "Linnéa Claeson",
+        "skådespelare"
+      ]
+    },
+    {
+      "term": "Christina Schollin",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 813,
+      "ton": "neutral",
+      "amne": "Christina Schollin",
+      "nyckelord": [
+        "Christina Schollin",
+        "skådespelerska"
+      ]
+    },
+    {
+      "term": "Roxette",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 802,
+      "ton": "neutral",
+      "amne": "Roxette",
+      "nyckelord": [
+        "Roxette",
+        "Per Gessle",
+        "Marie Fredriksson"
+      ]
+    },
+    {
+      "term": "30 november",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 787,
+      "ton": "neutral",
+      "amne": "30 november",
+      "nyckelord": [
+        "30 november",
+        "högtidsdag"
+      ]
+    },
+    {
+      "term": "Hammarby IF Fotboll",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 778,
+      "ton": "neutral",
+      "amne": "Hammarby IF Fotboll",
+      "nyckelord": [
+        "Hammarby IF",
+        "fotboll",
+        "Allsvenskan"
+      ]
+    },
+    {
+      "term": "Amanda Lind",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 775,
+      "ton": "neutral",
+      "amne": "Amanda Lind",
+      "nyckelord": [
+        "Amanda Lind",
+        "Miljöpartiet",
+        "politiker"
+      ]
+    },
+    {
+      "term": "Gunde Svan",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 773,
+      "ton": "neutral",
+      "amne": "Gunde Svan",
+      "nyckelord": [
+        "Gunde Svan",
+        "skidåkning",
+        "OS"
+      ]
+    },
+    {
+      "term": "Januariavtalet",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 751,
+      "ton": "neutral",
+      "amne": "Januariavtalet",
+      "nyckelord": [
+        "Januariavtalet",
+        "riksdag",
+        "politiskt avtal"
+      ]
+    },
+    {
+      "term": "Amanda Romare",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 748,
+      "ton": "neutral",
+      "amne": "Amanda Romare",
+      "nyckelord": [
+        "Amanda Romare"
+      ]
+    },
+    {
+      "term": "Ramayana: Part 1",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 305811,
+      "ton": "neutral",
+      "amne": "Ramayana Part 1",
+      "nyckelord": [
+        "Ramayana",
+        "film",
+        "Nitesh Tiwari"
+      ]
+    },
+    {
+      "term": "Grand Theft Auto VI",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 198339,
+      "ton": "neutral",
+      "amne": "Grand Theft Auto VI",
+      "nyckelord": [
+        "Grand Theft Auto VI",
+        "Rockstar Games",
+        "tv-spel"
+      ]
+    },
+    {
+      "term": "The Hunger Games: Sunrise on the Reaping",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 129863,
+      "ton": "neutral",
+      "amne": "The Hunger Games Sunrise on the Reaping",
+      "nyckelord": [
+        "Hunger Games",
+        "Sunrise on the Reaping",
+        "film"
+      ]
+    },
+    {
+      "term": "List of highest-grossing Indian films",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 128464,
+      "ton": "neutral",
+      "amne": "Högst intjänande indiska filmer",
+      "nyckelord": [
+        "indisk film",
+        "box office",
+        "Bollywood"
+      ]
+    },
+    {
+      "term": "Avengers: Doomsday",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 120242,
+      "ton": "neutral",
+      "amne": "Avengers Doomsday",
+      "nyckelord": [
+        "Avengers Doomsday",
+        "Marvel",
+        "film"
+      ]
+    },
+    {
+      "term": "Riemann hypothesis",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 102084,
+      "ton": "neutral",
+      "amne": "Riemannhypotesen",
+      "nyckelord": [
+        "Riemannhypotesen",
+        "matematik",
+        "primtal"
+      ]
+    },
+    {
+      "term": "Nvidia",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 89488,
+      "ton": "neutral",
+      "amne": "Nvidia",
+      "nyckelord": [
+        "Nvidia",
+        "grafikkort",
+        "AI-chip"
+      ]
+    },
+    {
+      "term": ".xxx",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 83971,
+      "ton": "neutral",
+      "amne": ".xxx domän",
+      "nyckelord": [
+        ".xxx",
+        "domän",
+        "internet"
+      ]
+    },
+    {
+      "term": "The Body (TV series)",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 83943,
+      "ton": "neutral",
+      "amne": "The Body TV-serie",
+      "nyckelord": [
+        "The Body",
+        "TV-serie",
+        "Netflix"
+      ]
+    },
+    {
+      "term": "Miley Cyrus",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 81270,
+      "ton": "neutral",
+      "amne": "Miley Cyrus",
+      "nyckelord": [
+        "Miley Cyrus",
+        "artist",
+        "musik"
+      ]
+    },
+    {
+      "term": "Mariella Frostrup",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 80552,
+      "ton": "neutral",
+      "amne": "Mariella Frostrup",
+      "nyckelord": [
+        "Mariella Frostrup",
+        "programledare",
+        "författare"
+      ]
+    },
+    {
+      "term": "Survivor Series: WarGames (2026)",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 67057,
+      "ton": "neutral",
+      "amne": "Survivor Series WarGames 2026",
+      "nyckelord": [
+        "WWE",
+        "Survivor Series",
+        "WarGames"
+      ]
+    },
+    {
+      "term": "O.M: Operation Mole",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 66369,
+      "ton": "neutral",
+      "amne": "O.M Operation Mole",
+      "nyckelord": [
+        "O.M Operation Mole",
+        "film",
+        "spionage"
+      ]
+    },
+    {
+      "term": "Tom Jackson (American football, born 1951)",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 64851,
+      "ton": "neutral",
+      "amne": "Tom Jackson amerikansk fotboll",
+      "nyckelord": [
+        "Tom Jackson",
+        "amerikansk fotboll",
+        "NFL"
+      ]
+    },
+    {
+      "term": "Eternal September",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 61273,
+      "ton": "neutral",
+      "amne": "Eternal September",
+      "nyckelord": [
+        "Eternal September",
+        "Usenet",
+        "internet"
+      ]
+    },
+    {
+      "term": "Mckenna Grace",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 60494,
+      "ton": "neutral",
+      "amne": "Mckenna Grace",
+      "nyckelord": [
+        "Mckenna Grace",
+        "skådespelerska"
+      ]
+    },
+    {
+      "term": "Miss Universe 2026",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 59793,
+      "ton": "neutral",
+      "amne": "Miss Universe 2026",
+      "nyckelord": [
+        "Miss Universe",
+        "tävling",
+        "skönhetstävling"
+      ]
+    },
+    {
+      "term": "Joseph Zada",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 59239,
+      "ton": "neutral",
+      "amne": "Joseph Zada",
+      "nyckelord": [
+        "Joseph Zada"
+      ]
+    },
+    {
+      "term": "Maxx Morando",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 55624,
+      "ton": "neutral",
+      "amne": "Maxx Morando",
+      "nyckelord": [
+        "Maxx Morando"
+      ]
+    },
+    {
+      "term": "Grand Theft Auto",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 55412,
+      "ton": "neutral",
+      "amne": "Grand Theft Auto",
+      "nyckelord": [
+        "Grand Theft Auto",
+        "Rockstar Games",
+        "tv-spel"
+      ]
+    },
+    {
+      "term": "ChatGPT",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 53144,
+      "ton": "neutral",
+      "amne": "ChatGPT",
+      "nyckelord": [
+        "ChatGPT",
+        "OpenAI",
+        "AI-chatbot"
+      ]
+    },
+    {
+      "term": "Jayden Daniels",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 50821,
+      "ton": "neutral",
+      "amne": "Jayden Daniels",
+      "nyckelord": [
+        "Jayden Daniels",
+        "NFL",
+        "quarterback"
+      ]
+    },
+    {
+      "term": "Robert Pattinson",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 49048,
+      "ton": "neutral",
+      "amne": "Robert Pattinson",
+      "nyckelord": [
+        "Robert Pattinson",
+        "skådespelare",
+        "The Batman"
+      ]
+    },
+    {
+      "term": "The Hunger Games: The Ballad of Songbirds & Snakes",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 48939,
+      "ton": "neutral",
+      "amne": "Hungerspelen film",
+      "nyckelord": [
+        "The Hunger Games",
+        "The Ballad of Songbirds & Snakes",
+        "Suzanne Collins"
+      ]
+    },
+    {
+      "term": "Vaibhav Sooryavanshi",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 48785,
+      "ton": "neutral",
+      "amne": "Vaibhav Sooryavanshi",
+      "nyckelord": [
+        "Vaibhav Sooryavanshi",
+        "cricket",
+        "Rajasthan Royals"
+      ]
+    },
+    {
+      "term": "Sunrise on the Reaping",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 47829,
+      "ton": "neutral",
+      "amne": "Sunrise on the Reaping",
+      "nyckelord": [
+        "Sunrise on the Reaping",
+        "Suzanne Collins",
+        "Hungerspelen"
+      ]
+    },
+    {
+      "term": "David Mamet",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 46506,
+      "ton": "neutral",
+      "amne": "David Mamet",
+      "nyckelord": [
+        "David Mamet",
+        "dramatiker",
+        "manusförfattare"
+      ]
+    },
+    {
+      "term": "kuba",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "WHO chief calls on US to lift oil blockade on Cuba, citing health impact",
+        "WHO Director-General announces support for vaccines, medical equipment during official visit to Cuba",
+        "WHO chief visits Cuba as healthcare system deteriorates"
+      ],
+      "ton": "negativ",
+      "amne": "Kuba och oljeblockaden",
+      "nyckelord": [
+        "WHO",
+        "Kuba",
+        "oljeblockad"
+      ]
+    },
+    {
+      "term": "andy taylor",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "2000+",
+      "nyheter": [
+        "Andy Taylor 1961–2026",
+        "Duran Duran guitarist Andy Taylor dies, aged 65",
+        "Andy Taylor, guitarist in Duran Duran, dies aged 65"
+      ],
+      "ton": "negativ",
+      "amne": "Andy Taylor död",
+      "nyckelord": [
+        "Andy Taylor",
+        "Duran Duran",
+        "gitarrist"
+      ]
+    },
+    {
+      "term": "jan guillou",
+      "kallor": [
+        "google-SE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "IB-avslöjaren Peter Bratt åtalas för vapenbrott",
+        "Politikbyrån – Avgå alla!",
+        "Jan Guillou och Ulf Brunnberg ryker ihop i SVT: \"Du vill sätta dit mig\""
+      ],
+      "ton": "negativ",
+      "amne": "Peter Bratt åtalas",
+      "nyckelord": [
+        "Peter Bratt",
+        "IB",
+        "vapenbrott"
+      ]
+    },
+    {
+      "term": "andrew tate",
+      "kallor": [
+        "google-US"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "New Doc Reveals How Andrew Tate's 'False Braggadocio' Is Just Like His Dad's: 'It's Spooky'",
+        "A New Doc Explores Andrew Tate’s ‘Toxic Empire’—and the Serious Charges Against Him",
+        "Andrew Tate Accused of Rape by Ex-Far Right Influencer in New Documentary"
+      ],
+      "ton": "negativ",
+      "amne": "Andrew Tate anklagelser",
+      "nyckelord": [
+        "Andrew Tate",
+        "dokumentär",
+        "våldtäkt"
+      ]
+    },
+    {
+      "term": "jesse baird",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "The CCTV that helped convict a Sydney policeman of double murder",
+        "Luke Davies and Jesse Baird fell in love. Across town, Beau Lamarre-Condon was plotting his revenge",
+        "Beau Lamarre-Condon's warning signs were visible before double murder"
+      ],
+      "ton": "negativ",
+      "amne": "Dubbelmord i Sydney",
+      "nyckelord": [
+        "Beau Lamarre-Condon",
+        "Jesse Baird",
+        "Luke Davies"
+      ]
+    },
+    {
+      "term": "skiing",
+      "kallor": [
+        "google-GB"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Lack of snow forces cancellation of Canadian World Cup alpine skiing races",
+        "PwC Tremblant World Cup Canceled After Limited Snowmaking Windows",
+        "Lack of snow forces cancellation of World Cup skiing races in Canada next month"
+      ],
+      "ton": "negativ",
+      "amne": "Inställda skidtävlingar",
+      "nyckelord": [
+        "Tremblant",
+        "World Cup alpint",
+        "snöbrist"
+      ]
+    },
+    {
+      "term": "வானிலை",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "10000+",
+      "nyheter": [
+        "மதுரை, திண்டுக்கல் உட்பட 7 மாவட்டங்களில் இன்று கனமழை",
+        "“சென்னை உள்ளிட்ட 16 மாவட்டங்களில் மழைக்கு வாய்ப்பு” - வானிலை ஆய்வு மையம் கணிப்பு!",
+        "TN Rains| தமிழகம் முழுக்க பரவலாக கனமழை.. வந்தது எச்சரிக்கை"
+      ],
+      "ton": "negativ",
+      "amne": "Kraftigt regn i Tamil Nadu",
+      "nyckelord": [
+        "Tamil Nadu",
+        "Madurai",
+        "Meteorological Centre"
+      ]
+    },
+    {
+      "term": "gta6 pc port",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Unauthorized 'GTA 6' PC port shut down by Rockstar Games' parent company",
+        "Cyberleek Reportedly Releases .exe File for Xbox Build",
+        "GTA VI Console Graphics Settings Revealed: Higher Framerate Theoretically Possible on PS5 Pro"
+      ],
+      "ton": "negativ",
+      "amne": "Olaglig GTA 6 PC-port",
+      "nyckelord": [
+        "GTA 6",
+        "Rockstar Games",
+        "Take-Two"
+      ]
+    },
+    {
+      "term": "satya nadella",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "EXCLUSIVE: Microsoft declares 'Code Red' after historic outage, internal memos show",
+        "Days after Microsoft CEO Satya Nadella publicly apologized for disruption in Outlook services globally, c",
+        "Microsoft 365 ‘Code Red’: What the Company Wants to Fix After the Outage"
+      ],
+      "ton": "negativ",
+      "amne": "Microsoft 365-avbrott",
+      "nyckelord": [
+        "Microsoft",
+        "Satya Nadella",
+        "Outlook"
+      ]
+    },
+    {
+      "term": "today news",
+      "kallor": [
+        "google-IN"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Army calls detonation of bomb chemicals in Iowa a success after earlier fears of a toxic plume",
+        "An Army detonation before Thanksgiving in America’s heartland",
+        "Army detonates nearly five tons of lead-based explosives in Iowa"
+      ],
+      "ton": "negativ",
+      "amne": "Sprängning av ammunition i Iowa",
+      "nyckelord": [
+        "Iowa",
+        "Army",
+        "sprängämnen"
+      ]
+    },
+    {
+      "term": "savic motorcycles",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Australian EV firm goes bust",
+        "Australian electric motorcycle manufacturer collapses after 10 years",
+        "Off yer bike: Electric motorcycle maker Savic calls in administrators"
+      ],
+      "ton": "negativ",
+      "amne": "Savic motorcyklar går i konkurs",
+      "nyckelord": [
+        "Savic",
+        "elmotorcykel",
+        "administratörer"
+      ]
+    },
+    {
+      "term": "lendlease",
+      "kallor": [
+        "google-AU"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Lendlease has torched $6b in value since 2021. Where to from here?",
+        "Apologetic Lendlease rails against emergency raising",
+        "Lendlease (ASX:LLC): Could Its Capital Strategy Shape the ASX 200 Outlook?"
+      ],
+      "ton": "negativ",
+      "amne": "Lendlease kris",
+      "nyckelord": [
+        "Lendlease",
+        "ASX",
+        "kapitalanskaffning"
+      ]
+    },
+    {
+      "term": "hippopotamus",
+      "kallor": [
+        "google-CA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Witness recounts what happened when hat landed in Fiona's Cincinnati Zoo habitat",
+        "After death of Fiona the hippo, online grieving quickly turned to blame",
+        "FC Cincinnati to honor Fiona the hippo at Saturday’s MLS Cup Playoffs Game 2"
+      ],
+      "ton": "negativ",
+      "amne": "Fiona nilpferd död",
+      "nyckelord": [
+        "Fiona",
+        "Cincinnati Zoo",
+        "nilpferd"
+      ]
+    },
+    {
+      "term": "losc lille vs bayern munich standings",
+      "kallor": [
+        "google-ZA",
+        "google-NG",
+        "google-KE"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Harry Kane injury: Dortmund could boost title charge at Bayern’s cost",
+        "Harry Kane injured as Bayern Munich and PSG face injury crises plus Lamine Yamal and Kylian Mbappe miss penalties",
+        "Harry Kane suffers ankle ligament tear, Michael Olise suffers bruise"
+      ],
+      "ton": "negativ",
+      "amne": "Lille mot Bayern München",
+      "nyckelord": [
+        "LOSC Lille",
+        "Bayern München",
+        "Harry Kane",
+        "Michael Olise",
+        "Champions League"
+      ]
+    },
+    {
+      "term": "edward kieswetter",
+      "kallor": [
+        "google-ZA"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "‘Follow the money’ to dismantle organised crime, Kieswetter tells Madlanga Commission",
+        "WATCH | Former SARS Commissioner takes stand at Madlanga Commission",
+        "Organised crime and state fighting for the same human resources, says Kieswetter"
+      ],
+      "ton": "negativ",
+      "amne": "Edward Kieswetter och Madlangakommissionen",
+      "nyckelord": [
+        "Edward Kieswetter",
+        "Madlanga Commission",
+        "SARS",
+        "organiserad brottslighet"
+      ]
+    },
+    {
+      "term": "bayern munich",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "Bayern Munich’s Max Eberl: There’s no time to point fingers",
+        "Sporting 2-2 Man Utd: Mauricio Pochettino denied first win by Senne Lammens howler in Champions League",
+        "'Disgrace' decisions, divots and howlers - Man Utd chaos against Sporting"
+      ],
+      "ton": "negativ",
+      "amne": "Bayern München och Man Utd",
+      "nyckelord": [
+        "Max Eberl",
+        "Sporting CP",
+        "Manchester United",
+        "Mauricio Pochettino",
+        "Senne Lammens"
+      ]
+    },
+    {
+      "term": "bayern",
+      "kallor": [
+        "google-KE"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Niederlage in Lille: Plötzlich zittern die Bayern um ihr Selbstverständnis als Gewinnerteam",
+        "“Ist nicht der Fehler von Aleks“ – Eberl über Pavlovic-Eigentor",
+        "Bayern in Lille in der Einzelkritik: Laimer versucht sich als Kane-Aushilfe - Sport - SZ.de"
+      ],
+      "ton": "negativ",
+      "amne": "Bayerns förlust i Lille",
+      "nyckelord": [
+        "FC Bayern",
+        "Lille",
+        "Eberl",
+        "Pavlović",
+        "Joshua Kimmich"
+      ]
+    },
+    {
+      "term": "débora rodrigues dos santos",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "Moraes libera Débora do Batom para evento de Natal do filho",
+        "Moraes autoriza Débora do batom a sair de prisão domiciliar para assistir a apresentação de Natal do filho",
+        "Moraes autoriza Débora do Batom a comparecer à apresentação do filho"
+      ],
+      "ton": "negativ",
+      "amne": "Débora do Batom",
+      "nyckelord": [
+        "Débora Rodrigues",
+        "Alexandre de Moraes",
+        "prisão domiciliar",
+        "STF"
+      ]
+    },
+    {
+      "term": "jean silva",
+      "kallor": [
+        "google-BR"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "UFC’s Jean Silva seeks justice after alleged hit-and-run",
+        "UFC star hit by car during preparation for ironman",
+        "Jean Silva shaken after Hit-and-Run accident in Brazil: \"I want him to pay\""
+      ],
+      "ton": "negativ",
+      "amne": "Jean Silva och trafikolyckan",
+      "nyckelord": [
+        "Jean Silva",
+        "UFC",
+        "hit-and-run",
+        "trafikolycka"
+      ]
+    },
+    {
+      "term": "ライチョウ",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "乗鞍岳のライチョウ、最少の73羽 中央アルプスでは最多285羽に（朝日新聞）",
+        "乗鞍岳のライチョウ、過去最少／環境省調査「要因不明」",
+        "ライチョウ、26羽が死んだか うち4羽はいしかわ動物園生まれ、昨秋に中央アルプスで放鳥"
+      ],
+      "ton": "negativ",
+      "amne": "Ryper i Japan minskar",
+      "nyckelord": [
+        "Ryper",
+        "Nori Ryper",
+        "Norra Alperna",
+        "Environment Ministry",
+        "Ishikawa Zoo"
+      ]
+    },
+    {
+      "term": "沖縄事故",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "オートバイが電柱に衝突 運転手の男性が死亡（RBC琉球放送）",
+        "ガードパイプに衝突 バイクの男性（18）が意識不明の重体",
+        "バイク事故相次ぐ 沖縄市で電柱に衝突、男性死亡 南風原では意識不明"
+      ],
+      "ton": "negativ",
+      "amne": "Trafikolyckor på Okinawa",
+      "nyckelord": [
+        "Okinawa",
+        "motorcykel",
+        "trafikolycka",
+        "RBC琉球放送"
+      ]
+    },
+    {
+      "term": "ジェイレン・ブラウン",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "ジェイレン・ブラウンが左脚を負傷、プレー後に自らロッカールームへ戻り、この試合の欠場が決定",
+        "76ersのジェイレン・ブラウンが頭部負傷で流血も、強行復帰でネッツ戦の勝利に貢献",
+        "【NBA試合速報】2026年11月24日（火） フィラデルフィア・セブンティシクサーズ vs ポートランド・トレイルブレイザーズ"
+      ],
+      "ton": "negativ",
+      "amne": "Jaylen Brown skada",
+      "nyckelord": [
+        "Jaylen Brown",
+        "Philadelphia 76ers",
+        "NBA",
+        "skada"
+      ]
+    },
+    {
+      "term": "アンディ・テイラー",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "1000+",
+      "nyheter": [
+        "ギタリスト A・テイラーさん死去",
+        "アンディ・テイラーさん死去、６５歳 デュラン・デュラン元ギタリスト：時事ドットコム",
+        "「デュラン・デュラン」元ギタリスト、アンディ・テーラーさん死去　６５歳"
+      ],
+      "ton": "negativ",
+      "amne": "Andy Taylor död",
+      "nyckelord": [
+        "Andy Taylor",
+        "Duran Duran",
+        "gitarrist"
+      ]
+    },
+    {
+      "term": "ウクライナ軍",
+      "kallor": [
+        "google-JP"
+      ],
+      "trafik": "200+",
+      "nyheter": [
+        "ウクライナが北アフリカでロシア船撃沈 国際法的に問題のある第三国での作戦はなぜリビアで行われたか #エキスパートトピ",
+        "【解説】 ウクライナでの戦争が拡大、リビア海域でのロシア艦船攻撃から分かること",
+        "ウクライナ、フィンランド湾でロシア商船攻撃 海上での戦闘拡大"
+      ],
+      "ton": "negativ",
+      "amne": "Ukrainas attacker mot rysk sjöfart",
+      "nyckelord": [
+        "Ukraina",
+        "Ryssland",
+        "Libyen",
+        "Finska viken",
+        "sjöfart"
+      ]
+    },
+    {
+      "term": "senta berger",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Senta Berger erinnert an verstorbenen Ehemann: \"Eine Lücke, die nicht zu füllen ist\"",
+        "\"War das Zentrum unserer Familie\": Senta Berger über den schweren Verlust von Ehemann Michael Verhoeven",
+        "Senta Berger über verstorbenen Mann: \"Zwischen uns war immer viel Erotik\""
+      ],
+      "ton": "negativ",
+      "amne": "Senta Berger sorg",
+      "nyckelord": [
+        "Senta Berger",
+        "Michael Verhoeven",
+        "sorg"
+      ]
+    },
+    {
+      "term": "israel",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "100+",
+      "nyheter": [
+        "Report says Netanyahu signaled to Kushner he is willing to move forward on Gaza plan",
+        "A ‘pariah state’ warning and a stalled Gaza plan: inside the growing rift between Israel and the US",
+        "Kushner: Israel needs to move beyond constant wartime mindset"
+      ],
+      "ton": "negativ",
+      "amne": "Israel och Gazaplanen",
+      "nyckelord": [
+        "Netanyahu",
+        "Jared Kushner",
+        "Gaza",
+        "Israel",
+        "USA"
+      ]
+    },
+    {
+      "term": "sandisk aktie",
+      "kallor": [
+        "google-DE"
+      ],
+      "trafik": "500+",
+      "nyheter": [
+        "Sandisk-Aktie minus 70 %: Mit diesem Trade sind über 180 % Rendite möglich",
+        "Sandisk-Aktie tiefrot: So reagiert der Anteilschein am Tag des Aktiensplits",
+        "SanDisk-Crash im Halbleiter-Sektor: Über 70 Prozent Verlust – Land in Sicht?"
+      ],
+      "ton": "negativ",
+      "amne": "Sandisk-aktien rasar",
+      "nyckelord": [
+        "Sandisk",
+        "aktie",
+        "aktiesplit",
+        "halvledare"
+      ]
+    },
+    {
+      "term": "Marie Fredriksson",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 3180,
+      "ton": "negativ",
+      "amne": "Marie Fredriksson",
+      "nyckelord": [
+        "Marie Fredriksson",
+        "Roxette",
+        "sjukdom"
+      ]
+    },
+    {
+      "term": "Elizabeth Holmes",
+      "kallor": [
+        "wikipedia-sv",
+        "wikipedia-en"
+      ],
+      "visningar": 2347,
+      "nyheter": [],
+      "ton": "negativ",
+      "amne": "Elizabeth Holmes",
+      "nyckelord": [
+        "Elizabeth Holmes",
+        "Theranos",
+        "bedrägeri"
+      ]
+    },
+    {
+      "term": "Avlidna 2026",
+      "kallor": [
+        "wikipedia-sv"
+      ],
+      "visningar": 884,
+      "ton": "negativ",
+      "amne": "Avlidna 2026",
+      "nyckelord": [
+        "dödsfall",
+        "avliden",
+        "2026"
+      ]
+    },
+    {
+      "term": "Deaths in 2026",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 129741,
+      "ton": "negativ",
+      "amne": "Deaths in 2026",
+      "nyckelord": [
+        "dödsfall",
+        "avlidna",
+        "2026"
+      ]
+    },
+    {
+      "term": "Soham murders",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 87021,
+      "ton": "negativ",
+      "amne": "Soham-morden",
+      "nyckelord": [
+        "Soham",
+        "mord",
+        "Cambridgeshire"
+      ]
+    },
+    {
+      "term": "Anthony Russell (murderer)",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 79697,
+      "ton": "negativ",
+      "amne": "Anthony Russell mördare",
+      "nyckelord": [
+        "Anthony Russell",
+        "mord",
+        "brottsling"
+      ]
+    },
+    {
+      "term": "Blood",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 75798,
+      "ton": "negativ",
+      "amne": "Blod",
+      "nyckelord": [
+        "blod",
+        "kropp",
+        "hematologi"
+      ]
+    },
+    {
+      "term": "Sam Bankman-Fried",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 65539,
+      "ton": "negativ",
+      "amne": "Sam Bankman-Fried",
+      "nyckelord": [
+        "Sam Bankman-Fried",
+        "FTX",
+        "bedrägeri"
+      ]
+    },
+    {
+      "term": "Killing of JonBenét Ramsey",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 64731,
+      "ton": "negativ",
+      "amne": "JonBenét Ramsey mordet",
+      "nyckelord": [
+        "JonBenét Ramsey",
+        "mord",
+        "polisutredning"
+      ]
+    },
+    {
+      "term": "Caroline Ellison",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 52577,
+      "ton": "negativ",
+      "amne": "Caroline Ellison",
+      "nyckelord": [
+        "Caroline Ellison",
+        "FTX",
+        "bedrägeri"
+      ]
+    },
+    {
+      "term": "Lead(II) azide",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 51398,
+      "ton": "negativ",
+      "amne": "Blyazid",
+      "nyckelord": [
+        "blyazid",
+        "sprängämne",
+        "explosiv"
+      ]
+    },
+    {
+      "term": "Great white shark",
+      "kallor": [
+        "wikipedia-en"
+      ],
+      "visningar": 50665,
+      "ton": "negativ",
+      "amne": "vithaj",
+      "nyckelord": [
+        "vithaj",
+        "hajattack",
+        "Carcharodon carcharias"
+      ]
+    }
+  ],
+  "matchningar": []
+}

@@ -2,8 +2,9 @@
 // Lång guidesida: Ovanliga namn och namnens betydelse. Antal bärare ur SCB (CC0, 2000/2020, nyfödda 2022),
 // namnens ursprung enligt Isof (Förnamn) och betydelser enligt svenska Wikipedias namnartiklar, lästa 2026-11-25.
 // Regel: bara betydelser som står i källan; osäkra tolkningar markeras som osäkra.
-import Guide from "@natverk/core/Guide.astro";
+import Guide from "../layouts/Guide.astro";
 import "../styles/sajt.css";
+import { datasetLd, itemListLd, ISOF_KALLA_LD, SCB_KALLA_LD } from "../lib/schema.js";
 import { SITE, ALLA_NAMN, AR, tal, lista, dagText, dagHref, namnHref, barare, giltigt } from "../site.js";
 import { ALLA_SCB } from "../lib/statistik.js";
 
@@ -84,6 +85,7 @@ const beskrivning = "Almanackans ovanligaste namn enligt SCB, vad namn som Holmf
   svar={`Almanackans ovanligaste namn är bland andra <strong>${lista(ovanligast.slice(0, 4).map((n) => n.namn))}</strong>. Färre än tio personer i Sverige har dem som tilltalsnamn (SCB 2020). Många ovanliga almanacksnamn är fornnordiska. Holmfrid betyder till exempel holme och frid, och Åslög lovad åt gudarna. Totalt har ${under100} av almanackans namn färre än 100 bärare.`}
   smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Ovanliga namn", href: "/ovanliga-namn/" }]}
   publicerad={PUBLICERAD} uppdaterad={PUBLICERAD} granskad="2026-11-25" avsnitt={avsnitt} fragor={fragor}
+  jsonld={[datasetLd({ namn: "Almanackans ovanligaste namn – antal bärare", beskrivning: "Antal bärare 2000 och 2020 och antal nyfödda till och med 2022 för de ovanligaste namnen i den svenska almanackan, ur SCB:s öppna namnstatistik och namnlängden enligt Isof.", sokvag: "/ovanliga-namn/", tid: "2000/2022", nyckelord: ["ovanliga namn", "almanackan"], kallor: [SCB_KALLA_LD, ISOF_KALLA_LD] })]}
   relaterat={[
     { namn: "Hur många heter …?", href: "/hur-manga-heter/", text: "Se hur ovanligt ett namn är" },
     { namn: "Alla namn A–Ö", href: "/alla-namn/", text: "Alla namn i almanackan" },
