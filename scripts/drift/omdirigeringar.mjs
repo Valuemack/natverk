@@ -39,8 +39,8 @@ for (const d of HUVUD) {
 }
 for (const [namn, mal] of Object.entries(OMDIR)) {
   const ascii = domainToASCII(namn);
-  // Ren domänvariant (forskolor.nu → förskolor.nu) behåller sökvägen; övriga leder till en landningssida.
-  const behallSokvag = new URL(mal).pathname === "/" && ["forskolor.nu", "badstrander.se", "pollenlaget.se"].includes(namn);
+  // Ren domänvariant (forskolor.nu → förskolor.nu) och flyttad sajt (namnsdagsidag.se) behåller sökvägen; övriga leder till en landningssida.
+  const behallSokvag = new URL(mal).pathname === "/" && ["forskolor.nu", "badstrander.se", "pollenlaget.se", "namnsdagsidag.se"].includes(namn);
   const malUrl = mal.endsWith("/") ? mal : `${mal}/`;
   poster.push(post(`${ascii}/`, malUrl, { behallSokvag }));
   poster.push(post(`www.${ascii}/`, malUrl, { behallSokvag }));
