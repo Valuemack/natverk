@@ -40,7 +40,7 @@ const fragor = [
     <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th class="num">Nyfödda 2022</th><th>Kan firas</th></tr></thead>
     <tbody>{UTAN_NAMNSDAG.map((x, i) => { const f = firas(x); return (
       <tr id={x.slug}><td class="num">{i + 1}</td>
-        <td>{harEgenSida(x.namn) ? <a href={utanHref(x)}>{x.namn}</a> : <strong>{x.namn}</strong>}</td>
+        <td>{utanHref(x).startsWith("/namn-utan-namnsdag/") ? <strong>{x.namn}</strong> : <a href={utanHref(x)}>{x.namn}</a>}</td>
         <td class="num">{tal(x.antal)}</td>
         <td class="num">{procent(x.kvinnor, x.antal)} %</td>
         <td class="num">{nyf22(x.namn) ? tal(nyf22(x.namn)) : "–"}</td>
@@ -49,7 +49,7 @@ const fragor = [
   </table></div>
   <p class="kalla">Källa: egen sammanställning av {SCB_KALLA}, tilltalsnamn 31 december 2020 (SCB:s senaste namnstatistik), jämfört med namnlängden enligt Isof. Ett namn räknas som stavningsvariant när det bara skiljer sig i stavningen (t.ex. th/t, c/k, ph/f, dubbelteckning) från ett almanacksnamn som oftast bärs av samma kön.</p>
   <h2 id="varfor">Varför saknas vanliga namn i almanackan?</h2>
-  <p>Almanackans namnlängd har {ANTAL_NU} namn, och varje dag har plats för bara några få. Listan ändras bara när Namnlängdskommittén beslutar det – sedan {andringsAr[0]} har det skett {andringsAr.length} gånger, med ändringar från {lista(andringsAr.map(String))}. Nya namn kommer därför in i almanackan långt efter att de blivit vanliga, och många namn med tusentals bärare saknar fortfarande egen dag. Se <a href="/nya-namn/">alla ändringar i almanackan</a>.</p>
+  <p>Almanackans namnlängd har {ANTAL_NU} namn, och varje dag har plats för bara några få. Listan ändras bara när Namnlängdskommittén beslutar det – sedan {andringsAr[0]} har det skett {andringsAr.length} gånger, med ändringar från {lista(andringsAr.map(String))}. Nya namn kommer därför in i almanackan långt efter att de blivit vanliga, och många namn med tusentals bärare saknar fortfarande egen dag. Se <a href="/nya-namn/">alla ändringar i almanackan</a> och <a href="/dubbelnamn/">alla dubbelnamn</a>.</p>
   <p>Den 1 januari är gemensam namnsdag för alla namn som saknas. Många kan dessutom firas en annan dag: {tal(VARIANTER.length)} namn är stavningsvarianter av ett almanacksnamn, dubbelnamn som Lars-Erik har delar som står i almanackan, och för andra namn räknar Wikidata en form som finns i almanackan som samma namn (till exempel Liam och William). I tabellen ovan har {tal(medDag)} av de {tal(UTAN_NAMNSDAG.length)} namnen en sådan dag. Det är sedvänja, ingen officiell namnsdag.</p>
   <p class="kalla">Samma namn i annan form: Wikidata (CC0), hämtad {WDN_HAMTAD}. Nyfödda: {NYF_KALLA}.</p>
 

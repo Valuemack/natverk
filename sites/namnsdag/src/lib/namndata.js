@@ -3,7 +3,7 @@
 // Allt läses med fs vid bygget. Saknas en källa för ett namn visas inget – inget fylls i.
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { ALLA_NAMN, SAMMANSLAGNA, UTAN_NAMNSDAG, SCB_ALLA, stavNyckel } from "../site.js";
+import { ALLA_NAMN, SAMMANSLAGNA, UTAN_NAMNSDAG, VARIANTER, SCB_ALLA, stavNyckel, slug as slugAv, namnHref } from "../site.js";
 import { MEDELALDER } from "./statistik.js";
 
 const las = (f, standard = null) => {
@@ -156,7 +156,7 @@ export const WDN_HAMTAD = WDN.hamtad;
 const WDD = las("wikidata-namnsdagar.json", { namn: {}, hamtad: null });
 export const WDD_HAMTAD = WDD.hamtad;
 // Dubbelnamn (med bindestreck) i SCB:s statistik, sorterade efter antal med namnet som tilltalsnamn 2020.
-const DUBBEL = Object.entries(SCB_ALLA).filter(([n]) => n.includes("-")).map(([namn, a]) => ({ namn, antal: a[0] + a[1] })).filter((x) => x.antal > 0).sort((a, b) => b.antal - a.antal);
+export const DUBBEL = Object.entries(SCB_ALLA).filter(([n]) => n.includes("-")).map(([namn, a]) => ({ namn, antal: a[0] + a[1] })).filter((x) => x.antal > 0).sort((a, b) => b.antal - a.antal);
 const delarAv = (n) => n.toLowerCase().split("-");
 /** För ett dubbelnamn: placering bland alla dubbelnamn och andra dubbelnamn med samma delar (SCB 2020). */
 export function dubbelnamn(namn) {
@@ -241,16 +241,97 @@ export function datablock(x) {
   };
 }
 export const antalBlock = (b) => Object.values(b).filter(Boolean).length;
+// ---------- Sammanslagningar (ägaren 2026-11-28) ----------
+// 1. Stavningsvarianter av almanacksnamn får ett avsnitt (#slug) på almanacksnamnets sida.
+// 2. Namnfamiljer: namn utan namnsdag som bara skiljer sig i stavningen (Mohammad/Mohamed, Josefin/Josefine) samlas
+//    på det vanligaste namnets sida. Regeln är medvetet strikt – Wikidatas "samma namn" räcker inte (då skulle t.ex.
+//    Tina hamna hos Isabelle): stavningsnyckeln (fonNyckel) ska vara lika, eller skilja på exakt en bokstav (minst
+//    fem bokstäver) när Wikidata eller stavNyckel också säger att det är samma namn. Samma kön krävs.
+// 3. Dubbelnamn som inte får egen sida hamnar på samlingssidan för sitt förled (/dubbelnamn/lars/#lars-gunnar).
+/** Nyckel för rena stavningsskillnader: th→t, ph→f, ch/c/q→k, w→v, z→s, y→i, dubbla bokstäver och slut-e bort. */
+export function fonNyckel(n) {
+  return n.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z]/g, "")
+    .replace(/ph/g, "f").replace(/th/g, "t").replace(/ch/g, "k").replace(/ck/g, "k").replace(/c(?=[eiy])/g, "s").replace(/c/g, "k")
+    .replace(/q/g, "k").replace(/x/g, "ks").replace(/z/g, "s").replace(/w/g, "v").replace(/^y/, "j").replace(/ie$/, "i").replace(/y/g, "i")
+    .replace(/ou/g, "u").replace(/([bdfgjklmnprstv])h/g, "$1").replace(/(.)\1+/g, "$1").replace(/e$/, "");
+}
+const enBokstav = (a, b) => a.length === b.length && a.length >= 5 && [...a].filter((c, i) => c !== b[i]).length === 1;
+const sammaKonX = (a, b) => Math.abs(a.kvinnor / a.antal - b.kvinnor / b.antal) < 0.5;
+// Namn som liknar ett annat i stavningen men är egna namn (granskat för hand 2026-11-28) slås aldrig ihop.
+const EGNA_NAMN = new Set(["Elena", "Michal", "Charles", "Markku", "Miriam", "Mina", "Milla", "Jaana", "Mary"]);
+const UTAN_EGNA = UTAN_NAMNSDAG.filter((x) => !x.huvud && !FORKORTNINGAR.has(x.namn) && !EGNA_NAMN.has(x.namn));
+const FAR = new Map(UTAN_EGNA.map((x) => [x.namn, x.namn]));
+const rotAv = (n) => { while (FAR.get(n) !== n) n = FAR.get(n); return n; };
+{
+  const perBokstav = new Map();
+  const fon = new Map(UTAN_EGNA.map((x) => [x.namn, fonNyckel(x.namn)]));
+  for (const x of UTAN_EGNA) { const k = fon.get(x.namn)[0]; (perBokstav.get(k) ?? perBokstav.set(k, []).get(k)).push(x); }
+  const wd = new Map();
+  const wdAv = (x) => wd.get(x.namn) ?? wd.set(x.namn, new Set(sammaNamn(x.namn).map((f) => f.namn))).get(x.namn);
+  for (const grupp of perBokstav.values()) for (let i = 0; i < grupp.length; i++) for (let j = i + 1; j < grupp.length; j++) {
+    const x = grupp[i], y = grupp[j];
+    if (!sammaKonX(x, y)) continue;
+    const fx = fon.get(x.namn), fy = fon.get(y.namn);
+    if (fx !== fy && !(enBokstav(fx, fy) && (wdAv(x).has(y.namn) || wdAv(y).has(x.namn) || stavNyckel(x.namn) === stavNyckel(y.namn)))) continue;
+    const rx = rotAv(x.namn), ry = rotAv(y.namn);
+    if (rx !== ry) FAR.set(rx, ry);
+  }
+}
+/** Namnfamilj: huvudnamn (flest bärare) → övriga stavningar, och tvärtom. */
+const FAMILJ = new Map(), FAMILJ_HUVUD = new Map();
+{
+  const grupper = new Map();
+  for (const x of UTAN_EGNA) { const r = rotAv(x.namn); (grupper.get(r) ?? grupper.set(r, []).get(r)).push(x); }
+  for (const g of grupper.values()) {
+    if (g.length < 2) continue;
+    g.sort((a, b) => b.antal - a.antal);
+    if (!skalForSida(g[0])) continue; // huvudnamnet får själv ingen sida – då gäller vanliga grinden för alla
+    FAMILJ.set(g[0].namn, g.slice(1));
+    for (const x of g.slice(1)) FAMILJ_HUVUD.set(x.namn, g[0]);
+  }
+}
+/** Övriga stavningar som visas på ett namns sida: varianter (almanacksnamn) eller namnfamilj (namn utan namnsdag). */
+export const stavningarPaSida = (namn) => FAMILJ.get(namn) ?? VARIANTER.filter((v) => v.huvud.namn === namn && !SAMMANSLAGNA.has(namn));
+/** Huvudnamnet för en sammanslagen stavning (variant eller namnfamilj), eller null. */
+export const huvudFor = (namn) => FAMILJ_HUVUD.get(namn)?.namn ?? VARIANTER.find((v) => v.namn === namn)?.huvud.namn ?? null;
+// Dubbelnamn: samlingssida per förled med minst MIN_DUBBEL namn (alla dubbelnamn SCB redovisar, minst 10 bärare).
+export const MIN_DUBBEL = 20;
+const forled = (n) => n.split("-")[0];
+const DUBBEL_PER = new Map();
+for (const x of DUBBEL) { const k = slugAv(forled(x.namn)); (DUBBEL_PER.get(k) ?? DUBBEL_PER.set(k, []).get(k)).push(x); }
+/** Samlingssidor: [{ slug, forled, namn: [{ namn, slug, antal, K, M, fornamn, t2000 }] }] (namnen sorterade efter antal). */
+export const DUBBEL_SIDOR = [...DUBBEL_PER].filter(([, v]) => v.length >= MIN_DUBBEL).map(([k, v]) => {
+  const visa = forled(v[0].namn);
+  return {
+    slug: k,
+    forled: visa.charAt(0).toUpperCase() + visa.slice(1).toLowerCase(),
+    namn: v.map((x) => { const a = SCB_ALLA[x.namn]; return { namn: x.namn, slug: slugAv(x.namn), antal: x.antal, K: a[0], M: a[1], fornamn: a[2] + a[3], t2000: a[4] ?? 0 }; }),
+  };
+}).sort((a, b) => b.namn.length - a.namn.length);
+const DUBBEL_SLUG = new Set(DUBBEL_SIDOR.map((d) => d.slug));
+/** Samlingssidan för ett dubbelnamns förled, eller null. */
+export const dubbelSida = (namn) => (namn.includes("-") && DUBBEL_SLUG.has(slugAv(forled(namn))) ? `/dubbelnamn/${slugAv(forled(namn))}/` : null);
+
 /** namn → { mal, skal } för namn utan egen sida. */
 export const OMDIRIGERADE = new Map();
 for (const x of UTAN_NAMNSDAG) {
-  const fork = FORKORTNINGAR.get(x.namn);
-  if (fork) { OMDIRIGERADE.set(x.namn, { slug: x.slug, mal: `/namn/${SIDA_AV.get(fork)?.slug}/`, skal: `förkortning av ${fork}` }); continue; }
+  if (FORKORTNINGAR.has(x.namn)) continue; // efter loopen, när målet är känt
+  if (x.huvud) {
+    OMDIRIGERADE.set(x.namn, SAMMANSLAGNA.has(x.huvud.namn)
+      ? { slug: x.slug, mal: namnHref(x.huvud.namn), skal: `stavningsvariant av ${x.huvud.namn}` }
+      : { slug: x.slug, mal: `/namn/${x.huvud.slug}/#${x.slug}`, skal: `stavningsvariant av ${x.huvud.namn}` });
+    continue;
+  }
+  const h = FAMILJ_HUVUD.get(x.namn);
+  if (h) { OMDIRIGERADE.set(x.namn, { slug: x.slug, mal: `/namn/${h.slug}/#${x.slug}`, skal: `annan stavning av ${h.namn}` }); continue; }
   const b = datablock(x);
   if (skalForSida(x, b)) continue;
-  OMDIRIGERADE.set(x.namn, x.huvud
-    ? { slug: x.slug, mal: `/namn/${x.huvud.slug}/`, skal: `${antalBlock(b)} datablock, stavningsvariant av ${x.huvud.namn}` }
-    : { slug: x.slug, mal: `/namn-utan-namnsdag/#${x.slug}`, skal: `${antalBlock(b)} datablock` });
+  const d = dubbelSida(x.namn);
+  OMDIRIGERADE.set(x.namn, { slug: x.slug, mal: d ? `${d}#${x.slug}` : `/namn-utan-namnsdag/#${x.slug}`, skal: `${antalBlock(b)} datablock${d ? ", dubbelnamn" : ""}` });
+}
+for (const [f, till] of FORKORTNINGAR) {
+  const x = UTAN_NAMNSDAG.find((y) => y.namn === f);
+  if (x) OMDIRIGERADE.set(f, { slug: x.slug, mal: OMDIRIGERADE.get(till)?.mal ?? `/namn/${slugAv(till)}/`, skal: `förkortning av ${till}` });
 }
 SIDNAMN = SIDNAMN.filter((x) => !OMDIRIGERADE.has(x.namn));
 SIDOR_NAMN = SIDNAMN;
@@ -260,3 +341,7 @@ SIDA_AV = new Map(SIDNAMN.map((x) => [x.namn, x]));
 export const utanHref = (x) => OMDIRIGERADE.get(x.namn)?.mal ?? `/namn/${x.slug}/`;
 /** Har namnet en egen sida? */
 export const harEgenSida = (namn) => SIDA_AV.has(namn);
+/** Länk till ett namn där det faktiskt finns: egen sida, avsnitt på huvudnamnets eller datumets sida, rad på en
+ *  samlingssida – eller null om namnet inte visas någonstans. */
+export const lankTill = (namn) => OMDIRIGERADE.get(namn)?.mal
+  ?? (SIDA_AV.has(namn) ? `/namn/${SIDA_AV.get(namn).slug}/` : SAMMANSLAGNA.has(namn) ? namnHref(namn) : dubbelSida(namn) ? `${dubbelSida(namn)}#${slugAv(namn)}` : null);

@@ -1,0 +1,84 @@
+---
+// Samlingssida per förled: alla dubbelnamn som SCB redovisar (minst 10 bärare) som börjar med samma namn.
+// Dubbelnamn som inte klarar kvalitetsgrinden för egen sida har sin rad här (#slug) i stället (ägaren 2026-11-28).
+import Layout from "../../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import Annons from "@natverk/core/Annons.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../../styles/sajt.css";
+import { datasetLd, itemListLd, SCB_KALLA_LD } from "../../lib/schema.js";
+import { SITE, UPPDATERAD, SCB_KALLA, tal, dagText, dagHref, procent, lista, beskriv } from "../../site.js";
+import { DUBBEL_SIDOR, DUBBEL, delnamn, lankTill, nyfodda, NYF_KALLA } from "../../lib/namndata.js";
+
+export function getStaticPaths() {
+  return DUBBEL_SIDOR.map((d) => ({ params: { del: d.slug }, props: { d } }));
+}
+const { d } = Astro.props;
+const F = d.forled, sokvag = `/dubbelnamn/${d.slug}/`;
+const rader = d.namn.map((x) => {
+  const href = lankTill(x.namn);
+  const nyf = nyfodda(x.namn), sen = nyf.findLast((r) => r.x > 0);
+  return { ...x, href: href && !href.startsWith(sokvag) ? href : null, delar: delnamn(x.namn), sen };
+});
+const summa = rader.reduce((s, x) => s + x.antal, 0);
+const kvinnor = rader.reduce((s, x) => s + x.K, 0);
+const fornamn = rader.reduce((s, x) => s + x.fornamn, 0);
+const med2000 = rader.filter((x) => x.t2000 > 0);
+const summa2000 = med2000.reduce((s, x) => s + x.t2000, 0), summaNu2000 = med2000.reduce((s, x) => s + x.antal, 0);
+const nya = rader.filter((x) => !(x.t2000 > 0));
+const [a, b, c] = rader;
+const flickor = rader.filter((x) => x.K > x.M), pojkar = rader.filter((x) => x.M >= x.K);
+const egenDag = delnamn(`${F}-x`).find((p) => p.del === F) ?? null;
+const bada = rader.filter((x) => x.delar.length === x.namn.split("-").length);
+const plats = DUBBEL.findIndex((x) => x.namn === a.namn) + 1;
+const okar = rader.filter((x) => x.t2000 > 0 && x.antal > x.t2000).length, minskar = rader.filter((x) => x.t2000 > 0 && x.antal < x.t2000).length;
+const nyfRader = rader.filter((x) => x.sen).sort((p, q) => q.sen.ar - p.sen.ar || q.sen.x - p.sen.x).slice(0, 5);
+const andra = DUBBEL_SIDOR.filter((x) => x.slug !== d.slug);
+const fragor = [
+  { fraga: `Vilket är det vanligaste dubbelnamnet med ${F}?`, svar: `${a.namn}, som ${tal(a.antal)} personer i Sverige har som tilltalsnamn (SCB 2020). Därefter kommer ${b.namn} (${tal(b.antal)}) och ${c.namn} (${tal(c.antal)}). ${a.namn} är nummer ${tal(plats)} av alla ${tal(DUBBEL.length)} dubbelnamn som SCB redovisar.` },
+  { fraga: `När har dubbelnamn med ${F} namnsdag?`, svar: `Dubbelnamn står inte i almanackan. Man kan fira på delarnas dagar${egenDag ? ` – ${F} har namnsdag den ${dagText(egenDag.datum)}${egenDag.namn !== F ? ` (som ${egenDag.namn})` : ""}` : ""} – eller på den gemensamma namnsdagen 1 januari. ${tal(bada.length)} av de ${tal(rader.length)} namnen har båda delarna i almanackan.` },
+  { fraga: `Hur många heter ${F}-något?`, svar: `De ${tal(rader.length)} dubbelnamn med ${F} som SCB redovisar bärs tillsammans av ${tal(summa)} personer som tilltalsnamn och ${tal(fornamn)} som förnamn (SCB 2020). SCB redovisar bara namn med minst 10 bärare.` },
+];
+---
+<Layout site={SITE} titel={`Dubbelnamn med ${F} – ${rader.length} namn, vanligast ${a.namn}`}
+  beskrivning={beskriv(`${rader.length} dubbelnamn börjar med ${F}, vanligast ${a.namn} (${tal(a.antal)} bärare).`, "Antal, kön och namnsdagar enligt SCB 2020.", "✓ Alla namn", "✓ Delarnas namnsdagar")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Dubbelnamn", href: "/dubbelnamn/" }, { namn: `Med ${F}`, href: sokvag }]}
+  jsonld={[faqLd(fragor), datasetLd({ namn: `Dubbelnamn med ${F} i Sverige 2020`, beskrivning: `Alla dubbelnamn som börjar med ${F} och har minst 10 bärare som tilltalsnamn i Sverige 2020 enligt SCB, med antal bärare, andel kvinnor och antal år 2000.`, sokvag, tid: "2000/2020", nyckelord: ["dubbelnamn", F], kallor: [SCB_KALLA_LD] }), itemListLd(`Dubbelnamn med ${F}`, rader.filter((x) => x.href).map((x) => ({ namn: x.namn, href: x.href })))]} uppdaterad={UPPDATERAD}>
+  <h1>Dubbelnamn med {F}</h1>
+  <p class="svar">SCB redovisar <strong>{tal(rader.length)} dubbelnamn</strong> som börjar med {F}. Tillsammans är de tilltalsnamn för {tal(summa)} personer i Sverige. Vanligast är <strong>{a.namn}</strong> ({tal(a.antal)}), {b.namn} ({tal(b.antal)}) och {c.namn} ({tal(c.antal)}). {kvinnor / summa < 0.02 ? "Nästan alla bärare är män." : kvinnor / summa > 0.98 ? "Nästan alla bärare är kvinnor." : `${procent(kvinnor, summa)} procent av bärarna är kvinnor.`}</p>
+  <p>{flickor.length && pojkar.length ? <>{tal(flickor.length)} av namnen bärs mest av kvinnor och {tal(pojkar.length)} mest av män.</> : flickor.length ? <>Alla namnen bärs mest av kvinnor.</> : <>Alla namnen bärs mest av män.</>}
+    {" "}{summa2000 > 0 && <>{tal(med2000.length)} av namnen fanns med i SCB:s statistik redan år 2000, då med {tal(summa2000)} bärare mot {tal(summaNu2000)} år 2020 ({summaNu2000 >= summa2000 ? "+" : "−"}{procent(Math.abs(summaNu2000 - summa2000), summa2000)} procent). {tal(okar)} av dem har fått fler bärare och {tal(minskar)} färre.</>}
+    {nya.length > 0 && <> {tal(nya.length)} namn saknades i statistiken år 2000 och har tillkommit sedan, till exempel {lista(nya.slice(0, 3).map((x) => x.namn))}.</>}
+    {" "}Som förnamn – inte bara tilltalsnamn – bärs namnen av {tal(fornamn)} personer.</p>
+
+  <h2>Alla dubbelnamn med {F}</h2>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th class="num">År 2000</th><th>Delarnas namnsdagar</th></tr></thead>
+    <tbody>{rader.map((x, i) => (
+      <tr id={x.slug}><td class="num">{i + 1}</td>
+        <td>{x.href ? <a href={x.href}>{x.namn}</a> : <strong>{x.namn}</strong>}</td>
+        <td class="num">{tal(x.antal)}</td>
+        <td class="num">{procent(x.K, x.antal)} %</td>
+        <td class="num">{x.t2000 > 0 ? tal(x.t2000) : "–"}</td>
+        <td>{x.delar.length ? x.delar.map((p, j) => <>{j > 0 && ", "}{p.del} <a href={dagHref(p.datum)}>{dagText(p.datum)}</a></>) : "1 januari"}</td></tr>
+    ))}</tbody>
+  </table></div>
+  <p class="kalla">Källa: {SCB_KALLA}, tilltalsnamn 31 december 2000 och 2020 (SCB:s senaste namnstatistik). SCB redovisar bara namn med minst 10 bärare; "–" betyder att namnet hade färre år 2000. Namnsdagar: den svenska namnlängden (Isof); stavningsvarianter räknas till almanacksnamnets dag.</p>
+
+  <h2>Namnsdag för dubbelnamn med {F}</h2>
+  <p>Inget dubbelnamn står i almanackan. Den som heter till exempel {a.namn} brukar fira på någon av delarnas dagar{egenDag && <> – {F} har namnsdag den <a href={dagHref(egenDag.datum)}>{dagText(egenDag.datum)}</a>{egenDag.namn !== F && <> (som {egenDag.namn})</>}</>}. {tal(bada.length)} av de {tal(rader.length)} namnen har båda delarna i almanackan och kan alltså välja mellan två dagar. För de övriga {tal(rader.length - bada.length)} saknas den andra delen{egenDag ? "" : " eller båda"}, och då återstår {egenDag ? `${F}-dagen eller ` : ""}den gemensamma namnsdagen <a href="/1-januari/">1 januari</a>.</p>
+
+  {nyfRader.length > 0 && <>
+    <h2>Dubbelnamn med {F} bland nyfödda</h2>
+    <p>Dubbelnamn är ovanliga bland nyfödda. SCB redovisar bara namn som minst två barn fick samma år, och av namnen ovan finns {tal(rader.filter((x) => x.sen).length)} med i statistiken 1998–2022. Senast redovisade år:</p>
+    <ul>{nyfRader.map((x) => <li>{x.href ? <a href={x.href}>{x.namn}</a> : x.namn}: {tal(x.sen.x)} barn {x.sen.ar}</li>)}</ul>
+    <p class="kalla">Källa: {NYF_KALLA}.</p>
+  </>}
+
+  <Annons plats="dubbel-1" />
+
+  <h2>Fler dubbelnamn</h2>
+  <ul class="namnchips">{andra.map((x) => <li><a href={`/dubbelnamn/${x.slug}/`}>{x.forled}-<small>{tal(x.namn.length)} namn</small></a></li>)}</ul>
+  <p>Se också <a href="/dubbelnamn/">alla dubbelnamn</a> och <a href="/namn-utan-namnsdag/">vanliga namn utan namnsdag</a>.</p>
+  <Faq fragor={fragor} />
+</Layout>

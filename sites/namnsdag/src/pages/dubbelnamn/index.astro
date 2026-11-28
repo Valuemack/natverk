@@ -1,0 +1,66 @@
+---
+// Översikt över dubbelnamn i Sverige (SCB 2020) med länkar till samlingssidorna per förled.
+import Layout from "../../layouts/Sida.astro";
+import Faq from "@natverk/core/Faq.astro";
+import { faqLd } from "@natverk/core/seo.js";
+import "../../styles/sajt.css";
+import { datasetLd, itemListLd, SCB_KALLA_LD } from "../../lib/schema.js";
+import { SITE, UPPDATERAD, SCB_ALLA, SCB_KALLA, tal, procent, beskriv } from "../../site.js";
+import { DUBBEL_SIDOR, DUBBEL, MIN_DUBBEL, lankTill } from "../../lib/namndata.js";
+
+const summa = DUBBEL.reduce((s, x) => s + x.antal, 0);
+const kvinnor = DUBBEL.reduce((s, x) => s + SCB_ALLA[x.namn][0], 0);
+const alla = Object.values(SCB_ALLA).reduce((s, a) => s + a[0] + a[1], 0);
+const topp = DUBBEL.slice(0, 25).map((x) => ({ ...x, K: SCB_ALLA[x.namn][0], t2000: SCB_ALLA[x.namn][4] ?? 0, href: lankTill(x.namn) }));
+const sidor = DUBBEL_SIDOR.map((d) => ({ ...d, summa: d.namn.reduce((s, x) => s + x.antal, 0) }));
+const iSidor = sidor.reduce((s, d) => s + d.namn.length, 0);
+// Efterled: hur många dubbelnamn slutar på samma namn, och hur många bär dem.
+const versal = (x) => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase();
+const EFTER = new Map();
+for (const x of DUBBEL) { const e = versal(x.namn.split("-").at(-1)); const v = EFTER.get(e) ?? EFTER.set(e, { namn: e, antal: 0, barare: 0, vanligast: x.namn }).get(e); v.antal++; v.barare += x.antal; }
+const efterled = [...EFTER.values()].sort((p, q) => q.antal - p.antal || q.barare - p.barare).slice(0, 12);
+const kvinnoNamn = DUBBEL.filter((x) => SCB_ALLA[x.namn][0] > SCB_ALLA[x.namn][1]);
+const mansNamn = DUBBEL.filter((x) => SCB_ALLA[x.namn][1] >= SCB_ALLA[x.namn][0]);
+const med2000 = DUBBEL.filter((x) => (SCB_ALLA[x.namn][4] ?? 0) > 0);
+const s2000 = med2000.reduce((s, x) => s + SCB_ALLA[x.namn][4], 0), sNu = med2000.reduce((s, x) => s + x.antal, 0);
+const nyaSedan = DUBBEL.length - med2000.length;
+const fragor = [
+  { fraga: "Vilket är det vanligaste dubbelnamnet i Sverige?", svar: `${DUBBEL[0].namn}, som ${tal(DUBBEL[0].antal)} personer har som tilltalsnamn enligt SCB 2020. Därefter kommer ${DUBBEL[1].namn} (${tal(DUBBEL[1].antal)}) och ${DUBBEL[2].namn} (${tal(DUBBEL[2].antal)}).` },
+  { fraga: "Hur många har ett dubbelnamn som tilltalsnamn?", svar: `${tal(summa)} personer i Sverige har ett av de ${tal(DUBBEL.length)} dubbelnamn med bindestreck som SCB redovisar som tilltalsnamn (2020). Det är ${procent(summa, alla)} procent av alla bärare av redovisade tilltalsnamn.` },
+  { fraga: "Har dubbelnamn namnsdag?", svar: "Dubbelnamn står inte i almanackan. Man brukar fira på någon av delarnas namnsdagar, eller på den gemensamma namnsdagen 1 januari som gäller alla namn som saknas i almanackan." },
+];
+---
+<Layout site={SITE} titel={`Dubbelnamn – de ${tal(DUBBEL.length)} vanligaste i Sverige (SCB 2020)`}
+  beskrivning={beskriv(`${tal(summa)} svenskar har ett dubbelnamn som tilltalsnamn, vanligast ${DUBBEL[0].namn}.`, "Alla dubbelnamn per förled, med antal och namnsdagar.", "✓ SCB 2020", "✓ Delarnas namnsdagar")}
+  smulor={[{ namn: "Namnsdag idag", href: "/" }, { namn: "Dubbelnamn", href: "/dubbelnamn/" }]}
+  jsonld={[faqLd(fragor), datasetLd({ namn: "Dubbelnamn i Sverige 2020", beskrivning: "Tilltalsnamn med bindestreck och minst 10 bärare i Sverige 2020 enligt SCB, grupperade efter förled.", sokvag: "/dubbelnamn/", tid: "2020", nyckelord: ["dubbelnamn"], kallor: [SCB_KALLA_LD] }), itemListLd("Dubbelnamn per förled", sidor.map((d) => ({ namn: `Dubbelnamn med ${d.forled}`, href: `/dubbelnamn/${d.slug}/` })))]} uppdaterad={UPPDATERAD}>
+  <h1>Dubbelnamn</h1>
+  <p class="svar">SCB redovisar <strong>{tal(DUBBEL.length)} dubbelnamn</strong> med bindestreck som minst 10 personer har som tilltalsnamn. Tillsammans bärs de av {tal(summa)} personer, {procent(kvinnor, summa)} procent kvinnor. Vanligast är <strong>{DUBBEL[0].namn}</strong> ({tal(DUBBEL[0].antal)}), {DUBBEL[1].namn} och {DUBBEL[2].namn}.</p>
+
+  <h2>Dubbelnamn per förled</h2>
+  <p>{tal(sidor.length)} förled har minst {MIN_DUBBEL} dubbelnamn och en egen sida med alla namn, antal bärare och delarnas namnsdagar. Tillsammans täcker de {tal(iSidor)} av de {tal(DUBBEL.length)} dubbelnamnen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Förled</th><th class="num">Antal dubbelnamn</th><th class="num">Bärare 2020</th><th>Vanligast</th></tr></thead>
+    <tbody>{sidor.map((d) => <tr><td><a href={`/dubbelnamn/${d.slug}/`}>{d.forled}-</a></td><td class="num">{tal(d.namn.length)}</td><td class="num">{tal(d.summa)}</td><td>{d.namn[0].namn} ({tal(d.namn[0].antal)})</td></tr>)}</tbody>
+  </table></div>
+
+  <h2>De 25 vanligaste dubbelnamnen</h2>
+  <div class="tabell"><table>
+    <thead><tr><th class="num">#</th><th>Namn</th><th class="num">Tilltalsnamn 2020</th><th class="num">Kvinnor</th><th class="num">År 2000</th></tr></thead>
+    <tbody>{topp.map((x, i) => <tr><td class="num">{i + 1}</td><td>{x.href ? <a href={x.href}>{x.namn}</a> : x.namn}</td><td class="num">{tal(x.antal)}</td><td class="num">{procent(x.K, x.antal)} %</td><td class="num">{x.t2000 > 0 ? tal(x.t2000) : "–"}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Källa: {SCB_KALLA}, tilltalsnamn 31 december 2000 och 2020 (SCB:s senaste namnstatistik). Bara namn med minst 10 bärare redovisas.</p>
+
+  <h2>Kvinnor, män och förändring sedan 2000</h2>
+  <p>{tal(kvinnoNamn.length)} av dubbelnamnen bärs mest av kvinnor, med {kvinnoNamn[0].namn}, {kvinnoNamn[1].namn} och {kvinnoNamn[2].namn} i topp. {tal(mansNamn.length)} bärs mest av män – vanligast är {mansNamn[0].namn}, {mansNamn[1].namn} och {mansNamn[2].namn}. {tal(med2000.length)} av namnen fanns i SCB:s statistik redan år 2000. De hade då {tal(s2000)} bärare och år 2020 {tal(sNu)}, {sNu < s2000 ? `en minskning med ${procent(s2000 - sNu, s2000)} procent` : `en ökning med ${procent(sNu - s2000, s2000)} procent`}. {tal(nyaSedan)} dubbelnamn hade färre än 10 bärare år 2000 och har kommit till i statistiken sedan dess.</p>
+
+  <h2>Vanligaste efterleden</h2>
+  <p>Samma efterled återkommer i många dubbelnamn. Tabellen visar de efterled som ingår i flest av de {tal(DUBBEL.length)} redovisade dubbelnamnen.</p>
+  <div class="tabell"><table>
+    <thead><tr><th>Efterled</th><th class="num">Antal dubbelnamn</th><th class="num">Bärare 2020</th><th>Vanligast</th></tr></thead>
+    <tbody>{efterled.map((e) => <tr><td>-{e.namn}</td><td class="num">{tal(e.antal)}</td><td class="num">{tal(e.barare)}</td><td>{e.vanligast}</td></tr>)}</tbody>
+  </table></div>
+  <p class="kalla">Egen sammanställning av {SCB_KALLA}. Stora och små bokstäver i efterledet räknas lika.</p>
+  <p>Se också <a href="/namn-utan-namnsdag/">vanliga namn utan namnsdag</a> och <a href="/hur-manga-heter/">hur många som heter ett visst namn</a>.</p>
+  <Faq fragor={fragor} />
+</Layout>
