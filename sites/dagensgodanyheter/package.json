@@ -11,7 +11,8 @@
     "skriv": "node scripts/skriv.mjs",
     "grafik": "node scripts/grafik.mjs",
     "bilder": "node scripts/bildsatt.mjs",
-    "test": "node --test \"tester/*.test.mjs\""
+    "test": "node --test \"tester/*.test.mjs\" \"tester/data/*.test.mjs\"",
+    "laga": "node scripts/laga.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.14.0",

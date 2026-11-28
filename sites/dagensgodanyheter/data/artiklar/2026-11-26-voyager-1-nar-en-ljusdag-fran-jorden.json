@@ -79,10 +79,11 @@
   ],
   "bildRymd": true,
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.48,
+    "positiv": 0.6,
+    "betydelse": 0.5,
     "tillit": 0.97,
-    "total": 52
+    "total": 80,
+    "gladje": 0.8
   },
   "produktion": {
     "metod": "ai-stod",
@@ -92,5 +93,6 @@
     "anmarkningar": []
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "rymden"
 }

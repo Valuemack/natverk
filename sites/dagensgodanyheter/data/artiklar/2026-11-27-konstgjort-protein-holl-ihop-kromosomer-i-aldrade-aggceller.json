@@ -74,7 +74,7 @@
     "liten": "/bilder/konstgjort-protein-holl-ihop-kromosomer-i-aldrade-aggceller-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: mikroskopbild av en äggcell där kromosomerna lyser blått mot mörk bakgrund",
+    "alt": "Målad illustration av ett mikroskop i ett laboratorium, där en grön cell med blå kromosomer syns på en skärm i bakgrunden.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -107,10 +107,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.8,
-    "betydelse": 0.5,
+    "positiv": 0.6,
+    "betydelse": 0.4,
     "tillit": 0.94,
-    "total": 76
+    "total": 62,
+    "gladje": 0.5
   },
   "produktion": {
     "metod": "ai-stod",
@@ -123,5 +124,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "medicin"
 }

@@ -79,10 +79,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.3,
+    "positiv": 0.5,
+    "betydelse": 0.5,
     "tillit": 0.93,
-    "total": 46
+    "total": 54,
+    "gladje": 0.3
   },
   "produktion": {
     "metod": "ai-stod",
@@ -94,5 +95,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "medicin"
 }

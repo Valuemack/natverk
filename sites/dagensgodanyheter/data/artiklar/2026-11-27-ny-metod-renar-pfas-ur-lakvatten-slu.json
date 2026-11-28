@@ -67,7 +67,7 @@
     "liten": "/bilder/ny-metod-renar-pfas-ur-lakvatten-slu-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: behållare med skum på vattenytan vid en avfallsanläggning, intill en anlagd våtmark med vass",
+    "alt": "Behållare med skum på vattenytan vid en avfallsanläggning, intill en anlagd våtmark med vass.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -100,10 +100,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.8,
-    "betydelse": 0.6,
+    "positiv": 0.6,
+    "betydelse": 0.4,
     "tillit": 0.93,
-    "total": 78
+    "total": 57,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -116,5 +117,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "klimat"
 }

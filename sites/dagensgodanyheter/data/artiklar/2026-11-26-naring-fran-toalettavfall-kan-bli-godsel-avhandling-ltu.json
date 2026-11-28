@@ -78,10 +78,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.3,
+    "positiv": 0.6,
+    "betydelse": 0.5,
     "tillit": 0.95,
-    "total": 47
+    "total": 64,
+    "gladje": 0.5
   },
   "produktion": {
     "metod": "ai-stod",
@@ -95,5 +96,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "klimat"
 }

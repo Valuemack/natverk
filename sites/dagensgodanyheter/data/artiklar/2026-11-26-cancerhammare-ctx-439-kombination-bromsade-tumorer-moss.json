@@ -70,7 +70,7 @@
     "liten": "/bilder/cancerhammare-ctx-439-kombination-bromsade-tumorer-moss-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: odlade cancerceller i en petriskål i ett forskningslaboratorium",
+    "alt": "Målad illustration av en petriskål med gröna celler i blått medium, bredvid mikroskop och provrör på bord.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -103,10 +103,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.7,
+    "positiv": 0.6,
     "betydelse": 0.5,
     "tillit": 0.92,
-    "total": 75
+    "total": 59,
+    "gladje": 0.4
   },
   "produktion": {
     "metod": "ai-stod",
@@ -118,5 +119,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "medicin"
 }

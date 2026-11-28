@@ -73,10 +73,11 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.65,
-    "betydelse": 0.46,
+    "positiv": 0.5,
+    "betydelse": 0.6,
     "tillit": 0.9,
-    "total": 55
+    "total": 51,
+    "gladje": 0.2
   },
   "produktion": {
     "metod": "ai-stod",
@@ -89,5 +90,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "text"
+  "bildbeslut": "text",
+  "typ": "siffror"
 }

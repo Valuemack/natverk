@@ -68,7 +68,7 @@
     "liten": "/bilder/demensfonden-stipendier-ki-utbildningar-demensvard-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: ett lugnt rum på ett äldreboende med fåtölj och pussel på bordet, en miljö där demensvård bedrivs",
+    "alt": "Ett lugnt rum på ett äldreboende med fåtölj och pussel på bordet, en miljö där demensvård bedrivs.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -101,10 +101,12 @@
   ],
   "bildRymd": false,
   "poang": {
-    "positiv": 0.55,
-    "betydelse": 0.38,
+    "positiv": 0.3,
+    "betydelse": 0.3,
     "tillit": 0.95,
-    "total": 55
+    "total": 25,
+    "gladje": 0.2,
+    "byrakratisk": true
   },
   "produktion": {
     "metod": "ai-stod",
@@ -117,5 +119,6 @@
     ]
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "ovrigt"
 }

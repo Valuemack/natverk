@@ -33,3 +33,11 @@ export function altFel(alt, rubrik = "") {
   if (!/[åäö]|\b(och|en|ett|med|av|på|i|som|vid|under|över)\b/i.test(t)) return "alt-texten verkar inte vara på svenska";
   return null;
 }
+
+/** Enkel rättning av en äldre alt-text utan modell: "Illustration:"-prefixet bort, stor bokstav, punkt på slutet. */
+export function enkelAlt(alt) {
+  let t = String(alt ?? "").trim().replace(/^illustration\s*:\s*/i, "");
+  if (!t) return "";
+  t = t[0].toUpperCase() + t.slice(1);
+  return /[.!]$/.test(t) ? t : `${t}.`;
+}

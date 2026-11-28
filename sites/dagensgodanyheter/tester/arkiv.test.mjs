@@ -21,10 +21,7 @@ test("varje publicerad URL finns kvar med samma adress", () => {
   }
 });
 
-test("varje artikel står i registret", () => {
-  const hrefar = new Set(register.map((r) => r.href));
-  for (const { f, a } of artiklar) assert.ok(hrefar.has(`/${a.kategori}/${a.slug}/`), `${f} saknas i data/publicerade.json`);
-});
+// "Varje artikel står i registret" är ett datatest (tester/data/), som scripts/laga.mjs lagar före testerna.
 
 test("inget skript tar bort eller flyttar artikelfiler", () => {
   const skript = [];

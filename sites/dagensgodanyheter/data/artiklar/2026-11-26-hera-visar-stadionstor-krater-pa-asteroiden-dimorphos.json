@@ -76,7 +76,7 @@
     "liten": "/bilder/hera-visar-stadionstor-krater-pa-asteroiden-dimorphos-640.webp",
     "bredd": 1536,
     "hojd": 864,
-    "alt": "Illustration: en rymdsond med solpaneler testas i ett renrum inför ett uppdrag till en asteroid",
+    "alt": "En rymdsond med solpaneler testas i ett renrum inför ett uppdrag till en asteroid.",
     "illustration": true,
     "licens": "Illustration: Dagens goda nyheter",
     "fotograf": null,
@@ -129,9 +129,10 @@
   "bildRymd": true,
   "poang": {
     "positiv": 0.6,
-    "betydelse": 0.4,
+    "betydelse": 0.5,
     "tillit": 0.97,
-    "total": 65
+    "total": 75,
+    "gladje": 0.7
   },
   "produktion": {
     "metod": "ai-stod",
@@ -141,5 +142,6 @@
     "anmarkningar": []
   },
   "rattelser": [],
-  "bildbeslut": "bild"
+  "bildbeslut": "bild",
+  "typ": "rymden"
 }

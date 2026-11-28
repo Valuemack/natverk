@@ -1,0 +1,25 @@
+#!/bin/sh
+# Kör dagensgodanyheter.se:s tester före push när pushen rör sajten eller dess nattbygge.
+# Stoppar pushen om kod- eller arkivtesterna fallerar; datatesterna (tester/data/) varnar bara, eftersom
+# nattbyggets lagningssteg (scripts/laga.mjs) rättar sådant innan testerna körs.
+# Aktiveras en gång per klon med: git config core.hooksPath .githooks
+NOLL=0000000000000000000000000000000000000000
+ROR=0
+while read lokal_ref lokal_sha fjarr_ref fjarr_sha; do
+  [ "$lokal_sha" = "$NOLL" ] && continue
+  if [ "$fjarr_sha" = "$NOLL" ]; then BAS=$(git merge-base "$lokal_sha" origin/main 2>/dev/null || echo ""); else BAS=$fjarr_sha; fi
+  if [ -z "$BAS" ] || git diff --name-only "$BAS" "$lokal_sha" 2>/dev/null | grep -qE '^(sites/dagensgodanyheter/|\.github/workflows/godanyheter\.yml)'; then ROR=1; fi
+done
+[ "$ROR" = "1" ] || exit 0
+
+echo "pre-push: kör dagensgodanyheter.se:s tester …"
+if ! node --test "sites/dagensgodanyheter/tester/*.test.mjs" > /dev/null 2>&1; then
+  node --test "sites/dagensgodanyheter/tester/*.test.mjs" 2>&1 | grep -E "✖|AssertionError|Error" | head -20
+  echo "pre-push: kod- eller arkivtesterna fallerar – pushen stoppas. Rätta felen ovan (eller kör npm run laga -w sites/dagensgodanyheter)."
+  exit 1
+fi
+if ! node --test "sites/dagensgodanyheter/tester/data/*.test.mjs" > /dev/null 2>&1; then
+  echo "pre-push: VARNING – datatesterna fallerar. Nattbyggets lagningssteg försöker rätta dem; kör gärna npm run laga -w sites/dagensgodanyheter."
+fi
+echo "pre-push: testerna gick igenom."
+exit 0

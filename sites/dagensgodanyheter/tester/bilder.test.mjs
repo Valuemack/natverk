@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { altFel, BILDTEXT_GENERERAD, ALT_MIN, ALT_MAX } from "../src/lib/bildtext.js";
+import { altFel, enkelAlt, BILDTEXT_GENERERAD, ALT_MIN, ALT_MAX } from "../src/lib/bildtext.js";
 import { bildInstallningar, byggPrompt, STANDARDMODELL } from "../scripts/lib/ai-bild.mjs";
 import { kortaAlt } from "../scripts/lib/bilder.mjs";
 
@@ -12,10 +12,12 @@ const ROT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIR = join(ROT, "data", "artiklar");
 const artiklar = readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => ({ f, a: JSON.parse(readFileSync(join(DIR, f), "utf8")) }));
 
-test("varje artikel med bild har en godkänd alt-text", () => {
-  for (const { f, a } of artiklar.filter(({ a }) => a.bild?.fil)) {
-    assert.equal(altFel(a.bild.alt, a.rubrik), null, `${f}: "${a.bild.alt}"`);
-  }
+// "Varje artikel med bild har en godkänd alt-text" är ett datatest (tester/data/), som scripts/laga.mjs lagar.
+
+test("äldre alt-texter med prefix rättas utan modell", () => {
+  assert.equal(enkelAlt("Illustration: odlade cancerceller i en petriskål i ett forskningslaboratorium med mikroskop och glasrör"),
+    "Odlade cancerceller i en petriskål i ett forskningslaboratorium med mikroskop och glasrör.");
+  assert.equal(enkelAlt(""), "");
 });
 
 test("alt-textreglerna underkänner tomma, korta, långa och felaktiga texter", () => {

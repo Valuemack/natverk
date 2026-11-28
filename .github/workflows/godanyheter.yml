@@ -56,10 +56,10 @@ jobs:
           echo "Stockholm $(TZ=Europe/Stockholm date '+%F %H:%M') ($OFFSET), schema '$SCHEMA' → kör=$KOR"
           echo "kor=$KOR" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: steps.tid.outputs.kor == '1'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.tid.outputs.kor == '1'
         with:
           node-version: 24
@@ -68,9 +68,27 @@ jobs:
       - run: npm ci
         if: steps.tid.outputs.kor == '1'
 
-      - name: Tester
+      # Äldre data får aldrig stoppa en natt: lagningen registrerar artiklar som saknas i arkivregistret, rättar
+      # alt-texter och poängsätter artiklar utan glädjepoäng. Den lägger bara till och rättar – tar aldrig bort artiklar.
+      - name: Laga data
+        if: steps.tid.outputs.kor == '1'
+        continue-on-error: true
+        timeout-minutes: 10
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # Haiku: alt-texter och poäng (några cent)
+        run: npm run laga -w sites/dagensgodanyheter
+
+      # Stoppar natten: koden och arkivskyddet (en publicerad adress får aldrig försvinna).
+      - name: Tester (kod och arkivskydd)
         if: steps.tid.outputs.kor == '1'
         run: node --test "sites/dagensgodanyheter/tester/*.test.mjs"
+
+      # Varnar bara: datakvalitet som lagningen inte rådde på syns i rapporten, men natten fortsätter.
+      - name: Datakontroll (varnar)
+        id: datakontroll
+        if: steps.tid.outputs.kor == '1'
+        continue-on-error: true
+        run: node --test "sites/dagensgodanyheter/tester/data/*.test.mjs"
 
       - name: Trender som idékälla (Google Trends, Wikipedia, ev. Keyword Planner)
         if: steps.tid.outputs.kor == '1' && github.event.inputs.skriv != 'false'
@@ -162,5 +180,6 @@ jobs:
           T=sites/dagensgodanyheter/data/raw/torrkorning.json
           if [ -f "$F" ]; then node -e "const r=require('./$F');console.log('Publicerade:',r.publicerade.length,'Underkända:',r.underkanda.length,'Hoppade:',r.hoppade.length,'Kostnad: \$'+r.kostnad)" >> "$GITHUB_STEP_SUMMARY"; fi
           if [ -f "$T" ]; then echo "Torrläge: ANTHROPIC_API_KEY saknas – inga nya artiklar skrevs." >> "$GITHUB_STEP_SUMMARY"; fi
+          if [ "${{ steps.datakontroll.outcome }}" = "failure" ]; then echo "⚠️ Datakontrollen hittade fel som lagningen inte rådde på – se steget Datakontroll." >> "$GITHUB_STEP_SUMMARY"; echo "::warning::Datakontrollen hittade fel i publicerade artiklar"; fi
           B=sites/dagensgodanyheter/data/raw/bildplan.json
           if [ -f "$B" ]; then node -e "const b=require('./$B');console.log('Bilder:',b.lage==='torr'?'torrläge ('+b.orsak+')':b.bilder.filter(x=>x.status==='skapad').length+' av '+b.antal+' skapade')" >> "$GITHUB_STEP_SUMMARY"; fi
