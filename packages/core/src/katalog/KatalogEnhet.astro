@@ -18,8 +18,10 @@ const kommun = kat.kommuner.find((k) => k.slug === e.kommunSlug);
 const lan = kat.lan.find((l) => l.slug === kommun.lanSlug);
 const vs = veckoSammanfattning(e.oppettider);
 // Helgdagstider (jul, nyår m.m.) de närmaste veckorna – bara publicerade uppgifter, inget gissas.
+// Tabellen och helgfrågan visas bara när enheten själv publicerat minst en helgtid. En tabell med bara
+// "Ej publicerat än" på tusentals sidor är ren mallutfyllnad (Googles "scaled content") och ger besökaren inget.
 const htRa = helgdagar && uppdaterad ? helgTider(e, uppdaterad) : null;
-const ht = htRa && (vs || htRa.harData) ? htRa : null;
+const ht = htRa?.harData ? htRa : null;
 const forstaOrd = ht && e.oppettider ? (() => { const v = e.oppettider[DAGAR[(new Date(ht.rader[0].iso).getUTCDay() + 6) % 7]]; return v != null ? dagText(v) : null; })() : null;
 const nara = narmaste(e, kat.enheter, 5);
 const ovriga = kommun.enheter.filter((x) => x !== e && !nara.some((n) => n.enhet === x));
